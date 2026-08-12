@@ -146,7 +146,10 @@ def compile_packet(
     validate_target(operation, spec, section, unit)
     validate_preconditions(product_dir, operation, section, unit)
 
+    operator_interface = (REPO_ROOT / "system" / "standards" / "operator-interface.md").resolve()
     instruction_paths = [(REPO_ROOT / item).resolve() for item in spec["instruction_files"]]
+    if operator_interface not in instruction_paths:
+        instruction_paths.append(operator_interface)
     for path in instruction_paths:
         if not path.is_file():
             raise FileNotFoundError(f"Missing instruction: {repo_relative(path)}")
@@ -185,7 +188,9 @@ def compile_packet(
                 "sha256": sha256(path) if path.is_file() else None,
             }
         )
-    allowed = outputs + [f"tasks/{task_id}/report.md"]
+    report_path = f"tasks/{task_id}/report.md"
+    operator_brief_path = f"tasks/{task_id}/operator-brief.json"
+    allowed = outputs + [report_path, operator_brief_path]
     header = [
         f"# Context Packet — {task_id}",
         "",
@@ -198,6 +203,9 @@ def compile_packet(
         "## Acceptance criteria",
         "",
         *[f"- {item}" for item in spec["acceptance"]],
+        "",
+        "Write full operational detail to `report.md`. Write only decision-relevant summary to `operator-brief.json`.",
+        "The final chat response must use the rendered operator brief, not the task report.",
         "",
         "Only the material inside this packet is task context. Do not scan the repository.",
         "",
@@ -219,13 +227,17 @@ def compile_packet(
         "estimated_context_tokens": tokens,
         "instruction_files": [repo_relative(path) for path in instruction_paths],
         "inputs": input_records,
+        "operation_outputs": outputs,
         "output_baselines": output_baselines,
         "allowed_write_paths": allowed,
+        "report_path": report_path,
+        "operator_brief_path": operator_brief_path,
         "acceptance_criteria": spec["acceptance"],
         "validation": [
             f"python scripts/validate.py products/{product_dir.name}",
             f"python scripts/task.py verify products/{product_dir.name} {task_id}",
             f"python scripts/check_scope.py products/{product_dir.name}",
+            f"python scripts/operator_brief.py validate products/{product_dir.name}/{operator_brief_path}",
         ],
     }
     return packet, packet_text

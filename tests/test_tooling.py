@@ -12,8 +12,10 @@ from scripts.impact import calculate_impact
 from scripts.materialize_research import materialize as materialize_research
 from scripts.materialize_sections import materialize as materialize_sections
 from scripts.new_product import DEFAULT_TEMPLATE_ROOT, create_product
+from scripts.operator_brief import MAX_RENDERED_WORDS, render_brief, validate_brief
 from scripts.task import create_task, submit_task, verify_task
 from scripts.validate import validate_product
+from scripts.common import word_count
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -69,6 +71,28 @@ def make_approved_outline(product: Path, section_count: int = 10) -> None:
         product / "02_outline" / "outline.json",
         {"schema_version": 1, "product": product.name, "status": "approved", "section_count_target": section_count, "sections": sections},
     )
+
+
+def valid_operator_brief() -> dict:
+    return {
+        "schema_version": 1,
+        "status": "ready_for_review",
+        "headline": "Research plan đã sẵn sàng để bạn kiểm duyệt.",
+        "material_points": [
+            "Plan giữ đúng subject và chia trách nhiệm research rõ ràng.",
+            "Một boundary nhỏ cần được theo dõi khi synthesis.",
+        ],
+        "decision": {
+            "required": True,
+            "question": "Bạn muốn duyệt plan hay yêu cầu chỉnh boundary trước?",
+            "recommendation": "Chỉnh boundary nhỏ rồi duyệt plan.",
+            "options": [
+                {"label": "Chỉnh trước", "effect": "Plan được patch; research chưa chạy."},
+                {"label": "Duyệt", "effect": "Mở research workstreams theo plan hiện tại."},
+            ],
+        },
+        "next_step": "",
+    }
     (product / "02_outline" / "story-bible.md").write_text(
         "# Story Bible\n\nPremise, causal spine, terminology and global exclusions.\n",
         encoding="utf-8",
@@ -109,7 +133,8 @@ class ModularProductionTests(unittest.TestCase):
             self.assertIn("01_research/workstreams/WS02/brief.md", context)
             self.assertNotIn("01_research/workstreams/WS01/brief.md", context)
             self.assertNotIn("01_research/workstreams/WS03/brief.md", context)
-            self.assertEqual(3, len(packet["allowed_write_paths"]) - 1)
+            self.assertEqual(3, len(packet["operation_outputs"]))
+            self.assertIn("system/standards/operator-interface.md", packet["instruction_files"])
 
     def test_research_synthesis_requires_every_declared_workstream(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -155,9 +180,15 @@ class ModularProductionTests(unittest.TestCase):
             self.assertNotIn("03_sections/P05/brief.md", context)
             self.assertNotIn("03_sections/P07/brief.md", context)
             self.assertEqual(
-                ["03_sections/P06/draft.md", "03_sections/P06/handoff.md", "tasks/T0001/report.md"],
+                [
+                    "03_sections/P06/draft.md",
+                    "03_sections/P06/handoff.md",
+                    "tasks/T0001/report.md",
+                    "tasks/T0001/operator-brief.json",
+                ],
                 packet["allowed_write_paths"],
             )
+            self.assertIn("Operator Interface Standard", context)
             self.assertLess(packet["estimated_context_tokens"], packet["max_context_tokens"])
 
     def test_draft_packet_adds_only_approved_dependency_handoff(self) -> None:
@@ -193,7 +224,12 @@ class ModularProductionTests(unittest.TestCase):
             self.assertIn("03_sections/P01/handoff.md", context)
             self.assertIn("03_sections/P02/handoff.md", context)
             self.assertEqual(
-                ["04_integration/review.md", "04_integration/change-map.json", "tasks/T0002/report.md"],
+                [
+                    "04_integration/review.md",
+                    "04_integration/change-map.json",
+                    "tasks/T0002/report.md",
+                    "tasks/T0002/operator-brief.json",
+                ],
                 packet["allowed_write_paths"],
             )
 
@@ -216,7 +252,9 @@ class ModularProductionTests(unittest.TestCase):
             state["stages"]["direction"] = "approved"
             write_json(product / "product.json", state)
             work = create_task(product, "research_plan", None, None, False)
-            self.assertTrue(any("missing output" in item or "no declared" in item for item in submit_task(product, work["id"])))
+            first_errors = submit_task(product, work["id"])
+            self.assertTrue(any("missing output" in item or "no declared" in item for item in first_errors))
+            self.assertTrue(any("operator brief" in item for item in first_errors))
             plan_path = product / "01_research" / "plan.json"
             plan = json.loads(plan_path.read_text(encoding="utf-8"))
             plan["central_research_question"] = "A real changed question"
@@ -233,10 +271,46 @@ class ModularProductionTests(unittest.TestCase):
             ]
             write_json(plan_path, plan)
             report = product / "tasks" / work["id"] / "report.md"
-            report.write_text("Completed: research plan.\n", encoding="utf-8")
+            report.write_text(("Detailed evidence and validation record. " * 500) + "\n", encoding="utf-8")
+            write_json(product / "tasks" / work["id"] / "operator-brief.json", valid_operator_brief())
             self.assertEqual([], submit_task(product, work["id"]))
             submitted = json.loads((product / "tasks" / work["id"] / "work-order.json").read_text(encoding="utf-8"))
             self.assertEqual("ready_for_review", submitted["state"])
+
+    def test_operator_brief_is_short_while_report_can_remain_deep(self) -> None:
+        document = valid_operator_brief()
+        rendered = render_brief(document)
+        self.assertEqual([], validate_brief(document))
+        self.assertLessEqual(word_count(rendered), MAX_RENDERED_WORDS)
+        self.assertIn("Cần bạn quyết định", rendered)
+        self.assertNotIn("file", rendered.lower())
+
+    def test_operator_brief_rejects_overload_and_ambiguous_review_state(self) -> None:
+        overloaded = valid_operator_brief()
+        overloaded["material_points"] = ["Điểm một.", "Điểm hai.", "Điểm ba.", "Điểm bốn."]
+        self.assertTrue(any("more than 3" in item for item in validate_brief(overloaded)))
+        ambiguous = valid_operator_brief()
+        ambiguous["decision"] = {"required": False, "question": "", "recommendation": "", "options": []}
+        ambiguous["next_step"] = "Tiếp tục khi phù hợp."
+        self.assertTrue(any("explicit user decision" in item for item in validate_brief(ambiguous)))
+
+        too_long = valid_operator_brief()
+        dense = "Một nhận định quan trọng cần được cân nhắc kỹ trước khi người dùng đưa ra quyết định cuối cùng cho giai đoạn hiện tại."
+        too_long["headline"] = dense
+        too_long["material_points"] = [dense, dense, dense]
+        too_long["decision"]["question"] = dense
+        too_long["decision"]["recommendation"] = dense
+        too_long["decision"]["options"] = [
+            {"label": "Phương án", "effect": dense},
+            {"label": "Phương án", "effect": dense},
+        ]
+        self.assertTrue(any("rendered operator brief exceeds" in item for item in validate_brief(too_long)))
+
+    def test_operator_interface_supports_adaptive_depth(self) -> None:
+        standard = (REPO_ROOT / "system" / "standards" / "operator-interface.md").read_text(encoding="utf-8")
+        for mode in ["Brief mode", "Guided explanation mode", "Deep review mode", "Deliverable mode"]:
+            self.assertIn(mode, standard)
+        self.assertIn("không phải luôn nói ngắn", standard)
 
     def test_review_change_request_and_revision_stay_in_one_section(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -250,7 +324,10 @@ class ModularProductionTests(unittest.TestCase):
             state["status"] = "ready_for_review"
             write_json(root / "section.json", state)
             review_packet, review_context = compile_packet(product, "review_section", "T0001", section="P06")
-            self.assertEqual(["03_sections/P06/review.md", "tasks/T0001/report.md"], review_packet["allowed_write_paths"])
+            self.assertEqual(
+                ["03_sections/P06/review.md", "tasks/T0001/report.md", "tasks/T0001/operator-brief.json"],
+                review_packet["allowed_write_paths"],
+            )
             self.assertNotIn("03_sections/P05/draft.md", review_context)
             request_changes(product, "P06", "Fix ISSUE-01 only; preserve the entry scene.")
             (root / "review.md").write_text("ISSUE-01: causal link is unsupported.", encoding="utf-8")

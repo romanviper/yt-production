@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: help new task show check research-units sections impact assemble test
+.PHONY: help new task show brief check research-units sections impact assemble test
 
 help:
 	@$(PYTHON) scripts/help.py
@@ -17,6 +17,10 @@ task:
 show:
 	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)
 	@$(PYTHON) scripts/task.py show "products/$(PRODUCT)"
+
+brief:
+	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)
+	@$(PYTHON) scripts/task.py brief "products/$(PRODUCT)" $(TASK)
 
 check:
 	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)
@@ -41,4 +45,3 @@ assemble:
 
 test:
 	@$(PYTHON) -m unittest discover -s tests -v
-

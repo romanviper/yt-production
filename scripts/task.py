@@ -12,9 +12,11 @@ from pathlib import Path
 try:
     from scripts.common import load_registry, product_relative, read_json, sha256, word_count, write_json
     from scripts.context_packet import compile_packet
+    from scripts.operator_brief import empty_brief, render_brief, validate_brief_file
 except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from common import load_registry, product_relative, read_json, sha256, word_count, write_json
     from context_packet import compile_packet
+    from operator_brief import empty_brief, render_brief, validate_brief_file
 
 
 def next_task_id(product_dir: Path, operation: str, section: str | None, unit: str | None) -> str:
@@ -50,6 +52,8 @@ def create_task(product_dir: Path, operation: str, section: str | None, unit: st
     context_path = task_dir / "context.md"
     write_json(packet_path, packet)
     context_path.write_text(context, encoding="utf-8")
+    operator_brief_path = product_dir / packet["operator_brief_path"]
+    write_json(operator_brief_path, empty_brief())
 
     work_order = {
         "schema_version": 1,
@@ -63,7 +67,9 @@ def create_task(product_dir: Path, operation: str, section: str | None, unit: st
         "packet_manifest": product_relative(product_dir, packet_path),
         "allowed_write_paths": packet["allowed_write_paths"],
         "acceptance_criteria": packet["acceptance_criteria"],
-        "outputs": packet["allowed_write_paths"][:-1],
+        "outputs": packet["operation_outputs"],
+        "report_path": packet["report_path"],
+        "operator_brief_path": packet["operator_brief_path"],
     }
     work_path = task_dir / "work-order.json"
     write_json(work_path, work_order)
@@ -107,6 +113,14 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     report = task_dir / "report.md"
     if not report.is_file():
         errors.append(f"missing output: tasks/{task_id}/report.md")
+    operator_brief = product_dir / packet["operator_brief_path"]
+    errors.extend(validate_brief_file(operator_brief))
+    if operator_brief.is_file():
+        try:
+            if read_json(operator_brief).get("status") != "ready_for_review":
+                errors.append("submitted task operator brief status must be ready_for_review")
+        except (json.JSONDecodeError, ValueError):
+            pass
     if not changed_outputs:
         errors.append("no declared artifact changed from its task baseline")
     errors.extend(validate_output_contract(product_dir, work))
@@ -279,6 +293,9 @@ def main() -> int:
     submit = sub.add_parser("submit")
     submit.add_argument("product", type=Path)
     submit.add_argument("task_id")
+    brief = sub.add_parser("brief")
+    brief.add_argument("product", type=Path)
+    brief.add_argument("task_id", nargs="?")
     state = sub.add_parser("state")
     state.add_argument("product", type=Path)
     state.add_argument("task_id")
@@ -305,6 +322,19 @@ def main() -> int:
             work = read_json(work_path)
             print(f"{work['id']}\t{work['state']}\t{work['operation']}\t{work.get('target', {})}")
         return 0
+    if args.command == "brief":
+        product = args.product.resolve()
+        task_id = args.task_id
+        if not task_id:
+            task_id = read_json(active_path(product))["task_id"]
+        path = product / "tasks" / task_id / "operator-brief.json"
+        errors = validate_brief_file(path)
+        if errors:
+            for error in errors:
+                print(f"ERROR: {error}")
+            return 1
+        print(render_brief(read_json(path)), end="")
+        return 0
     if args.command == "state":
         set_task_state(args.product, args.task_id, args.value)
         print(f"{args.task_id}: {args.value}")
@@ -314,7 +344,11 @@ def main() -> int:
         for error in errors:
             print(f"ERROR: {error}")
         return 1
-    print("Task submitted for review." if args.command == "submit" else "Task packet is fresh and within budget.")
+    if args.command == "submit":
+        brief_path = args.product.resolve() / "tasks" / args.task_id / "operator-brief.json"
+        print(render_brief(read_json(brief_path)), end="")
+    else:
+        print("Task packet is fresh and within budget.")
     return 0
 
 

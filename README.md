@@ -12,6 +12,8 @@ Repo có ba lớp độc lập:
 
 Agent không đọc toàn bộ `system/`. `scripts/task.py` biên dịch đúng instruction và input cần thiết thành một context packet cho từng task.
 
+Giao tiếp cũng có hai lớp: task report giữ chiều sâu, operator brief giữ bức tranh điều hành. Status/handoff mặc định ngắn; explanation, audit và artifact được mở rộng khi mục đích cần.
+
 ## Production flow
 
 ```text
@@ -45,6 +47,9 @@ python scripts/task.py show products/ten-san-pham
 
 # Sau khi Agent hoàn thành output và report
 python scripts/task.py submit products/ten-san-pham <task-id>
+
+# Render đúng brief ngắn mà Agent phải trả trong chat
+python scripts/task.py brief products/ten-san-pham <task-id>
 
 # Kiểm tra product, task packet và context budget
 python scripts/validate.py products/ten-san-pham

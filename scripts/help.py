@@ -8,6 +8,7 @@ make task PRODUCT=<slug> OPERATION=research_plan
 make task PRODUCT=<slug> OPERATION=research_workstream UNIT=WS01
 make task PRODUCT=<slug> OPERATION=draft_section SECTION=P04
 make show PRODUCT=<slug>
+make brief PRODUCT=<slug> TASK=<task-id>
 make check PRODUCT=<slug>
 make research-units PRODUCT=<slug>
 make sections PRODUCT=<slug>
@@ -19,6 +20,7 @@ make test
 Task lifecycle:
 python scripts/task.py list products/<slug>
 python scripts/task.py submit products/<slug> <task-id>
+python scripts/task.py brief products/<slug> <task-id>
 python scripts/task.py state products/<slug> <task-id> closed
 
 Human approval commands:

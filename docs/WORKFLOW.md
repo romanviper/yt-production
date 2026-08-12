@@ -16,6 +16,56 @@ Một Agent mới phải có thể hoàn thành một nghiệp vụ mà không c
 
 Số section là cấu hình của outline, không hard-code trong engine. Pilot Sumer đặt target 10; product khác có thể đặt số khác.
 
+## Operator interface: đúng độ sâu, đúng thời điểm
+
+Người dùng không cần xem process diary. Mỗi task giữ hai output giao tiếp khác nhau:
+
+- `report.md`: toàn bộ phân tích, issue, evidence, validation và chi tiết triển khai để audit khi cần;
+- `operator-brief.json`: phần thông tin đủ để người dùng hiểu tình hình và ra quyết định.
+
+Brief dùng cho status, handoff, blocker và checkpoint được render theo contract:
+
+- tối đa 140 từ;
+- kết luận ở dòng đầu;
+- tối đa ba điểm có ảnh hưởng thực sự;
+- nếu cần duyệt: một khuyến nghị, một câu hỏi quyết định và hiệu lực của các lựa chọn;
+- nếu không cần duyệt: đúng một bước kế tiếp.
+
+Không phải mọi câu trả lời đều bị giới hạn 140 từ:
+
+- hỏi concept hoặc `tại sao/như thế nào`: Agent dùng guided explanation, kết luận trước rồi giải thích vừa đủ;
+- yêu cầu evidence/audit/phản biện sâu: Agent dùng deep review, executive summary trước rồi mở chi tiết;
+- yêu cầu xem outline/draft: Agent dùng deliverable mode, brief trước rồi đưa artifact thật để kiểm duyệt.
+
+| Cách người dùng nói tự nhiên | Mode Agent nên chọn | Kết quả mong đợi |
+|---|---|---|
+| “Tình hình hiện tại thế nào?” | Brief | Trạng thái, tối đa ba điểm quan trọng, một bước/decision. |
+| “Tại sao phải tách WS07 và WS08?” | Guided explanation | Mental model và trade-off vừa đủ để hiểu. |
+| “Audit đầy đủ research plan và cho tôi evidence.” | Deep review | Executive summary rồi phân tích/evidence có cấu trúc. |
+| “Cho tôi xem bản P04 để duyệt.” | Deliverable | Brief rồi nội dung thật hoặc liên kết trực tiếp tới P04. |
+
+Người dùng không cần gọi tên mode; Agent suy ra từ intent. Các câu như `tóm tắt lại`, `chỉ cho tôi phần cần quyết định`, `mở chi tiết điểm 2` hoặc `cho tôi xem evidence` dùng để zoom thông tin lên/xuống mà không tạo lại công việc.
+
+Agent không mặc định kể file đã đọc, command đã chạy, hash, test bình thường hoặc mọi rủi ro nhỏ. Những thứ này vẫn được lưu trong report nên giao tiếp gọn không làm mất khả năng audit; ngược lại, brevity cũng không được che blocker hoặc uncertainty cần cho quyết định.
+
+Ví dụ mặc định:
+
+```text
+Chờ bạn duyệt: Research plan đủ mạnh và chỉ cần chỉnh nhẹ trước khi chạy.
+
+- Làm rõ ranh giới WS07–WS08.
+- Giao ownership cho exchange và social memory.
+- Giữ tám workstream; không cần thiết kế lại.
+
+Khuyến nghị: sửa ba điểm trên rồi duyệt.
+
+Cần bạn quyết định: Chỉnh plan trước hay duyệt nguyên trạng?
+- Chỉnh trước: Agent tạo một patch giới hạn, research chưa chạy.
+- Duyệt: Mở workstream research với rủi ro overlap còn giữ nguyên.
+```
+
+Khi người dùng yêu cầu `mở chi tiết`, Agent mới đọc report và mở đúng phần được hỏi. Đây là progressive disclosure: thông tin không bị mất, nhưng không chiếm giao diện mặc định.
+
 ## 1. Research không phải một task khổng lồ
 
 ### 1.1 Research plan
