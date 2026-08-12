@@ -1,6 +1,70 @@
 {
   "schema_version": 1,
   "workstream": "WS06",
-  "status": "not_started",
-  "claims": []
+  "status": "complete",
+  "claims": [
+    {
+      "id": "WS06-CLM-001",
+      "statement": "Administrative writing increased capacity to classify, aggregate and audit labor, goods and obligations when tied to institutional procedure.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS06-SRC-001",
+        "WS06-SRC-002"
+      ],
+      "counterevidence": "Records alone do not prove compliance or causal primacy.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS06-CLM-002",
+      "statement": "Ur III labor records reveal ordinary people mainly through top-down categories and required work.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS06-SRC-001",
+        "WS06-SRC-002"
+      ],
+      "counterevidence": "They do not recover the full lives or viewpoints of recorded workers.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS06-CLM-003",
+      "statement": "Writing’s power distribution changed over time: uses once concentrated in royal/institutional systems were later appropriated by urban private actors.",
+      "type": "inference",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "sources": [
+        "WS06-SRC-003"
+      ],
+      "counterevidence": "The scale and timing of ‘privatization’ vary by region.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS06-CLM-004",
+      "statement": "A written law, norm or transaction is evidence of recording and claim-making, not automatic evidence of enforcement.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS06-SRC-003"
+      ],
+      "counterevidence": "Case-specific links among tablet, witnesses, seal and action are required.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS06-CLM-005",
+      "statement": "Archive survival is structurally biased by clay durability, institutional discard, excavation history and antiquities-market provenance.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS06-SRC-001",
+        "WS06-SRC-004"
+      ],
+      "counterevidence": "Bias does not invalidate the corpus, but limits population-wide inference.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    }
+  ]
 }
