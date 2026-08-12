@@ -1,6 +1,73 @@
 {
   "schema_version": 1,
   "workstream": "WS04",
-  "status": "not_started",
-  "claims": []
+  "status": "complete",
+  "claims": [
+    {
+      "id": "WS04-CLM-001",
+      "statement": "The earliest writing implies trained specialists, but their identities, recruitment and institutional status are poorly recoverable.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS04-SRC-003"
+      ],
+      "counterevidence": "Lists and handwriting variation provide indirect evidence, not biographies.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS04-CLM-002",
+      "statement": "The best archaeological evidence for formal curricula comes from later household and institutional contexts, especially the Old Babylonian period.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS04-SRC-001",
+        "WS04-SRC-002",
+        "WS04-SRC-003"
+      ],
+      "counterevidence": "Later evidence cannot be projected unchanged onto Uruk.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS04-CLM-003",
+      "statement": "Edubba was not necessarily a single standardized temple-run school system across Mesopotamian history.",
+      "type": "contested",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS04-SRC-001",
+        "WS04-SRC-002"
+      ],
+      "counterevidence": "Literary school texts use institutional language, but excavated teaching often occurs in houses.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS04-CLM-004",
+      "statement": "Scribal competence included copying, calculation, lexical knowledge and genre conventions, not merely decoding signs.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS04-SRC-001",
+        "WS04-SRC-003",
+        "WS04-SRC-004"
+      ],
+      "counterevidence": "Curriculum differed by period, place and career path.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS04-CLM-005",
+      "statement": "Access was restricted and socially consequential, but no reliable percentage for literacy or a universal male-only rule can be derived.",
+      "type": "unknown",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS04-SRC-001",
+        "WS04-SRC-002"
+      ],
+      "counterevidence": "Named female scribes and elite women exist in some periods; corpus is not population-representative.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    }
+  ]
 }
