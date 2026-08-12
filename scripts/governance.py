@@ -80,13 +80,44 @@ def changed_paths(base: str) -> list[str]:
     return [line.strip() for line in result.stdout.splitlines() if line.strip()]
 
 
+def commits_in_range(base: str, head: str) -> list[str]:
+    result = subprocess.run(
+        ["git", "rev-list", "--reverse", "--no-merges", f"{base}..{head}"],
+        cwd=REPO_ROOT,
+        check=True,
+        text=True,
+        capture_output=True,
+    )
+    return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+
+
+def commit_paths(commit: str) -> list[str]:
+    result = subprocess.run(
+        ["git", "diff-tree", "--no-commit-id", "--name-only", "-r", commit],
+        cwd=REPO_ROOT,
+        check=True,
+        text=True,
+        capture_output=True,
+    )
+    return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
     commit = sub.add_parser("commit-scope")
     commit.add_argument("--base", default="HEAD^")
+    commit_range = sub.add_parser("commit-range")
+    commit_range.add_argument("--base", required=True)
+    commit_range.add_argument("--head", default="HEAD")
     args = parser.parse_args()
-    errors = commit_scope_errors(changed_paths(args.base))
+    if args.command == "commit-range":
+        errors = []
+        commits = commits_in_range(args.base, args.head)
+        for sha in commits:
+            errors.extend(f"commit {sha}: {error}" for error in commit_scope_errors(commit_paths(sha)))
+    else:
+        errors = commit_scope_errors(changed_paths(args.base))
     if errors:
         for error in errors:
             print(f"ERROR: {error}")

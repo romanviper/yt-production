@@ -207,6 +207,8 @@ class ModularProductionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
             plan = json.loads((REPO_ROOT / "products" / "sumer-writing" / "01_research" / "plan.json").read_text(encoding="utf-8"))
+            # Keep this test independent from the current Sumer product state.
+            plan.pop("shared_research_protocol", None)
             write_json(product / "01_research" / "plan.json", plan)
             with self.assertRaisesRegex(ValueError, "shared_research_protocol"):
                 approve_plan(product)
