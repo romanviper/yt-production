@@ -1,6 +1,71 @@
 {
   "schema_version": 1,
   "workstream": "WS05",
-  "status": "not_started",
-  "claims": []
+  "status": "complete",
+  "claims": [
+    {
+      "id": "WS05-CLM-001",
+      "statement": "Uruk IV evidence is overwhelmingly administrative, while lexical texts become substantially more visible in Uruk III.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-001"
+      ],
+      "counterevidence": "Preservation and excavation bias prevent exclusivity claims.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS05-CLM-002",
+      "statement": "By the middle third millennium BCE cuneiform served economic, religious, political, literary and scholarly domains.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-002"
+      ],
+      "counterevidence": "Chronologies differ by genre and city; ‘by’ does not mean simultaneous everywhere.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS05-CLM-003",
+      "statement": "Lexical lists form a continuous knowledge-organizing tradition from the earliest writing through later cuneiform cultures.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS05-SRC-001",
+        "WS05-SRC-003"
+      ],
+      "counterevidence": "Continuity involved copying, reordering and transformation, not static preservation.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS05-CLM-004",
+      "statement": "Legal documents, letters and contracts provide human-scale cases but are mediated by scribal formula and institutional context.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS05-SRC-004"
+      ],
+      "counterevidence": "First-person grammar is not transparent access to private interiority.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS05-CLM-005",
+      "statement": "Functional expansion should be narrated as successive additions and recombinations, not a ladder from accounting to literature.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-001",
+        "WS05-SRC-002",
+        "WS05-SRC-003",
+        "WS05-SRC-004"
+      ],
+      "counterevidence": "Local discontinuities and corpus gaps remain.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    }
+  ]
 }
