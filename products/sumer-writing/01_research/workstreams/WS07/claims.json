@@ -1,6 +1,74 @@
 {
   "schema_version": 1,
   "workstream": "WS07",
-  "status": "not_started",
-  "claims": []
+  "status": "complete",
+  "claims": [
+    {
+      "id": "WS07-CLM-001",
+      "statement": "Cuneiform was adapted from Sumerian-associated use to Akkadian and then to multiple unrelated languages.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS07-SRC-001",
+        "WS07-SRC-002",
+        "WS07-SRC-004"
+      ],
+      "counterevidence": "Adaptation was not uniform and sometimes imported Mesopotamian languages alongside the script.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS07-CLM-002",
+      "statement": "Adaptation required modification of sign values and orthographic conventions rather than simple substitution of words.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS07-SRC-001",
+        "WS07-SRC-004"
+      ],
+      "counterevidence": "Degree of modification differed by language and scribal center.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS07-CLM-003",
+      "statement": "Lexical lists and bilingual curricula were key transmission infrastructure across regions and centuries.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS07-SRC-002",
+        "WS07-SRC-003",
+        "WS07-SRC-004"
+      ],
+      "counterevidence": "Surviving lists privilege formal training contexts.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS07-CLM-004",
+      "statement": "Sumerian outlived probable vernacular use as a learned literary, cultic and scholarly language.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS07-SRC-001",
+        "WS07-SRC-003"
+      ],
+      "counterevidence": "The date and social extent of spoken-language decline remain debated.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS07-CLM-005",
+      "statement": "The living-tradition endpoint is institutional reproduction: active teaching, copying and competent reuse, not the survival of old tablets alone.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS07-SRC-002",
+        "WS07-SRC-003"
+      ],
+      "counterevidence": "Sparse late evidence makes the exact endpoint regional rather than singular.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    }
+  ]
 }
