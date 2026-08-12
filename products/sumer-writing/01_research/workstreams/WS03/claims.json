@@ -1,6 +1,70 @@
 {
   "schema_version": 1,
   "workstream": "WS03",
-  "status": "not_started",
-  "claims": []
+  "status": "complete",
+  "claims": [
+    {
+      "id": "WS03-CLM-001",
+      "statement": "Proto-cuneiform and mature cuneiform differ in ductus: early signs were largely drawn, while wedge impressions became systematic later.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS03-SRC-001",
+        "WS03-SRC-002"
+      ],
+      "counterevidence": "The ancestral system is conventionally still called proto-cuneiform.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS03-CLM-002",
+      "statement": "Tablet cases, subcases and spatial organization carried relations that later writing could encode more linguistically.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS03-SRC-002"
+      ],
+      "counterevidence": "Layout conventions varied and do not map cleanly to spoken syntax.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS03-CLM-003",
+      "statement": "Rare rebus/phonetic uses appear early, but consistent phonetic writing becomes evident mainly in the third millennium BCE.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS03-SRC-001",
+        "WS03-SRC-002"
+      ],
+      "counterevidence": "Dating and identification of individual early phonetic examples remain debated.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS03-CLM-004",
+      "statement": "Cuneiform developed as a logo-syllabic system with semantic and phonological values, not as a stage naturally progressing toward alphabetic writing.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS03-SRC-001",
+        "WS03-SRC-004"
+      ],
+      "counterevidence": "Later alphabetic cuneiform at Ugarit is a separate adaptation, not the endpoint of Sumerian evolution.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS03-CLM-005",
+      "statement": "Changes in metrology and sign standardization were pragmatic adaptations, not uniform replacement of old systems.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS03-SRC-003"
+      ],
+      "counterevidence": "Corpus gaps prevent a complete state-by-state reconstruction.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    }
+  ]
 }
