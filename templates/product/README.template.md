@@ -3,5 +3,4 @@
 Product workspace: `{{SLUG}}`  
 Khởi tạo: {{DATE}}
 
-Không viết trực tiếp một kịch bản dài ở đây. Bắt đầu từ `work-order.json`, đi qua từng gate trong `product.json`, và chỉ lắp bản delivery từ các chapter đã duyệt.
-
+Không viết trực tiếp một kịch bản dài ở đây. Agent bắt đầu từ `tasks/ACTIVE.json`; mỗi task có một context packet và write scope riêng.

@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "product": "sumer-writing",
+  "status": "seed_only",
   "claims": [
     {
       "id": "CLM-0001",

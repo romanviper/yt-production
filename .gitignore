@@ -2,5 +2,4 @@ __pycache__/
 *.py[cod]
 .DS_Store
 .venv/
-products/*/06_delivery/.build-tmp/
-
+products/*/05_delivery/.build-tmp/

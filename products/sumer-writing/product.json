@@ -4,7 +4,7 @@
   "working_title": "Chữ viết đã tạo ra nền văn minh Sumer như thế nào?",
   "language": "vi",
   "format": "long_form_history_documentary",
-  "status": "discovery",
+  "status": "research_planning",
   "created_at": "2026-08-12",
   "target": {
     "duration_minutes": {
@@ -57,14 +57,13 @@
       "differentiate_on": "Theo vòng đời của chữ viết như công nghệ–thiết chế thay vì kể tổng sử Sumer theo rise-and-fall."
     }
   ],
-  "gates": {
-    "G0": "ready_for_review",
-    "G1": "not_started",
-    "G2": "not_started",
-    "G3": "not_started",
-    "G4": "not_started",
-    "G5": "not_started",
-    "G6": "not_started",
-    "G7": "not_started"
+  "stages": {
+    "direction": "approved",
+    "research_plan": "draft",
+    "research": "not_started",
+    "outline": "not_started",
+    "sections": "not_started",
+    "integration": "not_started",
+    "delivery": "not_started"
   }
 }

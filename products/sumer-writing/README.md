@@ -3,5 +3,8 @@
 Product workspace: `sumer-writing`  
 Khởi tạo: 2026-08-12
 
-Không viết trực tiếp một kịch bản dài ở đây. Bắt đầu từ `work-order.json`, đi qua từng gate trong `product.json`, và chỉ lắp bản delivery từ các chapter đã duyệt.
+Subject đã khóa; research không được dùng để quyết định lại subject. Flow hiện tại:
 
+`research plan → workstreams → synthesis → outline 10 phần → viết/review từng phần → integration → assembly`
+
+Agent bắt đầu từ `tasks/ACTIVE.json`, không quét toàn bộ product.

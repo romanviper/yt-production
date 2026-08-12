@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate product contracts without third-party dependencies."""
+"""Validate product state, modular boundaries, and active context packets."""
 
 from __future__ import annotations
 
@@ -7,34 +7,15 @@ import argparse
 import json
 import re
 import sys
-from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 
-
-GATE_STATES = {
-    "not_started",
-    "in_progress",
-    "ready_for_review",
-    "approved",
-    "changes_requested",
-    "blocked",
-}
-EXPECTED_GATES = {f"G{number}" for number in range(8)}
-WORK_STATES = {"ready", "in_progress", "blocked", "review", "closed"}
-CHAPTER_STATES = {
-    "planned",
-    "brief_ready",
-    "drafting",
-    "review",
-    "approved",
-    "changes_requested",
-    "omitted",
-}
-CLAIM_STATES = {"open", "supported", "qualified", "rejected", "blocked"}
-CLAIM_TYPES = {"fact", "inference", "contested", "unknown"}
-CONFIDENCE_LEVELS = {"high", "medium", "low", "unrated"}
-SOURCE_STATES = {"discovered", "queued", "reviewed", "rejected", "inaccessible"}
+try:
+    from scripts.common import read_json
+    from scripts.task import verify_task
+except ModuleNotFoundError:
+    from common import read_json
+    from task import verify_task
 
 
 @dataclass(frozen=True)
@@ -44,238 +25,124 @@ class Issue:
     message: str
 
 
-def load_json(path: Path, issues: list[Issue]) -> dict:
+def safe_json(path: Path, issues: list[Issue]) -> dict:
     if not path.is_file():
-        issues.append(Issue("ERROR", str(path), "Thiếu file bắt buộc."))
+        issues.append(Issue("ERROR", str(path), "Missing required file."))
         return {}
     try:
-        value = json.loads(path.read_text(encoding="utf-8"))
-    except (json.JSONDecodeError, OSError) as exc:
-        issues.append(Issue("ERROR", str(path), f"JSON không hợp lệ: {exc}"))
+        return read_json(path)
+    except (json.JSONDecodeError, ValueError, OSError) as exc:
+        issues.append(Issue("ERROR", str(path), f"Invalid JSON: {exc}"))
         return {}
-    if not isinstance(value, dict):
-        issues.append(Issue("ERROR", str(path), "Root JSON phải là object."))
-        return {}
-    return value
-
-
-def require_keys(data: dict, keys: set[str], path: Path, issues: list[Issue]) -> None:
-    for key in sorted(keys - data.keys()):
-        issues.append(Issue("ERROR", str(path), f"Thiếu key `{key}`."))
-
-
-def detect_cycles(graph: dict[str, list[str]]) -> list[list[str]]:
-    cycles: list[list[str]] = []
-    active: list[str] = []
-    visited: set[str] = set()
-
-    def visit(node: str) -> None:
-        if node in active:
-            start = active.index(node)
-            cycles.append(active[start:] + [node])
-            return
-        if node in visited:
-            return
-        active.append(node)
-        for dependency in graph.get(node, []):
-            visit(dependency)
-        active.pop()
-        visited.add(node)
-
-    for node in graph:
-        visit(node)
-    return cycles
 
 
 def validate_product(product_dir: Path) -> list[Issue]:
     product_dir = product_dir.resolve()
     issues: list[Issue] = []
-
     product_path = product_dir / "product.json"
-    work_path = product_dir / "work-order.json"
+    brief_path = product_dir / "00_brief" / "product-brief.md"
+    benchmark_path = product_dir / "00_brief" / "benchmark.md"
+    plan_path = product_dir / "01_research" / "plan.json"
     source_path = product_dir / "01_research" / "source-index.json"
     claim_path = product_dir / "01_research" / "claim-ledger.json"
-    manifest_path = product_dir / "03_outline" / "manifest.json"
+    outline_path = product_dir / "02_outline" / "outline.json"
+    bible_path = product_dir / "02_outline" / "story-bible.md"
 
-    product = load_json(product_path, issues)
-    work = load_json(work_path, issues)
-    sources_doc = load_json(source_path, issues)
-    claims_doc = load_json(claim_path, issues)
-    manifest = load_json(manifest_path, issues)
+    product = safe_json(product_path, issues)
+    for path in [brief_path, benchmark_path, bible_path]:
+        if not path.is_file():
+            issues.append(Issue("ERROR", str(path), "Missing required artifact."))
+    if product and product.get("slug") != product_dir.name:
+        issues.append(Issue("ERROR", str(product_path), "Product slug must equal directory name."))
+    if product and "target" not in product:
+        issues.append(Issue("ERROR", str(product_path), "Missing target duration/wpm."))
 
-    if product:
-        require_keys(
-            product,
-            {"schema_version", "slug", "working_title", "language", "target", "gates"},
-            product_path,
-            issues,
-        )
-        if product.get("slug") != product_dir.name:
-            issues.append(Issue("ERROR", str(product_path), "`slug` phải trùng tên thư mục product."))
-        gates = product.get("gates", {})
-        if not isinstance(gates, dict):
-            issues.append(Issue("ERROR", str(product_path), "`gates` phải là object."))
-        else:
-            missing = EXPECTED_GATES - gates.keys()
-            extra = gates.keys() - EXPECTED_GATES
-            for gate in sorted(missing):
-                issues.append(Issue("ERROR", str(product_path), f"Thiếu gate {gate}."))
-            for gate in sorted(extra):
-                issues.append(Issue("WARNING", str(product_path), f"Gate không nhận diện: {gate}."))
-            for gate, state in gates.items():
-                if state not in GATE_STATES:
-                    issues.append(Issue("ERROR", str(product_path), f"{gate} có state không hợp lệ: {state}."))
+    plan = safe_json(plan_path, issues)
+    unit_ids: set[str] = set()
+    for index, unit in enumerate(plan.get("workstreams", [])):
+        unit_id = unit.get("id", "")
+        if not re.fullmatch(r"WS\d{2}", unit_id):
+            issues.append(Issue("ERROR", f"{plan_path}#{index}", f"Invalid workstream ID: {unit_id}"))
+        if unit_id in unit_ids:
+            issues.append(Issue("ERROR", f"{plan_path}#{index}", f"Duplicate workstream: {unit_id}"))
+        unit_ids.add(unit_id)
 
-    if work:
-        require_keys(
-            work,
-            {
-                "schema_version",
-                "id",
-                "product",
-                "task_type",
-                "state",
-                "objective",
-                "required_reads",
-                "allowed_write_paths",
-                "acceptance_criteria",
-                "blocked_by",
-            },
-            work_path,
-            issues,
-        )
-        if product and work.get("product") != product.get("slug"):
-            issues.append(Issue("ERROR", str(work_path), "Work order trỏ sai product."))
-        if work.get("state") not in WORK_STATES:
-            issues.append(Issue("ERROR", str(work_path), f"Work state không hợp lệ: {work.get('state')}."))
-        repo_root = product_dir.parents[1]
-        for required in work.get("required_reads", []):
-            candidate = repo_root / required
-            if not candidate.exists():
-                issues.append(Issue("ERROR", str(work_path), f"required_reads không tồn tại: {required}."))
-
-    sources = sources_doc.get("sources", []) if sources_doc else []
-    if not isinstance(sources, list):
-        issues.append(Issue("ERROR", str(source_path), "`sources` phải là array."))
-        sources = []
+    sources_doc = safe_json(source_path, issues)
+    claims_doc = safe_json(claim_path, issues)
     source_ids: set[str] = set()
-    for index, source in enumerate(sources):
-        location = f"{source_path}#sources[{index}]"
-        if not isinstance(source, dict):
-            issues.append(Issue("ERROR", location, "Source phải là object."))
-            continue
+    for index, source in enumerate(sources_doc.get("sources", [])):
         source_id = source.get("id", "")
         if not re.fullmatch(r"SRC-\d{4}", source_id):
-            issues.append(Issue("ERROR", location, f"Source ID không hợp lệ: {source_id!r}."))
+            issues.append(Issue("ERROR", f"{source_path}#{index}", f"Invalid source ID: {source_id}"))
         if source_id in source_ids:
-            issues.append(Issue("ERROR", location, f"Source ID trùng: {source_id}."))
+            issues.append(Issue("ERROR", f"{source_path}#{index}", f"Duplicate source ID: {source_id}"))
         source_ids.add(source_id)
-        if source.get("status") not in SOURCE_STATES:
-            issues.append(Issue("ERROR", location, f"Source status không hợp lệ: {source.get('status')}."))
         if source.get("status") == "reviewed" and not source.get("locators"):
-            issues.append(Issue("ERROR", location, "Source `reviewed` phải có locator."))
+            issues.append(Issue("ERROR", f"{source_path}#{index}", "Reviewed source requires locators."))
 
-    claims = claims_doc.get("claims", []) if claims_doc else []
-    if not isinstance(claims, list):
-        issues.append(Issue("ERROR", str(claim_path), "`claims` phải là array."))
-        claims = []
     claim_ids: set[str] = set()
-    claims_by_id: dict[str, dict] = {}
-    for index, claim in enumerate(claims):
-        location = f"{claim_path}#claims[{index}]"
-        if not isinstance(claim, dict):
-            issues.append(Issue("ERROR", location, "Claim phải là object."))
-            continue
+    for index, claim in enumerate(claims_doc.get("claims", [])):
         claim_id = claim.get("id", "")
         if not re.fullmatch(r"CLM-\d{4}", claim_id):
-            issues.append(Issue("ERROR", location, f"Claim ID không hợp lệ: {claim_id!r}."))
+            issues.append(Issue("ERROR", f"{claim_path}#{index}", f"Invalid claim ID: {claim_id}"))
         if claim_id in claim_ids:
-            issues.append(Issue("ERROR", location, f"Claim ID trùng: {claim_id}."))
+            issues.append(Issue("ERROR", f"{claim_path}#{index}", f"Duplicate claim ID: {claim_id}"))
         claim_ids.add(claim_id)
-        claims_by_id[claim_id] = claim
-        if claim.get("type") not in CLAIM_TYPES:
-            issues.append(Issue("ERROR", location, f"Claim type không hợp lệ: {claim.get('type')}."))
-        if claim.get("confidence") not in CONFIDENCE_LEVELS:
-            issues.append(Issue("ERROR", location, f"Confidence không hợp lệ: {claim.get('confidence')}."))
-        if claim.get("status") not in CLAIM_STATES:
-            issues.append(Issue("ERROR", location, f"Claim status không hợp lệ: {claim.get('status')}."))
         for source_id in claim.get("sources", []):
             if source_id not in source_ids:
-                issues.append(Issue("ERROR", location, f"Claim tham chiếu source chưa tồn tại: {source_id}."))
+                issues.append(Issue("ERROR", f"{claim_path}#{index}", f"Missing source: {source_id}"))
         if claim.get("status") in {"supported", "qualified"} and not claim.get("sources"):
-            issues.append(Issue("ERROR", location, "Claim đã support/qualify phải có source."))
+            issues.append(Issue("ERROR", f"{claim_path}#{index}", "Supported/qualified claim requires sources."))
 
-    chapters = manifest.get("chapters", []) if manifest else []
-    if product and manifest and manifest.get("product") != product.get("slug"):
-        issues.append(Issue("ERROR", str(manifest_path), "Manifest trỏ sai product."))
-    if not isinstance(chapters, list):
-        issues.append(Issue("ERROR", str(manifest_path), "`chapters` phải là array."))
-        chapters = []
-
-    chapter_ids: set[str] = set()
-    graph: dict[str, list[str]] = {}
-    min_words = 0
-    max_words = 0
-    for index, chapter in enumerate(chapters):
-        location = f"{manifest_path}#chapters[{index}]"
-        if not isinstance(chapter, dict):
-            issues.append(Issue("ERROR", location, "Chapter phải là object."))
-            continue
-        chapter_id = chapter.get("id", "")
-        if not re.fullmatch(r"CH\d{2}", chapter_id):
-            issues.append(Issue("ERROR", location, f"Chapter ID không hợp lệ: {chapter_id!r}."))
-        if chapter_id in chapter_ids:
-            issues.append(Issue("ERROR", location, f"Chapter ID trùng: {chapter_id}."))
-        chapter_ids.add(chapter_id)
-        graph[chapter_id] = list(chapter.get("depends_on", []))
-        if chapter.get("status") not in CHAPTER_STATES:
-            issues.append(Issue("ERROR", location, f"Chapter status không hợp lệ: {chapter.get('status')}."))
-        brief = chapter.get("brief")
-        if not brief or not (product_dir / brief).is_file():
-            issues.append(Issue("ERROR", location, f"Thiếu chapter brief: {brief}."))
-        draft = chapter.get("draft")
-        if chapter.get("status") in {"drafting", "review", "approved", "changes_requested"}:
-            if not draft or not (product_dir / draft).is_file():
-                issues.append(Issue("ERROR", location, f"Trạng thái {chapter.get('status')} cần draft: {draft}."))
-        for claim_id in chapter.get("claims", []):
+    outline = safe_json(outline_path, issues)
+    section_ids: set[str] = set()
+    orders: set[int] = set()
+    for index, section in enumerate(outline.get("sections", [])):
+        section_id = section.get("id", "")
+        if not re.fullmatch(r"P\d{2}", section_id):
+            issues.append(Issue("ERROR", f"{outline_path}#{index}", f"Invalid section ID: {section_id}"))
+        if section_id in section_ids:
+            issues.append(Issue("ERROR", f"{outline_path}#{index}", f"Duplicate section: {section_id}"))
+        section_ids.add(section_id)
+        order = section.get("order")
+        if not isinstance(order, int) or order < 1 or order in orders:
+            issues.append(Issue("ERROR", f"{outline_path}#{index}", f"Invalid/duplicate order: {order}"))
+        orders.add(order)
+        for claim_id in section.get("claim_ids", []):
             if claim_id not in claim_ids:
-                issues.append(Issue("ERROR", location, f"Chapter tham chiếu claim chưa tồn tại: {claim_id}."))
-            elif chapter.get("status") in {"review", "approved"} and claims_by_id[claim_id].get("status") in {"open", "blocked", "rejected"}:
-                issues.append(Issue("ERROR", location, f"Chapter {chapter.get('status')} dùng claim chưa sẵn sàng: {claim_id}."))
-        budget = chapter.get("target_words", {})
-        try:
-            low, high = int(budget.get("min", 0)), int(budget.get("max", 0))
-            if low <= 0 or high < low:
-                raise ValueError
-            min_words += low
-            max_words += high
-        except (TypeError, ValueError):
-            issues.append(Issue("ERROR", location, "`target_words` cần min > 0 và max >= min."))
+                issues.append(Issue("ERROR", f"{outline_path}#{index}", f"Unknown claim: {claim_id}"))
+        for dependency in section.get("dependencies", []):
+            # Forward references are checked after collection below.
+            if not re.fullmatch(r"P\d{2}", dependency):
+                issues.append(Issue("ERROR", f"{outline_path}#{index}", f"Invalid dependency: {dependency}"))
+    for index, section in enumerate(outline.get("sections", [])):
+        for dependency in section.get("dependencies", []):
+            if dependency not in section_ids:
+                issues.append(Issue("ERROR", f"{outline_path}#{index}", f"Missing dependency: {dependency}"))
 
-    for chapter_id, dependencies in graph.items():
-        for dependency in dependencies:
-            if dependency not in chapter_ids:
-                issues.append(Issue("ERROR", str(manifest_path), f"{chapter_id} phụ thuộc chapter chưa tồn tại: {dependency}."))
-    for cycle in detect_cycles(graph):
-        issues.append(Issue("ERROR", str(manifest_path), "Dependency cycle: " + " -> ".join(cycle)))
+    section_root = product_dir / "03_sections"
+    if outline.get("status") == "approved":
+        for section_id in section_ids:
+            root = section_root / section_id
+            for name in ["section.json", "brief.md", "evidence-pack.json", "continuity-in.md"]:
+                if not (root / name).is_file():
+                    issues.append(Issue("ERROR", str(root / name), "Approved outline requires materialized section."))
+            state_path = root / "section.json"
+            if state_path.is_file():
+                state = safe_json(state_path, issues)
+                if state.get("status") == "approved" and state.get("human_approved") is not True:
+                    issues.append(Issue("ERROR", str(state_path), "Approved section requires human_approved=true."))
 
-    if product and chapters:
-        target = product.get("target", {})
-        duration = target.get("duration_minutes", {})
-        wpm = target.get("narration_wpm", 0)
-        try:
-            expected_min = int(duration["min"]) * int(wpm)
-            expected_max = int(duration["max"]) * int(wpm)
-            if min_words > expected_max or max_words < expected_min:
-                issues.append(
-                    Issue(
-                        "WARNING",
-                        str(manifest_path),
-                        f"Word budget {min_words}–{max_words} không giao với target {expected_min}–{expected_max}.",
-                    )
-                )
-        except (KeyError, TypeError, ValueError):
-            issues.append(Issue("ERROR", str(product_path), "Target duration/narration_wpm không hợp lệ."))
+    active_path = product_dir / "tasks" / "ACTIVE.json"
+    if active_path.is_file():
+        active = safe_json(active_path, issues)
+        task_id = active.get("task_id")
+        if task_id:
+            try:
+                for message in verify_task(product_dir, task_id):
+                    issues.append(Issue("ERROR", str(active_path), message))
+            except (FileNotFoundError, KeyError, json.JSONDecodeError, ValueError) as exc:
+                issues.append(Issue("ERROR", str(active_path), f"Invalid active task: {exc}"))
 
     return issues
 
@@ -284,22 +151,20 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("products", nargs="+", type=Path)
     args = parser.parse_args()
-    error_count = 0
+    errors = 0
     for product in args.products:
         issues = validate_product(product)
         print(f"\n[{product}]")
         if not issues:
             print("OK")
-            continue
         for issue in issues:
             print(f"{issue.level}: {issue.location}: {issue.message}")
-            error_count += issue.level == "ERROR"
-    if error_count:
-        print(f"\nValidation failed with {error_count} error(s).", file=sys.stderr)
+            errors += issue.level == "ERROR"
+    if errors:
+        print(f"\nValidation failed with {errors} error(s).", file=sys.stderr)
         return 1
     return 0
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

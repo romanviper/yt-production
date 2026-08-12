@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "status": "draft",
+  "central_research_question": "Writing ở miền nam Mesopotamia đã hình thành, trở thành hạ tầng xã hội, biến đổi và để lại afterlife như thế nào?",
+  "hypotheses_to_test": [
+    "Administrative scale là động lực trung tâm nhưng không nhất thiết là nguyên nhân duy nhất của writing sớm.",
+    "Writing không chỉ phản ánh thiết chế mà còn thay đổi capacity và distribution of power.",
+    "Script, language và scribal practice có lifecycle khác nhau.",
+    "Legacy có thể được chứng minh qua persistence/adaptation/recovery mà không cần tuyên bố lineage trực tiếp tới mọi writing hiện đại."
+  ],
+  "workstreams": [
+    {
+      "id": "WS01",
+      "title": "Definition, chronology and attribution",
+      "question": "Thế nào được tính là writing, các mốc earliest evidence là gì, và attribution cho Sumer/Uruk chắc đến đâu?",
+      "in_scope": "Definitions, proto-cuneiform threshold, dating, archaeological context, comparative attribution.",
+      "out_of_scope": "Full development of later genres or scribal institutions.",
+      "required_evidence": ["Primary archaeological/corpus evidence", "Recent scholarly synthesis", "Competing definitions and chronologies"],
+      "completion_criteria": ["Qualify first/invented claim", "Produce chronology ranges", "List unresolved attribution issues"]
+    },
+    {
+      "id": "WS02",
+      "title": "Prehistory and formation mechanisms",
+      "question": "Tokens, seals, counting and urban/institutional pressures relate to writing formation by what mechanisms?",
+      "in_scope": "Pre-writing information practices, Uruk scale, accounting hypothesis, alternative functions.",
+      "out_of_scope": "Later literature and final decline.",
+      "required_evidence": ["Material sequence and provenance", "Administration hypothesis", "Critiques/non-linear models"],
+      "completion_criteria": ["Test token continuity", "Separate evidence from inference", "Identify causal direction limits"]
+    },
+    {
+      "id": "WS03",
+      "title": "Sign system and language transformation",
+      "question": "Hệ thống dấu hiệu thay đổi về medium, form và relation to language như thế nào?",
+      "in_scope": "Sign forms, numerical/metrological systems, phonetic/rebus use, cuneiform technique.",
+      "out_of_scope": "Full political history and modern decipherment.",
+      "required_evidence": ["Tablet/corpus examples", "Palaeographic/linguistic scholarship", "Uncertainty over language encoding"],
+      "completion_criteria": ["Avoid pictograph-to-alphabet teleology", "Explain state changes", "Separate script from language"]
+    },
+    {
+      "id": "WS04",
+      "title": "Scribes, institutions and access",
+      "question": "Ai sản xuất và học writing, trong những thiết chế nào, và access thay đổi theo thời kỳ ra sao?",
+      "in_scope": "Training, labor, workplace, identity, gender/class/access and institutional sponsorship.",
+      "out_of_scope": "Claims about median experience without evidence.",
+      "required_evidence": ["School/practice texts with caveats", "Administrative archives", "Social-history scholarship"],
+      "completion_criteria": ["Map known/unknown users", "Avoid modern literacy categories", "Identify human-scale anchors"]
+    },
+    {
+      "id": "WS05",
+      "title": "Functional expansion and human voices",
+      "question": "Writing mở từ các record sớm sang những domain nào, khi nào, và primary voices nào đại diện được?",
+      "in_scope": "Administrative, lexical, legal/normative, epistolary, literary/religious uses with chronology.",
+      "out_of_scope": "Genre catalogue without causal implication.",
+      "required_evidence": ["Primary texts/translations", "Genre chronology", "Representative-use critique"],
+      "completion_criteria": ["Select evidence-backed voices", "Explain functional turns", "Flag translation/rights issues"]
+    },
+    {
+      "id": "WS06",
+      "title": "Power, consequences and archive bias",
+      "question": "Recorded information changed institutional capacity and power in what demonstrable ways, and what does the archive hide?",
+      "in_scope": "Labor, obligation, ownership, law/norm, royal memory, erasure, selection and absence.",
+      "out_of_scope": "Technology-determinist claims without causal evidence.",
+      "required_evidence": ["Case studies linking record to action", "Archive theory", "Counterexamples/limits"],
+      "completion_criteria": ["Distinguish tool/user/institution agency", "Identify distributional effects", "Map survival bias"]
+    },
+    {
+      "id": "WS07",
+      "title": "Spread, adaptation and multilingual afterlife",
+      "question": "Writing practice moved across languages, regions and political systems through what channels and transformations?",
+      "in_scope": "Adaptation cases, training/diplomacy/prestige/administration, Sumerian as learned language.",
+      "out_of_scope": "Unbounded global history of writing.",
+      "required_evidence": ["Comparative script/language cases", "Transmission institutions", "Chronology"],
+      "completion_criteria": ["Show mechanisms of spread", "Separate script/language survival", "Identify transformation costs"]
+    },
+    {
+      "id": "WS08",
+      "title": "Decline, rediscovery and bounded legacy",
+      "question": "Cuneiform practice declined, disappeared and was recovered under what conditions, and which legacy claims have real links?",
+      "in_scope": "Late use, ecosystem decline, loss, excavation/decipherment, material and conceptual afterlife.",
+      "out_of_scope": "Direct Sumer-to-smartphone lineage without transmission evidence.",
+      "required_evidence": ["Late dated records", "Histories of decipherment", "Transmission-vs-analogy analysis"],
+      "completion_criteria": ["Avoid monocausal ending", "Find opening/ending anchors", "Bound legacy claim"]
+    }
+  ],
+  "coverage_matrix": {
+    "pressure_and_formation": ["WS01", "WS02"],
+    "technical_transformation": ["WS03"],
+    "adoption_and_people": ["WS04"],
+    "expansion": ["WS05"],
+    "consequence_and_conflict": ["WS06"],
+    "adaptation": ["WS07"],
+    "decline_and_legacy": ["WS08"]
+  },
+  "synthesis_questions": [
+    "Writing là cause, capacity, co-development hay record của social complexity ở từng phase?",
+    "Object nào giữ continuity xuyên các lần đổi medium, language, user và institution?",
+    "Human voices nào đủ representative và có translation/provenance tốt?",
+    "Opening và ending nào tạo payoff mà không lặp FoC?"
+  ]
+}
+

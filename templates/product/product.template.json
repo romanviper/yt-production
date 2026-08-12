@@ -4,7 +4,7 @@
   "working_title": "{{TITLE}}",
   "language": "vi",
   "format": "long_form_history_documentary",
-  "status": "discovery",
+  "status": "research_planning",
   "created_at": "{{DATE}}",
   "target": {
     "duration_minutes": {
@@ -19,15 +19,13 @@
     "out": []
   },
   "benchmarks": [],
-  "gates": {
-    "G0": "in_progress",
-    "G1": "not_started",
-    "G2": "not_started",
-    "G3": "not_started",
-    "G4": "not_started",
-    "G5": "not_started",
-    "G6": "not_started",
-    "G7": "not_started"
+  "stages": {
+    "direction": "draft",
+    "research_plan": "not_started",
+    "research": "not_started",
+    "outline": "not_started",
+    "sections": "not_started",
+    "integration": "not_started",
+    "delivery": "not_started"
   }
 }
-

@@ -1,0 +1,250 @@
+{
+  "schema_version": 1,
+  "operations": {
+    "research_plan": {
+      "target_kind": "product",
+      "max_context_tokens": 18000,
+      "instruction_files": [
+        "system/core/invariants.md",
+        "system/standards/channel.md",
+        "system/standards/evidence.md",
+        "system/operations/research-plan.md"
+      ],
+      "required_inputs": [
+        "00_brief/product-brief.md",
+        "00_brief/benchmark.md"
+      ],
+      "optional_inputs": [],
+      "outputs": [
+        "01_research/plan.json"
+      ],
+      "acceptance": [
+        "Plan chia subject thành workstream không trùng responsibility.",
+        "Mỗi workstream có question, boundary và completion criteria.",
+        "Plan test causal hypotheses nhưng không quyết định lại subject.",
+        "Không viết research findings, outline hoặc narration."
+      ]
+    },
+    "research_workstream": {
+      "target_kind": "unit",
+      "max_context_tokens": 20000,
+      "instruction_files": [
+        "system/core/invariants.md",
+        "system/standards/evidence.md",
+        "system/operations/research-workstream.md"
+      ],
+      "required_inputs": [
+        "00_brief/product-brief.md",
+        "01_research/workstreams/{unit}/brief.md"
+      ],
+      "optional_inputs": [],
+      "outputs": [
+        "01_research/workstreams/{unit}/sources.json",
+        "01_research/workstreams/{unit}/claims.json",
+        "01_research/workstreams/{unit}/synthesis.md"
+      ],
+      "acceptance": [
+        "Chỉ trả lời question của workstream hiện tại.",
+        "Source có locator, authority và limitation.",
+        "Claim tách fact/inference/contested/unknown và có counterevidence.",
+        "Synthesis đủ dùng cho task sau mà không cần raw browsing context."
+      ]
+    },
+    "research_synthesis": {
+      "target_kind": "product",
+      "max_context_tokens": 32000,
+      "instruction_files": [
+        "system/core/invariants.md",
+        "system/standards/evidence.md",
+        "system/operations/research-synthesis.md"
+      ],
+      "required_inputs": [
+        "00_brief/product-brief.md",
+        "01_research/plan.json",
+        "01_research/workstreams/*/synthesis.md",
+        "01_research/workstreams/*/sources.json",
+        "01_research/workstreams/*/claims.json"
+      ],
+      "optional_inputs": [],
+      "outputs": [
+        "01_research/source-index.json",
+        "01_research/claim-ledger.json",
+        "01_research/research-synthesis.md"
+      ],
+      "acceptance": [
+        "Không mất contradiction hoặc unknown giữa các workstream.",
+        "Deduplicate source/claim và giữ provenance.",
+        "Synthesis tổ chức theo causal questions, không theo thứ tự nguồn.",
+        "Không viết outline hoặc narration."
+      ]
+    },
+    "outline": {
+      "target_kind": "product",
+      "max_context_tokens": 30000,
+      "instruction_files": [
+        "system/core/invariants.md",
+        "system/standards/channel.md",
+        "system/standards/evidence.md",
+        "system/standards/story.md",
+        "system/operations/outline.md"
+      ],
+      "required_inputs": [
+        "00_brief/product-brief.md",
+        "00_brief/benchmark.md",
+        "01_research/research-synthesis.md",
+        "01_research/claim-ledger.json"
+      ],
+      "optional_inputs": [],
+      "outputs": [
+        "02_outline/outline.json",
+        "02_outline/story-bible.md"
+      ],
+      "acceptance": [
+        "Outline có đúng số section đã chọn và ID ổn định.",
+        "Mỗi section có một narrative job, state change, claim set và word budget.",
+        "Tổng arc trả North Star và khác biệt rõ với benchmark.",
+        "Story bible đủ continuity nhưng nằm trong giới hạn compact."
+      ]
+    },
+    "draft_section": {
+      "target_kind": "section",
+      "include_dependency_handoffs": true,
+      "max_context_tokens": 18000,
+      "instruction_files": [
+        "system/core/invariants.md",
+        "system/standards/story.md",
+        "system/standards/writing-vi.md",
+        "system/operations/draft-section.md"
+      ],
+      "required_inputs": [
+        "02_outline/story-bible.md",
+        "03_sections/{section}/section.json",
+        "03_sections/{section}/brief.md",
+        "03_sections/{section}/evidence-pack.json",
+        "03_sections/{section}/continuity-in.md"
+      ],
+      "optional_inputs": [],
+      "outputs": [
+        "03_sections/{section}/draft.md",
+        "03_sections/{section}/handoff.md"
+      ],
+      "acceptance": [
+        "Chỉ viết section được chỉ định.",
+        "Mọi substantive claim nằm trong evidence pack.",
+        "Entry/exit state và bridge đúng brief.",
+        "Handoff tóm tắt continuity, setup/payoff và không thay thế draft."
+      ]
+    },
+    "review_section": {
+      "target_kind": "section",
+      "include_dependency_handoffs": true,
+      "max_context_tokens": 22000,
+      "instruction_files": [
+        "system/core/invariants.md",
+        "system/standards/evidence.md",
+        "system/standards/review.md",
+        "system/operations/review-section.md"
+      ],
+      "required_inputs": [
+        "02_outline/story-bible.md",
+        "03_sections/{section}/section.json",
+        "03_sections/{section}/brief.md",
+        "03_sections/{section}/evidence-pack.json",
+        "03_sections/{section}/draft.md"
+      ],
+      "optional_inputs": [],
+      "outputs": [
+        "03_sections/{section}/review.md"
+      ],
+      "acceptance": [
+        "Review chẩn đoán trước khi đề xuất sửa.",
+        "Mỗi issue có location, impact, scope và acceptance test.",
+        "Không rewrite draft và không tự approve."
+      ]
+    },
+    "revise_section": {
+      "target_kind": "section",
+      "include_dependency_handoffs": true,
+      "max_context_tokens": 24000,
+      "instruction_files": [
+        "system/core/invariants.md",
+        "system/standards/evidence.md",
+        "system/standards/writing-vi.md",
+        "system/operations/revise-section.md"
+      ],
+      "required_inputs": [
+        "02_outline/story-bible.md",
+        "03_sections/{section}/brief.md",
+        "03_sections/{section}/evidence-pack.json",
+        "03_sections/{section}/draft.md",
+        "03_sections/{section}/review.md",
+        "03_sections/{section}/change-request.md"
+      ],
+      "optional_inputs": [],
+      "outputs": [
+        "03_sections/{section}/draft.md",
+        "03_sections/{section}/handoff.md",
+        "03_sections/{section}/revision-log.md"
+      ],
+      "acceptance": [
+        "Chỉ sửa issue có trong change request.",
+        "Giữ invariant và claim support không liên quan.",
+        "Revision log nêu patch scope và test đã vượt.",
+        "Không sửa section khác."
+      ]
+    },
+    "integration_review": {
+      "target_kind": "product",
+      "max_context_tokens": 30000,
+      "instruction_files": [
+        "system/core/invariants.md",
+        "system/standards/story.md",
+        "system/standards/review.md",
+        "system/operations/integration-review.md"
+      ],
+      "required_inputs": [
+        "02_outline/outline.json",
+        "02_outline/story-bible.md",
+        "03_sections/*/section.json",
+        "03_sections/*/handoff.md"
+      ],
+      "optional_inputs": [
+        "03_sections/*/review.md"
+      ],
+      "outputs": [
+        "04_integration/review.md",
+        "04_integration/change-map.json"
+      ],
+      "acceptance": [
+        "Audit continuity qua handoff trước khi mở full drafts.",
+        "Mỗi issue chỉ rõ section bị ảnh hưởng và revision class.",
+        "Không rewrite hoặc assemble script."
+      ]
+    },
+    "final_audit": {
+      "target_kind": "product",
+      "max_context_tokens": 100000,
+      "instruction_files": [
+        "system/core/invariants.md",
+        "system/standards/evidence.md",
+        "system/standards/story.md",
+        "system/standards/review.md",
+        "system/operations/final-audit.md"
+      ],
+      "required_inputs": [
+        "02_outline/story-bible.md",
+        "05_delivery/script.md",
+        "05_delivery/assembly-manifest.json"
+      ],
+      "optional_inputs": [],
+      "outputs": [
+        "04_integration/final-audit.md"
+      ],
+      "acceptance": [
+        "Audit full script một lần nhưng chỉ tạo report.",
+        "Không sửa source section hoặc delivery.",
+        "Issue được route về targeted revise_section."
+      ]
+    }
+  }
+}

@@ -5,81 +5,301 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.assemble import assemble_product, check_freshness
+from scripts.assemble import assemble_product
+from scripts.approval import approve_section, request_changes
+from scripts.context_packet import compile_packet
 from scripts.impact import calculate_impact
+from scripts.materialize_research import materialize as materialize_research
+from scripts.materialize_sections import materialize as materialize_sections
 from scripts.new_product import DEFAULT_TEMPLATE_ROOT, create_product
+from scripts.task import create_task, submit_task, verify_task
 from scripts.validate import validate_product
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
-class ProductToolingTests(unittest.TestCase):
-    def test_pilot_validates(self) -> None:
+def write_json(path: Path, value: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def make_approved_outline(product: Path, section_count: int = 10) -> None:
+    source = {
+        "id": "SRC-0001",
+        "title": "Source",
+        "status": "reviewed",
+        "locators": ["p. 1"],
+        "limitations": "Fixture only",
+    }
+    claim = {
+        "id": "CLM-0001",
+        "statement": "Supported fixture claim.",
+        "type": "fact",
+        "confidence": "high",
+        "status": "supported",
+        "sources": ["SRC-0001"],
+        "counterevidence": "None in fixture",
+    }
+    write_json(product / "01_research" / "source-index.json", {"schema_version": 1, "product": product.name, "status": "complete", "sources": [source]})
+    write_json(product / "01_research" / "claim-ledger.json", {"schema_version": 1, "product": product.name, "status": "complete", "claims": [claim]})
+    sections = []
+    for number in range(1, section_count + 1):
+        section_id = f"P{number:02d}"
+        sections.append(
+            {
+                "id": section_id,
+                "order": number,
+                "title": f"Part {number}",
+                "narrative_job": f"Move story state {number - 1} to {number}.",
+                "entry_state": f"State {number - 1}",
+                "exit_state": f"State {number}",
+                "question_payoff": f"Resolve turn {number}.",
+                "claim_ids": ["CLM-0001"],
+                "dependencies": [f"P{number - 1:02d}"] if number > 1 else [],
+                "anchor_requirements": "Evidence-backed object.",
+                "bridge_in": "Prior state.",
+                "bridge_out": "Next state.",
+                "boundary": "Do not explain the next part.",
+                "risk": "Overclaim.",
+                "target_words": {"min": 700, "max": 1200},
+            }
+        )
+    write_json(
+        product / "02_outline" / "outline.json",
+        {"schema_version": 1, "product": product.name, "status": "approved", "section_count_target": section_count, "sections": sections},
+    )
+    (product / "02_outline" / "story-bible.md").write_text(
+        "# Story Bible\n\nPremise, causal spine, terminology and global exclusions.\n",
+        encoding="utf-8",
+    )
+
+
+class ModularProductionTests(unittest.TestCase):
+    def test_pilot_validates_before_research(self) -> None:
         issues = validate_product(REPO_ROOT / "products" / "sumer-writing")
         errors = [issue for issue in issues if issue.level == "ERROR"]
         self.assertEqual([], errors, "\n".join(str(issue) for issue in errors))
 
-    def test_new_product_renders_template(self) -> None:
+    def test_new_product_has_operation_boundaries(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
-            root = Path(temp) / "products"
-            product = create_product(root, "demo-history", "Demo History", DEFAULT_TEMPLATE_ROOT)
-            data = json.loads((product / "product.json").read_text(encoding="utf-8"))
-            self.assertEqual("demo-history", data["slug"])
-            self.assertEqual("Demo History", data["working_title"])
-            self.assertTrue((product / "03_outline" / "chapters" / "CH01-opening.md").is_file())
+            product = create_product(Path(temp) / "products", "demo-history", "Demo History", DEFAULT_TEMPLATE_ROOT)
+            expected = [
+                "00_brief/product-brief.md",
+                "01_research/plan.json",
+                "01_research/research-synthesis.md",
+                "02_outline/outline.json",
+                "02_outline/story-bible.md",
+                "03_sections/README.md",
+                "04_integration/README.md",
+                "05_delivery/README.md",
+            ]
+            for relative in expected:
+                self.assertTrue((product / relative).is_file(), relative)
+            self.assertFalse((product / "work-order.json").exists())
 
-    def test_assembly_tracks_staleness(self) -> None:
+    def test_research_workstreams_are_isolated(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
-            product = Path(temp) / "products" / "demo"
-            chapter_dir = product / "04_script" / "chapters"
-            outline_dir = product / "03_outline"
-            chapter_dir.mkdir(parents=True)
-            outline_dir.mkdir(parents=True)
-            (product / "product.json").write_text(
-                json.dumps(
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            plan = json.loads((REPO_ROOT / "products" / "sumer-writing" / "01_research" / "plan.json").read_text(encoding="utf-8"))
+            plan["status"] = "approved"
+            write_json(product / "01_research" / "plan.json", plan)
+            materialize_research(product)
+            packet, context = compile_packet(product, "research_workstream", "T0001", unit="WS02")
+            self.assertIn("01_research/workstreams/WS02/brief.md", context)
+            self.assertNotIn("01_research/workstreams/WS01/brief.md", context)
+            self.assertNotIn("01_research/workstreams/WS03/brief.md", context)
+            self.assertEqual(3, len(packet["allowed_write_paths"]) - 1)
+
+    def test_research_synthesis_requires_every_declared_workstream(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            plan = {
+                "schema_version": 1,
+                "status": "approved",
+                "central_research_question": "How did it change?",
+                "hypotheses_to_test": [],
+                "workstreams": [
                     {
-                        "slug": "demo",
-                        "working_title": "Demo",
-                        "target": {"narration_wpm": 140},
+                        "id": unit,
+                        "title": unit,
+                        "question": f"Question {unit}",
+                        "in_scope": "One responsibility.",
+                        "out_of_scope": "The other responsibility.",
+                        "required_evidence": ["Primary source"],
+                        "completion_criteria": ["Answer the question"],
                     }
-                ),
-                encoding="utf-8",
+                    for unit in ["WS01", "WS02"]
+                ],
+                "coverage_matrix": {},
+                "synthesis_questions": [],
+            }
+            write_json(product / "01_research" / "plan.json", plan)
+            materialize_research(product)
+            for unit in ["WS01"]:
+                root = product / "01_research" / "workstreams" / unit
+                write_json(root / "sources.json", {"schema_version": 1, "workstream": unit, "status": "complete", "sources": []})
+                write_json(root / "claims.json", {"schema_version": 1, "workstream": unit, "status": "complete", "claims": []})
+                (root / "synthesis.md").write_text(f"# {unit}\n\nStatus: complete\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "Incomplete workstream ledgers: WS02"):
+                compile_packet(product, "research_synthesis", "T0001")
+
+    def test_ten_part_draft_packet_contains_only_selected_part(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 10)
+            materialize_sections(product)
+            packet, context = compile_packet(product, "draft_section", "T0001", section="P06")
+            self.assertIn("03_sections/P06/brief.md", context)
+            self.assertIn("03_sections/P06/evidence-pack.json", context)
+            self.assertNotIn("03_sections/P05/brief.md", context)
+            self.assertNotIn("03_sections/P07/brief.md", context)
+            self.assertEqual(
+                ["03_sections/P06/draft.md", "03_sections/P06/handoff.md", "tasks/T0001/report.md"],
+                packet["allowed_write_paths"],
             )
-            (outline_dir / "manifest.json").write_text(
-                json.dumps(
-                    {
-                        "chapters": [
-                            {
-                                "id": "CH01",
-                                "title": "Opening",
-                                "status": "approved",
-                                "draft": "04_script/chapters/CH01-opening.md",
-                            }
-                        ]
-                    }
-                ),
-                encoding="utf-8",
+            self.assertLess(packet["estimated_context_tokens"], packet["max_context_tokens"])
+
+    def test_draft_packet_adds_only_approved_dependency_handoff(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 3)
+            materialize_sections(product)
+            prior = product / "03_sections" / "P01"
+            (prior / "handoff.md").write_text("P01_APPROVED_HANDOFF", encoding="utf-8")
+            prior_state = json.loads((prior / "section.json").read_text(encoding="utf-8"))
+            prior_state.update({"status": "approved", "human_approved": True})
+            write_json(prior / "section.json", prior_state)
+            future = product / "03_sections" / "P03"
+            (future / "handoff.md").write_text("P03_UNAPPROVED_HANDOFF", encoding="utf-8")
+            _, context = compile_packet(product, "draft_section", "T0001", section="P02")
+            self.assertIn("P01_APPROVED_HANDOFF", context)
+            self.assertNotIn("P03_UNAPPROVED_HANDOFF", context)
+
+    def test_integration_review_requires_all_sections_human_approved(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 2)
+            materialize_sections(product)
+            with self.assertRaisesRegex(ValueError, "human-approved section: P01"):
+                compile_packet(product, "integration_review", "T0001")
+            for section_id in ["P01", "P02"]:
+                root = product / "03_sections" / section_id
+                (root / "handoff.md").write_text(f"Handoff {section_id}.", encoding="utf-8")
+                state = json.loads((root / "section.json").read_text(encoding="utf-8"))
+                state.update({"status": "approved", "human_approved": True})
+                write_json(root / "section.json", state)
+            packet, context = compile_packet(product, "integration_review", "T0002")
+            self.assertIn("03_sections/P01/handoff.md", context)
+            self.assertIn("03_sections/P02/handoff.md", context)
+            self.assertEqual(
+                ["04_integration/review.md", "04_integration/change-map.json", "tasks/T0002/report.md"],
+                packet["allowed_write_paths"],
             )
-            draft = chapter_dir / "CH01-opening.md"
-            draft.write_text("Một chapter đã được duyệt.", encoding="utf-8")
+
+    def test_task_detects_stale_input(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            state = json.loads((product / "product.json").read_text(encoding="utf-8"))
+            state["stages"]["direction"] = "approved"
+            write_json(product / "product.json", state)
+            work = create_task(product, "research_plan", None, None, False)
+            self.assertEqual([], verify_task(product, work["id"]))
+            with (product / "00_brief" / "product-brief.md").open("a", encoding="utf-8") as handle:
+                handle.write("\nChanged after packet creation.\n")
+            self.assertTrue(any("stale input" in item for item in verify_task(product, work["id"])))
+
+    def test_task_submission_requires_changed_artifact_and_report(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            state = json.loads((product / "product.json").read_text(encoding="utf-8"))
+            state["stages"]["direction"] = "approved"
+            write_json(product / "product.json", state)
+            work = create_task(product, "research_plan", None, None, False)
+            self.assertTrue(any("missing output" in item or "no declared" in item for item in submit_task(product, work["id"])))
+            plan_path = product / "01_research" / "plan.json"
+            plan = json.loads(plan_path.read_text(encoding="utf-8"))
+            plan["central_research_question"] = "A real changed question"
+            plan["workstreams"] = [
+                {
+                    "id": "WS01",
+                    "title": "Formation",
+                    "question": "How did the system form?",
+                    "in_scope": "Formation mechanisms.",
+                    "out_of_scope": "Later legacy.",
+                    "required_evidence": ["Primary evidence", "Scholarly synthesis"],
+                    "completion_criteria": ["Sources and claims are explicitly scoped."],
+                }
+            ]
+            write_json(plan_path, plan)
+            report = product / "tasks" / work["id"] / "report.md"
+            report.write_text("Completed: research plan.\n", encoding="utf-8")
+            self.assertEqual([], submit_task(product, work["id"]))
+            submitted = json.loads((product / "tasks" / work["id"] / "work-order.json").read_text(encoding="utf-8"))
+            self.assertEqual("ready_for_review", submitted["state"])
+
+    def test_review_change_request_and_revision_stay_in_one_section(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 10)
+            materialize_sections(product)
+            root = product / "03_sections" / "P06"
+            (root / "draft.md").write_text("Draft P06.", encoding="utf-8")
+            (root / "handoff.md").write_text("Exit state P06.", encoding="utf-8")
+            state = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            state["status"] = "ready_for_review"
+            write_json(root / "section.json", state)
+            review_packet, review_context = compile_packet(product, "review_section", "T0001", section="P06")
+            self.assertEqual(["03_sections/P06/review.md", "tasks/T0001/report.md"], review_packet["allowed_write_paths"])
+            self.assertNotIn("03_sections/P05/draft.md", review_context)
+            request_changes(product, "P06", "Fix ISSUE-01 only; preserve the entry scene.")
+            (root / "review.md").write_text("ISSUE-01: causal link is unsupported.", encoding="utf-8")
+            revision_packet, revision_context = compile_packet(product, "revise_section", "T0002", section="P06")
+            self.assertIn("Fix ISSUE-01 only", revision_context)
+            self.assertNotIn("03_sections/P07", revision_context)
+            self.assertIn("03_sections/P06/revision-log.md", revision_packet["allowed_write_paths"])
+            state = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            state["status"] = "ready_for_review"
+            write_json(root / "section.json", state)
+            approve_section(product, "P06")
+            approved = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            self.assertTrue(approved["human_approved"])
+
+    def test_context_budget_blocks_oversized_packet(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 1)
+            materialize_sections(product)
+            (product / "02_outline" / "story-bible.md").write_text("x" * 70000, encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "exceeds budget"):
+                compile_packet(product, "draft_section", "T0001", section="P01")
+
+    def test_impact_traverses_section_dependencies(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 10)
+            result = calculate_impact(product, "CLM-0001", None)
+            self.assertEqual(10, len(result["direct_sections"]))
+            result = calculate_impact(product, None, "P06")
+            self.assertEqual(["P06", "P07", "P08", "P09", "P10"], result["review_sections"])
+
+    def test_assembly_requires_human_approval_and_keeps_sources_modular(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 2)
+            materialize_sections(product)
+            for section_id in ["P01", "P02"]:
+                root = product / "03_sections" / section_id
+                (root / "draft.md").write_text(f"Narration for {section_id}.", encoding="utf-8")
+                state = json.loads((root / "section.json").read_text(encoding="utf-8"))
+                state.update({"status": "approved", "human_approved": True})
+                write_json(root / "section.json", state)
             result = assemble_product(product)
-            self.assertEqual(1, len(result["manifest"]["chapters"]))
-            self.assertEqual([], check_freshness(product))
-            draft.write_text("Chapter đã thay đổi sau lần lắp ráp.", encoding="utf-8")
-            self.assertTrue(check_freshness(product))
-
-    def test_claim_impact_is_transitive(self) -> None:
-        result = calculate_impact(
-            REPO_ROOT / "products" / "sumer-writing",
-            claim_id="CLM-0003",
-            chapter_id=None,
-        )
-        self.assertIn("CH05", result["direct_chapters"])
-        self.assertIn("CH07", result["direct_chapters"])
-        self.assertIn("CH10", result["affected_chapters"])
+            self.assertIn("Narration for P01", result["script"])
+            self.assertIn("Narration for P02", result["script"])
+            self.assertEqual(2, len(result["manifest"]["sections"]))
+            self.assertTrue((product / "03_sections" / "P01" / "draft.md").is_file())
 
 
 if __name__ == "__main__":
     unittest.main()
-

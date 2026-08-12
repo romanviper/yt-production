@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Report the smallest transitive chapter set affected by a claim or chapter change."""
+"""Find the smallest section review set affected by a claim or section change."""
 
 from __future__ import annotations
 
@@ -8,31 +8,29 @@ import json
 from collections import defaultdict, deque
 from pathlib import Path
 
+try:
+    from scripts.common import read_json
+except ModuleNotFoundError:
+    from common import read_json
 
-def calculate_impact(product_dir: Path, claim_id: str | None, chapter_id: str | None) -> dict:
+
+def calculate_impact(product_dir: Path, claim_id: str | None, section_id: str | None) -> dict:
     product_dir = product_dir.resolve()
-    claims_doc = json.loads((product_dir / "01_research" / "claim-ledger.json").read_text(encoding="utf-8"))
-    manifest = json.loads((product_dir / "03_outline" / "manifest.json").read_text(encoding="utf-8"))
-    chapters = {chapter["id"]: chapter for chapter in manifest["chapters"]}
+    outline = read_json(product_dir / "02_outline" / "outline.json")
+    sections = {item["id"]: item for item in outline.get("sections", [])}
     downstream: dict[str, set[str]] = defaultdict(set)
-    for chapter in chapters.values():
-        for dependency in chapter.get("depends_on", []):
-            downstream[dependency].add(chapter["id"])
-
+    for item in sections.values():
+        for dependency in item.get("dependencies", []):
+            downstream[dependency].add(item["id"])
     direct: set[str] = set()
     if claim_id:
-        claim = next((item for item in claims_doc.get("claims", []) if item.get("id") == claim_id), None)
-        if not claim:
-            raise ValueError(f"Không tìm thấy claim {claim_id}.")
-        direct.update(claim.get("used_by", []))
-        direct.update(
-            chapter["id"] for chapter in chapters.values() if claim_id in chapter.get("claims", [])
-        )
-    if chapter_id:
-        if chapter_id not in chapters:
-            raise ValueError(f"Không tìm thấy chapter {chapter_id}.")
-        direct.add(chapter_id)
-
+        direct.update(item["id"] for item in sections.values() if claim_id in item.get("claim_ids", []))
+        if not direct:
+            raise ValueError(f"No section uses claim {claim_id}")
+    if section_id:
+        if section_id not in sections:
+            raise ValueError(f"Unknown section {section_id}")
+        direct.add(section_id)
     affected = set(direct)
     queue = deque(direct)
     while queue:
@@ -41,18 +39,12 @@ def calculate_impact(product_dir: Path, claim_id: str | None, chapter_id: str | 
             if dependent not in affected:
                 affected.add(dependent)
                 queue.append(dependent)
-
-    ordered = [chapter["id"] for chapter in manifest["chapters"] if chapter["id"] in affected]
-    files: list[str] = []
-    for current in ordered:
-        chapter = chapters[current]
-        files.extend(path for path in [chapter.get("brief"), chapter.get("draft")] if path)
+    ordered = [item["id"] for item in outline["sections"] if item["id"] in affected]
     return {
-        "trigger": claim_id or chapter_id,
-        "direct_chapters": sorted(direct),
-        "affected_chapters": ordered,
-        "candidate_files": files,
-        "note": "Đây là phạm vi cần review, không phải quyền tự động rewrite.",
+        "trigger": claim_id or section_id,
+        "direct_sections": sorted(direct),
+        "review_sections": ordered,
+        "note": "Review scope only; revisions still require section-specific change requests.",
     }
 
 
@@ -61,11 +53,11 @@ def main() -> int:
     parser.add_argument("product", type=Path)
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--claim")
-    group.add_argument("--chapter")
+    group.add_argument("--section")
     args = parser.parse_args()
     try:
-        result = calculate_impact(args.product, args.claim, args.chapter)
-    except (ValueError, FileNotFoundError, json.JSONDecodeError) as exc:
+        result = calculate_impact(args.product, args.claim, args.section)
+    except (ValueError, FileNotFoundError) as exc:
         parser.error(str(exc))
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
@@ -73,4 +65,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

@@ -1,0 +1,143 @@
+# Modular Production Workflow
+
+## Mục tiêu vận hành
+
+Một Agent mới phải có thể hoàn thành một nghiệp vụ mà không cần biết toàn bộ lịch sử cuộc trò chuyện hay đọc toàn repo. Mỗi lượt làm việc nhận một context packet có version, token budget, input hash và write scope.
+
+## Ranh giới theo SOLID
+
+| Nguyên tắc | Cách repo áp dụng |
+|---|---|
+| Single responsibility | Mỗi operation chỉ sở hữu một loại biến đổi artifact; research, outline, draft, review và revision không trộn nhau. |
+| Open/closed | Thêm operation qua `registry.json` và contract riêng; router không cần biết nội dung lịch sử cụ thể. |
+| Liskov substitution | Agent nào thực hiện task cũng nhận cùng work-order/packet/report contract và phải qua cùng validator. |
+| Interface segregation | Task chỉ thấy instruction và input nó cần; P06 không nhận raw research hoặc draft P01–P10. |
+| Dependency inversion | Operation sau phụ thuộc vào artifact chuẩn hóa và hash, không phụ thuộc chat history hay memory của Agent trước. |
+
+Số section là cấu hình của outline, không hard-code trong engine. Pilot Sumer đặt target 10; product khác có thể đặt số khác.
+
+## 1. Research không phải một task khổng lồ
+
+### 1.1 Research plan
+
+Agent đọc product brief và benchmark, rồi tạo `01_research/plan.json`. Plan chia chủ đề thành các workstream có câu hỏi, boundary và deliverable riêng.
+
+Người dùng duyệt trước khi materialize:
+
+```bash
+python scripts/approval.py approve-plan products/<slug>
+```
+
+### 1.2 Research workstream
+
+Chạy `materialize_research.py` để tạo workspace cho từng workstream. Mỗi Agent chỉ research một workstream và ghi:
+
+- `sources.json`;
+- `claims.json`;
+- `synthesis.md` giới hạn dung lượng.
+
+Agent không cần đọc workstream khác.
+
+Source/claim ID ở cấp workstream được namespace (`WS02-SRC-001`, `WS02-CLM-001`) để các unit có thể chạy độc lập. Synthesis mới cấp ID toàn cục và lưu provenance, nên hai Agent song song không thể vô tình collision ID.
+
+### 1.3 Research synthesis
+
+Task synthesis chỉ đọc các workstream synthesis/ledger, không đọc toàn bộ web notes. Nó tạo:
+
+- source index và claim ledger hợp nhất;
+- `research-synthesis.md`;
+- contradictions và unknowns cần outline xử lý.
+
+## 2. Outline là interface giữa research và writing
+
+Task `outline` chỉ đọc product brief, research synthesis và claim ledger đã lọc. Output:
+
+- `02_outline/outline.json` gồm đúng số phần đã chọn;
+- `02_outline/story-bible.md` — context toàn cục được giữ ngắn.
+
+Mỗi phần phải có ID ổn định, narrative job, entry/exit state, claim IDs, dependencies và word budget. Con người review outline trước khi materialize.
+
+```bash
+python scripts/approval.py approve-outline products/<slug>
+```
+
+## 3. Section workspace
+
+Sau khi outline được duyệt:
+
+```bash
+python scripts/materialize_sections.py products/<slug>
+```
+
+Script tạo cho mỗi phần:
+
+```text
+03_sections/P04/
+  section.json
+  brief.md
+  evidence-pack.json
+  continuity-in.md
+```
+
+Evidence pack chỉ chứa claim/source cần cho P04. Nó là interface giữa research và drafting.
+
+## 4. Người dùng gọi phần nào, Agent chỉ viết phần đó
+
+```bash
+python scripts/task.py create products/<slug> draft_section --section P04
+```
+
+Packet của P04 chứa:
+
+- invariants tối thiểu;
+- contract của `draft_section`;
+- chuẩn viết tiếng Việt;
+- story bible compact;
+- brief P04;
+- evidence pack P04;
+- continuity input/handoff liên quan.
+
+Nếu dependency đã được con người duyệt, packet tự thêm đúng handoff của dependency đó; nó không mở full draft của dependency. Nếu viết out-of-order, Agent dựa vào bridge/story bible và ghi rõ continuity chưa xác lập.
+
+Nó không chứa raw research, brief của chín phần còn lại hoặc draft toàn phim.
+
+Agent chỉ được tạo/sửa:
+
+- `03_sections/P04/draft.md`;
+- `03_sections/P04/handoff.md`;
+- task report của chính task đó.
+
+## 5. Review và revision tách khỏi drafting
+
+- `review_section`: chỉ đọc và chẩn đoán P04; chỉ viết `review.md`.
+- `revise_section`: chỉ đọc draft, review/change request và evidence pack của P04; sửa draft P04.
+- Người dùng đặt `section.json.status = approved` sau khi chấp nhận.
+
+Thay vì sửa JSON bằng tay:
+
+```bash
+python scripts/approval.py approve-section products/<slug> P04
+python scripts/approval.py request-changes products/<slug> P04 --request "Sửa ISSUE-02; giữ nguyên opening và claim set."
+```
+
+AI viết không tự review để rồi tự phê duyệt output của chính nó.
+
+## 6. Integration không kéo toàn bộ prose vào mọi task
+
+Mỗi phần đã duyệt tạo `handoff.md` gồm entry/exit state, setup/payoff, entities và continuity changes. `integration_review` đọc story bible và các handoff trước để tìm conflict. Chỉ section có issue mới được mở trong revision task.
+
+## 7. Assembly không dùng AI
+
+`assemble.py` ghép các `draft.md` có status `approved` theo outline, tạo hash và word count. Bản delivery không phải source of truth và không sửa bằng tay.
+
+## Prompt tối thiểu cho Agent khác
+
+```text
+Mở repo romanviper/yt-production tại root. Đọc AGENTS.md và thực hiện task active của products/sumer-writing. Không đọc toàn repo, không bỏ qua context packet và không tự approve output.
+```
+
+Để viết phần cụ thể:
+
+```text
+Trong products/sumer-writing, tạo và thực hiện operation draft_section cho P04. Chỉ làm đúng phần P04 và bàn giao để tôi review.
+```
