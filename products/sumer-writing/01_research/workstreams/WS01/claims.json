@@ -1,6 +1,143 @@
 {
   "schema_version": 1,
   "workstream": "WS01",
-  "status": "not_started",
-  "claims": []
+  "status": "complete",
+  "claims": [
+    {
+      "id": "WS01-CLM-001",
+      "statement": "For this project, 'writing' should be treated as a graded analytical threshold: durable conventional marks that encode repeatable linguistic or lexical values count as writing, while devices that communicate quantities or meanings without demonstrable language encoding remain accounting/proto-writing; proto-cuneiform lies across this disputed boundary.",
+      "type": "contested",
+      "confidence": "medium",
+      "status": "qualified",
+      "sources": [
+        "WS01-SRC-003",
+        "WS01-SRC-004",
+        "WS01-SRC-005"
+      ],
+      "counterevidence": "A strict glottographic definition excludes much earliest proto-cuneiform; broader functional definitions include it because it records words/categories and develops directly into cuneiform.",
+      "narrative_implication": "Never let one definition silently decide who invented writing or its exact birthday."
+    },
+    {
+      "id": "WS01-CLM-002",
+      "statement": "The earliest substantial proto-cuneiform horizon is conventionally placed near the end of the Late Uruk period, approximately 3350/3300–3200 BCE (Uruk IV), followed by Uruk III/Jemdet Nasr approximately 3200–3000 BCE.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS01-SRC-001",
+        "WS01-SRC-002",
+        "WS01-SRC-008"
+      ],
+      "counterevidence": "Absolute ranges vary among chronologies, and poor excavation records prevent a precise first year; a slightly earlier date cannot be excluded.",
+      "narrative_implication": "Use ranges and archaeological phases, never a single invention year."
+    },
+    {
+      "id": "WS01-CLM-003",
+      "statement": "Uruk IVa is the most probable context for the oldest script at Uruk, but the original find documentation is too weak to make the stratigraphic placement definitive.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS01-SRC-002"
+      ],
+      "counterevidence": "No corrective reconstruction can fully repair the deficient find-spot and architectural documentation.",
+      "narrative_implication": "The uncertainty is archaeological, not merely rhetorical caution."
+    },
+    {
+      "id": "WS01-CLM-004",
+      "statement": "The earliest Uruk IV corpus known to scholarship is overwhelmingly administrative; lexical texts become materially more visible in Uruk III.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS01-SRC-001"
+      ],
+      "counterevidence": "Survival and excavation bias mean the preserved corpus cannot prove that no other uses or media existed.",
+      "narrative_implication": "Early evidence supports an administrative center of gravity, not the claim that administration was the only origin or use."
+    },
+    {
+      "id": "WS01-CLM-005",
+      "statement": "Calling the earliest system 'cuneiform' is potentially anachronistic: proto-cuneiform signs were initially drawn/incised and only later acquired the systematic wedge-impressed form associated with mature cuneiform.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS01-SRC-003",
+        "WS01-SRC-004"
+      ],
+      "counterevidence": "Scholarly convention uses proto-cuneiform to name the ancestral system, so the term remains useful when explicitly qualified.",
+      "narrative_implication": "Distinguish proto-cuneiform from later wedge-shaped cuneiform in terminology and visuals."
+    },
+    {
+      "id": "WS01-CLM-006",
+      "statement": "The language underlying Uruk IV–III proto-cuneiform cannot be securely identified as Sumerian because the texts encode little phonology and can often be interpreted without recovering continuous speech.",
+      "type": "contested",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS01-SRC-003",
+        "WS01-SRC-004"
+      ],
+      "counterevidence": "Some rare rebus/phonetic readings may fit Sumerian, and the later descendant script unquestionably writes Sumerian; this makes Sumerian plausible but not demonstrated for the earliest horizon.",
+      "narrative_implication": "Do not convert 'found in southern Mesopotamia/Uruk' into 'written by ethnic Sumerians in Sumerian'."
+    },
+    {
+      "id": "WS01-CLM-007",
+      "statement": "The safest attribution is regional and institutional: proto-cuneiform is first securely attested as a large corpus in the Uruk cultural sphere of southern Mesopotamia, especially Uruk, rather than securely attributable to a named ethnic population.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS01-SRC-001",
+        "WS01-SRC-002",
+        "WS01-SRC-004",
+        "WS01-SRC-007"
+      ],
+      "counterevidence": "Uruk's corpus dominance may partly reflect excavation and preservation; related early practices are attested beyond Uruk and transmitted toward Susiana/Iran.",
+      "narrative_implication": "Use 'Uruk/southern Mesopotamian tradition' for the earliest phase; reserve 'Sumerian writing' for contexts with linguistic evidence."
+    },
+    {
+      "id": "WS01-CLM-008",
+      "statement": "An unqualified claim that Sumer or Uruk produced the world's first writing is not defensible, because early Egyptian writing at Abydos overlaps the late-fourth-millennium date range and priority depends on calibration and definition.",
+      "type": "contested",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS01-SRC-005",
+        "WS01-SRC-006"
+      ],
+      "counterevidence": "Uruk provides one of the earliest and by far the largest early corpora and may precede Egyptian material under some chronologies; neither establishes a universally accepted single winner.",
+      "narrative_implication": "Claim 'one of the earliest independently developed writing traditions' or 'earliest large writing corpus', not an uncontested world first."
+    },
+    {
+      "id": "WS01-CLM-009",
+      "statement": "The relative sequence Uruk IV proto-cuneiform → Uruk III proto-cuneiform → later language-explicit cuneiform is much more secure than the absolute dates or a sharp boundary between proto-writing and writing.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS01-SRC-001",
+        "WS01-SRC-002",
+        "WS01-SRC-003",
+        "WS01-SRC-007"
+      ],
+      "counterevidence": "Local corpora and cross-regional contacts complicate a single linear sequence, and the exact transition to language-explicit writing is gradual.",
+      "narrative_implication": "Organize chronology by states and transitions rather than invention moments."
+    },
+    {
+      "id": "WS01-CLM-010",
+      "statement": "The claim 'Sumer invented writing' should remain rejected as a premise fact but retained as a researchable shorthand whose components—place, system, language, population and priority—must be tested separately.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS01-SRC-002",
+        "WS01-SRC-004",
+        "WS01-SRC-005",
+        "WS01-SRC-006"
+      ],
+      "counterevidence": "Public and some scholarly summaries still use 'Sumerian invention' because the later continuity into Sumerian cuneiform is strong and convenient.",
+      "narrative_implication": "The central narrative payoff can emerge from dismantling and rebuilding this familiar sentence with precise qualifiers."
+    }
+  ]
 }
