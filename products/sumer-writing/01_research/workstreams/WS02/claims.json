@@ -1,6 +1,76 @@
 {
   "schema_version": 1,
   "workstream": "WS02",
-  "status": "not_started",
-  "claims": []
+  "status": "complete",
+  "claims": [
+    {
+      "id": "WS02-CLM-001",
+      "statement": "Numerical systems provide the strongest material continuity between pre-writing devices and proto-cuneiform.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS02-SRC-001",
+        "WS02-SRC-002",
+        "WS02-SRC-004"
+      ],
+      "counterevidence": "Continuity of individual non-numerical sign shapes is much less secure.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS02-CLM-002",
+      "statement": "Neolithic clay objects called tokens were multifunctional; their existence does not prove a millennia-long standardized accounting code.",
+      "type": "contested",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS02-SRC-001",
+        "WS02-SRC-003"
+      ],
+      "counterevidence": "Some late simple tokens in bullae clearly served numerical/accounting functions.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS02-CLM-003",
+      "statement": "The direct token→tablet→writing sequence is too linear; seals, iconography, bullae, numerical tablets and institutional practice formed a parallel ecology.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS02-SRC-001",
+        "WS02-SRC-003",
+        "WS02-SRC-004"
+      ],
+      "counterevidence": "Exact contribution of each component cannot be quantified.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS02-CLM-004",
+      "statement": "Administrative scale is a major formation pressure but not evidence that administration was the sole cause of writing.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS02-SRC-001",
+        "WS02-SRC-002",
+        "WS02-SRC-004"
+      ],
+      "counterevidence": "Preserved earliest texts are overwhelmingly administrative, but corpus survival is selective.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS02-CLM-005",
+      "statement": "The evidence supports a feedback model: expanding institutions demanded records, and better records could expand institutional capacity.",
+      "type": "inference",
+      "confidence": "medium",
+      "status": "qualified",
+      "sources": [
+        "WS02-SRC-001",
+        "WS02-SRC-002",
+        "WS02-SRC-004"
+      ],
+      "counterevidence": "Downstream effects require WS06 case studies; WS02 cannot establish them alone.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    }
+  ]
 }
