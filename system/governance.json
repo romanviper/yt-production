@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "default_task_authority": "product_agent",
+  "roles": {
+    "product_agent": {
+      "purpose": "Thực hiện đúng một operation nội dung trong đúng một product.",
+      "may_modify_system": false,
+      "system_issue_action": "report_and_stop"
+    },
+    "system_architect": {
+      "purpose": "Thiết kế và bảo trì control plane dùng chung.",
+      "activation": "Chỉ repository owner có thể giao một architecture task riêng cho System Architect; Agent không được tự nâng quyền.",
+      "may_modify_system": true,
+      "may_mix_product_content": false
+    }
+  },
+  "protected_system_paths": [
+    ".github/**",
+    "AGENTS.md",
+    "Makefile",
+    "README.md",
+    "docs/**",
+    "scripts/**",
+    "system/**",
+    "templates/**",
+    "tests/**"
+  ],
+  "product_paths": [
+    "products/**"
+  ],
+  "commit_policy": {
+    "mix_system_and_product": "forbidden",
+    "content_task_system_edits": "forbidden"
+  }
+}

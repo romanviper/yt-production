@@ -218,6 +218,7 @@ def compile_packet(
 
     packet = {
         "schema_version": 1,
+        "authority": "product_agent",
         "task_id": task_id,
         "product": product_dir.name,
         "operation": operation,

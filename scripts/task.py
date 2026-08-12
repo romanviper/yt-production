@@ -13,10 +13,12 @@ try:
     from scripts.common import load_registry, product_relative, read_json, sha256, word_count, write_json
     from scripts.context_packet import compile_packet
     from scripts.operator_brief import empty_brief, render_brief, validate_brief_file
+    from scripts.research_plan_contract import validate_research_plan_contract
 except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from common import load_registry, product_relative, read_json, sha256, word_count, write_json
     from context_packet import compile_packet
     from operator_brief import empty_brief, render_brief, validate_brief_file
+    from research_plan_contract import validate_research_plan_contract
 
 
 def next_task_id(product_dir: Path, operation: str, section: str | None, unit: str | None) -> str:
@@ -57,6 +59,7 @@ def create_task(product_dir: Path, operation: str, section: str | None, unit: st
 
     work_order = {
         "schema_version": 1,
+        "authority": packet["authority"],
         "id": task_id,
         "product": product_dir.name,
         "operation": operation,
@@ -93,6 +96,8 @@ def verify_task(product_dir: Path, task_id: str) -> list[str]:
         errors.append("context budget exceeded")
     if work["allowed_write_paths"] != packet["allowed_write_paths"]:
         errors.append("work-order scope differs from packet")
+    if work.get("authority") != "product_agent" or work.get("authority") != packet.get("authority"):
+        errors.append("invalid or mismatched product task authority")
     return errors
 
 
@@ -148,15 +153,7 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
     try:
         if operation == "research_plan":
             plan = read_json(product_dir / "01_research" / "plan.json")
-            if not plan.get("workstreams"):
-                errors.append("research plan has no workstreams")
-            ids = [item.get("id") for item in plan.get("workstreams", [])]
-            if len(ids) != len(set(ids)):
-                errors.append("research plan has duplicate workstream IDs")
-            for item in plan.get("workstreams", []):
-                missing = [field for field in ["id", "title", "question", "in_scope", "out_of_scope", "required_evidence", "completion_criteria"] if not item.get(field)]
-                if missing:
-                    errors.append(f"research workstream {item.get('id', '?')} missing: {', '.join(missing)}")
+            errors.extend(validate_research_plan_contract(plan))
             if plan.get("status") == "approved":
                 errors.append("Agent may not self-approve research plan")
         elif operation == "research_workstream":

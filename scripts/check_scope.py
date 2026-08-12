@@ -4,23 +4,20 @@
 from __future__ import annotations
 
 import argparse
-import fnmatch
 import subprocess
 from pathlib import Path
 
 try:
     from scripts.common import REPO_ROOT, read_json
+    from scripts.governance import product_task_violations
 except ModuleNotFoundError:
     from common import REPO_ROOT, read_json
+    from governance import product_task_violations
 
 
 def git_lines(*args: str) -> list[str]:
     result = subprocess.run(["git", *args], cwd=REPO_ROOT, check=True, text=True, capture_output=True)
     return [line.strip() for line in result.stdout.splitlines() if line.strip()]
-
-
-def matches(path: str, patterns: list[str]) -> bool:
-    return any(fnmatch.fnmatchcase(path, pattern) for pattern in patterns)
 
 
 def main() -> int:
@@ -31,13 +28,6 @@ def main() -> int:
     product = args.product.resolve()
     active = read_json(product / "tasks" / "ACTIVE.json")
     work = read_json(product / active["work_order"])
-    prefix = str(product.relative_to(REPO_ROOT))
-    allowed = [f"{prefix}/{path}" for path in work["allowed_write_paths"]]
-    allowed.append(f"{prefix}/tasks/{work['id']}/*")
-    section = work.get("target", {}).get("section")
-    if section:
-        allowed.append(f"{prefix}/03_sections/{section}/section.json")
-    allowed.append(f"{prefix}/tasks/ACTIVE.json")
     if args.base:
         changed = git_lines("diff", "--name-only", f"{args.base}...HEAD")
     else:
@@ -46,17 +36,15 @@ def main() -> int:
             | set(git_lines("diff", "--cached", "--name-only"))
             | set(git_lines("ls-files", "--others", "--exclude-standard"))
         )
-    relevant = [path for path in changed if path.startswith(prefix + "/")]
-    violations = [path for path in relevant if not matches(path, allowed)]
+    violations = product_task_violations(product, work, changed)
     if violations:
         print("Write-scope violations:")
         for path in violations:
             print(f"- {path}")
         return 1
-    print(f"Scope OK: {len(relevant)} product file(s).")
+    print(f"Scope OK: {len(changed)} changed file(s), no protected system writes.")
     return 0
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

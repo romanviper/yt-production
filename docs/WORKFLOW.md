@@ -16,6 +16,23 @@ Một Agent mới phải có thể hoàn thành một nghiệp vụ mà không c
 
 Số section là cấu hình của outline, không hard-code trong engine. Pilot Sumer đặt target 10; product khác có thể đặt số khác.
 
+## Quyền hạn: nội dung không được sửa hệ thống
+
+Repo phân biệt hai trách nhiệm:
+
+- **Product Agent:** research, outline, draft hoặc review đúng một product operation. Không được sửa control plane.
+- **System Architect:** bảo trì kiến trúc dùng chung trong một architecture task riêng do repository owner giao.
+
+Protected system gồm `AGENTS.md`, `.github/`, `system/`, `scripts/`, `templates/`, `tests/`, `docs/`, `Makefile` và repo `README.md`.
+
+Nếu Product Agent phát hiện một lỗi hệ thống, nó chỉ báo cáo:
+
+1. hành vi nào đang bị chặn;
+2. ảnh hưởng đến product hiện tại;
+3. system change request cần route cho System Architect.
+
+Nó không được sửa hệ thống, ngay cả khi biết cách fix. Architecture commit cũng không được chứa thay đổi nội dung product. Boundary này được scope checker và governance test kiểm tra, thay vì chỉ dựa vào prompt discipline.
+
 ## Operator interface: đúng độ sâu, đúng thời điểm
 
 Người dùng không cần xem process diary. Mỗi task giữ hai output giao tiếp khác nhau:

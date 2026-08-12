@@ -9,8 +9,10 @@ from pathlib import Path
 
 try:
     from scripts.common import read_json, write_json
+    from scripts.research_plan_contract import bullet_list, render_shared_protocol, validate_research_plan_contract
 except ModuleNotFoundError:
     from common import read_json, write_json
+    from research_plan_contract import bullet_list, render_shared_protocol, validate_research_plan_contract
 
 
 def materialize(product_dir: Path) -> list[Path]:
@@ -18,6 +20,10 @@ def materialize(product_dir: Path) -> list[Path]:
     plan = read_json(product_dir / "01_research" / "plan.json")
     if plan.get("status") != "approved":
         raise ValueError("Research plan must be human-approved before materialization.")
+    contract_errors = validate_research_plan_contract(plan)
+    if contract_errors:
+        raise ValueError("Invalid approved research plan: " + "; ".join(contract_errors))
+    shared_protocol = render_shared_protocol(plan["shared_research_protocol"])
     created: list[Path] = []
     for unit in plan.get("workstreams", []):
         unit_id = unit.get("id", "")
@@ -27,15 +33,19 @@ def materialize(product_dir: Path) -> list[Path]:
         root.mkdir(parents=True, exist_ok=True)
         brief = root / "brief.md"
         if not brief.exists():
-            evidence = "\n".join(f"- {item}" for item in unit.get("required_evidence", [])) or "- Chưa xác định."
-            criteria = "\n".join(f"- {item}" for item in unit.get("completion_criteria", [])) or "- Chưa xác định."
+            evidence = bullet_list(unit.get("required_evidence", []))
+            criteria = bullet_list(unit.get("completion_criteria", []))
+            handoff = bullet_list(unit.get("synthesis_handoff", []))
             brief.write_text(
                 f"# {unit_id} — {unit['title']}\n\n"
                 f"## Question\n\n{unit['question']}\n\n"
                 f"## In scope\n\n{unit.get('in_scope', '')}\n\n"
                 f"## Out of scope\n\n{unit.get('out_of_scope', '')}\n\n"
+                f"## Ownership\n\n{unit.get('ownership', '')}\n\n"
                 f"## Required evidence\n\n{evidence}\n\n"
-                f"## Completion criteria\n\n{criteria}\n",
+                f"## Completion criteria\n\n{criteria}\n\n"
+                f"## Required synthesis handoff\n\n{handoff}\n\n"
+                f"{shared_protocol}\n",
                 encoding="utf-8",
             )
             created.append(brief)

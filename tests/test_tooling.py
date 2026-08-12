@@ -6,8 +6,9 @@ import unittest
 from pathlib import Path
 
 from scripts.assemble import assemble_product
-from scripts.approval import approve_section, request_changes
+from scripts.approval import approve_plan, approve_section, request_changes
 from scripts.context_packet import compile_packet
+from scripts.governance import classify_paths, commit_scope_errors, product_task_violations
 from scripts.impact import calculate_impact
 from scripts.materialize_research import materialize as materialize_research
 from scripts.materialize_sections import materialize as materialize_sections
@@ -93,6 +94,20 @@ def valid_operator_brief() -> dict:
         },
         "next_step": "",
     }
+
+
+def add_research_contract(plan: dict) -> dict:
+    plan["shared_research_protocol"] = {
+        "chronology": ["Use qualified date ranges."],
+        "terminology": ["Define contested terms."],
+        "case_selection": ["Choose cases for evidence, not spectacle."],
+        "cross_cutting_ownership": {"memory": "WS01 establishes the bounded fixture handoff."},
+        "handoff_contract": ["Return chronology, claims, unknowns and dependencies."],
+    }
+    for item in plan.get("workstreams", []):
+        item.setdefault("ownership", f"Own only the question of {item.get('id', 'this unit')}.")
+        item.setdefault("synthesis_handoff", ["Bounded findings and unresolved questions."])
+    return plan
     (product / "02_outline" / "story-bible.md").write_text(
         "# Story Bible\n\nPremise, causal spine, terminology and global exclusions.\n",
         encoding="utf-8",
@@ -122,10 +137,56 @@ class ModularProductionTests(unittest.TestCase):
                 self.assertTrue((product / relative).is_file(), relative)
             self.assertFalse((product / "work-order.json").exists())
 
+    def test_product_task_cannot_modify_protected_system_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            # Governance resolves real repo-relative product paths, so use the pilot path for a synthetic work order.
+            pilot = REPO_ROOT / "products" / "sumer-writing"
+            work = {
+                "id": "T0001-research-plan",
+                "authority": "product_agent",
+                "target": {"section": None, "unit": None},
+                "allowed_write_paths": [
+                    "01_research/plan.json",
+                    "tasks/T0001-research-plan/report.md",
+                    "tasks/T0001-research-plan/operator-brief.json",
+                ],
+            }
+            allowed = ["products/sumer-writing/01_research/plan.json"]
+            self.assertEqual([], product_task_violations(pilot, work, allowed))
+            violations = product_task_violations(
+                pilot,
+                work,
+                allowed + ["system/core/invariants.md", "scripts/materialize_research.py"],
+            )
+            self.assertEqual(2, len(violations))
+            self.assertTrue(all("protected system path" in item for item in violations))
+
+    def test_system_and_product_changes_must_use_separate_commits(self) -> None:
+        self.assertEqual([], commit_scope_errors(["system/core/invariants.md", "scripts/task.py"]))
+        self.assertEqual([], commit_scope_errors(["products/sumer-writing/01_research/plan.json"]))
+        errors = commit_scope_errors(["system/core/invariants.md", "products/sumer-writing/01_research/plan.json"])
+        self.assertEqual(1, len(errors))
+        classified = classify_paths(["AGENTS.md", "products/sumer-writing/product.json"])
+        self.assertEqual(["AGENTS.md"], classified["system"])
+        self.assertEqual(["products/sumer-writing/product.json"], classified["product"])
+
+    def test_new_tasks_are_product_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            state = json.loads((product / "product.json").read_text(encoding="utf-8"))
+            state["stages"]["direction"] = "approved"
+            write_json(product / "product.json", state)
+            work = create_task(product, "research_plan", None, None, False)
+            packet = json.loads((product / work["packet_manifest"]).read_text(encoding="utf-8"))
+            self.assertEqual("product_agent", work["authority"])
+            self.assertEqual("product_agent", packet["authority"])
+
     def test_research_workstreams_are_isolated(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
             plan = json.loads((REPO_ROOT / "products" / "sumer-writing" / "01_research" / "plan.json").read_text(encoding="utf-8"))
+            add_research_contract(plan)
             plan["status"] = "approved"
             write_json(product / "01_research" / "plan.json", plan)
             materialize_research(product)
@@ -135,6 +196,25 @@ class ModularProductionTests(unittest.TestCase):
             self.assertNotIn("01_research/workstreams/WS03/brief.md", context)
             self.assertEqual(3, len(packet["operation_outputs"]))
             self.assertIn("system/standards/operator-interface.md", packet["instruction_files"])
+            brief = (product / "01_research" / "workstreams" / "WS02" / "brief.md").read_text(encoding="utf-8")
+            self.assertIn("## Ownership", brief)
+            self.assertIn("## Required synthesis handoff", brief)
+            self.assertIn("## Shared research protocol", brief)
+            self.assertIn("### Chronology", brief)
+            self.assertIn("### Cross-cutting ownership", brief)
+
+    def test_plan_cannot_be_approved_without_executable_handoff_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            plan = json.loads((REPO_ROOT / "products" / "sumer-writing" / "01_research" / "plan.json").read_text(encoding="utf-8"))
+            write_json(product / "01_research" / "plan.json", plan)
+            with self.assertRaisesRegex(ValueError, "shared_research_protocol"):
+                approve_plan(product)
+            add_research_contract(plan)
+            write_json(product / "01_research" / "plan.json", plan)
+            approve_plan(product)
+            approved = json.loads((product / "01_research" / "plan.json").read_text(encoding="utf-8"))
+            self.assertEqual("approved", approved["status"])
 
     def test_research_synthesis_requires_every_declared_workstream(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -159,6 +239,7 @@ class ModularProductionTests(unittest.TestCase):
                 "coverage_matrix": {},
                 "synthesis_questions": [],
             }
+            add_research_contract(plan)
             write_json(product / "01_research" / "plan.json", plan)
             materialize_research(product)
             for unit in ["WS01"]:
@@ -269,6 +350,7 @@ class ModularProductionTests(unittest.TestCase):
                     "completion_criteria": ["Sources and claims are explicitly scoped."],
                 }
             ]
+            add_research_contract(plan)
             write_json(plan_path, plan)
             report = product / "tasks" / work["id"] / "report.md"
             report.write_text(("Detailed evidence and validation record. " * 500) + "\n", encoding="utf-8")

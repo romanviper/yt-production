@@ -10,6 +10,8 @@ Repo có ba lớp độc lập:
 - `products/`: trạng thái và artifact của từng video.
 - `scripts/`: orchestration thuần cơ học; không quyết định lịch sử hay văn phong.
 
+Product Agent chỉ được làm việc trong `products/<slug>/`. Tầng control plane do System Architect quản lý qua architecture task riêng; system change và product content không được trộn trong cùng commit.
+
 Agent không đọc toàn bộ `system/`. `scripts/task.py` biên dịch đúng instruction và input cần thiết thành một context packet cho từng task.
 
 Giao tiếp cũng có hai lớp: task report giữ chiều sâu, operator brief giữ bức tranh điều hành. Status/handoff mặc định ngắn; explanation, audit và artifact được mở rộng khi mục đích cần.

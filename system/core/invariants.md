@@ -12,6 +12,9 @@ Các luật này có hiệu lực với mọi operation.
 8. Nếu input mâu thuẫn, stale, thiếu hoặc vượt context budget: dừng và báo blocker.
 9. Output phải hoàn thành contract hiện tại; không chủ động chạy operation kế tiếp.
 10. Delivery là build artifact; source of truth nằm ở artifact module.
+11. Product operation có authority `product_agent`: không được sửa control plane hoặc protected system paths.
+12. Khi product task phát hiện lỗi hệ thống, chỉ báo cáo blocker và escalation; không tự sửa.
+13. Architecture task và product-content task không được trộn trong cùng commit.
 
 ## Artifact boundary
 
@@ -21,4 +24,3 @@ Các luật này có hiệu lực với mọi operation.
 - Review tạo diagnosis, không rewrite.
 - Revision sửa đúng issue đã duyệt, không “polish toàn bộ”.
 - Integration tìm dependency conflict qua handoff trước, không tái sinh script.
-

@@ -1,0 +1,11 @@
+# Protected control plane. Enforcement requires GitHub branch protection with
+# "Require review from Code Owners" enabled on the target branch.
+/AGENTS.md @romanviper
+/Makefile @romanviper
+/README.md @romanviper
+/.github/ @romanviper
+/docs/ @romanviper
+/scripts/ @romanviper
+/system/ @romanviper
+/templates/ @romanviper
+/tests/ @romanviper

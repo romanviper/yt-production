@@ -2,6 +2,18 @@
 
 This file is the only repo-wide instruction an Agent reads automatically.
 
+## Authority boundary
+
+Mọi product operation mặc định chạy với authority `product_agent`.
+
+- Product Agent chỉ được sửa output của đúng product task.
+- `AGENTS.md`, `.github/`, `system/`, `scripts/`, `templates/`, `tests/`, `docs/`, `Makefile` và repo `README.md` là tầng hệ thống được bảo vệ.
+- Phát hiện lỗi hệ thống không tạo ra quyền sửa. Product Agent ghi blocker/system issue vào task report và operator brief, rồi dừng tại boundary.
+- Product Agent không được tự nhận vai trò System Architect, kể cả khi fix có vẻ nhỏ hoặc hiển nhiên.
+- System change chỉ được thực hiện trong architecture task riêng do repository owner giao cho System Architect. System commit không được trộn thay đổi nội dung trong `products/`.
+
+Quy tắc machine-readable nằm ở `system/governance.json`; scope checker sẽ từ chối product task chạm protected paths.
+
 ## Do not load the repository
 
 Không đọc đệ quy `system/`, `products/` hoặc toàn bộ script. Repo được thiết kế để tránh context bloat. Một task hợp lệ phải có context packet tự chứa.
@@ -51,6 +63,7 @@ Các operation hợp lệ nằm trong `system/operations/registry.json`. Không 
 - `approved` chỉ do con người đặt.
 - Không chạy `scripts/approval.py` nếu người dùng không vừa đưa ra quyết định approve/request-changes rõ ràng.
 - Packet stale, thiếu source hoặc vượt context budget là blocker, không phải giấy phép suy diễn.
+- System defect là escalation, không phải giấy phép mở rộng product task.
 
 ## Operator Interface
 

@@ -9,9 +9,11 @@ from pathlib import Path
 
 try:
     from scripts.common import read_json, write_json
+    from scripts.research_plan_contract import validate_research_plan_contract
     from scripts.validate import validate_product
 except ModuleNotFoundError:
     from common import read_json, write_json
+    from research_plan_contract import validate_research_plan_contract
     from validate import validate_product
 
 
@@ -25,8 +27,9 @@ def update_stage(product_dir: Path, stage: str, value: str) -> None:
 def approve_plan(product_dir: Path) -> None:
     path = product_dir / "01_research" / "plan.json"
     plan = read_json(path)
-    if not plan.get("workstreams"):
-        raise ValueError("Cannot approve an empty research plan.")
+    contract_errors = validate_research_plan_contract(plan)
+    if contract_errors:
+        raise ValueError("Cannot approve research plan: " + "; ".join(contract_errors))
     plan["status"] = "approved"
     plan["approved_by"] = "user"
     plan["approved_at"] = datetime.now(timezone.utc).isoformat()
