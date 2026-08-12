@@ -1,6 +1,63 @@
 {
   "schema_version": 1,
   "workstream": "WS04",
-  "status": "not_started",
-  "sources": []
+  "status": "complete",
+  "sources": [
+    {
+      "id": "WS04-SRC-001",
+      "title": "Masters’ Writings and Students’ Writings",
+      "author": "Christine Proust, 2011",
+      "type": "scholarly chapter",
+      "authority": "Specialist study of scribal education",
+      "url": "https://hal.science/hal-01139643/document",
+      "locators": [
+        "school material analysis"
+      ],
+      "status": "reviewed",
+      "limitations": "Focused mainly on later school corpora.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS04-SRC-002",
+      "title": "The Scribal Tablet-House in Ancient Mesopotamia",
+      "author": "Christopher J. Lucas, 1979",
+      "type": "scholarly article",
+      "authority": "Survey of archaeological and textual evidence",
+      "url": "https://knowledgebasedsociety.com/wp-content/uploads/2021/12/367648.pdf",
+      "locators": [
+        "pp. 305–332"
+      ],
+      "status": "reviewed",
+      "limitations": "Older and sometimes institutionally schematic.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS04-SRC-003",
+      "title": "DCCLT lexical introduction",
+      "author": "Oracc / University of Pennsylvania",
+      "type": "academic corpus introduction",
+      "authority": "Curated specialist corpus",
+      "url": "https://oracc.museum.upenn.edu/dcclt/intro/lexical_intro.html",
+      "locators": [
+        "introductory sections"
+      ],
+      "status": "reviewed",
+      "limitations": "Public overview; not a demographic study.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS04-SRC-004",
+      "title": "Excursus: Scribes and Scribal Education",
+      "author": "Oxford Academic chapter",
+      "type": "scholarly chapter",
+      "authority": "Legal/scribal specialist synthesis",
+      "url": "https://academic.oup.com/book/31901/chapter/267577699",
+      "locators": [
+        "chapter overview"
+      ],
+      "status": "reviewed",
+      "limitations": "Specific focus on composition and legal tradition.",
+      "notes": "Selected for this workstream's bounded question."
+    }
+  ]
 }
