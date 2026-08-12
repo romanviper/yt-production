@@ -1,6 +1,127 @@
 {
   "schema_version": 1,
   "workstream": "WS01",
-  "status": "not_started",
-  "sources": []
+  "status": "complete",
+  "sources": [
+    {
+      "id": "WS01-SRC-001",
+      "title": "Proto-Cuneiform Account-Books and Journals",
+      "author": "Robert K. Englund",
+      "year": 2004,
+      "type": "scholarly chapter / corpus synthesis",
+      "authority": "Leading specialist synthesis grounded in the archaic tablet corpus and CDLI work.",
+      "url": "https://cdli.earth/files-up/publications/englund2004a.pdf",
+      "locators": [
+        "pp. 24–27 (PDF pp. 2–5), especially chronology figure and discussion of Uruk IV/III corpus"
+      ],
+      "status": "reviewed",
+      "limitations": "Chronological ranges and corpus counts reflect the state of publication in 2004; some causal interpretation belongs to WS02.",
+      "notes": "Supports ca. 3300 BCE emergence, relative Uruk IV→III sequence, overwhelmingly administrative earliest corpus, and caution around token continuity."
+    },
+    {
+      "id": "WS01-SRC-002",
+      "title": "Uruk and I",
+      "author": "Hans J. Nissen",
+      "year": 2024,
+      "type": "scholarly excavation historiography",
+      "authority": "CDLI Journal article by a senior Uruk specialist auditing excavation records and chronology.",
+      "url": "https://cdli.earth/articles/cdlj/2024-1",
+      "locators": [
+        "§15.8; §16.1–16.4; §17.3; §18.2"
+      ],
+      "status": "reviewed",
+      "limitations": "Author explicitly foregrounds failures in legacy excavation documentation; exact absolute dates remain model-dependent.",
+      "notes": "Uruk IVa is the most probable archaeological placement of the oldest script, slightly earlier cannot be excluded; find context is often insufficient and unreliable."
+    },
+    {
+      "id": "WS01-SRC-003",
+      "title": "Writing in Early Mesopotamia: Beyond the Meme",
+      "author": "Massimo Maiocchi",
+      "year": 2019,
+      "type": "peer-reviewed scholarly chapter",
+      "authority": "Assyriological synthesis focused on early Mesopotamian writing, semiotics and material systems.",
+      "url": "https://iris.unive.it/retrieve/e4239dde-83dd-7180-e053-3705fe0a3322/Maiocchi%20M.%202019%2C%20Writing%20in%20Early%20Mesopotamia%20--%20Beyond%20the%20Meme.pdf",
+      "locators": [
+        "pp. 410–412 (PDF pp. 15–17), especially discussion of glottographic/semasiographic boundary"
+      ],
+      "status": "reviewed",
+      "limitations": "The chapter advocates a fluid continuum; terminology is analytical rather than a universally accepted threshold definition.",
+      "notes": "Useful counterweight to a binary true-writing/proto-writing distinction and to a linear token→tablet story."
+    },
+    {
+      "id": "WS01-SRC-004",
+      "title": "The Origins of Writing",
+      "author": "Ira Spar",
+      "year": 2004,
+      "type": "museum scholarly essay",
+      "authority": "Metropolitan Museum of Art Heilbrunn Timeline essay by a cuneiform specialist.",
+      "url": "https://www.metmuseum.org/essays/the-origins-of-writing",
+      "locators": [
+        "paragraphs 62–69"
+      ],
+      "status": "reviewed",
+      "limitations": "Introductory synthesis and now older; statements about possible mid-fourth-millennium Syrian/Turkish systems are provisional.",
+      "notes": "States that Sumerian identification of Uruk tablets is popular but not universal; phonetic use is sparse before 3000 and consistently apparent much later."
+    },
+    {
+      "id": "WS01-SRC-005",
+      "title": "Visible Language: Inventions of Writing in the Ancient Middle East and Beyond",
+      "author": "Christopher Woods (ed.)",
+      "year": 2010,
+      "type": "academic museum catalogue / comparative synthesis",
+      "authority": "University of Chicago Oriental Institute catalogue curated by a Sumerologist.",
+      "url": "https://isac.uchicago.edu/sites/default/files/uploads/shared/docs/oimp32.pdf",
+      "locators": [
+        "comparative chronology and essays on earliest Mesopotamian and Egyptian writing; catalogue overview"
+      ],
+      "status": "reviewed",
+      "limitations": "Catalogue compresses specialist disagreements for comparative presentation; use for comparison scope, not exact Uruk stratigraphy.",
+      "notes": "Treats Mesopotamia and Egypt as roughly contemporary independent inventions; supports avoiding an unqualified unique 'world first' claim."
+    },
+    {
+      "id": "WS01-SRC-006",
+      "title": "Visible Language exhibition overview",
+      "author": "Institute for the Study of Ancient Cultures, University of Chicago",
+      "year": 2010,
+      "type": "academic institutional overview",
+      "authority": "Official ISAC summary of the Woods-curated exhibition.",
+      "url": "https://isac.uchicago.edu/museum-exhibits/visible-language-inventions-writing-ancient-middle-east-fall-2010",
+      "locators": [
+        "paragraphs 46–51"
+      ],
+      "status": "reviewed",
+      "limitations": "Public-facing overview rather than full argument; dates are rounded.",
+      "notes": "Places Mesopotamian tablets around 3200 BCE and early Egyptian tags around 3320 BCE, illustrating why 'first' depends on definition and dating."
+    },
+    {
+      "id": "WS01-SRC-007",
+      "title": "The State of Decipherment of Proto-Elamite",
+      "author": "Robert K. Englund",
+      "year": 2004,
+      "type": "scholarly chapter / comparative script study",
+      "authority": "Corpus-based comparison by a leading proto-cuneiform and proto-Elamite specialist.",
+      "url": "https://cdli.earth/files-up/publications/englund2004c.pdf",
+      "locators": [
+        "pp. 124–127 and 139–140 (PDF pp. 24–27, 39–40)"
+      ],
+      "status": "reviewed",
+      "limitations": "Proto-Elamite comparison is secondary to WS01 and does not establish the spoken language of Uruk scribes.",
+      "notes": "Supports relative order Uruk IV before Uruk III and contemporaneity/contact with proto-Elamite; shows attribution is regional and transmissional, not a simple ethnic label."
+    },
+    {
+      "id": "WS01-SRC-008",
+      "title": "The Origins of Writing",
+      "author": "Metropolitan Museum of Art, object and corpus context",
+      "year": 2004,
+      "type": "museum corpus overview",
+      "authority": "Major museum collection context linked to excavated and collected early tablets.",
+      "url": "https://www.metmuseum.org/art/collection/search/327385",
+      "locators": [
+        "object description: earliest tablets around 3300 BCE; two early phases"
+      ],
+      "status": "reviewed",
+      "limitations": "Single object is illustrative, not representative; provenance and dating of market-derived tablets can be weaker than excavated material.",
+      "notes": "Material anchor for the approximate 3300 BCE date and phase distinction."
+    }
+  ]
 }
