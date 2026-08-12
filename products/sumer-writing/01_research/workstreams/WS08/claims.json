@@ -1,6 +1,73 @@
 {
   "schema_version": 1,
   "workstream": "WS08",
-  "status": "not_started",
-  "claims": []
+  "status": "complete",
+  "claims": [
+    {
+      "id": "WS08-CLM-001",
+      "statement": "Cuneiform use contracted over centuries rather than ending through one event.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS08-SRC-001",
+        "WS08-SRC-002"
+      ],
+      "counterevidence": "Regional and genre-specific endpoints differ.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS08-CLM-002",
+      "statement": "Lexical and scholarly traditions persisted into the first centuries CE in narrowed institutional settings.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS08-SRC-001"
+      ],
+      "counterevidence": "Exact last-tablet dates depend on genre and dating; ‘last’ remains a discovery-sensitive claim.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS08-CLM-003",
+      "statement": "Material tablets survived after living reading competence disappeared, creating a break between ancient transmission and modern knowledge.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS08-SRC-001",
+        "WS08-SRC-003",
+        "WS08-SRC-004"
+      ],
+      "counterevidence": "Some local knowledge of ruins or objects may have persisted without script competence.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS08-CLM-004",
+      "statement": "Nineteenth-century decipherment was cumulative and comparative, not a single eureka moment.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS08-SRC-003",
+        "WS08-SRC-004"
+      ],
+      "counterevidence": "Public narratives often center Behistun and a few individuals, underrepresenting collaboration and error.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS08-CLM-005",
+      "statement": "Cuneiform’s defensible modern legacy is recovery-mediated knowledge of ancient societies and influence through ancient Near Eastern textual transmission; resemblance to digital record systems is analogy, not lineage.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS08-SRC-001",
+        "WS08-SRC-003",
+        "WS08-SRC-004"
+      ],
+      "counterevidence": "Specific transmitted texts or concepts require separate chains of evidence.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    }
+  ]
 }
