@@ -1,6 +1,63 @@
 {
   "schema_version": 1,
   "workstream": "WS05",
-  "status": "not_started",
-  "sources": []
+  "status": "complete",
+  "sources": [
+    {
+      "id": "WS05-SRC-001",
+      "title": "Proto-Cuneiform Account-Books and Journals",
+      "author": "Robert K. Englund, 2004",
+      "type": "scholarly chapter",
+      "authority": "Corpus specialist synthesis",
+      "url": "https://cdli.earth/files-up/publications/englund2004a.pdf",
+      "locators": [
+        "pp. 28–31"
+      ],
+      "status": "reviewed",
+      "limitations": "Earliest corpus only.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS05-SRC-002",
+      "title": "The Origins of Writing",
+      "author": "Ira Spar, 2004",
+      "type": "museum scholarly essay",
+      "authority": "Cuneiform specialist overview",
+      "url": "https://www.metmuseum.org/essays/the-origins-of-writing",
+      "locators": [
+        "paragraph 69"
+      ],
+      "status": "reviewed",
+      "limitations": "Broad chronological compression.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS05-SRC-003",
+      "title": "DCCLT lexical introduction",
+      "author": "Oracc / University of Pennsylvania",
+      "type": "academic corpus introduction",
+      "authority": "Specialist corpus",
+      "url": "https://oracc.museum.upenn.edu/dcclt/intro/lexical_intro.html",
+      "locators": [
+        "introduction"
+      ],
+      "status": "reviewed",
+      "limitations": "Lexical focus.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS05-SRC-004",
+      "title": "Cuneiform Texts in the Metropolitan Museum, Vol. I",
+      "author": "Metropolitan Museum of Art",
+      "type": "scholarly catalogue",
+      "authority": "Edited translations and object records",
+      "url": "https://www.metmuseum.org/met-publications/cuneiform-texts-in-the-metropolitan-museum-of-art-volume-i-tablets-cones-and-bricks-of-the-third",
+      "locators": [
+        "commercial, legal and letters catalogue"
+      ],
+      "status": "reviewed",
+      "limitations": "Collection selection is not representative of total use.",
+      "notes": "Selected for this workstream's bounded question."
+    }
+  ]
 }
