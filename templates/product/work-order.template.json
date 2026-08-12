@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "WO-0001",
+  "product": "{{SLUG}}",
+  "task_type": "premise_research",
+  "state": "ready",
+  "objective": "Biến subject thành một premise causal, bounded và falsifiable.",
+  "required_reads": [
+    "system/01-channel-north-star.md",
+    "system/03-research-standard.md",
+    "products/{{SLUG}}/00_brief/premise.md"
+  ],
+  "allowed_write_paths": [
+    "products/{{SLUG}}/00_brief/premise.md",
+    "products/{{SLUG}}/01_research/claim-ledger.json"
+  ],
+  "acceptance_criteria": [
+    "Central question có causal tension và scope boundary.",
+    "Có falsification criteria.",
+    "Các claim tiền đề được ghi vào claim ledger.",
+    "Không viết outline hoặc script."
+  ],
+  "blocked_by": []
+}
+

@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "product": "sumer-writing",
+  "status": "provisional",
+  "warning": "Scaffold để kiểm chứng modular workflow; không phải outline đã khóa.",
+  "chapters": [
+    {
+      "id": "CH01",
+      "slug": "surviving-marks",
+      "title": "Những dấu vết còn lại",
+      "status": "planned",
+      "brief": "03_outline/chapters/CH01-surviving-marks.md",
+      "draft": "04_script/chapters/CH01-surviving-marks.md",
+      "depends_on": [],
+      "claims": [],
+      "target_words": {"min": 700, "max": 1200}
+    },
+    {
+      "id": "CH02",
+      "slug": "before-writing",
+      "title": "Trước khi có chữ",
+      "status": "planned",
+      "brief": "03_outline/chapters/CH02-before-writing.md",
+      "draft": "04_script/chapters/CH02-before-writing.md",
+      "depends_on": ["CH01"],
+      "claims": ["CLM-0002"],
+      "target_words": {"min": 900, "max": 1500}
+    },
+    {
+      "id": "CH03",
+      "slug": "uruk-problem",
+      "title": "Bài toán của Uruk",
+      "status": "planned",
+      "brief": "03_outline/chapters/CH03-uruk-problem.md",
+      "draft": "04_script/chapters/CH03-uruk-problem.md",
+      "depends_on": ["CH02"],
+      "claims": ["CLM-0002"],
+      "target_words": {"min": 1000, "max": 1600}
+    },
+    {
+      "id": "CH04",
+      "slug": "signs-and-language",
+      "title": "Khi dấu hiệu bắt đầu mang tiếng nói",
+      "status": "planned",
+      "brief": "03_outline/chapters/CH04-signs-and-language.md",
+      "draft": "04_script/chapters/CH04-signs-and-language.md",
+      "depends_on": ["CH03"],
+      "claims": ["CLM-0001"],
+      "target_words": {"min": 1000, "max": 1600}
+    },
+    {
+      "id": "CH05",
+      "slug": "people-who-write",
+      "title": "Những người biết viết",
+      "status": "planned",
+      "brief": "03_outline/chapters/CH05-people-who-write.md",
+      "draft": "04_script/chapters/CH05-people-who-write.md",
+      "depends_on": ["CH04"],
+      "claims": ["CLM-0003"],
+      "target_words": {"min": 1000, "max": 1600}
+    },
+    {
+      "id": "CH06",
+      "slug": "beyond-accounts",
+      "title": "Từ sổ sách đến một thế giới được ghi lại",
+      "status": "planned",
+      "brief": "03_outline/chapters/CH06-beyond-accounts.md",
+      "draft": "04_script/chapters/CH06-beyond-accounts.md",
+      "depends_on": ["CH05"],
+      "claims": [],
+      "target_words": {"min": 1000, "max": 1700}
+    },
+    {
+      "id": "CH07",
+      "slug": "recorded-power",
+      "title": "Quyền lực của điều được ghi",
+      "status": "planned",
+      "brief": "03_outline/chapters/CH07-recorded-power.md",
+      "draft": "04_script/chapters/CH07-recorded-power.md",
+      "depends_on": ["CH05", "CH06"],
+      "claims": ["CLM-0003"],
+      "target_words": {"min": 1000, "max": 1700}
+    },
+    {
+      "id": "CH08",
+      "slug": "technology-travels",
+      "title": "Một công nghệ rời khỏi nơi sinh ra",
+      "status": "planned",
+      "brief": "03_outline/chapters/CH08-technology-travels.md",
+      "draft": "04_script/chapters/CH08-technology-travels.md",
+      "depends_on": ["CH04", "CH07"],
+      "claims": ["CLM-0004"],
+      "target_words": {"min": 900, "max": 1500}
+    },
+    {
+      "id": "CH09",
+      "slug": "language-and-afterlife",
+      "title": "Khi ngôn ngữ đổi vai nhưng chữ còn sống",
+      "status": "planned",
+      "brief": "03_outline/chapters/CH09-language-and-afterlife.md",
+      "draft": "04_script/chapters/CH09-language-and-afterlife.md",
+      "depends_on": ["CH08"],
+      "claims": ["CLM-0004"],
+      "target_words": {"min": 900, "max": 1500}
+    },
+    {
+      "id": "CH10",
+      "slug": "legacy-of-clay",
+      "title": "Di sản của đất sét",
+      "status": "planned",
+      "brief": "03_outline/chapters/CH10-legacy-of-clay.md",
+      "draft": "04_script/chapters/CH10-legacy-of-clay.md",
+      "depends_on": ["CH01", "CH09"],
+      "claims": ["CLM-0004"],
+      "target_words": {"min": 700, "max": 1200}
+    }
+  ]
+}

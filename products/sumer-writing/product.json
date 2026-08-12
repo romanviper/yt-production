@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "slug": "sumer-writing",
+  "working_title": "Chữ viết đã tạo ra nền văn minh Sumer như thế nào?",
+  "language": "vi",
+  "format": "long_form_history_documentary",
+  "status": "discovery",
+  "created_at": "2026-08-12",
+  "target": {
+    "duration_minutes": {
+      "min": 60,
+      "max": 120
+    },
+    "narration_wpm": 140
+  },
+  "locked_decisions": [
+    {
+      "id": "DEC-0001",
+      "statement": "Sản phẩm đầu tiên kể câu chuyện về chữ viết của nền văn minh Sumer.",
+      "locked": true,
+      "by": "user",
+      "date": "2026-08-12"
+    },
+    {
+      "id": "DEC-0002",
+      "statement": "Fall of Civilizations là benchmark và đối thủ tham chiếu, không phải khuôn để sao chép.",
+      "locked": true,
+      "by": "user",
+      "date": "2026-08-12"
+    },
+    {
+      "id": "DEC-0003",
+      "statement": "Kịch bản dự kiến dài 1–2 giờ và phải được tạo, review, sửa theo module thay vì generate một lần toàn bộ.",
+      "locked": true,
+      "by": "user",
+      "date": "2026-08-12"
+    }
+  ],
+  "scope": {
+    "in": [
+      "Các áp lực và thực hành dẫn đến những hệ thống ghi dấu sớm ở miền nam Mesopotamia.",
+      "Sự biến đổi của chữ viết về hình thức, công dụng, người sử dụng và thiết chế kiểm soát.",
+      "Hệ quả đối với quản trị, trí nhớ, quyền lực, ngôn ngữ và truyền thống tri thức.",
+      "Sự lan truyền, thích nghi, suy yếu và di sản của truyền thống chữ hình nêm liên quan."
+    ],
+    "out": [
+      "Tổng sử chính trị đầy đủ của Sumer nếu không phục vụ causal chain của chữ viết.",
+      "Danh mục toàn bộ vua, thành bang, thần thoại hoặc thành tựu Sumer.",
+      "Sao chép structure, câu chữ, cadence hoặc persona của Fall of Civilizations."
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "Fall of Civilizations — The Sumerians: Fall of the First Cities",
+      "role": "direct_adjacent_competitor",
+      "url": "https://www.youtube.com/watch?v=d2lJUOv0hLA",
+      "differentiate_on": "Theo vòng đời của chữ viết như công nghệ–thiết chế thay vì kể tổng sử Sumer theo rise-and-fall."
+    }
+  ],
+  "gates": {
+    "G0": "ready_for_review",
+    "G1": "not_started",
+    "G2": "not_started",
+    "G3": "not_started",
+    "G4": "not_started",
+    "G5": "not_started",
+    "G6": "not_started",
+    "G7": "not_started"
+  }
+}

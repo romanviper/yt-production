@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "product": "sumer-writing",
+  "claims": [
+    {
+      "id": "CLM-0001",
+      "statement": "Người Sumer phát minh ra chữ viết.",
+      "type": "contested",
+      "confidence": "unrated",
+      "status": "open",
+      "sources": [],
+      "counterevidence": "Cần định nghĩa writing, xác định attribution của proto-cuneiform và đặt cạnh các truyền thống chữ viết độc lập hoặc gần đồng thời.",
+      "used_by": ["CH04"],
+      "notes": "Không được xuất hiện như fact trong title hoặc narration trước khi audit."
+    },
+    {
+      "id": "CLM-0002",
+      "statement": "Nhu cầu hành chính và quản lý surplus là động lực trung tâm dẫn tới hệ thống viết sớm ở Uruk.",
+      "type": "inference",
+      "confidence": "unrated",
+      "status": "open",
+      "sources": [],
+      "counterevidence": "Cần kiểm tra nhiều chức năng ban đầu, tranh luận về tokens/seals và nguy cơ kể origin theo đường thẳng.",
+      "used_by": ["CH02", "CH03"],
+      "notes": "Candidate causal mechanism, chưa phải premise fact."
+    },
+    {
+      "id": "CLM-0003",
+      "statement": "Khả năng viết đã tái phân phối quyền lực về phía các thiết chế và nhóm chuyên môn kiểm soát việc ghi chép.",
+      "type": "inference",
+      "confidence": "unrated",
+      "status": "open",
+      "sources": [],
+      "counterevidence": "Phải tách evidence về literacy, training, institutional control và variation theo thời kỳ/địa điểm.",
+      "used_by": ["CH05", "CH07"],
+      "notes": "Cần tránh áp category bureaucracy/literacy hiện đại."
+    },
+    {
+      "id": "CLM-0004",
+      "statement": "Truyền thống chữ hình nêm và việc học tiếng Sumer tồn tại lâu hơn các nhà nước Sumer ban đầu.",
+      "type": "fact",
+      "confidence": "unrated",
+      "status": "open",
+      "sources": [],
+      "counterevidence": "Cần định nghĩa mốc kết thúc, phân biệt script, language và scribal tradition.",
+      "used_by": ["CH08", "CH09", "CH10"],
+      "notes": "Candidate legacy spine."
+    }
+  ]
+}
