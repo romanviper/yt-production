@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "status": "in_progress",
+  "headline": "WS01 đang được thực hiện",
+  "material_points": [],
+  "decision": {
+    "required": false,
+    "question": "",
+    "recommendation": "",
+    "options": []
+  },
+  "next_step": "Hoàn tất evidence ledger và synthesis WS01."
+}
