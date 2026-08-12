@@ -91,6 +91,25 @@ def commits_in_range(base: str, head: str) -> list[str]:
     return [line.strip() for line in result.stdout.splitlines() if line.strip()]
 
 
+def effective_policy_base(base: str, head: str, governance: dict[str, Any] | None = None) -> str:
+    """Do not retroactively reject grandfathered bootstrap commits."""
+    policy = governance or load_governance()
+    baseline = policy.get("commit_policy", {}).get("baseline_commit")
+    if not baseline:
+        return base
+    base_precedes_baseline = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", base, baseline],
+        cwd=REPO_ROOT,
+        check=False,
+    ).returncode == 0
+    baseline_precedes_head = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", baseline, head],
+        cwd=REPO_ROOT,
+        check=False,
+    ).returncode == 0
+    return baseline if base_precedes_baseline and baseline_precedes_head else base
+
+
 def commit_paths(commit: str) -> list[str]:
     result = subprocess.run(
         ["git", "diff-tree", "--no-commit-id", "--name-only", "-r", commit],
@@ -113,7 +132,7 @@ def main() -> int:
     args = parser.parse_args()
     if args.command == "commit-range":
         errors = []
-        commits = commits_in_range(args.base, args.head)
+        commits = commits_in_range(effective_policy_base(args.base, args.head), args.head)
         for sha in commits:
             errors.extend(f"commit {sha}: {error}" for error in commit_scope_errors(commit_paths(sha)))
     else:
