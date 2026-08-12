@@ -59,7 +59,7 @@
   ],
   "stages": {
     "direction": "approved",
-    "research_plan": "draft",
+    "research_plan": "approved",
     "research": "not_started",
     "outline": "not_started",
     "sections": "not_started",
