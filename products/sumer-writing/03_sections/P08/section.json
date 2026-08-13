@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "P08",
+  "title": "Sống lâu bằng cách trở thành thứ khác",
+  "order": 8,
+  "status": "ready_for_draft",
+  "human_approved": false,
+  "dependencies": [
+    "P06",
+    "P07"
+  ],
+  "target_words": {
+    "min": 1050,
+    "max": 1300
+  }
+}

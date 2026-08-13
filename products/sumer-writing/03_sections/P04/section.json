@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "P04",
+  "title": "Một hệ thống học cách ghi ngôn ngữ",
+  "order": 4,
+  "status": "ready_for_draft",
+  "human_approved": false,
+  "dependencies": [
+    "P01",
+    "P03"
+  ],
+  "target_words": {
+    "min": 1050,
+    "max": 1300
+  }
+}

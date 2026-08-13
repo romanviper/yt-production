@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "section": "P03",
+  "claims": [
+    {
+      "id": "CLM-0004",
+      "statement": "The earliest Uruk IV corpus known to scholarship is overwhelmingly administrative; lexical texts become materially more visible in Uruk III.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0001"
+      ],
+      "counterevidence": "Survival and excavation bias mean the preserved corpus cannot prove that no other uses or media existed.",
+      "narrative_implication": "Early evidence supports an administrative center of gravity, not the claim that administration was the only origin or use.",
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-CLM-004"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0014",
+      "statement": "Administrative scale is a major formation pressure but not evidence that administration was the sole cause of writing.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0005",
+        "SRC-0001",
+        "SRC-0003"
+      ],
+      "counterevidence": "Preserved earliest texts are overwhelmingly administrative, but corpus survival is selective.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-CLM-004"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0015",
+      "statement": "The evidence supports a feedback model: expanding institutions demanded records, and better records could expand institutional capacity.",
+      "type": "inference",
+      "confidence": "medium",
+      "status": "qualified",
+      "sources": [
+        "SRC-0005",
+        "SRC-0001",
+        "SRC-0003"
+      ],
+      "counterevidence": "Downstream effects require WS06 case studies; WS02 cannot establish them alone.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-CLM-005"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0016",
+      "statement": "The preserved proto-cuneiform corpus can distinguish accounting contexts more securely than it can distinguish market exchange from tax, tribute or redistribution.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0001",
+        "SRC-0010"
+      ],
+      "counterevidence": "Named agents, commodities, metrology and document structure sometimes narrow the transaction, but sign readings and institutional context remain incomplete.",
+      "narrative_implication": "Use 'accounting/administrative transfer' unless reciprocity or institutional flow is independently demonstrated.",
+      "provenance": [
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-CLM-006"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0017",
+      "statement": "Redistribution, labor coordination, obligation and ownership are not interchangeable formation mechanisms: each requires different evidence beyond the presence of numbers and commodities.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0005",
+        "SRC-0001",
+        "SRC-0010"
+      ],
+      "counterevidence": "A single tablet may participate in more than one mechanism, and early terminology is partly reconstructed.",
+      "narrative_implication": "Label the mechanism only when flows, persons, quotas, duration, seals or transfer conditions support it.",
+      "provenance": [
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-CLM-007"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0018",
+      "statement": "Co-occurrence between urban institutional growth and record systems establishes pressure and compatibility, not a one-way proof that either caused the other.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0005",
+        "SRC-0003",
+        "SRC-0011"
+      ],
+      "counterevidence": "Later cases may demonstrate capacity effects, but those belong to WS06 and cannot be back-projected.",
+      "narrative_implication": "Present the WS02 feedback loop as a hypothesis to be tested, not as a completed causal verdict.",
+      "provenance": [
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-CLM-008"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-0001",
+      "title": "Proto-Cuneiform Account-Books and Journals",
+      "author": "Robert K. Englund",
+      "year": 2004,
+      "type": "scholarly chapter / corpus synthesis",
+      "authority": "Leading specialist synthesis grounded in the archaic tablet corpus and CDLI work.",
+      "url": "https://cdli.earth/files-up/publications/englund2004a.pdf",
+      "locators": [
+        "pp. 24–27 (PDF pp. 2–5), especially chronology figure and discussion of Uruk IV/III corpus",
+        "pp. 24–31",
+        "pp. 28–31"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Chronological ranges and corpus counts reflect the state of publication in 2004; some causal interpretation belongs to WS02.",
+        "Older chronology; causal interpretation remains debated.",
+        "Earliest corpus only."
+      ],
+      "notes": [
+        "Supports ca. 3300 BCE emergence, relative Uruk IV→III sequence, overwhelmingly administrative earliest corpus, and caution around token continuity.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-001"
+        },
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-002"
+        },
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-001"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0003",
+      "title": "Writing in Early Mesopotamia: Beyond the Meme",
+      "author": "Massimo Maiocchi",
+      "year": 2019,
+      "type": "peer-reviewed scholarly chapter",
+      "authority": "Assyriological synthesis focused on early Mesopotamian writing, semiotics and material systems.",
+      "url": "https://iris.unive.it/retrieve/e4239dde-83dd-7180-e053-3705fe0a3322/Maiocchi%20M.%202019%2C%20Writing%20in%20Early%20Mesopotamia%20--%20Beyond%20the%20Meme.pdf",
+      "locators": [
+        "pp. 410–412 (PDF pp. 15–17), especially discussion of glottographic/semasiographic boundary",
+        "pp. 410–412"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "The chapter advocates a fluid continuum; terminology is analytical rather than a universally accepted threshold definition.",
+        "Framework-oriented rather than a new excavation report."
+      ],
+      "notes": [
+        "Useful counterweight to a binary true-writing/proto-writing distinction and to a linear token→tablet story.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-003"
+        },
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0005",
+      "title": "Visible Language: Inventions of Writing in the Ancient Middle East and Beyond",
+      "author": "Christopher Woods (ed.)",
+      "year": 2010,
+      "type": "academic museum catalogue / comparative synthesis",
+      "authority": "University of Chicago Oriental Institute catalogue curated by a Sumerologist.",
+      "url": "https://isac.uchicago.edu/sites/default/files/uploads/shared/docs/oimp32.pdf",
+      "locators": [
+        "comparative chronology and essays on earliest Mesopotamian and Egyptian writing; catalogue overview",
+        "pp. 33–50; development of accounting systems",
+        "Mesopotamian writing essays"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Catalogue compresses specialist disagreements for comparative presentation; use for comparison scope, not exact Uruk stratigraphy.",
+        "Comparative overview; some pathways remain hypothetical.",
+        "Catalogue compresses disagreements."
+      ],
+      "notes": [
+        "Treats Mesopotamia and Egypt as roughly contemporary independent inventions; supports avoiding an unqualified unique 'world first' claim.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-005"
+        },
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-001"
+        },
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0010",
+      "title": "A Quantitative Analysis of Proto-Cuneiform Sign Use in Archaic Tribute",
+      "author": "Logan Born and Kathryn Erin Kelley, 2021",
+      "year": null,
+      "type": "peer-reviewed corpus study",
+      "authority": "CDLI corpus-based quantitative analysis",
+      "url": "https://cdli.earth/articles/cdlb/2021-6",
+      "locators": [
+        "§§1–3; corpus definition, sign-frequency and genre limits",
+        "§§1–3; 6,726-artifact working corpus and sign-use method"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Sign-frequency patterns do not by themselves establish sign meanings or causal direction.",
+        "Readability, sign variants, genre assignment and corpus growth constrain quantitative conclusions."
+      ],
+      "notes": [
+        "Used to test how far administrative subgenres can be distinguished from the preserved corpus.",
+        "Used to separate observed sign distribution from reconstructed linguistic value."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-005"
+        },
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-005"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0011",
+      "title": "Cuneiform Script and the Origin of the Oldest Writing Systems in Comparative Perspective",
+      "author": "Massimo Maiocchi, 2015",
+      "year": null,
+      "type": "specialist institutional essay",
+      "authority": "Institute for the Study of Ancient Cultures",
+      "url": "https://isac.uchicago.edu/sites/default/files/uploads/shared/docs/nn227.pdf",
+      "locators": [
+        "pp. 6–9; token frequency mismatch and multiple antecedent practices"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Short comparative synthesis, not a primary excavation report."
+      ],
+      "notes": [
+        "Used for the non-linear formation model and token-continuity limit."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-006"
+        }
+      ]
+    }
+  ],
+  "rule": "Only claims in this pack may appear as substantive historical claims in the draft."
+}

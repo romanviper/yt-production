@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "P09",
+  "title": "Ngày truyền thống sống ngừng tự tái tạo",
+  "order": 9,
+  "status": "ready_for_draft",
+  "human_approved": false,
+  "dependencies": [
+    "P08"
+  ],
+  "target_words": {
+    "min": 900,
+    "max": 1150
+  }
+}

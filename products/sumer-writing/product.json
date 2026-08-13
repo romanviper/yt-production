@@ -4,7 +4,7 @@
   "working_title": "Chữ viết đã tạo ra nền văn minh Sumer như thế nào?",
   "language": "vi",
   "format": "long_form_history_documentary",
-  "status": "outline_review",
+  "status": "section_drafting",
   "created_at": "2026-08-12",
   "target": {
     "duration_minutes": {
@@ -68,8 +68,8 @@
     "direction": "approved",
     "research_plan": "approved",
     "research": "approved",
-    "outline": "ready_for_review",
-    "sections": "not_started",
+    "outline": "approved",
+    "sections": "in_progress",
     "integration": "not_started",
     "delivery": "not_started"
   }

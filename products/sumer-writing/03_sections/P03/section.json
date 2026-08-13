@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "P03",
+  "title": "Khi quy mô vượt quá trí nhớ cục bộ",
+  "order": 3,
+  "status": "ready_for_draft",
+  "human_approved": false,
+  "dependencies": [
+    "P02"
+  ],
+  "target_words": {
+    "min": 1000,
+    "max": 1250
+  }
+}

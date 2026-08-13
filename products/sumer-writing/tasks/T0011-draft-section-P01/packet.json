@@ -1,0 +1,84 @@
+{
+  "schema_version": 2,
+  "compiler": "scripts/context_packet.py",
+  "context_sha256": "7049d3f033008694840d4fdd9b5a2051117af0a2037d6459ee077409597edc6d",
+  "authority": "product_agent",
+  "task_id": "T0011-draft-section-P01",
+  "product": "sumer-writing",
+  "operation": "draft_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "created_at": "2026-08-13T07:44:06.442Z",
+  "max_context_tokens": 18000,
+  "estimated_context_tokens": 11736,
+  "instruction_files": [
+    "system/core/invariants.md",
+    "system/standards/story.md",
+    "system/standards/writing-vi.md",
+    "system/operations/draft-section.md",
+    "system/standards/operator-interface.md"
+  ],
+  "inputs": [
+    {
+      "path": "02_outline/story-bible.md",
+      "sha256": "fc9521a9a807def534a93b8f20dad1f2970f14e5cd6a8868e282bf7bfa318a2f",
+      "bytes": 4837
+    },
+    {
+      "path": "03_sections/P01/section.json",
+      "sha256": "cee5419185c1e90457b9c44e484ded90388a8491652a04b2a78ef56356d2b03f",
+      "bytes": 250
+    },
+    {
+      "path": "03_sections/P01/brief.md",
+      "sha256": "e4636d347537ad0e16aa7451847030f388fdac74908f4bfe9c0bb6293a60eb01",
+      "bytes": 1222
+    },
+    {
+      "path": "03_sections/P01/evidence-pack.json",
+      "sha256": "7f8c60be19754fee95b69315d0ddb20942e2801145a0b6fd9197e2e2ad598f5d",
+      "bytes": 19583
+    },
+    {
+      "path": "03_sections/P01/continuity-in.md",
+      "sha256": "8c348fa31222e10128b5ed758db361831f226ff4cf225b63cbcaf319a94d953b",
+      "bytes": 208
+    }
+  ],
+  "operation_outputs": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md"
+  ],
+  "output_baselines": [
+    {
+      "path": "03_sections/P01/draft.md",
+      "sha256": null
+    },
+    {
+      "path": "03_sections/P01/handoff.md",
+      "sha256": null
+    }
+  ],
+  "allowed_write_paths": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md",
+    "tasks/T0011-draft-section-P01/report.md",
+    "tasks/T0011-draft-section-P01/operator-brief.json"
+  ],
+  "report_path": "tasks/T0011-draft-section-P01/report.md",
+  "operator_brief_path": "tasks/T0011-draft-section-P01/operator-brief.json",
+  "acceptance_criteria": [
+    "Chỉ viết section được chỉ định.",
+    "Mọi substantive claim nằm trong evidence pack.",
+    "Entry/exit state và bridge đúng brief.",
+    "Handoff tóm tắt continuity, setup/payoff và không thay thế draft."
+  ],
+  "validation": [
+    "python scripts/validate.py products/sumer-writing",
+    "python scripts/task.py verify products/sumer-writing T0011-draft-section-P01",
+    "python scripts/check_scope.py products/sumer-writing",
+    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0011-draft-section-P01/operator-brief.json"
+  ]
+}

@@ -1,7 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "product": "sumer-writing",
-  "status": "draft",
+  "status": "approved",
   "section_count": 10,
   "architecture": "lifecycle_with_causal_returns",
   "central_question": "Writing ở miền nam Mesopotamia đã cùng các thiết chế hình thành, trở thành capacity multiplier, thích nghi và cuối cùng sống sót qua recovery như thế nào?",
@@ -377,5 +377,7 @@
       "boundary": "Không hero-only decipherment or direct modern lineage.",
       "risk": "Keep archaeology concise; make recovery pay off causal model."
     }
-  ]
+  ],
+  "approved_by": "user",
+  "approved_at": "2026-08-13T07:44:06.442Z"
 }
