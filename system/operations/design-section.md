@@ -25,3 +25,5 @@ Evidence pack là phạm vi sự thật, không phải checklist phải kể h�
 `guardrail` dùng để ngăn overclaim, không tự động xuất hiện trong prose. `omit` nghĩa là fact đúng nhưng không phục vụ section hiện tại.
 
 Status phải là `draft`. Chỉ người dùng được approve story plan.
+
+Nếu packet có `story-plan-change-request.md`, đây là authority cho vòng hiện tại. Patch đúng các thay đổi được yêu cầu, giữ phần đã đạt và ghi rõ field nào đổi trong report. Không trả lại nguyên artifact cũ như một bản sửa.

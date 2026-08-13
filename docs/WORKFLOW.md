@@ -175,6 +175,15 @@ Nó đồng thời thiết kế 4–8 story beats theo tension và consequence. 
 python scripts/approval.py approve-story-plan products/<slug> P04
 ```
 
+Nếu chưa đạt, ghi change request rồi mở một design task mới:
+
+```bash
+python scripts/approval.py request-story-plan-changes products/<slug> P04 --request "Gộp hai beat định nghĩa; bỏ suy diễn về người tham gia."
+python scripts/task.py create products/<slug> design_section --section P04
+```
+
+Feedback trở thành input có hash của packet mới. Agent không được sửa lại task đã submit hoặc dựa vào phản hồi chỉ tồn tại trong chat.
+
 Approval sinh `narration-pack.json` bằng code. Pack này chỉ chứa evidence được phép dùng trong prose và khóa hash của story plan/evidence pack.
 
 ## 5. Người dùng gọi phần nào, Agent chỉ viết phần đó

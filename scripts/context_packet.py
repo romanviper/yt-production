@@ -92,7 +92,7 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
             raise ValueError("Outline must be human-approved first.")
         state = read_json_local(product_dir / "03_sections" / str(section) / "section.json")
         expected = {
-            "design_section": {"needs_story_plan", "changes_requested", "story_plan_review"},
+            "design_section": {"needs_story_plan", "story_plan_changes_requested"},
             "draft_section": {"ready_for_draft"},
             "review_section": {"ready_for_review"},
             "revise_section": {"changes_requested"},

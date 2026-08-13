@@ -124,7 +124,9 @@
         "03_sections/{section}/evidence-pack.json",
         "03_sections/{section}/continuity-in.md"
       ],
-      "optional_inputs": [],
+      "optional_inputs": [
+        "03_sections/{section}/story-plan-change-request.md"
+      ],
       "outputs": [
         "03_sections/{section}/story-plan.json"
       ],

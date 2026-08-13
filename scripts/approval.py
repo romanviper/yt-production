@@ -133,6 +133,26 @@ def request_changes(product_dir: Path, section: str, request: str) -> None:
     write_json(state_path, state)
 
 
+def request_story_plan_changes(product_dir: Path, section: str, request: str) -> None:
+    if not request.strip():
+        raise ValueError("Story-plan change request cannot be empty.")
+    root = product_dir / "03_sections" / section
+    state_path = root / "section.json"
+    state = read_json(state_path)
+    if state.get("status") != "story_plan_review":
+        raise ValueError(f"Story plan {section} is not awaiting human review.")
+    (root / "story-plan-change-request.md").write_text(
+        f"# Story Plan Change Request — {section}\n\n"
+        f"Requested by: user\n\nRequested at: {datetime.now(timezone.utc).isoformat()}\n\n"
+        f"## Required changes\n\n{request.strip()}\n",
+        encoding="utf-8",
+    )
+    state.update({"status": "story_plan_changes_requested", "human_approved": False})
+    state.pop("approved_by", None)
+    state.pop("approved_at", None)
+    write_json(state_path, state)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -147,6 +167,10 @@ def main() -> int:
     changes.add_argument("product", type=Path)
     changes.add_argument("section")
     changes.add_argument("--request", required=True)
+    story_changes = sub.add_parser("request-story-plan-changes")
+    story_changes.add_argument("product", type=Path)
+    story_changes.add_argument("section")
+    story_changes.add_argument("--request", required=True)
     args = parser.parse_args()
     product = args.product.resolve()
     try:
@@ -158,8 +182,10 @@ def main() -> int:
             approve_story_plan(product, args.section)
         elif args.command == "approve-section":
             approve_section(product, args.section)
-        else:
+        elif args.command == "request-changes":
             request_changes(product, args.section, args.request)
+        else:
+            request_story_plan_changes(product, args.section, args.request)
     except (ValueError, FileNotFoundError, KeyError) as exc:
         parser.error(str(exc))
     print(f"Recorded user action: {args.command}.")

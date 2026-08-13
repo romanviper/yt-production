@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from scripts.assemble import assemble_product
-from scripts.approval import approve_plan, approve_section, approve_story_plan, request_changes
+from scripts.approval import approve_plan, approve_section, approve_story_plan, request_changes, request_story_plan_changes
 from scripts.context_packet import compile_packet
 from scripts.consolidate_research import consolidate, verify_consolidation
 from scripts.governance import classify_paths, commit_scope_errors, product_task_violations
@@ -420,6 +420,25 @@ class ModularProductionTests(unittest.TestCase):
             self.assertIn("03_sections/P01/narration-pack.json", draft_context)
             self.assertNotIn("# BEGIN INPUT: 03_sections/P01/evidence-pack.json", draft_context)
             self.assertEqual("draft_section", draft_packet["operation"])
+
+    def test_story_plan_feedback_creates_a_fresh_design_input(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 1)
+            materialize_sections(product)
+            root = product / "03_sections" / "P01"
+            state = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            state["status"] = "story_plan_review"
+            write_json(root / "section.json", state)
+            with self.assertRaisesRegex(ValueError, "does not allow design_section"):
+                compile_packet(product, "design_section", "T0001", section="P01")
+            request = "Merge the definition beats and remove unsupported participants."
+            request_story_plan_changes(product, "P01", request)
+            state = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            self.assertEqual("story_plan_changes_requested", state["status"])
+            packet, context = compile_packet(product, "design_section", "T0002", section="P01")
+            self.assertIn(request, context)
+            self.assertIn("03_sections/P01/story-plan-change-request.md", [item["path"] for item in packet["inputs"]])
 
     def test_draft_packet_adds_only_approved_dependency_handoff(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

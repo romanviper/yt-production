@@ -28,6 +28,7 @@ Human approval commands:
 python scripts/approval.py approve-plan products/<slug>
 python scripts/approval.py approve-outline products/<slug>
 python scripts/approval.py approve-story-plan products/<slug> P04
+python scripts/approval.py request-story-plan-changes products/<slug> P04 --request "..."
 python scripts/approval.py approve-section products/<slug> P04
 python scripts/approval.py request-changes products/<slug> P04 --request "..."
 """
