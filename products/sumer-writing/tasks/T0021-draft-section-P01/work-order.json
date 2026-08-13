@@ -8,7 +8,7 @@
     "section": "P01",
     "unit": null
   },
-  "state": "ready_for_review",
+  "state": "cancelled",
   "created_at": "2026-08-13T16:48:49.978657+00:00",
   "context_packet": "tasks/T0021-draft-section-P01/context.md",
   "packet_manifest": "tasks/T0021-draft-section-P01/packet.json",
@@ -30,5 +30,6 @@
   ],
   "report_path": "tasks/T0021-draft-section-P01/report.md",
   "operator_brief_path": "tasks/T0021-draft-section-P01/operator-brief.json",
-  "submitted_at": "2026-08-13T16:50:59.520334+00:00"
+  "submitted_at": "2026-08-13T16:50:59.520334+00:00",
+  "updated_at": "2026-08-13T18:18:51.390135+00:00"
 }

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "id": "T0022-outline-outline",
+  "product": "sumer-writing",
+  "operation": "outline",
+  "target": {
+    "section": null,
+    "unit": null
+  },
+  "state": "ready",
+  "created_at": "2026-08-13T18:18:51.640670+00:00",
+  "context_packet": "tasks/T0022-outline-outline/context.md",
+  "packet_manifest": "tasks/T0022-outline-outline/packet.json",
+  "allowed_write_paths": [
+    "02_outline/outline.json",
+    "02_outline/story-bible.md",
+    "02_outline/voice-profile.md",
+    "tasks/T0022-outline-outline/report.md",
+    "tasks/T0022-outline-outline/operator-brief.json"
+  ],
+  "acceptance_criteria": [
+    "Thiết kế đúng ba act toàn phim: opening, body và ending.",
+    "Macro movement và production section phát sinh từ causal load, không từ một số lượng hoặc template mặc định.",
+    "Mỗi work unit chỉ khóa narrative job, state change, evidence allowance, continuity và length estimate.",
+    "Story bible và voice profile đủ giữ continuity/bản sắc nhưng không mang research dump hoặc surface imitation.",
+    "Không viết narration hoặc tự approve."
+  ],
+  "outputs": [
+    "02_outline/outline.json",
+    "02_outline/story-bible.md",
+    "02_outline/voice-profile.md"
+  ],
+  "report_path": "tasks/T0022-outline-outline/report.md",
+  "operator_brief_path": "tasks/T0022-outline-outline/operator-brief.json"
+}

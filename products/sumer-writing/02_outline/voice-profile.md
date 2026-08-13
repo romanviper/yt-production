@@ -1,6 +1,6 @@
 # Product Voice Profile — Sumer Writing
 
-Status: active
+Status: draft
 
 ## Product voice
 
