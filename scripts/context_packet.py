@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -21,6 +22,7 @@ try:
         sha256,
         write_json,
     )
+    from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
 except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.py
     from common import (
         REPO_ROOT,
@@ -34,6 +36,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
         sha256,
         write_json,
     )
+    from packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
 
 
 def validate_target(operation: str, spec: dict[str, Any], section: str | None, unit: str | None) -> None:
@@ -217,7 +220,9 @@ def compile_packet(
         raise ValueError(f"Context packet estimate {tokens} exceeds budget {budget}; compact an upstream artifact.")
 
     packet = {
-        "schema_version": 1,
+        "schema_version": PACKET_SCHEMA_VERSION,
+        "compiler": PACKET_COMPILER,
+        "context_sha256": hashlib.sha256(packet_text.encode("utf-8")).hexdigest(),
         "authority": "product_agent",
         "task_id": task_id,
         "product": product_dir.name,

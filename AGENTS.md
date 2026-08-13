@@ -43,6 +43,8 @@ Ví dụ: “viết phần P04”, “review phần P07”, “research workstre
 2. Router phải tạo work order và context packet thành công trước khi làm nội dung.
 3. Sau đó thực hiện đúng packet. Nếu task cũ còn active, không ghi đè im lặng.
 
+`ACTIVE.json`, `work-order.json`, `packet.json` và `context.md` là artifact do router quản lý. Product Agent không được tự tạo hoặc sửa chúng để mô phỏng một task; nếu router không tạo được packet hợp lệ, hãy báo blocker hệ thống.
+
 Các operation hợp lệ nằm trong `system/operations/registry.json`. Không tự chế operation ngoài registry.
 
 ## Khi người dùng chỉ hỏi tình trạng, giải thích hoặc review read-only
@@ -63,6 +65,7 @@ Các operation hợp lệ nằm trong `system/operations/registry.json`. Không 
 - `approved` chỉ do con người đặt.
 - Không chạy `scripts/approval.py` nếu người dùng không vừa đưa ra quyết định approve/request-changes rõ ràng.
 - Packet stale, thiếu source hoặc vượt context budget là blocker, không phải giấy phép suy diễn.
+- Task packet chỉ hợp lệ khi được tạo bằng `scripts/task.py create`; không thay router bằng JSON hoặc context viết tay.
 - System defect là escalation, không phải giấy phép mở rộng product task.
 
 ## Operator Interface

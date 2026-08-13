@@ -14,6 +14,7 @@ from scripts.materialize_research import materialize as materialize_research
 from scripts.materialize_sections import materialize as materialize_sections
 from scripts.new_product import DEFAULT_TEMPLATE_ROOT, create_product
 from scripts.operator_brief import MAX_RENDERED_WORDS, render_brief, validate_brief
+from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
 from scripts.task import create_task, submit_task, verify_task
 from scripts.validate import validate_product
 from scripts.common import word_count
@@ -181,6 +182,8 @@ class ModularProductionTests(unittest.TestCase):
             packet = json.loads((product / work["packet_manifest"]).read_text(encoding="utf-8"))
             self.assertEqual("product_agent", work["authority"])
             self.assertEqual("product_agent", packet["authority"])
+            self.assertEqual(PACKET_SCHEMA_VERSION, packet["schema_version"])
+            self.assertEqual(PACKET_COMPILER, packet["compiler"])
 
     def test_research_workstreams_are_isolated(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -251,6 +254,16 @@ class ModularProductionTests(unittest.TestCase):
                 (root / "synthesis.md").write_text(f"# {unit}\n\nStatus: complete\n", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "Incomplete workstream ledgers: WS02"):
                 compile_packet(product, "research_synthesis", "T0001")
+
+            root = product / "01_research" / "workstreams" / "WS02"
+            write_json(root / "sources.json", {"schema_version": 1, "workstream": "WS02", "status": "complete", "sources": []})
+            write_json(root / "claims.json", {"schema_version": 1, "workstream": "WS02", "status": "complete", "claims": []})
+            (root / "synthesis.md").write_text("# WS02\n\nStatus: complete\n", encoding="utf-8")
+            packet, context = compile_packet(product, "research_synthesis", "T0002")
+            self.assertTrue(packet["inputs"])
+            self.assertTrue(all(set(record) == {"path", "sha256", "bytes"} for record in packet["inputs"]))
+            self.assertIn("01_research/workstreams/WS01/synthesis.md", context)
+            self.assertIn("01_research/workstreams/WS02/synthesis.md", context)
 
     def test_ten_part_draft_packet_contains_only_selected_part(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -327,6 +340,33 @@ class ModularProductionTests(unittest.TestCase):
             with (product / "00_brief" / "product-brief.md").open("a", encoding="utf-8") as handle:
                 handle.write("\nChanged after packet creation.\n")
             self.assertTrue(any("stale input" in item for item in verify_task(product, work["id"])))
+
+    def test_malformed_packet_is_rejected_without_crashing(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            state = json.loads((product / "product.json").read_text(encoding="utf-8"))
+            state["stages"]["direction"] = "approved"
+            write_json(product / "product.json", state)
+            work = create_task(product, "research_plan", None, None, False)
+            packet_path = product / work["packet_manifest"]
+            packet = json.loads(packet_path.read_text(encoding="utf-8"))
+            packet["inputs"] = ["00_brief/product-brief.md"]
+            write_json(packet_path, packet)
+            errors = verify_task(product, work["id"])
+            self.assertTrue(any("compiled record" in item for item in errors))
+            issues = validate_product(product)
+            self.assertTrue(any("compiled record" in issue.message for issue in issues))
+
+    def test_compiled_context_cannot_be_replaced_after_task_creation(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            state = json.loads((product / "product.json").read_text(encoding="utf-8"))
+            state["stages"]["direction"] = "approved"
+            write_json(product / "product.json", state)
+            work = create_task(product, "research_plan", None, None, False)
+            context_path = product / work["context_packet"]
+            context_path.write_text("Hand-written replacement.\n", encoding="utf-8")
+            self.assertTrue(any("context packet is stale" in item for item in verify_task(product, work["id"])))
 
     def test_task_submission_requires_changed_artifact_and_report(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

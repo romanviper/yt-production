@@ -4,6 +4,8 @@
 
 Một Agent mới phải có thể hoàn thành một nghiệp vụ mà không cần biết toàn bộ lịch sử cuộc trò chuyện hay đọc toàn repo. Mỗi lượt làm việc nhận một context packet có version, token budget, input hash và write scope.
 
+Work order, packet manifest, compiled context và `ACTIVE.json` là control artifact do router sinh ra. Agent thực hiện nội dung chỉ ghi các output được packet cho phép; không dựng hoặc vá các control artifact bằng tay. Packet version 2 mang định danh compiler và hash của chính compiled context, nên validator phát hiện cả input stale lẫn context bị thay thế.
+
 ## Ranh giới theo SOLID
 
 | Nguyên tắc | Cách repo áp dụng |

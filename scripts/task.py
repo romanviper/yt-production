@@ -13,11 +13,13 @@ try:
     from scripts.common import load_registry, product_relative, read_json, sha256, word_count, write_json
     from scripts.context_packet import compile_packet
     from scripts.operator_brief import empty_brief, render_brief, validate_brief_file
+    from scripts.packet_contract import validate_packet_contract
     from scripts.research_plan_contract import validate_research_plan_contract
 except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from common import load_registry, product_relative, read_json, sha256, word_count, write_json
     from context_packet import compile_packet
     from operator_brief import empty_brief, render_brief, validate_brief_file
+    from packet_contract import validate_packet_contract
     from research_plan_contract import validate_research_plan_contract
 
 
@@ -85,7 +87,9 @@ def verify_task(product_dir: Path, task_id: str) -> list[str]:
     task_dir = product_dir / "tasks" / task_id
     work = read_json(task_dir / "work-order.json")
     packet = read_json(task_dir / "packet.json")
-    errors: list[str] = []
+    errors = validate_packet_contract(packet, task_dir / "context.md")
+    if errors:
+        return errors
     for record in packet["inputs"]:
         path = product_dir / record["path"]
         if not path.is_file():
@@ -98,6 +102,16 @@ def verify_task(product_dir: Path, task_id: str) -> list[str]:
         errors.append("work-order scope differs from packet")
     if work.get("authority") != "product_agent" or work.get("authority") != packet.get("authority"):
         errors.append("invalid or mismatched product task authority")
+    expected_manifest = f"tasks/{task_id}/packet.json"
+    expected_context = f"tasks/{task_id}/context.md"
+    if work.get("id") != task_id or packet.get("task_id") != task_id:
+        errors.append("task id differs between task directory, work order and packet")
+    if work.get("product") != product_dir.name or packet.get("product") != product_dir.name:
+        errors.append("product differs between directory, work order and packet")
+    if work.get("operation") != packet.get("operation") or work.get("target") != packet.get("target"):
+        errors.append("operation target differs between work order and packet")
+    if work.get("packet_manifest") != expected_manifest or work.get("context_packet") != expected_context:
+        errors.append("work order must point to its router-generated packet and context")
     return errors
 
 
@@ -108,6 +122,8 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     work = read_json(work_path)
     packet = read_json(task_dir / "packet.json")
     errors = verify_task(product_dir, task_id)
+    if errors:
+        return errors
     changed_outputs = 0
     for record in packet.get("output_baselines", []):
         path = product_dir / record["path"]
