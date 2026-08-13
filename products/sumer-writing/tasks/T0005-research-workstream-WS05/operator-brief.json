@@ -1,17 +1,26 @@
 {
   "schema_version": 1,
   "status": "ready_for_review",
-  "headline": "WS05 đã được nâng từ initial_pass lên complete theo completion criteria riêng; synthesis handoff đã đủ để dùng về sau.",
+  "headline": "WS05 đã vá xong khoảng trống: shortlist không còn placeholder và gồm bốn text/object cụ thể với provenance, edition và rights flag.",
   "material_points": [
-    "Giữ lại toàn bộ nguồn và claim đang dùng được; chỉ thêm 1 nguồn và 3 claim để vá khoảng trống.",
-    "Handoff đã nêu rõ chronology, supported/disputed claims, unknowns, scope limits và dependency.",
-    "Không chạy global synthesis và không tự approve sản phẩm."
+    "Bốn case đã khóa: P005390, MMA 86.11.111, P228744/Q000001 và ETCSL 3.1.19; mỗi case phục vụ một functional turn riêng.",
+    "Hai giới hạn quan trọng được giữ rõ: Met/Uruk provenance có qualification, còn ETCSL 3.1.19 là composite từ các bản sao Old Babylonian chứ không phải thư Ur III đương thời.",
+    "Ảnh Met là Public Domain; ảnh Penn và quotation từ ETCSL/CTMMA chưa được coi là cleared. Không workstream khác hoặc global synthesis bị sửa."
   ],
   "decision": {
-    "required": false,
-    "question": "",
-    "recommendation": "",
-    "options": []
+    "required": true,
+    "question": "Bạn có chấp nhận shortlist và các rights/provenance boundary này để khóa WS05 không?",
+    "recommendation": "Chấp nhận WS05; bốn case đủ rộng để chứng minh functional turns nhưng vẫn bounded và kiểm chứng được.",
+    "options": [
+      {
+        "label": "Chấp nhận WS05",
+        "effect": "Khóa handoff WS05; global synthesis vẫn chờ lệnh riêng."
+      },
+      {
+        "label": "Yêu cầu sửa",
+        "effect": "Giữ WS05 ở review và chỉ thay case hoặc boundary bạn chỉ định."
+      }
+    ]
   },
-  "next_step": "Dependency handoff đã sẵn sàng cho workstream kế tiếp."
+  "next_step": "Chờ quyết định của operator; không tự approve và không chạy global synthesis."
 }
