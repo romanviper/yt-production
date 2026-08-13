@@ -101,12 +101,16 @@ def verify_task(product_dir: Path, task_id: str) -> list[str]:
     errors = validate_packet_contract(packet, task_dir / "context.md")
     if errors:
         return errors
-    for record in packet["inputs"]:
-        path = product_dir / record["path"]
-        if not path.is_file():
-            errors.append(f"missing input: {record['path']}")
-        elif sha256(path) != record["sha256"]:
-            errors.append(f"stale input: {record['path']}")
+    # Freshness protects work that has not yet been submitted. Once submitted,
+    # router-owned state transitions and later human decisions may legitimately
+    # change an input while the packet remains the immutable historical record.
+    if work.get("state") in {"ready", "in_progress"}:
+        for record in packet["inputs"]:
+            path = product_dir / record["path"]
+            if not path.is_file():
+                errors.append(f"missing input: {record['path']}")
+            elif sha256(path) != record["sha256"]:
+                errors.append(f"stale input: {record['path']}")
     if packet["estimated_context_tokens"] > packet["max_context_tokens"]:
         errors.append("context budget exceeded")
     if work["allowed_write_paths"] != packet["allowed_write_paths"]:

@@ -555,6 +555,47 @@ class ModularProductionTests(unittest.TestCase):
             submitted = json.loads((product / "tasks" / work["id"] / "work-order.json").read_text(encoding="utf-8"))
             self.assertEqual("ready_for_review", submitted["state"])
 
+    def test_submitted_task_allows_router_owned_state_transition(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 1)
+            materialize_sections(product)
+            work = create_task(product, "design_section", "P01", None, False)
+            root = product / "03_sections" / "P01"
+            evidence = json.loads((root / "evidence-pack.json").read_text(encoding="utf-8"))
+            claim_id = evidence["claims"][0]["id"]
+            write_json(
+                root / "story-plan.json",
+                {
+                    "schema_version": 1,
+                    "section": "P01",
+                    "status": "draft",
+                    "governing_idea": "A durable mark preserves selected information without recording complete speech.",
+                    "audience_question": "What can the mark preserve?",
+                    "audience_payoff": "Selected information can persist on a durable object.",
+                    "evidence_roles": {"narrated": [claim_id], "support": [], "guardrail": [], "omit": []},
+                    "claim_use": {claim_id: "It proves the limited capacity revealed by the section."},
+                    "beats": [
+                        {"id": "B01", "function": "hook", "purpose": "Open on the object as an unresolved problem.", "audience_change": "The object becomes a question.", "claim_ids": [claim_id]},
+                        {"id": "B02", "function": "tension", "purpose": "Ask what survives without complete speech.", "audience_change": "The audience sees the information gap.", "claim_ids": []},
+                        {"id": "B03", "function": "payoff", "purpose": "Reveal the selected information that persists.", "audience_change": "The audience names the limited capacity.", "claim_ids": []},
+                        {"id": "B04", "function": "bridge", "purpose": "Open the question of how that capacity formed.", "audience_change": "The answer creates the next question.", "claim_ids": []},
+                    ],
+                    "terminology": [],
+                    "opening_move": "Begin close to one object and make its limitation visible.",
+                    "ending_move": "Name the limited capacity and open its formation question.",
+                    "comprehension_test": "The audience can explain the capacity in one sentence.",
+                },
+            )
+            (product / "tasks" / work["id"] / "report.md").write_text("Diagnostic task report with completed contract details.\n", encoding="utf-8")
+            write_json(product / "tasks" / work["id"] / "operator-brief.json", valid_operator_brief())
+            self.assertEqual([], submit_task(product, work["id"]))
+            state = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            self.assertEqual("story_plan_review", state["status"])
+            self.assertEqual([], verify_task(product, work["id"]))
+            issues = validate_product(product)
+            self.assertFalse(any("stale input" in issue.message for issue in issues))
+
     def test_operator_brief_is_short_while_report_can_remain_deep(self) -> None:
         document = valid_operator_brief()
         rendered = render_brief(document)
