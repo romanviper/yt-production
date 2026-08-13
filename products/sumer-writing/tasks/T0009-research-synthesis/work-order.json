@@ -13,21 +13,17 @@
   "context_packet": "tasks/T0009-research-synthesis/context.md",
   "packet_manifest": "tasks/T0009-research-synthesis/packet.json",
   "allowed_write_paths": [
-    "01_research/source-index.json",
-    "01_research/claim-ledger.json",
     "01_research/research-synthesis.md",
     "tasks/T0009-research-synthesis/report.md",
     "tasks/T0009-research-synthesis/operator-brief.json"
   ],
   "acceptance_criteria": [
     "Không mất contradiction hoặc unknown giữa các workstream.",
-    "Deduplicate source/claim và giữ provenance.",
+    "Dùng global ledgers do deterministic consolidation tạo; không remap hoặc rewrite chúng trong AI task.",
     "Synthesis tổ chức theo causal questions, không theo thứ tự nguồn.",
     "Không viết outline hoặc narration."
   ],
   "outputs": [
-    "01_research/source-index.json",
-    "01_research/claim-ledger.json",
     "01_research/research-synthesis.md"
   ],
   "report_path": "tasks/T0009-research-synthesis/report.md",

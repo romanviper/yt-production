@@ -1,5 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
+  "compiler": "scripts/context_packet.py",
+  "context_sha256": "da8afcfe4f5e020c058e39b32797b74c32a8f3d58e4408d4a8f0be3de8f349b6",
   "authority": "product_agent",
   "task_id": "T0009-research-synthesis",
   "product": "sumer-writing",
@@ -10,7 +12,7 @@
   },
   "created_at": "2026-08-13T13:00:00.000Z",
   "max_context_tokens": 32000,
-  "estimated_context_tokens": 30000,
+  "estimated_context_tokens": 23308,
   "instruction_files": [
     "system/core/invariants.md",
     "system/standards/evidence.md",
@@ -18,20 +20,72 @@
     "system/standards/operator-interface.md"
   ],
   "inputs": [
-    "00_brief/product-brief.md",
-    "01_research/plan.json",
-    "01_research/workstreams/*/synthesis.md",
-    "01_research/workstreams/*/sources.json",
-    "01_research/workstreams/*/claims.json"
+    {
+      "path": "00_brief/product-brief.md",
+      "sha256": "bb8bc646f4d7756ee3c6cc7a12f1f1833c4eab9f6bf84a642fa2609e01a6f89f",
+      "bytes": 2317
+    },
+    {
+      "path": "01_research/plan.json",
+      "sha256": "521a5dcb24230a10900f79746411c4c3b410ad81856828408efae326db6d61ec",
+      "bytes": 16255
+    },
+    {
+      "path": "01_research/consolidation.json",
+      "sha256": "f114211692e17f3f61241c23c1802b48eaab44b40b226a313c97e27754b871e7",
+      "bytes": 3316
+    },
+    {
+      "path": "01_research/workstreams/WS01/synthesis.md",
+      "sha256": "65566e2a0c68fe2b39f0202d5d5eeaed5fb576089d533ca34983ebac7c00827a",
+      "bytes": 7527
+    },
+    {
+      "path": "01_research/workstreams/WS02/synthesis.md",
+      "sha256": "c502720b5b88ac2210413166e10b5e54fcf6c54574f44edda8255f8ee465ea54",
+      "bytes": 4827
+    },
+    {
+      "path": "01_research/workstreams/WS03/synthesis.md",
+      "sha256": "d4770e357d03985d328fbc75ffb6523426ab77e25ec7500f2fa867c4528dc6d3",
+      "bytes": 4170
+    },
+    {
+      "path": "01_research/workstreams/WS04/synthesis.md",
+      "sha256": "24884a175d71971e8095fb17e913dd91113adad3f78b2ceb83f85ef9ccba00e2",
+      "bytes": 4476
+    },
+    {
+      "path": "01_research/workstreams/WS05/synthesis.md",
+      "sha256": "89302d45aaad1c7a2f1689cd6362908eb23e573c3e2fab8032a8e4029c6ee954",
+      "bytes": 7430
+    },
+    {
+      "path": "01_research/workstreams/WS06/synthesis.md",
+      "sha256": "6b92f4ee9a7d1aa83de3227654debb508615f6748724ea9f44a33596b0f23933",
+      "bytes": 4276
+    },
+    {
+      "path": "01_research/workstreams/WS07/synthesis.md",
+      "sha256": "e179321722bc735283cf64d9b9a01d14fe92e90c3c31f0a58f3a711d771aec2b",
+      "bytes": 3596
+    },
+    {
+      "path": "01_research/workstreams/WS08/synthesis.md",
+      "sha256": "66a1d33365a5230e536ed3c405396aab61dbae16b93450f20ba2e710de5880a8",
+      "bytes": 4226
+    }
   ],
   "operation_outputs": [
-    "01_research/source-index.json",
-    "01_research/claim-ledger.json",
     "01_research/research-synthesis.md"
   ],
+  "output_baselines": [
+    {
+      "path": "01_research/research-synthesis.md",
+      "sha256": "0c27e4bccbe9116d03a2e379146f9c1bcd531306beec9f157585310a8897d6d6"
+    }
+  ],
   "allowed_write_paths": [
-    "01_research/source-index.json",
-    "01_research/claim-ledger.json",
     "01_research/research-synthesis.md",
     "tasks/T0009-research-synthesis/report.md",
     "tasks/T0009-research-synthesis/operator-brief.json"
@@ -40,7 +94,7 @@
   "operator_brief_path": "tasks/T0009-research-synthesis/operator-brief.json",
   "acceptance_criteria": [
     "Không mất contradiction hoặc unknown giữa các workstream.",
-    "Deduplicate source/claim và giữ provenance.",
+    "Dùng global ledgers do deterministic consolidation tạo; không remap hoặc rewrite chúng trong AI task.",
     "Synthesis tổ chức theo causal questions, không theo thứ tự nguồn.",
     "Không viết outline hoặc narration."
   ],
