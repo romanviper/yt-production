@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "task_id": "T0009-research-synthesis",
+  "product": "sumer-writing",
+  "operation": "research_synthesis",
+  "target": {
+    "section": null,
+    "unit": null
+  },
+  "created_at": "2026-08-13T13:00:00.000Z",
+  "max_context_tokens": 32000,
+  "estimated_context_tokens": 30000,
+  "instruction_files": [
+    "system/core/invariants.md",
+    "system/standards/evidence.md",
+    "system/operations/research-synthesis.md",
+    "system/standards/operator-interface.md"
+  ],
+  "inputs": [
+    "00_brief/product-brief.md",
+    "01_research/plan.json",
+    "01_research/workstreams/*/synthesis.md",
+    "01_research/workstreams/*/sources.json",
+    "01_research/workstreams/*/claims.json"
+  ],
+  "operation_outputs": [
+    "01_research/source-index.json",
+    "01_research/claim-ledger.json",
+    "01_research/research-synthesis.md"
+  ],
+  "allowed_write_paths": [
+    "01_research/source-index.json",
+    "01_research/claim-ledger.json",
+    "01_research/research-synthesis.md",
+    "tasks/T0009-research-synthesis/report.md",
+    "tasks/T0009-research-synthesis/operator-brief.json"
+  ],
+  "report_path": "tasks/T0009-research-synthesis/report.md",
+  "operator_brief_path": "tasks/T0009-research-synthesis/operator-brief.json",
+  "acceptance_criteria": [
+    "Không mất contradiction hoặc unknown giữa các workstream.",
+    "Deduplicate source/claim và giữ provenance.",
+    "Synthesis tổ chức theo causal questions, không theo thứ tự nguồn.",
+    "Không viết outline hoặc narration."
+  ],
+  "validation": [
+    "python scripts/validate.py products/sumer-writing",
+    "python scripts/task.py verify products/sumer-writing T0009-research-synthesis",
+    "python scripts/check_scope.py products/sumer-writing",
+    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0009-research-synthesis/operator-brief.json"
+  ]
+}

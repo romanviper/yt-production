@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "id": "T0009-research-synthesis",
+  "product": "sumer-writing",
+  "operation": "research_synthesis",
+  "target": {
+    "section": null,
+    "unit": null
+  },
+  "state": "ready_for_review",
+  "created_at": "2026-08-13T13:00:00.000Z",
+  "context_packet": "tasks/T0009-research-synthesis/context.md",
+  "packet_manifest": "tasks/T0009-research-synthesis/packet.json",
+  "allowed_write_paths": [
+    "01_research/source-index.json",
+    "01_research/claim-ledger.json",
+    "01_research/research-synthesis.md",
+    "tasks/T0009-research-synthesis/report.md",
+    "tasks/T0009-research-synthesis/operator-brief.json"
+  ],
+  "acceptance_criteria": [
+    "Không mất contradiction hoặc unknown giữa các workstream.",
+    "Deduplicate source/claim và giữ provenance.",
+    "Synthesis tổ chức theo causal questions, không theo thứ tự nguồn.",
+    "Không viết outline hoặc narration."
+  ],
+  "outputs": [
+    "01_research/source-index.json",
+    "01_research/claim-ledger.json",
+    "01_research/research-synthesis.md"
+  ],
+  "report_path": "tasks/T0009-research-synthesis/report.md",
+  "operator_brief_path": "tasks/T0009-research-synthesis/operator-brief.json",
+  "submitted_at": "2026-08-13T13:00:00.000Z",
+  "updated_at": "2026-08-13T13:00:00.000Z"
+}

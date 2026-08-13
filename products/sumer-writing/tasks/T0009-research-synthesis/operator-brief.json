@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "Global research synthesis đã hoàn tất; causal model đủ để dựng outline mà không cần biến title thành kết luận.",
+  "material_points": [
+    "Spine đề xuất: institutional pressure → information ecology → technical/language expansion → scribal embedding → capacity/power feedback → adaptation → contraction and recovery.",
+    "Các contradiction về invention, token continuity, causation, access và legacy được giữ cùng provenance; không bị làm phẳng.",
+    "Không có blocker cho outline; rủi ro chính là nhảy thời gian Uruk→Ur III, suy rộng từ archive và quyền dùng quote/image."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Bạn chấp nhận causal model này để chuyển sang operation outline, hay yêu cầu sửa synthesis?",
+    "recommendation": "Chấp nhận synthesis và giữ title như câu hỏi được kiểm nghiệm, không phải premise fact.",
+    "options": [
+      {
+        "label": "Chấp nhận",
+        "effect": "Khóa synthesis và cho phép tạo task outline."
+      },
+      {
+        "label": "Yêu cầu sửa",
+        "effect": "Giữ outline bị khóa và sửa đúng causal decision/claim được chỉ định."
+      }
+    ]
+  },
+  "next_step": "Chờ human review của global research synthesis."
+}
