@@ -17,6 +17,8 @@ try:
     from scripts.outline_contract import validate_outline_contract
     from scripts.packet_contract import validate_packet_contract
     from scripts.research_plan_contract import validate_research_plan_contract
+    from scripts.story_plan_contract import validate_story_plan
+    from scripts.voice_profile_contract import validate_voice_profile
 except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from common import load_registry, product_relative, read_json, sha256, word_count, write_json
     from consolidate_research import ensure_consolidated
@@ -25,6 +27,8 @@ except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from outline_contract import validate_outline_contract
     from packet_contract import validate_packet_contract
     from research_plan_contract import validate_research_plan_contract
+    from story_plan_contract import validate_story_plan
+    from voice_profile_contract import validate_voice_profile
 
 
 def next_task_id(product_dir: Path, operation: str, section: str | None, unit: str | None) -> str:
@@ -161,7 +165,9 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     if section:
         state_path = product_dir / "03_sections" / section / "section.json"
         state = read_json(state_path)
-        if work["operation"] in {"draft_section", "revise_section"}:
+        if work["operation"] == "design_section":
+            state["status"] = "story_plan_review"
+        elif work["operation"] in {"draft_section", "revise_section"}:
             state["status"] = "ready_for_review"
         elif work["operation"] == "review_section":
             state["status"] = "review_complete"
@@ -245,8 +251,21 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
             claims_doc = read_json(product_dir / "01_research" / "claim-ledger.json")
             known_claim_ids = {item.get("id") for item in claims_doc.get("claims", []) if item.get("id")}
             errors.extend(validate_outline_contract(outline, known_claim_ids))
+            voice_profile = (product_dir / "02_outline" / "voice-profile.md").read_text(encoding="utf-8")
+            errors.extend(validate_voice_profile(voice_profile))
             if outline.get("status") == "approved":
                 errors.append("Agent may not self-approve outline")
+            if "Status: approved" in voice_profile:
+                errors.append("Agent may not self-approve voice profile")
+        elif operation == "design_section":
+            section = target["section"]
+            root = product_dir / "03_sections" / section
+            story_plan = read_json(root / "story-plan.json")
+            evidence = read_json(root / "evidence-pack.json")
+            claim_ids = {item.get("id") for item in evidence.get("claims", []) if item.get("id")}
+            errors.extend(validate_story_plan(story_plan, claim_ids))
+            if story_plan.get("status") == "approved":
+                errors.append("Agent may not self-approve story plan")
         elif operation in {"draft_section", "revise_section"}:
             section = target["section"]
             root = product_dir / "03_sections" / section

@@ -83,6 +83,7 @@
         "system/standards/channel.md",
         "system/standards/evidence.md",
         "system/standards/story.md",
+        "system/standards/voice.md",
         "system/operations/outline.md"
       ],
       "required_inputs": [
@@ -94,13 +95,44 @@
       "optional_inputs": [],
       "outputs": [
         "02_outline/outline.json",
-        "02_outline/story-bible.md"
+        "02_outline/story-bible.md",
+        "02_outline/voice-profile.md"
       ],
       "acceptance": [
         "Outline có đúng số section đã chọn và ID ổn định.",
         "Mỗi section có một narrative job, state change, claim set và word budget.",
         "Tổng arc trả North Star và khác biệt rõ với benchmark.",
-        "Story bible đủ continuity nhưng nằm trong giới hạn compact."
+        "Story bible đủ continuity nhưng nằm trong giới hạn compact.",
+        "Voice profile chuyển benchmark thành chức năng và test nguyên bản; không mô phỏng surface style."
+      ]
+    },
+    "design_section": {
+      "target_kind": "section",
+      "include_dependency_handoffs": true,
+      "max_context_tokens": 18000,
+      "instruction_files": [
+        "system/core/invariants.md",
+        "system/standards/story.md",
+        "system/standards/voice.md",
+        "system/operations/design-section.md"
+      ],
+      "required_inputs": [
+        "02_outline/story-bible.md",
+        "02_outline/voice-profile.md",
+        "03_sections/{section}/section.json",
+        "03_sections/{section}/brief.md",
+        "03_sections/{section}/evidence-pack.json",
+        "03_sections/{section}/continuity-in.md"
+      ],
+      "optional_inputs": [],
+      "outputs": [
+        "03_sections/{section}/story-plan.json"
+      ],
+      "acceptance": [
+        "Một governing idea và audience payoff được diễn đạt bằng ngôn ngữ phổ thông.",
+        "Mọi claim được phân vai; chỉ 1–5 claim được chọn để narration thực sự kể.",
+        "Story beats tiến theo tension và consequence, không theo thứ tự evidence pack.",
+        "Không viết narration hoặc tự approve story plan."
       ]
     },
     "draft_section": {
@@ -110,14 +142,17 @@
       "instruction_files": [
         "system/core/invariants.md",
         "system/standards/story.md",
+        "system/standards/voice.md",
         "system/standards/writing-vi.md",
         "system/operations/draft-section.md"
       ],
       "required_inputs": [
         "02_outline/story-bible.md",
+        "02_outline/voice-profile.md",
         "03_sections/{section}/section.json",
         "03_sections/{section}/brief.md",
-        "03_sections/{section}/evidence-pack.json",
+        "03_sections/{section}/story-plan.json",
+        "03_sections/{section}/narration-pack.json",
         "03_sections/{section}/continuity-in.md"
       ],
       "optional_inputs": [],
@@ -127,9 +162,9 @@
       ],
       "acceptance": [
         "Chỉ viết section được chỉ định.",
-        "Mọi substantive claim nằm trong evidence pack.",
+        "Chỉ dùng claim được story plan chọn; narration pack là trần, không phải checklist.",
         "Entry/exit state và bridge đúng brief.",
-        "Handoff tóm tắt continuity, setup/payoff và không thay thế draft."
+        "Văn nói phổ thông truyền đạt được governing idea; handoff không thay thế draft."
       ]
     },
     "review_section": {
@@ -140,13 +175,16 @@
         "system/core/invariants.md",
         "system/standards/evidence.md",
         "system/standards/review.md",
+        "system/standards/voice.md",
         "system/operations/review-section.md"
       ],
       "required_inputs": [
         "02_outline/story-bible.md",
+        "02_outline/voice-profile.md",
         "03_sections/{section}/section.json",
         "03_sections/{section}/brief.md",
-        "03_sections/{section}/evidence-pack.json",
+        "03_sections/{section}/story-plan.json",
+        "03_sections/{section}/narration-pack.json",
         "03_sections/{section}/draft.md"
       ],
       "optional_inputs": [],
@@ -166,13 +204,16 @@
       "instruction_files": [
         "system/core/invariants.md",
         "system/standards/evidence.md",
+        "system/standards/voice.md",
         "system/standards/writing-vi.md",
         "system/operations/revise-section.md"
       ],
       "required_inputs": [
         "02_outline/story-bible.md",
+        "02_outline/voice-profile.md",
         "03_sections/{section}/brief.md",
-        "03_sections/{section}/evidence-pack.json",
+        "03_sections/{section}/story-plan.json",
+        "03_sections/{section}/narration-pack.json",
         "03_sections/{section}/draft.md",
         "03_sections/{section}/review.md",
         "03_sections/{section}/change-request.md"

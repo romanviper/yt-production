@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from scripts.assemble import assemble_product
-from scripts.approval import approve_plan, approve_section, request_changes
+from scripts.approval import approve_plan, approve_section, approve_story_plan, request_changes
 from scripts.context_packet import compile_packet
 from scripts.consolidate_research import consolidate, verify_consolidation
 from scripts.governance import classify_paths, commit_scope_errors, product_task_violations
@@ -77,6 +77,41 @@ def make_approved_outline(product: Path, section_count: int = 10) -> None:
     )
 
 
+def make_approved_story_plan(product: Path, section: str) -> None:
+    root = product / "03_sections" / section
+    evidence = json.loads((root / "evidence-pack.json").read_text(encoding="utf-8"))
+    claim_ids = [item["id"] for item in evidence["claims"]]
+    write_json(
+        root / "story-plan.json",
+        {
+            "schema_version": 1,
+            "section": section,
+            "status": "draft",
+            "governing_idea": "A record changes what an institution can remember and enforce.",
+            "audience_question": "Why does this small record matter?",
+            "audience_payoff": "The object matters because it changes what can persist beyond one encounter.",
+            "evidence_roles": {
+                "narrated": claim_ids[:1],
+                "support": [],
+                "guardrail": [],
+                "omit": claim_ids[1:],
+            },
+            "claim_use": {claim_ids[0]: "It proves the durable capacity revealed in the payoff."},
+            "beats": [
+                {"id": "B01", "function": "hook", "purpose": "Begin with the bounded object and one unresolved problem.", "audience_change": "The object becomes a problem rather than an exhibit.", "claim_ids": claim_ids[:1]},
+                {"id": "B02", "function": "tension", "purpose": "Show why memory alone cannot settle the problem.", "audience_change": "The audience sees the limit that demands a record.", "claim_ids": []},
+                {"id": "B03", "function": "payoff", "purpose": "Reveal the new capacity created by the record.", "audience_change": "The audience can name the capacity gained.", "claim_ids": []},
+                {"id": "B04", "function": "bridge", "purpose": "Carry that capacity into the next institutional change.", "audience_change": "The solution now creates the next historical question.", "claim_ids": []},
+            ],
+            "terminology": [],
+            "opening_move": "Put one object in front of the audience and make its unresolved job visible.",
+            "ending_move": "Name the concrete capacity gained and point to the next pressure it creates.",
+            "comprehension_test": "The audience can explain the change in one ordinary sentence.",
+        },
+    )
+    approve_story_plan(product, section)
+
+
 def valid_operator_brief() -> dict:
     return {
         "schema_version": 1,
@@ -132,6 +167,7 @@ class ModularProductionTests(unittest.TestCase):
                 "01_research/research-synthesis.md",
                 "02_outline/outline.json",
                 "02_outline/story-bible.md",
+                "02_outline/voice-profile.md",
                 "03_sections/README.md",
                 "04_integration/README.md",
                 "05_delivery/README.md",
@@ -332,9 +368,12 @@ class ModularProductionTests(unittest.TestCase):
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
             make_approved_outline(product, 10)
             materialize_sections(product)
+            make_approved_story_plan(product, "P06")
             packet, context = compile_packet(product, "draft_section", "T0001", section="P06")
             self.assertIn("03_sections/P06/brief.md", context)
-            self.assertIn("03_sections/P06/evidence-pack.json", context)
+            self.assertIn("03_sections/P06/story-plan.json", context)
+            self.assertIn("03_sections/P06/narration-pack.json", context)
+            self.assertNotIn("# BEGIN INPUT: 03_sections/P06/evidence-pack.json", context)
             self.assertNotIn("03_sections/P05/brief.md", context)
             self.assertNotIn("03_sections/P07/brief.md", context)
             self.assertEqual(
@@ -361,12 +400,33 @@ class ModularProductionTests(unittest.TestCase):
             self.assertIn("## Question\n\nWhat changes in part 1?", brief)
             self.assertIn("## Payoff\n\nResolve turn 1.", brief)
             self.assertIn("- Object one.\n- Object two.", brief)
+            state = json.loads((product / "03_sections" / "P01" / "section.json").read_text(encoding="utf-8"))
+            self.assertEqual("needs_story_plan", state["status"])
+            self.assertTrue((product / "03_sections" / "P01" / "story-plan.json").is_file())
+
+    def test_story_design_is_required_before_drafting(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 1)
+            materialize_sections(product)
+            with self.assertRaisesRegex(ValueError, "does not allow draft_section"):
+                compile_packet(product, "draft_section", "T0001", section="P01")
+            packet, context = compile_packet(product, "design_section", "T0002", section="P01")
+            self.assertIn("03_sections/P01/evidence-pack.json", context)
+            self.assertIn("system/standards/voice.md", packet["instruction_files"])
+            self.assertEqual(["03_sections/P01/story-plan.json"], packet["operation_outputs"])
+            make_approved_story_plan(product, "P01")
+            draft_packet, draft_context = compile_packet(product, "draft_section", "T0003", section="P01")
+            self.assertIn("03_sections/P01/narration-pack.json", draft_context)
+            self.assertNotIn("# BEGIN INPUT: 03_sections/P01/evidence-pack.json", draft_context)
+            self.assertEqual("draft_section", draft_packet["operation"])
 
     def test_draft_packet_adds_only_approved_dependency_handoff(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
             make_approved_outline(product, 3)
             materialize_sections(product)
+            make_approved_story_plan(product, "P02")
             prior = product / "03_sections" / "P01"
             (prior / "handoff.md").write_text("P01_APPROVED_HANDOFF", encoding="utf-8")
             prior_state = json.loads((prior / "section.json").read_text(encoding="utf-8"))
@@ -516,6 +576,7 @@ class ModularProductionTests(unittest.TestCase):
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
             make_approved_outline(product, 10)
             materialize_sections(product)
+            make_approved_story_plan(product, "P06")
             root = product / "03_sections" / "P06"
             (root / "draft.md").write_text("Draft P06.", encoding="utf-8")
             (root / "handoff.md").write_text("Exit state P06.", encoding="utf-8")
@@ -546,6 +607,7 @@ class ModularProductionTests(unittest.TestCase):
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
             make_approved_outline(product, 1)
             materialize_sections(product)
+            make_approved_story_plan(product, "P01")
             (product / "02_outline" / "story-bible.md").write_text("x" * 70000, encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "exceeds budget"):
                 compile_packet(product, "draft_section", "T0001", section="P01")

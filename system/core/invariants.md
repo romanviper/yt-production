@@ -15,11 +15,14 @@ Các luật này có hiệu lực với mọi operation.
 11. Product operation có authority `product_agent`: không được sửa control plane hoặc protected system paths.
 12. Khi product task phát hiện lỗi hệ thống, chỉ báo cáo blocker và escalation; không tự sửa.
 13. Architecture task và product-content task không được trộn trong cùng commit.
+14. Evidence completeness thuộc research artifact; narration không có nghĩa vụ kể mọi claim trong packet.
+15. Draft chỉ được bắt đầu sau khi story plan được con người duyệt và narration pack được sinh tự động.
 
 ## Artifact boundary
 
 - Research tạo evidence, không tạo narration.
 - Outline tạo section contracts, không tạo prose.
+- Story design chọn fact và beats, không viết prose.
 - Draft tạo prose một section, không review/approve.
 - Review tạo diagnosis, không rewrite.
 - Revision sửa đúng issue đã duyệt, không “polish toàn bộ”.

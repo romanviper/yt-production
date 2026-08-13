@@ -11,12 +11,16 @@ try:
     from scripts.common import read_json, write_json
     from scripts.outline_contract import validate_outline_contract
     from scripts.research_plan_contract import validate_research_plan_contract
+    from scripts.story_plan_contract import build_narration_pack, validate_story_plan
     from scripts.validate import validate_product
+    from scripts.voice_profile_contract import set_voice_profile_status, validate_voice_profile
 except ModuleNotFoundError:
     from common import read_json, write_json
     from outline_contract import validate_outline_contract
     from research_plan_contract import validate_research_plan_contract
+    from story_plan_contract import build_narration_pack, validate_story_plan
     from validate import validate_product
+    from voice_profile_contract import set_voice_profile_status, validate_voice_profile
 
 
 def update_stage(product_dir: Path, stage: str, value: str) -> None:
@@ -45,10 +49,17 @@ def approve_outline(product_dir: Path) -> None:
     contract_errors = validate_outline_contract(outline)
     if contract_errors:
         raise ValueError("Cannot approve outline: " + "; ".join(contract_errors))
+    voice_path = product_dir / "02_outline" / "voice-profile.md"
+    voice = voice_path.read_text(encoding="utf-8")
+    voice_errors = validate_voice_profile(voice)
+    if voice_errors:
+        raise ValueError("Cannot approve voice profile: " + "; ".join(voice_errors))
     outline["status"] = "approved"
     outline["approved_by"] = "user"
     outline["approved_at"] = datetime.now(timezone.utc).isoformat()
     write_json(path, outline)
+    original_voice = voice
+    voice_path.write_text(set_voice_profile_status(voice, "approved"), encoding="utf-8")
     errors = [issue for issue in validate_product(product_dir) if issue.level == "ERROR"]
     # Ignore the expected materialization errors until materialize_sections runs.
     structural = [issue for issue in errors if "requires materialized section" not in issue.message]
@@ -57,6 +68,7 @@ def approve_outline(product_dir: Path) -> None:
         outline.pop("approved_by", None)
         outline.pop("approved_at", None)
         write_json(path, outline)
+        voice_path.write_text(original_voice, encoding="utf-8")
         raise ValueError("Outline validation failed: " + "; ".join(issue.message for issue in structural))
     update_stage(product_dir, "outline", "approved")
 
@@ -78,6 +90,26 @@ def approve_section(product_dir: Path, section: str) -> None:
             "approved_at": datetime.now(timezone.utc).isoformat(),
         }
     )
+    write_json(state_path, state)
+
+
+def approve_story_plan(product_dir: Path, section: str) -> None:
+    root = product_dir / "03_sections" / section
+    plan_path = root / "story-plan.json"
+    plan = read_json(plan_path)
+    evidence = read_json(root / "evidence-pack.json")
+    claim_ids = {item.get("id") for item in evidence.get("claims", []) if item.get("id")}
+    errors = validate_story_plan(plan, claim_ids)
+    if errors:
+        raise ValueError("Cannot approve story plan: " + "; ".join(errors))
+    plan["status"] = "approved"
+    plan["approved_by"] = "user"
+    plan["approved_at"] = datetime.now(timezone.utc).isoformat()
+    write_json(plan_path, plan)
+    build_narration_pack(product_dir, section)
+    state_path = root / "section.json"
+    state = read_json(state_path)
+    state.update({"status": "ready_for_draft", "human_approved": False})
     write_json(state_path, state)
 
 
@@ -107,9 +139,10 @@ def main() -> int:
     for command in ["approve-plan", "approve-outline"]:
         item = sub.add_parser(command)
         item.add_argument("product", type=Path)
-    section = sub.add_parser("approve-section")
-    section.add_argument("product", type=Path)
-    section.add_argument("section")
+    for command in ["approve-story-plan", "approve-section"]:
+        section = sub.add_parser(command)
+        section.add_argument("product", type=Path)
+        section.add_argument("section")
     changes = sub.add_parser("request-changes")
     changes.add_argument("product", type=Path)
     changes.add_argument("section")
@@ -121,6 +154,8 @@ def main() -> int:
             approve_plan(product)
         elif args.command == "approve-outline":
             approve_outline(product)
+        elif args.command == "approve-story-plan":
+            approve_story_plan(product, args.section)
         elif args.command == "approve-section":
             approve_section(product, args.section)
         else:

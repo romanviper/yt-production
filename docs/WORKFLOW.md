@@ -148,12 +148,36 @@ Script tạo cho mỗi phần:
   section.json
   brief.md
   evidence-pack.json
+  story-plan.json
   continuity-in.md
 ```
 
-Evidence pack chỉ chứa claim/source cần cho P04. Nó là interface giữa research và drafting.
+Evidence pack là phạm vi sự thật của P04, không phải danh sách bắt buộc phải đọc thành lời.
 
-## 4. Người dùng gọi phần nào, Agent chỉ viết phần đó
+## 4. Story design chọn điều đáng kể
+
+Trước khi draft, Agent tạo story plan cho đúng một section:
+
+```bash
+python scripts/task.py create products/<slug> design_section --section P04
+```
+
+Task này phân mọi claim thành bốn vai trò:
+
+- `narrated`: 1–5 claim làm xương sống câu chuyện;
+- `support`: chi tiết tùy chọn khi cần độ chính xác;
+- `guardrail`: giới hạn cách nói, thường không đọc lên;
+- `omit`: đúng nhưng không phục vụ section.
+
+Nó đồng thời thiết kế 4–8 story beats theo tension và consequence. Con người review lựa chọn kể chuyện này trước khi viết prose:
+
+```bash
+python scripts/approval.py approve-story-plan products/<slug> P04
+```
+
+Approval sinh `narration-pack.json` bằng code. Pack này chỉ chứa evidence được phép dùng trong prose và khóa hash của story plan/evidence pack.
+
+## 5. Người dùng gọi phần nào, Agent chỉ viết phần đó
 
 ```bash
 python scripts/task.py create products/<slug> draft_section --section P04
@@ -166,12 +190,12 @@ Packet của P04 chứa:
 - chuẩn viết tiếng Việt;
 - story bible compact;
 - brief P04;
-- evidence pack P04;
+- story plan đã duyệt và narration pack P04;
 - continuity input/handoff liên quan.
 
 Nếu dependency đã được con người duyệt, packet tự thêm đúng handoff của dependency đó; nó không mở full draft của dependency. Nếu viết out-of-order, Agent dựa vào bridge/story bible và ghi rõ continuity chưa xác lập.
 
-Nó không chứa raw research, brief của chín phần còn lại hoặc draft toàn phim.
+Nó không chứa raw research, full evidence pool, brief của chín phần còn lại hoặc draft toàn phim. Vì vậy writer không thể biến mọi fact đã research thành một đoạn thuyết minh.
 
 Agent chỉ được tạo/sửa:
 
@@ -179,10 +203,10 @@ Agent chỉ được tạo/sửa:
 - `03_sections/P04/handoff.md`;
 - task report của chính task đó.
 
-## 5. Review và revision tách khỏi drafting
+## 6. Review và revision tách khỏi drafting
 
 - `review_section`: chỉ đọc và chẩn đoán P04; chỉ viết `review.md`.
-- `revise_section`: chỉ đọc draft, review/change request và evidence pack của P04; sửa draft P04.
+- `revise_section`: chỉ đọc draft, review/change request và narration pack của P04; sửa draft P04.
 - Người dùng đặt `section.json.status = approved` sau khi chấp nhận.
 
 Thay vì sửa JSON bằng tay:
@@ -194,11 +218,11 @@ python scripts/approval.py request-changes products/<slug> P04 --request "Sửa 
 
 AI viết không tự review để rồi tự phê duyệt output của chính nó.
 
-## 6. Integration không kéo toàn bộ prose vào mọi task
+## 7. Integration không kéo toàn bộ prose vào mọi task
 
 Mỗi phần đã duyệt tạo `handoff.md` gồm entry/exit state, setup/payoff, entities và continuity changes. `integration_review` đọc story bible và các handoff trước để tìm conflict. Chỉ section có issue mới được mở trong revision task.
 
-## 7. Assembly không dùng AI
+## 8. Assembly không dùng AI
 
 `assemble.py` ghép các `draft.md` có status `approved` theo outline, tạo hash và word count. Bản delivery không phải source of truth và không sửa bằng tay.
 
@@ -211,5 +235,5 @@ Mở repo romanviper/yt-production tại root. Đọc AGENTS.md và thực hiệ
 Để viết phần cụ thể:
 
 ```text
-Trong products/sumer-writing, tạo và thực hiện operation draft_section cho P04. Chỉ làm đúng phần P04 và bàn giao để tôi review.
+Trong products/sumer-writing, chuẩn bị P04 để viết. Nếu chưa có story plan được duyệt, hãy thực hiện design_section trước và bàn giao để tôi duyệt; chỉ draft sau khi story plan đã được duyệt.
 ```

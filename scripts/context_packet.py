@@ -24,6 +24,7 @@ try:
     )
     from scripts.consolidate_research import verify_consolidation
     from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
+    from scripts.story_plan_contract import verify_narration_pack
 except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.py
     from common import (
         REPO_ROOT,
@@ -39,6 +40,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
     )
     from consolidate_research import verify_consolidation
     from packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
+    from story_plan_contract import verify_narration_pack
 
 
 def validate_target(operation: str, spec: dict[str, Any], section: str | None, unit: str | None) -> None:
@@ -84,24 +86,23 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
         synthesis = product_dir / "01_research" / "research-synthesis.md"
         if "Status: complete" not in synthesis.read_text(encoding="utf-8"):
             raise ValueError("Research synthesis must be complete before outline.")
-    if operation in {"draft_section", "review_section", "revise_section"}:
+    if operation in {"design_section", "draft_section", "review_section", "revise_section"}:
         outline = read_json_local(product_dir / "02_outline" / "outline.json")
         if outline.get("status") != "approved":
             raise ValueError("Outline must be human-approved first.")
         state = read_json_local(product_dir / "03_sections" / str(section) / "section.json")
         expected = {
+            "design_section": {"needs_story_plan", "changes_requested", "story_plan_review"},
             "draft_section": {"ready_for_draft"},
             "review_section": {"ready_for_review"},
             "revise_section": {"changes_requested"},
         }[operation]
         if state.get("status") not in expected:
             raise ValueError(f"{section} status {state.get('status')!r} does not allow {operation}.")
-    if operation == "draft_section":
-        pack = read_json_local(product_dir / "03_sections" / str(section) / "evidence-pack.json")
-        invalid_claims = [item.get("id") for item in pack.get("claims", []) if item.get("status") not in {"supported", "qualified"}]
-        invalid_sources = [item.get("id") for item in pack.get("sources", []) if item.get("status") != "reviewed"]
-        if invalid_claims or invalid_sources:
-            raise ValueError(f"Evidence pack not draft-ready; claims={invalid_claims}, sources={invalid_sources}")
+    if operation in {"draft_section", "review_section", "revise_section"}:
+        narration_errors = verify_narration_pack(product_dir, str(section))
+        if narration_errors:
+            raise ValueError("Narration pack is not ready: " + "; ".join(narration_errors))
     if operation == "integration_review":
         outline = read_json_local(product_dir / "02_outline" / "outline.json")
         if outline.get("status") != "approved":

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create isolated section workspaces and evidence packs from an approved outline."""
+"""Create isolated section workspaces, evidence pools, and story-plan seeds."""
 
 from __future__ import annotations
 
@@ -11,9 +11,11 @@ from typing import Any
 try:
     from scripts.common import read_json, write_json
     from scripts.outline_contract import render_outline_value, render_section_question_payoff, validate_outline_contract
+    from scripts.story_plan_contract import empty_story_plan
 except ModuleNotFoundError:
     from common import read_json, write_json
     from outline_contract import render_outline_value, render_section_question_payoff, validate_outline_contract
+    from story_plan_contract import empty_story_plan
 
 
 def materialize(product_dir: Path) -> list[Path]:
@@ -46,7 +48,7 @@ def materialize(product_dir: Path) -> list[Path]:
                     "id": section_id,
                     "title": item["title"],
                     "order": item["order"],
-                    "status": "ready_for_draft",
+                    "status": "needs_story_plan",
                     "human_approved": False,
                     "dependencies": item.get("dependencies", []),
                     "target_words": item["target_words"],
@@ -99,6 +101,10 @@ def materialize(product_dir: Path) -> list[Path]:
                 },
             )
             created.append(evidence_path)
+        story_plan_path = root / "story-plan.json"
+        if not story_plan_path.exists():
+            write_json(story_plan_path, empty_story_plan(section_id))
+            created.append(story_plan_path)
         continuity = root / "continuity-in.md"
         if not continuity.exists():
             dependencies = ", ".join(item.get("dependencies", [])) or "Không có."

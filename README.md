@@ -24,13 +24,14 @@ research plan
   → research synthesis
   → outline 10 phần
   → materialize section workspaces
+  → design/approve story plan từng phần
   → draft/review/revise từng phần
   → integration qua handoff summaries
   → deterministic assembly
   → optional final audit
 ```
 
-Research thô không đi vào task viết. Mỗi phần nhận một evidence pack đã lọc; các phần khác được đại diện bằng story bible và handoff ngắn.
+Research thô không đi vào task viết. Story design phân evidence thành điều phải kể, chi tiết hỗ trợ, guardrail và điều bỏ; writer chỉ nhận narration pack đã được duyệt. Các phần khác được đại diện bằng story bible và handoff ngắn.
 
 ## Lệnh thường dùng
 
@@ -41,7 +42,10 @@ python scripts/new_product.py ten-san-pham --title "Tên làm việc"
 # Tạo/activate một task research plan
 python scripts/task.py create products/ten-san-pham research_plan
 
-# Tạo task viết riêng phần P04
+# Chọn fact và thiết kế beats cho P04
+python scripts/task.py create products/ten-san-pham design_section --section P04
+
+# Sau khi người dùng duyệt story plan, tạo task viết P04
 python scripts/task.py create products/ten-san-pham draft_section --section P04
 
 # Xem context packet Agent sẽ nhận

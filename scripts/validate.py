@@ -13,11 +13,15 @@ from pathlib import Path
 try:
     from scripts.common import read_json
     from scripts.outline_contract import validate_outline_contract
+    from scripts.story_plan_contract import verify_narration_pack
     from scripts.task import verify_task
+    from scripts.voice_profile_contract import validate_voice_profile
 except ModuleNotFoundError:
     from common import read_json
     from outline_contract import validate_outline_contract
+    from story_plan_contract import verify_narration_pack
     from task import verify_task
+    from voice_profile_contract import validate_voice_profile
 
 
 @dataclass(frozen=True)
@@ -49,6 +53,7 @@ def validate_product(product_dir: Path) -> list[Issue]:
     claim_path = product_dir / "01_research" / "claim-ledger.json"
     outline_path = product_dir / "02_outline" / "outline.json"
     bible_path = product_dir / "02_outline" / "story-bible.md"
+    voice_profile_path = product_dir / "02_outline" / "voice-profile.md"
 
     product = safe_json(product_path, issues)
     for path in [brief_path, benchmark_path, bible_path]:
@@ -104,9 +109,14 @@ def validate_product(product_dir: Path) -> list[Issue]:
 
     section_root = product_dir / "03_sections"
     if outline.get("status") == "approved":
+        if not voice_profile_path.is_file():
+            issues.append(Issue("ERROR", str(voice_profile_path), "Approved outline requires voice profile."))
+        else:
+            for message in validate_voice_profile(voice_profile_path.read_text(encoding="utf-8")):
+                issues.append(Issue("ERROR", str(voice_profile_path), message))
         for section_id in section_ids:
             root = section_root / section_id
-            for name in ["section.json", "brief.md", "evidence-pack.json", "continuity-in.md"]:
+            for name in ["section.json", "brief.md", "evidence-pack.json", "story-plan.json", "continuity-in.md"]:
                 if not (root / name).is_file():
                     issues.append(Issue("ERROR", str(root / name), "Approved outline requires materialized section."))
             state_path = root / "section.json"
@@ -114,6 +124,9 @@ def validate_product(product_dir: Path) -> list[Issue]:
                 state = safe_json(state_path, issues)
                 if state.get("status") == "approved" and state.get("human_approved") is not True:
                     issues.append(Issue("ERROR", str(state_path), "Approved section requires human_approved=true."))
+                if state.get("status") in {"ready_for_draft", "ready_for_review", "review_complete", "approved"}:
+                    for message in verify_narration_pack(product_dir, section_id):
+                        issues.append(Issue("ERROR", str(root / "narration-pack.json"), message))
 
     active_path = product_dir / "tasks" / "ACTIVE.json"
     if active_path.is_file():

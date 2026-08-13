@@ -33,6 +33,8 @@ Không đọc đệ quy `system/`, `products/` hoặc toàn bộ script. Repo đ
 
 Ví dụ: “viết phần P04”, “review phần P07”, “research workstream WS02”.
 
+“Viết phần P04” là intent ở cấp người dùng, không phải giấy phép bỏ qua checkpoint. Nếu P04 chưa có story plan được duyệt, route `design_section` trước; báo người dùng duyệt plan rồi mới tạo `draft_section`.
+
 1. Tạo task bằng router:
 
    ```bash
@@ -59,6 +61,7 @@ Các operation hợp lệ nằm trong `system/operations/registry.json`. Không 
 - Một task = một nghiệp vụ = một target chính.
 - Không generate toàn bộ kịch bản dài trong một task.
 - Không draft một section nếu chưa có brief và evidence pack.
+- Không draft một section nếu story plan chưa được con người duyệt hoặc narration pack chưa hợp lệ.
 - Không dùng raw research khi section evidence pack đã tồn tại.
 - Không sửa section khác để “giữ continuity”; tạo impact/change request.
 - Không sửa delivery artifact bằng tay.
