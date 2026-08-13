@@ -1,21 +1,21 @@
 {
   "schema_version": 1,
   "authority": "product_agent",
-  "id": "T0015-design-section-P01",
+  "id": "T0016-design-section-P01",
   "product": "sumer-writing",
   "operation": "design_section",
   "target": {
     "section": "P01",
     "unit": null
   },
-  "state": "cancelled",
-  "created_at": "2026-08-13T08:46:08.669561+00:00",
-  "context_packet": "tasks/T0015-design-section-P01/context.md",
-  "packet_manifest": "tasks/T0015-design-section-P01/packet.json",
+  "state": "ready",
+  "created_at": "2026-08-13T09:30:24.411636+00:00",
+  "context_packet": "tasks/T0016-design-section-P01/context.md",
+  "packet_manifest": "tasks/T0016-design-section-P01/packet.json",
   "allowed_write_paths": [
     "03_sections/P01/story-plan.json",
-    "tasks/T0015-design-section-P01/report.md",
-    "tasks/T0015-design-section-P01/operator-brief.json"
+    "tasks/T0016-design-section-P01/report.md",
+    "tasks/T0016-design-section-P01/operator-brief.json"
   ],
   "acceptance_criteria": [
     "Một governing idea và audience payoff được diễn đạt bằng ngôn ngữ phổ thông.",
@@ -26,7 +26,6 @@
   "outputs": [
     "03_sections/P01/story-plan.json"
   ],
-  "report_path": "tasks/T0015-design-section-P01/report.md",
-  "operator_brief_path": "tasks/T0015-design-section-P01/operator-brief.json",
-  "updated_at": "2026-08-13T09:30:24.369637+00:00"
+  "report_path": "tasks/T0016-design-section-P01/report.md",
+  "operator_brief_path": "tasks/T0016-design-section-P01/operator-brief.json"
 }
