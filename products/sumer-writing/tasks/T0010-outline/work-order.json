@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "id": "T0010-outline",
+  "product": "sumer-writing",
+  "operation": "outline",
+  "target": {
+    "section": null,
+    "unit": null
+  },
+  "state": "ready_for_review",
+  "created_at": "2026-08-13T14:00:00.000Z",
+  "context_packet": "tasks/T0010-outline/context.md",
+  "packet_manifest": "tasks/T0010-outline/packet.json",
+  "allowed_write_paths": [
+    "02_outline/outline.json",
+    "02_outline/story-bible.md",
+    "tasks/T0010-outline/report.md",
+    "tasks/T0010-outline/operator-brief.json"
+  ],
+  "acceptance_criteria": [
+    "Outline có đúng số section đã chọn và ID ổn định.",
+    "Mỗi section có một narrative job, state change, claim set và word budget.",
+    "Tổng arc trả North Star và khác biệt benchmark.",
+    "Story bible compact."
+  ],
+  "outputs": [
+    "02_outline/outline.json",
+    "02_outline/story-bible.md"
+  ],
+  "report_path": "tasks/T0010-outline/report.md",
+  "operator_brief_path": "tasks/T0010-outline/operator-brief.json",
+  "submitted_at": "2026-08-13T14:00:00.000Z",
+  "updated_at": "2026-08-13T14:00:00.000Z"
+}

@@ -1,5 +1,5 @@
 {
-  "task_id": "T0009-research-synthesis",
-  "work_order": "tasks/T0009-research-synthesis/work-order.json",
-  "context_packet": "tasks/T0009-research-synthesis/context.md"
+  "task_id": "T0010-outline",
+  "work_order": "tasks/T0010-outline/work-order.json",
+  "context_packet": "tasks/T0010-outline/context.md"
 }

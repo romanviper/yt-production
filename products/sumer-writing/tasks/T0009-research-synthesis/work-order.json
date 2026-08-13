@@ -8,7 +8,7 @@
     "section": null,
     "unit": null
   },
-  "state": "ready_for_review",
+  "state": "closed",
   "created_at": "2026-08-13T13:00:00.000Z",
   "context_packet": "tasks/T0009-research-synthesis/context.md",
   "packet_manifest": "tasks/T0009-research-synthesis/packet.json",
@@ -29,5 +29,7 @@
   "report_path": "tasks/T0009-research-synthesis/report.md",
   "operator_brief_path": "tasks/T0009-research-synthesis/operator-brief.json",
   "submitted_at": "2026-08-13T13:00:00.000Z",
-  "updated_at": "2026-08-13T13:00:00.000Z"
+  "updated_at": "2026-08-13T14:00:00.000Z",
+  "human_approved": true,
+  "approved_at": "2026-08-13T14:00:00.000Z"
 }

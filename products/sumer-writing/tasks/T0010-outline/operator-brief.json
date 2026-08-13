@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "Draft outline 10 phần đã sẵn sàng; arc trả causal question mà không biến thành tổng sử Sumer.",
+  "material_points": [
+    "P03/P07 tạo payoff chính: institutional pressure sinh record; record chỉ tăng capacity khi gắn người, procedure, archive và authority.",
+    "P01/P10 đi từ unreadability đến recovery; P06/P09 dùng trained community để định nghĩa tradition sống hay đứt.",
+    "Target 10.200–12.800 từ, khoảng 73–91 phút; chưa materialize section hoặc viết narration."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Bạn chấp nhận draft outline để khóa và materialize P01–P10, hay yêu cầu sửa cấu trúc?",
+    "recommendation": "Duyệt architecture 10 phần; nếu sửa, chỉ định part hoặc bridge cụ thể.",
+    "options": [
+      {
+        "label": "Chấp nhận",
+        "effect": "Khóa outline và cho phép tạo workspace P01–P10."
+      },
+      {
+        "label": "Yêu cầu sửa",
+        "effect": "Giữ sections khóa và sửa đúng part/bridge."
+      }
+    ]
+  },
+  "next_step": "Chờ human review draft outline."
+}
