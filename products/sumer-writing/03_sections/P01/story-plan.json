@@ -1,20 +1,93 @@
 {
   "schema_version": 1,
   "section": "P01",
-  "status": "not_started",
-  "governing_idea": "",
-  "audience_question": "",
-  "audience_payoff": "",
+  "status": "draft",
+  "governing_idea": "Các dấu có thể cố định một phần thông tin trên vật thể bền dù chưa ghi trọn lời nói.",
+  "audience_question": "Nếu chưa ghi trọn lời nói, những dấu trên P005390 đã làm được gì?",
+  "audience_payoff": "Các dấu có thể cố định một phần thông tin trên vật thể bền dù chưa ghi trọn lời nói.",
   "evidence_roles": {
-    "narrated": [],
-    "support": [],
-    "guardrail": [],
-    "omit": []
+    "narrated": [
+      "CLM-0042",
+      "CLM-0001",
+      "CLM-0009"
+    ],
+    "support": [
+      "CLM-0002",
+      "CLM-0004"
+    ],
+    "guardrail": [
+      "CLM-0006",
+      "CLM-0007",
+      "CLM-0008"
+    ],
+    "omit": [
+      "CLM-0034"
+    ]
   },
-  "claim_use": {},
-  "beats": [],
-  "terminology": [],
-  "opening_move": "",
-  "ending_move": "",
-  "comprehension_test": ""
+  "claim_use": {
+    "CLM-0042": "Tạo hook và tension: ta nhận ra ngũ cốc cùng số lượng nhưng không phục hồi được một câu hoàn chỉnh, ngôn ngữ hay chức năng chính xác của văn bản.",
+    "CLM-0001": "Tạo explanatory turn ngắn: dấu có thể cố định một phần thông tin trước khi ghi trọn lời nói.",
+    "CLM-0009": "Chỉ định hướng tối thiểu trong bridge rằng đây là một quá trình phát triển, không tạo một beat niên đại riêng.",
+    "CLM-0002": "Chỉ định hướng niên đại tối thiểu nếu cần; không sở hữu beat.",
+    "CLM-0004": "Chỉ là bối cảnh hỗ trợ nếu cần; không sở hữu beat."
+  },
+  "beats": [
+    {
+      "id": "B01",
+      "function": "hook",
+      "purpose": "Đặt P005390 trước mắt khán giả và nêu nghịch lý: các dấu cho phép nhận ra ngũ cốc cùng số lượng, nhưng không tạo thành một câu hoàn chỉnh.",
+      "audience_change": "Một văn bản cổ không còn được mặc định là một câu nói đang chờ dịch.",
+      "claim_ids": [
+        "CLM-0042"
+      ]
+    },
+    {
+      "id": "B02",
+      "function": "tension",
+      "purpose": "Đặt câu hỏi ngắn: nếu các dấu chưa tạo thành một câu hoàn chỉnh, chúng đã cố định được phần thông tin nào?",
+      "audience_change": "Khán giả chuyển từ hỏi văn bản nói gì sang hỏi hệ dấu đã làm được gì.",
+      "claim_ids": [
+        "CLM-0042"
+      ]
+    },
+    {
+      "id": "B03",
+      "function": "reveal",
+      "purpose": "Giải thích bằng lời phổ thông: các dấu đã cố định một phần thông tin trên đất sét dù chưa ghi trọn lời nói.",
+      "audience_change": "Khán giả hiểu năng lực có thể xuất hiện từng phần, không cần bắt đầu bằng một câu hoàn chỉnh.",
+      "claim_ids": [
+        "CLM-0042",
+        "CLM-0001"
+      ]
+    },
+    {
+      "id": "B04",
+      "function": "payoff",
+      "purpose": "Trả lời câu hỏi mở đầu bằng đúng giới hạn của evidence: P005390 giữ được một phần thông tin trong một vật thể bền.",
+      "audience_change": "Khán giả hiểu vì sao hiện vật quan trọng dù nó chưa ghi trọn lời nói.",
+      "claim_ids": [
+        "CLM-0042",
+        "CLM-0001"
+      ]
+    },
+    {
+      "id": "B05",
+      "function": "bridge",
+      "purpose": "Từ năng lực vừa thấy, mở câu hỏi cho P02: những thực hành nào đã giúp nó hình thành qua một quá trình, thay vì xuất hiện ở một khoảnh khắc phát minh?",
+      "audience_change": "Khán giả mang sang P02 một câu hỏi về quá trình hình thành; chronology chỉ còn là định hướng tối thiểu.",
+      "claim_ids": [
+        "CLM-0001",
+        "CLM-0009"
+      ]
+    }
+  ],
+  "terminology": [
+    {
+      "term": "proto-cuneiform",
+      "plain_language": "hệ dấu sớm ở Uruk, tổ tiên của chữ hình nêm nhưng chưa ghi lời nói rõ như các giai đoạn sau"
+    }
+  ],
+  "opening_move": "Mở ở khoảng cách gần trên P005390, không đọc mã bảo tàng trước; dùng khả năng đọc được ngũ cốc nhưng không đọc được một câu hoàn chỉnh để tạo vấn đề.",
+  "ending_move": "Kết lại ở khả năng cố định một phần thông tin trên vật thể bền, rồi lùi về trước tablet để hỏi năng lực ấy hình thành ra sao.",
+  "comprehension_test": "Khán giả phải kể lại được: các dấu trên P005390 cố định một phần thông tin dù chưa ghi trọn lời nói."
 }
