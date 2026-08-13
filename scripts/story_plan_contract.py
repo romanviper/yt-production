@@ -3,28 +3,38 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 try:
     from scripts.common import read_json, sha256, word_count, write_json
+    from scripts.outline_contract import MAX_SECTION_WORDS, valid_word_range
 except ModuleNotFoundError:  # Direct execution from scripts/
     from common import read_json, sha256, word_count, write_json
+    from outline_contract import MAX_SECTION_WORDS, valid_word_range
 
 
 ROLE_NAMES = ("narrated", "support", "guardrail", "omit")
-BEAT_FUNCTIONS = {"hook", "orientation", "tension", "reveal", "consequence", "payoff", "bridge"}
+STORY_PLAN_SCHEMA_VERSION = 2
+BEAT_FUNCTION_PATTERN = r"[a-z][a-z0-9_]{0,31}"
 
 
-def empty_story_plan(section: str) -> dict[str, Any]:
+def empty_story_plan(section: str, target_words: dict[str, int] | None = None) -> dict[str, Any]:
     return {
-        "schema_version": 1,
+        "schema_version": STORY_PLAN_SCHEMA_VERSION,
         "section": section,
         "status": "not_started",
         "governing_idea": "",
         "audience_question": "",
         "audience_payoff": "",
+        "structure_shape": "",
+        "word_budget": {
+            "recommended": dict(target_words or {"min": 0, "max": 0}),
+            "rationale": "",
+        },
         "evidence_roles": {name: [] for name in ROLE_NAMES},
         "claim_use": {},
         "beats": [],
@@ -35,10 +45,41 @@ def empty_story_plan(section: str) -> dict[str, Any]:
     }
 
 
-def validate_story_plan(plan: dict[str, Any], evidence_claim_ids: set[str]) -> list[str]:
-    errors: list[str] = []
+def normalize_story_plan(plan: dict[str, Any], current_target_words: dict[str, int] | None = None) -> dict[str, Any]:
+    """Read an already-approved v1 plan through the v2 contract without changing its hash."""
+
     if plan.get("schema_version") != 1:
-        errors.append("story plan schema_version must be 1")
+        return plan
+    value = deepcopy(plan)
+    value["schema_version"] = STORY_PLAN_SCHEMA_VERSION
+    value.setdefault(
+        "structure_shape",
+        "Legacy approved beat sequence retained until explicit human feedback reopens story design.",
+    )
+    budget = current_target_words if valid_word_range(current_target_words) else {"min": 1, "max": 1}
+    value.setdefault(
+        "word_budget",
+        {
+            "recommended": deepcopy(budget),
+            "rationale": "Legacy approved section budget retained until an explicit story-design revision.",
+        },
+    )
+    return value
+
+
+def validate_story_plan(
+    plan: dict[str, Any],
+    evidence_claim_ids: set[str],
+    current_target_words: dict[str, int] | None = None,
+    require_current: bool = False,
+) -> list[str]:
+    errors: list[str] = []
+    schema_version = plan.get("schema_version")
+    if schema_version == 1 and require_current:
+        errors.append(f"story plan schema_version must be {STORY_PLAN_SCHEMA_VERSION} for new or revised output")
+    if schema_version not in {1, STORY_PLAN_SCHEMA_VERSION}:
+        errors.append(f"story plan schema_version must be {STORY_PLAN_SCHEMA_VERSION}")
+    plan = normalize_story_plan(plan, current_target_words)
     if not isinstance(plan.get("section"), str) or not plan["section"]:
         errors.append("story plan section is required")
     if plan.get("status") not in {"draft", "approved"}:
@@ -48,6 +89,7 @@ def validate_story_plan(plan: dict[str, Any], evidence_claim_ids: set[str]) -> l
         ("governing_idea", 45),
         ("audience_question", 35),
         ("audience_payoff", 45),
+        ("structure_shape", 65),
         ("opening_move", 60),
         ("ending_move", 60),
         ("comprehension_test", 45),
@@ -57,6 +99,23 @@ def validate_story_plan(plan: dict[str, Any], evidence_claim_ids: set[str]) -> l
             errors.append(f"story plan {field} is required")
         elif word_count(value) > limit:
             errors.append(f"story plan {field} exceeds {limit} words")
+
+    word_budget = plan.get("word_budget")
+    if not isinstance(word_budget, dict):
+        errors.append("story plan word_budget must be an object")
+        word_budget = {}
+    recommended = word_budget.get("recommended")
+    if not valid_word_range(recommended):
+        errors.append("story plan word_budget.recommended is invalid")
+    elif recommended["max"] > MAX_SECTION_WORDS:
+        errors.append(f"story plan word budget exceeds the {MAX_SECTION_WORDS}-word production-unit cap")
+    rationale = word_budget.get("rationale")
+    if not isinstance(rationale, str) or not rationale.strip():
+        errors.append("story plan word_budget.rationale is required")
+    elif word_count(rationale) > 60:
+        errors.append("story plan word_budget.rationale exceeds 60 words")
+    if current_target_words is not None and not valid_word_range(current_target_words):
+        errors.append("section current target_words is invalid")
 
     roles = plan.get("evidence_roles")
     assigned: list[str] = []
@@ -107,8 +166,8 @@ def validate_story_plan(plan: dict[str, Any], evidence_claim_ids: set[str]) -> l
     beats = plan.get("beats")
     referenced: set[str] = set()
     functions: list[str] = []
-    if not isinstance(beats, list) or not 4 <= len(beats) <= 8:
-        errors.append("story plan requires four to eight beats")
+    if not isinstance(beats, list) or not 2 <= len(beats) <= 12:
+        errors.append("story plan requires two to twelve beats")
         beats = []
     narrative_ids = set(narrated + support)
     for index, beat in enumerate(beats):
@@ -119,7 +178,7 @@ def validate_story_plan(plan: dict[str, Any], evidence_claim_ids: set[str]) -> l
         if beat.get("id") != expected_id:
             errors.append(f"story beat #{index + 1} id must be {expected_id}")
         function = beat.get("function")
-        if function not in BEAT_FUNCTIONS:
+        if not isinstance(function, str) or not re.fullmatch(BEAT_FUNCTION_PATTERN, function):
             errors.append(f"story beat {expected_id} has invalid function: {function!r}")
         else:
             functions.append(function)
@@ -141,9 +200,8 @@ def validate_story_plan(plan: dict[str, Any], evidence_claim_ids: set[str]) -> l
         if invalid:
             errors.append(f"story beat {expected_id} uses non-narrative claims: {', '.join(invalid)}")
         referenced.update(claim_ids)
-    for required_function in ["tension", "payoff", "bridge"]:
-        if required_function not in functions:
-            errors.append(f"story plan requires a {required_function} beat")
+    if "payoff" not in functions:
+        errors.append("story plan requires a payoff beat")
     unreferenced = [claim_id for claim_id in narrated if claim_id not in referenced]
     if unreferenced:
         errors.append("narrated claims must appear in at least one beat: " + ", ".join(unreferenced))
@@ -164,8 +222,9 @@ def build_narration_pack(product_dir: Path, section: str) -> dict[str, Any]:
     evidence_path = root / "evidence-pack.json"
     plan = read_json(plan_path)
     evidence = read_json(evidence_path)
+    state = read_json(root / "section.json")
     claims = {item["id"]: item for item in evidence.get("claims", [])}
-    errors = validate_story_plan(plan, set(claims))
+    errors = validate_story_plan(plan, set(claims), state.get("target_words"))
     if errors:
         raise ValueError("Invalid story plan: " + "; ".join(errors))
     if plan.get("status") != "approved":
@@ -214,9 +273,13 @@ def verify_narration_pack(product_dir: Path, section: str) -> list[str]:
     try:
         plan = read_json(root / "story-plan.json")
         pack = read_json(root / "narration-pack.json")
+        evidence = read_json(root / "evidence-pack.json")
+        state = read_json(root / "section.json")
     except (FileNotFoundError, ValueError) as exc:
         return [f"invalid narration pack: {exc}"]
     errors: list[str] = []
+    evidence_claim_ids = {item.get("id") for item in evidence.get("claims", []) if item.get("id")}
+    errors.extend(validate_story_plan(plan, evidence_claim_ids, state.get("target_words")))
     if plan.get("status") != "approved":
         errors.append("story plan is not human-approved")
     if pack.get("story_plan_sha256") != sha256(root / "story-plan.json"):

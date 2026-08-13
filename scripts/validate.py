@@ -103,7 +103,7 @@ def validate_product(product_dir: Path) -> list[Issue]:
 
     outline = safe_json(outline_path, issues)
     if outline.get("sections"):
-        for message in validate_outline_contract(outline, claim_ids):
+        for message in validate_outline_contract(outline, claim_ids, product.get("target")):
             issues.append(Issue("ERROR", str(outline_path), message))
     section_ids = {section.get("id") for section in outline.get("sections", []) if isinstance(section, dict) and section.get("id")}
 

@@ -16,7 +16,7 @@ Work order, packet manifest, compiled context và `ACTIVE.json` là control arti
 | Interface segregation | Task chỉ thấy instruction và input nó cần; P06 không nhận raw research hoặc draft P01–P10. |
 | Dependency inversion | Operation sau phụ thuộc vào artifact chuẩn hóa và hash, không phụ thuộc chat history hay memory của Agent trước. |
 
-Số section là cấu hình của outline, không hard-code trong engine. Pilot Sumer đặt target 10; product khác có thể đặt số khác.
+Số section và độ dài từng section là output của outline, không hard-code trong engine hay product brief. Outline thiết kế macro movements của toàn câu chuyện trước, rồi mới đặt ranh giới `P##` tại state change hoặc điểm review có nghĩa. Một movement khán giả cảm nhận có thể trải qua nhiều production section; nhờ vậy context vẫn nhỏ mà bố cục phim không bị chia đều cơ học.
 
 ## Quyền hạn: nội dung không được sửa hệ thống
 
@@ -122,12 +122,12 @@ Nhờ vậy số workstream có thể tăng mà context synthesis vẫn tỷ l�
 
 ## 2. Outline là interface giữa research và writing
 
-Task `outline` chỉ đọc product brief, research synthesis và claim ledger đã lọc. Output:
+Task `outline` chỉ đọc product metadata/brief, research synthesis và claim ledger đã lọc. Nó làm theo thứ tự: thiết kế toàn arc → macro movements → phân bổ narrative load → đặt ranh giới production section. Output:
 
-- `02_outline/outline.json` gồm đúng số phần đã chọn;
+- `02_outline/outline.json` gồm macro architecture và đúng số work unit mà câu chuyện cần;
 - `02_outline/story-bible.md` — context toàn cục được giữ ngắn.
 
-Mỗi phần phải có ID ổn định, narrative job, entry/exit state, claim IDs, dependencies và word budget. Con người review outline trước khi materialize.
+Mỗi phần phải có ID ổn định, movement/structural role, narrative job, entry/exit state, phác họa shape riêng, claim IDs, dependencies, word budget và lý do phân bổ. Section không cần dài bằng nhau; prologue/bridge có thể ngắn hơn causal hinge. Con người review cả bố cục toàn phim lẫn ranh giới work unit trước khi materialize.
 
 ```bash
 python scripts/approval.py approve-outline products/<slug>
@@ -169,7 +169,7 @@ Task này phân mọi claim thành bốn vai trò:
 - `guardrail`: giới hạn cách nói, thường không đọc lên;
 - `omit`: đúng nhưng không phục vụ section.
 
-Nó đồng thời thiết kế 4–8 story beats theo tension và consequence. Con người review lựa chọn kể chuyện này trước khi viết prose:
+Nó đồng thời chọn shape riêng, word range phù hợp material và 2–12 story beats. Chỉ payoff là bắt buộc; tension/bridge không phải template chung. Con người review lựa chọn kể chuyện này trước khi viết prose:
 
 ```bash
 python scripts/approval.py approve-story-plan products/<slug> P04
@@ -184,7 +184,9 @@ python scripts/task.py create products/<slug> design_section --section P04
 
 Feedback trở thành input có hash của packet mới. Agent không được sửa lại task đã submit hoặc dựa vào phản hồi chỉ tồn tại trong chat.
 
-Approval sinh `narration-pack.json` bằng code. Pack này chỉ chứa evidence được phép dùng trong prose và khóa hash của story plan/evidence pack.
+Nếu draft về sau cho thấy governing idea, shape hoặc budget sai, dùng lại `request-story-plan-changes`: workflow quay về `design_section`, đưa draft/review cũ vào packet như diagnostic input và vẫn chỉ cho phép sửa `story-plan.json`. Nếu plan đúng mà prose thực hiện kém, mới route qua `request-changes` → `revise_section`. Nhờ vậy feedback có thể quay về đúng tầng đã gây lỗi thay vì bị ép sửa ở tầng cuối.
+
+Approval sinh `narration-pack.json` bằng code. Nếu story plan đề xuất range khác, approval đồng bộ budget vào section và outline, đồng thời giữ audit record; nó từ chối nếu tổng runtime ra ngoài envelope. Pack chỉ chứa evidence được phép dùng trong prose và khóa hash của story plan/evidence pack.
 
 ## 5. Người dùng gọi phần nào, Agent chỉ viết phần đó
 
@@ -204,7 +206,7 @@ Packet của P04 chứa:
 
 Nếu dependency đã được con người duyệt, packet tự thêm đúng handoff của dependency đó; nó không mở full draft của dependency. Nếu viết out-of-order, Agent dựa vào bridge/story bible và ghi rõ continuity chưa xác lập.
 
-Nó không chứa raw research, full evidence pool, brief của chín phần còn lại hoặc draft toàn phim. Vì vậy writer không thể biến mọi fact đã research thành một đoạn thuyết minh.
+Nó không chứa raw research, full evidence pool, brief của các phần còn lại hoặc draft toàn phim. Vì vậy writer không thể biến mọi fact đã research thành một đoạn thuyết minh.
 
 Agent chỉ được tạo/sửa:
 

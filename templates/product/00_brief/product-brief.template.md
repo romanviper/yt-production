@@ -26,5 +26,4 @@ Chưa xác định.
 
 - Ngôn ngữ: tiếng Việt.
 - Thời lượng: 60–120 phút.
-- Section count: do outline quyết định.
-
+- Section count và phân bổ độ dài: chỉ được quyết định sau khi outline thiết kế macro movements; không đặt quota trước.

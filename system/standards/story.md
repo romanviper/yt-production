@@ -4,7 +4,12 @@
 
 Story phải giải thích pressure nào tạo mechanism mới; mechanism đổi capacity/incentive của ai; hệ quả và adaptation nào biến state A thành B.
 
-Mỗi section contract có:
+Toàn kịch bản được thiết kế theo hai tầng:
+
+- **narrative movement:** nhịp lớn mà khán giả cảm nhận;
+- **production section (`P##`):** work unit giới hạn context, review và revision.
+
+Hai tầng không bắt buộc một-một. Section count không phải mục tiêu thẩm mỹ và không được chọn trước để chia đều thời lượng. Mỗi section contract có:
 
 - một narrative job;
 - entry/exit state;
@@ -13,6 +18,7 @@ Mỗi section contract có:
 - material/human anchor có provenance;
 - dependencies và bridge;
 - word budget;
+- lý do budget và phác họa shape riêng;
 - boundary: điều cố ý chưa giải thích.
 
 ## Long-form rhythm
@@ -37,12 +43,15 @@ Trước khi viết prose, section phải có story plan được con người d
 - chỉ chọn 1–5 claim làm xương sống narration;
 - giải thích narrative job của từng claim được giữ;
 - sắp beat theo tension và consequence, không theo thứ tự claim hoặc source.
+- tự chọn số beat và shape phù hợp; chỉ payoff là bắt buộc, tension/bridge không phải ô phải điền.
+
+Word budget là giả thuyết ở outline, không phải quota. Story design phải đề xuất lại range khi material không đủ hoặc narrative hinge cần thêm không gian. Draft không được lặp ý, thêm fact hay kéo dài câu chỉ để chạm min words.
 
 Một fact chỉ đáng xuất hiện trong narration nếu nó làm ít nhất một việc: tạo câu hỏi, tăng tension, giải thích mechanism, thay đổi cách hiểu, cho thấy consequence hoặc mở bridge cần thiết. Fact chỉ dùng để bảo vệ độ chính xác thường nên ở dạng guardrail và không cần được đọc thành lời.
 
 ## Narrative movement
 
-Mỗi section cần tạo ra chuỗi thay đổi trong hiểu biết:
+Toàn arc thường cần các chức năng dưới đây, nhưng một section riêng không phải lặp nguyên chuỗi:
 
 `vật/người cụ thể → vấn đề chưa giải được → evidence đổi mô hình → hệ quả đối với người hoặc hệ thống`
 

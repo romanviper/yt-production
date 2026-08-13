@@ -8,15 +8,18 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 try:
-    from scripts.common import read_json, sha256, word_count, write_json
+    from scripts.common import narration_text, read_json, sha256, word_count, write_json
+    from scripts.outline_contract import normalize_outline_contract
 except ModuleNotFoundError:
-    from common import read_json, sha256, word_count, write_json
+    from common import narration_text, read_json, sha256, word_count, write_json
+    from outline_contract import normalize_outline_contract
 
 
 def assemble_product(product_dir: Path, partial: bool = False, write: bool = True) -> dict:
     product_dir = product_dir.resolve()
     product = read_json(product_dir / "product.json")
     outline = read_json(product_dir / "02_outline" / "outline.json")
+    outline = normalize_outline_contract(outline, product.get("target"))
     selected = []
     unapproved = []
     for item in sorted(outline.get("sections", []), key=lambda value: value["order"]):
@@ -31,18 +34,37 @@ def assemble_product(product_dir: Path, partial: bool = False, write: bool = Tru
     if not selected:
         raise ValueError("No human-approved section available for assembly.")
 
+    movements = {
+        item["id"]: item
+        for item in outline.get("script_architecture", {}).get("movements", [])
+        if isinstance(item, dict) and item.get("id")
+    }
     blocks = [f"# {product['working_title']}", ""]
     records = []
     total = 0
+    current_movement = None
     for item in selected:
         draft = product_dir / "03_sections" / item["id"] / "draft.md"
         if not draft.is_file():
             raise FileNotFoundError(f"Missing draft for {item['id']}")
-        text = draft.read_text(encoding="utf-8").strip()
+        text = narration_text(draft.read_text(encoding="utf-8"), item["id"])
         words = word_count(text)
         total += words
-        blocks.extend([f"## {item['id']} — {item['title']}", "", text, ""])
-        records.append({"id": item["id"], "source": str(draft.relative_to(product_dir)), "sha256": sha256(draft), "words": words})
+        movement_id = item["movement_id"]
+        if movement_id != current_movement:
+            movement = movements[movement_id]
+            blocks.extend([f"## {movement['title']}", ""])
+            current_movement = movement_id
+        blocks.extend([f"<!-- production-unit: {item['id']} — {item['title']} -->", "", text, ""])
+        records.append(
+            {
+                "id": item["id"],
+                "movement_id": movement_id,
+                "source": str(draft.relative_to(product_dir)),
+                "sha256": sha256(draft),
+                "words": words,
+            }
+        )
     manifest = {
         "schema_version": 2,
         "product": product["slug"],

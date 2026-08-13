@@ -22,7 +22,8 @@ Giao tiếp cũng có hai lớp: task report giữ chiều sâu, operator brief 
 research plan
   → research workstreams độc lập
   → research synthesis
-  → outline 10 phần
+  → thiết kế macro movements và phân bổ nhịp toàn kịch bản
+  → chia production sections theo state change, không theo quota
   → materialize section workspaces
   → design/approve story plan từng phần
   → draft/review/revise từng phần
@@ -31,7 +32,7 @@ research plan
   → optional final audit
 ```
 
-Research thô không đi vào task viết. Story design phân evidence thành điều phải kể, chi tiết hỗ trợ, guardrail và điều bỏ; writer chỉ nhận narration pack đã được duyệt. Các phần khác được đại diện bằng story bible và handoff ngắn.
+Research thô không đi vào task viết. Macro movement là nhịp khán giả cảm nhận; `P##` là work unit giúp Agent giữ context nhỏ, hai thứ không buộc phải trùng nhau. Story design phân evidence thành điều phải kể, chi tiết hỗ trợ, guardrail và điều bỏ; writer chỉ nhận narration pack đã được duyệt. Các phần khác được đại diện bằng story bible và handoff ngắn.
 
 ## Lệnh thường dùng
 

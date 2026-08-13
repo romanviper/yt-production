@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -46,7 +47,8 @@ def approve_plan(product_dir: Path) -> None:
 def approve_outline(product_dir: Path) -> None:
     path = product_dir / "02_outline" / "outline.json"
     outline = read_json(path)
-    contract_errors = validate_outline_contract(outline)
+    product = read_json(product_dir / "product.json")
+    contract_errors = validate_outline_contract(outline, product_target=product.get("target"), require_current=True)
     if contract_errors:
         raise ValueError("Cannot approve outline: " + "; ".join(contract_errors))
     voice_path = product_dir / "02_outline" / "voice-profile.md"
@@ -98,16 +100,54 @@ def approve_story_plan(product_dir: Path, section: str) -> None:
     plan_path = root / "story-plan.json"
     plan = read_json(plan_path)
     evidence = read_json(root / "evidence-pack.json")
+    state_path = root / "section.json"
+    state = read_json(state_path)
     claim_ids = {item.get("id") for item in evidence.get("claims", []) if item.get("id")}
-    errors = validate_story_plan(plan, claim_ids)
+    errors = validate_story_plan(plan, claim_ids, state.get("target_words"), require_current=True)
     if errors:
         raise ValueError("Cannot approve story plan: " + "; ".join(errors))
+    approved_at = datetime.now(timezone.utc).isoformat()
+    recommended = plan["word_budget"]["recommended"]
+    current_budget = state["target_words"]
+    outline_path = product_dir / "02_outline" / "outline.json"
+    outline = read_json(outline_path)
+    resized_outline = deepcopy(outline)
+    resized_state = deepcopy(state)
+    if recommended != current_budget:
+        matching = [item for item in resized_outline.get("sections", []) if item.get("id") == section]
+        if len(matching) != 1:
+            raise ValueError(f"Cannot resize {section}: outline section is missing or duplicated.")
+        if matching[0].get("target_words") != current_budget:
+            raise ValueError(f"Cannot resize {section}: section and outline budgets are out of sync.")
+        reason = plan["word_budget"]["rationale"].strip()
+        matching[0]["target_words"] = recommended
+        matching[0]["budget_rationale"] = reason
+        architecture = resized_outline.setdefault("script_architecture", {})
+        architecture.setdefault("budget_revisions", []).append(
+            {
+                "section": section,
+                "from": current_budget,
+                "to": recommended,
+                "reason": reason,
+                "approved_by": "user",
+                "approved_at": approved_at,
+            }
+        )
+        resized_state["target_words"] = recommended
+        resized_state["budget_rationale"] = reason
+        product = read_json(product_dir / "product.json")
+        outline_errors = validate_outline_contract(resized_outline, product_target=product.get("target"))
+        if outline_errors:
+            raise ValueError("Cannot apply story-plan word budget: " + "; ".join(outline_errors))
+        plan["word_budget"]["accepted_resize_from"] = current_budget
     plan["status"] = "approved"
     plan["approved_by"] = "user"
-    plan["approved_at"] = datetime.now(timezone.utc).isoformat()
+    plan["approved_at"] = approved_at
+    if resized_outline != outline:
+        write_json(outline_path, resized_outline)
+        write_json(state_path, resized_state)
     write_json(plan_path, plan)
     build_narration_pack(product_dir, section)
-    state_path = root / "section.json"
     state = read_json(state_path)
     state.update({"status": "ready_for_draft", "human_approved": False})
     write_json(state_path, state)
@@ -139,8 +179,9 @@ def request_story_plan_changes(product_dir: Path, section: str, request: str) ->
     root = product_dir / "03_sections" / section
     state_path = root / "section.json"
     state = read_json(state_path)
-    if state.get("status") != "story_plan_review":
-        raise ValueError(f"Story plan {section} is not awaiting human review.")
+    reviewable_states = {"story_plan_review", "ready_for_review", "review_complete", "approved"}
+    if state.get("status") not in reviewable_states:
+        raise ValueError(f"Story plan {section} is not at a human review checkpoint.")
     (root / "story-plan-change-request.md").write_text(
         f"# Story Plan Change Request — {section}\n\n"
         f"Requested by: user\n\nRequested at: {datetime.now(timezone.utc).isoformat()}\n\n"
@@ -151,6 +192,12 @@ def request_story_plan_changes(product_dir: Path, section: str, request: str) ->
     state.pop("approved_by", None)
     state.pop("approved_at", None)
     write_json(state_path, state)
+    plan_path = root / "story-plan.json"
+    plan = read_json(plan_path)
+    plan["status"] = "draft"
+    plan.pop("approved_by", None)
+    plan.pop("approved_at", None)
+    write_json(plan_path, plan)
 
 
 def main() -> int:

@@ -1,7 +1,16 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "product": "{{SLUG}}",
   "status": "not_started",
   "section_count": null,
+  "script_architecture": {
+    "audience_promise": "",
+    "design_rationale": "",
+    "total_word_envelope": {
+      "min": null,
+      "max": null
+    },
+    "movements": []
+  },
   "sections": []
 }

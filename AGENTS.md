@@ -35,14 +35,14 @@ Ví dụ: “viết phần P04”, “review phần P07”, “research workstre
 
 “Viết phần P04” là intent ở cấp người dùng, không phải giấy phép bỏ qua checkpoint. Nếu P04 chưa có story plan được duyệt, route `design_section` trước; báo người dùng duyệt plan rồi mới tạo `draft_section`.
 
-Nếu người dùng yêu cầu sửa story plan đang chờ duyệt, ghi quyết định trước rồi tạo task mới:
+Nếu feedback chạm governing idea, evidence roles, structure shape hoặc word budget, route ngược về story design — kể cả khi draft đã lộ ra vấn đề. Ghi quyết định trước rồi tạo task mới:
 
 ```bash
 python scripts/approval.py request-story-plan-changes products/<slug> P04 --request "<phản hồi của người dùng>"
 python scripts/task.py create products/<slug> design_section --section P04
 ```
 
-Không tiếp tục render task đã submit; task mới phải nhận `story-plan-change-request.md` trong packet.
+Không tiếp tục render task đã submit; task mới phải nhận `story-plan-change-request.md` trong packet. Draft/review cũ có thể đi vào packet như diagnostic input nhưng design task không được sửa prose. Chỉ dùng `request-changes`/`revise_section` khi story plan vẫn đúng và lỗi chỉ nằm ở cách thực hiện prose.
 
 1. Tạo task bằng router:
 

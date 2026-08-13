@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 try:
-    from scripts.common import load_registry, product_relative, read_json, sha256, word_count, write_json
+    from scripts.common import load_registry, narration_text, product_relative, read_json, sha256, word_count, write_json
     from scripts.consolidate_research import ensure_consolidated
     from scripts.context_packet import compile_packet
     from scripts.operator_brief import empty_brief, render_brief, validate_brief_file
@@ -20,7 +20,7 @@ try:
     from scripts.story_plan_contract import validate_story_plan
     from scripts.voice_profile_contract import validate_voice_profile
 except ModuleNotFoundError:  # Direct execution: python scripts/task.py
-    from common import load_registry, product_relative, read_json, sha256, word_count, write_json
+    from common import load_registry, narration_text, product_relative, read_json, sha256, word_count, write_json
     from consolidate_research import ensure_consolidated
     from context_packet import compile_packet
     from operator_brief import empty_brief, render_brief, validate_brief_file
@@ -252,9 +252,10 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
                 errors.append("research synthesis status must be complete")
         elif operation == "outline":
             outline = read_json(product_dir / "02_outline" / "outline.json")
+            product = read_json(product_dir / "product.json")
             claims_doc = read_json(product_dir / "01_research" / "claim-ledger.json")
             known_claim_ids = {item.get("id") for item in claims_doc.get("claims", []) if item.get("id")}
-            errors.extend(validate_outline_contract(outline, known_claim_ids))
+            errors.extend(validate_outline_contract(outline, known_claim_ids, product.get("target"), require_current=True))
             voice_profile = (product_dir / "02_outline" / "voice-profile.md").read_text(encoding="utf-8")
             errors.extend(validate_voice_profile(voice_profile))
             if outline.get("status") == "approved":
@@ -266,15 +267,16 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
             root = product_dir / "03_sections" / section
             story_plan = read_json(root / "story-plan.json")
             evidence = read_json(root / "evidence-pack.json")
+            state = read_json(root / "section.json")
             claim_ids = {item.get("id") for item in evidence.get("claims", []) if item.get("id")}
-            errors.extend(validate_story_plan(story_plan, claim_ids))
+            errors.extend(validate_story_plan(story_plan, claim_ids, state.get("target_words"), require_current=True))
             if story_plan.get("status") == "approved":
                 errors.append("Agent may not self-approve story plan")
         elif operation in {"draft_section", "revise_section"}:
             section = target["section"]
             root = product_dir / "03_sections" / section
             state = read_json(root / "section.json")
-            draft_words = word_count((root / "draft.md").read_text(encoding="utf-8"))
+            draft_words = word_count(narration_text((root / "draft.md").read_text(encoding="utf-8"), section))
             budget = state["target_words"]
             if not int(budget["min"]) <= draft_words <= int(budget["max"]):
                 errors.append(f"draft word count {draft_words} outside {budget['min']}–{budget['max']}")

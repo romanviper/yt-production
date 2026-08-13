@@ -10,27 +10,34 @@ from typing import Any
 
 try:
     from scripts.common import read_json, write_json
-    from scripts.outline_contract import render_outline_value, render_section_question_payoff, validate_outline_contract
+    from scripts.outline_contract import normalize_outline_contract, render_outline_value, render_section_question_payoff, validate_outline_contract
     from scripts.story_plan_contract import empty_story_plan
 except ModuleNotFoundError:
     from common import read_json, write_json
-    from outline_contract import render_outline_value, render_section_question_payoff, validate_outline_contract
+    from outline_contract import normalize_outline_contract, render_outline_value, render_section_question_payoff, validate_outline_contract
     from story_plan_contract import empty_story_plan
 
 
 def materialize(product_dir: Path) -> list[Path]:
     product_dir = product_dir.resolve()
     outline = read_json(product_dir / "02_outline" / "outline.json")
+    product = read_json(product_dir / "product.json")
     if outline.get("status") != "approved":
         raise ValueError("Outline must be human-approved before section materialization.")
     claims_doc = read_json(product_dir / "01_research" / "claim-ledger.json")
     sources_doc = read_json(product_dir / "01_research" / "source-index.json")
     claims = {item["id"]: item for item in claims_doc.get("claims", [])}
     sources = {item["id"]: item for item in sources_doc.get("sources", [])}
-    contract_errors = validate_outline_contract(outline, set(claims))
+    contract_errors = validate_outline_contract(outline, set(claims), product.get("target"))
     if contract_errors:
         raise ValueError("Invalid approved outline: " + "; ".join(contract_errors))
+    outline = normalize_outline_contract(outline, product.get("target"))
     sections = outline.get("sections", [])
+    movements = {
+        item["id"]: item
+        for item in outline.get("script_architecture", {}).get("movements", [])
+        if isinstance(item, dict) and item.get("id")
+    }
     created: list[Path] = []
 
     for item in sections:
@@ -41,6 +48,7 @@ def materialize(product_dir: Path) -> list[Path]:
         root.mkdir(parents=True, exist_ok=True)
         section_path = root / "section.json"
         if not section_path.exists():
+            movement = movements[item["movement_id"]]
             write_json(
                 section_path,
                 {
@@ -51,18 +59,33 @@ def materialize(product_dir: Path) -> list[Path]:
                     "status": "needs_story_plan",
                     "human_approved": False,
                     "dependencies": item.get("dependencies", []),
+                    "movement_id": item["movement_id"],
+                    "macro_movement": {
+                        "id": movement["id"],
+                        "title": movement["title"],
+                        "narrative_job": movement["narrative_job"],
+                        "entry_state": movement["entry_state"],
+                        "exit_state": movement["exit_state"],
+                    },
+                    "structural_role": item["structural_role"],
+                    "planned_moves": item["planned_moves"],
                     "target_words": item["target_words"],
+                    "budget_rationale": item["budget_rationale"],
                 },
             )
             created.append(section_path)
         brief = root / "brief.md"
         if not brief.exists():
+            movement = movements[item["movement_id"]]
             brief.write_text(
                 f"# {section_id} — {item['title']}\n\n"
+                f"## Macro movement\n\n{movement['id']} — {movement['title']}\n\n"
+                f"## Structural role\n\n{item['structural_role']}\n\n"
                 f"## Narrative job\n\n{item['narrative_job']}\n\n"
                 f"## Entry state\n\n{item['entry_state']}\n\n"
                 f"## Exit state\n\n{item['exit_state']}\n\n"
                 f"{render_section_question_payoff(item)}\n\n"
+                f"## Planned shape\n\n{render_outline_value(item.get('planned_moves'))}\n\n"
                 f"## Anchor requirements\n\n{render_outline_value(item.get('anchor_requirements'))}\n\n"
                 f"## Bridge in\n\n{item.get('bridge_in', '')}\n\n"
                 f"## Bridge out\n\n{item.get('bridge_out', '')}\n\n"
@@ -103,7 +126,7 @@ def materialize(product_dir: Path) -> list[Path]:
             created.append(evidence_path)
         story_plan_path = root / "story-plan.json"
         if not story_plan_path.exists():
-            write_json(story_plan_path, empty_story_plan(section_id))
+            write_json(story_plan_path, empty_story_plan(section_id, item["target_words"]))
             created.append(story_plan_path)
         continuity = root / "continuity-in.md"
         if not continuity.exists():

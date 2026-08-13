@@ -39,6 +39,17 @@ def word_count(text: str) -> int:
     return len(re.findall(r"\b[\wÀ-ỹ]+\b", text, flags=re.UNICODE))
 
 
+def narration_text(text: str, section_id: str) -> str:
+    """Remove an optional editorial P## heading before counting or final assembly."""
+
+    lines = text.strip().splitlines()
+    if lines and re.match(rf"^#\s+{re.escape(section_id)}(?:\s|—|-|$)", lines[0]):
+        lines = lines[1:]
+        while lines and not lines[0].strip():
+            lines.pop(0)
+    return "\n".join(lines).strip()
+
+
 def load_registry() -> dict[str, Any]:
     return read_json(REGISTRY_PATH)["operations"]
 
@@ -87,4 +98,3 @@ def repo_relative(path: Path) -> str:
 
 def product_relative(product_dir: Path, path: Path) -> str:
     return str(path.resolve().relative_to(product_dir.resolve()))
-

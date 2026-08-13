@@ -3,8 +3,13 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 import re
 from typing import Any
+
+
+OUTLINE_SCHEMA_VERSION = 3
+MAX_SECTION_WORDS = 3000
 
 
 def outline_section_count(outline: dict[str, Any]) -> int | None:
@@ -36,8 +41,99 @@ def render_outline_value(value: Any, fallback: str = "Không có.") -> str:
     return text or fallback
 
 
-def validate_outline_contract(outline: dict[str, Any], known_claim_ids: set[str] | None = None) -> list[str]:
+def valid_word_range(value: Any) -> bool:
+    return (
+        isinstance(value, dict)
+        and isinstance(value.get("min"), int)
+        and not isinstance(value.get("min"), bool)
+        and isinstance(value.get("max"), int)
+        and not isinstance(value.get("max"), bool)
+        and value.get("min", 0) > 0
+        and value.get("max", 0) >= value.get("min", 0)
+    )
+
+
+def target_word_envelope(target: dict[str, Any]) -> dict[str, int] | None:
+    """Convert product duration and narration rate into its total word envelope."""
+
+    duration = target.get("duration_minutes") if isinstance(target, dict) else None
+    wpm = target.get("narration_wpm") if isinstance(target, dict) else None
+    if (
+        not isinstance(duration, dict)
+        or not isinstance(duration.get("min"), (int, float))
+        or isinstance(duration.get("min"), bool)
+        or not isinstance(duration.get("max"), (int, float))
+        or isinstance(duration.get("max"), bool)
+        or not isinstance(wpm, (int, float))
+        or isinstance(wpm, bool)
+        or duration["min"] <= 0
+        or duration["max"] < duration["min"]
+        or wpm <= 0
+    ):
+        return None
+    return {"min": round(duration["min"] * wpm), "max": round(duration["max"] * wpm)}
+
+
+def normalize_outline_contract(outline: dict[str, Any], product_target: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Expose approved v2 products through the v3 interface without rewriting their artifacts."""
+
+    if outline.get("schema_version") != 2:
+        return outline
+    value = deepcopy(outline)
+    value["schema_version"] = OUTLINE_SCHEMA_VERSION
+    sections = value.get("sections", [])
+    section_ids = [item.get("id") for item in sections if isinstance(item, dict) and item.get("id")]
+    envelope = target_word_envelope(product_target) if product_target is not None else None
+    if envelope is None:
+        envelope = value.get("target_total_words")
+    if not valid_word_range(envelope):
+        budgets = [item.get("target_words") for item in sections if isinstance(item, dict)]
+        valid_budgets = [item for item in budgets if valid_word_range(item)]
+        envelope = {
+            "min": sum(item["min"] for item in valid_budgets) or 1,
+            "max": sum(item["max"] for item in valid_budgets) or 1,
+        }
+    audience_promise = str(value.get("proposed_answer") or value.get("central_question") or "Legacy approved arc.")
+    value["script_architecture"] = {
+        "audience_promise": audience_promise,
+        "design_rationale": "Legacy v2 outline exposed as one compatibility movement; revise the outline before changing its macro architecture.",
+        "total_word_envelope": envelope,
+        "movements": [
+            {
+                "id": "M01",
+                "order": 1,
+                "title": "Legacy approved arc",
+                "narrative_job": audience_promise,
+                "entry_state": str(sections[0].get("entry_state", "Legacy entry state.")) if sections else "Legacy entry state.",
+                "exit_state": str(sections[-1].get("exit_state", "Legacy exit state.")) if sections else "Legacy exit state.",
+                "section_ids": section_ids,
+            }
+        ],
+    }
+    for section in sections:
+        if not isinstance(section, dict):
+            continue
+        narrative_job = str(section.get("narrative_job") or "Legacy section transition.")
+        section.setdefault("movement_id", "M01")
+        section.setdefault("structural_role", narrative_job)
+        section.setdefault("budget_rationale", "Legacy approved allocation retained until an explicit outline revision.")
+        section.setdefault("planned_moves", [narrative_job])
+    return value
+
+
+def validate_outline_contract(
+    outline: dict[str, Any],
+    known_claim_ids: set[str] | None = None,
+    product_target: dict[str, Any] | None = None,
+    require_current: bool = False,
+) -> list[str]:
     errors: list[str] = []
+    schema_version = outline.get("schema_version")
+    if schema_version == 2 and require_current:
+        errors.append(f"outline schema_version must be {OUTLINE_SCHEMA_VERSION} for new or revised output")
+    if schema_version not in {2, OUTLINE_SCHEMA_VERSION}:
+        errors.append(f"outline schema_version must be {OUTLINE_SCHEMA_VERSION}")
+    outline = normalize_outline_contract(outline, product_target)
     sections = outline.get("sections")
     if not isinstance(sections, list) or not sections:
         return ["outline must contain at least one section"]
@@ -52,9 +148,49 @@ def validate_outline_contract(outline: dict[str, Any], known_claim_ids: set[str]
     elif len(sections) != count:
         errors.append(f"outline declares {count} sections but contains {len(sections)}")
 
+    architecture = outline.get("script_architecture")
+    if not isinstance(architecture, dict):
+        errors.append("outline script_architecture must be an object")
+        architecture = {}
+    for field in ["audience_promise", "design_rationale"]:
+        if not isinstance(architecture.get(field), str) or not architecture[field].strip():
+            errors.append(f"outline script_architecture.{field} is required")
+    envelope = architecture.get("total_word_envelope")
+    if not valid_word_range(envelope):
+        errors.append("outline script_architecture.total_word_envelope is invalid")
+        envelope = None
+    expected_envelope = target_word_envelope(product_target) if product_target is not None else None
+    if product_target is not None and expected_envelope is None:
+        errors.append("product target cannot be converted into a word envelope")
+    elif expected_envelope is not None and envelope != expected_envelope:
+        errors.append(
+            "outline total_word_envelope must match product duration and narration rate "
+            f"({expected_envelope['min']}–{expected_envelope['max']})"
+        )
+
+    movements = architecture.get("movements")
+    if not isinstance(movements, list) or not movements:
+        errors.append("outline script_architecture requires at least one narrative movement")
+        movements = []
+
     section_ids: set[str] = set()
     orders: set[int] = set()
-    required = ["title", "narrative_job", "entry_state", "exit_state", "claim_ids", "target_words", "boundary"]
+    ordered_section_ids: list[str] = []
+    allocated_min = 0
+    allocated_max = 0
+    required = [
+        "title",
+        "movement_id",
+        "structural_role",
+        "narrative_job",
+        "entry_state",
+        "exit_state",
+        "claim_ids",
+        "target_words",
+        "budget_rationale",
+        "planned_moves",
+        "boundary",
+    ]
     for index, section in enumerate(sections):
         if not isinstance(section, dict):
             errors.append(f"outline section #{index + 1} must be an object")
@@ -65,6 +201,7 @@ def validate_outline_contract(outline: dict[str, Any], known_claim_ids: set[str]
         elif section_id in section_ids:
             errors.append(f"outline has duplicate section id: {section_id}")
         section_ids.add(section_id)
+        ordered_section_ids.append(section_id)
 
         order = section.get("order")
         if not isinstance(order, int) or isinstance(order, bool) or order < 1 or order in orders:
@@ -94,16 +231,25 @@ def validate_outline_contract(outline: dict[str, Any], known_claim_ids: set[str]
                 errors.append(f"outline section {section_id or '?'} references unknown claims: {', '.join(unknown)}")
 
         budget = section.get("target_words")
-        if (
-            not isinstance(budget, dict)
-            or not isinstance(budget.get("min"), int)
-            or isinstance(budget.get("min"), bool)
-            or not isinstance(budget.get("max"), int)
-            or isinstance(budget.get("max"), bool)
-            or budget.get("min", 0) <= 0
-            or budget.get("max", 0) < budget.get("min", 0)
-        ):
+        if not valid_word_range(budget):
             errors.append(f"outline section {section_id or '?'} has invalid word budget")
+        else:
+            allocated_min += budget["min"]
+            allocated_max += budget["max"]
+            if budget["max"] > MAX_SECTION_WORDS:
+                errors.append(
+                    f"outline section {section_id or '?'} exceeds the {MAX_SECTION_WORDS}-word production-unit cap; "
+                    "split the work unit without inventing a new audience-facing chapter"
+                )
+        if not isinstance(section.get("budget_rationale"), str) or not section["budget_rationale"].strip():
+            errors.append(f"outline section {section_id or '?'} budget_rationale is required")
+        planned_moves = section.get("planned_moves")
+        if (
+            not isinstance(planned_moves, list)
+            or not 1 <= len(planned_moves) <= 10
+            or not all(isinstance(item, str) and item.strip() for item in planned_moves)
+        ):
+            errors.append(f"outline section {section_id or '?'} planned_moves must contain one to ten story moves")
 
         dependencies = section.get("dependencies", [])
         if not isinstance(dependencies, list) or not all(isinstance(item, str) for item in dependencies):
@@ -115,10 +261,63 @@ def validate_outline_contract(outline: dict[str, Any], known_claim_ids: set[str]
     expected_orders = set(range(1, len(sections) + 1))
     if orders != expected_orders:
         errors.append("outline section orders must form a complete 1..N sequence")
+    if envelope is not None and (allocated_max < envelope["min"] or allocated_min > envelope["max"]):
+        errors.append(
+            f"outline section budgets allocate {allocated_min}–{allocated_max} words with no feasible total inside the "
+            f"{envelope['min']}–{envelope['max']} word envelope"
+        )
+
+    movement_ids: set[str] = set()
+    movement_orders: set[int] = set()
+    flattened_sections: list[str] = []
+    movement_membership: dict[str, str] = {}
+    for index, movement in enumerate(movements):
+        if not isinstance(movement, dict):
+            errors.append(f"outline movement #{index + 1} must be an object")
+            continue
+        movement_id = movement.get("id", "")
+        if not re.fullmatch(r"M\d{2}", movement_id):
+            errors.append(f"outline movement #{index + 1} has invalid id: {movement_id or '?'}")
+        elif movement_id in movement_ids:
+            errors.append(f"outline has duplicate movement id: {movement_id}")
+        movement_ids.add(movement_id)
+        order = movement.get("order")
+        if not isinstance(order, int) or isinstance(order, bool) or order < 1 or order in movement_orders:
+            errors.append(f"outline movement {movement_id or '?'} has invalid or duplicate order: {order!r}")
+        else:
+            movement_orders.add(order)
+        missing = [
+            field
+            for field in ["title", "narrative_job", "entry_state", "exit_state"]
+            if not isinstance(movement.get(field), str) or not movement[field].strip()
+        ]
+        if missing:
+            errors.append(f"outline movement {movement_id or '?'} missing: {', '.join(missing)}")
+        members = movement.get("section_ids")
+        if not isinstance(members, list) or not members or not all(isinstance(item, str) for item in members):
+            errors.append(f"outline movement {movement_id or '?'} section_ids must be a non-empty list")
+            continue
+        for section_id in members:
+            if section_id in movement_membership:
+                errors.append(
+                    f"outline section {section_id} belongs to both {movement_membership[section_id]} and {movement_id}"
+                )
+            movement_membership[section_id] = movement_id
+        flattened_sections.extend(members)
+    if movement_orders != set(range(1, len(movements) + 1)):
+        errors.append("outline movement orders must form a complete 1..N sequence")
+    if flattened_sections != ordered_section_ids:
+        errors.append("outline movements must cover every section exactly once, contiguously and in section order")
+
     for section in sections:
         if not isinstance(section, dict):
             continue
         section_id = section.get("id", "?")
+        movement_id = section.get("movement_id")
+        if movement_id not in movement_ids:
+            errors.append(f"outline section {section_id} references missing movement: {movement_id or '?'}")
+        elif movement_membership.get(section_id) != movement_id:
+            errors.append(f"outline section {section_id} movement_id conflicts with movement membership")
         for dependency in section.get("dependencies", []) if isinstance(section.get("dependencies", []), list) else []:
             if dependency not in section_ids:
                 errors.append(f"outline section {section_id} references missing dependency: {dependency}")
