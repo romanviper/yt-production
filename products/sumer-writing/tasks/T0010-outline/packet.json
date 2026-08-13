@@ -1,5 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
+  "compiler": "scripts/context_packet.py",
+  "context_sha256": "c46dfe253d89de6f19517b5fd933b7e90a2ac360023f538cde3fe4703a516c96",
   "authority": "product_agent",
   "task_id": "T0010-outline",
   "product": "sumer-writing",
@@ -10,7 +12,7 @@
   },
   "created_at": "2026-08-13T14:00:00.000Z",
   "max_context_tokens": 30000,
-  "estimated_context_tokens": 25000,
+  "estimated_context_tokens": 25980,
   "instruction_files": [
     "system/core/invariants.md",
     "system/standards/channel.md",
@@ -20,14 +22,40 @@
     "system/standards/operator-interface.md"
   ],
   "inputs": [
-    "00_brief/product-brief.md",
-    "00_brief/benchmark.md",
-    "01_research/research-synthesis.md",
-    "01_research/claim-ledger.json"
+    {
+      "path": "00_brief/product-brief.md",
+      "sha256": "bb8bc646f4d7756ee3c6cc7a12f1f1833c4eab9f6bf84a642fa2609e01a6f89f",
+      "bytes": 2317
+    },
+    {
+      "path": "00_brief/benchmark.md",
+      "sha256": "2c06edfc81f85897b108d058a90337f1d3e4a03f24029ccadbe3815f0817669e",
+      "bytes": 2321
+    },
+    {
+      "path": "01_research/research-synthesis.md",
+      "sha256": "da46bd0da9918382042ae27d3ab8cd800cd0bd0d3441a9ea230a2167aceb7f20",
+      "bytes": 9750
+    },
+    {
+      "path": "01_research/claim-ledger.json",
+      "sha256": "5b316543e9d25b449066ba6986edea2f88631dfcf440cfcb26b1062fed8e088a",
+      "bytes": 53758
+    }
   ],
   "operation_outputs": [
     "02_outline/outline.json",
     "02_outline/story-bible.md"
+  ],
+  "output_baselines": [
+    {
+      "path": "02_outline/outline.json",
+      "sha256": "f6e9de5ad3f0b49a744c62619f91cb79d25afe8fcfa0ea9706bb797c93adb146"
+    },
+    {
+      "path": "02_outline/story-bible.md",
+      "sha256": "a6231f0bea92acc94d1f8e4cf4dfeec8806af18578e47e432e430f46b7fbe1b0"
+    }
   ],
   "allowed_write_paths": [
     "02_outline/outline.json",
@@ -40,8 +68,8 @@
   "acceptance_criteria": [
     "Outline có đúng số section đã chọn và ID ổn định.",
     "Mỗi section có một narrative job, state change, claim set và word budget.",
-    "Tổng arc trả North Star và khác biệt benchmark.",
-    "Story bible compact."
+    "Tổng arc trả North Star và khác biệt rõ với benchmark.",
+    "Story bible đủ continuity nhưng nằm trong giới hạn compact."
   ],
   "validation": [
     "python scripts/validate.py products/sumer-writing",

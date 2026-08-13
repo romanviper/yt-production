@@ -21,8 +21,8 @@
   "acceptance_criteria": [
     "Outline có đúng số section đã chọn và ID ổn định.",
     "Mỗi section có một narrative job, state change, claim set và word budget.",
-    "Tổng arc trả North Star và khác biệt benchmark.",
-    "Story bible compact."
+    "Tổng arc trả North Star và khác biệt rõ với benchmark.",
+    "Story bible đủ continuity nhưng nằm trong giới hạn compact."
   ],
   "outputs": [
     "02_outline/outline.json",
