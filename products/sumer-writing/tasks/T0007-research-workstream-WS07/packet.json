@@ -18,8 +18,14 @@
     "system/standards/operator-interface.md"
   ],
   "inputs": [
-    "00_brief/product-brief.md",
-    "01_research/workstreams/WS07/brief.md"
+    {
+      "path": "00_brief/product-brief.md",
+      "sha256": "bb8bc646f4d7756ee3c6cc7a12f1f1833c4eab9f6bf84a642fa2609e01a6f89f"
+    },
+    {
+      "path": "01_research/workstreams/WS07/brief.md",
+      "sha256": "26638fb2fe7208034e7f94a68d1d554fe18fe1d46364a804f555a5797fa3d17a"
+    }
   ],
   "operation_outputs": [
     "01_research/workstreams/WS07/sources.json",
