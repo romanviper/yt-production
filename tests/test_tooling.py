@@ -59,7 +59,8 @@ def make_approved_outline(product: Path, section_count: int = 10) -> None:
                 "narrative_job": f"Move story state {number - 1} to {number}.",
                 "entry_state": f"State {number - 1}",
                 "exit_state": f"State {number}",
-                "question_payoff": f"Resolve turn {number}.",
+                "question": f"What changes in part {number}?",
+                "payoff": f"Resolve turn {number}.",
                 "claim_ids": ["CLM-0001"],
                 "dependencies": [f"P{number - 1:02d}"] if number > 1 else [],
                 "anchor_requirements": "Evidence-backed object.",
@@ -72,7 +73,7 @@ def make_approved_outline(product: Path, section_count: int = 10) -> None:
         )
     write_json(
         product / "02_outline" / "outline.json",
-        {"schema_version": 1, "product": product.name, "status": "approved", "section_count_target": section_count, "sections": sections},
+        {"schema_version": 2, "product": product.name, "status": "approved", "section_count": section_count, "sections": sections},
     )
 
 
@@ -347,6 +348,19 @@ class ModularProductionTests(unittest.TestCase):
             )
             self.assertIn("Operator Interface Standard", context)
             self.assertLess(packet["estimated_context_tokens"], packet["max_context_tokens"])
+
+    def test_outline_contract_materializes_split_question_and_payoff(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 1)
+            outline = json.loads((product / "02_outline" / "outline.json").read_text(encoding="utf-8"))
+            outline["sections"][0]["anchor_requirements"] = ["Object one.", "Object two."]
+            write_json(product / "02_outline" / "outline.json", outline)
+            materialize_sections(product)
+            brief = (product / "03_sections" / "P01" / "brief.md").read_text(encoding="utf-8")
+            self.assertIn("## Question\n\nWhat changes in part 1?", brief)
+            self.assertIn("## Payoff\n\nResolve turn 1.", brief)
+            self.assertIn("- Object one.\n- Object two.", brief)
 
     def test_draft_packet_adds_only_approved_dependency_handoff(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

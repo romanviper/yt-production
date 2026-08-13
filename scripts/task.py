@@ -14,6 +14,7 @@ try:
     from scripts.consolidate_research import ensure_consolidated
     from scripts.context_packet import compile_packet
     from scripts.operator_brief import empty_brief, render_brief, validate_brief_file
+    from scripts.outline_contract import validate_outline_contract
     from scripts.packet_contract import validate_packet_contract
     from scripts.research_plan_contract import validate_research_plan_contract
 except ModuleNotFoundError:  # Direct execution: python scripts/task.py
@@ -21,6 +22,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from consolidate_research import ensure_consolidated
     from context_packet import compile_packet
     from operator_brief import empty_brief, render_brief, validate_brief_file
+    from outline_contract import validate_outline_contract
     from packet_contract import validate_packet_contract
     from research_plan_contract import validate_research_plan_contract
 
@@ -240,19 +242,9 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
                 errors.append("research synthesis status must be complete")
         elif operation == "outline":
             outline = read_json(product_dir / "02_outline" / "outline.json")
-            sections = outline.get("sections", [])
-            if not sections:
-                errors.append("outline has no sections")
-            if outline.get("section_count_target") and len(sections) != outline["section_count_target"]:
-                errors.append("outline section count differs from target")
-            required = ["id", "order", "title", "narrative_job", "entry_state", "exit_state", "question_payoff", "claim_ids", "target_words", "boundary"]
-            for item in sections:
-                missing = [field for field in required if not item.get(field)]
-                if missing:
-                    errors.append(f"outline section {item.get('id', '?')} missing: {', '.join(missing)}")
-                budget = item.get("target_words", {})
-                if not isinstance(budget, dict) or not isinstance(budget.get("min"), int) or not isinstance(budget.get("max"), int) or budget.get("min", 0) <= 0 or budget.get("max", 0) < budget.get("min", 0):
-                    errors.append(f"outline section {item.get('id', '?')} has invalid word budget")
+            claims_doc = read_json(product_dir / "01_research" / "claim-ledger.json")
+            known_claim_ids = {item.get("id") for item in claims_doc.get("claims", []) if item.get("id")}
+            errors.extend(validate_outline_contract(outline, known_claim_ids))
             if outline.get("status") == "approved":
                 errors.append("Agent may not self-approve outline")
         elif operation in {"draft_section", "revise_section"}:

@@ -10,8 +10,10 @@ from typing import Any
 
 try:
     from scripts.common import read_json, write_json
+    from scripts.outline_contract import render_outline_value, render_section_question_payoff, validate_outline_contract
 except ModuleNotFoundError:
     from common import read_json, write_json
+    from outline_contract import render_outline_value, render_section_question_payoff, validate_outline_contract
 
 
 def materialize(product_dir: Path) -> list[Path]:
@@ -23,6 +25,9 @@ def materialize(product_dir: Path) -> list[Path]:
     sources_doc = read_json(product_dir / "01_research" / "source-index.json")
     claims = {item["id"]: item for item in claims_doc.get("claims", [])}
     sources = {item["id"]: item for item in sources_doc.get("sources", [])}
+    contract_errors = validate_outline_contract(outline, set(claims))
+    if contract_errors:
+        raise ValueError("Invalid approved outline: " + "; ".join(contract_errors))
     sections = outline.get("sections", [])
     created: list[Path] = []
 
@@ -55,8 +60,8 @@ def materialize(product_dir: Path) -> list[Path]:
                 f"## Narrative job\n\n{item['narrative_job']}\n\n"
                 f"## Entry state\n\n{item['entry_state']}\n\n"
                 f"## Exit state\n\n{item['exit_state']}\n\n"
-                f"## Question and payoff\n\n{item['question_payoff']}\n\n"
-                f"## Anchor requirements\n\n{item.get('anchor_requirements', 'Không có.')}\n\n"
+                f"{render_section_question_payoff(item)}\n\n"
+                f"## Anchor requirements\n\n{render_outline_value(item.get('anchor_requirements'))}\n\n"
                 f"## Bridge in\n\n{item.get('bridge_in', '')}\n\n"
                 f"## Bridge out\n\n{item.get('bridge_out', '')}\n\n"
                 f"## Boundary\n\n{item.get('boundary', '')}\n\n"

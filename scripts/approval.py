@@ -9,10 +9,12 @@ from pathlib import Path
 
 try:
     from scripts.common import read_json, write_json
+    from scripts.outline_contract import validate_outline_contract
     from scripts.research_plan_contract import validate_research_plan_contract
     from scripts.validate import validate_product
 except ModuleNotFoundError:
     from common import read_json, write_json
+    from outline_contract import validate_outline_contract
     from research_plan_contract import validate_research_plan_contract
     from validate import validate_product
 
@@ -40,11 +42,9 @@ def approve_plan(product_dir: Path) -> None:
 def approve_outline(product_dir: Path) -> None:
     path = product_dir / "02_outline" / "outline.json"
     outline = read_json(path)
-    sections = outline.get("sections", [])
-    if not sections:
-        raise ValueError("Cannot approve an empty outline.")
-    if outline.get("section_count_target") and len(sections) != outline["section_count_target"]:
-        raise ValueError("Section count does not match section_count_target.")
+    contract_errors = validate_outline_contract(outline)
+    if contract_errors:
+        raise ValueError("Cannot approve outline: " + "; ".join(contract_errors))
     outline["status"] = "approved"
     outline["approved_by"] = "user"
     outline["approved_at"] = datetime.now(timezone.utc).isoformat()

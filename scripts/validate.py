@@ -12,9 +12,11 @@ from pathlib import Path
 
 try:
     from scripts.common import read_json
+    from scripts.outline_contract import validate_outline_contract
     from scripts.task import verify_task
 except ModuleNotFoundError:
     from common import read_json
+    from outline_contract import validate_outline_contract
     from task import verify_task
 
 
@@ -95,30 +97,10 @@ def validate_product(product_dir: Path) -> list[Issue]:
             issues.append(Issue("ERROR", f"{claim_path}#{index}", "Supported/qualified claim requires sources."))
 
     outline = safe_json(outline_path, issues)
-    section_ids: set[str] = set()
-    orders: set[int] = set()
-    for index, section in enumerate(outline.get("sections", [])):
-        section_id = section.get("id", "")
-        if not re.fullmatch(r"P\d{2}", section_id):
-            issues.append(Issue("ERROR", f"{outline_path}#{index}", f"Invalid section ID: {section_id}"))
-        if section_id in section_ids:
-            issues.append(Issue("ERROR", f"{outline_path}#{index}", f"Duplicate section: {section_id}"))
-        section_ids.add(section_id)
-        order = section.get("order")
-        if not isinstance(order, int) or order < 1 or order in orders:
-            issues.append(Issue("ERROR", f"{outline_path}#{index}", f"Invalid/duplicate order: {order}"))
-        orders.add(order)
-        for claim_id in section.get("claim_ids", []):
-            if claim_id not in claim_ids:
-                issues.append(Issue("ERROR", f"{outline_path}#{index}", f"Unknown claim: {claim_id}"))
-        for dependency in section.get("dependencies", []):
-            # Forward references are checked after collection below.
-            if not re.fullmatch(r"P\d{2}", dependency):
-                issues.append(Issue("ERROR", f"{outline_path}#{index}", f"Invalid dependency: {dependency}"))
-    for index, section in enumerate(outline.get("sections", [])):
-        for dependency in section.get("dependencies", []):
-            if dependency not in section_ids:
-                issues.append(Issue("ERROR", f"{outline_path}#{index}", f"Missing dependency: {dependency}"))
+    if outline.get("sections"):
+        for message in validate_outline_contract(outline, claim_ids):
+            issues.append(Issue("ERROR", str(outline_path), message))
+    section_ids = {section.get("id") for section in outline.get("sections", []) if isinstance(section, dict) and section.get("id")}
 
     section_root = product_dir / "03_sections"
     if outline.get("status") == "approved":
