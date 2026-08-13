@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "mode": "brief",
+  "headline": "P01 đã được viết lại theo story plan v2 và sẵn sàng để review.",
+  "status": "ready_for_review",
+  "material_points": [
+    "Draft đi đúng ba movement và nằm trong budget 550–700 từ.",
+    "B02 chỉ có một đoạn ngắn về ngưỡng chữ viết; payoff xuất hiện đúng một lần.",
+    "Không dựng người tham gia hay tình huống trí nhớ; không dùng lại các claim đã omit."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Bạn muốn approve P01 hay yêu cầu sửa sau khi đọc draft mới?",
+    "recommendation": "Review trực tiếp draft mới trước khi quyết định.",
+    "options": [
+      {
+        "label": "Approve",
+        "effect": "Khóa P01 và cho phép tiếp tục dependency kế tiếp."
+      },
+      {
+        "label": "Request changes",
+        "effect": "Tạo revision scope giới hạn cho draft P01."
+      }
+    ]
+  },
+  "next_step": ""
+}

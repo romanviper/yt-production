@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "mode": "brief",
+  "headline": "Artifact story plan P01 đã được lưu lại đúng schema v2 và chờ bạn duyệt.",
+  "status": "ready_for_review",
+  "material_points": [
+    "Structure shape và ba beat cùng dùng đúng chuỗi object_puzzle → payoff → formation_turn.",
+    "Budget là 550–700 từ; status vẫn là draft.",
+    "Evidence roles khớp đúng selection đã trình; prose chưa thay đổi."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Bạn có approve artifact story plan P01 này không?",
+    "recommendation": "Duyệt trực tiếp artifact mới bên dưới trước khi approve.",
+    "options": [
+      {
+        "label": "Approve",
+        "effect": "Cho phép áp dụng budget và tạo narration pack mới."
+      },
+      {
+        "label": "Request changes",
+        "effect": "Giữ P01 ở story design để sửa tiếp artifact."
+      }
+    ]
+  },
+  "next_step": ""
+}

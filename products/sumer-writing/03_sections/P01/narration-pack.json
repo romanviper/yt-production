@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "section": "P01",
-  "created_at": "2026-08-13T11:49:23.431182+00:00",
-  "story_plan_sha256": "a0bed6d1ab1d86d4e3e980081022f1b5648b60bdccb46044fdbb9fe8c3d2aaf8",
+  "created_at": "2026-08-13T16:48:45.845764+00:00",
+  "story_plan_sha256": "f5c6958e8e24c514b7ada46ba2fd1a690b6404657b1da968138c54b1ab04b1ed",
   "evidence_pack_sha256": "7f8c60be19754fee95b69315d0ddb20942e2801145a0b6fd9197e2e2ad598f5d",
   "narrated_claims": [
     {
@@ -43,27 +43,6 @@
           "local_id": "WS01-CLM-001"
         }
       ]
-    },
-    {
-      "id": "CLM-0009",
-      "statement": "The relative sequence Uruk IV proto-cuneiform → Uruk III proto-cuneiform → later language-explicit cuneiform is much more secure than the absolute dates or a sharp boundary between proto-writing and writing.",
-      "type": "inference",
-      "confidence": "high",
-      "status": "supported",
-      "sources": [
-        "SRC-0001",
-        "SRC-0002",
-        "SRC-0003",
-        "SRC-0007"
-      ],
-      "counterevidence": "Local corpora and cross-regional contacts complicate a single linear sequence, and the exact transition to language-explicit writing is gradual.",
-      "narrative_implication": "Organize chronology by states and transitions rather than invention moments.",
-      "provenance": [
-        {
-          "workstream": "WS01",
-          "local_id": "WS01-CLM-009"
-        }
-      ]
     }
   ],
   "support_claims": [
@@ -86,32 +65,12 @@
           "local_id": "WS01-CLM-002"
         }
       ]
-    },
-    {
-      "id": "CLM-0004",
-      "statement": "The earliest Uruk IV corpus known to scholarship is overwhelmingly administrative; lexical texts become materially more visible in Uruk III.",
-      "type": "fact",
-      "confidence": "high",
-      "status": "supported",
-      "sources": [
-        "SRC-0001"
-      ],
-      "counterevidence": "Survival and excavation bias mean the preserved corpus cannot prove that no other uses or media existed.",
-      "narrative_implication": "Early evidence supports an administrative center of gravity, not the claim that administration was the only origin or use.",
-      "provenance": [
-        {
-          "workstream": "WS01",
-          "local_id": "WS01-CLM-004"
-        }
-      ]
     }
   ],
   "claim_use": {
-    "CLM-0042": "Tạo hook và tension: ta nhận ra ngũ cốc cùng số lượng nhưng không phục hồi được một câu hoàn chỉnh, ngôn ngữ hay chức năng chính xác của văn bản.",
-    "CLM-0001": "Tạo explanatory turn ngắn: dấu có thể cố định một phần thông tin trước khi ghi trọn lời nói.",
-    "CLM-0009": "Chỉ định hướng tối thiểu trong bridge rằng đây là một quá trình phát triển, không tạo một beat niên đại riêng.",
-    "CLM-0002": "Chỉ định hướng niên đại tối thiểu nếu cần; không sở hữu beat.",
-    "CLM-0004": "Chỉ là bối cảnh hỗ trợ nếu cần; không sở hữu beat."
+    "CLM-0042": "Tạo object puzzle: ta đọc được ngũ cốc và số lượng nhưng không phục hồi được câu hoàn chỉnh, ngôn ngữ hay giao dịch chính xác.",
+    "CLM-0001": "Đổi mô hình hiểu và trả payoff: năng lực cố định một phần thông tin có thể xuất hiện trước khả năng ghi trọn lời nói.",
+    "CLM-0002": "Chỉ đặt P005390 trong khoảng thời gian tối thiểu theo yêu cầu brief; không tạo chronology turn hay lập luận nguồn gốc."
   },
   "guardrails": [
     {
@@ -131,6 +90,8 @@
     }
   ],
   "omitted_claim_ids": [
+    "CLM-0004",
+    "CLM-0009",
     "CLM-0034"
   ],
   "sources": [
@@ -301,31 +262,6 @@
         {
           "workstream": "WS03",
           "local_id": "WS03-SRC-002"
-        }
-      ]
-    },
-    {
-      "id": "SRC-0007",
-      "title": "The State of Decipherment of Proto-Elamite",
-      "author": "Robert K. Englund",
-      "year": 2004,
-      "type": "scholarly chapter / comparative script study",
-      "authority": "Corpus-based comparison by a leading proto-cuneiform and proto-Elamite specialist.",
-      "url": "https://cdli.earth/files-up/publications/englund2004c.pdf",
-      "locators": [
-        "pp. 124–127 and 139–140 (PDF pp. 24–27, 39–40)"
-      ],
-      "status": "reviewed",
-      "limitations": [
-        "Proto-Elamite comparison is secondary to WS01 and does not establish the spoken language of Uruk scribes."
-      ],
-      "notes": [
-        "Supports relative order Uruk IV before Uruk III and contemporaneity/contact with proto-Elamite; shows attribution is regional and transmissional, not a simple ethnic label."
-      ],
-      "provenance": [
-        {
-          "workstream": "WS01",
-          "local_id": "WS01-SRC-007"
         }
       ]
     },

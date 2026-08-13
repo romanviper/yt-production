@@ -2,19 +2,20 @@
 
 ## State achieved
 
-Khán giả chuyển từ mô hình “chữ viết xuất hiện như một hệ hoàn chỉnh để ghi lời nói” sang hiểu biết giới hạn hơn: các dấu có thể cố định một phần thông tin trên vật thể bền dù chưa ghi trọn lời nói.
+Khán giả không còn mặc định tablet cổ là một câu nói đang chờ dịch. P005390 cho phép nhận ra các loại ngũ cốc và số lượng, nhưng không cho phép phục hồi câu hoàn chỉnh, ngôn ngữ hay giao dịch chắc chắn.
 
-## Entities and terms introduced
+## Entity and term introduced
 
-- P005390: tablet hành chính ghi các lượng ngũ cốc; ngôn ngữ và loại giao dịch chính xác chưa chắc chắn.
-- `proto-cuneiform`: hệ dấu sớm ở Uruk, tổ tiên của chữ hình nêm nhưng chưa ghi lời nói rõ như giai đoạn sau.
+- P005390: tablet Uruk III ghi các loại ngũ cốc cùng số lượng; provenience có thể là Uruk nhưng chưa chắc chắn.
+- proto-cuneiform: hệ dấu sớm ở Uruk, tổ tiên của chữ hình nêm nhưng chưa ghi lời nói rõ như các giai đoạn sau.
 
-## Continuity facts
+## Continuity constraints
 
-- Không gán tablet cho một cuộc trao đổi, người tham gia hay lời nói cụ thể.
-- Không tuyên bố mốc phát minh chính xác, người phát minh, ngôn ngữ Sumer hay vị trí “đầu tiên trên thế giới”.
-- Chronology chỉ xác lập một quá trình phát triển tương đối, không làm trục kể chính.
+- Không dựng cuộc trao đổi, người tham gia hoặc tình huống liên quan đến trí nhớ.
+- Không khẳng định ngôn ngữ Sumer, giao dịch cụ thể, người phát minh, ngày phát minh hay world-first.
+- Không đưa CLM-0004, CLM-0009 hoặc CLM-0034 trở lại narration.
+- Payoff của P01 đã được phát biểu một lần trong draft và không cần nhắc lại ở P02.
 
-## Open setup and bridge
+## Bridge to P02
 
-P01 chưa giải thích quá trình hình thành. P02 cần lùi về những thực hành lưu giữ thông tin có trước tablet và kiểm tra chúng đã góp phần vào hệ dấu mới như thế nào, không kể một “thang tiến hóa” đơn tuyến.
+P02 lùi về các thực hành thông tin có trước tablet để điều tra quá trình hình thành; P01 không tự giải thích quá trình này.

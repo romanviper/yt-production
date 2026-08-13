@@ -43,11 +43,12 @@
       "bridge_in": "Cold open on physical object and constrained modern reading.",
       "bridge_out": "Step backward into earlier information practices.",
       "target_words": {
-        "min": 950,
-        "max": 1200
+        "min": 550,
+        "max": 700
       },
       "boundary": "Không giải thích toàn bộ formation hoặc tuyên bố world-first.",
-      "risk": "Definition must stay attached to what the object can/cannot do."
+      "risk": "Definition must stay attached to what the object can/cannot do.",
+      "budget_rationale": "Section chỉ có một hiện vật, một nghịch lý và một explanatory turn. Khoảng này đủ đặt object, giải thích ngưỡng tranh luận, trả payoff và mở P02 mà không lặp ý hoặc bổ sung fact để kéo dài."
     },
     {
       "id": "P02",
@@ -379,5 +380,23 @@
     }
   ],
   "approved_by": "user",
-  "approved_at": "2026-08-13T07:44:06.442Z"
+  "approved_at": "2026-08-13T07:44:06.442Z",
+  "script_architecture": {
+    "budget_revisions": [
+      {
+        "section": "P01",
+        "from": {
+          "min": 950,
+          "max": 1200
+        },
+        "to": {
+          "min": 550,
+          "max": 700
+        },
+        "reason": "Section chỉ có một hiện vật, một nghịch lý và một explanatory turn. Khoảng này đủ đặt object, giải thích ngưỡng tranh luận, trả payoff và mở P02 mà không lặp ý hoặc bổ sung fact để kéo dài.",
+        "approved_by": "user",
+        "approved_at": "2026-08-13T16:48:45.843046+00:00"
+      }
+    ]
+  }
 }
