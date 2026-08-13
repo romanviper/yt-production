@@ -69,6 +69,47 @@
       ],
       "counterevidence": "Sparse late evidence makes the exact endpoint regional rather than singular.",
       "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS07-CLM-006",
+      "statement": "Transmission moved through courts, traveling or imported specialists, diplomatic contact, copying and formal curricula rather than by script diffusion alone.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS07-SRC-004",
+        "WS07-SRC-005",
+        "WS07-SRC-006"
+      ],
+      "counterevidence": "The balance among channels varies by region and is often reconstructed from elite archives.",
+      "narrative_implication": "Name the human and institutional carrier for every spread claim."
+    },
+    {
+      "id": "WS07-CLM-007",
+      "statement": "The Hittite case shows selective transfer: scholarly and literary cuneiform practices traveled, while Mesopotamian bookkeeping and metrology did not necessarily travel with them.",
+      "type": "fact",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "sources": [
+        "WS07-SRC-005"
+      ],
+      "counterevidence": "Other Anatolian sites and periods may preserve different practical uses.",
+      "narrative_implication": "Use as a transformation-cost case, not a universal rule of adaptation."
+    },
+    {
+      "id": "WS07-CLM-008",
+      "statement": "Script survival, language survival and institutional survival are separable: cuneiform could encode new languages, Sumerian could persist as learned content, and both depended on training communities.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS07-SRC-001",
+        "WS07-SRC-002",
+        "WS07-SRC-003",
+        "WS07-SRC-005"
+      ],
+      "counterevidence": "Sparse regional evidence prevents one synchronized timeline.",
+      "narrative_implication": "Track the three layers independently through the endpoint passed to WS08."
     }
   ]
 }

@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "task_id": "T0004-research-workstream-WS04",
+  "product": "sumer-writing",
+  "operation": "research_workstream",
+  "target": {
+    "section": null,
+    "unit": "WS04"
+  },
+  "created_at": "2026-08-13T12:00:00.000Z",
+  "max_context_tokens": 20000,
+  "estimated_context_tokens": 6500,
+  "instruction_files": [
+    "system/core/invariants.md",
+    "system/standards/evidence.md",
+    "system/operations/research-workstream.md",
+    "system/standards/operator-interface.md"
+  ],
+  "inputs": [
+    "00_brief/product-brief.md",
+    "01_research/workstreams/WS04/brief.md"
+  ],
+  "operation_outputs": [
+    "01_research/workstreams/WS04/sources.json",
+    "01_research/workstreams/WS04/claims.json",
+    "01_research/workstreams/WS04/synthesis.md"
+  ],
+  "output_baselines": [
+    {
+      "path": "01_research/workstreams/WS04/sources.json",
+      "sha256": "4c4b1661eec4dc1f81b142a4c87cc139ae4a28ea4b4bb42d090f6a2c41f4af48"
+    },
+    {
+      "path": "01_research/workstreams/WS04/claims.json",
+      "sha256": "2817a5f5f8beb41891e94c54131348d90261e447747720279609c574b6f7eeb0"
+    },
+    {
+      "path": "01_research/workstreams/WS04/synthesis.md",
+      "sha256": "cc20113c8943551776bf13872019b3d4d02b0c88fef22f04f5dd795d8fb3b2b9"
+    }
+  ],
+  "allowed_write_paths": [
+    "01_research/workstreams/WS04/sources.json",
+    "01_research/workstreams/WS04/claims.json",
+    "01_research/workstreams/WS04/synthesis.md",
+    "tasks/T0004-research-workstream-WS04/report.md",
+    "tasks/T0004-research-workstream-WS04/operator-brief.json"
+  ],
+  "report_path": "tasks/T0004-research-workstream-WS04/report.md",
+  "operator_brief_path": "tasks/T0004-research-workstream-WS04/operator-brief.json",
+  "acceptance_criteria": [
+    "Chỉ trả lời question của workstream hiện tại.",
+    "Source có locator, authority và limitation.",
+    "Claim tách fact/inference/contested/unknown và có counterevidence.",
+    "Synthesis đủ dùng cho task sau mà không cần raw browsing context."
+  ],
+  "validation": [
+    "python scripts/validate.py products/sumer-writing",
+    "python scripts/task.py verify products/sumer-writing T0004-research-workstream-WS04",
+    "python scripts/check_scope.py products/sumer-writing",
+    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0004-research-workstream-WS04/operator-brief.json"
+  ]
+}

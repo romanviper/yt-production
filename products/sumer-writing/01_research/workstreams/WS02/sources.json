@@ -58,6 +58,34 @@
       "status": "reviewed",
       "limitations": "Framework-oriented rather than a new excavation report.",
       "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS02-SRC-005",
+      "title": "A Quantitative Analysis of Proto-Cuneiform Sign Use in Archaic Tribute",
+      "author": "Logan Born and Kathryn Erin Kelley, 2021",
+      "type": "peer-reviewed corpus study",
+      "authority": "CDLI corpus-based quantitative analysis",
+      "url": "https://cdli.earth/articles/cdlb/2021-6",
+      "locators": [
+        "§§1–3; corpus definition, sign-frequency and genre limits"
+      ],
+      "status": "reviewed",
+      "limitations": "Sign-frequency patterns do not by themselves establish sign meanings or causal direction.",
+      "notes": "Used to test how far administrative subgenres can be distinguished from the preserved corpus."
+    },
+    {
+      "id": "WS02-SRC-006",
+      "title": "Cuneiform Script and the Origin of the Oldest Writing Systems in Comparative Perspective",
+      "author": "Massimo Maiocchi, 2015",
+      "type": "specialist institutional essay",
+      "authority": "Institute for the Study of Ancient Cultures",
+      "url": "https://isac.uchicago.edu/sites/default/files/uploads/shared/docs/nn227.pdf",
+      "locators": [
+        "pp. 6–9; token frequency mismatch and multiple antecedent practices"
+      ],
+      "status": "reviewed",
+      "limitations": "Short comparative synthesis, not a primary excavation report.",
+      "notes": "Used for the non-linear formation model and token-continuity limit."
     }
   ]
 }

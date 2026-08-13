@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "id": "T0007-research-workstream-WS07",
+  "product": "sumer-writing",
+  "operation": "research_workstream",
+  "target": {
+    "section": null,
+    "unit": "WS07"
+  },
+  "state": "closed",
+  "created_at": "2026-08-13T12:00:00.000Z",
+  "context_packet": "tasks/T0007-research-workstream-WS07/context.md",
+  "packet_manifest": "tasks/T0007-research-workstream-WS07/packet.json",
+  "allowed_write_paths": [
+    "01_research/workstreams/WS07/sources.json",
+    "01_research/workstreams/WS07/claims.json",
+    "01_research/workstreams/WS07/synthesis.md",
+    "tasks/T0007-research-workstream-WS07/report.md",
+    "tasks/T0007-research-workstream-WS07/operator-brief.json"
+  ],
+  "acceptance_criteria": [
+    "Chỉ trả lời question của workstream hiện tại.",
+    "Source có locator, authority và limitation.",
+    "Claim tách fact/inference/contested/unknown và có counterevidence.",
+    "Synthesis đủ dùng cho task sau mà không cần raw browsing context."
+  ],
+  "outputs": [
+    "01_research/workstreams/WS07/sources.json",
+    "01_research/workstreams/WS07/claims.json",
+    "01_research/workstreams/WS07/synthesis.md"
+  ],
+  "report_path": "tasks/T0007-research-workstream-WS07/report.md",
+  "operator_brief_path": "tasks/T0007-research-workstream-WS07/operator-brief.json",
+  "submitted_at": "2026-08-13T12:00:00.000Z",
+  "updated_at": "2026-08-13T12:00:00.000Z"
+}

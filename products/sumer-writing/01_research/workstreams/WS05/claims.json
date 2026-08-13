@@ -66,6 +66,46 @@
       ],
       "counterevidence": "Local discontinuities and corpus gaps remain.",
       "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS05-CLM-006",
+      "statement": "ETCSL's 394 literary compositions are modern composites based on late-third- and early-second-millennium manuscripts, so they are evidence for textual tradition rather than transparent transcripts of an original speaker.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-005"
+      ],
+      "counterevidence": "Individual manuscripts can preserve locally and chronologically specific variants when cited at tablet level.",
+      "narrative_implication": "Attribute translation and edition; identify composite status and avoid invented authorial interiority."
+    },
+    {
+      "id": "WS05-CLM-007",
+      "statement": "A bounded primary-voice set should include one administrative record, one letter or contract, one lexical/school text and at most one literary composition, each serving a distinct functional turn.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-001",
+        "WS05-SRC-003",
+        "WS05-SRC-004",
+        "WS05-SRC-005"
+      ],
+      "counterevidence": "Final object selection still depends on object-level provenance and usable translation rights.",
+      "narrative_implication": "Do not expand into an anthology; select objects only after provenance and rights verification."
+    },
+    {
+      "id": "WS05-CLM-008",
+      "statement": "Published English translations are editorial products and require attribution and rights review before direct quotation.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-004",
+        "WS05-SRC-005"
+      ],
+      "counterevidence": "Public-domain source texts do not automatically make a modern translation public domain.",
+      "narrative_implication": "Prefer paraphrase until the production task verifies translation credit and quotation permission."
     }
   ]
 }

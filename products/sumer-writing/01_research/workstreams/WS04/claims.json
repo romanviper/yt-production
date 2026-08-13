@@ -68,6 +68,43 @@
       ],
       "counterevidence": "Named female scribes and elite women exist in some periods; corpus is not population-representative.",
       "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS04-CLM-006",
+      "statement": "House F at Old Babylonian Nippur provides an unusually contextualized household training sequence, not proof of a universal Mesopotamian school system.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS04-SRC-005"
+      ],
+      "counterevidence": "Its more than 1,400 tablets make the sequence unusually rich but also locally exceptional.",
+      "narrative_implication": "Use House F as an illustrative, high-resolution anchor explicitly labeled non-representative of all periods."
+    },
+    {
+      "id": "WS04-CLM-007",
+      "statement": "Professional title, functional competence and broad literacy must be mapped separately; some later archives show on-the-job or non-professional use outside a single formal school track.",
+      "type": "inference",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "sources": [
+        "WS04-SRC-004",
+        "WS04-SRC-006"
+      ],
+      "counterevidence": "Survival still favors administrative settings and trained writers.",
+      "narrative_implication": "Describe capabilities and work roles instead of assigning a modern literate/illiterate binary."
+    },
+    {
+      "id": "WS04-CLM-008",
+      "statement": "Named women and female-authored or female-voiced texts demonstrate access in some settings but cannot establish population rates or unmediated authorship.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS04-SRC-007"
+      ],
+      "counterevidence": "Scribal mediation, elite selection and uneven survival complicate attribution.",
+      "narrative_implication": "Use specific women only with period, role, mediation and representativeness labels."
     }
   ]
 }

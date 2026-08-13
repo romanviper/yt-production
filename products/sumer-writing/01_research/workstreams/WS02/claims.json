@@ -71,6 +71,47 @@
       ],
       "counterevidence": "Downstream effects require WS06 case studies; WS02 cannot establish them alone.",
       "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS02-CLM-006",
+      "statement": "The preserved proto-cuneiform corpus can distinguish accounting contexts more securely than it can distinguish market exchange from tax, tribute or redistribution.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS02-SRC-002",
+        "WS02-SRC-005"
+      ],
+      "counterevidence": "Named agents, commodities, metrology and document structure sometimes narrow the transaction, but sign readings and institutional context remain incomplete.",
+      "narrative_implication": "Use 'accounting/administrative transfer' unless reciprocity or institutional flow is independently demonstrated."
+    },
+    {
+      "id": "WS02-CLM-007",
+      "statement": "Redistribution, labor coordination, obligation and ownership are not interchangeable formation mechanisms: each requires different evidence beyond the presence of numbers and commodities.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS02-SRC-001",
+        "WS02-SRC-002",
+        "WS02-SRC-005"
+      ],
+      "counterevidence": "A single tablet may participate in more than one mechanism, and early terminology is partly reconstructed.",
+      "narrative_implication": "Label the mechanism only when flows, persons, quotas, duration, seals or transfer conditions support it."
+    },
+    {
+      "id": "WS02-CLM-008",
+      "statement": "Co-occurrence between urban institutional growth and record systems establishes pressure and compatibility, not a one-way proof that either caused the other.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS02-SRC-001",
+        "WS02-SRC-004",
+        "WS02-SRC-006"
+      ],
+      "counterevidence": "Later cases may demonstrate capacity effects, but those belong to WS06 and cannot be back-projected.",
+      "narrative_implication": "Present the WS02 feedback loop as a hypothesis to be tested, not as a completed causal verdict."
     }
   ]
 }

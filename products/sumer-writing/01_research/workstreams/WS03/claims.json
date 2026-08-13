@@ -65,6 +65,34 @@
       ],
       "counterevidence": "Corpus gaps prevent a complete state-by-state reconstruction.",
       "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS03-CLM-006",
+      "statement": "Proto-cuneiform sign distribution and tablet position can reveal structural regularities even when a sign's spoken value or underlying language remains uncertain.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS03-SRC-002",
+        "WS03-SRC-005"
+      ],
+      "counterevidence": "Corpus readability, sign variants and genre classification affect frequency and positional analysis.",
+      "narrative_implication": "Separate observable graphic pattern from modern decipherment and language attribution."
+    },
+    {
+      "id": "WS03-CLM-007",
+      "statement": "A system's technical capacity to encode a relation is not evidence that communities used it consistently for that purpose.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS03-SRC-001",
+        "WS03-SRC-002",
+        "WS03-SRC-003",
+        "WS03-SRC-005"
+      ],
+      "counterevidence": "Repeated attested examples can establish use for a bounded corpus and period.",
+      "narrative_implication": "Route claims about actual economic, legal, literary or pedagogical uptake to WS05."
     }
   ]
 }

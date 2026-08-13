@@ -26,8 +26,37 @@ Cuneiform did not end in a single collapse. Its ecosystem contracted as Aramaic 
 - Regional and genre-specific endpoints differ.
 - Specific transmitted texts or concepts require separate chains of evidence.
 
-## Handoff to global synthesis
+## Completion handoff
 
-- Core answer: Cuneiform did not end in a single collapse. Its ecosystem contracted as Aramaic and alphabetic practices expanded, political and temple institutions changed, and specialist communities narrowed. Learned cuneiform survived in Babylonian scholarly/temple settings into the first centuries CE. After living competence disappeared, clay tablets persisted materially but became unreadable until nineteenth-century decipherment reconstructed the tradition. Its modern legacy is therefore recovery-mediated; direct lineage to modern writing is not established.
-- Preserve all confidence labels and counterevidence.
-- Do not promote this workstream's bounded findings into a monocausal global thesis.
+### Decline mechanism set
+
+Cuneiform's terminal contraction combined competition from Aramaic and Greek/alphabetic practices, changing political and economic institutions, narrowing temple/scholarly patronage, and the high cost of maintaining specialist multilingual training. Their relative importance varies; no single factor is sufficient everywhere.
+
+### Final-use and loss chronology
+
+- First millennium BCE: cuneiform remains active but increasingly concentrated in specialist administrative, temple and scholarly settings.
+- First centuries BCE/CE: the final preserved corpora are especially astronomical/scholarly.
+- **75 CE:** latest currently known dated tablet, not a guaranteed final act.
+- After institutional reproduction ceases: tablets survive materially while reading competence is no longer demonstrable.
+
+This uses WS07's endpoint—active teaching/copying/competent reuse—not mere object survival.
+
+### Recovery chain
+
+Early modern copies and observations made signs available; Old Persian was partially deciphered; the trilingual Behistun inscription enabled comparative testing; Akkadian readings were validated by multiple scholars and texts; Sumerian recognition and reconstruction followed through further corpus comparison. The chain is cumulative and error-correcting, not a single eureka.
+
+### Legacy classification
+
+| Class | Decision rule | Status |
+|---|---|---|
+| Direct ancient transmission | documented chain through intervening communities/texts | allow only case by case |
+| Recovery-mediated influence | modern decipherment restores knowledge that then affects scholarship/culture | strongly supported |
+| Analogy | formal resemblance without transmission chain, e.g. clay records vs databases | illustrative only; not historical lineage |
+
+### Opening and ending anchors
+
+Opening candidate: the 75 CE astronomical tablet as the latest-known trace of a shrinking competent community, explicitly discovery-sensitive. Ending candidate: a nineteenth-century comparative decipherment test that makes a previously mute clay archive readable again. Neither requires a general history of archaeology.
+
+### Scope limits and unknowns
+
+Local competence may have outlasted preserved dates; new finds can move the terminus. Specific legacy claims still require their own transmission evidence. Global synthesis has not been run.

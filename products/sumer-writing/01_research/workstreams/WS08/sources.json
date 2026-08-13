@@ -58,6 +58,34 @@
       "status": "reviewed",
       "limitations": "Babylon-focused.",
       "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS08-SRC-005",
+      "title": "The extinction of cuneiform writing",
+      "author": "Centre for the Study of Manuscript Cultures, Universität Hamburg, 2020",
+      "type": "academic research overview",
+      "authority": "University manuscript-culture research center",
+      "url": "https://www.csmc.uni-hamburg.de/publications/mesopotamia/2020-08-31.html",
+      "locators": [
+        "late-text chronology; first-century BCE/CE astronomical corpus and 75 CE tablet"
+      ],
+      "status": "reviewed",
+      "limitations": "The latest-known date is discovery-sensitive and does not prove an exact final day of competence.",
+      "notes": "Used to connect WS07's institutional endpoint to late Babylonian evidence."
+    },
+    {
+      "id": "WS08-SRC-006",
+      "title": "The Earliest Contributions to the Decipherment of Sumerian and Akkadian",
+      "author": "Irving L. Finkel and colleagues, 2011",
+      "type": "peer-reviewed history of decipherment",
+      "authority": "CDLI Journal specialist study",
+      "url": "https://cdli.earth/articles/cdlj/2011-1.pdf",
+      "locators": [
+        "§§2–4; Old Persian, Behistun and subsequent comparative steps"
+      ],
+      "status": "reviewed",
+      "limitations": "Focuses on early scholarly stages; later institutionalization of Assyriology is outside scope.",
+      "notes": "Used to replace the single-eureka story with a staged recovery chain."
     }
   ]
 }

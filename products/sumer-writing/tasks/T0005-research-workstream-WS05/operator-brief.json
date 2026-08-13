@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "WS05 đã được nâng từ initial_pass lên complete theo completion criteria riêng; synthesis handoff đã đủ để dùng về sau.",
+  "material_points": [
+    "Giữ lại toàn bộ nguồn và claim đang dùng được; chỉ thêm 1 nguồn và 3 claim để vá khoảng trống.",
+    "Handoff đã nêu rõ chronology, supported/disputed claims, unknowns, scope limits và dependency.",
+    "Không chạy global synthesis và không tự approve sản phẩm."
+  ],
+  "decision": {
+    "required": false,
+    "question": "",
+    "recommendation": "",
+    "options": []
+  },
+  "next_step": "Dependency handoff đã sẵn sàng cho workstream kế tiếp."
+}

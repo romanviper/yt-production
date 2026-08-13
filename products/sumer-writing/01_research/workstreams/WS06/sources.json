@@ -58,6 +58,20 @@
       "status": "reviewed",
       "limitations": "Collection-focused rather than archive theory.",
       "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS06-SRC-005",
+      "title": "A Reconstruction of the Puzriš-Dagan Central Livestock Agency",
+      "author": "Tonia Sharlach, 2013",
+      "type": "peer-reviewed corpus study",
+      "authority": "CDLI archive reconstruction",
+      "url": "https://cdli.earth/articles/cdlj/2013-2",
+      "locators": [
+        "§§1.2–1.5; archive function and more than 13,500 tablets"
+      ],
+      "status": "reviewed",
+      "limitations": "Ur III royal institution; archive reconstruction does not establish ordinary experience or empire-wide uniformity.",
+      "notes": "Used as a bounded case linking documents, officials, seals and institutional action."
     }
   ]
 }

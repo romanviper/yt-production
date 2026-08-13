@@ -25,8 +25,30 @@ Writing demonstrably enlarged institutional capacity when records were embedded 
 
 - The scale and timing of ‘privatization’ vary by region.
 
-## Handoff to global synthesis
+## Completion handoff
 
-- Core answer: Writing demonstrably enlarged institutional capacity when records were embedded in procedures: labor obligations could be quantified, accounts reconciled, property claims authenticated and distant transactions coordinated. But tablets did not act alone; scribes, seals, witnesses, archives and coercive institutions made records effective. Surviving archives are operational residues of organizations, not neutral samples of society, and they disproportionately expose those being counted through the categories of those doing the counting.
-- Preserve all confidence labels and counterevidence.
-- Do not promote this workstream's bounded findings into a monocausal global thesis.
+### Tested causal cases with archive bias attached
+
+| Case | Record-to-action chain | Distributional effect | Archive-bias limit |
+|---|---|---|---|
+| Ur III Umma labor/administration | categories and equivalencies → scribal accounts → institutional review/assignment | officials gain aggregate visibility; workers appear through imposed units | c. 27,500 known texts cover only about 45 years and a partial provincial archive |
+| Puzriš-Dagan livestock agency | entries + seals + responsible officials → retrievable obligations/gifts → royal fiscal/diplomatic action | central court and officeholders gain coordination and claim capacity | 13,500+ texts reconstruct a repository; not a neutral census or literal stockyard |
+| Old Babylonian private documents | contract/letter + witnesses/seals → claim presentation within urban networks | some private actors gain documentary leverage beyond royal institutions | urban notables and preserved transactions overrepresent successful/documented claims |
+
+These are mechanisms, not claims that tablets acted independently. Tool affordance, human users and institutional enforcement remain separate links.
+
+### Feedback loop to WS02
+
+Supported direction: established institutions create demand for stable classifications and records. Qualified return direction: where records are embedded in authentication, retrieval and enforcement, they enlarge coordination and claim capacity. The loop is case-bound and cannot be projected wholesale onto the Uruk formation horizon.
+
+### Counterexamples and limits
+
+Written law or contract is not proof of enforcement. Oral bargaining, household practice, embodied expertise and unrecorded exchange continued. Private documentary use can widen leverage rather than only centralize it. Absence from an archive is not absence from society.
+
+### Archive-bias rule
+
+Every causal claim must state: what entered the archive, who selected it, why clay survived, how excavation/market provenance affects context, and which people or practices remain invisible.
+
+### Scope limits and dependencies
+
+WS02 supplies only the formation hypothesis; WS05 supplies use chronology. WS08 owns material afterlife and rediscovery. No population-wide claim is licensed by a single archive.

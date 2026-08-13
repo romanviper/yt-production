@@ -65,6 +65,60 @@
       ],
       "counterevidence": "Bias does not invalidate the corpus, but limits population-wide inference.",
       "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS06-CLM-006",
+      "statement": "At Puzriš-Dagan, more than 13,500 tablets reconstruct an archival agency tied to livestock, taxation, royal gifts and diplomacy; the archive should not be read as a literal inventory of one stockyard.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS06-SRC-005"
+      ],
+      "counterevidence": "The surviving repository is selective and its reconstructed units remain scholarly models.",
+      "narrative_implication": "Use as a bounded causal case in which records, seals, officials and retrieval practices jointly made obligations actionable."
+    },
+    {
+      "id": "WS06-CLM-007",
+      "statement": "Agency belongs to people and institutions using records: tablets stabilize classifications, scribes and sealers authenticate them, archives make them retrievable, and authorities supply enforcement.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS06-SRC-001",
+        "WS06-SRC-002",
+        "WS06-SRC-005"
+      ],
+      "counterevidence": "The strength of each link differs by archive; a preserved record alone cannot demonstrate enforcement.",
+      "narrative_implication": "Never say writing itself commanded, owned or coerced."
+    },
+    {
+      "id": "WS06-CLM-008",
+      "statement": "Distributional effects were asymmetric: record systems improved institutional visibility and elite/private claims while exposing workers and dependents through imposed categories.",
+      "type": "inference",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "sources": [
+        "WS06-SRC-001",
+        "WS06-SRC-002",
+        "WS06-SRC-003",
+        "WS06-SRC-005"
+      ],
+      "counterevidence": "People could also use documents strategically, and private uptake widened access in some later settings.",
+      "narrative_implication": "Pair every capacity gain with who gained legibility, leverage, burden or exclusion."
+    },
+    {
+      "id": "WS06-CLM-009",
+      "statement": "Oral negotiation, embodied skill, household practice and much routine exchange remained partly or wholly outside surviving writing.",
+      "type": "unknown",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS06-SRC-001",
+        "WS06-SRC-004"
+      ],
+      "counterevidence": "Absence from archives cannot quantify the size of unwritten domains.",
+      "narrative_implication": "State the limit; do not turn archival silence into proof of absence."
     }
   ]
 }

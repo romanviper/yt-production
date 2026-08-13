@@ -58,6 +58,20 @@
       "status": "reviewed",
       "limitations": "Collection selection is not representative of total use.",
       "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS05-SRC-005",
+      "title": "ETCSL Manual",
+      "author": "Electronic Text Corpus of Sumerian Literature, University of Oxford",
+      "type": "academic corpus documentation",
+      "authority": "Curated transliteration and translation corpus",
+      "url": "https://etcsl.orinst.ox.ac.uk/edition2/etcslmanual.php",
+      "locators": [
+        "§1.1; corpus scope, 394 compositions, source-date range"
+      ],
+      "status": "reviewed",
+      "limitations": "Modern composite editions reconstruct compositions from multiple manuscripts; not transparent single-tablet voices.",
+      "notes": "Used for provenance, copy status and translation handling of literary candidates."
     }
   ]
 }
