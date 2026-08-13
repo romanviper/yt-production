@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "section": "P01",
-  "status": "draft",
+  "status": "approved",
   "governing_idea": "Các dấu có thể cố định một phần thông tin trên vật thể bền dù chưa ghi trọn lời nói.",
   "audience_question": "Nếu chưa ghi trọn lời nói, những dấu trên P005390 đã làm được gì?",
   "audience_payoff": "Các dấu có thể cố định một phần thông tin trên vật thể bền dù chưa ghi trọn lời nói.",
@@ -89,5 +89,7 @@
   ],
   "opening_move": "Mở ở khoảng cách gần trên P005390, không đọc mã bảo tàng trước; dùng khả năng đọc được ngũ cốc nhưng không đọc được một câu hoàn chỉnh để tạo vấn đề.",
   "ending_move": "Kết lại ở khả năng cố định một phần thông tin trên vật thể bền, rồi lùi về trước tablet để hỏi năng lực ấy hình thành ra sao.",
-  "comprehension_test": "Khán giả phải kể lại được: các dấu trên P005390 cố định một phần thông tin dù chưa ghi trọn lời nói."
+  "comprehension_test": "Khán giả phải kể lại được: các dấu trên P005390 cố định một phần thông tin dù chưa ghi trọn lời nói.",
+  "approved_by": "user",
+  "approved_at": "2026-08-13T11:49:23.430564+00:00"
 }

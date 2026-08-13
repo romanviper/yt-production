@@ -1,0 +1,95 @@
+{
+  "schema_version": 2,
+  "compiler": "scripts/context_packet.py",
+  "context_sha256": "eb9d229a3f042fc793aee3bc076c60d01ba2730b40b5dba7c0e478bead95da8f",
+  "authority": "product_agent",
+  "task_id": "T0018-draft-section-P01",
+  "product": "sumer-writing",
+  "operation": "draft_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "created_at": "2026-08-13T11:49:47.897032+00:00",
+  "max_context_tokens": 18000,
+  "estimated_context_tokens": 15664,
+  "instruction_files": [
+    "system/core/invariants.md",
+    "system/standards/story.md",
+    "system/standards/voice.md",
+    "system/standards/writing-vi.md",
+    "system/operations/draft-section.md",
+    "system/standards/operator-interface.md"
+  ],
+  "inputs": [
+    {
+      "path": "02_outline/story-bible.md",
+      "sha256": "fc9521a9a807def534a93b8f20dad1f2970f14e5cd6a8868e282bf7bfa318a2f",
+      "bytes": 4837
+    },
+    {
+      "path": "02_outline/voice-profile.md",
+      "sha256": "124d9877b544893655c17c822336c26df3503b94329acf4da9b23ca3ee7854ad",
+      "bytes": 3689
+    },
+    {
+      "path": "03_sections/P01/section.json",
+      "sha256": "cee5419185c1e90457b9c44e484ded90388a8491652a04b2a78ef56356d2b03f",
+      "bytes": 250
+    },
+    {
+      "path": "03_sections/P01/brief.md",
+      "sha256": "e4636d347537ad0e16aa7451847030f388fdac74908f4bfe9c0bb6293a60eb01",
+      "bytes": 1222
+    },
+    {
+      "path": "03_sections/P01/story-plan.json",
+      "sha256": "a0bed6d1ab1d86d4e3e980081022f1b5648b60bdccb46044fdbb9fe8c3d2aaf8",
+      "bytes": 4570
+    },
+    {
+      "path": "03_sections/P01/narration-pack.json",
+      "sha256": "721d2bb967e4552a045cc18edcf7faa72809428f3152e7ae501b6c1034a04429",
+      "bytes": 17610
+    },
+    {
+      "path": "03_sections/P01/continuity-in.md",
+      "sha256": "8c348fa31222e10128b5ed758db361831f226ff4cf225b63cbcaf319a94d953b",
+      "bytes": 208
+    }
+  ],
+  "operation_outputs": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md"
+  ],
+  "output_baselines": [
+    {
+      "path": "03_sections/P01/draft.md",
+      "sha256": "019eb3d0100ad0e710d1bc24251162c2689cfde7d1aefdf41c6c4216cf58383a"
+    },
+    {
+      "path": "03_sections/P01/handoff.md",
+      "sha256": "f225a24721658a2a1ea0b840275c98cdf24698ed448073b60439ec8ea20c4979"
+    }
+  ],
+  "allowed_write_paths": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md",
+    "tasks/T0018-draft-section-P01/report.md",
+    "tasks/T0018-draft-section-P01/operator-brief.json"
+  ],
+  "report_path": "tasks/T0018-draft-section-P01/report.md",
+  "operator_brief_path": "tasks/T0018-draft-section-P01/operator-brief.json",
+  "acceptance_criteria": [
+    "Chỉ viết section được chỉ định.",
+    "Chỉ dùng claim được story plan chọn; narration pack là trần, không phải checklist.",
+    "Entry/exit state và bridge đúng brief.",
+    "Văn nói phổ thông truyền đạt được governing idea; handoff không thay thế draft."
+  ],
+  "validation": [
+    "python scripts/validate.py products/sumer-writing",
+    "python scripts/task.py verify products/sumer-writing T0018-draft-section-P01",
+    "python scripts/check_scope.py products/sumer-writing",
+    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0018-draft-section-P01/operator-brief.json"
+  ]
+}

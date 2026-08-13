@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "mode": "brief",
+  "headline": "P01 đã được viết lại từ đầu theo story plan mới và sẵn sàng để review.",
+  "status": "ready_for_review",
+  "material_points": [
+    "Draft đi đúng năm movement đã duyệt; không kế thừa cấu trúc của bản cũ.",
+    "Payoff chỉ khẳng định các dấu cố định một phần thông tin trên vật thể bền dù chưa ghi trọn lời nói.",
+    "Không dựng cuộc trao đổi, người tham gia hay biến chronology và bối cảnh hành chính thành trục kể."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Bạn muốn approve P01 hay yêu cầu sửa sau khi review draft mới?",
+    "recommendation": "Review draft mới trước khi đưa ra quyết định.",
+    "options": [
+      {
+        "label": "Approve",
+        "effect": "Khóa P01 và cho phép tiếp tục dependency kế tiếp."
+      },
+      {
+        "label": "Request changes",
+        "effect": "Tạo revision scope giới hạn cho P01."
+      }
+    ]
+  },
+  "next_step": ""
+}
