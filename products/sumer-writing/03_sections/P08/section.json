@@ -3,7 +3,7 @@
   "id": "P08",
   "title": "Sống lâu bằng cách trở thành thứ khác",
   "order": 8,
-  "status": "ready_for_draft",
+  "status": "needs_story_plan",
   "human_approved": false,
   "dependencies": [
     "P06",

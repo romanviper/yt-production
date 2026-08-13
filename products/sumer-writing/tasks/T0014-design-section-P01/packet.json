@@ -1,0 +1,83 @@
+{
+  "schema_version": 2,
+  "compiler": "scripts/context_packet.py",
+  "context_sha256": "bfbaf0d8d0f6051cc0224c3c4d2b1ac81eabe7e4eed97156430c3965e1825656",
+  "authority": "product_agent",
+  "task_id": "T0014-design-section-P01",
+  "product": "sumer-writing",
+  "operation": "design_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "created_at": "2026-08-13T08:40:02.768391+00:00",
+  "max_context_tokens": 18000,
+  "estimated_context_tokens": 14513,
+  "instruction_files": [
+    "system/core/invariants.md",
+    "system/standards/story.md",
+    "system/standards/voice.md",
+    "system/operations/design-section.md",
+    "system/standards/operator-interface.md"
+  ],
+  "inputs": [
+    {
+      "path": "02_outline/story-bible.md",
+      "sha256": "0f92ef956abe2f76bf9e3b7beacf236b161e20a897907adcb1a741ce1617d8e9",
+      "bytes": 4838
+    },
+    {
+      "path": "02_outline/voice-profile.md",
+      "sha256": "124d9877b544893655c17c822336c26df3503b94329acf4da9b23ca3ee7854ad",
+      "bytes": 3689
+    },
+    {
+      "path": "03_sections/P01/section.json",
+      "sha256": "a579f65a35cb7e366322eb19e259815c8a181f598ea1bfeb88ff427e6413dabd",
+      "bytes": 252
+    },
+    {
+      "path": "03_sections/P01/brief.md",
+      "sha256": "b12e793e4e4bf5ba64469ea10fa2fc76073d6de3b8763e42183768b17411fb57",
+      "bytes": 1223
+    },
+    {
+      "path": "03_sections/P01/evidence-pack.json",
+      "sha256": "098d2f9e33006e3a004f836489cad0f22a433efea295d152857016e11001df34",
+      "bytes": 19584
+    },
+    {
+      "path": "03_sections/P01/continuity-in.md",
+      "sha256": "9cb33332e81e73edd9dff37971f3576273f5b887926af76c21016fbc8c04b555",
+      "bytes": 209
+    }
+  ],
+  "operation_outputs": [
+    "03_sections/P01/story-plan.json"
+  ],
+  "output_baselines": [
+    {
+      "path": "03_sections/P01/story-plan.json",
+      "sha256": "ed282f469ccf33f830a233782848526f85ad5274133885d4531c1745b2a8e860"
+    }
+  ],
+  "allowed_write_paths": [
+    "03_sections/P01/story-plan.json",
+    "tasks/T0014-design-section-P01/report.md",
+    "tasks/T0014-design-section-P01/operator-brief.json"
+  ],
+  "report_path": "tasks/T0014-design-section-P01/report.md",
+  "operator_brief_path": "tasks/T0014-design-section-P01/operator-brief.json",
+  "acceptance_criteria": [
+    "Một governing idea và audience payoff được diễn đạt bằng ngôn ngữ phổ thông.",
+    "Mọi claim được phân vai; chỉ 1–5 claim được chọn để narration thực sự kể.",
+    "Story beats tiến theo tension và consequence, không theo thứ tự evidence pack.",
+    "Không viết narration hoặc tự approve story plan."
+  ],
+  "validation": [
+    "python scripts/validate.py products/sumer-writing",
+    "python scripts/task.py verify products/sumer-writing T0014-design-section-P01",
+    "python scripts/check_scope.py products/sumer-writing",
+    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0014-design-section-P01/operator-brief.json"
+  ]
+}

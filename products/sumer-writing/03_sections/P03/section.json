@@ -3,7 +3,7 @@
   "id": "P03",
   "title": "Khi quy mô vượt quá trí nhớ cục bộ",
   "order": 3,
-  "status": "ready_for_draft",
+  "status": "needs_story_plan",
   "human_approved": false,
   "dependencies": [
     "P02"

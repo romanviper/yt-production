@@ -3,7 +3,7 @@
   "id": "P04",
   "title": "Một hệ thống học cách ghi ngôn ngữ",
   "order": 4,
-  "status": "ready_for_draft",
+  "status": "needs_story_plan",
   "human_approved": false,
   "dependencies": [
     "P01",

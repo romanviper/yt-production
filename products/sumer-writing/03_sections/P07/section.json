@@ -3,7 +3,7 @@
   "id": "P07",
   "title": "Khi record trở thành năng lực hành động",
   "order": 7,
-  "status": "ready_for_draft",
+  "status": "needs_story_plan",
   "human_approved": false,
   "dependencies": [
     "P03",

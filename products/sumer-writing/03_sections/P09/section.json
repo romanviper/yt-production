@@ -3,7 +3,7 @@
   "id": "P09",
   "title": "Ngày truyền thống sống ngừng tự tái tạo",
   "order": 9,
-  "status": "ready_for_draft",
+  "status": "needs_story_plan",
   "human_approved": false,
   "dependencies": [
     "P08"

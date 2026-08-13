@@ -3,7 +3,7 @@
   "id": "P06",
   "title": "Những người giữ cho dấu hiệu còn sống",
   "order": 6,
-  "status": "ready_for_draft",
+  "status": "needs_story_plan",
   "human_approved": false,
   "dependencies": [
     "P05"

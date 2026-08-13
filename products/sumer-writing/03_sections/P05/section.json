@@ -3,7 +3,7 @@
   "id": "P05",
   "title": "Từ account đến những thế giới có thể được ghi lại",
   "order": 5,
-  "status": "ready_for_draft",
+  "status": "needs_story_plan",
   "human_approved": false,
   "dependencies": [
     "P04"

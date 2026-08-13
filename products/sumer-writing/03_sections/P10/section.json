@@ -3,7 +3,7 @@
   "id": "P10",
   "title": "Khi đất sét học cách nói lần thứ hai",
   "order": 10,
-  "status": "ready_for_draft",
+  "status": "needs_story_plan",
   "human_approved": false,
   "dependencies": [
     "P01",
