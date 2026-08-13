@@ -88,7 +88,7 @@
         "00_brief/product-brief.md",
         "00_brief/benchmark.md",
         "01_research/research-synthesis.md",
-        "01_research/claim-ledger.json"
+        "01_research/outline-evidence-pack.json"
       ],
       "optional_inputs": [
         "02_outline/outline-change-request.md"

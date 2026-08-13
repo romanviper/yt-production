@@ -17,6 +17,7 @@ from scripts.new_product import DEFAULT_TEMPLATE_ROOT, create_product
 from scripts.operator_brief import MAX_RENDERED_WORDS, render_brief, validate_brief
 from scripts.outcome_eval_contract import validate_outcome_review
 from scripts.outline_contract import validate_outline_contract
+from scripts.outline_evidence_pack import verify_outline_evidence_pack
 from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
 from scripts.story_plan_contract import build_narration_pack, verify_narration_pack
 from scripts.task import create_task, submit_task, validate_output_contract, verify_task
@@ -747,6 +748,43 @@ class ModularProductionTests(unittest.TestCase):
             self.assertIn('"id": "C002"', context)
             with self.assertRaisesRegex(ValueError, "approved outline"):
                 start_new_cycle(product, "Do it again.")
+
+    def test_outline_packet_compacts_legacy_approved_research(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 3)
+            state = json.loads((product / "product.json").read_text(encoding="utf-8"))
+            state["stages"]["research"] = "approved"
+            write_json(product / "product.json", state)
+            (product / "01_research" / "research-synthesis.md").write_text(
+                "# Research Synthesis\n\nStatus: ready_for_review\n\nA previously approved causal synthesis.\n",
+                encoding="utf-8",
+            )
+            ledger_path = product / "01_research" / "claim-ledger.json"
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+            base = ledger["claims"][0]
+            ledger["claims"] = []
+            for number in range(1, 72):
+                claim = dict(base)
+                claim["id"] = f"CLM-{number:04d}"
+                claim["statement"] = f"Claim {number} gives the architecture a bounded, evidence-backed causal option."
+                claim["provenance"] = [
+                    {"workstream": "WS01", "local_id": f"WS01-CLM-{number:03d}", "notes": "x" * 240}
+                ]
+                claim["counterevidence"] = (
+                    "A detailed research caveat that remains authoritative outside the creative prompt. " + "y" * 180
+                )
+                ledger["claims"].append(claim)
+            write_json(ledger_path, ledger)
+
+            packet, context = compile_packet(product, "outline", "T0001-outline-outline")
+            input_paths = [item["path"] for item in packet["inputs"]]
+            self.assertIn("01_research/outline-evidence-pack.json", input_paths)
+            self.assertNotIn("01_research/claim-ledger.json", input_paths)
+            self.assertIn("claim_ledger_sha256", context)
+            self.assertNotIn('"provenance"', context)
+            self.assertEqual([], verify_outline_evidence_pack(product))
+            self.assertLess(packet["estimated_context_tokens"], packet["max_context_tokens"])
 
     def test_new_cycle_archives_old_sections_before_rematerialization(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

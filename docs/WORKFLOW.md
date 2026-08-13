@@ -31,6 +31,8 @@ Agent đọc đúng ACTIVE → work order → packet. Nó không quét repo.
 
 Raw browsing context không đi vào outline hay writing.
 
+Trước outline, router sinh `outline-evidence-pack.json` quyết định từ claim ledger. Pack chỉ giữ claim ID, statement, type, confidence, status, source IDs và contradiction register; provenance chi tiết vẫn nằm ngoài creative prompt trong ledgers gốc.
+
 ## 4. Whole-product architecture
 
 Outline schema v4 thiết kế theo thứ tự:

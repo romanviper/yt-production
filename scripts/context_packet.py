@@ -24,6 +24,7 @@ try:
         write_json,
     )
     from scripts.consolidate_research import verify_consolidation
+    from scripts.outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
     from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
     from scripts.story_plan_contract import verify_narration_pack
 except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.py
@@ -41,6 +42,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
         write_json,
     )
     from consolidate_research import verify_consolidation
+    from outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
     from packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
     from story_plan_contract import verify_narration_pack
 
@@ -110,8 +112,14 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
         if sources.get("status") != "complete" or claims.get("status") != "complete":
             raise ValueError("Source index and claim ledger must be complete before outline.")
         synthesis = product_dir / "01_research" / "research-synthesis.md"
-        if "Status: complete" not in synthesis.read_text(encoding="utf-8"):
+        synthesis_text = synthesis.read_text(encoding="utf-8")
+        legacy_approved = stages.get("research") == "approved" and "Status: ready_for_review" in synthesis_text
+        if "Status: complete" not in synthesis_text and not legacy_approved:
             raise ValueError("Research synthesis must be complete before outline.")
+        build_outline_evidence_pack(product_dir)
+        pack_errors = verify_outline_evidence_pack(product_dir)
+        if pack_errors:
+            raise ValueError("Outline evidence pack is not ready: " + "; ".join(pack_errors))
     if operation in {"design_section", "draft_section", "review_section", "revise_section"}:
         outline = read_json_local(product_dir / "02_outline" / "outline.json")
         if outline.get("status") != "approved":

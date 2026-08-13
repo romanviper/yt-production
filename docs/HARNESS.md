@@ -31,6 +31,8 @@ Creative prompts may contain only:
 
 `system/harness.json` blocks hard-policy and eval-only files from leaking into writer prompts and limits instruction tokens independently from total context tokens. Operator-interface is validated outside the creative context.
 
+Operation inputs are compact and hash-bound. Outline design receives a deterministic claim catalog instead of the full claim ledger; drafting receives the approved narration pack instead of the full section evidence archive. Detailed provenance remains authoritative outside the creative prompt.
+
 ## Anti-accretion rule
 
 Feedback is absorbed at the smallest valid layer:
