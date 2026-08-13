@@ -8,6 +8,7 @@ from pathlib import Path
 from scripts.assemble import assemble_product
 from scripts.approval import approve_plan, approve_section, request_changes
 from scripts.context_packet import compile_packet
+from scripts.consolidate_research import consolidate, verify_consolidation
 from scripts.governance import classify_paths, commit_scope_errors, product_task_violations
 from scripts.impact import calculate_impact
 from scripts.materialize_research import materialize as materialize_research
@@ -259,11 +260,71 @@ class ModularProductionTests(unittest.TestCase):
             write_json(root / "sources.json", {"schema_version": 1, "workstream": "WS02", "status": "complete", "sources": []})
             write_json(root / "claims.json", {"schema_version": 1, "workstream": "WS02", "status": "complete", "claims": []})
             (root / "synthesis.md").write_text("# WS02\n\nStatus: complete\n", encoding="utf-8")
+            consolidate(product)
             packet, context = compile_packet(product, "research_synthesis", "T0002")
             self.assertTrue(packet["inputs"])
             self.assertTrue(all(set(record) == {"path", "sha256", "bytes"} for record in packet["inputs"]))
+            input_paths = [record["path"] for record in packet["inputs"]]
             self.assertIn("01_research/workstreams/WS01/synthesis.md", context)
             self.assertIn("01_research/workstreams/WS02/synthesis.md", context)
+            self.assertNotIn("01_research/workstreams/WS01/claims.json", input_paths)
+            self.assertNotIn("01_research/workstreams/WS02/sources.json", input_paths)
+            self.assertEqual(["01_research/research-synthesis.md"], packet["operation_outputs"])
+            self.assertLess(packet["estimated_context_tokens"], packet["max_context_tokens"])
+
+    def test_research_consolidation_deduplicates_sources_and_preserves_provenance(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            plan = {
+                "schema_version": 1,
+                "status": "approved",
+                "workstreams": [{"id": unit} for unit in ["WS01", "WS02"]],
+            }
+            write_json(product / "01_research" / "plan.json", plan)
+            for number, unit in enumerate(["WS01", "WS02"], start=1):
+                root = product / "01_research" / "workstreams" / unit
+                write_json(
+                    root / "sources.json",
+                    {
+                        "schema_version": 1,
+                        "workstream": unit,
+                        "status": "complete",
+                        "sources": [
+                            {
+                                "id": f"{unit}-SRC-001",
+                                "title": "Shared source",
+                                "author": "Historian",
+                                "url": "https://example.com/shared",
+                                "locators": [f"p. {number}"],
+                                "limitations": [f"Limit {number}"],
+                            }
+                        ],
+                    },
+                )
+                write_json(
+                    root / "claims.json",
+                    {
+                        "schema_version": 1,
+                        "workstream": unit,
+                        "status": "complete",
+                        "claims": [
+                            {
+                                "id": f"{unit}-CLM-001",
+                                "statement": f"Distinct claim {number}.",
+                                "sources": [f"{unit}-SRC-001"],
+                            }
+                        ],
+                    },
+                )
+                (root / "synthesis.md").write_text(f"# {unit}\n\nStatus: complete\n", encoding="utf-8")
+            consolidate(product)
+            self.assertEqual([], verify_consolidation(product))
+            sources = json.loads((product / "01_research" / "source-index.json").read_text(encoding="utf-8"))["sources"]
+            claims = json.loads((product / "01_research" / "claim-ledger.json").read_text(encoding="utf-8"))["claims"]
+            self.assertEqual(1, len(sources))
+            self.assertEqual(2, len(sources[0]["provenance"]))
+            self.assertEqual(["SRC-0001"], claims[0]["sources"])
+            self.assertEqual(["SRC-0001"], claims[1]["sources"])
 
     def test_ten_part_draft_packet_contains_only_selected_part(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

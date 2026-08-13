@@ -11,12 +11,14 @@ from pathlib import Path
 
 try:
     from scripts.common import load_registry, product_relative, read_json, sha256, word_count, write_json
+    from scripts.consolidate_research import ensure_consolidated
     from scripts.context_packet import compile_packet
     from scripts.operator_brief import empty_brief, render_brief, validate_brief_file
     from scripts.packet_contract import validate_packet_contract
     from scripts.research_plan_contract import validate_research_plan_contract
 except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from common import load_registry, product_relative, read_json, sha256, word_count, write_json
+    from consolidate_research import ensure_consolidated
     from context_packet import compile_packet
     from operator_brief import empty_brief, render_brief, validate_brief_file
     from packet_contract import validate_packet_contract
@@ -47,6 +49,9 @@ def create_task(product_dir: Path, operation: str, section: str | None, unit: st
         existing = product_dir / active["work_order"]
         if existing.is_file() and read_json(existing).get("state") in {"ready", "in_progress"}:
             raise ValueError(f"Task {active['task_id']} còn active; close/cancel hoặc dùng --replace có chủ đích.")
+
+    if operation == "research_synthesis":
+        ensure_consolidated(product_dir)
 
     task_id = next_task_id(product_dir, operation, section, unit)
     task_dir = product_dir / "tasks" / task_id

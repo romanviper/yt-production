@@ -111,11 +111,14 @@ Source/claim ID ở cấp workstream được namespace (`WS02-SRC-001`, `WS02-C
 
 ### 1.3 Research synthesis
 
-Task synthesis chỉ đọc các workstream synthesis/ledger, không đọc toàn bộ web notes. Nó tạo:
+Trước task AI, router chạy deterministic consolidation để remap ID, deduplicate source theo canonical identity, giữ provenance và tạo global source/claim ledgers. Đây là biến đổi dữ liệu có quy tắc, không tiêu tốn context AI.
 
-- source index và claim ledger hợp nhất;
+Task synthesis chỉ đọc `consolidation.json` cùng các workstream `synthesis.md`; nó không nạp 16 local ledger hoặc toàn bộ web notes. Nó tạo:
+
 - `research-synthesis.md`;
 - contradictions và unknowns cần outline xử lý.
+
+Nhờ vậy số workstream có thể tăng mà context synthesis vẫn tỷ lệ với các handoff cô đọng, không tỷ lệ với toàn bộ research corpus.
 
 ## 2. Outline là interface giữa research và writing
 

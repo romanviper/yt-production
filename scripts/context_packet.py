@@ -22,6 +22,7 @@ try:
         sha256,
         write_json,
     )
+    from scripts.consolidate_research import verify_consolidation
     from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
 except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.py
     from common import (
@@ -36,6 +37,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
         sha256,
         write_json,
     )
+    from consolidate_research import verify_consolidation
     from packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
 
 
@@ -71,6 +73,9 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
                 raise ValueError(f"Incomplete workstream ledgers: {expected_unit}")
             if "Status: complete" not in synthesis.read_text(encoding="utf-8"):
                 raise ValueError(f"Incomplete workstream synthesis: {synthesis.relative_to(product_dir)}")
+        consolidation_errors = verify_consolidation(product_dir)
+        if consolidation_errors:
+            raise ValueError("Research ledgers must be consolidated before synthesis: " + "; ".join(consolidation_errors))
     if operation == "outline":
         sources = read_json_local(product_dir / "01_research" / "source-index.json")
         claims = read_json_local(product_dir / "01_research" / "claim-ledger.json")

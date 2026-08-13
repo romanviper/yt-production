@@ -61,19 +61,16 @@
       "required_inputs": [
         "00_brief/product-brief.md",
         "01_research/plan.json",
-        "01_research/workstreams/*/synthesis.md",
-        "01_research/workstreams/*/sources.json",
-        "01_research/workstreams/*/claims.json"
+        "01_research/consolidation.json",
+        "01_research/workstreams/*/synthesis.md"
       ],
       "optional_inputs": [],
       "outputs": [
-        "01_research/source-index.json",
-        "01_research/claim-ledger.json",
         "01_research/research-synthesis.md"
       ],
       "acceptance": [
         "Không mất contradiction hoặc unknown giữa các workstream.",
-        "Deduplicate source/claim và giữ provenance.",
+        "Dùng global ledgers do deterministic consolidation tạo; không remap hoặc rewrite chúng trong AI task.",
         "Synthesis tổ chức theo causal questions, không theo thứ tự nguồn.",
         "Không viết outline hoặc narration."
       ]
