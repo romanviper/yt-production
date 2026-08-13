@@ -8,7 +8,7 @@
     "section": "P01",
     "unit": null
   },
-  "state": "ready",
+  "state": "ready_for_review",
   "created_at": "2026-08-13T07:44:06.442Z",
   "context_packet": "tasks/T0011-draft-section-P01/context.md",
   "packet_manifest": "tasks/T0011-draft-section-P01/packet.json",
@@ -29,5 +29,6 @@
     "03_sections/P01/handoff.md"
   ],
   "report_path": "tasks/T0011-draft-section-P01/report.md",
-  "operator_brief_path": "tasks/T0011-draft-section-P01/operator-brief.json"
+  "operator_brief_path": "tasks/T0011-draft-section-P01/operator-brief.json",
+  "submitted_at": "2026-08-13T07:52:11.740145+00:00"
 }

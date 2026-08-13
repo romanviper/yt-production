@@ -3,7 +3,7 @@
   "id": "P01",
   "title": "Một mảnh đất sét không chịu nói",
   "order": 1,
-  "status": "ready_for_draft",
+  "status": "ready_for_review",
   "human_approved": false,
   "dependencies": [],
   "target_words": {

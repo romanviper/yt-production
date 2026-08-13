@@ -1,13 +1,25 @@
 {
   "schema_version": 1,
-  "status": "in_progress",
-  "headline": "",
-  "material_points": [],
+  "status": "ready_for_review",
+  "headline": "P01 đã hoàn tất và sẵn sàng để bạn kiểm duyệt.",
+  "material_points": [
+    "Bản nháp 1.063 từ dùng P005390 để phá mô hình một người Sumer phát minh chữ viết hoàn chỉnh.",
+    "Uncertainty về niên đại, ngôn ngữ, provenance, định nghĩa và world-first được giữ; bridge P02 đã sẵn sàng."
+  ],
   "decision": {
-    "required": false,
-    "question": "",
-    "recommendation": "",
-    "options": []
+    "required": true,
+    "question": "Bạn chấp nhận P01 hay muốn yêu cầu một bản sửa có phạm vi?",
+    "recommendation": "Đọc draft và kiểm tra nhịp đoạn định nghĩa trước khi chấp nhận.",
+    "options": [
+      {
+        "label": "Chấp nhận P01",
+        "effect": "Khóa handoff và cho phép chuyển sang section kế tiếp."
+      },
+      {
+        "label": "Yêu cầu sửa",
+        "effect": "Mở revision task chỉ cho các điểm bạn nêu."
+      }
+    ]
   },
   "next_step": ""
 }
