@@ -21,8 +21,8 @@ REQUIRED_HEADINGS = [
 def validate_voice_profile(text: str) -> list[str]:
     errors: list[str] = []
     count = word_count(text)
-    if not 250 <= count <= 900:
-        errors.append(f"voice profile must contain 250–900 words, found {count}")
+    if not 150 <= count <= 600:
+        errors.append(f"voice profile must contain 150–600 words, found {count}")
     for heading in REQUIRED_HEADINGS:
         if heading not in text:
             errors.append(f"voice profile missing heading: {heading}")

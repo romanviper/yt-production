@@ -8,6 +8,7 @@ make task PRODUCT=<slug> OPERATION=research_plan
 make task PRODUCT=<slug> OPERATION=research_workstream UNIT=WS01
 make task PRODUCT=<slug> OPERATION=design_section SECTION=P04
 make task PRODUCT=<slug> OPERATION=draft_section SECTION=P04
+make task PRODUCT=<slug> OPERATION=review_section SECTION=P04
 make show PRODUCT=<slug>
 make brief PRODUCT=<slug> TASK=<task-id>
 make check PRODUCT=<slug>
@@ -31,5 +32,7 @@ python scripts/approval.py approve-story-plan products/<slug> P04
 python scripts/approval.py request-story-plan-changes products/<slug> P04 --request "..."
 python scripts/approval.py approve-section products/<slug> P04
 python scripts/approval.py request-changes products/<slug> P04 --request "..."
+python scripts/approval.py start-new-cycle products/<slug> --request "..."
+python scripts/materialize_sections.py products/<slug> --archive-previous-cycle
 """
 )

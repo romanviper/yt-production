@@ -6,19 +6,20 @@ import unittest
 from pathlib import Path
 
 from scripts.assemble import assemble_product
-from scripts.approval import approve_plan, approve_section, approve_story_plan, request_changes, request_story_plan_changes
+from scripts.approval import approve_plan, approve_section, approve_story_plan, request_changes, request_story_plan_changes, start_new_cycle
 from scripts.context_packet import compile_packet
 from scripts.consolidate_research import consolidate, verify_consolidation
 from scripts.governance import classify_paths, commit_scope_errors, product_task_violations
 from scripts.impact import calculate_impact
 from scripts.materialize_research import materialize as materialize_research
-from scripts.materialize_sections import materialize as materialize_sections
+from scripts.materialize_sections import archive_previous_cycle, materialize as materialize_sections
 from scripts.new_product import DEFAULT_TEMPLATE_ROOT, create_product
 from scripts.operator_brief import MAX_RENDERED_WORDS, render_brief, validate_brief
+from scripts.outcome_eval_contract import validate_outcome_review
 from scripts.outline_contract import validate_outline_contract
 from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
 from scripts.story_plan_contract import build_narration_pack, verify_narration_pack
-from scripts.task import create_task, submit_task, verify_task
+from scripts.task import create_task, submit_task, validate_output_contract, verify_task
 from scripts.validate import validate_product
 from scripts.common import word_count
 
@@ -50,6 +51,17 @@ def make_approved_outline(product: Path, section_count: int = 10) -> None:
     }
     write_json(product / "01_research" / "source-index.json", {"schema_version": 1, "product": product.name, "status": "complete", "sources": [source]})
     write_json(product / "01_research" / "claim-ledger.json", {"schema_version": 1, "product": product.name, "status": "complete", "claims": [claim]})
+    section_ids = [f"P{number:02d}" for number in range(1, section_count + 1)]
+    if section_count == 1:
+        movement_sections = [section_ids, section_ids, section_ids]
+    elif section_count == 2:
+        movement_sections = [[section_ids[0]], section_ids, [section_ids[1]]]
+    else:
+        first_cut = max(1, section_count // 3)
+        second_cut = max(first_cut + 1, (section_count * 2) // 3)
+        second_cut = min(second_cut, section_count - 1)
+        movement_sections = [section_ids[:first_cut], section_ids[first_cut:second_cut], section_ids[second_cut:]]
+
     sections = []
     for number in range(1, section_count + 1):
         section_id = f"P{number:02d}"
@@ -60,23 +72,17 @@ def make_approved_outline(product: Path, section_count: int = 10) -> None:
                 "id": section_id,
                 "order": number,
                 "title": f"Part {number}",
-                "movement_id": "M01",
-                "structural_role": f"Distinct state transition {number}.",
+                "movement_ids": [f"M{index + 1:02d}" for index, members in enumerate(movement_sections) if section_id in members],
                 "narrative_job": f"Move story state {number - 1} to {number}.",
                 "entry_state": f"State {number - 1}",
                 "exit_state": f"State {number}",
-                "question": f"What changes in part {number}?",
-                "payoff": f"Resolve turn {number}.",
                 "claim_ids": ["CLM-0001"],
                 "dependencies": [f"P{number - 1:02d}"] if number > 1 else [],
-                "anchor_requirements": "Evidence-backed object.",
-                "bridge_in": "Prior state.",
-                "bridge_out": "Next state.",
-                "boundary": "Do not explain the next part.",
-                "risk": "Overclaim.",
+                "anchor_options": ["Evidence-backed object."],
+                "continuity_in": "Prior state.",
+                "continuity_out": "Next state.",
+                "non_goal": "Do not resolve work assigned to a later unit.",
                 "target_words": {"min": minimum, "max": maximum},
-                "budget_rationale": f"Part {number} receives only the space required for its distinct state change.",
-                "planned_moves": ["Open the local question.", "Produce the state change."],
             }
         )
     total_min = sum(item["target_words"]["min"] for item in sections)
@@ -90,24 +96,60 @@ def make_approved_outline(product: Path, section_count: int = 10) -> None:
     write_json(
         product / "02_outline" / "outline.json",
         {
-            "schema_version": 3,
+            "schema_version": 4,
             "product": product.name,
+            "cycle_id": json.loads((product / "product.json").read_text(encoding="utf-8"))["production_cycle"]["id"],
             "status": "approved",
             "section_count": section_count,
             "script_architecture": {
+                "central_question": "How does the fixture system change from pressure to legacy?",
                 "audience_promise": "Follow one complete causal transformation.",
                 "design_rationale": "The whole arc is designed before bounded production work units are cut.",
                 "total_word_envelope": {"min": total_min, "max": total_max},
+                "acts": [
+                    {
+                        "id": "A01",
+                        "order": 1,
+                        "role": "opening",
+                        "title": "Opening",
+                        "narrative_job": "Establish the concrete tension and promise.",
+                        "entry_state": "The causal problem is unresolved.",
+                        "exit_state": "The audience knows what must be explained.",
+                        "movement_ids": ["M01"],
+                    },
+                    {
+                        "id": "A02",
+                        "order": 2,
+                        "role": "body",
+                        "title": "Body",
+                        "narrative_job": "Trace mechanism, expansion, conflict and adaptation.",
+                        "entry_state": "The causal problem is defined.",
+                        "exit_state": "The mechanism and consequences are understood.",
+                        "movement_ids": ["M02"],
+                    },
+                    {
+                        "id": "A03",
+                        "order": 3,
+                        "role": "ending",
+                        "title": "Ending",
+                        "narrative_job": "Answer the question and return to the opening tension.",
+                        "entry_state": "The causal chain is visible.",
+                        "exit_state": "The central question is resolved through legacy.",
+                        "movement_ids": ["M03"],
+                    },
+                ],
                 "movements": [
                     {
-                        "id": "M01",
-                        "order": 1,
-                        "title": "Complete movement",
-                        "narrative_job": "Carry the audience through the complete test arc.",
-                        "entry_state": "The causal problem is unresolved.",
-                        "exit_state": "The causal problem is resolved.",
-                        "section_ids": [item["id"] for item in sections],
+                        "id": f"M{index + 1:02d}",
+                        "order": index + 1,
+                        "act_id": f"A{index + 1:02d}",
+                        "title": ["Concrete tension", "Causal development", "Resolution and legacy"][index],
+                        "narrative_job": ["Open the causal problem.", "Explain the transformation.", "Resolve the question."][index],
+                        "entry_state": ["Unresolved object.", "Defined problem.", "Visible consequence."][index],
+                        "exit_state": ["Promised investigation.", "Visible consequence.", "Resolved legacy."][index],
+                        "section_ids": members,
                     }
+                    for index, members in enumerate(movement_sections)
                 ],
             },
             "sections": sections,
@@ -123,34 +165,22 @@ def make_approved_story_plan(product: Path, section: str) -> None:
     write_json(
         root / "story-plan.json",
         {
-            "schema_version": 2,
+            "schema_version": 3,
             "section": section,
             "status": "draft",
-            "governing_idea": "A record changes what an institution can remember and enforce.",
-            "audience_question": "Why does this small record matter?",
-            "audience_payoff": "The object matters because it changes what can persist beyond one encounter.",
-            "structure_shape": "A compact object mystery turns once into a bounded institutional consequence.",
+            "audience_shift": "The audience understands how a small record changes what can persist beyond one encounter.",
+            "story_strategy": "Use the evidence-backed object as an anchor, then choose the clearest route from its immediate function to the section's assigned state change.",
             "word_budget": {
                 "recommended": state["target_words"],
                 "rationale": "The range matches one object, one explanatory turn and one concrete payoff without padding.",
             },
             "evidence_roles": {
-                "narrated": claim_ids[:1],
-                "support": [],
+                "core": claim_ids[:1],
+                "optional": [],
                 "guardrail": [],
-                "omit": claim_ids[1:],
+                "exclude": claim_ids[1:],
             },
-            "claim_use": {claim_ids[0]: "It proves the durable capacity revealed in the payoff."},
-            "beats": [
-                {"id": "B01", "function": "hook", "purpose": "Begin with the bounded object and one unresolved problem.", "audience_change": "The object becomes a problem rather than an exhibit.", "claim_ids": claim_ids[:1]},
-                {"id": "B02", "function": "tension", "purpose": "Show why memory alone cannot settle the problem.", "audience_change": "The audience sees the limit that demands a record.", "claim_ids": []},
-                {"id": "B03", "function": "payoff", "purpose": "Reveal the new capacity created by the record.", "audience_change": "The audience can name the capacity gained.", "claim_ids": []},
-                {"id": "B04", "function": "bridge", "purpose": "Carry that capacity into the next institutional change.", "audience_change": "The solution now creates the next historical question.", "claim_ids": []},
-            ],
-            "terminology": [],
-            "opening_move": "Put one object in front of the audience and make its unresolved job visible.",
-            "ending_move": "Name the concrete capacity gained and point to the next pressure it creates.",
-            "comprehension_test": "The audience can explain the change in one ordinary sentence.",
+            "design_risks": [],
         },
     )
     approve_story_plan(product, section)
@@ -176,6 +206,20 @@ def valid_operator_brief() -> dict:
         },
         "next_step": "",
     }
+
+
+def valid_outcome_review(verdict: str = "pass") -> str:
+    return (
+        "# Outcome Evaluation — P01\n\n"
+        f"Verdict: {verdict}\n\n"
+        "## Outcome judgment\n\n"
+        "The section advances its assigned act, creates a visible change in understanding and remains clear when spoken aloud. "
+        "Its causal relation is understandable without forcing the listener through the source order.\n\n"
+        "## Issues\n\n"
+        "No material issue remains. The evidence ceiling, semantic economy and product voice are intact in the current draft.\n\n"
+        "## Routing\n\n"
+        "Pass to human review. No prose, local design, product architecture or evidence intervention is required.\n"
+    )
 
 
 def add_research_contract(plan: dict) -> dict:
@@ -280,7 +324,8 @@ class ModularProductionTests(unittest.TestCase):
             self.assertNotIn("01_research/workstreams/WS01/brief.md", context)
             self.assertNotIn("01_research/workstreams/WS03/brief.md", context)
             self.assertEqual(3, len(packet["operation_outputs"]))
-            self.assertIn("system/standards/operator-interface.md", packet["instruction_files"])
+            self.assertNotIn("system/standards/operator-interface.md", packet["instruction_files"])
+            self.assertEqual("research", packet["context_profile"])
             brief = (product / "01_research" / "workstreams" / "WS02" / "brief.md").read_text(encoding="utf-8")
             self.assertIn("## Ownership", brief)
             self.assertIn("## Required synthesis handoff", brief)
@@ -429,20 +474,28 @@ class ModularProductionTests(unittest.TestCase):
                 ],
                 packet["allowed_write_paths"],
             )
-            self.assertIn("Operator Interface Standard", context)
+            self.assertNotIn("Operator Interface Standard", context)
+            self.assertEqual("creative_draft", packet["context_profile"])
+            self.assertLessEqual(packet["prompt_instruction_tokens"], 1500)
             self.assertLess(packet["estimated_context_tokens"], packet["max_context_tokens"])
 
-    def test_outline_contract_materializes_split_question_and_payoff(self) -> None:
+    def test_outline_contract_materializes_global_acts_without_section_formula(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
-            make_approved_outline(product, 1)
+            make_approved_outline(product, 3)
             outline = json.loads((product / "02_outline" / "outline.json").read_text(encoding="utf-8"))
-            outline["sections"][0]["anchor_requirements"] = ["Object one.", "Object two."]
+            outline["sections"][0]["anchor_options"] = ["Object one.", "Object two."]
             write_json(product / "02_outline" / "outline.json", outline)
             materialize_sections(product)
             brief = (product / "03_sections" / "P01" / "brief.md").read_text(encoding="utf-8")
-            self.assertIn("## Question\n\nWhat changes in part 1?", brief)
-            self.assertIn("## Payoff\n\nResolve turn 1.", brief)
+            body_brief = (product / "03_sections" / "P02" / "brief.md").read_text(encoding="utf-8")
+            ending_brief = (product / "03_sections" / "P03" / "brief.md").read_text(encoding="utf-8")
+            self.assertIn("## Whole-script acts", brief)
+            self.assertIn("opening — Opening", brief)
+            self.assertIn("body — Body", body_brief)
+            self.assertIn("ending — Ending", ending_brief)
+            self.assertNotIn("## Question", brief)
+            self.assertNotIn("## Planned shape", brief)
             self.assertIn("- Object one.\n- Object two.", brief)
             state = json.loads((product / "03_sections" / "P01" / "section.json").read_text(encoding="utf-8"))
             self.assertEqual("needs_story_plan", state["status"])
@@ -458,27 +511,63 @@ class ModularProductionTests(unittest.TestCase):
             self.assertGreater(len({tuple(item["target_words"].values()) for item in outline["sections"]}), 1)
             outline["script_architecture"]["movements"][0]["section_ids"] = ["P01", "P03", "P02", "P04"]
             errors = validate_outline_contract(outline, {"CLM-0001"}, target)
-            self.assertTrue(any("contiguously" in item for item in errors))
+            self.assertTrue(any("contiguous" in item for item in errors))
 
     def test_legacy_approved_artifacts_remain_readable_but_cannot_be_new_output(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
-            make_approved_outline(product, 1)
+            make_approved_outline(product, 3)
             outline_path = product / "02_outline" / "outline.json"
             outline = json.loads(outline_path.read_text(encoding="utf-8"))
-            outline["schema_version"] = 2
-            outline.pop("script_architecture")
+            outline["schema_version"] = 3
+            outline["script_architecture"].pop("acts")
+            outline["script_architecture"].pop("central_question")
+            outline["script_architecture"]["movements"] = [
+                {
+                    "id": "M01",
+                    "order": 1,
+                    "title": "Legacy movement",
+                    "narrative_job": "Carry the legacy section.",
+                    "entry_state": "Legacy entry.",
+                    "exit_state": "Legacy exit.",
+                    "section_ids": [item["id"] for item in outline["sections"]],
+                }
+            ]
             for item in outline["sections"]:
-                for field in ["movement_id", "structural_role", "planned_moves", "budget_rationale"]:
-                    item.pop(field)
+                item.pop("movement_ids")
+                item.update(
+                    {
+                        "movement_id": "M01",
+                        "structural_role": "Legacy transition.",
+                        "question": "What changes?",
+                        "payoff": "The state changes.",
+                        "budget_rationale": "Legacy allocation.",
+                        "planned_moves": ["Legacy move."],
+                        "boundary": "Legacy boundary.",
+                    }
+                )
             write_json(outline_path, outline)
             materialize_sections(product)
             make_approved_story_plan(product, "P01")
             root = product / "03_sections" / "P01"
             plan = json.loads((root / "story-plan.json").read_text(encoding="utf-8"))
-            plan["schema_version"] = 1
-            plan.pop("structure_shape")
-            plan.pop("word_budget")
+            plan = {
+                "schema_version": 2,
+                "section": "P01",
+                "status": "approved",
+                "governing_idea": "A legacy record changes what persists.",
+                "audience_question": "What persists?",
+                "audience_payoff": "Selected information persists.",
+                "structure_shape": "Legacy approved object turn.",
+                "word_budget": {"recommended": {"min": 550, "max": 850}, "rationale": "Legacy range."},
+                "evidence_roles": {"narrated": ["CLM-0001"], "support": [], "guardrail": [], "omit": []},
+                "claim_use": {"CLM-0001": "Legacy use."},
+                "beats": [],
+                "terminology": [],
+                "opening_move": "Legacy opening.",
+                "ending_move": "Legacy ending.",
+                "comprehension_test": "Legacy test.",
+            }
             write_json(root / "story-plan.json", plan)
             build_narration_pack(product, "P01")
             target = json.loads((product / "product.json").read_text(encoding="utf-8"))["target"]
@@ -487,16 +576,16 @@ class ModularProductionTests(unittest.TestCase):
             errors = validate_outline_contract(outline, {"CLM-0001"}, target, require_current=True)
             self.assertTrue(any("new or revised output" in item for item in errors))
 
-    def test_story_design_can_choose_two_beats_and_resize_without_padding(self) -> None:
+    def test_story_design_resizes_without_prescribing_beats(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
-            make_approved_outline(product, 1)
+            make_approved_outline(product, 3)
             product_state = json.loads((product / "product.json").read_text(encoding="utf-8"))
-            product_state["target"] = {"duration_minutes": {"min": 3, "max": 10}, "narration_wpm": 100}
+            product_state["target"] = {"duration_minutes": {"min": 15, "max": 25}, "narration_wpm": 100}
             write_json(product / "product.json", product_state)
             outline_path = product / "02_outline" / "outline.json"
             outline = json.loads(outline_path.read_text(encoding="utf-8"))
-            outline["script_architecture"]["total_word_envelope"] = {"min": 300, "max": 1000}
+            outline["script_architecture"]["total_word_envelope"] = {"min": 1500, "max": 2500}
             write_json(outline_path, outline)
             materialize_sections(product)
             root = product / "03_sections" / "P01"
@@ -505,39 +594,17 @@ class ModularProductionTests(unittest.TestCase):
             write_json(
                 root / "story-plan.json",
                 {
-                    "schema_version": 2,
+                    "schema_version": 3,
                     "section": "P01",
                     "status": "draft",
-                    "governing_idea": "One bounded object can change what survives.",
-                    "audience_question": "What survives here?",
-                    "audience_payoff": "The selected relation survives without a full scene.",
-                    "structure_shape": "A two-step miniature: inspect the object, then reverse what survival means.",
+                    "audience_shift": "The audience sees that one bounded object changes what can survive.",
+                    "story_strategy": "Stay close to the object until its limited capacity becomes clear; leave ordering and cadence to the writer.",
                     "word_budget": {
                         "recommended": {"min": 350, "max": 600},
                         "rationale": "One object and one reversal need less space than the outline first estimated.",
                     },
-                    "evidence_roles": {"narrated": [claim_id], "support": [], "guardrail": [], "omit": []},
-                    "claim_use": {claim_id: "The object carries the only factual turn required for the payoff."},
-                    "beats": [
-                        {
-                            "id": "B01",
-                            "function": "inspection",
-                            "purpose": "Make the object's limited content visible.",
-                            "audience_change": "The object becomes a bounded question.",
-                            "claim_ids": [claim_id],
-                        },
-                        {
-                            "id": "B02",
-                            "function": "payoff",
-                            "purpose": "Name exactly what can persist.",
-                            "audience_change": "The audience can state the limited capacity.",
-                            "claim_ids": [],
-                        },
-                    ],
-                    "terminology": [],
-                    "opening_move": "Inspect only the information the object actually preserves.",
-                    "ending_move": "Resolve the limited capacity without adding a generic bridge.",
-                    "comprehension_test": "The audience can name what survives and what does not.",
+                    "evidence_roles": {"core": [claim_id], "optional": [], "guardrail": [], "exclude": []},
+                    "design_risks": [],
                 },
             )
             approve_story_plan(product, "P01")
@@ -546,17 +613,20 @@ class ModularProductionTests(unittest.TestCase):
             self.assertEqual({"min": 350, "max": 600}, section_state["target_words"])
             self.assertEqual({"min": 350, "max": 600}, revised_outline["sections"][0]["target_words"])
             self.assertEqual(1, len(revised_outline["script_architecture"]["budget_revisions"]))
+            self.assertNotIn("beats", json.loads((root / "story-plan.json").read_text(encoding="utf-8")))
 
     def test_story_design_is_required_before_drafting(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
-            make_approved_outline(product, 1)
+            make_approved_outline(product, 3)
             materialize_sections(product)
             with self.assertRaisesRegex(ValueError, "does not allow draft_section"):
                 compile_packet(product, "draft_section", "T0001", section="P01")
             packet, context = compile_packet(product, "design_section", "T0002", section="P01")
             self.assertIn("03_sections/P01/evidence-pack.json", context)
-            self.assertIn("system/standards/voice.md", packet["instruction_files"])
+            self.assertIn("system/standards/channel-constitution.md", packet["instruction_files"])
+            self.assertNotIn("system/standards/voice.md", packet["instruction_files"])
+            self.assertNotIn("system/core/invariants.md", packet["instruction_files"])
             self.assertEqual(["03_sections/P01/story-plan.json"], packet["operation_outputs"])
             make_approved_story_plan(product, "P01")
             draft_packet, draft_context = compile_packet(product, "draft_section", "T0003", section="P01")
@@ -564,10 +634,143 @@ class ModularProductionTests(unittest.TestCase):
             self.assertNotIn("# BEGIN INPUT: 03_sections/P01/evidence-pack.json", draft_context)
             self.assertEqual("draft_section", draft_packet["operation"])
 
+    def test_creative_packet_separates_hard_soft_and_evaluation_layers(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 3)
+            materialize_sections(product)
+            make_approved_story_plan(product, "P01")
+            packet, context = compile_packet(product, "draft_section", "T0001", section="P01")
+            self.assertEqual("creative_draft", packet["context_profile"])
+            self.assertEqual("review_section", packet["evaluation_gate"])
+            self.assertIn("system/core/creative-boundaries.md", packet["instruction_files"])
+            self.assertIn("system/standards/channel-constitution.md", packet["instruction_files"])
+            for excluded in [
+                "system/core/invariants.md",
+                "system/standards/operator-interface.md",
+                "system/standards/outcome-evaluation.md",
+                "system/standards/review.md",
+            ]:
+                self.assertNotIn(excluded, packet["instruction_files"])
+            self.assertNotIn("Operator Interface Standard", context)
+            self.assertLessEqual(packet["prompt_instruction_tokens"], 1500)
+            self.assertLess(packet["estimated_context_tokens"], 9000)
+            narration_pack = json.loads(
+                (product / "03_sections" / "P01" / "narration-pack.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(2, narration_pack["schema_version"])
+            self.assertNotIn("claim_use", narration_pack)
+            self.assertNotIn("narrated_claims", narration_pack)
+            self.assertTrue(all("authority" not in item and "limitations" not in item for item in narration_pack["source_refs"]))
+
+    def test_length_estimate_does_not_force_padding(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 3)
+            materialize_sections(product)
+            make_approved_story_plan(product, "P01")
+            work = create_task(product, "draft_section", "P01", None, False)
+            root = product / "03_sections" / "P01"
+            (root / "draft.md").write_text("# P01\n\nA concise factual turn.\n", encoding="utf-8")
+            (root / "handoff.md").write_text("The intended state change is complete.\n", encoding="utf-8")
+            (product / "tasks" / work["id"] / "report.md").write_text(
+                "The material reached its intended shift below the planning estimate without repetition.\n",
+                encoding="utf-8",
+            )
+            write_json(product / "tasks" / work["id"] / "operator-brief.json", valid_operator_brief())
+            self.assertEqual([], submit_task(product, work["id"]))
+
+    def test_production_unit_hard_cap_remains_enforced(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 3)
+            materialize_sections(product)
+            make_approved_story_plan(product, "P01")
+            work = create_task(product, "draft_section", "P01", None, False)
+            root = product / "03_sections" / "P01"
+            (root / "draft.md").write_text(("word " * 3001).strip() + "\n", encoding="utf-8")
+            (root / "handoff.md").write_text("State.\n", encoding="utf-8")
+            errors = validate_output_contract(product, work)
+            self.assertTrue(any("hard cap" in item for item in errors))
+
+    def test_outcome_evaluation_is_required_before_section_approval(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 3)
+            materialize_sections(product)
+            make_approved_story_plan(product, "P01")
+            root = product / "03_sections" / "P01"
+            (root / "draft.md").write_text("A draft with an evidenced state change.\n", encoding="utf-8")
+            (root / "handoff.md").write_text("State changed.\n", encoding="utf-8")
+            state = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            state["status"] = "ready_for_review"
+            write_json(root / "section.json", state)
+            with self.assertRaisesRegex(ValueError, "completed outcome review"):
+                approve_section(product, "P01")
+            (root / "review.md").write_text(valid_outcome_review("changes_requested"), encoding="utf-8")
+            state["status"] = "review_complete"
+            write_json(root / "section.json", state)
+            with self.assertRaisesRegex(ValueError, "has not passed"):
+                approve_section(product, "P01")
+            review = valid_outcome_review("pass")
+            self.assertEqual([], validate_outcome_review(review))
+            (root / "review.md").write_text(review, encoding="utf-8")
+            approve_section(product, "P01")
+            approved = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            self.assertTrue(approved["human_approved"])
+
+    def test_new_cycle_reopens_whole_product_architecture(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 3)
+            cycle_id = start_new_cycle(
+                product,
+                "Rebuild the complete three-act arc under the lean hard-boundary/soft-logic harness.",
+            )
+            self.assertEqual("C002", cycle_id)
+            state = json.loads((product / "product.json").read_text(encoding="utf-8"))
+            outline = json.loads((product / "02_outline" / "outline.json").read_text(encoding="utf-8"))
+            self.assertEqual("outline_design", state["production_cycle"]["status"])
+            self.assertEqual("changes_requested", state["stages"]["outline"])
+            self.assertEqual("paused", state["stages"]["sections"])
+            self.assertEqual("draft", outline["status"])
+            self.assertEqual("C002", outline["cycle_id"])
+            request = (product / "02_outline" / "outline-change-request.md").read_text(encoding="utf-8")
+            self.assertIn("hard-boundary/soft-logic", request)
+            (product / "01_research" / "research-synthesis.md").write_text(
+                "# Research Synthesis\n\nStatus: complete\n",
+                encoding="utf-8",
+            )
+            work = create_task(product, "outline", None, None, False)
+            context = (product / work["context_packet"]).read_text(encoding="utf-8")
+            self.assertIn("Outline Change Request — C002", context)
+            self.assertIn('"id": "C002"', context)
+            with self.assertRaisesRegex(ValueError, "approved outline"):
+                start_new_cycle(product, "Do it again.")
+
+    def test_new_cycle_archives_old_sections_before_rematerialization(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 3)
+            materialize_sections(product)
+            self.assertTrue((product / "03_sections" / "P01").is_dir())
+            start_new_cycle(product, "Rebuild the full arc.")
+            outline_path = product / "02_outline" / "outline.json"
+            outline = json.loads(outline_path.read_text(encoding="utf-8"))
+            outline["status"] = "approved"
+            write_json(outline_path, outline)
+            archived = archive_previous_cycle(product)
+            self.assertEqual(3, len(archived))
+            self.assertTrue((product / "03_sections" / "_history" / "C001" / "P01").is_dir())
+            created = materialize_sections(product)
+            self.assertTrue(created)
+            current = json.loads((product / "03_sections" / "P01" / "section.json").read_text(encoding="utf-8"))
+            self.assertEqual("C002", current["cycle_id"])
+
     def test_story_plan_feedback_creates_a_fresh_design_input(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
-            make_approved_outline(product, 1)
+            make_approved_outline(product, 3)
             materialize_sections(product)
             root = product / "03_sections" / "P01"
             state = json.loads((root / "section.json").read_text(encoding="utf-8"))
@@ -586,7 +789,7 @@ class ModularProductionTests(unittest.TestCase):
     def test_failed_prose_can_reopen_story_design_without_editing_the_draft(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
-            make_approved_outline(product, 1)
+            make_approved_outline(product, 3)
             materialize_sections(product)
             make_approved_story_plan(product, "P01")
             root = product / "03_sections" / "P01"
@@ -602,7 +805,8 @@ class ModularProductionTests(unittest.TestCase):
             plan = json.loads((root / "story-plan.json").read_text(encoding="utf-8"))
             self.assertEqual("draft", plan["status"])
             packet, context = compile_packet(product, "design_section", "T0001", section="P01")
-            self.assertIn("DIAGNOSTIC_DRAFT_THAT_MUST_NOT_BE_EDITED", context)
+            self.assertNotIn("DIAGNOSTIC_DRAFT_THAT_MUST_NOT_BE_EDITED", context)
+            self.assertIn("The prose exposed a padded structure", context)
             self.assertEqual(["03_sections/P01/story-plan.json"], packet["operation_outputs"])
 
     def test_draft_packet_adds_only_approved_dependency_handoff(self) -> None:
@@ -625,11 +829,11 @@ class ModularProductionTests(unittest.TestCase):
     def test_integration_review_requires_all_sections_human_approved(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
-            make_approved_outline(product, 2)
+            make_approved_outline(product, 3)
             materialize_sections(product)
             with self.assertRaisesRegex(ValueError, "human-approved section: P01"):
                 compile_packet(product, "integration_review", "T0001")
-            for section_id in ["P01", "P02"]:
+            for section_id in ["P01", "P02", "P03"]:
                 root = product / "03_sections" / section_id
                 (root / "handoff.md").write_text(f"Handoff {section_id}.", encoding="utf-8")
                 state = json.loads((root / "section.json").read_text(encoding="utf-8"))
@@ -638,6 +842,7 @@ class ModularProductionTests(unittest.TestCase):
             packet, context = compile_packet(product, "integration_review", "T0002")
             self.assertIn("03_sections/P01/handoff.md", context)
             self.assertIn("03_sections/P02/handoff.md", context)
+            self.assertIn("03_sections/P03/handoff.md", context)
             self.assertEqual(
                 [
                     "04_integration/review.md",
@@ -723,7 +928,7 @@ class ModularProductionTests(unittest.TestCase):
     def test_submitted_task_allows_router_owned_state_transition(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
-            make_approved_outline(product, 1)
+            make_approved_outline(product, 3)
             materialize_sections(product)
             work = create_task(product, "design_section", "P01", None, False)
             root = product / "03_sections" / "P01"
@@ -733,29 +938,17 @@ class ModularProductionTests(unittest.TestCase):
             write_json(
                 root / "story-plan.json",
                 {
-                    "schema_version": 2,
+                    "schema_version": 3,
                     "section": "P01",
                     "status": "draft",
-                    "governing_idea": "A durable mark preserves selected information without recording complete speech.",
-                    "audience_question": "What can the mark preserve?",
-                    "audience_payoff": "Selected information can persist on a durable object.",
-                    "structure_shape": "A short object puzzle turns directly into one bounded capacity.",
+                    "audience_shift": "The audience understands that selected information can persist on a durable object.",
+                    "story_strategy": "Use the object as the factual anchor and let the writer choose the clearest route to its limited capacity.",
                     "word_budget": {
                         "recommended": state["target_words"],
                         "rationale": "The range supports one puzzle, one turn and one payoff without repetition.",
                     },
-                    "evidence_roles": {"narrated": [claim_id], "support": [], "guardrail": [], "omit": []},
-                    "claim_use": {claim_id: "It proves the limited capacity revealed by the section."},
-                    "beats": [
-                        {"id": "B01", "function": "hook", "purpose": "Open on the object as an unresolved problem.", "audience_change": "The object becomes a question.", "claim_ids": [claim_id]},
-                        {"id": "B02", "function": "tension", "purpose": "Ask what survives without complete speech.", "audience_change": "The audience sees the information gap.", "claim_ids": []},
-                        {"id": "B03", "function": "payoff", "purpose": "Reveal the selected information that persists.", "audience_change": "The audience names the limited capacity.", "claim_ids": []},
-                        {"id": "B04", "function": "bridge", "purpose": "Open the question of how that capacity formed.", "audience_change": "The answer creates the next question.", "claim_ids": []},
-                    ],
-                    "terminology": [],
-                    "opening_move": "Begin close to one object and make its limitation visible.",
-                    "ending_move": "Name the limited capacity and open its formation question.",
-                    "comprehension_test": "The audience can explain the capacity in one sentence.",
+                    "evidence_roles": {"core": [claim_id], "optional": [], "guardrail": [], "exclude": []},
+                    "design_risks": [],
                 },
             )
             (product / "tasks" / work["id"] / "report.md").write_text("Diagnostic task report with completed contract details.\n", encoding="utf-8")
@@ -826,8 +1019,9 @@ class ModularProductionTests(unittest.TestCase):
             self.assertIn("Fix ISSUE-01 only", revision_context)
             self.assertNotIn("03_sections/P07", revision_context)
             self.assertIn("03_sections/P06/revision-log.md", revision_packet["allowed_write_paths"])
+            (root / "review.md").write_text(valid_outcome_review("pass"), encoding="utf-8")
             state = json.loads((root / "section.json").read_text(encoding="utf-8"))
-            state["status"] = "ready_for_review"
+            state["status"] = "review_complete"
             write_json(root / "section.json", state)
             approve_section(product, "P06")
             approved = json.loads((root / "section.json").read_text(encoding="utf-8"))
@@ -836,7 +1030,7 @@ class ModularProductionTests(unittest.TestCase):
     def test_context_budget_blocks_oversized_packet(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
-            make_approved_outline(product, 1)
+            make_approved_outline(product, 3)
             materialize_sections(product)
             make_approved_story_plan(product, "P01")
             (product / "02_outline" / "story-bible.md").write_text("x" * 70000, encoding="utf-8")
@@ -855,9 +1049,9 @@ class ModularProductionTests(unittest.TestCase):
     def test_assembly_requires_human_approval_and_keeps_sources_modular(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
-            make_approved_outline(product, 2)
+            make_approved_outline(product, 3)
             materialize_sections(product)
-            for section_id in ["P01", "P02"]:
+            for section_id in ["P01", "P02", "P03"]:
                 root = product / "03_sections" / section_id
                 (root / "draft.md").write_text(f"Narration for {section_id}.", encoding="utf-8")
                 state = json.loads((root / "section.json").read_text(encoding="utf-8"))
@@ -866,10 +1060,13 @@ class ModularProductionTests(unittest.TestCase):
             result = assemble_product(product)
             self.assertIn("Narration for P01", result["script"])
             self.assertIn("Narration for P02", result["script"])
-            self.assertIn("## Complete movement", result["script"])
+            self.assertIn("Narration for P03", result["script"])
+            self.assertIn("## Opening", result["script"])
+            self.assertIn("## Body", result["script"])
+            self.assertIn("## Ending", result["script"])
             self.assertIn("<!-- production-unit: P01", result["script"])
             self.assertNotIn("## P01", result["script"])
-            self.assertEqual(2, len(result["manifest"]["sections"]))
+            self.assertEqual(3, len(result["manifest"]["sections"]))
             self.assertTrue((product / "03_sections" / "P01" / "draft.md").is_file())
 
 

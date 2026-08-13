@@ -1,74 +1,72 @@
 # YT Production
 
-Hệ điều hành biên tập cho phim lịch sử dài 1–2 giờ, được thiết kế để nhiều AI task có thể cộng tác mà không phải mang toàn bộ context của dự án vào mỗi context window.
+Hệ điều hành biên tập cho phim lịch sử dài, được thiết kế để nhiều AI task cộng tác mà không mang toàn bộ repo và toàn bộ policy vào mỗi context window.
 
-## Kiến trúc
+## Harness
 
-Repo có ba lớp độc lập:
+Hệ thống dùng nguyên tắc **Hard boundaries, Soft logic**:
 
-- `system/`: contracts và standards cố định.
-- `products/`: trạng thái và artifact của từng video.
-- `scripts/`: orchestration thuần cơ học; không quyết định lịch sử hay văn phong.
+- **Hard boundaries:** authority, write scope, task state, approval, freshness, provenance và hard cap được code/validator giữ bên ngoài prompt.
+- **Soft logic:** Agent sáng tạo chỉ nhận Channel Constitution ngắn, product blueprint, vai trò work unit, continuity và evidence ceiling; nó tự chọn route, nhịp và câu chữ.
+- **Eval-only:** storytelling, voice, causal clarity và semantic repetition được đánh giá sau draft. Evaluator chấm outcome, không chấm việc đi đúng một route định trước.
 
-Product Agent chỉ được làm việc trong `products/<slug>/`. Tầng control plane do System Architect quản lý qua architecture task riêng; system change và product content không được trộn trong cùng commit.
+Machine-readable profiles nằm ở `system/harness.json`. Phân loại và lý do thiết kế nằm ở [docs/HARNESS.md](docs/HARNESS.md).
 
-Agent không đọc toàn bộ `system/`. `scripts/task.py` biên dịch đúng instruction và input cần thiết thành một context packet cho từng task.
+## Kiến trúc câu chuyện
 
-Giao tiếp cũng có hai lớp: task report giữ chiều sâu, operator brief giữ bức tranh điều hành. Status/handoff mặc định ngắn; explanation, audit và artifact được mở rộng khi mục đích cần.
+Mọi script có ba act rõ ràng ở cấp toàn phim:
+
+`opening → body → ending`
+
+Số narrative movement và số production section không cố định. `P##` là work unit để giới hạn context/revision; nó không phải mini-chapter bắt buộc có hook–body–payoff riêng. Length range là estimate; chỉ production-unit hard cap mới bị máy cưỡng chế.
 
 ## Production flow
 
 ```text
 research plan
-  → research workstreams độc lập
+  → isolated research workstreams
   → research synthesis
-  → thiết kế macro movements và phân bổ nhịp toàn kịch bản
-  → chia production sections theo state change, không theo quota
-  → materialize section workspaces
-  → design/approve story plan từng phần
-  → draft/review/revise từng phần
-  → integration qua handoff summaries
+  → three-act product architecture + narrative movements
+  → bounded production sections
+  → lean story design + human approval
+  → autonomous draft
+  → outcome evaluation
+  → human approval / targeted revision
+  → handoff integration
   → deterministic assembly
-  → optional final audit
 ```
 
-Research thô không đi vào task viết. Macro movement là nhịp khán giả cảm nhận; `P##` là work unit giúp Agent giữ context nhỏ, hai thứ không buộc phải trùng nhau. Story design phân evidence thành điều phải kể, chi tiết hỗ trợ, guardrail và điều bỏ; writer chỉ nhận narration pack đã được duyệt. Các phần khác được đại diện bằng story bible và handoff ngắn.
+Story design chỉ khóa audience shift, evidence roles (`core / optional / guardrail / exclude`) và length estimate. Approval sinh narration pack compact có provenance refs; raw research và full source metadata không đi vào writer packet.
 
 ## Lệnh thường dùng
 
 ```bash
-# Tạo product
 python scripts/new_product.py ten-san-pham --title "Tên làm việc"
-
-# Tạo/activate một task research plan
 python scripts/task.py create products/ten-san-pham research_plan
-
-# Chọn fact và thiết kế beats cho P04
 python scripts/task.py create products/ten-san-pham design_section --section P04
-
-# Sau khi người dùng duyệt story plan, tạo task viết P04
+python scripts/approval.py approve-story-plan products/ten-san-pham P04
 python scripts/task.py create products/ten-san-pham draft_section --section P04
-
-# Xem context packet Agent sẽ nhận
-python scripts/task.py show products/ten-san-pham
-
-# Sau khi Agent hoàn thành output và report
-python scripts/task.py submit products/ten-san-pham <task-id>
-
-# Render đúng brief ngắn mà Agent phải trả trong chat
-python scripts/task.py brief products/ten-san-pham <task-id>
-
-# Kiểm tra product, task packet và context budget
-python scripts/validate.py products/ten-san-pham
-
-# Ghép các phần đã approved
+python scripts/task.py create products/ten-san-pham review_section --section P04
+python scripts/approval.py approve-section products/ten-san-pham P04
 python scripts/assemble.py products/ten-san-pham
 ```
 
-Chi tiết cho người vận hành: [`docs/WORKFLOW.md`](docs/WORKFLOW.md).
+Mở một vòng sản xuất mới từ research đã duyệt:
+
+```bash
+python scripts/approval.py start-new-cycle products/ten-san-pham --request "Yêu cầu kiến trúc mới"
+python scripts/task.py state products/ten-san-pham <old-active-task> cancelled
+python scripts/task.py create products/ten-san-pham outline
+```
+
+Sau khi outline mới được duyệt, archive workspaces cũ rồi materialize cycle mới:
+
+```bash
+python scripts/materialize_sections.py products/ten-san-pham --archive-previous-cycle
+```
+
+Chi tiết vận hành: [docs/WORKFLOW.md](docs/WORKFLOW.md).
 
 ## Pilot
 
-`products/sumer-writing/` đã khóa subject: câu chuyện về chữ viết trong nền văn minh Sumer. Research sẽ kiểm tra causal chain; không dùng research để quyết định lại subject.
-
-*Fall of Civilizations* là benchmark/đối thủ liền kề. Repo học từ bar về evidence, causal clarity và human presence, nhưng cấm mô phỏng câu chữ, cadence hoặc structure đặc trưng.
+`products/sumer-writing/` kể vòng đời chữ viết như một công nghệ–thiết chế của văn minh Sumer. *Fall of Civilizations* là benchmark chức năng, không phải mẫu câu, cadence, persona hay structure để sao chép.

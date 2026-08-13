@@ -22,7 +22,7 @@ Các luật này có hiệu lực với mọi operation.
 
 - Research tạo evidence, không tạo narration.
 - Outline tạo section contracts, không tạo prose.
-- Story design chọn fact và beats, không viết prose.
+- Story design khóa audience shift và evidence selection, không pre-script route hoặc viết prose.
 - Draft tạo prose một section, không review/approve.
 - Review tạo diagnosis, không rewrite.
 - Revision sửa đúng issue đã duyệt, không “polish toàn bộ”.

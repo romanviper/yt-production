@@ -9,10 +9,10 @@ from pathlib import Path
 
 try:
     from scripts.common import narration_text, read_json, sha256, word_count, write_json
-    from scripts.outline_contract import normalize_outline_contract
+    from scripts.outline_contract import OUTLINE_SCHEMA_VERSION, normalize_outline_contract
 except ModuleNotFoundError:
     from common import narration_text, read_json, sha256, word_count, write_json
-    from outline_contract import normalize_outline_contract
+    from outline_contract import OUTLINE_SCHEMA_VERSION, normalize_outline_contract
 
 
 def assemble_product(product_dir: Path, partial: bool = False, write: bool = True) -> dict:
@@ -20,6 +20,7 @@ def assemble_product(product_dir: Path, partial: bool = False, write: bool = Tru
     product = read_json(product_dir / "product.json")
     outline = read_json(product_dir / "02_outline" / "outline.json")
     outline = normalize_outline_contract(outline, product.get("target"))
+    current_contract = outline.get("schema_version") == OUTLINE_SCHEMA_VERSION
     selected = []
     unapproved = []
     for item in sorted(outline.get("sections", []), key=lambda value: value["order"]):
@@ -39,10 +40,16 @@ def assemble_product(product_dir: Path, partial: bool = False, write: bool = Tru
         for item in outline.get("script_architecture", {}).get("movements", [])
         if isinstance(item, dict) and item.get("id")
     }
+    acts = {
+        item["id"]: item
+        for item in outline.get("script_architecture", {}).get("acts", [])
+        if isinstance(item, dict) and item.get("id")
+    }
     blocks = [f"# {product['working_title']}", ""]
     records = []
     total = 0
     current_movement = None
+    current_act = None
     for item in selected:
         draft = product_dir / "03_sections" / item["id"] / "draft.md"
         if not draft.is_file():
@@ -50,23 +57,32 @@ def assemble_product(product_dir: Path, partial: bool = False, write: bool = Tru
         text = narration_text(draft.read_text(encoding="utf-8"), item["id"])
         words = word_count(text)
         total += words
-        movement_id = item["movement_id"]
-        if movement_id != current_movement:
-            movement = movements[movement_id]
-            blocks.extend([f"## {movement['title']}", ""])
-            current_movement = movement_id
+        if current_contract:
+            movement_ids = item["movement_ids"]
+            act_id = movements[movement_ids[0]]["act_id"]
+            if act_id != current_act:
+                blocks.extend([f"## {acts[act_id]['title']}", ""])
+                current_act = act_id
+            record_scope = {"act_id": act_id, "movement_ids": movement_ids}
+        else:
+            movement_id = item["movement_id"]
+            if movement_id != current_movement:
+                movement = movements[movement_id]
+                blocks.extend([f"## {movement['title']}", ""])
+                current_movement = movement_id
+            record_scope = {"movement_id": movement_id}
         blocks.extend([f"<!-- production-unit: {item['id']} — {item['title']} -->", "", text, ""])
         records.append(
             {
                 "id": item["id"],
-                "movement_id": movement_id,
+                **record_scope,
                 "source": str(draft.relative_to(product_dir)),
                 "sha256": sha256(draft),
                 "words": words,
             }
         )
     manifest = {
-        "schema_version": 2,
+        "schema_version": 3 if current_contract else 2,
         "product": product["slug"],
         "mode": "partial" if partial else "full",
         "generated_at": datetime.now(timezone.utc).isoformat(),

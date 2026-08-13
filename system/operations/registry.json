@@ -1,12 +1,11 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "operations": {
     "research_plan": {
       "target_kind": "product",
       "max_context_tokens": 18000,
       "instruction_files": [
-        "system/core/invariants.md",
-        "system/standards/channel.md",
+        "system/standards/channel-constitution.md",
         "system/standards/evidence.md",
         "system/operations/research-plan.md"
       ],
@@ -23,13 +22,13 @@
         "Mỗi workstream có question, boundary và completion criteria.",
         "Plan test causal hypotheses nhưng không quyết định lại subject.",
         "Không viết research findings, outline hoặc narration."
-      ]
+      ],
+      "context_profile": "research"
     },
     "research_workstream": {
       "target_kind": "unit",
       "max_context_tokens": 20000,
       "instruction_files": [
-        "system/core/invariants.md",
         "system/standards/evidence.md",
         "system/operations/research-workstream.md"
       ],
@@ -48,13 +47,13 @@
         "Source có locator, authority và limitation.",
         "Claim tách fact/inference/contested/unknown và có counterevidence.",
         "Synthesis đủ dùng cho task sau mà không cần raw browsing context."
-      ]
+      ],
+      "context_profile": "research"
     },
     "research_synthesis": {
       "target_kind": "product",
       "max_context_tokens": 32000,
       "instruction_files": [
-        "system/core/invariants.md",
         "system/standards/evidence.md",
         "system/operations/research-synthesis.md"
       ],
@@ -73,17 +72,15 @@
         "Dùng global ledgers do deterministic consolidation tạo; không remap hoặc rewrite chúng trong AI task.",
         "Synthesis tổ chức theo causal questions, không theo thứ tự nguồn.",
         "Không viết outline hoặc narration."
-      ]
+      ],
+      "context_profile": "research"
     },
     "outline": {
       "target_kind": "product",
-      "max_context_tokens": 30000,
+      "max_context_tokens": 24000,
       "instruction_files": [
-        "system/core/invariants.md",
-        "system/standards/channel.md",
-        "system/standards/evidence.md",
-        "system/standards/story.md",
-        "system/standards/voice.md",
+        "system/core/creative-boundaries.md",
+        "system/standards/channel-constitution.md",
         "system/operations/outline.md"
       ],
       "required_inputs": [
@@ -93,29 +90,30 @@
         "01_research/research-synthesis.md",
         "01_research/claim-ledger.json"
       ],
-      "optional_inputs": [],
+      "optional_inputs": [
+        "02_outline/outline-change-request.md"
+      ],
       "outputs": [
         "02_outline/outline.json",
         "02_outline/story-bible.md",
         "02_outline/voice-profile.md"
       ],
       "acceptance": [
-        "Macro movements thiết kế toàn arc trước khi đặt ranh giới production section.",
-        "Section count và độ dài xuất phát từ narrative load; không dùng default 10 hoặc chia đều thời lượng.",
-        "Mỗi section có structural role, planned shape, state change, claim set và budget rationale riêng.",
-        "Tổng arc trả North Star và khác biệt rõ với benchmark.",
-        "Story bible đủ continuity nhưng nằm trong giới hạn compact.",
-        "Voice profile chuyển benchmark thành chức năng và test nguyên bản; không mô phỏng surface style."
-      ]
+        "Thiết kế đúng ba act toàn phim: opening, body và ending.",
+        "Macro movement và production section phát sinh từ causal load, không từ một số lượng hoặc template mặc định.",
+        "Mỗi work unit chỉ khóa narrative job, state change, evidence allowance, continuity và length estimate.",
+        "Story bible và voice profile đủ giữ continuity/bản sắc nhưng không mang research dump hoặc surface imitation.",
+        "Không viết narration hoặc tự approve."
+      ],
+      "context_profile": "architecture"
     },
     "design_section": {
       "target_kind": "section",
       "include_dependency_handoffs": true,
-      "max_context_tokens": 18000,
+      "max_context_tokens": 12000,
       "instruction_files": [
-        "system/core/invariants.md",
-        "system/standards/story.md",
-        "system/standards/voice.md",
+        "system/core/creative-boundaries.md",
+        "system/standards/channel-constitution.md",
         "system/operations/design-section.md"
       ],
       "required_inputs": [
@@ -127,37 +125,32 @@
         "03_sections/{section}/continuity-in.md"
       ],
       "optional_inputs": [
-        "03_sections/{section}/story-plan-change-request.md",
-        "03_sections/{section}/draft.md",
-        "03_sections/{section}/review.md"
+        "03_sections/{section}/story-plan-change-request.md"
       ],
       "outputs": [
         "03_sections/{section}/story-plan.json"
       ],
       "acceptance": [
-        "Một governing idea và audience payoff được diễn đạt bằng ngôn ngữ phổ thông.",
-        "Structure shape và số beat được chọn theo material của section, không theo template chung.",
-        "Word budget recommendation phản ánh đúng narrative load và không khuyến khích padding.",
-        "Mọi claim được phân vai; chỉ 1–5 claim được chọn để narration thực sự kể.",
-        "Story beats tiến theo tension và consequence, không theo thứ tự evidence pack.",
-        "Không viết narration hoặc tự approve story plan."
-      ]
+        "Xác định một audience shift khả thi cho work unit.",
+        "Phân mọi claim vào core, optional, guardrail hoặc exclude để khóa evidence ceiling.",
+        "Story strategy mô tả intent nhưng không ép beats, paragraph count, cadence hoặc opening formula.",
+        "Length range là estimate theo material, không phải quota.",
+        "Không viết narration hoặc tự approve."
+      ],
+      "context_profile": "creative_design"
     },
     "draft_section": {
       "target_kind": "section",
       "include_dependency_handoffs": true,
-      "max_context_tokens": 18000,
+      "max_context_tokens": 9000,
       "instruction_files": [
-        "system/core/invariants.md",
-        "system/standards/story.md",
-        "system/standards/voice.md",
-        "system/standards/writing-vi.md",
+        "system/core/creative-boundaries.md",
+        "system/standards/channel-constitution.md",
         "system/operations/draft-section.md"
       ],
       "required_inputs": [
         "02_outline/story-bible.md",
         "02_outline/voice-profile.md",
-        "03_sections/{section}/section.json",
         "03_sections/{section}/brief.md",
         "03_sections/{section}/story-plan.json",
         "03_sections/{section}/narration-pack.json",
@@ -169,21 +162,21 @@
         "03_sections/{section}/handoff.md"
       ],
       "acceptance": [
-        "Chỉ viết section được chỉ định.",
-        "Chỉ dùng claim được story plan chọn; narration pack là trần, không phải checklist.",
-        "Entry/exit state và bridge đúng brief.",
-        "Văn nói phổ thông truyền đạt được governing idea; handoff không thay thế draft."
-      ]
+        "Section tạo được audience shift và state change đã duyệt.",
+        "Prose tự chọn route phù hợp nhưng giữ act role, continuity và evidence ceiling.",
+        "Văn nói tiếng Việt nhất quán với Channel Constitution và product voice.",
+        "Không padding để chạm length estimate; handoff chỉ ghi continuity cần thiết."
+      ],
+      "context_profile": "creative_draft"
     },
     "review_section": {
       "target_kind": "section",
       "include_dependency_handoffs": true,
-      "max_context_tokens": 22000,
+      "max_context_tokens": 14000,
       "instruction_files": [
-        "system/core/invariants.md",
-        "system/standards/evidence.md",
-        "system/standards/review.md",
-        "system/standards/voice.md",
+        "system/core/creative-boundaries.md",
+        "system/standards/channel-constitution.md",
+        "system/standards/outcome-evaluation.md",
         "system/operations/review-section.md"
       ],
       "required_inputs": [
@@ -200,20 +193,20 @@
         "03_sections/{section}/review.md"
       ],
       "acceptance": [
-        "Review chẩn đoán trước khi đề xuất sửa.",
-        "Mỗi issue có location, impact, scope và acceptance test.",
-        "Không rewrite draft và không tự approve."
-      ]
+        "Chấm outcome thay vì mức tuân thủ một creative route.",
+        "Kiểm tra act contribution, narrative movement, causality, voice, semantic repetition và evidence integrity.",
+        "Mỗi issue được route về prose_execution, local_design, product_architecture hoặc evidence.",
+        "Review có verdict và acceptance test; không rewrite hoặc tự approve."
+      ],
+      "context_profile": "evaluation"
     },
     "revise_section": {
       "target_kind": "section",
       "include_dependency_handoffs": true,
-      "max_context_tokens": 24000,
+      "max_context_tokens": 11000,
       "instruction_files": [
-        "system/core/invariants.md",
-        "system/standards/evidence.md",
-        "system/standards/voice.md",
-        "system/standards/writing-vi.md",
+        "system/core/creative-boundaries.md",
+        "system/standards/channel-constitution.md",
         "system/operations/revise-section.md"
       ],
       "required_inputs": [
@@ -233,19 +226,19 @@
         "03_sections/{section}/revision-log.md"
       ],
       "acceptance": [
-        "Chỉ sửa issue có trong change request.",
-        "Giữ invariant và claim support không liên quan.",
-        "Revision log nêu patch scope và test đã vượt.",
-        "Không sửa section khác."
-      ]
+        "Chỉ xử lý issue được người dùng duyệt.",
+        "Giữ lựa chọn đang hiệu quả, act role, continuity và evidence ceiling.",
+        "Revision log nêu issue, phạm vi và observable result.",
+        "Escalate khi lỗi thật sự thuộc architecture hoặc evidence; không sửa section khác."
+      ],
+      "context_profile": "creative_revision"
     },
     "integration_review": {
       "target_kind": "product",
-      "max_context_tokens": 30000,
+      "max_context_tokens": 24000,
       "instruction_files": [
-        "system/core/invariants.md",
-        "system/standards/story.md",
-        "system/standards/review.md",
+        "system/standards/channel-constitution.md",
+        "system/standards/outcome-evaluation.md",
         "system/operations/integration-review.md"
       ],
       "required_inputs": [
@@ -265,16 +258,16 @@
         "Audit continuity qua handoff trước khi mở full drafts.",
         "Mỗi issue chỉ rõ section bị ảnh hưởng và revision class.",
         "Không rewrite hoặc assemble script."
-      ]
+      ],
+      "context_profile": "evaluation"
     },
     "final_audit": {
       "target_kind": "product",
       "max_context_tokens": 100000,
       "instruction_files": [
-        "system/core/invariants.md",
-        "system/standards/evidence.md",
-        "system/standards/story.md",
-        "system/standards/review.md",
+        "system/core/creative-boundaries.md",
+        "system/standards/channel-constitution.md",
+        "system/standards/outcome-evaluation.md",
         "system/operations/final-audit.md"
       ],
       "required_inputs": [
@@ -290,7 +283,8 @@
         "Audit full script một lần nhưng chỉ tạo report.",
         "Không sửa source section hoặc delivery.",
         "Issue được route về targeted revise_section."
-      ]
+      ],
+      "context_profile": "evaluation"
     }
   }
 }

@@ -1,58 +1,39 @@
 # Story Standard
 
+The Channel Constitution is the source of identity. This file is an architecture/evaluation reference, not a beat template for writers.
+
+## Whole-script invariant
+
+Every script has three audience-facing acts:
+
+`opening → body → ending`
+
+Opening establishes a concrete tension and promise. Body follows causal formation, expansion, conflict, consequence and adaptation. Ending answers the central question and reconnects consequence/legacy to the opening tension.
+
+## Two independent scales
+
+- **Narrative movement:** a state change the audience experiences.
+- **Production section (`P##`):** a bounded unit for context, review and revision.
+
+The mapping may be many-to-many inside one act. A movement may need several work units; a work unit may contain several movements. A work unit may not cross an act boundary. Section count and relative length emerge from narrative/context load.
+
 ## Causal spine
 
-Story phải giải thích pressure nào tạo mechanism mới; mechanism đổi capacity/incentive của ai; hệ quả và adaptation nào biến state A thành B.
+Where relevant, show which pressure creates a mechanism, whose capacity or incentive changes, which consequence follows and what adaptation changes the next state. Do not substitute chronology for causality.
 
-Toàn kịch bản được thiết kế theo hai tầng:
+## Lean local design
 
-- **narrative movement:** nhịp lớn mà khán giả cảm nhận;
-- **production section (`P##`):** work unit giới hạn context, review và revision.
+A section plan records:
 
-Hai tầng không bắt buộc một-một. Section count không phải mục tiêu thẩm mỹ và không được chọn trước để chia đều thời lượng. Mỗi section contract có:
+- the audience shift;
+- a free-form story strategy;
+- evidence roles (`core / optional / guardrail / exclude`);
+- a material-based length estimate.
 
-- một narrative job;
-- entry/exit state;
-- central question/payoff;
-- claim IDs;
-- material/human anchor có provenance;
-- dependencies và bridge;
-- word budget;
-- lý do budget và phác họa shape riêng;
-- boundary: điều cố ý chưa giải thích.
+It does not prescribe numbered beats, compulsory payoff beats, paragraph count, opening formula, cadence or claim-by-claim use. The writer owns those choices.
 
-## Long-form rhythm
+## Evidence and length
 
-Luân phiên có chủ đích:
+Evidence defines what may be said, not what must be narrated. A fact earns space when it changes the question, proves a mechanism, changes understanding, creates consequence or supplies necessary continuity.
 
-`human/object → institution → system → human consequence`
-
-Entity được giới thiệu theo `FUNCTION → NAME → thuộc tính cần cho hành động kế tiếp`.
-
-Opening thiết lập object, causal tension, stakes và boundary. Ending trả causal question và legacy có mắt xích; không chỉ recap hay “bài học lịch sử” chung chung.
-
-## Story trước, fact sau
-
-Evidence pack xác định những gì có thể nói đúng. Nó không xác định những gì khán giả cần nghe.
-
-Trước khi viết prose, section phải có story plan được con người duyệt. Story plan phải:
-
-- diễn đạt một governing idea bằng ngôn ngữ phổ thông;
-- xác định câu hỏi khán giả mang theo và điều họ hiểu ra ở cuối section;
-- phân mọi claim thành `narrated`, `support`, `guardrail` hoặc `omit`;
-- chỉ chọn 1–5 claim làm xương sống narration;
-- giải thích narrative job của từng claim được giữ;
-- sắp beat theo tension và consequence, không theo thứ tự claim hoặc source.
-- tự chọn số beat và shape phù hợp; chỉ payoff là bắt buộc, tension/bridge không phải ô phải điền.
-
-Word budget là giả thuyết ở outline, không phải quota. Story design phải đề xuất lại range khi material không đủ hoặc narrative hinge cần thêm không gian. Draft không được lặp ý, thêm fact hay kéo dài câu chỉ để chạm min words.
-
-Một fact chỉ đáng xuất hiện trong narration nếu nó làm ít nhất một việc: tạo câu hỏi, tăng tension, giải thích mechanism, thay đổi cách hiểu, cho thấy consequence hoặc mở bridge cần thiết. Fact chỉ dùng để bảo vệ độ chính xác thường nên ở dạng guardrail và không cần được đọc thành lời.
-
-## Narrative movement
-
-Toàn arc thường cần các chức năng dưới đây, nhưng một section riêng không phải lặp nguyên chuỗi:
-
-`vật/người cụ thể → vấn đề chưa giải được → evidence đổi mô hình → hệ quả đối với người hoặc hệ thống`
-
-Không dùng một object làm cái cớ để lần lượt trình bày toàn bộ niên đại, thuật ngữ, tranh luận và disclaimer có trong packet. Mỗi đoạn phải khiến câu chuyện tiến lên, không chỉ làm hồ sơ dày thêm.
+Target ranges are forecasts. They can inform architecture and evaluation but cannot force padding. Only the 3,000-word production-unit cap is a hard writing limit.

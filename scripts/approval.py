@@ -7,10 +7,12 @@ import argparse
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
+import re
 
 try:
     from scripts.common import read_json, write_json
     from scripts.outline_contract import validate_outline_contract
+    from scripts.outcome_eval_contract import review_verdict, validate_outcome_review
     from scripts.research_plan_contract import validate_research_plan_contract
     from scripts.story_plan_contract import build_narration_pack, validate_story_plan
     from scripts.validate import validate_product
@@ -18,6 +20,7 @@ try:
 except ModuleNotFoundError:
     from common import read_json, write_json
     from outline_contract import validate_outline_contract
+    from outcome_eval_contract import review_verdict, validate_outcome_review
     from research_plan_contract import validate_research_plan_contract
     from story_plan_contract import build_narration_pack, validate_story_plan
     from validate import validate_product
@@ -48,6 +51,9 @@ def approve_outline(product_dir: Path) -> None:
     path = product_dir / "02_outline" / "outline.json"
     outline = read_json(path)
     product = read_json(product_dir / "product.json")
+    expected_cycle = product.get("production_cycle", {}).get("id")
+    if expected_cycle and outline.get("cycle_id") != expected_cycle:
+        raise ValueError(f"Cannot approve outline: cycle_id must match current product cycle {expected_cycle}")
     contract_errors = validate_outline_contract(outline, product_target=product.get("target"), require_current=True)
     if contract_errors:
         raise ValueError("Cannot approve outline: " + "; ".join(contract_errors))
@@ -79,8 +85,15 @@ def approve_section(product_dir: Path, section: str) -> None:
     root = product_dir / "03_sections" / section
     state_path = root / "section.json"
     state = read_json(state_path)
-    if state.get("status") not in {"ready_for_review", "review_complete"}:
-        raise ValueError(f"Section {section} is not ready for human approval.")
+    if state.get("status") != "review_complete":
+        raise ValueError(f"Section {section} requires a completed outcome review before human approval.")
+    review_path = root / "review.md"
+    review_text = review_path.read_text(encoding="utf-8")
+    review_errors = validate_outcome_review(review_text)
+    if review_errors:
+        raise ValueError("Section outcome review is invalid: " + "; ".join(review_errors))
+    if review_verdict(review_text) != "pass":
+        raise ValueError(f"Section {section} outcome review has not passed.")
     for name in ["draft.md", "handoff.md"]:
         if not (root / name).is_file():
             raise ValueError(f"Missing {section}/{name}")
@@ -173,6 +186,58 @@ def request_changes(product_dir: Path, section: str, request: str) -> None:
     write_json(state_path, state)
 
 
+def start_new_cycle(product_dir: Path, request: str) -> str:
+    """Reopen whole-product architecture after an explicit owner decision."""
+
+    if not request.strip():
+        raise ValueError("Production-cycle request cannot be empty.")
+    outline_path = product_dir / "02_outline" / "outline.json"
+    outline = read_json(outline_path)
+    if outline.get("status") != "approved":
+        raise ValueError("A new production cycle can start only from an approved outline.")
+
+    product_path = product_dir / "product.json"
+    product = read_json(product_path)
+    previous_id = product.get("production_cycle", {}).get("id", "C001")
+    match = re.fullmatch(r"C(\d{3})", str(previous_id))
+    if not match:
+        raise ValueError(f"Invalid current production cycle: {previous_id}")
+    cycle_id = f"C{int(match.group(1)) + 1:03d}"
+    started_at = datetime.now(timezone.utc).isoformat()
+
+    (product_dir / "02_outline" / "outline-change-request.md").write_text(
+        f"# Outline Change Request — {cycle_id}\n\n"
+        f"Requested by: user\n\nRequested at: {started_at}\n\n"
+        f"Previous cycle: {previous_id}\n\n"
+        f"## Required architecture change\n\n{request.strip()}\n",
+        encoding="utf-8",
+    )
+
+    outline["status"] = "draft"
+    outline["cycle_id"] = cycle_id
+    outline.pop("approved_by", None)
+    outline.pop("approved_at", None)
+    write_json(outline_path, outline)
+
+    voice_path = product_dir / "02_outline" / "voice-profile.md"
+    voice_path.write_text(set_voice_profile_status(voice_path.read_text(encoding="utf-8"), "draft"), encoding="utf-8")
+
+    product["production_cycle"] = {
+        "id": cycle_id,
+        "status": "outline_design",
+        "previous": previous_id,
+        "started_at": started_at,
+        "reason": request.strip(),
+    }
+    product["status"] = "outline_redesign"
+    product.setdefault("stages", {})["outline"] = "changes_requested"
+    product["stages"]["sections"] = "paused"
+    product["stages"]["integration"] = "not_started"
+    product["stages"]["delivery"] = "not_started"
+    write_json(product_path, product)
+    return cycle_id
+
+
 def request_story_plan_changes(product_dir: Path, section: str, request: str) -> None:
     if not request.strip():
         raise ValueError("Story-plan change request cannot be empty.")
@@ -218,6 +283,9 @@ def main() -> int:
     story_changes.add_argument("product", type=Path)
     story_changes.add_argument("section")
     story_changes.add_argument("--request", required=True)
+    cycle = sub.add_parser("start-new-cycle")
+    cycle.add_argument("product", type=Path)
+    cycle.add_argument("--request", required=True)
     args = parser.parse_args()
     product = args.product.resolve()
     try:
@@ -231,6 +299,8 @@ def main() -> int:
             approve_section(product, args.section)
         elif args.command == "request-changes":
             request_changes(product, args.section, args.request)
+        elif args.command == "start-new-cycle":
+            start_new_cycle(product, args.request)
         else:
             request_story_plan_changes(product, args.section, args.request)
     except (ValueError, FileNotFoundError, KeyError) as exc:

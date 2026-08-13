@@ -13,7 +13,7 @@ except ModuleNotFoundError:  # Direct execution from scripts/
     from common import sha256
 
 
-PACKET_SCHEMA_VERSION = 2
+PACKET_SCHEMA_VERSION = 3
 PACKET_COMPILER = "scripts/context_packet.py"
 SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
 
@@ -40,7 +40,7 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
 
     errors: list[str] = []
     schema_version = packet.get("schema_version")
-    if schema_version not in {1, PACKET_SCHEMA_VERSION}:
+    if schema_version not in {1, 2, PACKET_SCHEMA_VERSION}:
         errors.append(f"unsupported packet.schema_version: {schema_version!r}")
 
     for field in ["authority", "task_id", "product", "operation", "report_path", "operator_brief_path"]:
@@ -65,6 +65,20 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
         value = packet.get(field)
         if not isinstance(value, int) or isinstance(value, bool) or value < 0:
             errors.append(f"packet.{field} must be a non-negative integer")
+
+    if schema_version == PACKET_SCHEMA_VERSION:
+        for field in ["prompt_instruction_tokens", "input_tokens"]:
+            value = packet.get(field)
+            if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+                errors.append(f"packet.{field} must be a non-negative integer")
+        if not isinstance(packet.get("context_profile"), str) or not packet["context_profile"]:
+            errors.append("packet.context_profile must be a non-empty string")
+        boundaries = packet.get("boundary_enforcement")
+        if not isinstance(boundaries, list) or not boundaries or not all(isinstance(item, str) and item for item in boundaries):
+            errors.append("packet.boundary_enforcement must be a non-empty list of strings")
+        gate = packet.get("evaluation_gate")
+        if gate is not None and (not isinstance(gate, str) or not gate):
+            errors.append("packet.evaluation_gate must be null or a non-empty string")
 
     inputs = packet.get("inputs")
     if not isinstance(inputs, list):

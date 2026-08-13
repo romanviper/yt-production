@@ -2,13 +2,10 @@
 
 ## Responsibility
 
-Áp dụng change request đã được con người chọn lên một section.
+Resolve only the user-approved change request.
 
-## Rules
+Preserve successful creative choices. Use the smallest change that passes the stated acceptance test, unless the approved request explicitly routes the issue back from local design and permits a full section rewrite.
 
-- Review không đồng nghĩa mọi suggestion đều được duyệt; `change-request.md` là authority.
-- Dùng patch nhỏ nhất vượt acceptance test.
-- Ngoại lệ: nếu change request cho phép revision class R5 hoặc yêu cầu thiết kế lại narrative, có thể thay toàn bộ prose của section. Khi đó vẫn phải giữ section boundary, evidence ceiling và exit state.
-- Nếu fix phá brief, evidence hoặc section khác, dừng và tạo impact report.
-- Cập nhật handoff nếu exit state/setup/continuity thực sự đổi.
-- Revision log ghi issue IDs, vị trí và kết quả; không ghi “polished”.
+The evidence ceiling, act role, entry/exit state and continuity remain fixed. If the requested fix actually belongs to product architecture or missing evidence, report that blocker instead of compensating with prose.
+
+Update the handoff only when the achieved exit state or continuity facts changed. Record issue IDs and observable results in the revision log; do not describe generic polishing.

@@ -17,6 +17,7 @@ try:
         expand_optional_inputs,
         load_registry,
         product_relative,
+        read_json,
         render_pattern,
         repo_relative,
         sha256,
@@ -33,6 +34,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
         expand_optional_inputs,
         load_registry,
         product_relative,
+        read_json,
         render_pattern,
         repo_relative,
         sha256,
@@ -41,6 +43,30 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
     from consolidate_research import verify_consolidation
     from packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
     from story_plan_contract import verify_narration_pack
+
+
+HARNESS_PATH = REPO_ROOT / "system" / "harness.json"
+
+
+def load_harness() -> dict[str, Any]:
+    value = read_json(HARNESS_PATH)
+    if value.get("schema_version") != 1 or not isinstance(value.get("profiles"), dict):
+        raise ValueError("Invalid system/harness.json")
+    return value
+
+
+def validate_prompt_layers(
+    instruction_paths: list[Path],
+    profile: dict[str, Any],
+    harness: dict[str, Any],
+) -> None:
+    relative_paths = {repo_relative(path) for path in instruction_paths}
+    excluded = relative_paths.intersection(harness.get("prompt_excluded_files", []))
+    if excluded:
+        raise ValueError("Hard-policy files must stay outside task prompts: " + ", ".join(sorted(excluded)))
+    eval_only = relative_paths.intersection(harness.get("eval_only_files", []))
+    if eval_only and profile.get("kind") != "evaluation":
+        raise ValueError("Evaluation-only files cannot enter a creative prompt: " + ", ".join(sorted(eval_only)))
 
 
 def validate_target(operation: str, spec: dict[str, Any], section: str | None, unit: str | None) -> None:
@@ -152,16 +178,19 @@ def compile_packet(
     if operation not in registry:
         raise ValueError(f"Unknown operation: {operation}")
     spec = registry[operation]
+    harness = load_harness()
+    profile_name = spec.get("context_profile")
+    profile = harness["profiles"].get(profile_name)
+    if not isinstance(profile, dict):
+        raise ValueError(f"Operation {operation} has no valid context profile")
     validate_target(operation, spec, section, unit)
     validate_preconditions(product_dir, operation, section, unit)
 
-    operator_interface = (REPO_ROOT / "system" / "standards" / "operator-interface.md").resolve()
     instruction_paths = [(REPO_ROOT / item).resolve() for item in spec["instruction_files"]]
-    if operator_interface not in instruction_paths:
-        instruction_paths.append(operator_interface)
     for path in instruction_paths:
         if not path.is_file():
             raise FileNotFoundError(f"Missing instruction: {repo_relative(path)}")
+    validate_prompt_layers(instruction_paths, profile, harness)
     input_paths = expand_inputs(product_dir, spec["required_inputs"], section, unit)
     input_paths += expand_optional_inputs(product_dir, spec.get("optional_inputs", []), section, unit)
     if spec.get("include_dependency_handoffs") and section:
@@ -177,15 +206,29 @@ def compile_packet(
     input_paths = list(dict.fromkeys(input_paths))
 
     blocks: list[str] = []
+    instruction_blocks: list[str] = []
+    input_blocks: list[str] = []
     input_records: list[dict[str, Any]] = []
     for path in instruction_paths:
         content = path.read_text(encoding="utf-8")
-        blocks.extend([f"# BEGIN INSTRUCTION: {repo_relative(path)}", content.rstrip(), f"# END INSTRUCTION: {repo_relative(path)}", ""])
+        block = [f"# BEGIN INSTRUCTION: {repo_relative(path)}", content.rstrip(), f"# END INSTRUCTION: {repo_relative(path)}", ""]
+        blocks.extend(block)
+        instruction_blocks.extend(block)
+    instruction_tokens = estimate_tokens("\n".join(instruction_blocks))
+    instruction_budget = int(profile["max_instruction_tokens"])
+    if instruction_tokens > instruction_budget:
+        raise ValueError(
+            f"Instruction estimate {instruction_tokens} exceeds {profile_name} budget {instruction_budget}; "
+            "move hard policy or evaluation logic out of the prompt."
+        )
     for path in input_paths:
         content = path.read_text(encoding="utf-8")
         relative = product_relative(product_dir, path)
         input_records.append({"path": relative, "sha256": sha256(path), "bytes": path.stat().st_size})
-        blocks.extend([f"# BEGIN INPUT: {relative}", content.rstrip(), f"# END INPUT: {relative}", ""])
+        block = [f"# BEGIN INPUT: {relative}", content.rstrip(), f"# END INPUT: {relative}", ""]
+        blocks.extend(block)
+        input_blocks.extend(block)
+    input_tokens = estimate_tokens("\n".join(input_blocks))
 
     outputs = [render_pattern(item, section, unit) for item in spec["outputs"]]
     output_baselines = []
@@ -205,6 +248,7 @@ def compile_packet(
         "",
         f"- Product: `{product_dir.name}`",
         f"- Operation: `{operation}`",
+        f"- Context profile: `{profile_name}`",
         f"- Section: `{section or '-'}`",
         f"- Unit: `{unit or '-'}`",
         f"- Allowed writes: {', '.join(f'`{item}`' for item in allowed)}",
@@ -212,6 +256,10 @@ def compile_packet(
         "## Acceptance criteria",
         "",
         *[f"- {item}" for item in spec["acceptance"]],
+        "",
+        "## Local autonomy",
+        "",
+        profile["autonomy"],
         "",
         "Write full operational detail to `report.md`. Write only decision-relevant summary to `operator-brief.json`.",
         "The final chat response must use the rendered operator brief, not the task report.",
@@ -235,8 +283,13 @@ def compile_packet(
         "operation": operation,
         "target": {"section": section, "unit": unit},
         "created_at": datetime.now(timezone.utc).isoformat(),
+        "context_profile": profile_name,
         "max_context_tokens": budget,
         "estimated_context_tokens": tokens,
+        "prompt_instruction_tokens": instruction_tokens,
+        "input_tokens": input_tokens,
+        "boundary_enforcement": harness["boundary_enforcement"],
+        "evaluation_gate": profile.get("evaluation_gate"),
         "instruction_files": [repo_relative(path) for path in instruction_paths],
         "inputs": input_records,
         "operation_outputs": outputs,

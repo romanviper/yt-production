@@ -5,6 +5,10 @@
   "language": "vi",
   "format": "long_form_history_documentary",
   "status": "research_planning",
+  "production_cycle": {
+    "id": "C001",
+    "status": "initial"
+  },
   "created_at": "{{DATE}}",
   "target": {
     "duration_minutes": {

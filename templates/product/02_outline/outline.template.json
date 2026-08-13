@@ -1,15 +1,18 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "product": "{{SLUG}}",
+  "cycle_id": "C001",
   "status": "not_started",
   "section_count": null,
   "script_architecture": {
+    "central_question": "",
     "audience_promise": "",
     "design_rationale": "",
     "total_word_envelope": {
       "min": null,
       "max": null
     },
+    "acts": [],
     "movements": []
   },
   "sections": []

@@ -8,8 +8,10 @@ import re
 from typing import Any
 
 
-OUTLINE_SCHEMA_VERSION = 3
+OUTLINE_SCHEMA_VERSION = 4
+LEGACY_ADAPTIVE_SCHEMA_VERSION = 3
 MAX_SECTION_WORDS = 3000
+ACT_ROLES = ("opening", "body", "ending")
 
 
 def outline_section_count(outline: dict[str, Any]) -> int | None:
@@ -80,7 +82,7 @@ def normalize_outline_contract(outline: dict[str, Any], product_target: dict[str
     if outline.get("schema_version") != 2:
         return outline
     value = deepcopy(outline)
-    value["schema_version"] = OUTLINE_SCHEMA_VERSION
+    value["schema_version"] = LEGACY_ADAPTIVE_SCHEMA_VERSION
     sections = value.get("sections", [])
     section_ids = [item.get("id") for item in sections if isinstance(item, dict) and item.get("id")]
     envelope = target_word_envelope(product_target) if product_target is not None else None
@@ -129,11 +131,14 @@ def validate_outline_contract(
 ) -> list[str]:
     errors: list[str] = []
     schema_version = outline.get("schema_version")
-    if schema_version == 2 and require_current:
+    if schema_version in {2, LEGACY_ADAPTIVE_SCHEMA_VERSION} and require_current:
         errors.append(f"outline schema_version must be {OUTLINE_SCHEMA_VERSION} for new or revised output")
-    if schema_version not in {2, OUTLINE_SCHEMA_VERSION}:
+    if schema_version not in {2, LEGACY_ADAPTIVE_SCHEMA_VERSION, OUTLINE_SCHEMA_VERSION}:
         errors.append(f"outline schema_version must be {OUTLINE_SCHEMA_VERSION}")
     outline = normalize_outline_contract(outline, product_target)
+    current_contract = outline.get("schema_version") == OUTLINE_SCHEMA_VERSION
+    if current_contract and not re.fullmatch(r"C\d{3}", str(outline.get("cycle_id", ""))):
+        errors.append("outline cycle_id must use C### format")
     sections = outline.get("sections")
     if not isinstance(sections, list) or not sections:
         return ["outline must contain at least one section"]
@@ -152,7 +157,10 @@ def validate_outline_contract(
     if not isinstance(architecture, dict):
         errors.append("outline script_architecture must be an object")
         architecture = {}
-    for field in ["audience_promise", "design_rationale"]:
+    architecture_fields = ["audience_promise", "design_rationale"]
+    if current_contract:
+        architecture_fields.append("central_question")
+    for field in architecture_fields:
         if not isinstance(architecture.get(field), str) or not architecture[field].strip():
             errors.append(f"outline script_architecture.{field} is required")
     envelope = architecture.get("total_word_envelope")
@@ -178,19 +186,11 @@ def validate_outline_contract(
     ordered_section_ids: list[str] = []
     allocated_min = 0
     allocated_max = 0
-    required = [
-        "title",
-        "movement_id",
-        "structural_role",
-        "narrative_job",
-        "entry_state",
-        "exit_state",
-        "claim_ids",
-        "target_words",
-        "budget_rationale",
-        "planned_moves",
-        "boundary",
-    ]
+    required = ["title", "narrative_job", "entry_state", "exit_state", "claim_ids", "target_words"]
+    if current_contract:
+        required.append("movement_ids")
+    else:
+        required += ["movement_id", "structural_role", "budget_rationale", "planned_moves", "boundary"]
     for index, section in enumerate(sections):
         if not isinstance(section, dict):
             errors.append(f"outline section #{index + 1} must be an object")
@@ -212,18 +212,21 @@ def validate_outline_contract(
         missing = [field for field in required if section.get(field) is None or section.get(field) == ""]
         if missing:
             errors.append(f"outline section {section_id or '?'} missing: {', '.join(missing)}")
-        question = section.get("question")
-        payoff = section.get("payoff")
-        combined = section.get("question_payoff")
-        split_complete = isinstance(question, str) and bool(question.strip()) and isinstance(payoff, str) and bool(payoff.strip())
-        legacy_complete = isinstance(combined, str) and bool(combined.strip())
-        if not split_complete and not legacy_complete:
-            errors.append(f"outline section {section_id or '?'} requires question and payoff")
-        if (question or payoff) and not split_complete:
-            errors.append(f"outline section {section_id or '?'} must provide both question and payoff")
+        if not current_contract:
+            question = section.get("question")
+            payoff = section.get("payoff")
+            combined = section.get("question_payoff")
+            split_complete = isinstance(question, str) and bool(question.strip()) and isinstance(payoff, str) and bool(payoff.strip())
+            legacy_complete = isinstance(combined, str) and bool(combined.strip())
+            if not split_complete and not legacy_complete:
+                errors.append(f"outline section {section_id or '?'} requires question and payoff")
+            if (question or payoff) and not split_complete:
+                errors.append(f"outline section {section_id or '?'} must provide both question and payoff")
 
         claim_ids = section.get("claim_ids")
-        if not isinstance(claim_ids, list) or not claim_ids or not all(isinstance(item, str) and item for item in claim_ids):
+        if not isinstance(claim_ids, list) or not all(isinstance(item, str) and item for item in claim_ids):
+            errors.append(f"outline section {section_id or '?'} claim_ids must be a list of claim IDs")
+        elif not current_contract and not claim_ids:
             errors.append(f"outline section {section_id or '?'} claim_ids must be a non-empty list")
         elif known_claim_ids is not None:
             unknown = [claim_id for claim_id in claim_ids if claim_id not in known_claim_ids]
@@ -241,15 +244,16 @@ def validate_outline_contract(
                     f"outline section {section_id or '?'} exceeds the {MAX_SECTION_WORDS}-word production-unit cap; "
                     "split the work unit without inventing a new audience-facing chapter"
                 )
-        if not isinstance(section.get("budget_rationale"), str) or not section["budget_rationale"].strip():
-            errors.append(f"outline section {section_id or '?'} budget_rationale is required")
-        planned_moves = section.get("planned_moves")
-        if (
-            not isinstance(planned_moves, list)
-            or not 1 <= len(planned_moves) <= 10
-            or not all(isinstance(item, str) and item.strip() for item in planned_moves)
-        ):
-            errors.append(f"outline section {section_id or '?'} planned_moves must contain one to ten story moves")
+        if not current_contract:
+            if not isinstance(section.get("budget_rationale"), str) or not section["budget_rationale"].strip():
+                errors.append(f"outline section {section_id or '?'} budget_rationale is required")
+            planned_moves = section.get("planned_moves")
+            if (
+                not isinstance(planned_moves, list)
+                or not 1 <= len(planned_moves) <= 10
+                or not all(isinstance(item, str) and item.strip() for item in planned_moves)
+            ):
+                errors.append(f"outline section {section_id or '?'} planned_moves must contain one to ten story moves")
 
         dependencies = section.get("dependencies", [])
         if not isinstance(dependencies, list) or not all(isinstance(item, str) for item in dependencies):
@@ -269,8 +273,11 @@ def validate_outline_contract(
 
     movement_ids: set[str] = set()
     movement_orders: set[int] = set()
+    ordered_movement_ids: list[str] = []
     flattened_sections: list[str] = []
     movement_membership: dict[str, str] = {}
+    current_membership: dict[str, list[str]] = {section_id: [] for section_id in ordered_section_ids}
+    movement_windows: list[tuple[int, int]] = []
     for index, movement in enumerate(movements):
         if not isinstance(movement, dict):
             errors.append(f"outline movement #{index + 1} must be an object")
@@ -281,6 +288,7 @@ def validate_outline_contract(
         elif movement_id in movement_ids:
             errors.append(f"outline has duplicate movement id: {movement_id}")
         movement_ids.add(movement_id)
+        ordered_movement_ids.append(movement_id)
         order = movement.get("order")
         if not isinstance(order, int) or isinstance(order, bool) or order < 1 or order in movement_orders:
             errors.append(f"outline movement {movement_id or '?'} has invalid or duplicate order: {order!r}")
@@ -293,31 +301,113 @@ def validate_outline_contract(
         ]
         if missing:
             errors.append(f"outline movement {movement_id or '?'} missing: {', '.join(missing)}")
+        if current_contract and (not isinstance(movement.get("act_id"), str) or not movement["act_id"]):
+            errors.append(f"outline movement {movement_id or '?'} act_id is required")
         members = movement.get("section_ids")
         if not isinstance(members, list) or not members or not all(isinstance(item, str) for item in members):
             errors.append(f"outline movement {movement_id or '?'} section_ids must be a non-empty list")
             continue
-        for section_id in members:
-            if section_id in movement_membership:
-                errors.append(
-                    f"outline section {section_id} belongs to both {movement_membership[section_id]} and {movement_id}"
-                )
-            movement_membership[section_id] = movement_id
-        flattened_sections.extend(members)
+        unknown_members = [section_id for section_id in members if section_id not in section_ids]
+        if unknown_members:
+            errors.append(f"outline movement {movement_id or '?'} references missing sections: {', '.join(unknown_members)}")
+        if current_contract:
+            member_indexes = [ordered_section_ids.index(section_id) for section_id in members if section_id in section_ids]
+            if member_indexes:
+                expected_indexes = list(range(min(member_indexes), max(member_indexes) + 1))
+                if member_indexes != expected_indexes:
+                    errors.append(f"outline movement {movement_id or '?'} sections must be contiguous and ordered")
+                movement_windows.append((min(member_indexes), max(member_indexes)))
+            for section_id in members:
+                if section_id in current_membership:
+                    current_membership[section_id].append(movement_id)
+        else:
+            for section_id in members:
+                if section_id in movement_membership:
+                    errors.append(
+                        f"outline section {section_id} belongs to both {movement_membership[section_id]} and {movement_id}"
+                    )
+                movement_membership[section_id] = movement_id
+            flattened_sections.extend(members)
     if movement_orders != set(range(1, len(movements) + 1)):
         errors.append("outline movement orders must form a complete 1..N sequence")
-    if flattened_sections != ordered_section_ids:
+    if not current_contract and flattened_sections != ordered_section_ids:
         errors.append("outline movements must cover every section exactly once, contiguously and in section order")
+    if current_contract:
+        uncovered = [section_id for section_id, memberships in current_membership.items() if not memberships]
+        if uncovered:
+            errors.append("outline movements leave sections uncovered: " + ", ".join(uncovered))
+        for previous, current in zip(movement_windows, movement_windows[1:]):
+            if current[0] < previous[0] or current[1] < previous[1]:
+                errors.append("outline movement-to-section windows must progress in section order")
+                break
+
+    act_ids: set[str] = set()
+    movement_to_act: dict[str, str] = {}
+    if current_contract:
+        acts = architecture.get("acts")
+        if not isinstance(acts, list) or len(acts) != 3:
+            errors.append("outline script_architecture must contain exactly three acts")
+            acts = []
+        flattened_movements: list[str] = []
+        for index, act in enumerate(acts):
+            expected_id = f"A{index + 1:02d}"
+            expected_role = ACT_ROLES[index]
+            if not isinstance(act, dict):
+                errors.append(f"outline act #{index + 1} must be an object")
+                continue
+            act_id = act.get("id")
+            if act_id != expected_id:
+                errors.append(f"outline act #{index + 1} id must be {expected_id}")
+            elif act_id in act_ids:
+                errors.append(f"outline has duplicate act id: {act_id}")
+            act_ids.add(str(act_id))
+            if act.get("role") != expected_role:
+                errors.append(f"outline act {expected_id} role must be {expected_role}")
+            missing = [
+                field
+                for field in ["title", "narrative_job", "entry_state", "exit_state"]
+                if not isinstance(act.get(field), str) or not act[field].strip()
+            ]
+            if missing:
+                errors.append(f"outline act {expected_id} missing: {', '.join(missing)}")
+            members = act.get("movement_ids")
+            if not isinstance(members, list) or not members or not all(isinstance(item, str) for item in members):
+                errors.append(f"outline act {expected_id} movement_ids must be a non-empty list")
+                continue
+            for movement_id in members:
+                if movement_id in movement_to_act:
+                    errors.append(f"outline movement {movement_id} belongs to multiple acts")
+                movement_to_act[movement_id] = expected_id
+            flattened_movements.extend(members)
+        if flattened_movements != ordered_movement_ids:
+            errors.append("outline acts must cover every movement exactly once, contiguously and in movement order")
+        for movement in movements:
+            if not isinstance(movement, dict):
+                continue
+            movement_id = movement.get("id", "?")
+            if movement.get("act_id") != movement_to_act.get(movement_id):
+                errors.append(f"outline movement {movement_id} act_id conflicts with act membership")
 
     for section in sections:
         if not isinstance(section, dict):
             continue
         section_id = section.get("id", "?")
-        movement_id = section.get("movement_id")
-        if movement_id not in movement_ids:
-            errors.append(f"outline section {section_id} references missing movement: {movement_id or '?'}")
-        elif movement_membership.get(section_id) != movement_id:
-            errors.append(f"outline section {section_id} movement_id conflicts with movement membership")
+        if current_contract:
+            memberships = section.get("movement_ids")
+            if not isinstance(memberships, list) or not memberships or not all(isinstance(item, str) for item in memberships):
+                errors.append(f"outline section {section_id} movement_ids must be a non-empty list")
+            elif memberships != current_membership.get(section_id):
+                errors.append(f"outline section {section_id} movement_ids conflict with movement membership")
+            elif any(movement_id not in movement_ids for movement_id in memberships):
+                errors.append(f"outline section {section_id} references a missing movement")
+            elif len({movement_to_act.get(movement_id) for movement_id in memberships}) != 1:
+                errors.append(f"outline section {section_id} cannot cross whole-script act boundaries")
+        else:
+            movement_id = section.get("movement_id")
+            if movement_id not in movement_ids:
+                errors.append(f"outline section {section_id} references missing movement: {movement_id or '?'}")
+            elif movement_membership.get(section_id) != movement_id:
+                errors.append(f"outline section {section_id} movement_id conflicts with movement membership")
         for dependency in section.get("dependencies", []) if isinstance(section.get("dependencies", []), list) else []:
             if dependency not in section_ids:
                 errors.append(f"outline section {section_id} references missing dependency: {dependency}")

@@ -2,22 +2,12 @@
 
 ## Responsibility
 
-Viết narration cho đúng một section từ story plan đã được duyệt và narration pack đã đóng gói.
+Write one section that produces the approved audience shift and advances its assigned act and movement.
 
-## Rules
+Treat the story plan as intent and evidence selection, not as a route that must be reproduced. Choose the opening form, ordering, paragraph count, rhythm and transitions that work best for the material.
 
-- Không mở source index hoặc raw workstreams ngoài packet.
-- Đi theo logic của story beats nhưng không biến tên beat thành đề mục hay viết như điền biểu mẫu.
-- Narration pack là ceiling, không phải checklist. Không buộc mọi support claim xuất hiện; guardrail chỉ giới hạn cách diễn đạt; omitted claim phải ở ngoài draft.
-- Không giải thích nội dung đã được boundary giao cho section khác.
-- Nếu narration pack thiếu claim cần thiết, ghi blocker; không tự research hoặc kéo claim đã bị loại trở lại.
-- Draft phải đạt entry→exit state, narrative job, payoff và word budget đã được story plan hiệu chỉnh.
-- Không dùng một layout, số đoạn hoặc cadence mặc định cho mọi section. Hình thức phải đi theo `structure_shape` và beats đã được duyệt.
-- Word range là guardrail sau design, không phải lý do để padding. Nếu khi viết mới phát hiện material vẫn không đỡ được range, dừng và xin redesign/budget adjustment thay vì lặp payoff hoặc nạp thêm fact.
-- Opening phải tạo ra vấn đề cần theo dõi, không mở như bản mô tả hiện vật. Ending phải trả payoff cụ thể, không kết bằng khái quát trừu tượng.
-- Chỉ giữ chi tiết khi người nghe cần nó để hiểu hành động, mechanism hoặc consequence tiếp theo.
-- Comment biên tập cho quote/claim locator được phép; không để citation phá narration.
+Use core evidence as the anchor. Optional evidence appears only when the listener needs it. Guardrails constrain wording without becoming exposition; excluded claims remain out. Keep the approved entry/exit state and continuity handoff.
 
-## Handoff
+The length range is a planning estimate, not a quota. Never repeat an idea, add a fact or stretch a sentence to reach its minimum. The only hard size boundary is the production-unit cap. If the section needs a materially different scope, explain the mismatch in the report so it can be routed to design.
 
-`handoff.md` tối đa 500 từ, gồm state đạt được, entities/terms đã giới thiệu, setup chưa payoff, fact continuity và bridge mong đợi. Không tóm tắt toàn bộ prose.
+Write natural spoken Vietnamese and a compact handoff. Do not review or approve your own draft.

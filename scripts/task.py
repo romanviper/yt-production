@@ -14,7 +14,8 @@ try:
     from scripts.consolidate_research import ensure_consolidated
     from scripts.context_packet import compile_packet
     from scripts.operator_brief import empty_brief, render_brief, validate_brief_file
-    from scripts.outline_contract import validate_outline_contract
+    from scripts.outcome_eval_contract import validate_outcome_review
+    from scripts.outline_contract import MAX_SECTION_WORDS, validate_outline_contract
     from scripts.packet_contract import validate_packet_contract
     from scripts.research_plan_contract import validate_research_plan_contract
     from scripts.story_plan_contract import validate_story_plan
@@ -24,7 +25,8 @@ except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from consolidate_research import ensure_consolidated
     from context_packet import compile_packet
     from operator_brief import empty_brief, render_brief, validate_brief_file
-    from outline_contract import validate_outline_contract
+    from outcome_eval_contract import validate_outcome_review
+    from outline_contract import MAX_SECTION_WORDS, validate_outline_contract
     from packet_contract import validate_packet_contract
     from research_plan_contract import validate_research_plan_contract
     from story_plan_contract import validate_story_plan
@@ -256,6 +258,9 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
             claims_doc = read_json(product_dir / "01_research" / "claim-ledger.json")
             known_claim_ids = {item.get("id") for item in claims_doc.get("claims", []) if item.get("id")}
             errors.extend(validate_outline_contract(outline, known_claim_ids, product.get("target"), require_current=True))
+            expected_cycle = product.get("production_cycle", {}).get("id")
+            if expected_cycle and outline.get("cycle_id") != expected_cycle:
+                errors.append(f"outline cycle_id must match current product cycle {expected_cycle}")
             voice_profile = (product_dir / "02_outline" / "voice-profile.md").read_text(encoding="utf-8")
             errors.extend(validate_voice_profile(voice_profile))
             if outline.get("status") == "approved":
@@ -277,16 +282,14 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
             root = product_dir / "03_sections" / section
             state = read_json(root / "section.json")
             draft_words = word_count(narration_text((root / "draft.md").read_text(encoding="utf-8"), section))
-            budget = state["target_words"]
-            if not int(budget["min"]) <= draft_words <= int(budget["max"]):
-                errors.append(f"draft word count {draft_words} outside {budget['min']}–{budget['max']}")
+            if not 1 <= draft_words <= MAX_SECTION_WORDS:
+                errors.append(f"draft word count must stay inside the 1–{MAX_SECTION_WORDS} production-unit hard cap")
             if word_count((root / "handoff.md").read_text(encoding="utf-8")) > 500:
                 errors.append("section handoff exceeds 500 words")
         elif operation == "review_section":
             section = target["section"]
             review = product_dir / "03_sections" / section / "review.md"
-            if word_count(review.read_text(encoding="utf-8")) < 5:
-                errors.append("section review is empty or non-diagnostic")
+            errors.extend(validate_outcome_review(review.read_text(encoding="utf-8")))
         elif operation == "integration_review":
             review = product_dir / "04_integration" / "review.md"
             change_map = read_json(product_dir / "04_integration" / "change-map.json")

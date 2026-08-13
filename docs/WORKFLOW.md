@@ -1,250 +1,126 @@
 # Modular Production Workflow
 
-## Mục tiêu vận hành
+## 1. Mental model
 
-Một Agent mới phải có thể hoàn thành một nghiệp vụ mà không cần biết toàn bộ lịch sử cuộc trò chuyện hay đọc toàn repo. Mỗi lượt làm việc nhận một context packet có version, token budget, input hash và write scope.
+Repo tách ba thứ vốn dễ bị trộn:
 
-Work order, packet manifest, compiled context và `ACTIVE.json` là control artifact do router sinh ra. Agent thực hiện nội dung chỉ ghi các output được packet cho phép; không dựng hoặc vá các control artifact bằng tay. Packet version 2 mang định danh compiler và hash của chính compiled context, nên validator phát hiện cả input stale lẫn context bị thay thế.
-
-## Ranh giới theo SOLID
-
-| Nguyên tắc | Cách repo áp dụng |
-|---|---|
-| Single responsibility | Mỗi operation chỉ sở hữu một loại biến đổi artifact; research, outline, draft, review và revision không trộn nhau. |
-| Open/closed | Thêm operation qua `registry.json` và contract riêng; router không cần biết nội dung lịch sử cụ thể. |
-| Liskov substitution | Agent nào thực hiện task cũng nhận cùng work-order/packet/report contract và phải qua cùng validator. |
-| Interface segregation | Task chỉ thấy instruction và input nó cần; P06 không nhận raw research hoặc draft P01–P10. |
-| Dependency inversion | Operation sau phụ thuộc vào artifact chuẩn hóa và hash, không phụ thuộc chat history hay memory của Agent trước. |
-
-Số section và độ dài từng section là output của outline, không hard-code trong engine hay product brief. Outline thiết kế macro movements của toàn câu chuyện trước, rồi mới đặt ranh giới `P##` tại state change hoặc điểm review có nghĩa. Một movement khán giả cảm nhận có thể trải qua nhiều production section; nhờ vậy context vẫn nhỏ mà bố cục phim không bị chia đều cơ học.
-
-## Quyền hạn: nội dung không được sửa hệ thống
-
-Repo phân biệt hai trách nhiệm:
-
-- **Product Agent:** research, outline, draft hoặc review đúng một product operation. Không được sửa control plane.
-- **System Architect:** bảo trì kiến trúc dùng chung trong một architecture task riêng do repository owner giao.
-
-Protected system gồm `AGENTS.md`, `.github/`, `system/`, `scripts/`, `templates/`, `tests/`, `docs/`, `Makefile` và repo `README.md`.
-
-Nếu Product Agent phát hiện một lỗi hệ thống, nó chỉ báo cáo:
-
-1. hành vi nào đang bị chặn;
-2. ảnh hưởng đến product hiện tại;
-3. system change request cần route cho System Architect.
-
-Nó không được sửa hệ thống, ngay cả khi biết cách fix. Architecture commit cũng không được chứa thay đổi nội dung product. Boundary này được scope checker và governance test kiểm tra, thay vì chỉ dựa vào prompt discipline.
-
-## Operator interface: đúng độ sâu, đúng thời điểm
-
-Người dùng không cần xem process diary. Mỗi task giữ hai output giao tiếp khác nhau:
-
-- `report.md`: toàn bộ phân tích, issue, evidence, validation và chi tiết triển khai để audit khi cần;
-- `operator-brief.json`: phần thông tin đủ để người dùng hiểu tình hình và ra quyết định.
-
-Brief dùng cho status, handoff, blocker và checkpoint được render theo contract:
-
-- tối đa 140 từ;
-- kết luận ở dòng đầu;
-- tối đa ba điểm có ảnh hưởng thực sự;
-- nếu cần duyệt: một khuyến nghị, một câu hỏi quyết định và hiệu lực của các lựa chọn;
-- nếu không cần duyệt: đúng một bước kế tiếp.
-
-Không phải mọi câu trả lời đều bị giới hạn 140 từ:
-
-- hỏi concept hoặc `tại sao/như thế nào`: Agent dùng guided explanation, kết luận trước rồi giải thích vừa đủ;
-- yêu cầu evidence/audit/phản biện sâu: Agent dùng deep review, executive summary trước rồi mở chi tiết;
-- yêu cầu xem outline/draft: Agent dùng deliverable mode, brief trước rồi đưa artifact thật để kiểm duyệt.
-
-| Cách người dùng nói tự nhiên | Mode Agent nên chọn | Kết quả mong đợi |
+| Layer | Chức năng | Nơi thực thi |
 |---|---|---|
-| “Tình hình hiện tại thế nào?” | Brief | Trạng thái, tối đa ba điểm quan trọng, một bước/decision. |
-| “Tại sao phải tách WS07 và WS08?” | Guided explanation | Mental model và trade-off vừa đủ để hiểu. |
-| “Audit đầy đủ research plan và cho tôi evidence.” | Deep review | Executive summary rồi phân tích/evidence có cấu trúc. |
-| “Cho tôi xem bản P04 để duyệt.” | Deliverable | Brief rồi nội dung thật hoặc liên kết trực tiếp tới P04. |
+| Hard boundaries | authority, write scope, state, approval, packet integrity, evidence provenance, hard cap | router, permissions, validators |
+| Soft logic | opening form, fact order, local structure, rhythm, paragraph count, phrasing | Agent phán đoán từ material |
+| Outcome evaluation | story motion, voice, causality, repetition, listening experience | review Agent rồi human gate |
 
-Người dùng không cần gọi tên mode; Agent suy ra từ intent. Các câu như `tóm tắt lại`, `chỉ cho tôi phần cần quyết định`, `mở chi tiết điểm 2` hoặc `cho tôi xem evidence` dùng để zoom thông tin lên/xuống mà không tạo lại công việc.
+Product Agent không sửa control plane. System Architect không trộn system change với product content trong cùng commit.
 
-Agent không mặc định kể file đã đọc, command đã chạy, hash, test bình thường hoặc mọi rủi ro nhỏ. Những thứ này vẫn được lưu trong report nên giao tiếp gọn không làm mất khả năng audit; ngược lại, brevity cũng không được che blocker hoặc uncertainty cần cho quyết định.
+## 2. Task packets
 
-Ví dụ mặc định:
+`scripts/task.py create` biên dịch đúng một operation thành:
 
-```text
-Chờ bạn duyệt: Research plan đủ mạnh và chỉ cần chỉnh nhẹ trước khi chạy.
+- immutable `context.md`;
+- `packet.json` có input hashes, context profile, instruction/input token metrics và evaluation gate;
+- `work-order.json` có allowed writes;
+- `operator-brief.json` cho handoff ngắn.
 
-- Làm rõ ranh giới WS07–WS08.
-- Giao ownership cho exchange và social memory.
-- Giữ tám workstream; không cần thiết kế lại.
+Hard-policy files và operator-interface không được nạp vào prompt sáng tạo. Creative packet chỉ dùng allowlist ngắn và bị chặn nếu evaluation-only policy lọt vào writer context.
 
-Khuyến nghị: sửa ba điểm trên rồi duyệt.
+Agent đọc đúng ACTIVE → work order → packet. Nó không quét repo.
 
-Cần bạn quyết định: Chỉnh plan trước hay duyệt nguyên trạng?
-- Chỉnh trước: Agent tạo một patch giới hạn, research chưa chạy.
-- Duyệt: Mở workstream research với rủi ro overlap còn giữ nguyên.
-```
+## 3. Research
 
-Khi người dùng yêu cầu `mở chi tiết`, Agent mới đọc report và mở đúng phần được hỏi. Đây là progressive disclosure: thông tin không bị mất, nhưng không chiếm giao diện mặc định.
+`research_plan` chia câu hỏi thành workstreams không trùng ownership. Mỗi `research_workstream` trả source/claim ledgers có locator, limitation, contradiction và provenance. Deterministic consolidation remap/deduplicate trước `research_synthesis`.
 
-## 1. Research không phải một task khổng lồ
+Raw browsing context không đi vào outline hay writing.
 
-### 1.1 Research plan
+## 4. Whole-product architecture
 
-Agent đọc product brief và benchmark, rồi tạo `01_research/plan.json`. Plan chia chủ đề thành các workstream có câu hỏi, boundary và deliverable riêng.
+Outline schema v4 thiết kế theo thứ tự:
 
-Người dùng duyệt trước khi materialize:
+1. central question và audience promise;
+2. đúng ba act toàn phim: `opening`, `body`, `ending`;
+3. số narrative movement cần cho causal arc;
+4. số `P##` cần cho context/review.
 
-```bash
-python scripts/approval.py approve-plan products/<slug>
-```
+Ba act là invariant. Movement count, section count và relative length là adaptive. Một movement có thể trải qua nhiều work unit; một work unit có thể chứa nhiều movement trong cùng act. Work unit không được băng qua act boundary vì assembly phải giữ ba phần rõ ràng.
 
-### 1.2 Research workstream
+Section contract mới chỉ cần narrative job, entry/exit state, evidence allowance, dependencies và target range. Question/payoff/beat/shape ở cấp section không phải schema bắt buộc.
 
-Chạy `materialize_research.py` để tạo workspace cho từng workstream. Mỗi Agent chỉ research một workstream và ghi:
-
-- `sources.json`;
-- `claims.json`;
-- `synthesis.md` giới hạn dung lượng.
-
-Agent không cần đọc workstream khác.
-
-Source/claim ID ở cấp workstream được namespace (`WS02-SRC-001`, `WS02-CLM-001`) để các unit có thể chạy độc lập. Synthesis mới cấp ID toàn cục và lưu provenance, nên hai Agent song song không thể vô tình collision ID.
-
-### 1.3 Research synthesis
-
-Trước task AI, router chạy deterministic consolidation để remap ID, deduplicate source theo canonical identity, giữ provenance và tạo global source/claim ledgers. Đây là biến đổi dữ liệu có quy tắc, không tiêu tốn context AI.
-
-Task synthesis chỉ đọc `consolidation.json` cùng các workstream `synthesis.md`; nó không nạp 16 local ledger hoặc toàn bộ web notes. Nó tạo:
-
-- `research-synthesis.md`;
-- contradictions và unknowns cần outline xử lý.
-
-Nhờ vậy số workstream có thể tăng mà context synthesis vẫn tỷ lệ với các handoff cô đọng, không tỷ lệ với toàn bộ research corpus.
-
-## 2. Outline là interface giữa research và writing
-
-Task `outline` chỉ đọc product metadata/brief, research synthesis và claim ledger đã lọc. Nó làm theo thứ tự: thiết kế toàn arc → macro movements → phân bổ narrative load → đặt ranh giới production section. Output:
-
-- `02_outline/outline.json` gồm macro architecture và đúng số work unit mà câu chuyện cần;
-- `02_outline/story-bible.md` — context toàn cục được giữ ngắn.
-
-Mỗi phần phải có ID ổn định, movement/structural role, narrative job, entry/exit state, phác họa shape riêng, claim IDs, dependencies, word budget và lý do phân bổ. Section không cần dài bằng nhau; prologue/bridge có thể ngắn hơn causal hinge. Con người review cả bố cục toàn phim lẫn ranh giới work unit trước khi materialize.
+Approve rồi materialize:
 
 ```bash
 python scripts/approval.py approve-outline products/<slug>
-```
-
-## 3. Section workspace
-
-Sau khi outline được duyệt:
-
-```bash
 python scripts/materialize_sections.py products/<slug>
 ```
 
-Script tạo cho mỗi phần:
+## 5. Lean story design
+
+`design_section` tạo story-plan schema v3:
+
+- `audience_shift`;
+- `story_strategy` dạng free-form, không phải beat sheet;
+- `core / optional / guardrail / exclude`;
+- `word_budget.recommended` như estimate;
+- optional design risks.
+
+Không có compulsory payoff beat, numbered beats, claim-use explanation, opening move, ending move, paragraph count hoặc cadence.
+
+Human approval tạo narration-pack schema v2. Pack chỉ giữ compact claims và source refs; full authority/notes/limitations/provenance vẫn ở evidence artifacts, không chiếm writer context.
+
+## 6. Drafting
+
+Writer nhận:
+
+- Creative Boundaries;
+- Channel Constitution;
+- product story bible và voice profile;
+- local brief;
+- approved lean story plan;
+- compact narration pack;
+- approved dependency handoffs.
+
+Nó tự chọn local route. Target range không phải quota: submit không lỗi chỉ vì draft ngắn hơn estimate. Padding bị cấm; hard cap 3.000 từ/work unit vẫn được máy giữ.
+
+## 7. Outcome evaluation
+
+`review_section` là gate bắt buộc trước human section approval. Nó kiểm tra outcome và route lỗi về đúng layer:
+
+- `prose_execution`;
+- `local_design`;
+- `product_architecture`;
+- `evidence`.
+
+Review phải có verdict `pass / changes_requested / blocked`, observable diagnosis và acceptance test. `approve-section` chỉ mở khi review hoàn chỉnh và verdict là `pass`.
+
+## 8. Feedback routing
+
+- Wording/pacing/arrangement hỏng, plan vẫn đúng → `request-changes` rồi `revise_section`.
+- Audience shift hoặc evidence selection hỏng → `request-story-plan-changes` rồi `design_section`.
+- Section boundary hoặc three-act arc hỏng → mở production cycle mới ở `outline`.
+- Evidence thiếu/contradicted → research escalation.
+
+Không thêm một writer rule toàn cục cho một lỗi một lần. Chỉ pattern lặp mới trở thành eval; chỉ invariant thật sự mới vào constitution/hard boundary.
+
+## 9. Production cycles
+
+```bash
+python scripts/approval.py start-new-cycle products/<slug> --request "Yêu cầu kiến trúc"
+python scripts/task.py state products/<slug> <active-task> cancelled
+python scripts/task.py create products/<slug> outline
+```
+
+Cycle mới giữ research đã duyệt, pause sections cũ và buộc outline output dùng cycle ID mới. Sau khi approve outline, lệnh sau chuyển section workspaces cũ vào `03_sections/_history/<cycle>/` rồi materialize workspaces mới:
+
+```bash
+python scripts/materialize_sections.py products/<slug> --archive-previous-cycle
+```
+
+Archive là recoverable; Git history và task reports vẫn giữ audit trail.
+
+## 10. Assembly
+
+`assemble.py` chỉ ghép section đã human-approved. Với schema v4, delivery hiển thị ba act audience-facing; production IDs chỉ nằm trong comment/manifest, không biến thành chapter giả.
+
+## Minimal handoff prompt
 
 ```text
-03_sections/P04/
-  section.json
-  brief.md
-  evidence-pack.json
-  story-plan.json
-  continuity-in.md
-```
-
-Evidence pack là phạm vi sự thật của P04, không phải danh sách bắt buộc phải đọc thành lời.
-
-## 4. Story design chọn điều đáng kể
-
-Trước khi draft, Agent tạo story plan cho đúng một section:
-
-```bash
-python scripts/task.py create products/<slug> design_section --section P04
-```
-
-Task này phân mọi claim thành bốn vai trò:
-
-- `narrated`: 1–5 claim làm xương sống câu chuyện;
-- `support`: chi tiết tùy chọn khi cần độ chính xác;
-- `guardrail`: giới hạn cách nói, thường không đọc lên;
-- `omit`: đúng nhưng không phục vụ section.
-
-Nó đồng thời chọn shape riêng, word range phù hợp material và 2–12 story beats. Chỉ payoff là bắt buộc; tension/bridge không phải template chung. Con người review lựa chọn kể chuyện này trước khi viết prose:
-
-```bash
-python scripts/approval.py approve-story-plan products/<slug> P04
-```
-
-Nếu chưa đạt, ghi change request rồi mở một design task mới:
-
-```bash
-python scripts/approval.py request-story-plan-changes products/<slug> P04 --request "Gộp hai beat định nghĩa; bỏ suy diễn về người tham gia."
-python scripts/task.py create products/<slug> design_section --section P04
-```
-
-Feedback trở thành input có hash của packet mới. Agent không được sửa lại task đã submit hoặc dựa vào phản hồi chỉ tồn tại trong chat.
-
-Nếu draft về sau cho thấy governing idea, shape hoặc budget sai, dùng lại `request-story-plan-changes`: workflow quay về `design_section`, đưa draft/review cũ vào packet như diagnostic input và vẫn chỉ cho phép sửa `story-plan.json`. Nếu plan đúng mà prose thực hiện kém, mới route qua `request-changes` → `revise_section`. Nhờ vậy feedback có thể quay về đúng tầng đã gây lỗi thay vì bị ép sửa ở tầng cuối.
-
-Approval sinh `narration-pack.json` bằng code. Nếu story plan đề xuất range khác, approval đồng bộ budget vào section và outline, đồng thời giữ audit record; nó từ chối nếu tổng runtime ra ngoài envelope. Pack chỉ chứa evidence được phép dùng trong prose và khóa hash của story plan/evidence pack.
-
-## 5. Người dùng gọi phần nào, Agent chỉ viết phần đó
-
-```bash
-python scripts/task.py create products/<slug> draft_section --section P04
-```
-
-Packet của P04 chứa:
-
-- invariants tối thiểu;
-- contract của `draft_section`;
-- chuẩn viết tiếng Việt;
-- story bible compact;
-- brief P04;
-- story plan đã duyệt và narration pack P04;
-- continuity input/handoff liên quan.
-
-Nếu dependency đã được con người duyệt, packet tự thêm đúng handoff của dependency đó; nó không mở full draft của dependency. Nếu viết out-of-order, Agent dựa vào bridge/story bible và ghi rõ continuity chưa xác lập.
-
-Nó không chứa raw research, full evidence pool, brief của các phần còn lại hoặc draft toàn phim. Vì vậy writer không thể biến mọi fact đã research thành một đoạn thuyết minh.
-
-Agent chỉ được tạo/sửa:
-
-- `03_sections/P04/draft.md`;
-- `03_sections/P04/handoff.md`;
-- task report của chính task đó.
-
-## 6. Review và revision tách khỏi drafting
-
-- `review_section`: chỉ đọc và chẩn đoán P04; chỉ viết `review.md`.
-- `revise_section`: chỉ đọc draft, review/change request và narration pack của P04; sửa draft P04.
-- Người dùng đặt `section.json.status = approved` sau khi chấp nhận.
-
-Thay vì sửa JSON bằng tay:
-
-```bash
-python scripts/approval.py approve-section products/<slug> P04
-python scripts/approval.py request-changes products/<slug> P04 --request "Sửa ISSUE-02; giữ nguyên opening và claim set."
-```
-
-AI viết không tự review để rồi tự phê duyệt output của chính nó.
-
-## 7. Integration không kéo toàn bộ prose vào mọi task
-
-Mỗi phần đã duyệt tạo `handoff.md` gồm entry/exit state, setup/payoff, entities và continuity changes. `integration_review` đọc story bible và các handoff trước để tìm conflict. Chỉ section có issue mới được mở trong revision task.
-
-## 8. Assembly không dùng AI
-
-`assemble.py` ghép các `draft.md` có status `approved` theo outline, tạo hash và word count. Bản delivery không phải source of truth và không sửa bằng tay.
-
-## Prompt tối thiểu cho Agent khác
-
-```text
-Mở repo romanviper/yt-production tại root. Đọc AGENTS.md và thực hiện task active của products/sumer-writing. Không đọc toàn repo, không bỏ qua context packet và không tự approve output.
-```
-
-Để viết phần cụ thể:
-
-```text
-Trong products/sumer-writing, chuẩn bị P04 để viết. Nếu chưa có story plan được duyệt, hãy thực hiện design_section trước và bàn giao để tôi duyệt; chỉ draft sau khi story plan đã được duyệt.
+Đọc AGENTS.md, rồi thực hiện task active của products/<slug>. Chỉ dùng compiled packet, không quét repo và không tự approve output.
 ```
