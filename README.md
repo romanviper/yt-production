@@ -2,6 +2,10 @@
 
 Hệ điều hành biên tập cho phim lịch sử dài, được thiết kế để nhiều AI task cộng tác mà không mang toàn bộ repo và toàn bộ policy vào mỗi context window.
 
+## Source of truth
+
+`main` là nhánh làm việc duy nhất. Agent mới luôn checkout `main` ở HEAD hiện tại và không chọn commit hay branch lịch sử để bắt đầu. Chỉ tạo branch/PR khi người dùng yêu cầu riêng một vòng review hoặc isolation.
+
 ## Harness
 
 Hệ thống dùng nguyên tắc **Hard boundaries, Soft logic**:
@@ -72,4 +76,3 @@ Chi tiết vận hành: [docs/WORKFLOW.md](docs/WORKFLOW.md).
 ## Pilot
 
 `products/sumer-writing/` kể vòng đời chữ viết như một công nghệ–thiết chế của văn minh Sumer. *Fall of Civilizations* là benchmark chức năng, không phải mẫu câu, cadence, persona hay structure để sao chép.
-

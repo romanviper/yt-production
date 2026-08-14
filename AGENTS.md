@@ -2,6 +2,12 @@
 
 This file contains only repo-wide operating boundaries. Creative logic belongs in the task packet.
 
+## Canonical branch
+
+- `main` is the only working branch and the repository source of truth. Start from the current `main` HEAD; do not choose a historical commit as an entrypoint.
+- Do not create feature, task or agent branches for routine work. Commit authorized changes directly to `main` after the required validation.
+- Create a branch or pull request only when the user explicitly asks for isolation or review. Historical remote branches are not valid production inputs.
+
 ## Authority
 
 - Product work runs as `product_agent` and may write only the paths declared by its router-generated work order.
@@ -29,4 +35,3 @@ Stop and report a blocker when the packet is stale, malformed, missing an input,
 ## User-facing handoff
 
 For task output, lead with `python scripts/task.py brief products/<slug> <task-id>`. Keep operational detail in `report.md`; expose deeper analysis only when the user asks for it or needs it to make a safe decision.
-
