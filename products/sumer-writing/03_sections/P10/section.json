@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "id": "P10",
+  "title": "Khi đất sét học cách nói lần thứ hai",
+  "order": 10,
+  "status": "needs_story_plan",
+  "human_approved": false,
+  "dependencies": [
+    "P01",
+    "P07",
+    "P09"
+  ],
+  "target_words": {
+    "min": 1000,
+    "max": 1300
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "workstream": "WS06",
+  "status": "complete",
+  "claims": [
+    {
+      "id": "WS06-CLM-001",
+      "statement": "Administrative writing increased capacity to classify, aggregate and audit labor, goods and obligations when tied to institutional procedure.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS06-SRC-001",
+        "WS06-SRC-002"
+      ],
+      "counterevidence": "Records alone do not prove compliance or causal primacy.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS06-CLM-002",
+      "statement": "Ur III labor records reveal ordinary people mainly through top-down categories and required work.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS06-SRC-001",
+        "WS06-SRC-002"
+      ],
+      "counterevidence": "They do not recover the full lives or viewpoints of recorded workers.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS06-CLM-003",
+      "statement": "Writing’s power distribution changed over time: uses once concentrated in royal/institutional systems were later appropriated by urban private actors.",
+      "type": "inference",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "sources": [
+        "WS06-SRC-003"
+      ],
+      "counterevidence": "The scale and timing of ‘privatization’ vary by region.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS06-CLM-004",
+      "statement": "A written law, norm or transaction is evidence of recording and claim-making, not automatic evidence of enforcement.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS06-SRC-003"
+      ],
+      "counterevidence": "Case-specific links among tablet, witnesses, seal and action are required.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS06-CLM-005",
+      "statement": "Archive survival is structurally biased by clay durability, institutional discard, excavation history and antiquities-market provenance.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS06-SRC-001",
+        "WS06-SRC-004"
+      ],
+      "counterevidence": "Bias does not invalidate the corpus, but limits population-wide inference.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS06-CLM-006",
+      "statement": "At Puzriš-Dagan, more than 13,500 tablets reconstruct an archival agency tied to livestock, taxation, royal gifts and diplomacy; the archive should not be read as a literal inventory of one stockyard.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS06-SRC-005"
+      ],
+      "counterevidence": "The surviving repository is selective and its reconstructed units remain scholarly models.",
+      "narrative_implication": "Use as a bounded causal case in which records, seals, officials and retrieval practices jointly made obligations actionable."
+    },
+    {
+      "id": "WS06-CLM-007",
+      "statement": "Agency belongs to people and institutions using records: tablets stabilize classifications, scribes and sealers authenticate them, archives make them retrievable, and authorities supply enforcement.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS06-SRC-001",
+        "WS06-SRC-002",
+        "WS06-SRC-005"
+      ],
+      "counterevidence": "The strength of each link differs by archive; a preserved record alone cannot demonstrate enforcement.",
+      "narrative_implication": "Never say writing itself commanded, owned or coerced."
+    },
+    {
+      "id": "WS06-CLM-008",
+      "statement": "Distributional effects were asymmetric: record systems improved institutional visibility and elite/private claims while exposing workers and dependents through imposed categories.",
+      "type": "inference",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "sources": [
+        "WS06-SRC-001",
+        "WS06-SRC-002",
+        "WS06-SRC-003",
+        "WS06-SRC-005"
+      ],
+      "counterevidence": "People could also use documents strategically, and private uptake widened access in some later settings.",
+      "narrative_implication": "Pair every capacity gain with who gained legibility, leverage, burden or exclusion."
+    },
+    {
+      "id": "WS06-CLM-009",
+      "statement": "Oral negotiation, embodied skill, household practice and much routine exchange remained partly or wholly outside surviving writing.",
+      "type": "unknown",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS06-SRC-001",
+        "WS06-SRC-004"
+      ],
+      "counterevidence": "Absence from archives cannot quantify the size of unwritten domains.",
+      "narrative_implication": "State the limit; do not turn archival silence into proof of absence."
+    }
+  ]
+}

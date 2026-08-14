@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "principle": "hard_boundaries_soft_logic",
+  "boundary_enforcement": [
+    "authority_and_write_scope",
+    "task_state_and_human_approval",
+    "input_freshness_and_packet_integrity",
+    "evidence_provenance_and_narration_ceiling",
+    "context_and_production_unit_hard_caps"
+  ],
+  "prompt_excluded_files": [
+    "system/governance.json",
+    "system/standards/operator-interface.md"
+  ],
+  "eval_only_files": [
+    "system/standards/outcome-evaluation.md"
+  ],
+  "profiles": {
+    "research": {
+      "kind": "research",
+      "max_instruction_tokens": 3200,
+      "evaluation_gate": "human_review"
+    },
+    "architecture": {
+      "kind": "creative",
+      "max_instruction_tokens": 1800,
+      "evaluation_gate": "human_approval"
+    },
+    "creative_design": {
+      "kind": "creative",
+      "max_instruction_tokens": 1500,
+      "evaluation_gate": "human_approval"
+    },
+    "creative_draft": {
+      "kind": "creative",
+      "max_instruction_tokens": 1500,
+      "evaluation_gate": "review_section"
+    },
+    "creative_revision": {
+      "kind": "creative",
+      "max_instruction_tokens": 1500,
+      "evaluation_gate": "review_section"
+    },
+    "evaluation": {
+      "kind": "evaluation",
+      "max_instruction_tokens": 2600,
+      "evaluation_gate": "human_review"
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "task_id": "T0008-research-workstream-WS08",
+  "product": "sumer-writing",
+  "operation": "research_workstream",
+  "target": {
+    "section": null,
+    "unit": "WS08"
+  },
+  "created_at": "2026-08-13T12:00:00.000Z",
+  "max_context_tokens": 20000,
+  "estimated_context_tokens": 6500,
+  "instruction_files": [
+    "system/core/invariants.md",
+    "system/standards/evidence.md",
+    "system/operations/research-workstream.md",
+    "system/standards/operator-interface.md"
+  ],
+  "inputs": [
+    {
+      "path": "00_brief/product-brief.md",
+      "sha256": "bb8bc646f4d7756ee3c6cc7a12f1f1833c4eab9f6bf84a642fa2609e01a6f89f"
+    },
+    {
+      "path": "01_research/workstreams/WS08/brief.md",
+      "sha256": "5bdf26c2e6aada8ac001e4d7d3cea8087f53efab26c9e3a8acca7a0f46d3a32d"
+    }
+  ],
+  "operation_outputs": [
+    "01_research/workstreams/WS08/sources.json",
+    "01_research/workstreams/WS08/claims.json",
+    "01_research/workstreams/WS08/synthesis.md"
+  ],
+  "output_baselines": [
+    {
+      "path": "01_research/workstreams/WS08/sources.json",
+      "sha256": "ace850bc1aae47777b2797b2fd6d9df3d00af165bb4c6b27b1582ceeb777a039"
+    },
+    {
+      "path": "01_research/workstreams/WS08/claims.json",
+      "sha256": "d5fd0e394150f7efe5bff60d4ea89838c261860f9acbc10f4f321ee49ef83748"
+    },
+    {
+      "path": "01_research/workstreams/WS08/synthesis.md",
+      "sha256": "94469f57c0403115a17d0a77dd87f294a27ee5f268d177ac5d4fe9b120ba2f3c"
+    }
+  ],
+  "allowed_write_paths": [
+    "01_research/workstreams/WS08/sources.json",
+    "01_research/workstreams/WS08/claims.json",
+    "01_research/workstreams/WS08/synthesis.md",
+    "tasks/T0008-research-workstream-WS08/report.md",
+    "tasks/T0008-research-workstream-WS08/operator-brief.json"
+  ],
+  "report_path": "tasks/T0008-research-workstream-WS08/report.md",
+  "operator_brief_path": "tasks/T0008-research-workstream-WS08/operator-brief.json",
+  "acceptance_criteria": [
+    "Chỉ trả lời question của workstream hiện tại.",
+    "Source có locator, authority và limitation.",
+    "Claim tách fact/inference/contested/unknown và có counterevidence.",
+    "Synthesis đủ dùng cho task sau mà không cần raw browsing context."
+  ],
+  "validation": [
+    "python scripts/validate.py products/sumer-writing",
+    "python scripts/task.py verify products/sumer-writing T0008-research-workstream-WS08",
+    "python scripts/check_scope.py products/sumer-writing",
+    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0008-research-workstream-WS08/operator-brief.json"
+  ]
+}

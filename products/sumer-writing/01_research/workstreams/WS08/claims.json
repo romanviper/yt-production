@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "workstream": "WS08",
+  "status": "complete",
+  "claims": [
+    {
+      "id": "WS08-CLM-001",
+      "statement": "Cuneiform use contracted over centuries rather than ending through one event.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS08-SRC-001",
+        "WS08-SRC-002"
+      ],
+      "counterevidence": "Regional and genre-specific endpoints differ.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS08-CLM-002",
+      "statement": "Lexical and scholarly traditions persisted into the first centuries CE in narrowed institutional settings.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS08-SRC-001"
+      ],
+      "counterevidence": "Exact last-tablet dates depend on genre and dating; ‘last’ remains a discovery-sensitive claim.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS08-CLM-003",
+      "statement": "Material tablets survived after living reading competence disappeared, creating a break between ancient transmission and modern knowledge.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS08-SRC-001",
+        "WS08-SRC-003",
+        "WS08-SRC-004"
+      ],
+      "counterevidence": "Some local knowledge of ruins or objects may have persisted without script competence.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS08-CLM-004",
+      "statement": "Nineteenth-century decipherment was cumulative and comparative, not a single eureka moment.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS08-SRC-003",
+        "WS08-SRC-004"
+      ],
+      "counterevidence": "Public narratives often center Behistun and a few individuals, underrepresenting collaboration and error.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS08-CLM-005",
+      "statement": "Cuneiform’s defensible modern legacy is recovery-mediated knowledge of ancient societies and influence through ancient Near Eastern textual transmission; resemblance to digital record systems is analogy, not lineage.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS08-SRC-001",
+        "WS08-SRC-003",
+        "WS08-SRC-004"
+      ],
+      "counterevidence": "Specific transmitted texts or concepts require separate chains of evidence.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS08-CLM-006",
+      "statement": "The latest currently known dated cuneiform tablet is an astronomical text from 75 CE, but this is a latest-discovered datum, not a proven final act of writing.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS08-SRC-005"
+      ],
+      "counterevidence": "New finds may move the endpoint, and competence could outlast the latest preserved tablet.",
+      "narrative_implication": "Use 'latest currently known' and keep WS07's institutional-reproduction definition."
+    },
+    {
+      "id": "WS08-CLM-007",
+      "statement": "Cuneiform decline combined language competition, institutional contraction, changing political economies and the cost of specialist training; no surviving evidence isolates one sufficient cause.",
+      "type": "inference",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "sources": [
+        "WS08-SRC-001",
+        "WS08-SRC-002",
+        "WS08-SRC-005"
+      ],
+      "counterevidence": "The relative weight of Aramaic, Greek, temple change and regional politics differs by place and century.",
+      "narrative_implication": "End with a mechanism set, not a single-collapse explanation."
+    },
+    {
+      "id": "WS08-CLM-008",
+      "statement": "Modern recovery proceeded through copied inscriptions, the partial decipherment of Old Persian, multilingual comparison at Behistun, and subsequent testing of Akkadian and Sumerian readings.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS08-SRC-003",
+        "WS08-SRC-004",
+        "WS08-SRC-006"
+      ],
+      "counterevidence": "Individual milestones are important but none alone recovered the full cuneiform tradition.",
+      "narrative_implication": "Use a short cumulative chain rather than a hero-only eureka story."
+    },
+    {
+      "id": "WS08-CLM-009",
+      "statement": "Legacy claims fall into three classes: direct ancient transmission, recovery-mediated modern knowledge, and analogy without lineage.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS08-SRC-001",
+        "WS08-SRC-003",
+        "WS08-SRC-004",
+        "WS08-SRC-006"
+      ],
+      "counterevidence": "Each proposed direct transmission still requires its own documented chain.",
+      "narrative_implication": "Permit only the first two as historical legacy; label digital-record parallels as analogy."
+    }
+  ]
+}

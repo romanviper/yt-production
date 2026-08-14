@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "product": "{{SLUG}}",
+  "status": "not_started",
+  "sources": []
+}

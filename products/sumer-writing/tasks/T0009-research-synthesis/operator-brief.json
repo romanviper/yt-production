@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "status": "approved",
+  "headline": "Global research synthesis đã được chấp nhận và khóa làm handoff cho outline.",
+  "material_points": [
+    "Causal model là source of truth.",
+    "Contradiction, uncertainty và provenance tiếp tục được giữ.",
+    "Outline được phép bắt đầu; narration vẫn khóa."
+  ],
+  "decision": {
+    "required": false,
+    "question": "",
+    "recommendation": "",
+    "options": []
+  },
+  "next_step": "Operation outline đã được tạo."
+}

@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "workstream": "WS04",
+  "status": "complete",
+  "sources": [
+    {
+      "id": "WS04-SRC-001",
+      "title": "Masters’ Writings and Students’ Writings",
+      "author": "Christine Proust, 2011",
+      "type": "scholarly chapter",
+      "authority": "Specialist study of scribal education",
+      "url": "https://hal.science/hal-01139643/document",
+      "locators": [
+        "school material analysis"
+      ],
+      "status": "reviewed",
+      "limitations": "Focused mainly on later school corpora.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS04-SRC-002",
+      "title": "The Scribal Tablet-House in Ancient Mesopotamia",
+      "author": "Christopher J. Lucas, 1979",
+      "type": "scholarly article",
+      "authority": "Survey of archaeological and textual evidence",
+      "url": "https://knowledgebasedsociety.com/wp-content/uploads/2021/12/367648.pdf",
+      "locators": [
+        "pp. 305–332"
+      ],
+      "status": "reviewed",
+      "limitations": "Older and sometimes institutionally schematic.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS04-SRC-003",
+      "title": "DCCLT lexical introduction",
+      "author": "Oracc / University of Pennsylvania",
+      "type": "academic corpus introduction",
+      "authority": "Curated specialist corpus",
+      "url": "https://oracc.museum.upenn.edu/dcclt/intro/lexical_intro.html",
+      "locators": [
+        "introductory sections"
+      ],
+      "status": "reviewed",
+      "limitations": "Public overview; not a demographic study.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS04-SRC-004",
+      "title": "Excursus: Scribes and Scribal Education",
+      "author": "Oxford Academic chapter",
+      "type": "scholarly chapter",
+      "authority": "Legal/scribal specialist synthesis",
+      "url": "https://academic.oup.com/book/31901/chapter/267577699",
+      "locators": [
+        "chapter overview"
+      ],
+      "status": "reviewed",
+      "limitations": "Specific focus on composition and legal tradition.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS04-SRC-005",
+      "title": "The Tablet House: A Scribal School in Old Babylonian Nippur",
+      "author": "Eleanor Robson, 2001",
+      "type": "peer-reviewed article",
+      "authority": "Archaeologically contextualized specialist study",
+      "url": "https://www.jstor.org/stable/23282005",
+      "locators": [
+        "pp. 39–66; House F assemblage and curriculum"
+      ],
+      "status": "reviewed",
+      "limitations": "One eighteenth-century BCE household context at Nippur; not a universal school model.",
+      "notes": "Human-scale anchor: more than 1,400 contextualized tablets from House F."
+    },
+    {
+      "id": "WS04-SRC-006",
+      "title": "Tell Khaiber: scribes, schooling and literacy",
+      "author": "Eleanor Robson et al., 2023",
+      "type": "archaeological monograph chapter",
+      "authority": "Excavation-based study of scribal practice",
+      "url": "https://discovery.ucl.ac.uk/10172118/13/Robson_Tell%20Khaiber%20CHAPTER%204.pdf",
+      "locators": [
+        "chapter 4; professional scribes, apprenticeship and non-professional literacy"
+      ],
+      "status": "reviewed",
+      "limitations": "First Sealand provincial center; evidence cannot be generalized to all periods.",
+      "notes": "Used to distinguish professional title, on-the-job competence and non-professional use."
+    },
+    {
+      "id": "WS04-SRC-007",
+      "title": "Women's Writing of Ancient Mesopotamia — Introduction",
+      "author": "Charles Halton and Saana Svärd, 2017",
+      "type": "scholarly anthology introduction",
+      "authority": "Cambridge specialist synthesis",
+      "url": "https://www.cambridge.org/core/books/womens-writing-of-ancient-mesopotamia/introduction/99B0C019CDA688ECD98A582DA910EFD9",
+      "locators": [
+        "Introduction, pp. xix–xx"
+      ],
+      "status": "reviewed",
+      "limitations": "Selected female voices are not a demographic sample; authorship and scribal mediation vary.",
+      "notes": "Used only to bound claims about gender and access."
+    }
+  ]
+}

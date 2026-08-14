@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "workstream": "WS03",
+  "status": "complete",
+  "sources": [
+    {
+      "id": "WS03-SRC-001",
+      "title": "The Origins of Writing",
+      "author": "Ira Spar, 2004",
+      "type": "museum scholarly essay",
+      "authority": "Cuneiform specialist overview",
+      "url": "https://www.metmuseum.org/essays/the-origins-of-writing",
+      "locators": [
+        "paragraphs 62–69"
+      ],
+      "status": "reviewed",
+      "limitations": "Introductory; dates rounded.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS03-SRC-002",
+      "title": "Visible Language",
+      "author": "Christopher Woods (ed.), 2010",
+      "type": "academic catalogue",
+      "authority": "University of Chicago specialist synthesis",
+      "url": "https://isac.uchicago.edu/sites/default/files/uploads/shared/docs/oimp32.pdf",
+      "locators": [
+        "Mesopotamian writing essays"
+      ],
+      "status": "reviewed",
+      "limitations": "Catalogue compresses disagreements.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS03-SRC-003",
+      "title": "Numerical and Metrological Graphemes",
+      "author": "Christine Proust, 2009",
+      "type": "peer-reviewed article",
+      "authority": "Detailed grapheme/metrology study",
+      "url": "https://cdli.mpiwg-berlin.mpg.de/articles/cdlj/2009-1.pdf",
+      "locators": [
+        "§3.5 and conclusions"
+      ],
+      "status": "reviewed",
+      "limitations": "Focuses on specific numerical systems.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS03-SRC-004",
+      "title": "Classifying and Comparing Early Writing Systems",
+      "author": "Amalia Gnanadesikan, 2023",
+      "type": "scholarly handbook chapter",
+      "authority": "Current comparative orthography synthesis",
+      "url": "https://www.cambridge.org/core/books/cambridge-handbook-of-historical-orthography/classifying-and-comparing-early-writing-systems/1FB931255299DED0DCF6C0E712E8A653",
+      "locators": [
+        "chapter summary"
+      ],
+      "status": "reviewed",
+      "limitations": "Accessible summary rather than full chapter.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS03-SRC-005",
+      "title": "A Quantitative Analysis of Proto-Cuneiform Sign Use in Archaic Tribute",
+      "author": "Logan Born and Kathryn Erin Kelley, 2021",
+      "type": "peer-reviewed corpus study",
+      "authority": "CDLI corpus-based quantitative analysis",
+      "url": "https://cdli.earth/articles/cdlb/2021-6",
+      "locators": [
+        "§§1–3; 6,726-artifact working corpus and sign-use method"
+      ],
+      "status": "reviewed",
+      "limitations": "Readability, sign variants, genre assignment and corpus growth constrain quantitative conclusions.",
+      "notes": "Used to separate observed sign distribution from reconstructed linguistic value."
+    }
+  ]
+}

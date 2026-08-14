@@ -1,0 +1,466 @@
+{
+  "schema_version": 1,
+  "section": "P06",
+  "claims": [
+    {
+      "id": "CLM-0026",
+      "statement": "The earliest writing implies trained specialists, but their identities, recruitment and institutional status are poorly recoverable.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0016"
+      ],
+      "counterevidence": "Lists and handwriting variation provide indirect evidence, not biographies.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-CLM-001"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0027",
+      "statement": "The best archaeological evidence for formal curricula comes from later household and institutional contexts, especially the Old Babylonian period.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0014",
+        "SRC-0015",
+        "SRC-0016"
+      ],
+      "counterevidence": "Later evidence cannot be projected unchanged onto Uruk.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-CLM-002"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0028",
+      "statement": "Edubba was not necessarily a single standardized temple-run school system across Mesopotamian history.",
+      "type": "contested",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0014",
+        "SRC-0015"
+      ],
+      "counterevidence": "Literary school texts use institutional language, but excavated teaching often occurs in houses.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-CLM-003"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0029",
+      "statement": "Scribal competence included copying, calculation, lexical knowledge and genre conventions, not merely decoding signs.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0014",
+        "SRC-0016",
+        "SRC-0017"
+      ],
+      "counterevidence": "Curriculum differed by period, place and career path.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-CLM-004"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0030",
+      "statement": "Access was restricted and socially consequential, but no reliable percentage for literacy or a universal male-only rule can be derived.",
+      "type": "unknown",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0014",
+        "SRC-0015"
+      ],
+      "counterevidence": "Named female scribes and elite women exist in some periods; corpus is not population-representative.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-CLM-005"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0031",
+      "statement": "House F at Old Babylonian Nippur provides an unusually contextualized household training sequence, not proof of a universal Mesopotamian school system.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0018"
+      ],
+      "counterevidence": "Its more than 1,400 tablets make the sequence unusually rich but also locally exceptional.",
+      "narrative_implication": "Use House F as an illustrative, high-resolution anchor explicitly labeled non-representative of all periods.",
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-CLM-006"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0032",
+      "statement": "Professional title, functional competence and broad literacy must be mapped separately; some later archives show on-the-job or non-professional use outside a single formal school track.",
+      "type": "inference",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0017",
+        "SRC-0019"
+      ],
+      "counterevidence": "Survival still favors administrative settings and trained writers.",
+      "narrative_implication": "Describe capabilities and work roles instead of assigning a modern literate/illiterate binary.",
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-CLM-007"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0033",
+      "statement": "Named women and female-authored or female-voiced texts demonstrate access in some settings but cannot establish population rates or unmediated authorship.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0020"
+      ],
+      "counterevidence": "Scribal mediation, elite selection and uneven survival complicate attribution.",
+      "narrative_implication": "Use specific women only with period, role, mediation and representativeness labels.",
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-CLM-008"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0044",
+      "statement": "P228744 is a fragmented Old Babylonian lexical school tablet excavated at Nippur and a witness to the OB Nippur Ura 03 composite Q000001.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0016",
+        "SRC-0026"
+      ],
+      "counterevidence": "The obverse is missing and the record does not preserve detailed stratigraphy; formal school material cannot establish population-wide literacy.",
+      "narrative_implication": "Use as a representative case of formal lexical classification and copying within the Nippur training tradition only.",
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-CLM-011"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0057",
+      "statement": "Lexical lists and bilingual curricula were key transmission infrastructure across regions and centuries.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0016",
+        "SRC-0035",
+        "SRC-0036"
+      ],
+      "counterevidence": "Surviving lists privilege formal training contexts.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-CLM-003"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-0014",
+      "title": "Masters’ Writings and Students’ Writings",
+      "author": "Christine Proust, 2011",
+      "year": null,
+      "type": "scholarly chapter",
+      "authority": "Specialist study of scribal education",
+      "url": "https://hal.science/hal-01139643/document",
+      "locators": [
+        "school material analysis"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Focused mainly on later school corpora."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-001"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0015",
+      "title": "The Scribal Tablet-House in Ancient Mesopotamia",
+      "author": "Christopher J. Lucas, 1979",
+      "year": null,
+      "type": "scholarly article",
+      "authority": "Survey of archaeological and textual evidence",
+      "url": "https://knowledgebasedsociety.com/wp-content/uploads/2021/12/367648.pdf",
+      "locators": [
+        "pp. 305–332"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Older and sometimes institutionally schematic."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0016",
+      "title": "DCCLT lexical introduction",
+      "author": "Oracc / University of Pennsylvania",
+      "year": null,
+      "type": "academic corpus introduction",
+      "authority": "Curated specialist corpus",
+      "url": "https://oracc.museum.upenn.edu/dcclt/intro/lexical_intro.html",
+      "locators": [
+        "introductory sections",
+        "introduction"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Public overview; not a demographic study.",
+        "Lexical focus.",
+        "Lexical tradition focus."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-003"
+        },
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-003"
+        },
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0017",
+      "title": "Excursus: Scribes and Scribal Education",
+      "author": "Oxford Academic chapter",
+      "year": null,
+      "type": "scholarly chapter",
+      "authority": "Legal/scribal specialist synthesis",
+      "url": "https://academic.oup.com/book/31901/chapter/267577699",
+      "locators": [
+        "chapter overview"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Specific focus on composition and legal tradition."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0018",
+      "title": "The Tablet House: A Scribal School in Old Babylonian Nippur",
+      "author": "Eleanor Robson, 2001",
+      "year": null,
+      "type": "peer-reviewed article",
+      "authority": "Archaeologically contextualized specialist study",
+      "url": "https://www.jstor.org/stable/23282005",
+      "locators": [
+        "pp. 39–66; House F assemblage and curriculum"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "One eighteenth-century BCE household context at Nippur; not a universal school model."
+      ],
+      "notes": [
+        "Human-scale anchor: more than 1,400 contextualized tablets from House F."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-005"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0019",
+      "title": "Tell Khaiber: scribes, schooling and literacy",
+      "author": "Eleanor Robson et al., 2023",
+      "year": null,
+      "type": "archaeological monograph chapter",
+      "authority": "Excavation-based study of scribal practice",
+      "url": "https://discovery.ucl.ac.uk/10172118/13/Robson_Tell%20Khaiber%20CHAPTER%204.pdf",
+      "locators": [
+        "chapter 4; professional scribes, apprenticeship and non-professional literacy"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "First Sealand provincial center; evidence cannot be generalized to all periods."
+      ],
+      "notes": [
+        "Used to distinguish professional title, on-the-job competence and non-professional use."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-006"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0020",
+      "title": "Women's Writing of Ancient Mesopotamia — Introduction",
+      "author": "Charles Halton and Saana Svärd, 2017",
+      "year": null,
+      "type": "scholarly anthology introduction",
+      "authority": "Cambridge specialist synthesis",
+      "url": "https://www.cambridge.org/core/books/womens-writing-of-ancient-mesopotamia/introduction/99B0C019CDA688ECD98A582DA910EFD9",
+      "locators": [
+        "Introduction, pp. xix–xx"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Selected female voices are not a demographic sample; authorship and scribal mediation vary."
+      ],
+      "notes": [
+        "Used only to bound claims about gender and access."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-007"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0026",
+      "title": "N 6052 (+) UM 29-16-393 artifact entry (P228744)",
+      "author": "Cuneiform Digital Library Initiative / Digital Corpus of Cuneiform Lexical Texts",
+      "year": null,
+      "type": "primary artifact record, transliteration and composite witness",
+      "authority": "CDLI/DCCLT object-level lexical corpus",
+      "url": "https://cdli.earth/P228744",
+      "locators": [
+        "CDLI P228744; museum nos. N 6052 (+) UM 29-16-393",
+        "Reverse columns 1–2, preserved lines 4–30",
+        "Witness to CDLI Lexical 000001 / composite Q000001"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Fragmented Old Babylonian school tablet; obverse is not preserved and findspot/stratigraphic fields are blank. It represents formal lexical training at Nippur, not general literacy."
+      ],
+      "notes": [
+        "Selected knowledge/training object. Excavated at Nippur, ca. 1900–1600 BCE. CDLI provides transliteration; the photograph is marked © Penn Museum and requires a separate image-use check."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-009"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0035",
+      "title": "Ancient Mesopotamia",
+      "author": "Niek Veldhuis, 2019",
+      "year": null,
+      "type": "scholarly handbook chapter",
+      "authority": "Leading specialist on lexical traditions",
+      "url": "https://www.cambridge.org/core/books/cambridge-world-history-of-lexicography/ancient-mesopotamia/B020E908200C609176018CA9FCCA363A",
+      "locators": [
+        "summary"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Full chapter access limited."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-SRC-003"
+        },
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-SRC-001"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0036",
+      "title": "A History of Hittite Literacy — Introduction",
+      "author": "Theo van den Hout, 2020",
+      "year": null,
+      "type": "scholarly monograph chapter",
+      "authority": "Leading Hittitologist synthesis",
+      "url": "https://www.cambridge.org/core/books/history-of-hittite-literacy/introduction/2665C532BD423C96A11075D908A9EF09",
+      "locators": [
+        "introduction"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Hittite-specific."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-SRC-004"
+        }
+      ]
+    }
+  ],
+  "rule": "Only claims in this pack may appear as substantive historical claims in the draft."
+}

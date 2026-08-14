@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "workstream": "WS08",
+  "status": "complete",
+  "sources": [
+    {
+      "id": "WS08-SRC-001",
+      "title": "Ancient Mesopotamia",
+      "author": "Niek Veldhuis, 2019",
+      "type": "scholarly handbook chapter",
+      "authority": "Leading specialist synthesis",
+      "url": "https://www.cambridge.org/core/books/cambridge-world-history-of-lexicography/ancient-mesopotamia/B020E908200C609176018CA9FCCA363A",
+      "locators": [
+        "summary"
+      ],
+      "status": "reviewed",
+      "limitations": "Full chapter access limited.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS08-SRC-002",
+      "title": "The Sumerian language",
+      "author": "Oracc / University of Pennsylvania, 2019",
+      "type": "academic reference",
+      "authority": "Curated specialist project",
+      "url": "https://oracc.museum.upenn.edu/nimrud/ancientkalhu/thewritings/sumerian/",
+      "locators": [
+        "overview"
+      ],
+      "status": "reviewed",
+      "limitations": "Public overview.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS08-SRC-003",
+      "title": "Art of the Ancient Near East: A Resource for Educators",
+      "author": "Metropolitan Museum of Art",
+      "type": "museum scholarly publication",
+      "authority": "Major museum synthesis",
+      "url": "https://resources.metmuseum.org/resources/metpublications/pdf/Art_of_the_Ancient_Near_East_A_Resource_for_Educators.pdf",
+      "locators": [
+        "Cuneiform Messages, pp. 27–29"
+      ],
+      "status": "reviewed",
+      "limitations": "Educational compression.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS08-SRC-004",
+      "title": "Discoveries and Excavations — The City of Babylon",
+      "author": "Olof Pedersén, 2021",
+      "type": "scholarly monograph chapter",
+      "authority": "Modern excavation/decipherment history",
+      "url": "https://www.cambridge.org/core/books/city-of-babylon/discoveries-and-excavations/4E8A13224F291C14876F2E5DC9260F65",
+      "locators": [
+        "chapter overview"
+      ],
+      "status": "reviewed",
+      "limitations": "Babylon-focused.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS08-SRC-005",
+      "title": "The extinction of cuneiform writing",
+      "author": "Centre for the Study of Manuscript Cultures, Universität Hamburg, 2020",
+      "type": "academic research overview",
+      "authority": "University manuscript-culture research center",
+      "url": "https://www.csmc.uni-hamburg.de/publications/mesopotamia/2020-08-31.html",
+      "locators": [
+        "late-text chronology; first-century BCE/CE astronomical corpus and 75 CE tablet"
+      ],
+      "status": "reviewed",
+      "limitations": "The latest-known date is discovery-sensitive and does not prove an exact final day of competence.",
+      "notes": "Used to connect WS07's institutional endpoint to late Babylonian evidence."
+    },
+    {
+      "id": "WS08-SRC-006",
+      "title": "The Earliest Contributions to the Decipherment of Sumerian and Akkadian",
+      "author": "Irving L. Finkel and colleagues, 2011",
+      "type": "peer-reviewed history of decipherment",
+      "authority": "CDLI Journal specialist study",
+      "url": "https://cdli.earth/articles/cdlj/2011-1.pdf",
+      "locators": [
+        "§§2–4; Old Persian, Behistun and subsequent comparative steps"
+      ],
+      "status": "reviewed",
+      "limitations": "Focuses on early scholarly stages; later institutionalization of Assyriology is outside scope.",
+      "notes": "Used to replace the single-eureka story with a staged recovery chain."
+    }
+  ]
+}

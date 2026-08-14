@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "workstream": "WS06",
+  "status": "complete",
+  "sources": [
+    {
+      "id": "WS06-SRC-001",
+      "title": "An Interdisciplinary Overview of a Mesopotamian City and its Hinterlands",
+      "author": "Robert McC. Adams, 2008",
+      "type": "peer-reviewed article",
+      "authority": "Major archaeological synthesis",
+      "url": "https://cdli.earth/articles/cdlj/2008-1",
+      "locators": [
+        "§2.3 and archive discussion"
+      ],
+      "status": "reviewed",
+      "limitations": "Umma/Ur III case is not universal.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS06-SRC-002",
+      "title": "Equivalency Values and the Command Economy of the Ur III Period",
+      "author": "Robert K. Englund, 2012",
+      "type": "scholarly study",
+      "authority": "Corpus-based administrative study",
+      "url": "https://cdli.earth/files-up/publications/englund2012a.pdf",
+      "locators": [
+        "labor norms and equivalencies"
+      ],
+      "status": "reviewed",
+      "limitations": "Ur III is much later than writing’s origin.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS06-SRC-003",
+      "title": "Old Babylonian Networks of Urban Notables",
+      "author": "Marc Van De Mieroop, 2009",
+      "type": "peer-reviewed article",
+      "authority": "Specialist socio-economic interpretation",
+      "url": "https://cdli.earth/articles/cdlj/2009-7",
+      "locators": [
+        "§1.2 and §2.4"
+      ],
+      "status": "reviewed",
+      "limitations": "Broad model debated; Old Babylonian focus.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS06-SRC-004",
+      "title": "Cuneiform Tablets in Collections at the University of Kansas",
+      "author": "CDLI Bulletin, 2020",
+      "type": "scholarly catalogue article",
+      "authority": "Object-level provenance scholarship",
+      "url": "https://cdli.earth/articles/cdlb/2020-2",
+      "locators": [
+        "§1.7 provenance warning"
+      ],
+      "status": "reviewed",
+      "limitations": "Collection-focused rather than archive theory.",
+      "notes": "Selected for this workstream's bounded question."
+    },
+    {
+      "id": "WS06-SRC-005",
+      "title": "A Reconstruction of the Puzriš-Dagan Central Livestock Agency",
+      "author": "Tonia Sharlach, 2013",
+      "type": "peer-reviewed corpus study",
+      "authority": "CDLI archive reconstruction",
+      "url": "https://cdli.earth/articles/cdlj/2013-2",
+      "locators": [
+        "§§1.2–1.5; archive function and more than 13,500 tablets"
+      ],
+      "status": "reviewed",
+      "limitations": "Ur III royal institution; archive reconstruction does not establish ordinary experience or empire-wide uniformity.",
+      "notes": "Used as a bounded case linking documents, officials, seals and institutional action."
+    }
+  ]
+}

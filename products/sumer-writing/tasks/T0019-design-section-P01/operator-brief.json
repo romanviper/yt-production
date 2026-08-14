@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "mode": "brief",
+  "headline": "Story plan P01 đã được thiết kế lại theo contract mới và chờ bạn duyệt.",
+  "status": "ready_for_review",
+  "material_points": [
+    "Ba movement: object puzzle → payoff → formation turn; payoff chỉ xuất hiện một lần.",
+    "Budget giảm từ 950–1200 xuống 550–700 từ theo narrative load.",
+    "Chỉ giữ hai narrated claim; chronology tối thiểu là support."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Bạn có approve story plan P01 mới không?",
+    "recommendation": "Approve nếu shape ba movement và budget 550–700 từ đã đúng.",
+    "options": [
+      {
+        "label": "Approve",
+        "effect": "Áp dụng budget mới và cho phép viết lại P01."
+      },
+      {
+        "label": "Request changes",
+        "effect": "Chỉnh shape, evidence hoặc budget trước khi viết."
+      }
+    ]
+  },
+  "next_step": ""
+}

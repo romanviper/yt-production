@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "slug": "{{SLUG}}",
+  "working_title": "{{TITLE}}",
+  "language": "vi",
+  "format": "long_form_history_documentary",
+  "status": "research_planning",
+  "production_cycle": {
+    "id": "C001",
+    "status": "initial"
+  },
+  "created_at": "{{DATE}}",
+  "target": {
+    "duration_minutes": {
+      "min": 60,
+      "max": 120
+    },
+    "narration_wpm": 140
+  },
+  "locked_decisions": [],
+  "scope": {
+    "in": [],
+    "out": []
+  },
+  "benchmarks": [],
+  "stages": {
+    "direction": "draft",
+    "research_plan": "not_started",
+    "research": "not_started",
+    "outline": "not_started",
+    "sections": "not_started",
+    "integration": "not_started",
+    "delivery": "not_started"
+  }
+}

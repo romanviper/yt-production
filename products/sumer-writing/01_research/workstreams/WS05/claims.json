@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "workstream": "WS05",
+  "status": "complete",
+  "claims": [
+    {
+      "id": "WS05-CLM-001",
+      "statement": "Uruk IV evidence is overwhelmingly administrative, while lexical texts become substantially more visible in Uruk III.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-001"
+      ],
+      "counterevidence": "Preservation and excavation bias prevent exclusivity claims.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS05-CLM-002",
+      "statement": "By the middle third millennium BCE cuneiform served economic, religious, political, literary and scholarly domains.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-002"
+      ],
+      "counterevidence": "Chronologies differ by genre and city; ‘by’ does not mean simultaneous everywhere.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS05-CLM-003",
+      "statement": "Lexical lists form a continuous knowledge-organizing tradition from the earliest writing through later cuneiform cultures.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS05-SRC-001",
+        "WS05-SRC-003"
+      ],
+      "counterevidence": "Continuity involved copying, reordering and transformation, not static preservation.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS05-CLM-004",
+      "statement": "Legal documents, letters and contracts provide human-scale cases but are mediated by scribal formula and institutional context.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS05-SRC-004"
+      ],
+      "counterevidence": "First-person grammar is not transparent access to private interiority.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS05-CLM-005",
+      "statement": "Functional expansion should be narrated as successive additions and recombinations, not a ladder from accounting to literature.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-001",
+        "WS05-SRC-002",
+        "WS05-SRC-003",
+        "WS05-SRC-004"
+      ],
+      "counterevidence": "Local discontinuities and corpus gaps remain.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS05-CLM-006",
+      "statement": "ETCSL's 394 literary compositions are modern composites based on late-third- and early-second-millennium manuscripts, so they are evidence for textual tradition rather than transparent transcripts of an original speaker.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-005"
+      ],
+      "counterevidence": "Individual manuscripts can preserve locally and chronologically specific variants when cited at tablet level.",
+      "narrative_implication": "Attribute translation and edition; identify composite status and avoid invented authorial interiority."
+    },
+    {
+      "id": "WS05-CLM-007",
+      "statement": "The bounded primary-text shortlist is fixed to four cases: administrative tablet P005390/MMA 1988.433.2, private letter MMA 86.11.111, lexical school tablet P228744, and literary composition ETCSL 3.1.19.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-006",
+        "WS05-SRC-007",
+        "WS05-SRC-008",
+        "WS05-SRC-009",
+        "WS05-SRC-010"
+      ],
+      "counterevidence": "The four cases cover distinct functional turns but cannot represent every city, period, social group or genre.",
+      "narrative_implication": "Use only these four handoff candidates unless a later production task documents why a substitution is needed."
+    },
+    {
+      "id": "WS05-CLM-008",
+      "statement": "Published English translations are editorial products and require attribution and rights review before direct quotation.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-004",
+        "WS05-SRC-005",
+        "WS05-SRC-007",
+        "WS05-SRC-008",
+        "WS05-SRC-009",
+        "WS05-SRC-010",
+        "WS05-SRC-011"
+      ],
+      "counterevidence": "Met object images selected here are explicitly Public Domain, but that status does not extend to modern catalogue prose, CDLI/Penn photographs or ETCSL/CTMMA translations.",
+      "narrative_implication": "Met images may be used with object credit; paraphrase modern translations unless a production-stage rights check clears quotation."
+    },
+    {
+      "id": "WS05-CLM-009",
+      "statement": "P005390/MMA 1988.433.2 is a physical Uruk III administrative tablet recording grain-related quantities; its language and exact transaction remain uncertain.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS05-SRC-006",
+        "WS05-SRC-007"
+      ],
+      "counterevidence": "CDLI and the Met use overlapping but different date labels, and both qualify the Uruk provenience; missing verbs prevent a fully secure reading of deliveries versus distributions.",
+      "narrative_implication": "Use as a representative preserved administrative form, not as a quoted individual voice or proof of a specific economic institution."
+    },
+    {
+      "id": "WS05-CLM-010",
+      "statement": "MMA 86.11.111 is a ca. 1632 BCE Old Babylonian letter in which Marduk-mushallim reports failure to implement a royal security order.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS05-SRC-004",
+        "WS05-SRC-008"
+      ],
+      "counterevidence": "Its probable Sippar-Yahrurum origin lacks excavated context, and the museum itself presents the letter as unusual.",
+      "narrative_implication": "Use as an exceptional human-scale epistolary case illustrating reporting and command, not as representative everyday correspondence or proof that writing caused compliance."
+    },
+    {
+      "id": "WS05-CLM-011",
+      "statement": "P228744 is a fragmented Old Babylonian lexical school tablet excavated at Nippur and a witness to the OB Nippur Ura 03 composite Q000001.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-003",
+        "WS05-SRC-009"
+      ],
+      "counterevidence": "The obverse is missing and the record does not preserve detailed stratigraphy; formal school material cannot establish population-wide literacy.",
+      "narrative_implication": "Use as a representative case of formal lexical classification and copying within the Nippur training tradition only."
+    },
+    {
+      "id": "WS05-CLM-012",
+      "statement": "ETCSL 3.1.19 is a modern composite of the Puzur-Shulgi royal letter tradition assembled from multiple Old Babylonian manuscripts, not a contemporary Ur III dispatch.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS05-SRC-005",
+        "WS05-SRC-010",
+        "WS05-SRC-011"
+      ],
+      "counterevidence": "Individual witnesses such as 3N-T311/IM 58418 preserve substantial portions and can be cited separately, but no one witness equals the complete ETCSL text.",
+      "narrative_implication": "Use to show retrospective political/literary memory and scribal copying; always distinguish narrated event, manuscript date and modern reconstruction."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "id": "T0016-design-section-P01",
+  "product": "sumer-writing",
+  "operation": "design_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "state": "ready_for_review",
+  "created_at": "2026-08-13T09:30:24.411636+00:00",
+  "context_packet": "tasks/T0016-design-section-P01/context.md",
+  "packet_manifest": "tasks/T0016-design-section-P01/packet.json",
+  "allowed_write_paths": [
+    "03_sections/P01/story-plan.json",
+    "tasks/T0016-design-section-P01/report.md",
+    "tasks/T0016-design-section-P01/operator-brief.json"
+  ],
+  "acceptance_criteria": [
+    "Một governing idea và audience payoff được diễn đạt bằng ngôn ngữ phổ thông.",
+    "Mọi claim được phân vai; chỉ 1–5 claim được chọn để narration thực sự kể.",
+    "Story beats tiến theo tension và consequence, không theo thứ tự evidence pack.",
+    "Không viết narration hoặc tự approve story plan."
+  ],
+  "outputs": [
+    "03_sections/P01/story-plan.json"
+  ],
+  "report_path": "tasks/T0016-design-section-P01/report.md",
+  "operator_brief_path": "tasks/T0016-design-section-P01/operator-brief.json",
+  "submitted_at": "2026-08-13T10:09:36.191061+00:00"
+}

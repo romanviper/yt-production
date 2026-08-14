@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "mode": "brief",
+  "headline": "Story plan P01 đã đạt change request và sẵn sàng để duyệt.",
+  "status": "ready_for_review",
+  "material_points": [
+    "Đúng năm beat hook → tension → reveal → payoff → bridge; chronology chỉ là định hướng tối thiểu.",
+    "Không suy diễn cuộc trao đổi hoặc người tham gia; chỉ giữ thuật ngữ proto-cuneiform.",
+    "Governing idea và payoff cùng giới hạn ở khả năng cố định một phần thông tin trên vật thể bền dù chưa ghi trọn lời nói."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Bạn có approve story plan P01 để mở task viết prose không?",
+    "recommendation": "Approve nếu cấu trúc năm beat và giới hạn evidence đã đạt yêu cầu.",
+    "options": [
+      {
+        "label": "Approve",
+        "effect": "Cho phép tạo task draft_section P01."
+      },
+      {
+        "label": "Request changes",
+        "effect": "Giữ P01 ở vòng story design và tạo change request mới."
+      }
+    ]
+  },
+  "next_step": ""
+}

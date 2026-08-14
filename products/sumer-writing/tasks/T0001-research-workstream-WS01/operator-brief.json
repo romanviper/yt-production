@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "WS01 hoàn tất: Uruk có corpus proto-cuneiform sớm rất mạnh, nhưng “người Sumer phát minh chữ viết năm 3200 BCE” không đứng vững.",
+  "material_points": [
+    "Niên đại tốt nhất là Uruk IV khoảng 3350/3300–3200 BCE, rồi Uruk III khoảng 3200–3000 BCE; relative sequence chắc hơn ngày tuyệt đối.",
+    "Attribution vùng Uruk/nam Mesopotamia có độ tin cậy cao; attribution trực tiếp cho ngôn ngữ hoặc dân tộc Sumer chỉ thấp–trung bình và còn tranh luận.",
+    "“World first” không nên dùng như fact vì evidence Ai Cập chồng lấn; cách gọi an toàn là một trong những truyền thống writing độc lập sớm nhất."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Bạn có chấp nhận terminology và mức qualification này làm boundary chung cho các workstream sau không?",
+    "recommendation": "Chấp nhận WS01 và dùng Uruk/southern Mesopotamian proto-cuneiform cho horizon sớm; không dùng mệnh đề Sumer invented writing như fact.",
+    "options": [
+      {
+        "label": "Chấp nhận WS01",
+        "effect": "Khóa terminology và chronology này làm handoff cho synthesis sau."
+      },
+      {
+        "label": "Yêu cầu sửa",
+        "effect": "Giữ WS01 ở review và chỉ chỉnh những claim hoặc qualification bạn chỉ định."
+      }
+    ]
+  },
+  "next_step": ""
+}

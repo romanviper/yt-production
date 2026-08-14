@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "slug": "sumer-writing",
+  "working_title": "Chữ viết đã tạo ra nền văn minh Sumer như thế nào?",
+  "language": "vi",
+  "format": "long_form_history_documentary",
+  "status": "outline_redesign",
+  "created_at": "2026-08-12",
+  "target": {
+    "duration_minutes": {
+      "min": 60,
+      "max": 120
+    },
+    "narration_wpm": 140
+  },
+  "locked_decisions": [
+    {
+      "id": "DEC-0001",
+      "statement": "Sản phẩm đầu tiên kể câu chuyện về chữ viết của nền văn minh Sumer.",
+      "locked": true,
+      "by": "user",
+      "date": "2026-08-12"
+    },
+    {
+      "id": "DEC-0002",
+      "statement": "Fall of Civilizations là benchmark và đối thủ tham chiếu, không phải khuôn để sao chép.",
+      "locked": true,
+      "by": "user",
+      "date": "2026-08-12"
+    },
+    {
+      "id": "DEC-0003",
+      "statement": "Kịch bản dự kiến dài 1–2 giờ và phải được tạo, review, sửa theo module thay vì generate một lần toàn bộ.",
+      "locked": true,
+      "by": "user",
+      "date": "2026-08-12"
+    },
+    {
+      "id": "DEC-0004",
+      "statement": "Global research synthesis và causal model được chấp nhận làm handoff cho outline.",
+      "locked": true,
+      "by": "user",
+      "date": "2026-08-13"
+    }
+  ],
+  "scope": {
+    "in": [
+      "Các áp lực và thực hành dẫn đến những hệ thống ghi dấu sớm ở miền nam Mesopotamia.",
+      "Sự biến đổi của chữ viết về hình thức, công dụng, người sử dụng và thiết chế kiểm soát.",
+      "Hệ quả đối với quản trị, trí nhớ, quyền lực, ngôn ngữ và truyền thống tri thức.",
+      "Sự lan truyền, thích nghi, suy yếu và di sản của truyền thống chữ hình nêm liên quan."
+    ],
+    "out": [
+      "Tổng sử chính trị đầy đủ của Sumer nếu không phục vụ causal chain.",
+      "Danh mục toàn bộ vua, thành bang, thần thoại hoặc thành tựu.",
+      "Sao chép structure, câu chữ, cadence hoặc persona của Fall of Civilizations."
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "Fall of Civilizations — The Sumerians: Fall of the First Cities",
+      "role": "direct_adjacent_competitor",
+      "url": "https://www.youtube.com/watch?v=d2lJUOv0hLA",
+      "differentiate_on": "Theo vòng đời chữ viết như công nghệ–thiết chế."
+    }
+  ],
+  "stages": {
+    "direction": "approved",
+    "research_plan": "approved",
+    "research": "approved",
+    "outline": "changes_requested",
+    "sections": "paused",
+    "integration": "not_started",
+    "delivery": "not_started"
+  },
+  "production_cycle": {
+    "id": "C002",
+    "status": "outline_design",
+    "previous": "C001",
+    "started_at": "2026-08-13T18:18:51.170286+00:00",
+    "reason": "Bắt đầu production cycle C002 dưới harness Hard Boundaries, Soft Logic. Thiết kế lại toàn bộ kịch bản từ research đã duyệt: giữ ba act toàn phim opening–body–ending rõ ràng; thiết kế macro movements trước rồi mới cắt P## theo causal load và context/review boundaries; không dùng section count, beat sheet, payoff formula hay word quota làm khuôn mặc định. Giữ ổn định channel values, voice identity và causal system-as-protagonist; cho phép opening form, local route, movement count, section count và relative length thích ứng với vật liệu. Không dùng P01 hoặc story plan của cycle cũ làm template."
+  }
+}

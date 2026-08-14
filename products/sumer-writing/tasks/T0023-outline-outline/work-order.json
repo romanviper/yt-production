@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "id": "T0023-outline-outline",
+  "product": "sumer-writing",
+  "operation": "outline",
+  "target": {
+    "section": null,
+    "unit": null
+  },
+  "state": "ready",
+  "created_at": "2026-08-14T02:49:35.241698+00:00",
+  "context_packet": "tasks/T0023-outline-outline/context.md",
+  "packet_manifest": "tasks/T0023-outline-outline/packet.json",
+  "allowed_write_paths": [
+    "02_outline/outline.json",
+    "02_outline/story-bible.md",
+    "02_outline/voice-profile.md",
+    "tasks/T0023-outline-outline/report.md",
+    "tasks/T0023-outline-outline/operator-brief.json"
+  ],
+  "outputs": [
+    "02_outline/outline.json",
+    "02_outline/story-bible.md",
+    "02_outline/voice-profile.md"
+  ],
+  "report_path": "tasks/T0023-outline-outline/report.md",
+  "operator_brief_path": "tasks/T0023-outline-outline/operator-brief.json"
+}

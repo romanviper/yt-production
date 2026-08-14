@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "headline": "Outline 10 phần đã được bạn chấp nhận và bàn giao sang giai đoạn viết theo module.",
+  "material_points": [
+    "P01–P10 đã có brief và evidence pack riêng.",
+    "Task viết P01 đã được tạo; các phần khác chưa được viết."
+  ],
+  "decision": {
+    "required": false,
+    "question": "",
+    "recommendation": "",
+    "options": []
+  },
+  "next_step": "Content Agent thực hiện task active P01 và bàn giao bản nháp để bạn duyệt."
+}

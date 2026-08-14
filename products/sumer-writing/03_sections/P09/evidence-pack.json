@@ -1,0 +1,339 @@
+{
+  "schema_version": 1,
+  "section": "P09",
+  "claims": [
+    {
+      "id": "CLM-0059",
+      "statement": "The living-tradition endpoint is institutional reproduction: active teaching, copying and competent reuse, not the survival of old tablets alone.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0016",
+        "SRC-0035"
+      ],
+      "counterevidence": "Sparse late evidence makes the exact endpoint regional rather than singular.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-CLM-005"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0062",
+      "statement": "Script survival, language survival and institutional survival are separable: cuneiform could encode new languages, Sumerian could persist as learned content, and both depended on training communities.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0034",
+        "SRC-0016",
+        "SRC-0035",
+        "SRC-0037"
+      ],
+      "counterevidence": "Sparse regional evidence prevents one synchronized timeline.",
+      "narrative_implication": "Track the three layers independently through the endpoint passed to WS08.",
+      "provenance": [
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-CLM-008"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0063",
+      "statement": "Cuneiform use contracted over centuries rather than ending through one event.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0035",
+        "SRC-0034"
+      ],
+      "counterevidence": "Regional and genre-specific endpoints differ.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-CLM-001"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0064",
+      "statement": "Lexical and scholarly traditions persisted into the first centuries CE in narrowed institutional settings.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0035"
+      ],
+      "counterevidence": "Exact last-tablet dates depend on genre and dating; ‘last’ remains a discovery-sensitive claim.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-CLM-002"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0065",
+      "statement": "Material tablets survived after living reading competence disappeared, creating a break between ancient transmission and modern knowledge.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0035",
+        "SRC-0039",
+        "SRC-0040"
+      ],
+      "counterevidence": "Some local knowledge of ruins or objects may have persisted without script competence.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-CLM-003"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0068",
+      "statement": "The latest currently known dated cuneiform tablet is an astronomical text from 75 CE, but this is a latest-discovered datum, not a proven final act of writing.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0041"
+      ],
+      "counterevidence": "New finds may move the endpoint, and competence could outlast the latest preserved tablet.",
+      "narrative_implication": "Use 'latest currently known' and keep WS07's institutional-reproduction definition.",
+      "provenance": [
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-CLM-006"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0069",
+      "statement": "Cuneiform decline combined language competition, institutional contraction, changing political economies and the cost of specialist training; no surviving evidence isolates one sufficient cause.",
+      "type": "inference",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0035",
+        "SRC-0034",
+        "SRC-0041"
+      ],
+      "counterevidence": "The relative weight of Aramaic, Greek, temple change and regional politics differs by place and century.",
+      "narrative_implication": "End with a mechanism set, not a single-collapse explanation.",
+      "provenance": [
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-CLM-007"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-0016",
+      "title": "DCCLT lexical introduction",
+      "author": "Oracc / University of Pennsylvania",
+      "year": null,
+      "type": "academic corpus introduction",
+      "authority": "Curated specialist corpus",
+      "url": "https://oracc.museum.upenn.edu/dcclt/intro/lexical_intro.html",
+      "locators": [
+        "introductory sections",
+        "introduction"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Public overview; not a demographic study.",
+        "Lexical focus.",
+        "Lexical tradition focus."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-003"
+        },
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-003"
+        },
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0034",
+      "title": "The Sumerian language",
+      "author": "Oracc / University of Pennsylvania, 2019",
+      "year": null,
+      "type": "academic reference",
+      "authority": "Curated specialist project",
+      "url": "https://oracc.museum.upenn.edu/nimrud/ancientkalhu/thewritings/sumerian/",
+      "locators": [
+        "full overview",
+        "overview"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Public overview."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-SRC-001"
+        },
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0035",
+      "title": "Ancient Mesopotamia",
+      "author": "Niek Veldhuis, 2019",
+      "year": null,
+      "type": "scholarly handbook chapter",
+      "authority": "Leading specialist on lexical traditions",
+      "url": "https://www.cambridge.org/core/books/cambridge-world-history-of-lexicography/ancient-mesopotamia/B020E908200C609176018CA9FCCA363A",
+      "locators": [
+        "summary"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Full chapter access limited."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-SRC-003"
+        },
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-SRC-001"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0037",
+      "title": "The Construction of Meaning on the Cuneiform Periphery",
+      "author": "Mark Weeden, 2017",
+      "year": null,
+      "type": "scholarly chapter",
+      "authority": "Open-access specialist study of transmission and adaptation",
+      "url": "https://discovery.ucl.ac.uk/id/eprint/10198300/",
+      "locators": [
+        "pp. 3–13; Hittite curricula, bilingual lists and selective transfer"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Hittite/periphery cases do not represent every receiving region."
+      ],
+      "notes": [
+        "Used to identify transmission channels, adaptation costs and selective non-transfer."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-SRC-005"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0039",
+      "title": "Art of the Ancient Near East: A Resource for Educators",
+      "author": "Metropolitan Museum of Art",
+      "year": null,
+      "type": "museum scholarly publication",
+      "authority": "Major museum synthesis",
+      "url": "https://resources.metmuseum.org/resources/metpublications/pdf/Art_of_the_Ancient_Near_East_A_Resource_for_Educators.pdf",
+      "locators": [
+        "Cuneiform Messages, pp. 27–29"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Educational compression."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-SRC-003"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0040",
+      "title": "Discoveries and Excavations — The City of Babylon",
+      "author": "Olof Pedersén, 2021",
+      "year": null,
+      "type": "scholarly monograph chapter",
+      "authority": "Modern excavation/decipherment history",
+      "url": "https://www.cambridge.org/core/books/city-of-babylon/discoveries-and-excavations/4E8A13224F291C14876F2E5DC9260F65",
+      "locators": [
+        "chapter overview"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Babylon-focused."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0041",
+      "title": "The extinction of cuneiform writing",
+      "author": "Centre for the Study of Manuscript Cultures, Universität Hamburg, 2020",
+      "year": null,
+      "type": "academic research overview",
+      "authority": "University manuscript-culture research center",
+      "url": "https://www.csmc.uni-hamburg.de/publications/mesopotamia/2020-08-31.html",
+      "locators": [
+        "late-text chronology; first-century BCE/CE astronomical corpus and 75 CE tablet"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "The latest-known date is discovery-sensitive and does not prove an exact final day of competence."
+      ],
+      "notes": [
+        "Used to connect WS07's institutional endpoint to late Babylonian evidence."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-SRC-005"
+        }
+      ]
+    }
+  ],
+  "rule": "Only claims in this pack may appear as substantive historical claims in the draft."
+}

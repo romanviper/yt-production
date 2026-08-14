@@ -1,0 +1,1143 @@
+{
+  "schema_version": 1,
+  "product": "sumer-writing",
+  "status": "complete",
+  "deduplication_rule": "Canonical URL; locators, limitations, notes and local provenance are unioned.",
+  "sources": [
+    {
+      "id": "SRC-0001",
+      "title": "Proto-Cuneiform Account-Books and Journals",
+      "author": "Robert K. Englund",
+      "year": 2004,
+      "type": "scholarly chapter / corpus synthesis",
+      "authority": "Leading specialist synthesis grounded in the archaic tablet corpus and CDLI work.",
+      "url": "https://cdli.earth/files-up/publications/englund2004a.pdf",
+      "locators": [
+        "pp. 24–27 (PDF pp. 2–5), especially chronology figure and discussion of Uruk IV/III corpus",
+        "pp. 24–31",
+        "pp. 28–31"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Chronological ranges and corpus counts reflect the state of publication in 2004; some causal interpretation belongs to WS02.",
+        "Older chronology; causal interpretation remains debated.",
+        "Earliest corpus only."
+      ],
+      "notes": [
+        "Supports ca. 3300 BCE emergence, relative Uruk IV→III sequence, overwhelmingly administrative earliest corpus, and caution around token continuity.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-001"
+        },
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-002"
+        },
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-001"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0002",
+      "title": "Uruk and I",
+      "author": "Hans J. Nissen",
+      "year": 2024,
+      "type": "scholarly excavation historiography",
+      "authority": "CDLI Journal article by a senior Uruk specialist auditing excavation records and chronology.",
+      "url": "https://cdli.earth/articles/cdlj/2024-1",
+      "locators": [
+        "§15.8; §16.1–16.4; §17.3; §18.2"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Author explicitly foregrounds failures in legacy excavation documentation; exact absolute dates remain model-dependent."
+      ],
+      "notes": [
+        "Uruk IVa is the most probable archaeological placement of the oldest script, slightly earlier cannot be excluded; find context is often insufficient and unreliable."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0003",
+      "title": "Writing in Early Mesopotamia: Beyond the Meme",
+      "author": "Massimo Maiocchi",
+      "year": 2019,
+      "type": "peer-reviewed scholarly chapter",
+      "authority": "Assyriological synthesis focused on early Mesopotamian writing, semiotics and material systems.",
+      "url": "https://iris.unive.it/retrieve/e4239dde-83dd-7180-e053-3705fe0a3322/Maiocchi%20M.%202019%2C%20Writing%20in%20Early%20Mesopotamia%20--%20Beyond%20the%20Meme.pdf",
+      "locators": [
+        "pp. 410–412 (PDF pp. 15–17), especially discussion of glottographic/semasiographic boundary",
+        "pp. 410–412"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "The chapter advocates a fluid continuum; terminology is analytical rather than a universally accepted threshold definition.",
+        "Framework-oriented rather than a new excavation report."
+      ],
+      "notes": [
+        "Useful counterweight to a binary true-writing/proto-writing distinction and to a linear token→tablet story.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-003"
+        },
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0004",
+      "title": "The Origins of Writing",
+      "author": "Ira Spar",
+      "year": 2004,
+      "type": "museum scholarly essay",
+      "authority": "Metropolitan Museum of Art Heilbrunn Timeline essay by a cuneiform specialist.",
+      "url": "https://www.metmuseum.org/essays/the-origins-of-writing",
+      "locators": [
+        "paragraphs 62–69",
+        "paragraph 69"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Introductory synthesis and now older; statements about possible mid-fourth-millennium Syrian/Turkish systems are provisional.",
+        "Introductory; dates rounded.",
+        "Broad chronological compression."
+      ],
+      "notes": [
+        "States that Sumerian identification of Uruk tablets is popular but not universal; phonetic use is sparse before 3000 and consistently apparent much later.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-004"
+        },
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-001"
+        },
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0005",
+      "title": "Visible Language: Inventions of Writing in the Ancient Middle East and Beyond",
+      "author": "Christopher Woods (ed.)",
+      "year": 2010,
+      "type": "academic museum catalogue / comparative synthesis",
+      "authority": "University of Chicago Oriental Institute catalogue curated by a Sumerologist.",
+      "url": "https://isac.uchicago.edu/sites/default/files/uploads/shared/docs/oimp32.pdf",
+      "locators": [
+        "comparative chronology and essays on earliest Mesopotamian and Egyptian writing; catalogue overview",
+        "pp. 33–50; development of accounting systems",
+        "Mesopotamian writing essays"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Catalogue compresses specialist disagreements for comparative presentation; use for comparison scope, not exact Uruk stratigraphy.",
+        "Comparative overview; some pathways remain hypothetical.",
+        "Catalogue compresses disagreements."
+      ],
+      "notes": [
+        "Treats Mesopotamia and Egypt as roughly contemporary independent inventions; supports avoiding an unqualified unique 'world first' claim.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-005"
+        },
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-001"
+        },
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0006",
+      "title": "Visible Language exhibition overview",
+      "author": "Institute for the Study of Ancient Cultures, University of Chicago",
+      "year": 2010,
+      "type": "academic institutional overview",
+      "authority": "Official ISAC summary of the Woods-curated exhibition.",
+      "url": "https://isac.uchicago.edu/museum-exhibits/visible-language-inventions-writing-ancient-middle-east-fall-2010",
+      "locators": [
+        "paragraphs 46–51"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Public-facing overview rather than full argument; dates are rounded."
+      ],
+      "notes": [
+        "Places Mesopotamian tablets around 3200 BCE and early Egyptian tags around 3320 BCE, illustrating why 'first' depends on definition and dating."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-006"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0007",
+      "title": "The State of Decipherment of Proto-Elamite",
+      "author": "Robert K. Englund",
+      "year": 2004,
+      "type": "scholarly chapter / comparative script study",
+      "authority": "Corpus-based comparison by a leading proto-cuneiform and proto-Elamite specialist.",
+      "url": "https://cdli.earth/files-up/publications/englund2004c.pdf",
+      "locators": [
+        "pp. 124–127 and 139–140 (PDF pp. 24–27, 39–40)"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Proto-Elamite comparison is secondary to WS01 and does not establish the spoken language of Uruk scribes."
+      ],
+      "notes": [
+        "Supports relative order Uruk IV before Uruk III and contemporaneity/contact with proto-Elamite; shows attribution is regional and transmissional, not a simple ethnic label."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-007"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0008",
+      "title": "The Origins of Writing",
+      "author": "Metropolitan Museum of Art, object and corpus context",
+      "year": 2004,
+      "type": "museum corpus overview",
+      "authority": "Major museum collection context linked to excavated and collected early tablets.",
+      "url": "https://www.metmuseum.org/art/collection/search/327385",
+      "locators": [
+        "object description: earliest tablets around 3300 BCE; two early phases"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Single object is illustrative, not representative; provenance and dating of market-derived tablets can be weaker than excavated material."
+      ],
+      "notes": [
+        "Material anchor for the approximate 3300 BCE date and phase distinction."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-008"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0009",
+      "title": "Reconsidering ‘Tokens’",
+      "author": "Lucy E. Bennison-Chapman, 2019",
+      "year": null,
+      "type": "peer-reviewed article",
+      "authority": "Systematic archaeological reassessment",
+      "url": "https://www.cambridge.org/core/journals/cambridge-archaeological-journal/article/reconsidering-tokens-the-neolithic-origins-of-accounting-or-multifunctional-utilitarian-tools/7E6C04CB040AD8AA0EA84B94D4D275C4",
+      "locators": [
+        "abstract and pp. 233–259"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Full text access limited; abstract supports multifunctionality critique."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-003"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0010",
+      "title": "A Quantitative Analysis of Proto-Cuneiform Sign Use in Archaic Tribute",
+      "author": "Logan Born and Kathryn Erin Kelley, 2021",
+      "year": null,
+      "type": "peer-reviewed corpus study",
+      "authority": "CDLI corpus-based quantitative analysis",
+      "url": "https://cdli.earth/articles/cdlb/2021-6",
+      "locators": [
+        "§§1–3; corpus definition, sign-frequency and genre limits",
+        "§§1–3; 6,726-artifact working corpus and sign-use method"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Sign-frequency patterns do not by themselves establish sign meanings or causal direction.",
+        "Readability, sign variants, genre assignment and corpus growth constrain quantitative conclusions."
+      ],
+      "notes": [
+        "Used to test how far administrative subgenres can be distinguished from the preserved corpus.",
+        "Used to separate observed sign distribution from reconstructed linguistic value."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-005"
+        },
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-005"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0011",
+      "title": "Cuneiform Script and the Origin of the Oldest Writing Systems in Comparative Perspective",
+      "author": "Massimo Maiocchi, 2015",
+      "year": null,
+      "type": "specialist institutional essay",
+      "authority": "Institute for the Study of Ancient Cultures",
+      "url": "https://isac.uchicago.edu/sites/default/files/uploads/shared/docs/nn227.pdf",
+      "locators": [
+        "pp. 6–9; token frequency mismatch and multiple antecedent practices"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Short comparative synthesis, not a primary excavation report."
+      ],
+      "notes": [
+        "Used for the non-linear formation model and token-continuity limit."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-006"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0012",
+      "title": "Numerical and Metrological Graphemes",
+      "author": "Christine Proust, 2009",
+      "year": null,
+      "type": "peer-reviewed article",
+      "authority": "Detailed grapheme/metrology study",
+      "url": "https://cdli.mpiwg-berlin.mpg.de/articles/cdlj/2009-1.pdf",
+      "locators": [
+        "§3.5 and conclusions"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Focuses on specific numerical systems."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-003"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0013",
+      "title": "Classifying and Comparing Early Writing Systems",
+      "author": "Amalia Gnanadesikan, 2023",
+      "year": null,
+      "type": "scholarly handbook chapter",
+      "authority": "Current comparative orthography synthesis",
+      "url": "https://www.cambridge.org/core/books/cambridge-handbook-of-historical-orthography/classifying-and-comparing-early-writing-systems/1FB931255299DED0DCF6C0E712E8A653",
+      "locators": [
+        "chapter summary"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Accessible summary rather than full chapter."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0014",
+      "title": "Masters’ Writings and Students’ Writings",
+      "author": "Christine Proust, 2011",
+      "year": null,
+      "type": "scholarly chapter",
+      "authority": "Specialist study of scribal education",
+      "url": "https://hal.science/hal-01139643/document",
+      "locators": [
+        "school material analysis"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Focused mainly on later school corpora."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-001"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0015",
+      "title": "The Scribal Tablet-House in Ancient Mesopotamia",
+      "author": "Christopher J. Lucas, 1979",
+      "year": null,
+      "type": "scholarly article",
+      "authority": "Survey of archaeological and textual evidence",
+      "url": "https://knowledgebasedsociety.com/wp-content/uploads/2021/12/367648.pdf",
+      "locators": [
+        "pp. 305–332"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Older and sometimes institutionally schematic."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0016",
+      "title": "DCCLT lexical introduction",
+      "author": "Oracc / University of Pennsylvania",
+      "year": null,
+      "type": "academic corpus introduction",
+      "authority": "Curated specialist corpus",
+      "url": "https://oracc.museum.upenn.edu/dcclt/intro/lexical_intro.html",
+      "locators": [
+        "introductory sections",
+        "introduction"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Public overview; not a demographic study.",
+        "Lexical focus.",
+        "Lexical tradition focus."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-003"
+        },
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-003"
+        },
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0017",
+      "title": "Excursus: Scribes and Scribal Education",
+      "author": "Oxford Academic chapter",
+      "year": null,
+      "type": "scholarly chapter",
+      "authority": "Legal/scribal specialist synthesis",
+      "url": "https://academic.oup.com/book/31901/chapter/267577699",
+      "locators": [
+        "chapter overview"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Specific focus on composition and legal tradition."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0018",
+      "title": "The Tablet House: A Scribal School in Old Babylonian Nippur",
+      "author": "Eleanor Robson, 2001",
+      "year": null,
+      "type": "peer-reviewed article",
+      "authority": "Archaeologically contextualized specialist study",
+      "url": "https://www.jstor.org/stable/23282005",
+      "locators": [
+        "pp. 39–66; House F assemblage and curriculum"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "One eighteenth-century BCE household context at Nippur; not a universal school model."
+      ],
+      "notes": [
+        "Human-scale anchor: more than 1,400 contextualized tablets from House F."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-005"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0019",
+      "title": "Tell Khaiber: scribes, schooling and literacy",
+      "author": "Eleanor Robson et al., 2023",
+      "year": null,
+      "type": "archaeological monograph chapter",
+      "authority": "Excavation-based study of scribal practice",
+      "url": "https://discovery.ucl.ac.uk/10172118/13/Robson_Tell%20Khaiber%20CHAPTER%204.pdf",
+      "locators": [
+        "chapter 4; professional scribes, apprenticeship and non-professional literacy"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "First Sealand provincial center; evidence cannot be generalized to all periods."
+      ],
+      "notes": [
+        "Used to distinguish professional title, on-the-job competence and non-professional use."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-006"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0020",
+      "title": "Women's Writing of Ancient Mesopotamia — Introduction",
+      "author": "Charles Halton and Saana Svärd, 2017",
+      "year": null,
+      "type": "scholarly anthology introduction",
+      "authority": "Cambridge specialist synthesis",
+      "url": "https://www.cambridge.org/core/books/womens-writing-of-ancient-mesopotamia/introduction/99B0C019CDA688ECD98A582DA910EFD9",
+      "locators": [
+        "Introduction, pp. xix–xx"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Selected female voices are not a demographic sample; authorship and scribal mediation vary."
+      ],
+      "notes": [
+        "Used only to bound claims about gender and access."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS04",
+          "local_id": "WS04-SRC-007"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0021",
+      "title": "Cuneiform Texts in the Metropolitan Museum, Vol. I",
+      "author": "Metropolitan Museum of Art",
+      "year": null,
+      "type": "scholarly catalogue",
+      "authority": "Edited translations and object records",
+      "url": "https://www.metmuseum.org/met-publications/cuneiform-texts-in-the-metropolitan-museum-of-art-volume-i-tablets-cones-and-bricks-of-the-third",
+      "locators": [
+        "catalogue overview for commercial, legal and epistolary texts",
+        "MMA 86.11.111 = CTMMA I no. 69, p. 87; plates 63–64 and 135–136"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Collection selection is not representative of total use; the modern edition/translation requires attribution and a separate quotation-rights check."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0022",
+      "title": "ETCSL Manual",
+      "author": "Electronic Text Corpus of Sumerian Literature, University of Oxford",
+      "year": null,
+      "type": "academic corpus documentation",
+      "authority": "Curated transliteration and translation corpus",
+      "url": "https://etcsl.orinst.ox.ac.uk/edition2/etcslmanual.php",
+      "locators": [
+        "§1.1; corpus scope, 394 compositions, source-date range"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Modern composite editions reconstruct compositions from multiple manuscripts; not transparent single-tablet voices."
+      ],
+      "notes": [
+        "Used for provenance, copy status and translation handling of literary candidates."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-005"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0023",
+      "title": "MSVO 3, 79 artifact entry (P005390)",
+      "author": "Cuneiform Digital Library Initiative; transliterations by Robert K. Englund, Jacob L. Dahl and CDLI",
+      "year": null,
+      "type": "primary artifact record and corpus transliteration",
+      "authority": "CDLI object-level record linked to the Metropolitan Museum of Art",
+      "url": "https://cdli.earth/P005390",
+      "locators": [
+        "CDLI P005390; MMA 1988.433.2",
+        "Text: obverse columns 1–2 and reverse columns 1–2",
+        "Edition references: MSVO 3 no. 79; Frühe Schrift no. 4.79; CTMMA IV no. 180"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "CDLI labels Uruk provenience uncertain and dates the tablet to Uruk III ca. 3200–3000 BCE; the Met uses Jemdet Nasr ca. 3100–2900 BCE. Language is undetermined and the document lacks verbs, limiting transaction-level interpretation."
+      ],
+      "notes": [
+        "Selected administrative object. Contemporary ancient tablet, not a later copy; use as an early economic-classification case, not a transparent voice."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-006"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0024",
+      "title": "Cuneiform tablet: administrative account concerning the distribution of barley and emmer",
+      "author": "Metropolitan Museum of Art",
+      "year": null,
+      "type": "museum object record",
+      "authority": "Holding-institution record for MMA 1988.433.2",
+      "url": "https://www.metmuseum.org/art/collection/search/327384",
+      "locators": [
+        "Object no. 1988.433.2",
+        "Object overview and artwork details",
+        "Open Access/Public Domain image flag"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "The museum gives 'probably from Uruk' and a broad interpretive description; acquisition rather than excavation context means exact provenience is uncertain."
+      ],
+      "notes": [
+        "Rights anchor for the selected administrative object: Met object images are marked Public Domain; credit the museum and object number."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-007"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0025",
+      "title": "Cuneiform tablet: private letter",
+      "author": "Metropolitan Museum of Art",
+      "year": null,
+      "type": "primary artifact record with scholarly overview",
+      "authority": "Holding-institution record for MMA 86.11.111",
+      "url": "https://www.metmuseum.org/art/collection/search/321706",
+      "locators": [
+        "Object no. 86.11.111",
+        "Overview: Marduk-mushallim's report on non-implementation of a royal security order",
+        "Artwork details: Old Babylonian, ca. 1632 BCE, probably Sippar-Yahrurum"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Purchased in 1886; exact archaeological context is unavailable and geography is qualified as probable. The letter is unusual, so it cannot represent ordinary correspondence."
+      ],
+      "notes": [
+        "Selected epistolary object. Treat as an ancient documentary letter, not an Old Babylonian school copy. Met object images are marked Public Domain; modern translation wording is not cleared for direct quotation."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-008"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0026",
+      "title": "N 6052 (+) UM 29-16-393 artifact entry (P228744)",
+      "author": "Cuneiform Digital Library Initiative / Digital Corpus of Cuneiform Lexical Texts",
+      "year": null,
+      "type": "primary artifact record, transliteration and composite witness",
+      "authority": "CDLI/DCCLT object-level lexical corpus",
+      "url": "https://cdli.earth/P228744",
+      "locators": [
+        "CDLI P228744; museum nos. N 6052 (+) UM 29-16-393",
+        "Reverse columns 1–2, preserved lines 4–30",
+        "Witness to CDLI Lexical 000001 / composite Q000001"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Fragmented Old Babylonian school tablet; obverse is not preserved and findspot/stratigraphic fields are blank. It represents formal lexical training at Nippur, not general literacy."
+      ],
+      "notes": [
+        "Selected knowledge/training object. Excavated at Nippur, ca. 1900–1600 BCE. CDLI provides transliteration; the photograph is marked © Penn Museum and requires a separate image-use check."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-009"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0027",
+      "title": "Letter from Puzur-Shulgi to Ibbi-Suen about Ishbi-Erra's claim on Isin (ETCSL 3.1.19)",
+      "author": "Electronic Text Corpus of Sumerian Literature, University of Oxford",
+      "year": null,
+      "type": "primary-text composite edition and translation",
+      "authority": "Curated Sumerian literary corpus with manuscript list and edition bibliography",
+      "url": "https://etcsl.orinst.ox.ac.uk/section3/b3119.htm",
+      "locators": [
+        "ETCSL composition 3.1.19",
+        "Composite text lines 1–53: section3/c3119.htm",
+        "English translation lines 1–53: section3/tr3119.htm",
+        "Cuneiform witnesses include 3N-T311 = IM 58418 and IM 13347; full witness list in bibliography"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "The online text is a modern composite reconstructed from multiple Old Babylonian school manuscripts. It is not a surviving contemporary Ur III letter or a single speaker's unmediated voice."
+      ],
+      "notes": [
+        "Selected literary-memory text. The narrated setting belongs to the end of Ur III, while the surviving manuscripts are later Old Babylonian copies."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-010"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0028",
+      "title": "ETCSL credits and copyright",
+      "author": "Electronic Text Corpus of Sumerian Literature, University of Oxford",
+      "year": null,
+      "type": "rights and citation statement",
+      "authority": "Official corpus rights page",
+      "url": "https://etcsl.orinst.ox.ac.uk/credits.htm",
+      "locators": [
+        "Citations section",
+        "Copyright statement"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "The page supplies attribution and copyright ownership but no blanket licence for audiovisual reuse of the English translation."
+      ],
+      "notes": [
+        "ETCSL transliteration/translation must be attributed; direct quotation beyond a minimal excerpt requires rights clearance. Prefer attributed paraphrase during scripting."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-011"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0029",
+      "title": "An Interdisciplinary Overview of a Mesopotamian City and its Hinterlands",
+      "author": "Robert McC. Adams, 2008",
+      "year": null,
+      "type": "peer-reviewed article",
+      "authority": "Major archaeological synthesis",
+      "url": "https://cdli.earth/articles/cdlj/2008-1",
+      "locators": [
+        "§2.3 and archive discussion"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Umma/Ur III case is not universal."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-001"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0030",
+      "title": "Equivalency Values and the Command Economy of the Ur III Period",
+      "author": "Robert K. Englund, 2012",
+      "year": null,
+      "type": "scholarly study",
+      "authority": "Corpus-based administrative study",
+      "url": "https://cdli.earth/files-up/publications/englund2012a.pdf",
+      "locators": [
+        "labor norms and equivalencies"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Ur III is much later than writing’s origin."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0031",
+      "title": "Old Babylonian Networks of Urban Notables",
+      "author": "Marc Van De Mieroop, 2009",
+      "year": null,
+      "type": "peer-reviewed article",
+      "authority": "Specialist socio-economic interpretation",
+      "url": "https://cdli.earth/articles/cdlj/2009-7",
+      "locators": [
+        "§1.2 and §2.4"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Broad model debated; Old Babylonian focus."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-003"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0032",
+      "title": "Cuneiform Tablets in Collections at the University of Kansas",
+      "author": "CDLI Bulletin, 2020",
+      "year": null,
+      "type": "scholarly catalogue article",
+      "authority": "Object-level provenance scholarship",
+      "url": "https://cdli.earth/articles/cdlb/2020-2",
+      "locators": [
+        "§1.7 provenance warning"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Collection-focused rather than archive theory."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0033",
+      "title": "A Reconstruction of the Puzriš-Dagan Central Livestock Agency",
+      "author": "Tonia Sharlach, 2013",
+      "year": null,
+      "type": "peer-reviewed corpus study",
+      "authority": "CDLI archive reconstruction",
+      "url": "https://cdli.earth/articles/cdlj/2013-2",
+      "locators": [
+        "§§1.2–1.5; archive function and more than 13,500 tablets"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Ur III royal institution; archive reconstruction does not establish ordinary experience or empire-wide uniformity."
+      ],
+      "notes": [
+        "Used as a bounded case linking documents, officials, seals and institutional action."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-005"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0034",
+      "title": "The Sumerian language",
+      "author": "Oracc / University of Pennsylvania, 2019",
+      "year": null,
+      "type": "academic reference",
+      "authority": "Curated specialist project",
+      "url": "https://oracc.museum.upenn.edu/nimrud/ancientkalhu/thewritings/sumerian/",
+      "locators": [
+        "full overview",
+        "overview"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Public overview."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-SRC-001"
+        },
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0035",
+      "title": "Ancient Mesopotamia",
+      "author": "Niek Veldhuis, 2019",
+      "year": null,
+      "type": "scholarly handbook chapter",
+      "authority": "Leading specialist on lexical traditions",
+      "url": "https://www.cambridge.org/core/books/cambridge-world-history-of-lexicography/ancient-mesopotamia/B020E908200C609176018CA9FCCA363A",
+      "locators": [
+        "summary"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Full chapter access limited."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-SRC-003"
+        },
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-SRC-001"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0036",
+      "title": "A History of Hittite Literacy — Introduction",
+      "author": "Theo van den Hout, 2020",
+      "year": null,
+      "type": "scholarly monograph chapter",
+      "authority": "Leading Hittitologist synthesis",
+      "url": "https://www.cambridge.org/core/books/history-of-hittite-literacy/introduction/2665C532BD423C96A11075D908A9EF09",
+      "locators": [
+        "introduction"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Hittite-specific."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0037",
+      "title": "The Construction of Meaning on the Cuneiform Periphery",
+      "author": "Mark Weeden, 2017",
+      "year": null,
+      "type": "scholarly chapter",
+      "authority": "Open-access specialist study of transmission and adaptation",
+      "url": "https://discovery.ucl.ac.uk/id/eprint/10198300/",
+      "locators": [
+        "pp. 3–13; Hittite curricula, bilingual lists and selective transfer"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Hittite/periphery cases do not represent every receiving region."
+      ],
+      "notes": [
+        "Used to identify transmission channels, adaptation costs and selective non-transfer."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-SRC-005"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0038",
+      "title": "Literacy and Literature in the Old Kingdom until 1500 BC",
+      "author": "Theo van den Hout, 2020",
+      "year": null,
+      "type": "scholarly monograph chapter",
+      "authority": "Specialist history of Hittite literacy",
+      "url": "https://www.cambridge.org/core/books/history-of-hittite-literacy/literacy-and-literature-in-the-old-kingdom-until-1500-bc/CB1156B309B3C70FFB307EF48A7349ED",
+      "locators": [
+        "chapter summary; local Hittite form and continued oral domains"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Chapter preview/summary and Hittite-specific evidence."
+      ],
+      "notes": [
+        "Used to separate adoption of script from breadth of social use."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS07",
+          "local_id": "WS07-SRC-006"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0039",
+      "title": "Art of the Ancient Near East: A Resource for Educators",
+      "author": "Metropolitan Museum of Art",
+      "year": null,
+      "type": "museum scholarly publication",
+      "authority": "Major museum synthesis",
+      "url": "https://resources.metmuseum.org/resources/metpublications/pdf/Art_of_the_Ancient_Near_East_A_Resource_for_Educators.pdf",
+      "locators": [
+        "Cuneiform Messages, pp. 27–29"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Educational compression."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-SRC-003"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0040",
+      "title": "Discoveries and Excavations — The City of Babylon",
+      "author": "Olof Pedersén, 2021",
+      "year": null,
+      "type": "scholarly monograph chapter",
+      "authority": "Modern excavation/decipherment history",
+      "url": "https://www.cambridge.org/core/books/city-of-babylon/discoveries-and-excavations/4E8A13224F291C14876F2E5DC9260F65",
+      "locators": [
+        "chapter overview"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Babylon-focused."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0041",
+      "title": "The extinction of cuneiform writing",
+      "author": "Centre for the Study of Manuscript Cultures, Universität Hamburg, 2020",
+      "year": null,
+      "type": "academic research overview",
+      "authority": "University manuscript-culture research center",
+      "url": "https://www.csmc.uni-hamburg.de/publications/mesopotamia/2020-08-31.html",
+      "locators": [
+        "late-text chronology; first-century BCE/CE astronomical corpus and 75 CE tablet"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "The latest-known date is discovery-sensitive and does not prove an exact final day of competence."
+      ],
+      "notes": [
+        "Used to connect WS07's institutional endpoint to late Babylonian evidence."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-SRC-005"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0042",
+      "title": "The Earliest Contributions to the Decipherment of Sumerian and Akkadian",
+      "author": "Irving L. Finkel and colleagues, 2011",
+      "year": null,
+      "type": "peer-reviewed history of decipherment",
+      "authority": "CDLI Journal specialist study",
+      "url": "https://cdli.earth/articles/cdlj/2011-1.pdf",
+      "locators": [
+        "§§2–4; Old Persian, Behistun and subsequent comparative steps"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Focuses on early scholarly stages; later institutionalization of Assyriology is outside scope."
+      ],
+      "notes": [
+        "Used to replace the single-eureka story with a staged recovery chain."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS08",
+          "local_id": "WS08-SRC-006"
+        }
+      ]
+    }
+  ]
+}

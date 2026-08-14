@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "workstream": "WS04",
+  "status": "complete",
+  "claims": [
+    {
+      "id": "WS04-CLM-001",
+      "statement": "The earliest writing implies trained specialists, but their identities, recruitment and institutional status are poorly recoverable.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS04-SRC-003"
+      ],
+      "counterevidence": "Lists and handwriting variation provide indirect evidence, not biographies.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS04-CLM-002",
+      "statement": "The best archaeological evidence for formal curricula comes from later household and institutional contexts, especially the Old Babylonian period.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS04-SRC-001",
+        "WS04-SRC-002",
+        "WS04-SRC-003"
+      ],
+      "counterevidence": "Later evidence cannot be projected unchanged onto Uruk.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS04-CLM-003",
+      "statement": "Edubba was not necessarily a single standardized temple-run school system across Mesopotamian history.",
+      "type": "contested",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS04-SRC-001",
+        "WS04-SRC-002"
+      ],
+      "counterevidence": "Literary school texts use institutional language, but excavated teaching often occurs in houses.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS04-CLM-004",
+      "statement": "Scribal competence included copying, calculation, lexical knowledge and genre conventions, not merely decoding signs.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS04-SRC-001",
+        "WS04-SRC-003",
+        "WS04-SRC-004"
+      ],
+      "counterevidence": "Curriculum differed by period, place and career path.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS04-CLM-005",
+      "statement": "Access was restricted and socially consequential, but no reliable percentage for literacy or a universal male-only rule can be derived.",
+      "type": "unknown",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS04-SRC-001",
+        "WS04-SRC-002"
+      ],
+      "counterevidence": "Named female scribes and elite women exist in some periods; corpus is not population-representative.",
+      "narrative_implication": "Use only with the stated confidence and boundary."
+    },
+    {
+      "id": "WS04-CLM-006",
+      "statement": "House F at Old Babylonian Nippur provides an unusually contextualized household training sequence, not proof of a universal Mesopotamian school system.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "WS04-SRC-005"
+      ],
+      "counterevidence": "Its more than 1,400 tablets make the sequence unusually rich but also locally exceptional.",
+      "narrative_implication": "Use House F as an illustrative, high-resolution anchor explicitly labeled non-representative of all periods."
+    },
+    {
+      "id": "WS04-CLM-007",
+      "statement": "Professional title, functional competence and broad literacy must be mapped separately; some later archives show on-the-job or non-professional use outside a single formal school track.",
+      "type": "inference",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "sources": [
+        "WS04-SRC-004",
+        "WS04-SRC-006"
+      ],
+      "counterevidence": "Survival still favors administrative settings and trained writers.",
+      "narrative_implication": "Describe capabilities and work roles instead of assigning a modern literate/illiterate binary."
+    },
+    {
+      "id": "WS04-CLM-008",
+      "statement": "Named women and female-authored or female-voiced texts demonstrate access in some settings but cannot establish population rates or unmediated authorship.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "WS04-SRC-007"
+      ],
+      "counterevidence": "Scribal mediation, elite selection and uneven survival complicate attribution.",
+      "narrative_implication": "Use specific women only with period, role, mediation and representativeness labels."
+    }
+  ]
+}
