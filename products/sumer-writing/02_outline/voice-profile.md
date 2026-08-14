@@ -1,38 +1,29 @@
-# Product Voice Profile — Sumer Writing
+# Voice Profile — Sumer Writing C002
 
-Status: draft
+Status: approved
 
 ## Product voice
 
-Người kể là một điều tra viên điềm tĩnh, đứng cùng phía với khán giả trước những dấu vết khó đọc. Giọng văn sáng rõ, gần với lời nói và có sức nặng nhưng không khoa trương. Nó không kể tổng sử Sumer; nó theo một phát minh dần biến thành thiết chế, quyền lực, ký ức và cuối cùng là di sản. Khán giả luôn phải biết ta đang nhìn điều gì, chưa hiểu điều gì và phát hiện kế tiếp thay đổi cách hiểu ra sao.
+Giọng kể bình tĩnh, sáng rõ và có sức nặng của một cuộc điều tra. Mỗi lần mở rộng khái niệm phải bắt đầu hoặc trở về một vật thể, thao tác hay consequence có provenance: mặt tablet, cách chia ô, seal, record không được thi hành, lexical exercise, hoặc archive chỉ cho institution nhìn thấy con người qua category.
+
+Câu tiếng Việt ưu tiên động từ nhân quả cụ thể: “ổn định”, “phân loại”, “xác thực”, “truy hồi”, “đào tạo”, “thi hành”. Thuật ngữ Anh chỉ giữ khi bản dịch dễ làm mất ranh giới; lần đầu phải giải thích bằng lời Việt thông thường.
 
 ## Borrowed functions
 
-- Từ *Fall of Civilizations*: giữ một vật thể, văn bản hoặc con người làm điểm tựa hiện diện thay vì giảng giải trong khoảng không.
-- Duy trì một causal macro arc đủ rõ để khán giả không lạc trong thời lượng dài.
-- Chuyển scale giữa thao tác đời thường, thiết chế và biến đổi văn minh; mỗi lần chuyển phải trả lời “điều này thay đổi được gì?”.
-- Dùng primary text hoặc primary object vừa làm evidence vừa tạo human presence.
-- Để cảm xúc đến từ khoảng cách giữa điều con người cố giữ lại và điều lịch sử thực sự cho phép còn lại.
+Từ benchmark chỉ học causal macro arc, material anchor, primary-text presence, chuyển nhịp giữa đời sống và institution, cùng việc thừa nhận uncertainty. Emotional weight đến từ evidenced consequence chứ không từ cường điệu.
 
 ## Original expression
 
-Mỗi section mở ở khoảng cách gần: một vật, một dấu, một hành động hoặc một giới hạn cụ thể. Từ đó xuất hiện một vấn đề thực dụng, không phải một lời tuyên bố hùng vĩ. Evidence tạo explanatory turn; người kể lùi ra để giải thích mechanism, rồi trở lại một consequence mà người nghe có thể hình dung. Câu chữ dùng tiếng Việt thông thường, động từ cụ thể và nhịp tương phản: giải thích đủ chậm, phát hiện đủ gọn. Uncertainty chỉ ở lại khi nó đổi kết luận hoặc tạo tension.
-
-Giọng riêng của sản phẩm nằm ở câu hỏi xuyên suốt: bằng cách nào những dấu vết nhỏ bé khiến một hành động có thể tiếp tục sau khi người tham gia đã rời đi? Mỗi phần phải làm năng lực ấy lớn hơn, phức tạp hơn hoặc đắt giá hơn.
+Nhịp câu linh hoạt: câu ngắn để khóa uncertainty hoặc state change, câu dài hơn khi nối mechanism. Không biến qualifier thành lời xin lỗi; nói thẳng evidence cho phép gì và chưa chứng minh được gì. Trục diễn đạt riêng của product là khoảng cách giữa dấu bền và năng lực xã hội khiến dấu có nghĩa: workers hiện thành con số, clay còn sau khi người đọc biến mất, một mệnh lệnh được ghi nhưng không thành hành động.
 
 ## Prohibited imitation
 
-- Không dùng motif nhìn tàn tích ở hiện tại như opening mặc định.
-- Không sao chép cadence, narrator persona, câu chuyển, chapter order hoặc cách dàn dựng của episode Sumer.
-- Không dùng mỹ từ suy tàn, định mệnh hoặc “nền văn minh đầu tiên” để thay cho causal tension.
-- Không kéo myth, proverb, voice actor hay recreated music vào chỉ vì benchmark dùng chúng; chỉ dùng khi chúng có narrative job và evidence/rights rõ.
-- Không mở như catalogue bảo tàng hoặc biến caveat học thuật thành nhịp kể chính.
+Không dùng motif ruins-in-the-present, cadence, chapter order, narrator persona, signature transition hay wording của *Fall of Civilizations*. Không thêm dialogue, nội tâm, sensory scene hoặc certainty không có nguồn. Toàn phim có opening–body–ending; từng P## không tự dựng lại mini-hook–explanation–payoff.
 
 ## Draft tests
 
-1. Sau mỗi đoạn, người nghe có thể nói bằng một câu đơn giản mình vừa hiểu thêm điều gì không?
-2. Nếu bỏ một fact, tension, mechanism hoặc consequence có mất không? Nếu không, bỏ fact đó.
-3. Section có ít nhất một explanatory turn làm thay đổi mô hình ban đầu không?
-4. Scale shift có trở lại hệ quả đối với người hoặc thiết chế, hay chỉ phô bày kiến thức?
-5. Opening tạo một vấn đề cần theo dõi, hay chỉ giới thiệu hiện vật? Ending trả payoff cụ thể, hay chỉ khái quát?
-6. Cảm giác về FoC đến từ chức năng kể chuyện, hay từ câu chữ/cadence có thể nhận ra? Trường hợp thứ hai phải viết lại.
+- Mỗi causal verb có claim hoặc được đánh dấu inference đúng mức.
+- Mỗi abstraction trở lại một người, vật, procedure hoặc consequence có evidence.
+- Script, language, population, competence, literacy và institution không bị trộn.
+- Đọc thành tiếng vẫn tự nhiên; qualifier rõ nhưng không làm câu kể mất lực.
+- Không có câu nào có thể bị nhầm là mô phỏng bề mặt của benchmark.

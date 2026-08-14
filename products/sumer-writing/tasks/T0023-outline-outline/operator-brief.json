@@ -1,13 +1,26 @@
 {
   "schema_version": 1,
-  "status": "in_progress",
-  "headline": "",
-  "material_points": [],
+  "status": "ready_for_review",
+  "headline": "Outline C002 đã sẵn sàng để mở production script cho sumer-writing.",
+  "material_points": [
+    "Ba act, tám causal movements và tám production sections thay cho khuôn mười phần cũ.",
+    "Opening/ending cùng trở lại P005390; payoff là co-development, feedback có điều kiện và recovery sau competence break.",
+    "Validation product và task packet đều pass; prose vẫn khóa cho đến khi bạn duyệt outline."
+  ],
   "decision": {
-    "required": false,
-    "question": "",
-    "recommendation": "",
-    "options": []
+    "required": true,
+    "question": "Bạn duyệt outline C002 để tôi materialize P01 và bắt đầu viết script chứ?",
+    "recommendation": "Duyệt outline C002 và mở ngay vòng design rồi draft cho P01.",
+    "options": [
+      {
+        "label": "Duyệt C002",
+        "effect": "Mở P01; tôi chạy design_section rồi draft_section."
+      },
+      {
+        "label": "Yêu cầu chỉnh",
+        "effect": "Giữ khóa prose và sửa đúng feedback ở outline trước."
+      }
+    ]
   },
   "next_step": ""
 }
