@@ -35,7 +35,8 @@ python scripts/approval.py request-story-plan-changes products/<slug> P04 --requ
 python scripts/approval.py approve-section products/<slug> P04
 python scripts/approval.py request-changes products/<slug> P04 --request "..."
 python scripts/approval.py start-new-cycle products/<slug> --request "..."
+python scripts/approval.py human-amend-outline products/<slug> --request "..." --path outline.json
+python scripts/approval.py human-amend-section products/<slug> P04 --request "..." --path draft.md
 python scripts/materialize_sections.py products/<slug> --archive-previous-cycle
 """
 )
-

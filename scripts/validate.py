@@ -114,19 +114,27 @@ def validate_product(product_dir: Path) -> list[Issue]:
         else:
             for message in validate_voice_profile(voice_profile_path.read_text(encoding="utf-8")):
                 issues.append(Issue("ERROR", str(voice_profile_path), message))
-        for section_id in section_ids:
-            root = section_root / section_id
-            for name in ["section.json", "brief.md", "evidence-pack.json", "story-plan.json", "continuity-in.md"]:
-                if not (root / name).is_file():
-                    issues.append(Issue("ERROR", str(root / name), "Approved outline requires materialized section."))
-            state_path = root / "section.json"
-            if state_path.is_file():
-                state = safe_json(state_path, issues)
-                if state.get("status") == "approved" and state.get("human_approved") is not True:
-                    issues.append(Issue("ERROR", str(state_path), "Approved section requires human_approved=true."))
-                if state.get("status") in {"ready_for_draft", "ready_for_review", "review_complete", "approved"}:
-                    for message in verify_narration_pack(product_dir, section_id):
-                        issues.append(Issue("ERROR", str(root / "narration-pack.json"), message))
+        # A human-amended outline may intentionally lead its deterministic section
+        # projections. Keep the outline valid while downstream work is explicitly
+        # marked for sync; do not pretend the old section artifacts are current.
+        sections_need_sync = product.get("stages", {}).get("sections") in {
+            "human_sync_required",
+            "ready_to_materialize",
+        }
+        if not sections_need_sync:
+            for section_id in section_ids:
+                root = section_root / section_id
+                for name in ["section.json", "brief.md", "evidence-pack.json", "story-plan.json", "continuity-in.md"]:
+                    if not (root / name).is_file():
+                        issues.append(Issue("ERROR", str(root / name), "Approved outline requires materialized section."))
+                state_path = root / "section.json"
+                if state_path.is_file():
+                    state = safe_json(state_path, issues)
+                    if state.get("status") == "approved" and state.get("human_approved") is not True:
+                        issues.append(Issue("ERROR", str(state_path), "Approved section requires human_approved=true."))
+                    if state.get("status") in {"ready_for_draft", "ready_for_review", "review_complete", "approved"}:
+                        for message in verify_narration_pack(product_dir, section_id):
+                            issues.append(Issue("ERROR", str(root / "narration-pack.json"), message))
 
     active_path = product_dir / "tasks" / "ACTIVE.json"
     if active_path.is_file():

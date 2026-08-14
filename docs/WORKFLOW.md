@@ -12,6 +12,8 @@ Repo tách ba thứ vốn dễ bị trộn:
 
 Product Agent không sửa control plane. System Architect không trộn system change với product content trong cùng commit.
 
+Human authority có một đường ngắn riêng. Khi người dùng trực tiếp feedback hoặc yêu cầu sửa một output cụ thể, Agent có thể sửa file đó rồi chạy một lệnh `human-amend-*`; không tạo task mới chỉ để hợp thức hóa quyết định của human.
+
 ## 2. Task packets
 
 `scripts/task.py create` biên dịch đúng một operation thành:
@@ -113,6 +115,22 @@ Review phải có verdict `pass / changes_requested / blocked`, observable diagn
 - Evidence thiếu/contradicted → research escalation.
 
 Không thêm một writer rule toàn cục cho một lỗi một lần. Chỉ pattern lặp mới trở thành eval; chỉ invariant thật sự mới vào constitution/hard boundary.
+
+### Human-directed amendment
+
+Sau khi human trực tiếp sửa file, hoặc Agent áp đúng feedback đã được human chỉ định:
+
+```bash
+python scripts/approval.py human-amend-outline products/<slug> \
+  --request "Human correction" --path outline.json
+
+python scripts/approval.py human-amend-section products/<slug> P04 \
+  --request "Human prose correction" --path draft.md
+```
+
+Có thể lặp `--path`. Outline allowlist chỉ gồm `outline.json`, `story-bible.md`, `voice-profile.md`; section allowlist chỉ gồm `story-plan.json`, `draft.md`, `handoff.md`.
+
+Lệnh accept thực hiện trong một bước: validate contract/hard cap, giữ evidence ceiling, ghi SHA-256 vào `human-amendments.jsonl`, hủy task active bị supersede và xóa con trỏ ACTIVE. Human-edited draft hợp lệ có thể chuyển thẳng sang `approved` mà không cần `review_section` hoặc `revise_section`. Nếu `outline.json` đổi sau khi sections đã tồn tại, sections được đánh dấu `human_sync_required`; nội dung cũ không bị xóa nhưng không còn được coi là current.
 
 ## 9. Production cycles
 

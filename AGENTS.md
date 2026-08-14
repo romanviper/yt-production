@@ -11,6 +11,7 @@ This file contains only repo-wide operating boundaries. Creative logic belongs i
 ## Authority
 
 - Product work runs as `product_agent` and may write only the paths declared by its router-generated work order.
+- An explicit user instruction to edit an outline or section output may run as a human-directed amendment instead of an AI task. It may touch only the creative output allowlists enforced by `scripts/approval.py`, must record provenance, and may not widen evidence authority.
 - `.github/`, `AGENTS.md`, `Makefile`, `README.md`, `docs/`, `scripts/`, `system/`, `templates/` and `tests/` are protected system paths.
 - A system defect is reported as a blocker. It does not grant a Product Agent permission to fix the system.
 - System architecture changes require an explicit owner-assigned `system_architect` task and may not share a commit with product content.
@@ -23,6 +24,8 @@ This file contains only repo-wide operating boundaries. Creative logic belongs i
 3. Do not scan the repository or load files outside that packet.
 4. Write only `allowed_write_paths`, run the packet's validations, produce `report.md` and `operator-brief.json`, then submit through `scripts/task.py`.
 5. Stop at the current checkpoint. Do not silently start the next operation.
+
+The task entrypoint applies to AI-generated work. For explicit human feedback or a direct human edit, use `human-amend-outline` or `human-amend-section`; do not create a replacement task merely to legitimize the user's authority.
 
 An `outline` work order compiled with `execution_runtime.kind: dsh` is the only POC exception to direct packet consumption. Launch it through `scripts/outline_runtime.py`; the Agent receives a minimal seed and may access repository context only through the packet-declared, audit-logged capability broker. Do not grant that runtime filesystem, shell, web or repo-scan tools.
 

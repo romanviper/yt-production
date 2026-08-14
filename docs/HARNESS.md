@@ -11,6 +11,7 @@ The harness controls what must never happen and what outcome must be reviewed. I
 | Product/system authority | HARD | governance and scope checker |
 | Allowed write paths | HARD | router-generated work order |
 | Task state and human approval | HARD | preconditions and approval commands |
+| Human-directed creative edits | HARD | explicit user request, output allowlist, validators and amendment log |
 | Input freshness/context integrity | HARD | hashes and packet schema |
 | Evidence provenance/narration ceiling | HARD | ledgers, evidence roles and narration-pack hashes |
 | Context/instruction/section caps | HARD | compiler and validators |
@@ -65,6 +66,7 @@ This document explains the layout; it is not another policy source.
 | Machine routing, inputs and outputs | `system/operations/registry.json` |
 | Optional outline runtime boundary and audit trace | `scripts/outline_runtime.py` plus the task packet |
 | Product decisions and feedback | product artifacts and local change requests |
+| Direct human amendments | `scripts/approval.py` and product-local `human-amendments.jsonl` |
 
 Generated hashes, allowed paths and validation commands may repeat across router artifacts because they enforce integrity. Manually authored behavioral prose must have one home.
 
@@ -89,5 +91,5 @@ Approved outline schema v2/v3, story-plan v1/v2 and packet v1-v3 remain readable
 - writer packets exclude hard-policy and evaluation files;
 - registry entries contain routing data rather than creative acceptance prose;
 - no minimum word count can force padding;
-- every section is outcome-reviewed before approval;
+- every AI-authored section is outcome-reviewed before approval, unless the user directly edits or explicitly accepts a bounded amendment;
 - three acts remain stable across runtimes while movement/section counts remain adaptive.

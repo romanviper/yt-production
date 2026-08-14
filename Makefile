@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: help new task run show brief check research-units sections impact assemble test
+.PHONY: help new task run show brief check research-units sections impact human-outline human-section assemble test
 
 help:
 	@$(PYTHON) scripts/help.py
@@ -44,10 +44,22 @@ impact:
 	@test -n "$(CLAIM)$(SECTION)" || (echo "Cần CLAIM=<id> hoặc SECTION=<id>" && exit 1)
 	@$(PYTHON) scripts/impact.py "products/$(PRODUCT)" $(if $(CLAIM),--claim "$(CLAIM)",--section "$(SECTION)")
 
+human-outline:
+	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)
+	@test -n "$(REQUEST)" || (echo "Thiếu REQUEST=..." && exit 1)
+	@test -n "$(PATHS)" || (echo "Thiếu PATHS='outline.json ...'" && exit 1)
+	@$(PYTHON) scripts/approval.py human-amend-outline "products/$(PRODUCT)" --request "$(REQUEST)" $(foreach path,$(PATHS),--path "$(path)")
+
+human-section:
+	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)
+	@test -n "$(SECTION)" || (echo "Thiếu SECTION=P##" && exit 1)
+	@test -n "$(REQUEST)" || (echo "Thiếu REQUEST=..." && exit 1)
+	@test -n "$(PATHS)" || (echo "Thiếu PATHS='draft.md ...'" && exit 1)
+	@$(PYTHON) scripts/approval.py human-amend-section "products/$(PRODUCT)" "$(SECTION)" --request "$(REQUEST)" $(foreach path,$(PATHS),--path "$(path)")
+
 assemble:
 	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)
 	@$(PYTHON) scripts/assemble.py "products/$(PRODUCT)"
 
 test:
 	@$(PYTHON) -m unittest discover -s tests -v
-

@@ -10,7 +10,16 @@ from pathlib import Path
 from unittest.mock import patch
 
 from scripts.assemble import assemble_product
-from scripts.approval import approve_plan, approve_section, approve_story_plan, request_changes, request_story_plan_changes, start_new_cycle
+from scripts.approval import (
+    approve_plan,
+    approve_section,
+    approve_story_plan,
+    human_amend_outline,
+    human_amend_section,
+    request_changes,
+    request_story_plan_changes,
+    start_new_cycle,
+)
 from scripts.context_packet import compile_packet
 from scripts.consolidate_research import consolidate, verify_consolidation
 from scripts.governance import classify_paths, commit_scope_errors, product_task_violations
@@ -841,7 +850,7 @@ class ModularProductionTests(unittest.TestCase):
             make_approved_story_plan(product, "P01")
             packet, context = compile_packet(product, "draft_section", "T0001", section="P01")
             self.assertEqual("creative_draft", packet["context_profile"])
-            self.assertEqual("review_section", packet["evaluation_gate"])
+            self.assertEqual("review_section_or_human_amendment", packet["evaluation_gate"])
             self.assertIn("system/core/creative-boundaries.md", packet["instruction_files"])
             self.assertIn("system/standards/channel-constitution.md", packet["instruction_files"])
             for excluded in [
@@ -1260,6 +1269,133 @@ class ModularProductionTests(unittest.TestCase):
             approve_section(product, "P06")
             approved = json.loads((root / "section.json").read_text(encoding="utf-8"))
             self.assertTrue(approved["human_approved"])
+
+    def test_human_outline_amendment_bypasses_task_lifecycle_and_marks_downstream_sync(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 3)
+            materialize_sections(product)
+            voice_body = (
+                "Evidence leads the narration while uncertainty stays visible and causal language remains bounded. " * 4
+            )
+            (product / "02_outline" / "voice-profile.md").write_text(
+                "Status: approved\n\n"
+                + "\n\n".join(
+                    f"{heading}\n\n{voice_body}"
+                    for heading in [
+                        "## Product voice",
+                        "## Borrowed functions",
+                        "## Original expression",
+                        "## Prohibited imitation",
+                        "## Draft tests",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            work = create_task(product, "design_section", "P01", None, False)
+            outline_path = product / "02_outline" / "outline.json"
+            outline = json.loads(outline_path.read_text(encoding="utf-8"))
+            outline["sections"][0]["narrative_job"] = "Human-approved direct architecture correction."
+            write_json(outline_path, outline)
+
+            record = human_amend_outline(
+                product,
+                "Apply the user's architecture correction directly; do not create another outline task.",
+                ["outline.json"],
+            )
+
+            active = json.loads((product / "tasks" / "ACTIVE.json").read_text(encoding="utf-8"))
+            work_state = json.loads((product / "tasks" / work["id"] / "work-order.json").read_text(encoding="utf-8"))
+            section_state = json.loads((product / "03_sections" / "P01" / "section.json").read_text(encoding="utf-8"))
+            product_state = json.loads((product / "product.json").read_text(encoding="utf-8"))
+            self.assertIsNone(active["task_id"])
+            self.assertEqual("cancelled", work_state["state"])
+            self.assertEqual(record["id"], work_state["superseded_by"])
+            self.assertEqual("outline_amended", section_state["status"])
+            self.assertEqual("human_sync_required", product_state["stages"]["sections"])
+            self.assertEqual([], [issue for issue in validate_product(product) if issue.level == "ERROR"])
+            log = (product / "human-amendments.jsonl").read_text(encoding="utf-8")
+            self.assertIn(record["id"], log)
+            self.assertIn("02_outline/outline.json", log)
+
+    def test_human_story_plan_edit_builds_evidence_handoff_without_design_task(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 3)
+            materialize_sections(product)
+            root = product / "03_sections" / "P01"
+            state = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            evidence = json.loads((root / "evidence-pack.json").read_text(encoding="utf-8"))
+            claim_ids = [item["id"] for item in evidence["claims"]]
+            write_json(
+                root / "story-plan.json",
+                {
+                    "schema_version": 3,
+                    "section": "P01",
+                    "status": "draft",
+                    "audience_shift": "The audience understands the human-approved state change.",
+                    "story_strategy": "Use the selected evidence directly and keep the causal turn compact.",
+                    "word_budget": {
+                        "recommended": state["target_words"],
+                        "rationale": "The existing range fits the bounded narrative load.",
+                    },
+                    "evidence_roles": {"core": claim_ids, "optional": [], "guardrail": [], "exclude": []},
+                    "design_risks": [],
+                },
+            )
+
+            human_amend_section(
+                product,
+                "P01",
+                "Accept the user's direct story-plan edit.",
+                ["story-plan.json"],
+            )
+
+            plan = json.loads((root / "story-plan.json").read_text(encoding="utf-8"))
+            state = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            self.assertEqual("approved", plan["status"])
+            self.assertEqual("ready_for_draft", state["status"])
+            self.assertTrue((root / "narration-pack.json").is_file())
+            self.assertFalse((product / "tasks" / "ACTIVE.json").is_file())
+
+    def test_human_prose_edit_can_be_approved_without_review_task_but_keeps_hard_boundaries(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 3)
+            materialize_sections(product)
+            make_approved_story_plan(product, "P01")
+            root = product / "03_sections" / "P01"
+            work = create_task(product, "draft_section", "P01", None, False)
+            (root / "draft.md").write_text("# P01\n\nHuman-edited narration with a bounded factual turn.\n", encoding="utf-8")
+            (root / "handoff.md").write_text("The approved state change is complete.\n", encoding="utf-8")
+            before_tasks = sorted((product / "tasks").glob("T*")) if (product / "tasks").is_dir() else []
+
+            record = human_amend_section(
+                product,
+                "P01",
+                "Accept the user's direct prose correction as the reviewed output.",
+                ["draft.md"],
+            )
+
+            after_tasks = sorted((product / "tasks").glob("T*")) if (product / "tasks").is_dir() else []
+            state = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            self.assertEqual(before_tasks, after_tasks)
+            self.assertEqual("approved", state["status"])
+            self.assertTrue(state["human_approved"])
+            self.assertEqual("human_direct_edit", state["approval_basis"])
+            self.assertEqual(record["id"], state["last_human_amendment"])
+            active = json.loads((product / "tasks" / "ACTIVE.json").read_text(encoding="utf-8"))
+            work_state = json.loads((product / "tasks" / work["id"] / "work-order.json").read_text(encoding="utf-8"))
+            self.assertIsNone(active["task_id"])
+            self.assertEqual("cancelled", work_state["state"])
+            self.assertEqual(record["id"], work_state["superseded_by"])
+            with self.assertRaisesRegex(ValueError, "outside the allowed output scope"):
+                human_amend_section(product, "P01", "Do not widen scope.", ["review.md"])
+
+            (root / "draft.md").write_text(("word " * 3001).strip() + "\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "hard cap"):
+                human_amend_section(product, "P01", "This must still fail validation.", ["draft.md"])
 
     def test_context_budget_blocks_oversized_packet(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

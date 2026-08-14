@@ -57,6 +57,15 @@ python scripts/approval.py approve-section products/ten-san-pham P04
 python scripts/assemble.py products/ten-san-pham
 ```
 
+Human có thể sửa hoặc chỉ đạo sửa trực tiếp output mà không mở task mới:
+
+```bash
+python scripts/approval.py human-amend-outline products/ten-san-pham --request "..." --path outline.json
+python scripts/approval.py human-amend-section products/ten-san-pham P04 --request "..." --path draft.md
+```
+
+Đường này vẫn giữ allowlist, evidence ceiling, hard cap và provenance; nó chỉ bỏ AI task/design/review trung gian khi authority đến trực tiếp từ người dùng.
+
 Mở một vòng sản xuất mới từ research đã duyệt:
 
 ```bash
