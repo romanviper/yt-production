@@ -1,17 +1,20 @@
 {
   "schema_version": 1,
-  "status": "approved_ready_for_p01",
-  "headline": "Outline C002 đã được tối ưu retention và được người dùng duyệt; creative handoff đã sẵn sàng cho P01.",
+  "status": "ready_for_review",
+  "headline": "Outline C002 đã được chỉnh theo audit retention và đang ở trạng thái chờ kiểm duyệt.",
   "material_points": [
-    "P01–P03 được nén và chuyển reveal/function lên trước chronology, taxonomy và definition để giảm setup drag.",
-    "P05 reset về training object; P06 mở bằng written-order failure rồi mới trả causal payoff về conditional institutional capacity; P08 mở ở competence brink và giữ P005390 cho final return.",
-    "Tổng range mới 8.500–14.900 words, vẫn nằm trong envelope 8.400–16.800; outline, story bible và voice profile đều ở trạng thái approved."
+    "P01 bắt buộc trả first reveal trong 60–90 giây đầu; P03 giữ function trước definition và không gom uncertainty thành disclaimer block.",
+    "P04/P05 được siết concrete→mechanism→capability/consequence và giảm trần độ dài; P06 phải quay lại evidence/consequence sau mỗi cụm institutional mechanism.",
+    "P08 được rút trần và buộc decipherment chỉ phục vụ câu hỏi knowledge nào phải được phục dựng để clay nói lại; tổng range mới 8.500–13.900 words, vẫn nằm trong envelope 8.400–16.800."
   ],
   "decision": {
-    "required": false,
-    "question": "",
-    "recommendation": "Bắt đầu operation kế tiếp cho P01 với retention brief hiện tại; không cần review outline thêm trước khi draft.",
-    "options": []
+    "required": true,
+    "question": "Có duyệt retention revision này để khóa outline và chuyển sang P01 không?",
+    "recommendation": "Review outline C002 ở trạng thái hiện tại trước khi materialize hoặc draft P01.",
+    "options": [
+      "approve",
+      "request_changes"
+    ]
   },
-  "next_step": "Create/materialize the router-approved P01 operation, then draft P01 from the revised outline. Router state files must be advanced through scripts/task.py; they were not hand-edited because they are outside this work order's allowed_write_paths."
+  "next_step": "Kiểm duyệt outline retention revision. Chỉ sau khi được duyệt mới chuyển outline về approved và tiếp tục operation P01; router state ngoài allowed_write_paths vẫn phải được advance qua scripts/task.py."
 }
