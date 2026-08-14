@@ -1,26 +1,17 @@
 {
   "schema_version": 1,
-  "status": "ready_for_review",
-  "headline": "Outline C002 đã sẵn sàng để mở production script cho sumer-writing.",
+  "status": "approved_ready_for_p01",
+  "headline": "Outline C002 đã được tối ưu retention và được người dùng duyệt; creative handoff đã sẵn sàng cho P01.",
   "material_points": [
-    "Ba act, tám causal movements và tám production sections thay cho khuôn mười phần cũ.",
-    "Opening/ending cùng trở lại P005390; payoff là co-development, feedback có điều kiện và recovery sau competence break.",
-    "Validation product và task packet đều pass; prose vẫn khóa cho đến khi bạn duyệt outline."
+    "P01–P03 được nén và chuyển reveal/function lên trước chronology, taxonomy và definition để giảm setup drag.",
+    "P05 reset về training object; P06 mở bằng written-order failure rồi mới trả causal payoff về conditional institutional capacity; P08 mở ở competence brink và giữ P005390 cho final return.",
+    "Tổng range mới 8.500–14.900 words, vẫn nằm trong envelope 8.400–16.800; outline, story bible và voice profile đều ở trạng thái approved."
   ],
   "decision": {
-    "required": true,
-    "question": "Bạn duyệt outline C002 để tôi materialize P01 và bắt đầu viết script chứ?",
-    "recommendation": "Duyệt outline C002 và mở ngay vòng design rồi draft cho P01.",
-    "options": [
-      {
-        "label": "Duyệt C002",
-        "effect": "Mở P01; tôi chạy design_section rồi draft_section."
-      },
-      {
-        "label": "Yêu cầu chỉnh",
-        "effect": "Giữ khóa prose và sửa đúng feedback ở outline trước."
-      }
-    ]
+    "required": false,
+    "question": "",
+    "recommendation": "Bắt đầu operation kế tiếp cho P01 với retention brief hiện tại; không cần review outline thêm trước khi draft.",
+    "options": []
   },
-  "next_step": ""
+  "next_step": "Create/materialize the router-approved P01 operation, then draft P01 from the revised outline. Router state files must be advanced through scripts/task.py; they were not hand-edited because they are outside this work order's allowed_write_paths."
 }
