@@ -2,34 +2,33 @@
 
 ## Outcome
 
-Rebuilt the complete `sumer-writing` outline under the current schema v4 contract. All artifacts remain `draft` pending explicit human approval.
+Revised the approved C002 outline specifically for audience retention while preserving the research thesis, evidence ceilings and eight-section causal architecture. The user explicitly requested the revision and asked that the result be treated as ready for P01 drafting.
 
-## Architecture
+## Retention changes
 
-- Three audience-facing acts: opening, body, ending.
-- Eight causal macro movements were designed before production boundaries.
-- Eight production sections replace the earlier ten-section shape; each boundary corresponds to a causal-state, period, or evidence-ceiling transition rather than a fixed chapter quota.
-- Total duration-derived envelope is 8,400–16,800 words at 140 wpm for 60–120 minutes.
-- Section allocations are individually capped below 3,000 words and collectively admit a feasible total inside the product envelope.
+- P01 is compressed from 700–1,400 to 500–800 words and must deliver the first reveal before chronology or definition: P005390 preserves grain-related quantities and structured relations but not a recoverable full sentence, certain language or specific transaction.
+- P02 is compressed to 900–1,400 words and reorganized as pressure → partial solution rather than a catalogue of tokens, seals, bullae, metrology and numerical devices.
+- P03 is compressed to 900–1,500 words and explicitly puts function before definition: demonstrate what proto-cuneiform can do before handling writing-threshold, chronology, language, ethnicity and world-first uncertainty.
+- P04 keeps technical expansion but removes genre-catalogue pacing; every case must demonstrate a new capability or recombination.
+- P05 resets scale from system abstraction to a training object/practice (P228744/House F) before generalizing to trained communities.
+- P06 now opens with MMA 86.11.111 as a reversal—written order does not equal compliance—then builds the conditional capacity chain through Ur III/later evidence. This is the main causal payoff of the body.
+- P07 opens on a survival contradiction: cuneiform can persist while Sumerian no longer needs to be a vernacular language.
+- P08 opens at the competence brink with the latest-known dated tablet (75 CE), accelerates through the competence break and nineteenth-century recovery, and returns to P005390 only for the final payoff.
 
-## Central decision
+## Word allocation
 
-The title proposition is treated as a question to test. The permitted answer is phase-bounded co-development followed by feedback: institutions create record pressure; record infrastructure can expand selected capacities only when trained people, conventions, authentication, archives, retrieval, procedure and authority are connected.
+The total duration envelope remains 8,400–16,800 words. Revised section ranges are:
 
-## Opening/ending continuity
+- P01: 500–800
+- P02: 900–1,400
+- P03: 900–1,500
+- P04: 1,100–2,100
+- P05: 1,000–1,900
+- P06: 1,500–2,600
+- P07: 1,200–2,200
+- P08: 1,400–2,400
 
-The opening uses P005390 as a material object whose marks preserve structure without yielding transparent speech. The ending returns to the same problem after cuneiform contraction, competence loss and nineteenth-century recovery. The payoff distinguishes material survival, living transmission and recovery-mediated knowledge.
-
-## Evidence allocation
-
-- P01: P005390 and the writing threshold.
-- P02: parallel information ecology and pressure of scale.
-- P03: Uruk IV–III proto-cuneiform, region, chronology and uncertainty.
-- P04: technical/functional expansion with MMA 86.11.111 and ETCSL 3.1.19 as bounded cases.
-- P05: trained communities, P228744 and House F.
-- P06: Ur III capacity effects, Puzriš-Dagan, asymmetrical visibility and enforcement limits.
-- P07: adaptation across languages, curricula and selective transfer.
-- P08: multicausal contraction, latest-known 75 CE tablet, competence break and cumulative decipherment.
+The revised minimum totals 8,500 words and the revised maximum totals 14,900 words, remaining inside the product duration envelope while reducing setup weight and moving more time to the central causal payoff and ending.
 
 ## Guardrails retained
 
@@ -39,16 +38,16 @@ The opening uses P005390 as a material object whose marks preserve structure wit
 - Rights-uncleared translations are not assigned as direct quotations.
 - Modern database/smartphone resemblance cannot be presented as direct lineage.
 
-## Product-specific supporting artifacts
+## Approval state
 
-`story-bible.md` now contains only the global causal spine, chronology, terms, continuity and exclusions. `voice-profile.md` remains within the 150–450-word contract and specifies a calm Vietnamese investigative voice without imitating the benchmark.
+`02_outline/outline.json`, `02_outline/story-bible.md` and `02_outline/voice-profile.md` are now aligned as approved creative artifacts. The user's current instruction constitutes explicit approval of this retention-revised outline and authorizes the next creative operation to prepare/draft P01.
 
-## Validation
+## Router handoff blocker
 
-- `python3 scripts/validate.py products/sumer-writing` — pass.
-- `python3 scripts/task.py verify products/sumer-writing T0023-outline-outline` — packet fresh and within budget.
+The active work order allows writes only to the outline artifacts plus this report/operator brief. `product.json`, `tasks/ACTIVE.json` and router-generated task state are outside `allowed_write_paths`, and repo policy requires state transitions/new operations to be created through `scripts/task.py` rather than hand-edited. This connector session does not expose shell execution for that command. Therefore the creative artifacts are ready for P01, but the router-level stage/materialization cannot be safely advanced from this task without violating the repo boundary.
 
-## Human gate
+## Validation available in-session
 
-The outline cannot be approved or materialized by the Agent. Explicit user approval is required before section workspaces for C002 can be materialized and before `design_section`/`draft_section` begins.
-
+- GitHub accepted the replacement `outline.json` and the file can be fetched from `main` as schema v4 with `status: approved` and eight sections.
+- The revised word ranges sum to 8,500–14,900 words, inside the 8,400–16,800 total envelope.
+- Full repo validation and `task.py` verification/submission could not be rerun because shell execution is unavailable in the current connector surface.
