@@ -1,6 +1,6 @@
 # Story Bible — Sumer Writing C002
 
-Status: draft
+Status: approved
 
 ## Central causal spine
 
@@ -12,15 +12,15 @@ Tác nhân xuyên suốt không phải một tablet, một language hay một et
 
 ### Opening — Một vật thể chưa chịu kể chuyện
 
-P005390 cho thấy material survival không đồng nghĩa với transparent speech. Từ một grain-related administrative tablet có language và transaction chưa chắc, phim mở rộng sang ecology trước writing và pressure of scale. Act kết thúc khi khán giả biết phải tách material, sign system, language, community và institution.
+P005390 cho thấy material survival không đồng nghĩa với transparent speech. Retention revision yêu cầu trả reveal này ngay ở opening, rồi chuyển nhanh sang pressure: vì sao quantity, category, person hoặc obligation cần tồn tại lâu hơn cuộc gặp trực tiếp. Act kết thúc khi khán giả hiểu pre-writing ecology là nhiều partial solutions chứ không một genealogy tuyến tính.
 
 ### Body — Khi dấu hiệu trở thành năng lực tổ chức
 
-Proto-cuneiform được đặt trên một ngưỡng writing đã khai báo, không gắn chắc với ethnic Sumerians hay world-first. Hệ thống mở rộng từ incised/layout-heavy records sang logo-syllabic cuneiform và các chức năng tích lũy. Trained communities tạo continuity; seal, archive, retrieval và authority tạo hiệu lực. Ur III và later cases kiểm nghiệm capacity return mà không back-project về Uruk. Quyền lực phân phối không đối xứng: institution nhìn thấy aggregate; workers và dependents hiện ra trong imposed categories; nhiều practice vẫn ngoài archive.
+Proto-cuneiform được trình bày bằng function trước definition: layout, quantity và category có thể tổ chức information dù phonology còn sparse. Sau đó mới cô đọng writing threshold và uncertainty. Hệ thống mở rộng về sign values và use; trained communities tạo continuity. Causal payoff lớn của body bắt đầu bằng counterexample MMA 86.11.111—written order không tự tạo compliance—rồi dùng Ur III/later evidence để chỉ ra khi classification, authentication, archive, retrieval, audit và authority kết nối thì record mới tăng capacity. Quyền lực phân phối không đối xứng: institution nhìn thấy aggregate; workers và dependents hiện ra trong imposed categories; nhiều practice vẫn ngoài archive.
 
 ### Ending — Đất sét còn lại sau khi người đọc biến mất
 
-Cuneiform sống lâu vì thích nghi với language, convention và setting mới. Script, Sumerian language và institution có timeline khác nhau nhưng đều cần competent reuse. Khi hệ sinh thái đào tạo co hẹp rồi đứt, clay còn mà living competence mất. Decipherment thế kỷ XIX là recovery tích lũy. Payoff trở lại tablet mở đầu: vật thể chỉ “nói” khi social chain được duy trì hoặc phục dựng.
+Cuneiform sống lâu vì thích nghi với language, convention và setting mới. Script, Sumerian language và institution có timeline khác nhau nhưng đều cần competent reuse. Ending mở trên competence brink với latest-known dated tablet 75 CE, đi qua competence break và cumulative decipherment, rồi mới trở lại P005390. Payoff: vật thể chỉ “nói” khi social knowledge được duy trì hoặc phục dựng.
 
 ## Chronology guardrails
 
@@ -40,15 +40,15 @@ Cuneiform sống lâu vì thích nghi với language, convention và setting m�
 ## Evidence anchors
 
 - P005390/MMA 1988.433.2: opening object; grain-related quantities, exact transaction/language uncertain.
-- MMA 86.11.111: written royal security order không được thi hành; record không đồng nghĩa compliance.
-- P228744 và House F: bounded evidence cho lexical training/curriculum ở Old Babylonian Nippur.
+- MMA 86.11.111: written royal security order không được thi hành; dùng làm retention reversal trước khi giải thích capacity.
+- P228744 và House F: bounded evidence cho lexical training/curriculum ở Old Babylonian Nippur; dùng để reset từ abstraction về scale của người học/practice.
 - ETCSL 3.1.19: later composite textual tradition, không phải contemporary Ur III dispatch.
 - Ur III Umma và Puzriš-Dagan: bounded tests cho classification, aggregation, audit, archive và asymmetric visibility.
 - Behistun/comparative decipherment: recovery là chuỗi tích lũy, không phải một eureka moment.
 
 ## Setup/payoff continuity
 
-- Setup: tablet có dấu nhưng không trao một voice rõ. Payoff: clay tồn tại qua competence break và chỉ nói lại nhờ phục dựng social knowledge.
+- Setup: tablet có dấu nhưng không trao một voice rõ. Early payoff: nó vẫn giữ được structured relations; final payoff: clay chỉ nói lại khi social knowledge được phục dựng.
 - Setup: scale pressure cần record. Payoff: record chỉ tăng capacity khi whole procedural chain hoạt động.
 - Setup: system chưa encode language trọn vẹn. Payoff: survival đến từ khả năng đổi language và convention, không từ purity.
 - Setup: archive làm quá khứ visible. Payoff: visibility luôn bị định hình bởi category, discard, excavation và provenance.
@@ -62,4 +62,3 @@ Cuneiform sống lâu vì thích nghi với language, convention và setting m�
 - Không dùng archive như mẫu trung tính của society.
 - Không direct-quote translation chưa rights-cleared; ưu tiên attributed paraphrase và Met objects đã thuận lợi hơn về rights.
 - Không nối Sumer trực tiếp đến database, smartphone hay modern writing; resemblance chỉ là analogy nếu được dùng.
-
