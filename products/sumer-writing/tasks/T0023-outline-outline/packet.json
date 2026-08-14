@@ -1,0 +1,98 @@
+{
+  "schema_version": 4,
+  "compiler": "scripts/context_packet.py",
+  "context_sha256": "2b61fbf1ed6d2d043410979165ebe43ed84940131967c9862fcbab05a67b80da",
+  "authority": "product_agent",
+  "task_id": "T0023-outline-outline",
+  "product": "sumer-writing",
+  "operation": "outline",
+  "target": {
+    "section": null,
+    "unit": null
+  },
+  "created_at": "2026-08-14T02:49:35.241148+00:00",
+  "context_profile": "architecture",
+  "max_context_tokens": 24000,
+  "estimated_context_tokens": 17330,
+  "prompt_instruction_tokens": 1425,
+  "input_tokens": 15697,
+  "boundary_enforcement": [
+    "authority_and_write_scope",
+    "task_state_and_human_approval",
+    "input_freshness_and_packet_integrity",
+    "evidence_provenance_and_narration_ceiling",
+    "context_and_production_unit_hard_caps"
+  ],
+  "evaluation_gate": "human_approval",
+  "instruction_files": [
+    "system/core/creative-boundaries.md",
+    "system/standards/channel-constitution.md",
+    "system/operations/outline.md"
+  ],
+  "inputs": [
+    {
+      "path": "product.json",
+      "sha256": "8e3a517a1a25a0a469ac51fad6852ae95808fc3d0d9ec1224164781f0140ade0",
+      "bytes": 3572
+    },
+    {
+      "path": "00_brief/product-brief.md",
+      "sha256": "bb8bc646f4d7756ee3c6cc7a12f1f1833c4eab9f6bf84a642fa2609e01a6f89f",
+      "bytes": 2317
+    },
+    {
+      "path": "00_brief/benchmark.md",
+      "sha256": "2c06edfc81f85897b108d058a90337f1d3e4a03f24029ccadbe3815f0817669e",
+      "bytes": 2321
+    },
+    {
+      "path": "01_research/research-synthesis.md",
+      "sha256": "da46bd0da9918382042ae27d3ab8cd800cd0bd0d3441a9ea230a2167aceb7f20",
+      "bytes": 9750
+    },
+    {
+      "path": "01_research/outline-evidence-pack.json",
+      "sha256": "b020d0072aeb07ccd228f23b45ece6cdbf3c8c000b45d1e4b688592e20e1c4cd",
+      "bytes": 29002
+    },
+    {
+      "path": "02_outline/outline-change-request.md",
+      "sha256": "fbf68207ef0e9a06d9923df20138c3c6847566eae4948347b6277f22ac08762c",
+      "bytes": 843
+    }
+  ],
+  "operation_outputs": [
+    "02_outline/outline.json",
+    "02_outline/story-bible.md",
+    "02_outline/voice-profile.md"
+  ],
+  "output_baselines": [
+    {
+      "path": "02_outline/outline.json",
+      "sha256": "6bfe7149638ca2dab61eddcf8ec54846f1241ab37ca0d3fb64cc1cc1bef38570"
+    },
+    {
+      "path": "02_outline/story-bible.md",
+      "sha256": "fc9521a9a807def534a93b8f20dad1f2970f14e5cd6a8868e282bf7bfa318a2f"
+    },
+    {
+      "path": "02_outline/voice-profile.md",
+      "sha256": "f0f1529ff14b354a398d276bb1b605c16a09232e33f9a6788b01ec177bbedd62"
+    }
+  ],
+  "allowed_write_paths": [
+    "02_outline/outline.json",
+    "02_outline/story-bible.md",
+    "02_outline/voice-profile.md",
+    "tasks/T0023-outline-outline/report.md",
+    "tasks/T0023-outline-outline/operator-brief.json"
+  ],
+  "report_path": "tasks/T0023-outline-outline/report.md",
+  "operator_brief_path": "tasks/T0023-outline-outline/operator-brief.json",
+  "validation": [
+    "python scripts/validate.py products/sumer-writing",
+    "python scripts/task.py verify products/sumer-writing T0023-outline-outline",
+    "python scripts/check_scope.py products/sumer-writing",
+    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0023-outline-outline/operator-brief.json"
+  ]
+}
