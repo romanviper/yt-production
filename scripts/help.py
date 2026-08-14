@@ -6,6 +6,8 @@ print(
 make new PRODUCT=<slug> TITLE="Tên làm việc"
 make task PRODUCT=<slug> OPERATION=research_plan
 make task PRODUCT=<slug> OPERATION=research_workstream UNIT=WS01
+make task PRODUCT=<slug> OPERATION=outline RUNTIME=dsh
+make run PRODUCT=<slug> TASK=<task-id>
 make task PRODUCT=<slug> OPERATION=design_section SECTION=P04
 make task PRODUCT=<slug> OPERATION=draft_section SECTION=P04
 make task PRODUCT=<slug> OPERATION=review_section SECTION=P04
@@ -36,3 +38,4 @@ python scripts/approval.py start-new-cycle products/<slug> --request "..."
 python scripts/materialize_sections.py products/<slug> --archive-previous-cycle
 """
 )
+

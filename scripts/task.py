@@ -49,7 +49,14 @@ def active_path(product_dir: Path) -> Path:
     return product_dir / "tasks" / "ACTIVE.json"
 
 
-def create_task(product_dir: Path, operation: str, section: str | None, unit: str | None, replace: bool) -> dict:
+def create_task(
+    product_dir: Path,
+    operation: str,
+    section: str | None,
+    unit: str | None,
+    replace: bool,
+    execution_runtime: str | None = None,
+) -> dict:
     product_dir = product_dir.resolve()
     active_file = active_path(product_dir)
     if active_file.is_file() and not replace:
@@ -64,7 +71,7 @@ def create_task(product_dir: Path, operation: str, section: str | None, unit: st
     task_id = next_task_id(product_dir, operation, section, unit)
     task_dir = product_dir / "tasks" / task_id
     task_dir.mkdir(parents=True, exist_ok=False)
-    packet, context = compile_packet(product_dir, operation, task_id, section, unit)
+    packet, context = compile_packet(product_dir, operation, task_id, section, unit, execution_runtime)
     packet_path = task_dir / "packet.json"
     context_path = task_dir / "context.md"
     write_json(packet_path, packet)
@@ -88,6 +95,9 @@ def create_task(product_dir: Path, operation: str, section: str | None, unit: st
         "report_path": packet["report_path"],
         "operator_brief_path": packet["operator_brief_path"],
     }
+    if "execution_runtime" in packet:
+        work_order["execution_runtime"] = packet["execution_runtime"]
+        work_order["runtime_owned_paths"] = packet.get("runtime_owned_paths", [])
     work_path = task_dir / "work-order.json"
     write_json(work_path, work_order)
     write_json(active_file, {"task_id": task_id, "work_order": product_relative(product_dir, work_path), "context_packet": product_relative(product_dir, context_path)})
@@ -126,6 +136,10 @@ def verify_task(product_dir: Path, task_id: str) -> list[str]:
         errors.append("product differs between directory, work order and packet")
     if work.get("operation") != packet.get("operation") or work.get("target") != packet.get("target"):
         errors.append("operation target differs between work order and packet")
+    if work.get("execution_runtime") != packet.get("execution_runtime"):
+        errors.append("execution runtime differs between work order and packet")
+    if work.get("runtime_owned_paths", []) != packet.get("runtime_owned_paths", []):
+        errors.append("runtime-owned paths differ between work order and packet")
     if work.get("packet_manifest") != expected_manifest or work.get("context_packet") != expected_context:
         errors.append("work order must point to its router-generated packet and context")
     return errors
@@ -322,6 +336,7 @@ def main() -> int:
     create.add_argument("--section")
     create.add_argument("--unit")
     create.add_argument("--replace", action="store_true")
+    create.add_argument("--runtime", choices=["legacy", "dsh"])
     show = sub.add_parser("show")
     show.add_argument("product", type=Path)
     verify = sub.add_parser("verify")
@@ -343,7 +358,7 @@ def main() -> int:
 
     if args.command == "create":
         try:
-            work = create_task(args.product, args.operation, args.section, args.unit, args.replace)
+            work = create_task(args.product, args.operation, args.section, args.unit, args.replace, args.runtime)
         except (ValueError, FileNotFoundError, FileExistsError, json.JSONDecodeError) as exc:
             parser.error(str(exc))
         print(json.dumps(work, ensure_ascii=False, indent=2))
@@ -391,3 +406,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

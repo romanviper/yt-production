@@ -27,6 +27,17 @@ Registry chỉ route operation, input, output, profile và budget. Tiêu chí se
 
 Agent đọc đúng ACTIVE → work order → packet. Nó không quét repo.
 
+Riêng POC `outline`, operator có thể chọn runtime DSH on-demand:
+
+```bash
+python scripts/task.py create products/<slug> outline --runtime dsh
+python scripts/outline_runtime.py run products/<slug> <task-id>
+```
+
+DSH phải được cài riêng ở đúng version POC đã audit (`@deepseek-ai/dsh@0.1.0-rc.5`) và cung cấp executable `dsh`; repo không phụ thuộc npm package này để chạy control plane hoặc test. Trước model call, runner dump fully composed config và fail-closed nếu một guarded tool row không bị disable hoặc MCP broker không đúng interface. Runtime headless chạy trong thư mục tạm rỗng, tắt telemetry và chỉ nhìn thấy capability broker theo scope của packet. `runtime-trace.jsonl` giữ nguyên payload context/evidence đã trả cho model; `runtime-run.json` giữ version, composed config, seed/patch hash và kết quả run. Hai file là runtime-owned, không phải factual authority hay product artifact.
+
+Không truyền `--runtime` thì task dùng packet precompile hiện tại. Nếu DSH lỗi hoặc bị loại bỏ, cancel/replace task và tạo lại `outline --runtime legacy`; không cần convert outline, story bible hay voice profile.
+
 ## 3. Research
 
 `research_plan` chia câu hỏi thành workstreams không trùng ownership. Mỗi `research_workstream` trả source/claim ledgers có locator, limitation, contradiction và provenance. Deterministic consolidation remap/deduplicate trước `research_synthesis`.

@@ -49,6 +49,20 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
 
 HARNESS_PATH = REPO_ROOT / "system" / "harness.json"
 
+DSH_OUTLINE_CAPABILITIES = [
+    "get_task_state",
+    "get_product_direction",
+    "get_research_summary",
+    "search_evidence",
+    "get_claims",
+    "get_benchmark",
+    "get_current_outline",
+    "write_outputs",
+    "validate",
+    "submit",
+]
+DSH_OUTLINE_ADAPTER = "scripts/outline_runtime.py"
+
 
 def load_harness() -> dict[str, Any]:
     value = read_json(HARNESS_PATH)
@@ -79,6 +93,20 @@ def validate_target(operation: str, spec: dict[str, Any], section: str | None, u
         raise ValueError(f"{operation} requires --unit WS##")
     if kind == "product" and (section or unit):
         raise ValueError(f"{operation} targets the product; omit --section/--unit")
+
+
+def resolve_execution_runtime(operation: str, spec: dict[str, Any], requested: str | None) -> str:
+    allowed = spec.get("execution_runtimes", ["legacy"])
+    default = spec.get("default_execution_runtime", "legacy")
+    runtime = requested or default
+    if runtime not in allowed:
+        raise ValueError(
+            f"Operation {operation} does not support execution runtime {runtime!r}; "
+            f"allowed: {', '.join(allowed)}"
+        )
+    if runtime == "dsh" and operation != "outline":
+        raise ValueError("DeepSeek Harness POC is limited to the outline operation.")
+    return runtime
 
 
 def validate_preconditions(product_dir: Path, operation: str, section: str | None, unit: str | None) -> None:
@@ -180,6 +208,7 @@ def compile_packet(
     task_id: str,
     section: str | None = None,
     unit: str | None = None,
+    execution_runtime: str | None = None,
 ) -> tuple[dict[str, Any], str]:
     product_dir = product_dir.resolve()
     registry = load_registry()
@@ -192,6 +221,7 @@ def compile_packet(
     if not isinstance(profile, dict):
         raise ValueError(f"Operation {operation} has no valid context profile")
     validate_target(operation, spec, section, unit)
+    runtime = resolve_execution_runtime(operation, spec, execution_runtime)
     validate_preconditions(product_dir, operation, section, unit)
 
     instruction_paths = [(REPO_ROOT / item).resolve() for item in spec["instruction_files"]]
@@ -230,13 +260,14 @@ def compile_packet(
             "move hard policy or evaluation logic out of the prompt."
         )
     for path in input_paths:
-        content = path.read_text(encoding="utf-8")
         relative = product_relative(product_dir, path)
         input_records.append({"path": relative, "sha256": sha256(path), "bytes": path.stat().st_size})
-        block = [f"# BEGIN INPUT: {relative}", content.rstrip(), f"# END INPUT: {relative}", ""]
-        blocks.extend(block)
-        input_blocks.extend(block)
-    input_tokens = estimate_tokens("\n".join(input_blocks))
+        if runtime == "legacy":
+            content = path.read_text(encoding="utf-8")
+            block = [f"# BEGIN INPUT: {relative}", content.rstrip(), f"# END INPUT: {relative}", ""]
+            blocks.extend(block)
+            input_blocks.extend(block)
+    input_tokens = estimate_tokens("\n".join(input_blocks)) if input_blocks else 0
 
     outputs = [render_pattern(item, section, unit) for item in spec["outputs"]]
     output_baselines = []
@@ -250,23 +281,55 @@ def compile_packet(
         )
     report_path = f"tasks/{task_id}/report.md"
     operator_brief_path = f"tasks/{task_id}/operator-brief.json"
-    allowed = outputs + [report_path, operator_brief_path]
-    header = [
-        f"# Context Packet — {task_id}",
-        "",
-        f"- Product: `{product_dir.name}`",
-        f"- Operation: `{operation}`",
-        f"- Context profile: `{profile_name}`",
-        f"- Section: `{section or '-'}`",
-        f"- Unit: `{unit or '-'}`",
-        f"- Allowed writes: {', '.join(f'`{item}`' for item in allowed)}",
-        "",
-        "Write full operational detail to `report.md`. Write only decision-relevant summary to `operator-brief.json`.",
-        "The final chat response must use the rendered operator brief, not the task report.",
-        "",
-        "Only the material inside this packet is task context. Do not scan the repository.",
-        "",
-    ]
+    runtime_owned_paths: list[str] = []
+    if runtime == "dsh":
+        runtime_owned_paths = [
+            f"tasks/{task_id}/runtime-trace.jsonl",
+            f"tasks/{task_id}/runtime-run.json",
+        ]
+    model_write_paths = outputs + [report_path, operator_brief_path]
+    allowed = model_write_paths
+    write_label = "Model-writable paths" if runtime == "dsh" else "Allowed writes"
+    displayed_write_paths = model_write_paths if runtime == "dsh" else allowed
+    header = [f"# Context Packet — {task_id}", ""]
+    header.extend(
+        [
+            f"- Product: `{product_dir.name}`",
+            f"- Operation: `{operation}`",
+            f"- Context profile: `{profile_name}`",
+            f"- Section: `{section or '-'}`",
+            f"- Unit: `{unit or '-'}`",
+            f"- {write_label}: {', '.join(f'`{item}`' for item in displayed_write_paths)}",
+            "",
+        ]
+    )
+    if runtime == "dsh":
+        header.extend(
+            [
+                "This is a minimal task seed for the DeepSeek Harness outline POC.",
+                "Runtime-owned trace/run paths are not model-writable.",
+                "Use only the scoped capabilities exposed by the `yt_outline` MCP server:",
+                ", ".join(f"`{item}`" for item in DSH_OUTLINE_CAPABILITIES) + ".",
+                "",
+                "Call `get_task_state` first. Load product or evidence context only when the current design decision needs it.",
+                "Do not treat session memory, compaction summaries or unsupported inference as factual authority.",
+                "Repository artifacts returned by capabilities are the only factual authority; capability calls are audit-logged.",
+                "Use `write_outputs` for declared artifacts, `validate` before completion, and `submit` only after validation passes.",
+                "Human approval remains external: never mark the outline or voice profile approved.",
+                "Write full operational detail to `report.md` and only decision-relevant summary to `operator-brief.json`.",
+                "",
+            ]
+        )
+    else:
+        header.extend(
+            [
+                "Write full operational detail to `report.md`. Write only decision-relevant summary to `operator-brief.json`.",
+                "The final chat response must use the rendered operator brief, not the task report.",
+                "",
+                "Only the material inside this packet is task context. Do not scan the repository.",
+                "",
+            ]
+        )
     packet_text = "\n".join(header + blocks).rstrip() + "\n"
     tokens = estimate_tokens(packet_text)
     budget = int(spec["max_context_tokens"])
@@ -304,6 +367,14 @@ def compile_packet(
             f"python scripts/operator_brief.py validate products/{product_dir.name}/{operator_brief_path}",
         ],
     }
+    if runtime == "dsh":
+        packet["execution_runtime"] = {
+            "kind": "dsh",
+            "adapter": DSH_OUTLINE_ADAPTER,
+            "interface_version": 1,
+            "capabilities": DSH_OUTLINE_CAPABILITIES,
+        }
+        packet["runtime_owned_paths"] = runtime_owned_paths
     return packet, packet_text
 
 
@@ -314,9 +385,10 @@ def main() -> int:
     parser.add_argument("task_id")
     parser.add_argument("--section")
     parser.add_argument("--unit")
+    parser.add_argument("--runtime", choices=["legacy", "dsh"])
     parser.add_argument("--out", type=Path)
     args = parser.parse_args()
-    packet, text = compile_packet(args.product, args.operation, args.task_id, args.section, args.unit)
+    packet, text = compile_packet(args.product, args.operation, args.task_id, args.section, args.unit, args.runtime)
     output = args.out or args.product / "tasks" / args.task_id / "context.md"
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(text, encoding="utf-8")

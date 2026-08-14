@@ -87,6 +87,42 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
         if gate is not None and (not isinstance(gate, str) or not gate):
             errors.append("packet.evaluation_gate must be null or a non-empty string")
 
+    runtime = packet.get("execution_runtime")
+    if runtime is not None:
+        if not isinstance(runtime, dict):
+            errors.append("packet.execution_runtime must be an object")
+        else:
+            if runtime.get("kind") != "dsh":
+                errors.append("packet.execution_runtime.kind must be 'dsh'")
+            if runtime.get("adapter") != "scripts/outline_runtime.py":
+                errors.append("packet.execution_runtime.adapter must be 'scripts/outline_runtime.py'")
+            if runtime.get("interface_version") != 1:
+                errors.append("packet.execution_runtime.interface_version must be 1")
+            capabilities = runtime.get("capabilities")
+            if not isinstance(capabilities, list) or not capabilities or not all(
+                isinstance(item, str) and item for item in capabilities
+            ):
+                errors.append("packet.execution_runtime.capabilities must be a non-empty list of strings")
+        if packet.get("operation") != "outline":
+            errors.append("DeepSeek Harness runtime is allowed only for outline")
+
+        runtime_owned = packet.get("runtime_owned_paths")
+        if not isinstance(runtime_owned, list):
+            errors.append("packet.runtime_owned_paths must be a list")
+        else:
+            for index, item in enumerate(runtime_owned):
+                if not _is_relative_product_path(item):
+                    errors.append(f"packet.runtime_owned_paths[{index}] must be a product-relative path")
+            task_id = packet.get("task_id")
+            expected_runtime_owned = {
+                f"tasks/{task_id}/runtime-trace.jsonl",
+                f"tasks/{task_id}/runtime-run.json",
+            }
+            if set(runtime_owned) != expected_runtime_owned:
+                errors.append("packet.runtime_owned_paths must contain only the task trace and run record")
+    elif "runtime_owned_paths" in packet:
+        errors.append("packet.runtime_owned_paths requires packet.execution_runtime")
+
     inputs = packet.get("inputs")
     if not isinstance(inputs, list):
         errors.append("packet.inputs must be a list of compiled input records")
@@ -132,6 +168,11 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
         path = packet.get(field)
         if isinstance(path, str) and isinstance(allowed, list) and path not in allowed:
             errors.append(f"packet.{field} is outside packet write scope")
+    runtime_owned = packet.get("runtime_owned_paths", [])
+    if isinstance(runtime_owned, list) and isinstance(allowed, list):
+        for path in runtime_owned:
+            if path in allowed:
+                errors.append(f"runtime-owned path must stay outside model write scope: {path}")
 
     if schema_version in INTEGRITY_PACKET_SCHEMAS:
         if packet.get("compiler") != PACKET_COMPILER:

@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+import io
 import json
+import subprocess
 import tempfile
 import unittest
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
+from unittest.mock import patch
 
 from scripts.assemble import assemble_product
 from scripts.approval import approve_plan, approve_section, approve_story_plan, request_changes, request_story_plan_changes, start_new_cycle
@@ -15,6 +19,17 @@ from scripts.materialize_research import materialize as materialize_research
 from scripts.materialize_sections import archive_previous_cycle, materialize as materialize_sections
 from scripts.new_product import DEFAULT_TEMPLATE_ROOT, create_product
 from scripts.operator_brief import MAX_RENDERED_WORDS, render_brief, validate_brief
+from scripts.outline_runtime import (
+    DISABLED_DSH_ROWS,
+    TESTED_DSH_VERSION,
+    TOOL_DEFINITIONS,
+    OutlineContextBroker,
+    OutlineRuntimeError,
+    build_dsh_patch,
+    handle_mcp_message,
+    run_dsh,
+    verify_composed_dsh_config,
+)
 from scripts.outcome_eval_contract import validate_outcome_review
 from scripts.outline_contract import validate_outline_contract
 from scripts.outline_evidence_pack import verify_outline_evidence_pack
@@ -241,6 +256,33 @@ def add_research_contract(plan: dict) -> dict:
     )
 
 
+def make_dsh_outline_task(root: Path) -> tuple[Path, dict]:
+    product = create_product(root / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+    make_approved_outline(product, 3)
+    start_new_cycle(product, "Rebuild the complete outline through the bounded runtime POC.")
+    (product / "01_research" / "research-synthesis.md").write_text(
+        "# Research Synthesis\n\nStatus: complete\n\nA bounded causal synthesis for the fixture.\n",
+        encoding="utf-8",
+    )
+    work = create_task(product, "outline", None, None, False, "dsh")
+    return product, work
+
+
+def valid_dsh_composed_config() -> str:
+    rows = []
+    for row_id in DISABLED_DSH_ROWS:
+        rows.extend([f"- id: {row_id}", "  disabled: true"])
+    rows.extend(
+        [
+            "- id: yt-outline-runtime-mcp",
+            "  name: '@deepseek-ai/dsh-mcp-client'",
+            "  config:",
+            "    serverName: yt_outline",
+        ]
+    )
+    return "\n".join(rows) + "\n"
+
+
 class ModularProductionTests(unittest.TestCase):
     def test_pilot_validates_before_research(self) -> None:
         issues = validate_product(REPO_ROOT / "products" / "sumer-writing")
@@ -321,6 +363,142 @@ class ModularProductionTests(unittest.TestCase):
             legacy["schema_version"] = 3
             legacy["acceptance_criteria"] = ["Legacy generated criterion."]
             self.assertEqual([], validate_packet_contract(legacy, context_path))
+
+    def test_dsh_outline_uses_minimal_seed_and_preserves_legacy_fallback(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product, work = make_dsh_outline_task(Path(temp))
+            packet = json.loads((product / work["packet_manifest"]).read_text(encoding="utf-8"))
+            seed = (product / work["context_packet"]).read_text(encoding="utf-8")
+            self.assertEqual("dsh", packet["execution_runtime"]["kind"])
+            self.assertEqual(0, packet["input_tokens"])
+            self.assertIn("get_task_state", seed)
+            self.assertIn("search_evidence", seed)
+            self.assertNotIn("Supported fixture claim.", seed)
+            self.assertNotIn("# BEGIN INPUT:", seed)
+            self.assertEqual(
+                ["02_outline/outline.json", "02_outline/story-bible.md", "02_outline/voice-profile.md"],
+                packet["operation_outputs"],
+            )
+            self.assertTrue(set(packet["runtime_owned_paths"]).isdisjoint(packet["allowed_write_paths"]))
+            self.assertEqual([], validate_packet_contract(packet, product / work["context_packet"]))
+
+            default_packet, default_context = compile_packet(product, "outline", "T9998-outline-outline")
+            legacy_packet, legacy_context = compile_packet(product, "outline", "T9998-outline-outline", execution_runtime="legacy")
+            self.assertEqual(default_context, legacy_context)
+            self.assertNotIn("execution_runtime", default_packet)
+            self.assertIn("Supported fixture claim.", legacy_context)
+            with self.assertRaisesRegex(ValueError, "does not support execution runtime"):
+                compile_packet(product, "research_plan", "T9999-research-plan", execution_runtime="dsh")
+
+    def test_dsh_outline_broker_enforces_read_write_scope_and_audits_context(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product, work = make_dsh_outline_task(Path(temp))
+            broker = OutlineContextBroker(product, work["id"])
+            claims = broker.call("get_claims", {"limit": 1})
+            self.assertEqual(["CLM-0001"], [item["id"] for item in claims["claims"]])
+            search = broker.call("search_evidence", {"query": "fixture", "limit": 5})
+            self.assertEqual("CLM-0001", search["claims"][0]["id"])
+
+            escaped = product / "system" / "harness.json"
+            with self.assertRaisesRegex(OutlineRuntimeError, "outside model scope"):
+                broker.call("write_outputs", {"files": [{"path": "system/harness.json", "content": "{}\n"}]})
+            self.assertFalse(escaped.exists())
+            with self.assertRaisesRegex(OutlineRuntimeError, "outside model scope"):
+                broker.call(
+                    "write_outputs",
+                    {
+                        "files": [
+                            {
+                                "path": f"tasks/{work['id']}/runtime-trace.jsonl",
+                                "content": "model-owned trace replacement\n",
+                            }
+                        ]
+                    },
+                )
+
+            trace_path = product / "tasks" / work["id"] / "runtime-trace.jsonl"
+            entries = [json.loads(line) for line in trace_path.read_text(encoding="utf-8").splitlines()]
+            claim_entry = next(item for item in entries if item["capability"] == "get_claims")
+            self.assertEqual("01_research/outline-evidence-pack.json", claim_entry["sources"][0]["path"])
+            self.assertEqual(claims, claim_entry["response"])
+            self.assertTrue(claim_entry["response_sha256"])
+            self.assertTrue(any(item["error"] for item in entries if item["capability"] == "write_outputs"))
+
+            synthesis = product / "01_research" / "research-synthesis.md"
+            synthesis.write_text(synthesis.read_text(encoding="utf-8") + "Changed after task creation.\n", encoding="utf-8")
+            with self.assertRaisesRegex(OutlineRuntimeError, "stale"):
+                broker.call("get_research_summary", {})
+
+    def test_dsh_patch_removes_general_tools_and_exposes_exact_capability_interface(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product, work = make_dsh_outline_task(Path(temp))
+            runtime_dir = Path(temp) / "empty-runtime"
+            runtime_dir.mkdir()
+            patch_text = build_dsh_patch(product, work["id"], runtime_dir)
+            for row_id in DISABLED_DSH_ROWS:
+                self.assertIn(f"- id: {row_id}\n  disabled: true", patch_text)
+            self.assertEqual(1, patch_text.count("@deepseek-ai/dsh-mcp-client"))
+            self.assertIn("serverName: yt_outline", patch_text)
+            composed = valid_dsh_composed_config()
+            self.assertEqual([], verify_composed_dsh_config(composed))
+            unsafe = composed.replace("- id: tool-fs\n  disabled: true", "- id: tool-fs")
+            self.assertTrue(any("tool-fs" in item for item in verify_composed_dsh_config(unsafe)))
+            tool_names = [item["name"] for item in TOOL_DEFINITIONS]
+            packet = json.loads((product / work["packet_manifest"]).read_text(encoding="utf-8"))
+            self.assertEqual(packet["execution_runtime"]["capabilities"], tool_names)
+            self.assertEqual(len(tool_names), len(set(tool_names)))
+
+            broker = OutlineContextBroker(product, work["id"])
+            initialized = handle_mcp_message(
+                broker,
+                {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-06-18"}},
+            )
+            self.assertEqual("2025-06-18", initialized["result"]["protocolVersion"])
+            listed = handle_mcp_message(broker, {"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}})
+            self.assertEqual(tool_names, [item["name"] for item in listed["result"]["tools"]])
+            called = handle_mcp_message(
+                broker,
+                {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "get_task_state", "arguments": {}}},
+            )
+            state = json.loads(called["result"]["content"][0]["text"])
+            self.assertEqual(work["id"], state["task"]["id"])
+
+            tampered = dict(packet)
+            tampered["runtime_owned_paths"] = ["../outside.json"]
+            errors = validate_packet_contract(tampered, product / work["context_packet"])
+            self.assertTrue(any("runtime_owned_paths" in item for item in errors))
+
+    def test_dsh_runner_uses_isolated_workspace_and_fails_closed_without_submit(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product, work = make_dsh_outline_task(Path(temp))
+            calls = [
+                subprocess.CompletedProcess(
+                    ["/mock/dsh", "--version"], 0, stdout=f"dsh {TESTED_DSH_VERSION}\n", stderr=""
+                ),
+                subprocess.CompletedProcess(
+                    ["/mock/dsh", "--dump-config"], 0, stdout=valid_dsh_composed_config(), stderr=""
+                ),
+                subprocess.CompletedProcess(["/mock/dsh"], 0, stdout="Finished without submit.\n", stderr=""),
+            ]
+            with patch("scripts.outline_runtime.resolve_executable", return_value="/mock/dsh"), patch(
+                "scripts.outline_runtime.subprocess.run", side_effect=calls
+            ) as mocked_run:
+                with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                    code = run_dsh(product, work["id"], executable="dsh", timeout_seconds=30)
+            self.assertEqual(2, code)
+            run_call = mocked_run.call_args_list[2]
+            command = run_call.args[0]
+            self.assertEqual(["/mock/dsh", "--profile", "headless", "--patch"], command[:4])
+            self.assertNotEqual(product.resolve(), Path(run_call.kwargs["cwd"]).resolve())
+            self.assertEqual("1", run_call.kwargs["env"]["DSH_TELEMETRY_DISABLED"])
+            self.assertEqual("read-only", run_call.kwargs["env"]["DSH_PERMISSION_MODE"])
+            record = json.loads(
+                (product / "tasks" / work["id"] / "runtime-run.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(2, record["return_code"])
+            self.assertEqual("ready", record["task_state"])
+            self.assertEqual("isolated-empty-directory", record["workspace_mode"])
+            self.assertIn("yt-outline-runtime-mcp", record["patch"])
 
     def test_policy_has_one_authoritative_home(self) -> None:
         registry = json.loads((REPO_ROOT / "system" / "operations" / "registry.json").read_text(encoding="utf-8"))

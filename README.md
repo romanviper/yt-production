@@ -43,6 +43,8 @@ Story design chỉ khóa audience shift, evidence roles (`core / optional / guar
 ```bash
 python scripts/new_product.py ten-san-pham --title "Tên làm việc"
 python scripts/task.py create products/ten-san-pham research_plan
+python scripts/task.py create products/ten-san-pham outline --runtime dsh  # optional POC
+python scripts/outline_runtime.py run products/ten-san-pham <task-id>     # requires dsh executable
 python scripts/task.py create products/ten-san-pham design_section --section P04
 python scripts/approval.py approve-story-plan products/ten-san-pham P04
 python scripts/task.py create products/ten-san-pham draft_section --section P04
@@ -70,3 +72,4 @@ Chi tiết vận hành: [docs/WORKFLOW.md](docs/WORKFLOW.md).
 ## Pilot
 
 `products/sumer-writing/` kể vòng đời chữ viết như một công nghệ–thiết chế của văn minh Sumer. *Fall of Civilizations* là benchmark chức năng, không phải mẫu câu, cadence, persona hay structure để sao chép.
+

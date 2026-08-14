@@ -60,6 +60,11 @@
     "outline": {
       "target_kind": "product",
       "max_context_tokens": 24000,
+      "execution_runtimes": [
+        "legacy",
+        "dsh"
+      ],
+      "default_execution_runtime": "legacy",
       "instruction_files": [
         "system/core/creative-boundaries.md",
         "system/standards/channel-constitution.md",
@@ -228,3 +233,4 @@
     }
   }
 }
+

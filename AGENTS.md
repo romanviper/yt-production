@@ -18,6 +18,8 @@ This file contains only repo-wide operating boundaries. Creative logic belongs i
 4. Write only `allowed_write_paths`, run the packet's validations, produce `report.md` and `operator-brief.json`, then submit through `scripts/task.py`.
 5. Stop at the current checkpoint. Do not silently start the next operation.
 
+An `outline` work order compiled with `execution_runtime.kind: dsh` is the only POC exception to direct packet consumption. Launch it through `scripts/outline_runtime.py`; the Agent receives a minimal seed and may access repository context only through the packet-declared, audit-logged capability broker. Do not grant that runtime filesystem, shell, web or repo-scan tools.
+
 For a newly requested operation, create it through `python scripts/task.py create`; never hand-author router artifacts. Operation names and preconditions are machine-readable in `system/operations/registry.json`.
 
 ## Hard stops
@@ -27,3 +29,4 @@ Stop and report a blocker when the packet is stale, malformed, missing an input,
 ## User-facing handoff
 
 For task output, lead with `python scripts/task.py brief products/<slug> <task-id>`. Keep operational detail in `report.md`; expose deeper analysis only when the user asks for it or needs it to make a safe decision.
+

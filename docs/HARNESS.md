@@ -33,6 +33,23 @@ Creative prompts may contain only:
 
 Operation inputs are compact and hash-bound. Outline design receives a deterministic claim catalog instead of the full claim ledger; drafting receives the approved narration pack instead of the full section evidence archive. Detailed provenance remains authoritative outside the creative prompt.
 
+## Outline execution-runtime POC
+
+`outline` may be compiled explicitly with `--runtime dsh`. This changes only the execution path:
+
+- the Python router still owns preconditions, work order, hashes, write scope, validators, submission and human approval;
+- product artifacts keep the same outline/story-bible/voice-profile contracts and contain no DSH fields;
+- `context.md` becomes a minimal seed containing bounded operation instructions, not product facts;
+- DSH runs headless in an empty temporary workspace with telemetry disabled;
+- a Cordis overlay disables filesystem, shell, code, web, skill, workflow and subagent tools, then inserts one `yt_outline` MCP broker;
+- the runner accepts only the audited `0.1.0-rc.5` CLI and preflights the fully composed Cordis config before any model call; a version or row mismatch fails closed;
+- the broker reads only packet-declared inputs and current declared outputs, enforces fresh hashes and exact write paths, and records every returned context/evidence payload in `runtime-trace.jsonl`;
+- `validate` and `submit` delegate to the existing deterministic Python control plane.
+
+The capability interface is versioned independently of product schemas: `get_task_state`, `get_product_direction`, `get_research_summary`, `search_evidence`, `get_claims`, `get_benchmark`, `get_current_outline`, `write_outputs`, `validate`, `submit`.
+
+DSH remains opt-in because v0.1 is a developer preview. A DSH upgrade requires re-auditing the base/headless rows, updating `TESTED_DSH_VERSION` and rerunning the boundary tests. Omitting `--runtime` preserves the precompiled-context harness. Rollback requires no artifact migration: cancel/replace the task and create `outline` again with `--runtime legacy`, or remove the adapter and the two runtime routing fields from the outline registry entry.
+
 ## Authoritative homes
 
 This document explains the layout; it is not another policy source.
@@ -46,6 +63,7 @@ This document explains the layout; it is not another policy source.
 | One operation's reasoning problem | its file in `system/operations/` |
 | Outcome criteria and failure routing | `system/standards/outcome-evaluation.md` |
 | Machine routing, inputs and outputs | `system/operations/registry.json` |
+| Optional outline runtime boundary and audit trace | `scripts/outline_runtime.py` plus the task packet |
 | Product decisions and feedback | product artifacts and local change requests |
 
 Generated hashes, allowed paths and validation commands may repeat across router artifacts because they enforce integrity. Manually authored behavioral prose must have one home.
