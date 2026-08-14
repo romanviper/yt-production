@@ -18,7 +18,7 @@ from scripts.operator_brief import MAX_RENDERED_WORDS, render_brief, validate_br
 from scripts.outcome_eval_contract import validate_outcome_review
 from scripts.outline_contract import validate_outline_contract
 from scripts.outline_evidence_pack import verify_outline_evidence_pack
-from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
+from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION, validate_packet_contract
 from scripts.story_plan_contract import build_narration_pack, verify_narration_pack
 from scripts.task import create_task, submit_task, validate_output_contract, verify_task
 from scripts.validate import validate_product
@@ -285,15 +285,15 @@ class ModularProductionTests(unittest.TestCase):
             violations = product_task_violations(
                 pilot,
                 work,
-                allowed + ["system/core/invariants.md", "scripts/materialize_research.py"],
+                allowed + ["system/harness.json", "scripts/materialize_research.py"],
             )
             self.assertEqual(2, len(violations))
             self.assertTrue(all("protected system path" in item for item in violations))
 
     def test_system_and_product_changes_must_use_separate_commits(self) -> None:
-        self.assertEqual([], commit_scope_errors(["system/core/invariants.md", "scripts/task.py"]))
+        self.assertEqual([], commit_scope_errors(["system/harness.json", "scripts/task.py"]))
         self.assertEqual([], commit_scope_errors(["products/sumer-writing/01_research/plan.json"]))
-        errors = commit_scope_errors(["system/core/invariants.md", "products/sumer-writing/01_research/plan.json"])
+        errors = commit_scope_errors(["system/harness.json", "products/sumer-writing/01_research/plan.json"])
         self.assertEqual(1, len(errors))
         classified = classify_paths(["AGENTS.md", "products/sumer-writing/product.json"])
         self.assertEqual(["AGENTS.md"], classified["system"])
@@ -311,6 +311,27 @@ class ModularProductionTests(unittest.TestCase):
             self.assertEqual("product_agent", packet["authority"])
             self.assertEqual(PACKET_SCHEMA_VERSION, packet["schema_version"])
             self.assertEqual(PACKET_COMPILER, packet["compiler"])
+            self.assertNotIn("acceptance_criteria", packet)
+            self.assertNotIn("acceptance_criteria", work)
+            context_path = product / work["context_packet"]
+            context = context_path.read_text(encoding="utf-8")
+            self.assertNotIn("## Acceptance criteria", context)
+            self.assertNotIn("## Local autonomy", context)
+            legacy = dict(packet)
+            legacy["schema_version"] = 3
+            legacy["acceptance_criteria"] = ["Legacy generated criterion."]
+            self.assertEqual([], validate_packet_contract(legacy, context_path))
+
+    def test_policy_has_one_authoritative_home(self) -> None:
+        registry = json.loads((REPO_ROOT / "system" / "operations" / "registry.json").read_text(encoding="utf-8"))
+        for name, spec in registry["operations"].items():
+            self.assertNotIn("acceptance", spec, name)
+            for required in ["target_kind", "max_context_tokens", "instruction_files", "required_inputs", "outputs", "context_profile"]:
+                self.assertIn(required, spec, f"{name}.{required}")
+        harness = json.loads((REPO_ROOT / "system" / "harness.json").read_text(encoding="utf-8"))
+        self.assertTrue(all("autonomy" not in profile for profile in harness["profiles"].values()))
+        self.assertFalse((REPO_ROOT / "system" / "core" / "invariants.md").exists())
+        self.assertFalse((REPO_ROOT / "system" / "standards" / "review.md").exists())
 
     def test_research_workstreams_are_isolated(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -627,7 +648,6 @@ class ModularProductionTests(unittest.TestCase):
             self.assertIn("03_sections/P01/evidence-pack.json", context)
             self.assertIn("system/standards/channel-constitution.md", packet["instruction_files"])
             self.assertNotIn("system/standards/voice.md", packet["instruction_files"])
-            self.assertNotIn("system/core/invariants.md", packet["instruction_files"])
             self.assertEqual(["03_sections/P01/story-plan.json"], packet["operation_outputs"])
             make_approved_story_plan(product, "P01")
             draft_packet, draft_context = compile_packet(product, "draft_section", "T0003", section="P01")
@@ -647,10 +667,8 @@ class ModularProductionTests(unittest.TestCase):
             self.assertIn("system/core/creative-boundaries.md", packet["instruction_files"])
             self.assertIn("system/standards/channel-constitution.md", packet["instruction_files"])
             for excluded in [
-                "system/core/invariants.md",
                 "system/standards/operator-interface.md",
                 "system/standards/outcome-evaluation.md",
-                "system/standards/review.md",
             ]:
                 self.assertNotIn(excluded, packet["instruction_files"])
             self.assertNotIn("Operator Interface Standard", context)

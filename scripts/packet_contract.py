@@ -13,7 +13,9 @@ except ModuleNotFoundError:  # Direct execution from scripts/
     from common import sha256
 
 
-PACKET_SCHEMA_VERSION = 3
+PACKET_SCHEMA_VERSION = 4
+SUPPORTED_PACKET_SCHEMAS = {1, 2, 3, PACKET_SCHEMA_VERSION}
+INTEGRITY_PACKET_SCHEMAS = {3, PACKET_SCHEMA_VERSION}
 PACKET_COMPILER = "scripts/context_packet.py"
 SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
 
@@ -40,7 +42,7 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
 
     errors: list[str] = []
     schema_version = packet.get("schema_version")
-    if schema_version not in {1, 2, PACKET_SCHEMA_VERSION}:
+    if schema_version not in SUPPORTED_PACKET_SCHEMAS:
         errors.append(f"unsupported packet.schema_version: {schema_version!r}")
 
     for field in ["authority", "task_id", "product", "operation", "report_path", "operator_brief_path"]:
@@ -56,17 +58,22 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
         if field in packet and not _is_relative_product_path(packet[field]):
             errors.append(f"packet.{field} must be a product-relative path")
 
-    for field in ["acceptance_criteria", "validation"]:
+    for field in ["validation"]:
         value = packet.get(field)
         if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
             errors.append(f"packet.{field} must be a list of strings")
+
+    if schema_version in {1, 2, 3}:
+        value = packet.get("acceptance_criteria")
+        if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+            errors.append("legacy packet.acceptance_criteria must be a list of strings")
 
     for field in ["estimated_context_tokens", "max_context_tokens"]:
         value = packet.get(field)
         if not isinstance(value, int) or isinstance(value, bool) or value < 0:
             errors.append(f"packet.{field} must be a non-negative integer")
 
-    if schema_version == PACKET_SCHEMA_VERSION:
+    if schema_version in INTEGRITY_PACKET_SCHEMAS:
         for field in ["prompt_instruction_tokens", "input_tokens"]:
             value = packet.get(field)
             if not isinstance(value, int) or isinstance(value, bool) or value < 0:
@@ -126,7 +133,7 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
         if isinstance(path, str) and isinstance(allowed, list) and path not in allowed:
             errors.append(f"packet.{field} is outside packet write scope")
 
-    if schema_version == PACKET_SCHEMA_VERSION:
+    if schema_version in INTEGRITY_PACKET_SCHEMAS:
         if packet.get("compiler") != PACKET_COMPILER:
             errors.append(f"packet.compiler must be {PACKET_COMPILER!r}")
         context_digest = packet.get("context_sha256")

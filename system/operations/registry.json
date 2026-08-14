@@ -17,12 +17,6 @@
       "outputs": [
         "01_research/plan.json"
       ],
-      "acceptance": [
-        "Plan chia subject thành workstream không trùng responsibility.",
-        "Mỗi workstream có question, boundary và completion criteria.",
-        "Plan test causal hypotheses nhưng không quyết định lại subject.",
-        "Không viết research findings, outline hoặc narration."
-      ],
       "context_profile": "research"
     },
     "research_workstream": {
@@ -42,12 +36,6 @@
         "01_research/workstreams/{unit}/claims.json",
         "01_research/workstreams/{unit}/synthesis.md"
       ],
-      "acceptance": [
-        "Chỉ trả lời question của workstream hiện tại.",
-        "Source có locator, authority và limitation.",
-        "Claim tách fact/inference/contested/unknown và có counterevidence.",
-        "Synthesis đủ dùng cho task sau mà không cần raw browsing context."
-      ],
       "context_profile": "research"
     },
     "research_synthesis": {
@@ -66,12 +54,6 @@
       "optional_inputs": [],
       "outputs": [
         "01_research/research-synthesis.md"
-      ],
-      "acceptance": [
-        "Không mất contradiction hoặc unknown giữa các workstream.",
-        "Dùng global ledgers do deterministic consolidation tạo; không remap hoặc rewrite chúng trong AI task.",
-        "Synthesis tổ chức theo causal questions, không theo thứ tự nguồn.",
-        "Không viết outline hoặc narration."
       ],
       "context_profile": "research"
     },
@@ -98,13 +80,6 @@
         "02_outline/story-bible.md",
         "02_outline/voice-profile.md"
       ],
-      "acceptance": [
-        "Thiết kế đúng ba act toàn phim: opening, body và ending.",
-        "Macro movement và production section phát sinh từ causal load, không từ một số lượng hoặc template mặc định.",
-        "Mỗi work unit chỉ khóa narrative job, state change, evidence allowance, continuity và length estimate.",
-        "Story bible và voice profile đủ giữ continuity/bản sắc nhưng không mang research dump hoặc surface imitation.",
-        "Không viết narration hoặc tự approve."
-      ],
       "context_profile": "architecture"
     },
     "design_section": {
@@ -130,13 +105,6 @@
       "outputs": [
         "03_sections/{section}/story-plan.json"
       ],
-      "acceptance": [
-        "Xác định một audience shift khả thi cho work unit.",
-        "Phân mọi claim vào core, optional, guardrail hoặc exclude để khóa evidence ceiling.",
-        "Story strategy mô tả intent nhưng không ép beats, paragraph count, cadence hoặc opening formula.",
-        "Length range là estimate theo material, không phải quota.",
-        "Không viết narration hoặc tự approve."
-      ],
       "context_profile": "creative_design"
     },
     "draft_section": {
@@ -160,12 +128,6 @@
       "outputs": [
         "03_sections/{section}/draft.md",
         "03_sections/{section}/handoff.md"
-      ],
-      "acceptance": [
-        "Section tạo được audience shift và state change đã duyệt.",
-        "Prose tự chọn route phù hợp nhưng giữ act role, continuity và evidence ceiling.",
-        "Văn nói tiếng Việt nhất quán với Channel Constitution và product voice.",
-        "Không padding để chạm length estimate; handoff chỉ ghi continuity cần thiết."
       ],
       "context_profile": "creative_draft"
     },
@@ -191,12 +153,6 @@
       "optional_inputs": [],
       "outputs": [
         "03_sections/{section}/review.md"
-      ],
-      "acceptance": [
-        "Chấm outcome thay vì mức tuân thủ một creative route.",
-        "Kiểm tra act contribution, narrative movement, causality, voice, semantic repetition và evidence integrity.",
-        "Mỗi issue được route về prose_execution, local_design, product_architecture hoặc evidence.",
-        "Review có verdict và acceptance test; không rewrite hoặc tự approve."
       ],
       "context_profile": "evaluation"
     },
@@ -225,12 +181,6 @@
         "03_sections/{section}/handoff.md",
         "03_sections/{section}/revision-log.md"
       ],
-      "acceptance": [
-        "Chỉ xử lý issue được người dùng duyệt.",
-        "Giữ lựa chọn đang hiệu quả, act role, continuity và evidence ceiling.",
-        "Revision log nêu issue, phạm vi và observable result.",
-        "Escalate khi lỗi thật sự thuộc architecture hoặc evidence; không sửa section khác."
-      ],
       "context_profile": "creative_revision"
     },
     "integration_review": {
@@ -254,11 +204,6 @@
         "04_integration/review.md",
         "04_integration/change-map.json"
       ],
-      "acceptance": [
-        "Audit continuity qua handoff trước khi mở full drafts.",
-        "Mỗi issue chỉ rõ section bị ảnh hưởng và revision class.",
-        "Không rewrite hoặc assemble script."
-      ],
       "context_profile": "evaluation"
     },
     "final_audit": {
@@ -278,11 +223,6 @@
       "optional_inputs": [],
       "outputs": [
         "04_integration/final-audit.md"
-      ],
-      "acceptance": [
-        "Audit full script một lần nhưng chỉ tạo report.",
-        "Không sửa source section hoặc delivery.",
-        "Issue được route về targeted revise_section."
       ],
       "context_profile": "evaluation"
     }

@@ -23,6 +23,8 @@ Product Agent không sửa control plane. System Architect không trộn system 
 
 Hard-policy files và operator-interface không được nạp vào prompt sáng tạo. Creative packet chỉ dùng allowlist ngắn và bị chặn nếu evaluation-only policy lọt vào writer context.
 
+Registry chỉ route operation, input, output, profile và budget. Tiêu chí semantic nằm đúng một lần trong operation instruction, Channel Constitution hoặc Outcome Evaluation; compiler không lặp lại chúng thành một acceptance prompt thứ hai.
+
 Agent đọc đúng ACTIVE → work order → packet. Nó không quét repo.
 
 ## 3. Research

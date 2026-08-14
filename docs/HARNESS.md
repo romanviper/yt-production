@@ -33,6 +33,23 @@ Creative prompts may contain only:
 
 Operation inputs are compact and hash-bound. Outline design receives a deterministic claim catalog instead of the full claim ledger; drafting receives the approved narration pack instead of the full section evidence archive. Detailed provenance remains authoritative outside the creative prompt.
 
+## Authoritative homes
+
+This document explains the layout; it is not another policy source.
+
+| Concern | Authoritative home |
+|---|---|
+| Authority, write scope and task lifecycle | `AGENTS.md` plus deterministic scripts |
+| Context profiles, caps and layer allowlists | `system/harness.json` |
+| Content safety and evidence ceiling | `system/core/creative-boundaries.md` |
+| Three-act identity, voice and channel values | `system/standards/channel-constitution.md` |
+| One operation's reasoning problem | its file in `system/operations/` |
+| Outcome criteria and failure routing | `system/standards/outcome-evaluation.md` |
+| Machine routing, inputs and outputs | `system/operations/registry.json` |
+| Product decisions and feedback | product artifacts and local change requests |
+
+Generated hashes, allowed paths and validation commands may repeat across router artifacts because they enforce integrity. Manually authored behavioral prose must have one home.
+
 ## Anti-accretion rule
 
 Feedback is absorbed at the smallest valid layer:
@@ -46,12 +63,13 @@ Never add a global negative writer rule merely because one draft failed.
 
 ## Compatibility
 
-Approved outline schema v2/v3 and story-plan v1/v2 remain readable. Any new or revised architecture must use outline v4; any new or revised section design must use story-plan v3. Current plans generate compact narration-pack v2.
+Approved outline schema v2/v3, story-plan v1/v2 and packet v1-v3 remain readable. New output uses outline v4, story-plan v3, compact narration-pack v2 and packet v4.
 
 ## Success criteria
 
 - creative instructions stay under their profile budget;
 - writer packets exclude hard-policy and evaluation files;
+- registry entries contain routing data rather than creative acceptance prose;
 - no minimum word count can force padding;
 - every section is outcome-reviewed before approval;
 - three acts remain stable across runtimes while movement/section counts remain adaptive.

@@ -9,10 +9,8 @@
     "context_and_production_unit_hard_caps"
   ],
   "prompt_excluded_files": [
-    "system/core/invariants.md",
     "system/governance.json",
-    "system/standards/operator-interface.md",
-    "system/standards/review.md"
+    "system/standards/operator-interface.md"
   ],
   "eval_only_files": [
     "system/standards/outcome-evaluation.md"
@@ -21,38 +19,32 @@
     "research": {
       "kind": "research",
       "max_instruction_tokens": 3200,
-      "evaluation_gate": "human_review",
-      "autonomy": "Choose the research route inside the declared question and evidence protocol."
+      "evaluation_gate": "human_review"
     },
     "architecture": {
       "kind": "creative",
       "max_instruction_tokens": 1800,
-      "evaluation_gate": "human_approval",
-      "autonomy": "Design the whole arc before choosing production boundaries; use no default section count or repeated section formula."
+      "evaluation_gate": "human_approval"
     },
     "creative_design": {
       "kind": "creative",
       "max_instruction_tokens": 1500,
-      "evaluation_gate": "human_approval",
-      "autonomy": "Choose a narrative strategy that fits the material. Do not pre-script beats, paragraph count, cadence or transitions for the writer."
+      "evaluation_gate": "human_approval"
     },
     "creative_draft": {
       "kind": "creative",
       "max_instruction_tokens": 1500,
-      "evaluation_gate": "review_section",
-      "autonomy": "Choose ordering, opening form, paragraph count, rhythm and phrasing locally; the plan defines intent and evidence, not a mandatory route."
+      "evaluation_gate": "review_section"
     },
     "creative_revision": {
       "kind": "creative",
       "max_instruction_tokens": 1500,
-      "evaluation_gate": "review_section",
-      "autonomy": "Use the smallest change that resolves the approved issue while preserving successful choices."
+      "evaluation_gate": "review_section"
     },
     "evaluation": {
       "kind": "evaluation",
       "max_instruction_tokens": 2600,
-      "evaluation_gate": "human_review",
-      "autonomy": "Judge the produced outcome, not whether the Agent followed one preferred creative route."
+      "evaluation_gate": "human_review"
     }
   }
 }

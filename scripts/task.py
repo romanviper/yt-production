@@ -84,7 +84,6 @@ def create_task(product_dir: Path, operation: str, section: str | None, unit: st
         "context_packet": product_relative(product_dir, context_path),
         "packet_manifest": product_relative(product_dir, packet_path),
         "allowed_write_paths": packet["allowed_write_paths"],
-        "acceptance_criteria": packet["acceptance_criteria"],
         "outputs": packet["operation_outputs"],
         "report_path": packet["report_path"],
         "operator_brief_path": packet["operator_brief_path"],
