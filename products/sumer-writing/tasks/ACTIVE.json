@@ -1,5 +1,6 @@
 {
-  "task_id": "T0023-outline-outline",
-  "work_order": "tasks/T0023-outline-outline/work-order.json",
-  "context_packet": "tasks/T0023-outline-outline/context.md"
+  "task_id": null,
+  "status": "idle",
+  "updated_at": "2026-08-17T07:14:00+00:00",
+  "superseded_by": "HA-20260817T071400000000Z"
 }
