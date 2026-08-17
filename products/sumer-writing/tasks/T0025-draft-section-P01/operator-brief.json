@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "status": "in_progress",
+  "headline": "Đang viết draft P01 theo story-plan và narration pack đã được bạn duyệt.",
+  "material_points": [],
+  "decision": {
+    "required": false,
+    "question": "",
+    "recommendation": "",
+    "options": []
+  },
+  "next_step": "Hoàn tất draft và handoff rồi chuyển P01 sang outcome review."
+}
