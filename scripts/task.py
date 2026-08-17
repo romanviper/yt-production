@@ -100,11 +100,14 @@ def create_task(
         work_order["runtime_owned_paths"] = packet.get("runtime_owned_paths", [])
     work_path = task_dir / "work-order.json"
     write_json(work_path, work_order)
+    errors = verify_task(product_dir, task_id)
+    if errors:
+        raise ValueError("Router produced invalid task artifacts: " + "; ".join(errors))
     write_json(active_file, {"task_id": task_id, "work_order": product_relative(product_dir, work_path), "context_packet": product_relative(product_dir, context_path)})
     return work_order
 
 
-def verify_task(product_dir: Path, task_id: str) -> list[str]:
+def verify_task(product_dir: Path, task_id: str, *, state_override: str | None = None) -> list[str]:
     product_dir = product_dir.resolve()
     task_dir = product_dir / "tasks" / task_id
     work = read_json(task_dir / "work-order.json")
@@ -115,7 +118,8 @@ def verify_task(product_dir: Path, task_id: str) -> list[str]:
     # Freshness protects work that has not yet been submitted. Once submitted,
     # router-owned state transitions and later human decisions may legitimately
     # change an input while the packet remains the immutable historical record.
-    if work.get("state") in {"ready", "in_progress"}:
+    effective_state = state_override or work.get("state")
+    if effective_state in {"ready", "in_progress"}:
         for record in packet["inputs"]:
             path = product_dir / record["path"]
             if not path.is_file():
@@ -145,13 +149,34 @@ def verify_task(product_dir: Path, task_id: str) -> list[str]:
     return errors
 
 
+def verify_active_pointer(product_dir: Path, task_id: str) -> list[str]:
+    product_dir = product_dir.resolve()
+    path = active_path(product_dir)
+    if not path.is_file():
+        return ["task is not active: missing tasks/ACTIVE.json"]
+    try:
+        active = read_json(path)
+    except (json.JSONDecodeError, ValueError, OSError) as exc:
+        return [f"invalid tasks/ACTIVE.json: {exc}"]
+
+    errors: list[str] = []
+    if active.get("task_id") != task_id:
+        errors.append(f"task {task_id} is not the active task")
+    expected_work = f"tasks/{task_id}/work-order.json"
+    expected_context = f"tasks/{task_id}/context.md"
+    if active.get("work_order") != expected_work or active.get("context_packet") != expected_context:
+        errors.append("ACTIVE.json must point to the task's router-generated work order and context")
+    return errors
+
+
 def submit_task(product_dir: Path, task_id: str) -> list[str]:
     product_dir = product_dir.resolve()
     task_dir = product_dir / "tasks" / task_id
     work_path = task_dir / "work-order.json"
     work = read_json(work_path)
     packet = read_json(task_dir / "packet.json")
-    errors = verify_task(product_dir, task_id)
+    errors = verify_active_pointer(product_dir, task_id)
+    errors.extend(verify_task(product_dir, task_id))
     if errors:
         return errors
     changed_outputs = 0
@@ -319,12 +344,20 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
     return errors
 
 
-def set_task_state(product_dir: Path, task_id: str, state: str) -> None:
-    work_path = product_dir.resolve() / "tasks" / task_id / "work-order.json"
+def set_task_state(product_dir: Path, task_id: str, state: str) -> list[str]:
+    product_dir = product_dir.resolve()
+    if state in {"ready", "in_progress"}:
+        errors = verify_active_pointer(product_dir, task_id)
+        errors.extend(verify_task(product_dir, task_id, state_override=state))
+        if errors:
+            return errors
+
+    work_path = product_dir / "tasks" / task_id / "work-order.json"
     work = read_json(work_path)
     work["state"] = state
     work["updated_at"] = datetime.now(timezone.utc).isoformat()
     write_json(work_path, work)
+    return []
 
 
 def main() -> int:
@@ -388,7 +421,11 @@ def main() -> int:
         print(render_brief(read_json(path)), end="")
         return 0
     if args.command == "state":
-        set_task_state(args.product, args.task_id, args.value)
+        errors = set_task_state(args.product, args.task_id, args.value)
+        if errors:
+            for error in errors:
+                print(f"ERROR: {error}")
+            return 1
         print(f"{args.task_id}: {args.value}")
         return 0
     errors = submit_task(args.product, args.task_id) if args.command == "submit" else verify_task(args.product, args.task_id)
@@ -406,4 +443,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

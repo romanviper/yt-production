@@ -14,13 +14,13 @@ try:
     from scripts.common import read_json
     from scripts.outline_contract import validate_outline_contract
     from scripts.story_plan_contract import verify_narration_pack
-    from scripts.task import verify_task
+    from scripts.task import verify_active_pointer, verify_task
     from scripts.voice_profile_contract import validate_voice_profile
 except ModuleNotFoundError:
     from common import read_json
     from outline_contract import validate_outline_contract
     from story_plan_contract import verify_narration_pack
-    from task import verify_task
+    from task import verify_active_pointer, verify_task
     from voice_profile_contract import validate_voice_profile
 
 
@@ -136,16 +136,42 @@ def validate_product(product_dir: Path) -> list[Issue]:
                         for message in verify_narration_pack(product_dir, section_id):
                             issues.append(Issue("ERROR", str(root / "narration-pack.json"), message))
 
+    validated_task_ids: set[str] = set()
     active_path = product_dir / "tasks" / "ACTIVE.json"
     if active_path.is_file():
         active = safe_json(active_path, issues)
         task_id = active.get("task_id")
         if task_id:
             try:
+                for message in verify_active_pointer(product_dir, task_id):
+                    issues.append(Issue("ERROR", str(active_path), message))
                 for message in verify_task(product_dir, task_id):
                     issues.append(Issue("ERROR", str(active_path), message))
+                validated_task_ids.add(task_id)
             except (FileNotFoundError, KeyError, json.JSONDecodeError, ValueError) as exc:
                 issues.append(Issue("ERROR", str(active_path), f"Invalid active task: {exc}"))
+
+    # Submitted tasks are production candidates even after ACTIVE.json moves on.
+    # Keep their router-generated packet/context integrity enforceable until a
+    # human decision closes or cancels the task.
+    tasks_dir = product_dir / "tasks"
+    if tasks_dir.is_dir():
+        for work_path in sorted(tasks_dir.glob("T*/work-order.json")):
+            task_id = work_path.parent.name
+            if task_id in validated_task_ids:
+                continue
+            try:
+                work = read_json(work_path)
+            except (json.JSONDecodeError, ValueError, OSError) as exc:
+                issues.append(Issue("ERROR", str(work_path), f"Invalid task work order: {exc}"))
+                continue
+            if work.get("state") != "ready_for_review":
+                continue
+            try:
+                for message in verify_task(product_dir, task_id):
+                    issues.append(Issue("ERROR", str(work_path), message))
+            except (FileNotFoundError, KeyError, json.JSONDecodeError, ValueError) as exc:
+                issues.append(Issue("ERROR", str(work_path), f"Invalid submitted task: {exc}"))
 
     return issues
 
