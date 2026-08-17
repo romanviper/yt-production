@@ -1,21 +1,32 @@
 {
   "schema_version": 3,
   "section": "P01",
-  "status": "not_started",
-  "audience_shift": "",
-  "story_strategy": "",
+  "status": "approved",
+  "audience_shift": "Khán giả bắt đầu với giả định rằng một tablet cổ là một thông điệp chỉ cần được dịch. Cuối P01, họ nhận ra điều lạ hơn: ngay cả khi không thể khôi phục một câu nói hoàn chỉnh, ta vẫn có thể thấy tablet đang giữ những quantity và relation có cấu trúc. Câu hỏi vì thế đổi từ ‘nó nói gì?’ sang ‘tại sao việc làm cho những relation như vậy tồn tại ngoài trí nhớ lại hữu ích?’",
+  "story_strategy": "Giữ P005390 làm carrier duy nhất của opening. Trả reward sớm bằng điều có thể quan sát: quantity, repetition, arrangement và grain-related signs cho thấy tablet đang giữ một relation có cấu trúc ngay cả khi ta chưa thể đọc nó như một câu hoàn chỉnh. Sau đó mới mở contradiction: vật thể vẫn giữ được một phần structure nhưng không trao lại chắc chắn underlying language, exact transaction hay một lời nói trọn vẹn. Không biến uncertainty thành disclaimer; mỗi giới hạn chỉ xuất hiện sau một điều viewer vừa hiểu được. Không mở rộng sang world-first, nguồn gốc chữ viết, chronology dài hay tranh luận định nghĩa. Kết section bằng câu hỏi earned: nếu một tablet không cần giữ lại trọn một câu nói mà vẫn giữ được một phần relation, tại sao con người lại cần làm cho những relation đó tồn tại ngoài trí nhớ?",
   "word_budget": {
     "recommended": {
       "min": 500,
       "max": 800
     },
-    "rationale": ""
+    "rationale": "Đủ để object và reveal land sớm, làm rõ giới hạn diễn giải rồi chuyển câu hỏi sang P02 mà không biến opening thành exposition."
   },
   "evidence_roles": {
-    "core": [],
+    "core": [
+      "CLM-0042",
+      "CLM-0024"
+    ],
     "optional": [],
     "guardrail": [],
     "exclude": []
   },
-  "design_risks": []
+  "design_risks": [
+    "Biến uncertainty về language và transaction thành disclaimer pile.",
+    "Nói quá mức rằng tablet ghi một giao dịch cụ thể hoặc một câu hoàn chỉnh.",
+    "Rời P005390 quá sớm để giảng chronology, nguồn gốc chữ viết hoặc world-first.",
+    "Giữ mystery quá lâu thay vì trả micro-reveal ngay trong opening.",
+    "Mở đầu bằng provenance, tuổi hoặc archaeology quá lâu trước khi viewer nhận được observable clue đầu tiên."
+  ],
+  "approved_by": "user",
+  "approved_at": "2026-08-17T15:30:00+07:00"
 }
