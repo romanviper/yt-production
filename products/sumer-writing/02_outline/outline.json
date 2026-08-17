@@ -5,9 +5,9 @@
   "status": "approved",
   "section_count": 9,
   "script_architecture": {
-    "central_question": "Một hệ thống ghi dấu hình thành từ nhu cầu giữ quantity, category, person và obligation ổn định qua thời gian đã trở thành năng lực tổ chức, được con người duy trì, rồi sống lâu hơn những thiết chế đầu tiên nuôi nó như thế nào?",
-    "audience_promise": "Mở bằng P005390: một tablet gần năm thiên niên kỷ vẫn giữ quantity và relation nhưng không trao lại một câu nói trọn vẹn. First reveal phải đến trong 60–90 giây; từ đó phim theo một câu hỏi cụ thể hơn: điều gì thực sự sống sót khi dấu còn lại nhưng meaning chỉ tồn tại nhờ người, practice và institution?",
-    "design_rationale": "Giữ 3 act và 8 narrative movements nhưng cắt thành 9 production sections theo causal/context load. Competitive revision ưu tiên ba nguyên tắc: mỗi stretch abstraction phải có human/material carrier; mỗi movement dài phải có một event, object hoặc action làm propulsion; qualifier chỉ ở lại nếu đổi interpretation. P03–P04 giảm evidence ceiling để tránh lecture valley. M06 được tách thành P06 reversal và P07 institutional reconstruction để written-order failure có đủ dramatic space trước khi giải thích chain. M07 khóa Akkadian adaptation làm case chính; Hittite và curricula chỉ là contrast/support. P09 giữ decipherment ở mức competence recovery và dành final emotional/intellectual payoff cho return P005390. Word ranges là material forecasts trong duration-derived envelope, không phải quota.",
+    "central_question": "Chữ viết có thật sự tự tạo ra sức mạnh của các xã hội Sumer, hay nó chỉ trở thành quyền lực khi con người học cách làm cho những dấu trên đất sét được hiểu, nhớ, truy hồi và biến thành hành động?",
+    "audience_promise": "Mở bằng P005390 với một micro-reveal trong 20–30 giây: tablet gần năm thiên niên kỷ vẫn giữ quantity và relation nhưng không trao lại một câu nói trọn vẹn. Full reveal phải land trong 60–90 giây. Từ đó phim giữ một chuỗi câu hỏi viewer-facing liên tục: nếu hệ thống chưa nói trọn câu mà vẫn hữu ích thì nó làm được gì; complexity mở rộng capability ra sao; ai phải giữ convention sống; vì sao một written order vẫn có thể thất bại; và cuối cùng điều gì thực sự sống sót khi clay còn nhưng competent readers biến mất?",
+    "design_rationale": "Giữ 3 act, 8 narrative movements và 9 production sections, nhưng revision này ưu tiên storytelling/retention hơn density. Một thời điểm chỉ nên có một dominant viewer question; mỗi movement phải tạo state change trước khi mở abstraction mới; mỗi limitation hoặc failure phải sinh trực tiếp câu hỏi kế tiếp thay vì dùng teaser ngoại lai. P03 được route như một viewer puzzle về function khi language còn uncertain; P04 chỉ giữ hai transformation theo old limit→material/sign change→new capability→new cost; P05 biến maintenance thành human work và seed câu hỏi record có tự tạo power hay không; P06 giữ vị trí body reversal, P07 là lời giải progressive cho failure đó; P08 là survival test qua linguistic mismatch→adaptation; P09 đóng toàn bộ bằng competence break→recovery→return P005390. Không dùng cliffhanger giả, invented drama hay qualifier pile. Word ranges vẫn là material forecasts trong duration-derived envelope, nhưng P03–P05 được nén tương đối để reversal đến sớm hơn và hậu quả P06–P09 có thêm breathing room.",
     "total_word_envelope": {
       "min": 8400,
       "max": 16800
@@ -18,9 +18,9 @@
         "order": 1,
         "role": "opening",
         "title": "Một vật thể chưa chịu kể chuyện",
-        "narrative_job": "Object puzzle → first reveal → concrete pressure khiến record bền trở nên đáng giá; không rời vật thể quá lâu trước khi khán giả hiểu vấn đề con người mà record giải quyết.",
-        "entry_state": "Tablet dễ bị xem như lời nói cổ đã đóng băng.",
-        "exit_state": "Khán giả hiểu tablet giữ relation chứ không giữ trọn speech, và muốn biết vì sao người ta cần relation ấy sống lâu hơn cuộc gặp.",
+        "narrative_job": "Object puzzle → micro-reveal → full reveal → concrete pressure. Khán giả phải nhận một reward sớm trước khi chronology/definition xuất hiện, rồi câu hỏi chuyển ngay từ 'nó nói gì?' sang 'vì sao một relation chưa phải full speech lại đáng giữ qua thời gian?'.",
+        "entry_state": "Tablet dễ bị xem như lời nói cổ đã đóng băng chỉ chờ dịch.",
+        "exit_state": "Khán giả hiểu tablet giữ structured relation nhưng không giữ trọn speech, và muốn biết nhu cầu nào khiến loại memory này trở nên đủ giá trị để phát triển.",
         "movement_ids": [
           "M01",
           "M02"
@@ -31,9 +31,9 @@
         "order": 2,
         "role": "body",
         "title": "Khi dấu hiệu trở thành năng lực tổ chức",
-        "narrative_job": "Escalate từ capability surprise sang expressive expansion, human maintenance cost và conditional institutional power; concept chỉ được mở rộng sau khi object/action/consequence đã land.",
+        "narrative_job": "Escalate theo một chuỗi câu hỏi nối nhau: system chưa nói trọn câu mà làm được gì → làm sao capability mở rộng → ai trả maintenance cost → competence có đủ tạo power không → nếu không, missing chain là gì. Mỗi câu trả lời phải được mang bởi object/action/event trước khi mở mechanism kế tiếp.",
         "entry_state": "Pressure đã rõ nhưng chưa biết system làm được gì, ai phải giữ nó sống và khi nào record thực sự có hiệu lực.",
-        "exit_state": "Khán giả thấy power không nằm trong clay mà trong chain người–quy ước–xác thực–archive–retrieval–authority, và chain đó vừa tăng capacity vừa phân phối visibility bất đối xứng.",
+        "exit_state": "Khán giả thấy power không nằm trong clay tự thân mà trong chain người–quy ước–xác thực–archive–retrieval–authority; chain đó vừa tăng capacity vừa phân phối visibility bất đối xứng.",
         "movement_ids": [
           "M03",
           "M04",
@@ -46,9 +46,9 @@
         "order": 3,
         "role": "ending",
         "title": "Đất sét còn lại sau khi người đọc biến mất",
-        "narrative_job": "Adaptation bằng một case chính → competence break → recovery → return to opening; emotional weight đến từ khoảng cách giữa vật thể còn lại và cộng đồng biết làm nó có nghĩa.",
+        "narrative_job": "Survival test bằng adaptation → competence brink → break → recovery → return to opening. Câu hỏi cuối không phải 'cuneiform tồn tại bao lâu?' mà là 'một tradition sống nhờ vật thể, hay nhờ cộng đồng có thể làm vật thể có nghĩa?'.",
         "entry_state": "Tradition đã chứng minh có thể sống qua adaptation nhưng vẫn phụ thuộc competent communities.",
-        "exit_state": "Clay chỉ 'nói' khi social knowledge được duy trì hoặc phục dựng; material survival không tự bảo đảm survival of meaning.",
+        "exit_state": "Clay chỉ 'nói' khi social knowledge được duy trì hoặc phục dựng; material survival và survival of meaning là hai chuyện khác nhau.",
         "movement_ids": [
           "M07",
           "M08"
@@ -60,10 +60,10 @@
         "id": "M01",
         "order": 1,
         "act_id": "A01",
-        "title": "Một tablet giữ được quan hệ nhưng không giữ được lời nói",
-        "narrative_job": "P005390 trả reveal trong 60–90 giây/~140–210 từ: quantity/layout còn, full sentence/language/transaction chắc chắn thì không. Sau reveal mới mở central question.",
+        "title": "Một tablet còn dấu nhưng không còn giọng nói",
+        "narrative_job": "P005390 phải trả micro-reveal trong 20–30 giây và full reveal trong 60–90 giây/~140–210 từ: quantity/layout/relation còn, nhưng full sentence/language/transaction chắc chắn thì không. Viewer được giải một phần mystery ngay, rồi mystery đổi dạng: nếu đây chưa phải speech đầy đủ, tại sao nó vẫn đáng tạo ra và giữ lại?",
         "entry_state": "Mọi dấu trên clay có thể bị mặc định là câu chữ trực tiếp từ Sumer.",
-        "exit_state": "Mystery đổi từ 'nó nói gì?' sang 'record bền giải quyết vấn đề gì?'.",
+        "exit_state": "Mystery đổi từ 'nó nói gì?' sang 'một record chưa nói trọn câu có thể giải quyết vấn đề gì tốt hơn trí nhớ người?'.",
         "section_ids": [
           "P01"
         ]
@@ -73,9 +73,9 @@
         "order": 2,
         "act_id": "A01",
         "title": "Khi trí nhớ phải sống lâu hơn cuộc gặp",
-        "narrative_job": "Không trình bày pre-writing ecology như catalogue. Mỗi device chỉ xuất hiện qua một thao tác hoặc giới hạn concrete: giữ số lượng, xác thực, niêm phong, mang relation ra khỏi cuộc gặp; limitation của một partial solution tạo pressure cho bước kế.",
+        "narrative_job": "Không trình bày pre-writing ecology như catalogue. Mỗi device xuất hiện vì một pressure concrete, làm được một việc rồi lộ một limitation; limitation đó phải sinh trực tiếp bước kế. Viewer cảm nhận một chuỗi problem-solving chứ không phải genealogy của token/seal/bulla.",
         "entry_state": "Chưa rõ vì sao relation phải sống ngoài trí nhớ người tham dự.",
-        "exit_state": "Khán giả thấy nhiều partial solutions đang xử lý cùng một family of pressures và muốn biết Uruk IV–III recombine chúng thành capability gì mới.",
+        "exit_state": "Khán giả thấy nhiều partial solutions đang giải cùng một family of pressures và có một câu hỏi rõ: điều gì xảy ra khi quantity, category và relation được đưa lên cùng một surface có thể nhìn lại?",
         "section_ids": [
           "P02"
         ]
@@ -84,10 +84,10 @@
         "id": "M03",
         "order": 3,
         "act_id": "A02",
-        "title": "Hệ thống hoạt động trước khi nó nói trọn câu",
-        "narrative_job": "Return to tablet structure/layout như running material carrier. Chứng minh function trước definition: quantity, category và spatial relation đã hữu ích khi phonology còn sparse. Threshold, chronology, language và world-first chỉ giữ phần tối thiểu cần để ngăn interpretation sai.",
-        "entry_state": "Khán giả có thể nghĩ writing chỉ mạnh khi encode continuous speech.",
-        "exit_state": "Khán giả giữ một paradox rõ: system chưa nói trọn câu nhưng đã làm được việc; uncertainty không che mất capability.",
+        "title": "Làm sao một hệ thống chưa nói trọn câu vẫn làm được việc?",
+        "narrative_job": "Route P03 như viewer puzzle. Bắt đầu từ layout/quantity/category và hỏi: nếu language còn uncertain, làm sao ta vẫn biết tablet đang làm một việc có cấu trúc? Cho viewer suy ra function từ spatial relation và repeated patterns trước khi narrator đặt tên threshold/chronology. Qualifier chỉ vào sau reward và chỉ khi nó đổi interpretation.",
+        "entry_state": "Khán giả có thể nghĩ writing chỉ đáng kể khi encode continuous speech.",
+        "exit_state": "Khán giả tự land paradox: system chưa nói trọn câu nhưng đã ổn định relation đủ để làm việc; câu hỏi kế tiếp là làm sao nó vượt khỏi loại capability hạn chế này.",
         "section_ids": [
           "P03"
         ]
@@ -96,10 +96,10 @@
         "id": "M04",
         "order": 4,
         "act_id": "A02",
-        "title": "Khi dấu hiệu bắt đầu mang nhiều loại thông tin hơn",
-        "narrative_job": "Chỉ dùng hai transformation có consequence rõ. Mỗi transformation phải được mang bởi một thao tác trên tablet/sign rồi trả ngay capability mới ở human/institutional scale; không cho technical taxonomy chạy liên tục. Capability tăng đồng thời làm lộ cost về convention và training.",
+        "title": "Khi một dấu hiệu bắt đầu làm được nhiều việc hơn",
+        "narrative_job": "Chỉ dùng hai transformation có consequence rõ và kể mỗi case như mini problem-solution: old limitation → physical/sign operation → mechanism → new capability → new cost. Không cho taxonomy chạy độc lập. Mỗi capability mới phải làm viewer thấy ngay vì sao system hữu ích hơn, rồi đồng thời làm lộ rằng convention giờ khó tự duy trì hơn.",
         "entry_state": "Proto-cuneiform hữu ích nhưng expressive range và language encoding còn hạn chế.",
-        "exit_state": "Khán giả thấy system làm được nhiều hơn nhưng chính complexity mới khiến nó không thể tự duy trì.",
+        "exit_state": "Khán giả thấy system mở rộng được những gì nó có thể biểu đạt, nhưng chính bước tiến đó tạo câu hỏi mới: ai học, nhớ và sửa một convention ngày càng khó?",
         "section_ids": [
           "P04"
         ]
@@ -109,9 +109,9 @@
         "order": 5,
         "act_id": "A02",
         "title": "Một hệ thống không thể tự truyền mình",
-        "narrative_job": "P228744/House F là human carrier chính: copying, calculation và lexical organization cho thấy complexity được trả bằng thời gian, practice và correction của người học. Từ những thao tác đó mới mở trained community; không biến section thành lịch sử giáo dục.",
+        "narrative_job": "P228744/House F là human reset sau phần technical. Theo work có trạng thái trước–sau: copy, calculate, organize, detect/correct. Viewer phải cảm nhận continuity là labor được lặp lại qua generation, không phải property của signs. Cuối movement seed nhưng chưa trả lời câu hỏi: nếu đã có competent people và readable records, liệu inscription có tự biến thành power?",
         "entry_state": "System expressive hơn nhưng maintenance cost vẫn có thể bị hiểu như abstraction kỹ thuật.",
-        "exit_state": "Khán giả thấy continuity phải được tái tạo bởi người/practice; competence là điều kiện cần nhưng chưa đủ để record có hiệu lực.",
+        "exit_state": "Khán giả thấy convention sống nhờ practice và competence; đồng thời một assumption mới được đặt lên bàn để P06 phá: record được tạo đúng và đọc đúng có đủ khiến người khác hành động không?",
         "section_ids": [
           "P05"
         ]
@@ -121,9 +121,9 @@
         "order": 6,
         "act_id": "A02",
         "title": "Một mệnh lệnh được viết ra vẫn có thể thất bại",
-        "narrative_job": "MMA 86.11.111 tạo body reversal: written order tồn tại nhưng action không xảy ra. P06 cho failure đủ space để phá record=compliance; P07 mới rebuild capacity qua bounded Ur III/later records. Reconstruction phải đi record/action/consequence thay vì một chuỗi abstraction.",
-        "entry_state": "Khán giả vừa thấy system cần trained people và có thể vẫn ngầm nghĩ competence + record = power.",
-        "exit_state": "Khán giả hiểu writing chỉ tăng institutional capacity khi procedural chain hoạt động; chain đó cũng quyết định ai được nhìn thấy và ai bị biến thành category.",
+        "narrative_job": "MMA 86.11.111 là midpoint/body reversal. P06 theo written royal security order đủ lâu để viewer kỳ vọng authority sẽ thành action rồi chứng kiến non-compliance; không giải chain ngay. P07 bắt đầu từ câu hỏi earned 'mắt xích nào còn thiếu?' và rebuild answer qua 2–3 record/action cases: authentication, retrievability/aggregation và authority chỉ xuất hiện khi mỗi case chứng minh một function. Kết bằng consequence về asymmetric visibility.",
+        "entry_state": "Khán giả vừa thấy competent people có thể giữ convention sống và dễ suy ra competent record + authority = effective power.",
+        "exit_state": "Khán giả hiểu writing chỉ tăng institutional capacity khi procedural chain hoạt động, và chính chain đó quyết định cái gì/ai trở nên visible trong record.",
         "section_ids": [
           "P06",
           "P07"
@@ -133,10 +133,10 @@
         "id": "M07",
         "order": 7,
         "act_id": "A03",
-        "title": "Muốn sống sót, cuneiform phải đổi ngôn ngữ",
-        "narrative_job": "Khóa Akkadian adaptation làm primary case: cùng một tradition phải đổi sign values/orthographic convention để làm việc trong language setting khác. Hittite chỉ làm contrast chứng minh selective transfer; lexical/bilingual curricula chỉ giải thích infrastructure của competent reuse.",
+        "title": "Muốn sống sót, cuneiform phải thay đổi",
+        "narrative_job": "Kể Akkadian adaptation như survival test chứ không diffusion lecture: một tradition hình thành trong một language setting gặp mismatch khi phải phục vụ language khác → sign values/orthographic conventions phải đổi → competent reuse giữ tradition sống. Hittite chỉ là contrast chứng minh selective transfer; curricula chỉ giải thích infrastructure. Câu hỏi cuối: nếu tradition sống nhờ competent adaptation, chuyện gì xảy ra khi competence không còn được tái tạo?",
         "entry_state": "Chain có vẻ gắn cố định với Sumerian institutions và language.",
-        "exit_state": "Khán giả phân biệt script/language/institution survival và thấy continuity nằm ở practice có thể được học lại trong setting mới.",
+        "exit_state": "Khán giả phân biệt script/language/institution survival và thấy continuity nằm ở practice có thể đổi; vì vậy competence break trở thành mối đe dọa thật sự ở P09.",
         "section_ids": [
           "P08"
         ]
@@ -146,9 +146,9 @@
         "order": 8,
         "act_id": "A03",
         "title": "Đất sét còn lại, người đọc biến mất",
-        "narrative_job": "75 CE là competence brink có qualifier; decline chỉ giải thích reproduction ecosystem. Decipherment chỉ giữ những bước cho thấy competence nào phải được phục dựng để old clay trở lại intelligible. Return P005390 là final payoff duy nhất; không mở thêm một ending về scholars.",
-        "entry_state": "Material durability dễ bị nhầm với continuity.",
-        "exit_state": "Modern access là recovery sau competence break; opening tablet giờ chứng minh rằng vật thể sống sót và meaning sống sót là hai chuyện khác nhau.",
+        "narrative_job": "Mở 75 CE như competence brink có qualifier, rồi cho reproduction ecosystem co lại cho tới khi viewer đối diện paradox cuối: vật thể vẫn tồn tại nhưng chain tạo meaning đã đứt. Decipherment chỉ giữ các hành động cho thấy competence nào phải được phục dựng—copy, compare, test—và mỗi bước trả lại một phần khả năng đọc. Return P005390 là final payoff duy nhất; không mở second ending về scholars.",
+        "entry_state": "Sau P08, viewer biết tradition sống nhờ competent reuse chứ không chỉ nhờ vật liệu bền.",
+        "exit_state": "Opening tablet được reinterpret: thứ sống sót tự nhiên là clay; thứ phải được truyền hoặc phục dựng là năng lực khiến dấu có nghĩa và có thể dẫn đến action.",
         "section_ids": [
           "P09"
         ]
@@ -163,15 +163,15 @@
       "movement_ids": [
         "M01"
       ],
-      "narrative_job": "Cold-open P005390; first reveal trong 60–90 giây/~140–210 từ trước chronology/definition. Sau reveal chuyển ngay từ vật thể sang vấn đề con người: vì sao relation cần sống lâu hơn cuộc gặp.",
+      "narrative_job": "Cold-open P005390. Trong 20–30 giây phải có micro-reveal đủ cụ thể để viewer biết mình đang nhìn một paradox thật; full reveal trong 60–90 giây/~140–210 từ trước chronology/definition. Sau đó chuyển ngay sang câu hỏi earned: nếu tablet chưa trao lại full speech, tại sao loại relation này vẫn đáng giữ qua thời gian?",
       "entry_state": "Khán giả coi tablet như thông điệp chỉ cần dịch.",
-      "exit_state": "Khán giả biết cái gì còn/mất và muốn biết pressure nào khiến relation bền cần thiết.",
+      "exit_state": "Khán giả biết cái gì còn/mất và giữ một câu hỏi đơn giản: loại memory này giải quyết điều gì mà trí nhớ của người có mặt không giải quyết được?",
       "claim_ids": [
         "CLM-0024",
         "CLM-0042"
       ],
       "dependencies": [],
-      "non_goal": "Không tuyên bố language/transaction/world-first; không trì hoãn reveal quá 90 giây; không rời object sang exposition dài ngay sau reveal.",
+      "non_goal": "Không tuyên bố language/transaction/world-first; không trì hoãn reward đầu tiên tới cuối phút đầu; không rời object sang exposition dài ngay sau reveal; không tạo mystery bằng cách giấu fact đã biết.",
       "target_words": {
         "min": 500,
         "max": 800
@@ -184,9 +184,9 @@
       "movement_ids": [
         "M02"
       ],
-      "narrative_job": "Theo pressure→material action→limitation. Token, seal, bulla và numerical device chỉ xuất hiện khi người dùng cần giữ số lượng, xác thực hoặc mang relation ra khỏi encounter; một limitation phải đẩy trực tiếp sang nhu cầu kế tiếp.",
+      "narrative_job": "Theo pressure→material action→limited success→new pressure. Token, seal, bulla và numerical device chỉ xuất hiện khi một thao tác concrete cần giữ quantity, xác thực hoặc mang relation ra khỏi encounter. Mỗi device phải kiếm được chỗ đứng bằng một problem nó giải và một limitation nó để lại; kết bằng việc nhiều loại information bắt đầu hội tụ trên cùng surface.",
       "entry_state": "P01 để lại nhu cầu về relation bền nhưng chưa cho thấy social pressure dưới dạng action.",
-      "exit_state": "Khán giả thấy nhiều partial solutions đang giải các phần khác nhau của cùng vấn đề và muốn biết Uruk IV–III recombine chúng ra sao.",
+      "exit_state": "Khán giả không nhớ một catalogue device mà nhớ một escalation: mỗi partial solution giải được thêm một phần vấn đề; câu hỏi chuyển sang việc một tablet có thể làm gì khi các relation đó cùng hiện diện.",
       "claim_ids": [
         "CLM-0011",
         "CLM-0012",
@@ -199,7 +199,7 @@
       "dependencies": [
         "P01"
       ],
-      "non_goal": "Không linear token genealogy; không đồng nhất tax/tribute/market/ownership; không catalogue device hoặc abstract ecology block kéo dài.",
+      "non_goal": "Không linear token genealogy; không đồng nhất tax/tribute/market/ownership; không catalogue device hoặc abstract ecology block kéo dài; không dùng mỗi artifact như một mục encyclopedia độc lập.",
       "target_words": {
         "min": 900,
         "max": 1300
@@ -208,13 +208,13 @@
     {
       "id": "P03",
       "order": 3,
-      "title": "Một hệ thống mạnh vì còn chưa trọn vẹn",
+      "title": "Một hệ thống làm được việc trước khi biết nói",
       "movement_ids": [
         "M03"
       ],
-      "narrative_job": "Return to layout/quantity/category như material proof của function. Chỉ sau capability reveal mới dùng minimum chronology/definition/language qualifiers cần thiết; mỗi qualifier phải thay đổi cách hiểu object hoặc mechanism, không trở thành một debate block.",
+      "narrative_job": "Dựng section như puzzle có lời giải. Bắt đầu từ một tablet/layout cụ thể và cho viewer quan sát repeated quantity/category/spatial relation; chỉ sau khi function đã được suy ra mới đặt minimum chronology/definition/language qualifiers. Reward chính phải là changed interpretation: usefulness không chờ full speech encoding. Kết bằng limitation của capability hiện tại, không kết bằng disclaimer.",
       "entry_state": "Khán giả vẫn có thể nghĩ writing chỉ đáng kể khi encode speech.",
-      "exit_state": "Khán giả nhớ một paradox duy nhất: system hữu ích khi phonology còn sparse, và biết vì sao gọi nó là Sumerian/world-first tuyệt đối sẽ làm sai câu chuyện.",
+      "exit_state": "Khán giả tự thấy vì sao một system với sparse phonology vẫn hữu ích, đồng thời muốn biết những thay đổi nào cho phép signs mang nhiều hơn quantity/category/relation.",
       "claim_ids": [
         "CLM-0001",
         "CLM-0002",
@@ -228,22 +228,22 @@
       "dependencies": [
         "P02"
       ],
-      "non_goal": "Không mở bằng definition; không ethnic-Sumerian invention, absolute threshold, world-first debate kéo dài, stratigraphy detour hay disclaimer pile.",
+      "non_goal": "Không mở bằng definition; không ethnic-Sumerian invention, absolute threshold, world-first debate kéo dài, stratigraphy detour hay disclaimer pile; không để qualifier chiếm reward của puzzle.",
       "target_words": {
-        "min": 900,
-        "max": 1350
+        "min": 800,
+        "max": 1200
       }
     },
     {
       "id": "P04",
       "order": 4,
-      "title": "Khi dấu hiệu bắt đầu mang nhiều loại thông tin hơn",
+      "title": "Khi một dấu hiệu bắt đầu làm được nhiều việc hơn",
       "movement_ids": [
         "M04"
       ],
-      "narrative_job": "Chọn hai technical transformations có consequence rõ; mỗi case phải đi tablet/sign action→mechanism→new capability/consequence rồi dừng. Kết bằng maintenance cost: expressive range tăng đồng nghĩa convention cần được học và tái tạo.",
-      "entry_state": "Proto-cuneiform hữu ích nhưng expressive range hạn chế.",
-      "exit_state": "Khán giả thấy system mở rộng capability mà không bị kéo qua taxonomy, đồng thời nhận ra complexity tạo human cost.",
+      "narrative_job": "Chọn đúng hai technical transformations và kể từng case như một state change: old limitation→thao tác/sign change→mechanism→new capability/consequence→new maintenance cost. Sau mỗi mechanism phải quay về việc con người/institution giờ có thể làm gì mà trước đó không làm được. Section kết ở cost, khiến P05 trở thành câu trả lời tự nhiên cho 'ai giữ convention này sống?'.",
+      "entry_state": "Proto-cuneiform hữu ích nhưng expressive range và language encoding còn hạn chế.",
+      "exit_state": "Khán giả thấy capability mở rộng nhưng hiểu ngay tradeoff: càng nhiều convention, system càng phụ thuộc người biết học, nhớ và sửa nó.",
       "claim_ids": [
         "CLM-0019",
         "CLM-0021",
@@ -256,22 +256,22 @@
       "dependencies": [
         "P03"
       ],
-      "non_goal": "Không genre catalogue, technical taxonomy kéo dài, liệt kê mọi sign change, mọi use domain hay march tất định tới alphabet.",
+      "non_goal": "Không genre catalogue, technical taxonomy kéo dài, liệt kê mọi sign change, mọi use domain hay march tất định tới alphabet; không giải thích transformation nếu không trả được consequence.",
       "target_words": {
-        "min": 950,
-        "max": 1450
+        "min": 800,
+        "max": 1250
       }
     },
     {
       "id": "P05",
       "order": 5,
-      "title": "Một hệ thống không thể tự truyền mình",
+      "title": "Ai giữ cho một hệ thống chữ viết sống?",
       "movement_ids": [
         "M05"
       ],
-      "narrative_job": "Human-scale carrier bằng P228744/House F: nhìn vào copying/calculation/lexical organization như work phải được thực hiện và sửa. Từ practice mới suy ra trained community; training là causal cost của complexity chứ không phải side topic.",
+      "narrative_job": "Dùng P228744/House F như một work sequence thay vì education exposition: copy/calculation/lexical organization, chỗ phải nhớ, chỗ có thể sai, chỗ cần correction. Viewer phải thấy complexity được trả bằng thời gian và practice của người học. Cuối section không kết ở 'scribal school' mà đặt assumption cho reversal: nếu trained people có thể tạo và đọc record đúng, liệu written authority có tự trở thành action?",
       "entry_state": "P04 tạo maintenance cost nhưng viewer chưa thấy ai phải trả cost đó.",
-      "exit_state": "Khán giả hiểu convention cần người/practice tái tạo; trained competence là điều kiện cần nhưng chưa chứng minh record có hiệu lực.",
+      "exit_state": "Khán giả hiểu continuity cần trained practice và mang sang P06 một kỳ vọng đủ mạnh để bị phá: competence + written authority có lẽ phải tạo ra compliance.",
       "claim_ids": [
         "CLM-0026",
         "CLM-0027",
@@ -283,10 +283,10 @@
       "dependencies": [
         "P04"
       ],
-      "non_goal": "Không biến section thành lịch sử trường scribal; không back-project edubba thống nhất, literacy rate, gender rate hay authorship; không mở bằng abstraction về education.",
+      "non_goal": "Không biến section thành lịch sử trường scribal; không back-project edubba thống nhất, literacy rate, gender rate hay authorship; không mở bằng abstraction về education; không invented student interiority hoặc fake classroom drama.",
       "target_words": {
-        "min": 950,
-        "max": 1450
+        "min": 850,
+        "max": 1300
       }
     },
     {
@@ -296,9 +296,9 @@
       "movement_ids": [
         "M06"
       ],
-      "narrative_job": "Cho MMA 86.11.111 làm event carrier: một royal security order đã được viết nhưng không được thi hành. Theo failure đủ lâu để phá assumption record=compliance; chỉ mở câu hỏi 'thiếu mắt xích nào?' ở cuối, chưa giải toàn bộ institutional chain.",
-      "entry_state": "Khán giả vừa thấy trained competence và có thể vẫn đồng nhất written authority với effective action.",
-      "exit_state": "Khán giả biết một record có thể giữ mệnh lệnh mà không tạo ra compliance; power phải nằm ở thứ gì đó ngoài inscription.",
+      "narrative_job": "Cho MMA 86.11.111 làm midpoint event. Establish đủ authority/context để viewer kỳ vọng order sẽ có force, theo record tới failure, rồi để consequence land trước explanation. Section chỉ phá assumption record=compliance và hỏi 'thiếu mắt xích nào giữa inscription và action?'; tuyệt đối chưa lắp institutional chain đầy đủ.",
+      "entry_state": "Khán giả vừa thấy trained competence và dễ đồng nhất readable written authority với effective action.",
+      "exit_state": "Khán giả biết một record có thể giữ mệnh lệnh mà không tạo ra compliance; câu hỏi của P07 trở nên bắt buộc: thứ gì phải tồn tại quanh record để nó có lực?",
       "claim_ids": [
         "CLM-0043",
         "CLM-0049"
@@ -306,22 +306,22 @@
       "dependencies": [
         "P05"
       ],
-      "non_goal": "Không biến một non-compliance case thành norm; không lắp chain dài trong cùng section; không dùng failure để phủ nhận institutional value của writing.",
+      "non_goal": "Không biến một non-compliance case thành norm; không lắp chain dài trong cùng section; không dùng failure để phủ nhận institutional value của writing; không giải thích reversal trước khi viewer cảm nhận failure.",
       "target_words": {
-        "min": 800,
-        "max": 1200
+        "min": 850,
+        "max": 1300
       }
     },
     {
       "id": "P07",
       "order": 7,
-      "title": "Khi hồ sơ bắt đầu nhìn thấy cả một hệ thống",
+      "title": "Thứ quyền lực mà một tấm đất sét không tự có",
       "movement_ids": [
         "M06"
       ],
-      "narrative_job": "Rebuild conditional capacity bằng bounded Ur III/later evidence. Đi qua 2–3 concrete records/actions thay vì liệt kê chain: classification/official/authentication làm claim ổn định; archive/retrieval/audit làm claim có thể quay lại và tổng hợp; authority mới biến một số record thành action. Kết ở asymmetric visibility: institution thấy aggregate, workers/dependents hiện qua imposed categories.",
-      "entry_state": "P06 đã chứng minh inscription tự thân không bảo đảm compliance.",
-      "exit_state": "Khán giả thấy record tăng capacity khi people/procedure/archive/authority nối được với nhau, đồng thời hiểu visibility mà system tạo ra không trung tính.",
+      "narrative_job": "Bắt đầu đúng tại câu hỏi P06: missing link là gì? Rebuild conditional capacity qua 2–3 concrete Ur III/later record/action cases. Mỗi case chỉ thêm một mắt xích sau khi viewer thấy thiếu nó sẽ gây gì: authentication ổn định claim; archive/retrieval/aggregation làm claim quay lại và nhìn ở scale lớn; authority/procedure nối record với action. Chỉ sau khi chain đã 'work' mới reveal cost: institution nhìn thấy aggregate trong khi workers/dependents bị ép vào category.",
+      "entry_state": "P06 đã chứng minh inscription tự thân không bảo đảm compliance và để lại một causal gap cụ thể.",
+      "exit_state": "Khán giả đã tự rebuild được conditional power của record, rồi nhận thêm một consequence mới: visibility mà system tạo ra là selective và asymmetric. Từ đó câu hỏi chuyển sang durability: một chain phụ thuộc người/practice như vậy có sống được khi language và institution thay đổi không?",
       "claim_ids": [
         "CLM-0046",
         "CLM-0047",
@@ -335,22 +335,22 @@
       "dependencies": [
         "P06"
       ],
-      "non_goal": "Không back-project Ur III về Uruk; không coi archive là sample trung tính; không kể institutional chain như checklist; không để aggregate xóa human consequence.",
+      "non_goal": "Không back-project Ur III về Uruk; không coi archive là sample trung tính; không kể institutional chain như checklist; không mở section bằng sáu abstraction liên tiếp; không để aggregate xóa human consequence.",
       "target_words": {
-        "min": 1100,
-        "max": 1700
+        "min": 1200,
+        "max": 1800
       }
     },
     {
       "id": "P08",
       "order": 8,
-      "title": "Sống lâu bằng cách trở thành thứ khác",
+      "title": "Muốn sống sót, chữ hình nêm phải thay đổi",
       "movement_ids": [
         "M07"
       ],
-      "narrative_job": "Primary case là adaptation sang Akkadian: chỉ giữ những sign/convention changes cần chứng minh reuse không phải simple word substitution. Hittite là contrast về selective transfer; lexical/bilingual curricula giải thích cách competence đi qua region/generation. Sumerian learned survival chỉ dùng để tách language survival khỏi script survival.",
-      "entry_state": "Chain vừa thấy có vẻ gắn với Sumerian world và institutions.",
-      "exit_state": "Khán giả phân biệt script/language/institution survival và thấy tradition sống bằng competent adaptation, không bằng purity.",
+      "narrative_job": "Kể Akkadian adaptation như một survival problem: tradition gặp linguistic mismatch; simple word substitution không đủ; sign values/orthographic convention phải đổi; competent reuse tạo continuity. Hittite chỉ làm contrast để chứng minh transfer có chọn lọc; lexical/bilingual curricula chỉ giải thích infrastructure cho việc học lại. Kết ở dependency đã rõ: nếu survival nằm trong practice có thể tái tạo, competence break mới là mối nguy thực sự.",
+      "entry_state": "Chain vừa thấy có vẻ gắn với Sumerian world, language và institutions.",
+      "exit_state": "Khán giả thấy cuneiform sống lâu không nhờ purity mà nhờ adaptation có người duy trì; câu hỏi cuối tự sinh: chuyện gì xảy ra khi không còn đủ người tái tạo convention?",
       "claim_ids": [
         "CLM-0055",
         "CLM-0056",
@@ -364,9 +364,9 @@
       "dependencies": [
         "P07"
       ],
-      "non_goal": "Không civilization tour; không chia đều thời lượng cho Akkadian/Hittite/curricula; không script diffusion tự thân, direct ethnic continuity hay list ngôn ngữ.",
+      "non_goal": "Không civilization tour; không chia đều thời lượng cho Akkadian/Hittite/curricula; không script diffusion tự thân, direct ethnic continuity hay list ngôn ngữ; không để technical adaptation tách khỏi survival stakes.",
       "target_words": {
-        "min": 1100,
+        "min": 1200,
         "max": 1700
       }
     },
@@ -377,9 +377,9 @@
       "movement_ids": [
         "M08"
       ],
-      "narrative_job": "Mở 75 CE như competence brink có qualifier; decline chỉ đủ để cho thấy reproduction ecosystem co lại. Decipherment chỉ giữ các bước làm visible việc competence phải được phục dựng—copy signs, multilingual comparison, testing—rồi return P005390 để khóa distinction material survival/meaning survival.",
-      "entry_state": "Durable clay tạo ảo giác continuity được bảo đảm.",
-      "exit_state": "Khán giả hiểu modern access là recovery sau competence break; tablet opening giờ mang nghĩa khác vì thứ phải phục dựng không chỉ là sign value mà là social knowledge để đọc và hành động theo dấu.",
+      "narrative_job": "Mở 75 CE như competence brink có qualifier, rồi theo sự co lại của reproduction ecosystem chỉ đủ để viewer hiểu chain bị đứt. Decipherment được kể như competence reconstruction chứ không scholar biography: copy signs→multilingual comparison→test reading→capacity returns. Mỗi bước phải trả một phần mystery đã mở ở đầu phim. Return P005390 là final payoff duy nhất và phải reinterpret opening object, không mở thesis mới.",
+      "entry_state": "Sau P08, viewer biết tradition chỉ sống khi competent practice tiếp tục được tái tạo.",
+      "exit_state": "Khán giả hiểu modern access là recovery sau competence break; P005390 giờ chứng minh distinction cuối cùng: clay có thể sống sót gần như một mình, meaning thì cần một social technology được truyền hoặc phục dựng.",
       "claim_ids": [
         "CLM-0063",
         "CLM-0064",
@@ -394,14 +394,14 @@
       "dependencies": [
         "P08"
       ],
-      "non_goal": "Không gọi 75 CE là ngày cuối tuyệt đối; không direct lineage hiện đại; không kể lịch sử decipherment độc lập; không multiple endings hoặc scholar-hero arc.",
+      "non_goal": "Không gọi 75 CE là ngày cuối tuyệt đối; không direct lineage hiện đại; không kể lịch sử decipherment độc lập; không multiple endings hoặc scholar-hero arc; không dùng return P005390 như recap thay vì reinterpretation.",
       "target_words": {
-        "min": 1200,
+        "min": 1300,
         "max": 1800
       }
     }
   ],
   "approved_by": "user",
-  "approved_at": "2026-08-17T07:14:00+00:00",
-  "last_human_amendment": "HA-20260817T071400000000Z"
+  "approved_at": "2026-08-17T07:45:50.367787+00:00",
+  "last_human_amendment": "HA-20260817T074550367787Z"
 }
