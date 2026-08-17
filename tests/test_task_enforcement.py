@@ -58,15 +58,32 @@ class TaskEnforcementTests(unittest.TestCase):
 
             self.assertTrue(any("packet.compiler" in issue.message for issue in issues))
 
-    def test_replaced_task_cannot_be_submitted_after_active_pointer_moves(self) -> None:
+    def test_replace_cancels_superseded_task_instead_of_using_pointer_as_authority(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = make_direction_approved_product(Path(temp))
             first = create_task(product, "research_plan", None, None, False)
-            create_task(product, "research_plan", None, None, True)
+            second = create_task(product, "research_plan", None, None, True)
+
+            persisted = json.loads(
+                (product / "tasks" / first["id"] / "work-order.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual("cancelled", persisted["state"])
+            self.assertEqual(second["id"], persisted["superseded_by"])
 
             errors = submit_task(product, first["id"])
+            self.assertTrue(any("cancelled" in item and "cannot submit" in item for item in errors))
 
-            self.assertTrue(any("not the active task" in item for item in errors))
+    def test_cancel_clears_routing_pointer_and_idle_pointer_does_not_block_new_task(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direction_approved_product(Path(temp))
+            first = create_task(product, "research_plan", None, None, False)
+
+            self.assertEqual([], set_task_state(product, first["id"], "cancelled"))
+            active = json.loads((product / "tasks" / "ACTIVE.json").read_text(encoding="utf-8"))
+            self.assertIsNone(active["task_id"])
+
+            second = create_task(product, "research_plan", None, None, False)
+            self.assertNotEqual(first["id"], second["id"])
 
 
 if __name__ == "__main__":

@@ -14,7 +14,9 @@ Product Agent không sửa control plane. System Architect không trộn system 
 
 Human authority có một đường ngắn riêng. Khi người dùng trực tiếp feedback hoặc yêu cầu sửa một output cụ thể, Agent có thể sửa file đó rồi chạy một lệnh `human-amend-*`; không tạo task mới chỉ để hợp thức hóa quyết định của human.
 
-## 2. Task packets
+**Safety cứng, workflow mềm.** Packet integrity, evidence ceiling, write scope và human approval không được bypass. Nhưng human không phải tự sửa nhiều state để yêu cầu chạy lại một operation: semantic rework sẽ reopen đúng lifecycle state rồi tạo task canonical mới.
+
+## 2. Task packets và lifecycle
 
 `scripts/task.py create` biên dịch đúng một operation thành:
 
@@ -26,6 +28,10 @@ Human authority có một đường ngắn riêng. Khi người dùng trực ti�
 Hard-policy files và operator-interface không được nạp vào prompt sáng tạo. Creative packet chỉ dùng allowlist ngắn và bị chặn nếu evaluation-only policy lọt vào writer context.
 
 Registry chỉ route operation, input, output, profile và budget. Tiêu chí semantic nằm đúng một lần trong operation instruction, Channel Constitution hoặc Outcome Evaluation; compiler không lặp lại chúng thành một acceptance prompt thứ hai.
+
+`work-order.json.state` và packet validity là authority cho lifecycle của task. `tasks/ACTIVE.json` chỉ là **routing pointer** để Agent biết task nào đang được giao; pointer không tự làm một task hợp lệ hoặc vô hiệu. `--replace` phải cancel/supersede task cũ trước khi route task mới, thay vì chỉ ghi đè ACTIVE.
+
+Các rule canonical cho task state, section-operation entry state, submit state và rework state nằm trong `scripts/lifecycle.py`. `context_packet.py`, `task.py` và human rework cùng dùng mapping này; không tự định nghĩa state machine riêng ở từng script.
 
 Agent đọc đúng ACTIVE → work order → packet. Nó không quét repo.
 
@@ -94,6 +100,8 @@ Writer nhận:
 - compact narration pack;
 - approved dependency handoffs.
 
+Nếu draft được mở lại bằng semantic rework, writer còn nhận one-shot `draft-rework-request.md`. File này chỉ truyền human intent cho lần draft đó và được router bỏ sau submit; nó không trở thành writer rule toàn cục.
+
 Nó tự chọn local route. Target range không phải quota: submit không lỗi chỉ vì draft ngắn hơn estimate. Padding bị cấm; hard cap 3.000 từ/work unit vẫn được máy giữ.
 
 ## 7. Outcome evaluation
@@ -107,12 +115,37 @@ Nó tự chọn local route. Target range không phải quota: submit không l�
 
 Review phải có verdict `pass / changes_requested / blocked`, observable diagnosis và acceptance test. `approve-section` chỉ mở khi review hoàn chỉnh và verdict là `pass`.
 
-## 8. Feedback routing
+## 8. Feedback routing và semantic rework
+
+Đường chuyên biệt vẫn giữ để operator có thể route feedback chính xác:
 
 - Wording/pacing/arrangement hỏng, plan vẫn đúng → `request-changes` rồi `revise_section`.
 - Audience shift hoặc evidence selection hỏng → `request-story-plan-changes` rồi `design_section`.
 - Section boundary hoặc three-act arc hỏng → mở production cycle mới ở `outline`.
 - Evidence thiếu/contradicted → research escalation.
+
+Nhưng khi human đơn giản muốn **làm lại một process**, không yêu cầu human tự nhớ current state. Dùng một command semantic:
+
+```bash
+python scripts/rework.py products/<slug> draft_section --section P01 \
+  --request "Rewrite from the same approved story plan"
+
+python scripts/rework.py products/<slug> design_section --section P04 \
+  --request "Redesign this section from the approved evidence"
+
+python scripts/rework.py products/<slug> outline \
+  --request "Reopen whole-product architecture"
+```
+
+`rework.py` thực hiện theo intent:
+
+1. cancel task đang được route và clear ACTIVE;
+2. reopen đúng operation state từ `scripts/lifecycle.py`;
+3. invalidate downstream product stages khi section đã được mở lại;
+4. tạo task mới bằng **canonical `scripts/context_packet.py`**;
+5. ghi audit trail vào `rework-requests.jsonl`.
+
+Human không cần gọi `task.py state`, sửa `section.json` hay hand-author `packet.json/context.md`. Low-level `task.py state` vẫn tồn tại cho recovery/debugging, nhưng terminal task không được reopen; muốn chạy lại thì tạo task mới hoặc dùng semantic rework.
 
 Không thêm một writer rule toàn cục cho một lỗi một lần. Chỉ pattern lặp mới trở thành eval; chỉ invariant thật sự mới vào constitution/hard boundary.
 
@@ -134,10 +167,17 @@ Lệnh accept thực hiện trong một bước: validate contract/hard cap, gi�
 
 ## 9. Production cycles
 
+Đường semantic được ưu tiên:
+
+```bash
+python scripts/rework.py products/<slug> outline --request "Yêu cầu kiến trúc"
+```
+
+Nếu outline đang approved, command này mở production cycle mới rồi tạo outline task canonical. Expert path cũ vẫn tồn tại:
+
 ```bash
 python scripts/approval.py start-new-cycle products/<slug> --request "Yêu cầu kiến trúc"
-python scripts/task.py state products/<slug> <active-task> cancelled
-python scripts/task.py create products/<slug> outline
+python scripts/task.py create products/<slug> outline --replace
 ```
 
 Cycle mới giữ research đã duyệt, pause sections cũ và buộc outline output dùng cycle ID mới. Sau khi approve outline, lệnh sau chuyển section workspaces cũ vào `03_sections/_history/<cycle>/` rồi materialize workspaces mới:

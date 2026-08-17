@@ -129,7 +129,9 @@
         "03_sections/{section}/narration-pack.json",
         "03_sections/{section}/continuity-in.md"
       ],
-      "optional_inputs": [],
+      "optional_inputs": [
+        "03_sections/{section}/draft-rework-request.md"
+      ],
       "outputs": [
         "03_sections/{section}/draft.md",
         "03_sections/{section}/handoff.md"
@@ -233,4 +235,3 @@
     }
   }
 }
-

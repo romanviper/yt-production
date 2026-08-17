@@ -13,6 +13,13 @@ try:
     from scripts.common import load_registry, narration_text, product_relative, read_json, sha256, word_count, write_json
     from scripts.consolidate_research import ensure_consolidated
     from scripts.context_packet import compile_packet
+    from scripts.lifecycle import (
+        apply_section_submission,
+        cancel_active_task,
+        clear_active_pointer,
+        task_submit_errors,
+        task_transition_errors,
+    )
     from scripts.operator_brief import empty_brief, render_brief, validate_brief_file
     from scripts.outcome_eval_contract import validate_outcome_review
     from scripts.outline_contract import MAX_SECTION_WORDS, validate_outline_contract
@@ -24,6 +31,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from common import load_registry, narration_text, product_relative, read_json, sha256, word_count, write_json
     from consolidate_research import ensure_consolidated
     from context_packet import compile_packet
+    from lifecycle import apply_section_submission, cancel_active_task, clear_active_pointer, task_submit_errors, task_transition_errors
     from operator_brief import empty_brief, render_brief, validate_brief_file
     from outcome_eval_contract import validate_outcome_review
     from outline_contract import MAX_SECTION_WORDS, validate_outline_contract
@@ -61,17 +69,25 @@ def create_task(
     active_file = active_path(product_dir)
     if active_file.is_file() and not replace:
         active = read_json(active_file)
-        existing = product_dir / active["work_order"]
-        if existing.is_file() and read_json(existing).get("state") in {"ready", "in_progress"}:
-            raise ValueError(f"Task {active['task_id']} còn active; close/cancel hoặc dùng --replace có chủ đích.")
+        existing_ref = active.get("work_order")
+        if active.get("task_id") and existing_ref:
+            existing = product_dir / existing_ref
+            if existing.is_file() and read_json(existing).get("state") in {"ready", "in_progress"}:
+                raise ValueError(f"Task {active['task_id']} còn active; close/cancel hoặc dùng --replace có chủ đích.")
 
     if operation == "research_synthesis":
         ensure_consolidated(product_dir)
 
     task_id = next_task_id(product_dir, operation, section, unit)
+    packet, context = compile_packet(product_dir, operation, task_id, section, unit, execution_runtime)
+
+    # Replacement is a lifecycle transition, not a pointer overwrite. Only
+    # cancel the old routed task after the new canonical packet compiled.
+    if replace:
+        cancel_active_task(product_dir, reason=f"router replacement by {task_id}", replacement=task_id)
+
     task_dir = product_dir / "tasks" / task_id
     task_dir.mkdir(parents=True, exist_ok=False)
-    packet, context = compile_packet(product_dir, operation, task_id, section, unit, execution_runtime)
     packet_path = task_dir / "packet.json"
     context_path = task_dir / "context.md"
     write_json(packet_path, packet)
@@ -103,7 +119,14 @@ def create_task(
     errors = verify_task(product_dir, task_id)
     if errors:
         raise ValueError("Router produced invalid task artifacts: " + "; ".join(errors))
-    write_json(active_file, {"task_id": task_id, "work_order": product_relative(product_dir, work_path), "context_packet": product_relative(product_dir, context_path)})
+    write_json(
+        active_file,
+        {
+            "task_id": task_id,
+            "work_order": product_relative(product_dir, work_path),
+            "context_packet": product_relative(product_dir, context_path),
+        },
+    )
     return work_order
 
 
@@ -150,10 +173,12 @@ def verify_task(product_dir: Path, task_id: str, *, state_override: str | None =
 
 
 def verify_active_pointer(product_dir: Path, task_id: str) -> list[str]:
+    """Validate routing metadata only. ACTIVE.json is not task execution authority."""
+
     product_dir = product_dir.resolve()
     path = active_path(product_dir)
     if not path.is_file():
-        return ["task is not active: missing tasks/ACTIVE.json"]
+        return ["task is not routed: missing tasks/ACTIVE.json"]
     try:
         active = read_json(path)
     except (json.JSONDecodeError, ValueError, OSError) as exc:
@@ -161,7 +186,7 @@ def verify_active_pointer(product_dir: Path, task_id: str) -> list[str]:
 
     errors: list[str] = []
     if active.get("task_id") != task_id:
-        errors.append(f"task {task_id} is not the active task")
+        errors.append(f"task {task_id} is not the routed task")
     expected_work = f"tasks/{task_id}/work-order.json"
     expected_context = f"tasks/{task_id}/context.md"
     if active.get("work_order") != expected_work or active.get("context_packet") != expected_context:
@@ -175,7 +200,7 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     work_path = task_dir / "work-order.json"
     work = read_json(work_path)
     packet = read_json(task_dir / "packet.json")
-    errors = verify_active_pointer(product_dir, task_id)
+    errors = task_submit_errors(work.get("state"))
     errors.extend(verify_task(product_dir, task_id))
     if errors:
         return errors
@@ -204,18 +229,9 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
         return errors
     work["state"] = "ready_for_review"
     work["submitted_at"] = datetime.now(timezone.utc).isoformat()
+    work["updated_at"] = work["submitted_at"]
     write_json(work_path, work)
-    section = work.get("target", {}).get("section")
-    if section:
-        state_path = product_dir / "03_sections" / section / "section.json"
-        state = read_json(state_path)
-        if work["operation"] == "design_section":
-            state["status"] = "story_plan_review"
-        elif work["operation"] in {"draft_section", "revise_section"}:
-            state["status"] = "ready_for_review"
-        elif work["operation"] == "review_section":
-            state["status"] = "review_complete"
-        write_json(state_path, state)
+    apply_section_submission(product_dir, work["operation"], work.get("target", {}).get("section"))
     return []
 
 
@@ -318,7 +334,6 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
         elif operation in {"draft_section", "revise_section"}:
             section = target["section"]
             root = product_dir / "03_sections" / section
-            state = read_json(root / "section.json")
             draft_words = word_count(narration_text((root / "draft.md").read_text(encoding="utf-8"), section))
             if not 1 <= draft_words <= MAX_SECTION_WORDS:
                 errors.append(f"draft word count must stay inside the 1–{MAX_SECTION_WORDS} production-unit hard cap")
@@ -346,17 +361,19 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
 
 def set_task_state(product_dir: Path, task_id: str, state: str) -> list[str]:
     product_dir = product_dir.resolve()
-    if state in {"ready", "in_progress"}:
-        errors = verify_active_pointer(product_dir, task_id)
-        errors.extend(verify_task(product_dir, task_id, state_override=state))
-        if errors:
-            return errors
-
     work_path = product_dir / "tasks" / task_id / "work-order.json"
     work = read_json(work_path)
+    errors = task_transition_errors(work.get("state"), state)
+    if state in {"ready", "in_progress"}:
+        errors.extend(verify_task(product_dir, task_id, state_override=state))
+    if errors:
+        return errors
+
     work["state"] = state
     work["updated_at"] = datetime.now(timezone.utc).isoformat()
     write_json(work_path, work)
+    if state in {"closed", "cancelled"}:
+        clear_active_pointer(product_dir, task_id, reason=f"task {state}")
     return []
 
 
@@ -398,7 +415,10 @@ def main() -> int:
         return 0
     if args.command == "show":
         active = read_json(active_path(args.product.resolve()))
-        context = args.product.resolve() / active["context_packet"]
+        context_ref = active.get("context_packet")
+        if not context_ref:
+            parser.error("No routed task in tasks/ACTIVE.json")
+        context = args.product.resolve() / context_ref
         print(context.read_text(encoding="utf-8"))
         return 0
     if args.command == "list":
@@ -411,7 +431,9 @@ def main() -> int:
         product = args.product.resolve()
         task_id = args.task_id
         if not task_id:
-            task_id = read_json(active_path(product))["task_id"]
+            task_id = read_json(active_path(product)).get("task_id")
+        if not task_id:
+            parser.error("No routed task in tasks/ACTIVE.json")
         path = product / "tasks" / task_id / "operator-brief.json"
         errors = validate_brief_file(path)
         if errors:

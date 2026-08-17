@@ -24,6 +24,7 @@ try:
         write_json,
     )
     from scripts.consolidate_research import verify_consolidation
+    from scripts.lifecycle import section_operation_state_error
     from scripts.outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
     from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
     from scripts.story_plan_contract import verify_narration_pack
@@ -42,6 +43,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
         write_json,
     )
     from consolidate_research import verify_consolidation
+    from lifecycle import section_operation_state_error
     from outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
     from packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
     from story_plan_contract import verify_narration_pack
@@ -153,14 +155,9 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
         if outline.get("status") != "approved":
             raise ValueError("Outline must be human-approved first.")
         state = read_json_local(product_dir / "03_sections" / str(section) / "section.json")
-        expected = {
-            "design_section": {"needs_story_plan", "story_plan_changes_requested"},
-            "draft_section": {"ready_for_draft"},
-            "review_section": {"ready_for_review"},
-            "revise_section": {"changes_requested"},
-        }[operation]
-        if state.get("status") not in expected:
-            raise ValueError(f"{section} status {state.get('status')!r} does not allow {operation}.")
+        state_error = section_operation_state_error(operation, state.get("status"), section)
+        if state_error:
+            raise ValueError(state_error)
     if operation in {"draft_section", "review_section", "revise_section"}:
         narration_errors = verify_narration_pack(product_dir, str(section))
         if narration_errors:
