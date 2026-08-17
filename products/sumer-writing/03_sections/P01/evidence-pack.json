@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "section": "P01",
+  "claims": [
+    {
+      "id": "CLM-0024",
+      "statement": "Proto-cuneiform sign distribution and tablet position can reveal structural regularities even when a sign's spoken value or underlying language remains uncertain.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0005",
+        "SRC-0010"
+      ],
+      "counterevidence": "Corpus readability, sign variants and genre classification affect frequency and positional analysis.",
+      "narrative_implication": "Separate observable graphic pattern from modern decipherment and language attribution.",
+      "provenance": [
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-CLM-006"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0042",
+      "statement": "P005390/MMA 1988.433.2 is a physical Uruk III administrative tablet recording grain-related quantities; its language and exact transaction remain uncertain.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0023",
+        "SRC-0024"
+      ],
+      "counterevidence": "CDLI and the Met use overlapping but different date labels, and both qualify the Uruk provenience; missing verbs prevent a fully secure reading of deliveries versus distributions.",
+      "narrative_implication": "Use as a representative preserved administrative form, not as a quoted individual voice or proof of a specific economic institution.",
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-CLM-009"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-0005",
+      "title": "Visible Language: Inventions of Writing in the Ancient Middle East and Beyond",
+      "author": "Christopher Woods (ed.)",
+      "year": 2010,
+      "type": "academic museum catalogue / comparative synthesis",
+      "authority": "University of Chicago Oriental Institute catalogue curated by a Sumerologist.",
+      "url": "https://isac.uchicago.edu/sites/default/files/uploads/shared/docs/oimp32.pdf",
+      "locators": [
+        "comparative chronology and essays on earliest Mesopotamian and Egyptian writing; catalogue overview",
+        "pp. 33–50; development of accounting systems",
+        "Mesopotamian writing essays"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Catalogue compresses specialist disagreements for comparative presentation; use for comparison scope, not exact Uruk stratigraphy.",
+        "Comparative overview; some pathways remain hypothetical.",
+        "Catalogue compresses disagreements."
+      ],
+      "notes": [
+        "Treats Mesopotamia and Egypt as roughly contemporary independent inventions; supports avoiding an unqualified unique 'world first' claim.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-005"
+        },
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-001"
+        },
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0010",
+      "title": "A Quantitative Analysis of Proto-Cuneiform Sign Use in Archaic Tribute",
+      "author": "Logan Born and Kathryn Erin Kelley, 2021",
+      "year": null,
+      "type": "peer-reviewed corpus study",
+      "authority": "CDLI corpus-based quantitative analysis",
+      "url": "https://cdli.earth/articles/cdlb/2021-6",
+      "locators": [
+        "§§1–3; corpus definition, sign-frequency and genre limits",
+        "§§1–3; 6,726-artifact working corpus and sign-use method"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Sign-frequency patterns do not by themselves establish sign meanings or causal direction.",
+        "Readability, sign variants, genre assignment and corpus growth constrain quantitative conclusions."
+      ],
+      "notes": [
+        "Used to test how far administrative subgenres can be distinguished from the preserved corpus.",
+        "Used to separate observed sign distribution from reconstructed linguistic value."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-005"
+        },
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-005"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0023",
+      "title": "MSVO 3, 79 artifact entry (P005390)",
+      "author": "Cuneiform Digital Library Initiative; transliterations by Robert K. Englund, Jacob L. Dahl and CDLI",
+      "year": null,
+      "type": "primary artifact record and corpus transliteration",
+      "authority": "CDLI object-level record linked to the Metropolitan Museum of Art",
+      "url": "https://cdli.earth/P005390",
+      "locators": [
+        "CDLI P005390; MMA 1988.433.2",
+        "Text: obverse columns 1–2 and reverse columns 1–2",
+        "Edition references: MSVO 3 no. 79; Frühe Schrift no. 4.79; CTMMA IV no. 180"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "CDLI labels Uruk provenience uncertain and dates the tablet to Uruk III ca. 3200–3000 BCE; the Met uses Jemdet Nasr ca. 3100–2900 BCE. Language is undetermined and the document lacks verbs, limiting transaction-level interpretation."
+      ],
+      "notes": [
+        "Selected administrative object. Contemporary ancient tablet, not a later copy; use as an early economic-classification case, not a transparent voice."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-006"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0024",
+      "title": "Cuneiform tablet: administrative account concerning the distribution of barley and emmer",
+      "author": "Metropolitan Museum of Art",
+      "year": null,
+      "type": "museum object record",
+      "authority": "Holding-institution record for MMA 1988.433.2",
+      "url": "https://www.metmuseum.org/art/collection/search/327384",
+      "locators": [
+        "Object no. 1988.433.2",
+        "Object overview and artwork details",
+        "Open Access/Public Domain image flag"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "The museum gives 'probably from Uruk' and a broad interpretive description; acquisition rather than excavation context means exact provenience is uncertain."
+      ],
+      "notes": [
+        "Rights anchor for the selected administrative object: Met object images are marked Public Domain; credit the museum and object number."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-007"
+        }
+      ]
+    }
+  ],
+  "rule": "Only claims in this pack may appear as substantive historical claims in the draft."
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 3,
+  "section": "P01",
+  "status": "not_started",
+  "audience_shift": "",
+  "story_strategy": "",
+  "word_budget": {
+    "recommended": {
+      "min": 500,
+      "max": 800
+    },
+    "rationale": ""
+  },
+  "evidence_roles": {
+    "core": [],
+    "optional": [],
+    "guardrail": [],
+    "exclude": []
+  },
+  "design_risks": []
+}

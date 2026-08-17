@@ -1,0 +1,86 @@
+{
+  "schema_version": 4,
+  "compiler": "scripts/context_packet.py",
+  "context_sha256": "4826e9e94377b422e0ca26acd397e432d03d897e237573fe7e11824c05f6da45",
+  "authority": "product_agent",
+  "task_id": "T0024-design-section-P01",
+  "product": "sumer-writing",
+  "operation": "design_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "created_at": "2026-08-17T08:11:38.358331+00:00",
+  "context_profile": "creative_design",
+  "max_context_tokens": 12000,
+  "estimated_context_tokens": 9450,
+  "prompt_instruction_tokens": 1229,
+  "input_tokens": 8023,
+  "boundary_enforcement": [
+    "authority_and_write_scope",
+    "ai_task_state_or_human_amendment_provenance",
+    "input_freshness_and_packet_integrity",
+    "evidence_provenance_and_narration_ceiling",
+    "context_and_production_unit_hard_caps"
+  ],
+  "evaluation_gate": "human_approval",
+  "instruction_files": [
+    "system/core/creative-boundaries.md",
+    "system/standards/channel-constitution.md",
+    "system/operations/design-section.md"
+  ],
+  "inputs": [
+    {
+      "path": "02_outline/story-bible.md",
+      "sha256": "29ed638147f7405782e895ad2d0d9a719207f6f6ee01cf3fce542566353f0b4b",
+      "bytes": 12078
+    },
+    {
+      "path": "02_outline/voice-profile.md",
+      "sha256": "5bff47d9c43111169bbd386099092cb7087f37c3730c4019b26ea8ea140826bd",
+      "bytes": 3808
+    },
+    {
+      "path": "03_sections/P01/section.json",
+      "sha256": "8c5072dd007c05c7e9f09455ea1ceacaffa4c7d13d3ce1c4cbb526b1a5bf2ae0",
+      "bytes": 1977
+    },
+    {
+      "path": "03_sections/P01/brief.md",
+      "sha256": "a465283f3e0f8d3fdcd799f6b177478023d393dff081b4369c5bcd032dbac5ac",
+      "bytes": 1257
+    },
+    {
+      "path": "03_sections/P01/evidence-pack.json",
+      "sha256": "8b29ea363f9db3db2f30b9f38095c150cf2a26ee7196a499baf43d9832bd16a3",
+      "bytes": 6877
+    },
+    {
+      "path": "03_sections/P01/continuity-in.md",
+      "sha256": "8c348fa31222e10128b5ed758db361831f226ff4cf225b63cbcaf319a94d953b",
+      "bytes": 208
+    }
+  ],
+  "operation_outputs": [
+    "03_sections/P01/story-plan.json"
+  ],
+  "output_baselines": [
+    {
+      "path": "03_sections/P01/story-plan.json",
+      "sha256": "ad37a9bec256370f32e4bbf711d6115c5f98c485562cd82cc20cb8bf18247f9b"
+    }
+  ],
+  "allowed_write_paths": [
+    "03_sections/P01/story-plan.json",
+    "tasks/T0024-design-section-P01/report.md",
+    "tasks/T0024-design-section-P01/operator-brief.json"
+  ],
+  "report_path": "tasks/T0024-design-section-P01/report.md",
+  "operator_brief_path": "tasks/T0024-design-section-P01/operator-brief.json",
+  "validation": [
+    "python scripts/validate.py products/sumer-writing",
+    "python scripts/task.py verify products/sumer-writing T0024-design-section-P01",
+    "python scripts/check_scope.py products/sumer-writing",
+    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0024-design-section-P01/operator-brief.json"
+  ]
+}

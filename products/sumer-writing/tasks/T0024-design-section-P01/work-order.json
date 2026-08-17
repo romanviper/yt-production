@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "id": "T0024-design-section-P01",
+  "product": "sumer-writing",
+  "operation": "design_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "state": "in_progress",
+  "created_at": "2026-08-17T08:11:51.488912+00:00",
+  "context_packet": "tasks/T0024-design-section-P01/context.md",
+  "packet_manifest": "tasks/T0024-design-section-P01/packet.json",
+  "allowed_write_paths": [
+    "03_sections/P01/story-plan.json",
+    "tasks/T0024-design-section-P01/report.md",
+    "tasks/T0024-design-section-P01/operator-brief.json"
+  ],
+  "outputs": [
+    "03_sections/P01/story-plan.json"
+  ],
+  "report_path": "tasks/T0024-design-section-P01/report.md",
+  "operator_brief_path": "tasks/T0024-design-section-P01/operator-brief.json",
+  "updated_at": "2026-08-17T08:11:51.488979+00:00"
+}
