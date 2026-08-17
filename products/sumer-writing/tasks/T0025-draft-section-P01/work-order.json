@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "id": "T0025-draft-section-P01",
+  "product": "sumer-writing",
+  "operation": "draft_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "state": "in_progress",
+  "created_at": "2026-08-17T08:31:00+00:00",
+  "context_packet": "tasks/T0025-draft-section-P01/context.md",
+  "packet_manifest": "tasks/T0025-draft-section-P01/packet.json",
+  "allowed_write_paths": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md",
+    "tasks/T0025-draft-section-P01/report.md",
+    "tasks/T0025-draft-section-P01/operator-brief.json"
+  ],
+  "outputs": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md"
+  ],
+  "report_path": "tasks/T0025-draft-section-P01/report.md",
+  "operator_brief_path": "tasks/T0025-draft-section-P01/operator-brief.json",
+  "updated_at": "2026-08-17T08:31:00+00:00"
+}
