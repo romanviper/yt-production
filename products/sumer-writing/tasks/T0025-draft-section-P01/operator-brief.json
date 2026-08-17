@@ -1,13 +1,26 @@
 {
   "schema_version": 1,
-  "status": "in_progress",
-  "headline": "Đang viết draft P01 theo story-plan và narration pack đã được bạn duyệt.",
-  "material_points": [],
+  "status": "ready_for_review",
+  "headline": "Draft P01 đã hoàn tất ở 663 từ và giữ đúng evidence ceiling đã duyệt.",
+  "material_points": [
+    "P005390 trả observable clue sớm: quantity, grain-related signs và arrangement cho thấy structured relation.",
+    "Full reveal giữ đúng giới hạn: underlying language và exact transaction không chắc; không dựng voice hay participant.",
+    "Section kết bằng câu hỏi về lý do relation cần tồn tại ngoài trí nhớ để nối sang P02."
+  ],
   "decision": {
-    "required": false,
-    "question": "",
-    "recommendation": "",
-    "options": []
+    "required": true,
+    "question": "Bạn muốn đưa draft P01 này sang outcome review hay sửa trực tiếp trước?",
+    "recommendation": "Đưa sang outcome review để kiểm tra storytelling, causal clarity, voice và repetition trước human approval.",
+    "options": [
+      {
+        "label": "Outcome review",
+        "effect": "Tạo review_section P01 và đánh giá draft mà không tự approve."
+      },
+      {
+        "label": "Sửa trước",
+        "effect": "Áp feedback cụ thể của bạn vào draft trước khi review."
+      }
+    ]
   },
-  "next_step": "Hoàn tất draft và handoff rồi chuyển P01 sang outcome review."
+  "next_step": ""
 }
