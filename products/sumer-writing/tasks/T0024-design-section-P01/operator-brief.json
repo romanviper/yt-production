@@ -1,13 +1,17 @@
 {
   "schema_version": 1,
-  "status": "in_progress",
-  "headline": "",
-  "material_points": [],
+  "status": "completed",
+  "headline": "Story-plan P01 đã được bạn duyệt và chuyển sang trạng thái sẵn sàng viết draft.",
+  "material_points": [
+    "P005390 là carrier duy nhất; core evidence gồm CLM-0042 và CLM-0024.",
+    "Audience shift khóa khoảng cách giữa structured relation còn lại và full speech không thể khôi phục chắc chắn.",
+    "Narration pack P01 đã được tạo từ đúng evidence roles đã duyệt."
+  ],
   "decision": {
     "required": false,
     "question": "",
     "recommendation": "",
     "options": []
   },
-  "next_step": ""
+  "next_step": "Thực hiện draft_section P01 rồi đưa prose sang outcome review, không tự approve draft."
 }
