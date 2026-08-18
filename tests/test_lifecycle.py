@@ -7,8 +7,11 @@ from pathlib import Path
 from unittest.mock import patch
 
 from scripts.lifecycle import (
+    apply_research_submission,
     apply_section_submission,
+    prepare_research_rework,
     prepare_section_rework,
+    research_rework_blocker,
     section_operation_state_error,
     task_transition_errors,
 )
@@ -51,6 +54,45 @@ def make_section_fixture(root: Path) -> Path:
     return product
 
 
+def make_research_fixture(root: Path) -> Path:
+    product = root / "products" / "demo"
+    write_json(
+        product / "product.json",
+        {
+            "slug": "demo",
+            "status": "outline_approved",
+            "stages": {
+                "direction": "approved",
+                "research_plan": "approved",
+                "research": "approved",
+                "outline": "approved",
+                "sections": "in_progress",
+                "integration": "not_started",
+                "delivery": "not_started",
+            },
+            "production_cycle": {"id": "C002", "status": "outline_approved"},
+        },
+    )
+    write_json(
+        product / "01_research" / "plan.json",
+        {
+            "status": "approved",
+            "workstreams": [{"id": "WS01"}, {"id": "WS02"}],
+        },
+    )
+    for unit in ["WS01", "WS02"]:
+        root_ws = product / "01_research" / "workstreams" / unit
+        write_json(root_ws / "sources.json", {"status": "complete", "sources": []})
+        write_json(root_ws / "claims.json", {"status": "complete", "claims": []})
+        write_json(root_ws / "materials.json", {"status": "complete", "materials": []})
+        (root_ws / "synthesis.md").write_text("Status: complete\n\n# Synthesis\n", encoding="utf-8")
+    (product / "01_research" / "research-synthesis.md").write_text(
+        "Status: complete\n\n# Research synthesis\n", encoding="utf-8"
+    )
+    write_json(product / "01_research" / "story-material-map.json", {"status": "complete"})
+    return product
+
+
 class LifecycleTests(unittest.TestCase):
     def test_section_operation_entry_states_have_one_canonical_mapping(self) -> None:
         self.assertIsNone(section_operation_state_error("draft_section", "ready_for_draft", "P01"))
@@ -61,6 +103,68 @@ class LifecycleTests(unittest.TestCase):
     def test_terminal_task_is_not_reopened_by_low_level_state_mutation(self) -> None:
         errors = task_transition_errors("cancelled", "in_progress")
         self.assertTrue(any("fresh task" in item or "semantic rework" in item for item in errors))
+
+    def test_stage_level_workstream_rework_invalidates_all_units_and_downstream(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_research_fixture(Path(temp))
+
+            selected = prepare_research_rework(
+                product,
+                "research_workstream",
+                "Rebuild research handoff before a full outline redesign.",
+                all_units=True,
+            )
+
+            self.assertEqual("WS01", selected)
+            state = json.loads((product / "01_research" / "rework-state.json").read_text(encoding="utf-8"))
+            product_state = json.loads((product / "product.json").read_text(encoding="utf-8"))
+            self.assertEqual(["WS01", "WS02"], state["pending_units"])
+            self.assertEqual("in_progress", product_state["stages"]["research"])
+            self.assertEqual("changes_requested", product_state["stages"]["outline"])
+            self.assertEqual("paused", product_state["stages"]["sections"])
+            self.assertIn("WS01", str(research_rework_blocker(product)))
+            for unit in ["WS01", "WS02"]:
+                sources = json.loads((product / "01_research" / "workstreams" / unit / "sources.json").read_text(encoding="utf-8"))
+                claims = json.loads((product / "01_research" / "workstreams" / unit / "claims.json").read_text(encoding="utf-8"))
+                self.assertEqual("rework_pending", sources["status"])
+                self.assertEqual("rework_pending", claims["status"])
+                self.assertIn(
+                    "Status: rework_pending",
+                    (product / "01_research" / "workstreams" / unit / "synthesis.md").read_text(encoding="utf-8"),
+                )
+            self.assertIn(
+                "Status: rework_pending",
+                (product / "01_research" / "research-synthesis.md").read_text(encoding="utf-8"),
+            )
+
+    def test_workstream_submissions_drain_rework_queue(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_research_fixture(Path(temp))
+            prepare_research_rework(product, "research_workstream", "Rework all workstreams.", all_units=True)
+
+            apply_research_submission(product, "research_workstream", "WS01")
+            state = json.loads((product / "01_research" / "rework-state.json").read_text(encoding="utf-8"))
+            self.assertEqual(["WS02"], state["pending_units"])
+            self.assertEqual(["WS01"], state["completed_units"])
+
+            apply_research_submission(product, "research_workstream", "WS02")
+            state = json.loads((product / "01_research" / "rework-state.json").read_text(encoding="utf-8"))
+            self.assertEqual([], state["pending_units"])
+            self.assertEqual("workstreams_complete", state["status"])
+            self.assertIsNone(research_rework_blocker(product))
+
+    def test_research_synthesis_submission_closes_transient_rework_state(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_research_fixture(Path(temp))
+            prepare_research_rework(product, "research_synthesis", "Rebuild material-aware synthesis.")
+            self.assertTrue((product / "01_research" / "rework-state.json").is_file())
+
+            apply_research_submission(product, "research_synthesis", None)
+
+            product_state = json.loads((product / "product.json").read_text(encoding="utf-8"))
+            self.assertEqual("complete", product_state["stages"]["research"])
+            self.assertFalse((product / "01_research" / "rework-state.json").exists())
+            self.assertFalse((product / "01_research" / "rework-request.md").exists())
 
     def test_design_rework_reopens_approved_section_without_review_state_ceremony(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
