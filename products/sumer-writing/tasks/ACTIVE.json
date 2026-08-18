@@ -1,5 +1,6 @@
 {
-  "task_id": "T0029-research-workstream-WS01",
-  "work_order": "tasks/T0029-research-workstream-WS01/work-order.json",
-  "context_packet": "tasks/T0029-research-workstream-WS01/context.md"
+  "task_id": null,
+  "status": "idle",
+  "updated_at": "2026-08-18T14:46:33+00:00",
+  "reason": "Material-aware research handoff completed; ready to create a fresh outline rebuild task."
 }
