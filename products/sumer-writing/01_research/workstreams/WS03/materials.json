@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "workstream": "WS03",
+  "status": "complete",
+  "materials": [
+    {
+      "id": "WS03-MAT-001",
+      "kind": "object",
+      "label": "Uruk IV administrative tablet VAT 14682",
+      "what_audience_follows": "A small one-sided Uruk IV tablet turns quantities of milk into an organized durable account, making visible how early writing could work before it encoded continuous speech.",
+      "sequence": [
+        "A small clay tablet is prepared for a short administrative account.",
+        "Numerical and commodity signs are placed on one face to record quantities of milk.",
+        "The apparently drawn signs are produced through repeated impressions of a straight reed stylus.",
+        "The object preserves a structured relation among quantity, commodity and tablet position without requiring a recoverable sentence."
+      ],
+      "claim_ids": [
+        "WS03-CLM-001",
+        "WS03-CLM-002",
+        "WS03-CLM-006",
+        "WS03-CLM-007"
+      ],
+      "source_refs": [
+        {
+          "source_id": "WS03-SRC-002",
+          "locators": [
+            "Visible Language, Catalog No. 44, p. 73: VAT 14682, Uruk IV, Eana District; short account of milk quantities",
+            "Visible Language, Catalog No. 44 description: signs made by repeated impressions of a straight reed stylus"
+          ]
+        }
+      ],
+      "representativeness": "illustrative",
+      "limitations": [
+        "One tablet cannot represent the whole Uruk IV corpus.",
+        "Its layout and sign structure do not recover continuous speech or prove the underlying language.",
+        "Do not narrate the stylus technique as the already-mature wedge ductus of later cuneiform."
+      ]
+    }
+  ],
+  "gaps": [
+    "The current WS03 evidence supports the long technical shift toward more abstract/wedge-shaped cuneiform, but no single local source locator reconstructs that entire transformation as one continuous object sequence. Keep that long change explanatory unless later research adds a tighter comparative series."
+  ]
+}
