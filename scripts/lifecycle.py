@@ -85,6 +85,46 @@ def _research_units(product_dir: Path) -> list[str]:
     return [str(item["id"]) for item in plan.get("workstreams", []) if item.get("id")]
 
 
+def _mark_json_status(path: Path, status: str) -> None:
+    if not path.is_file():
+        return
+    document = read_json(path)
+    document["status"] = status
+    write_json(path, document)
+
+
+def _mark_markdown_status(path: Path, status: str) -> None:
+    if not path.is_file():
+        return
+    text = path.read_text(encoding="utf-8")
+    lines = text.splitlines()
+    replaced = False
+    for index, line in enumerate(lines):
+        if line.startswith("Status:"):
+            lines[index] = f"Status: {status}"
+            replaced = True
+            break
+    if not replaced:
+        lines.insert(0, f"Status: {status}")
+        lines.insert(1, "")
+    path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+
+
+def _mark_workstream_rework_pending(product_dir: Path, unit: str) -> None:
+    root = product_dir / "01_research" / "workstreams" / unit
+    _mark_json_status(root / "sources.json", "rework_pending")
+    _mark_json_status(root / "claims.json", "rework_pending")
+    _mark_json_status(root / "materials.json", "rework_pending")
+    _mark_markdown_status(root / "synthesis.md", "rework_pending")
+
+
+def _mark_global_synthesis_rework_pending(product_dir: Path) -> None:
+    _mark_markdown_status(product_dir / "01_research" / "research-synthesis.md", "rework_pending")
+    map_path = product_dir / "01_research" / "story-material-map.json"
+    if map_path.is_file():
+        _mark_json_status(map_path, "rework_pending")
+
+
 def _write_research_request(
     product_dir: Path,
     *,
@@ -118,8 +158,9 @@ def prepare_research_rework(
     """Reopen research at one semantic layer and invalidate every downstream stage.
 
     For a stage-level research_workstream request, all declared workstreams become
-    pending and the first unit is returned for routing. Existing workstream outputs
-    remain available as baselines; they are not destroyed merely to express rework.
+    pending and the first unit is returned for routing. Existing evidence content
+    remains available as a baseline, while status markers prevent stale downstream
+    synthesis or outline tasks from being treated as current.
     """
 
     if operation not in RESEARCH_REWORK_OPERATIONS:
@@ -147,6 +188,7 @@ def prepare_research_rework(
         write_json(plan_path, plan)
         stages["research_plan"] = "changes_requested"
         stages["research"] = "not_started"
+        _mark_global_synthesis_rework_pending(product_dir)
     else:
         plan = read_json(product_dir / "01_research" / "plan.json")
         if plan.get("status") != "approved":
@@ -166,6 +208,11 @@ def prepare_research_rework(
                 pending_units = [selected_unit]
             if selected_unit not in units:
                 raise ValueError(f"Workstream {selected_unit} is not declared in the approved research plan.")
+            for pending_unit in pending_units:
+                _mark_workstream_rework_pending(product_dir, pending_unit)
+            _mark_global_synthesis_rework_pending(product_dir)
+        elif operation == "research_synthesis":
+            _mark_global_synthesis_rework_pending(product_dir)
         stages["research"] = "in_progress"
 
     stages["outline"] = "changes_requested"
