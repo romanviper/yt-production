@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "product": "sumer-writing",
+  "status": "complete",
+  "materials": [
+    {
+      "id": "MAT-0001",
+      "kind": "process",
+      "label": "Late-Uruk accounting media at Chogha Mish",
+      "what_audience_follows": "Two coexisting clay accounting devices—an envelope that contains tokens and a sealed numerical tablet—show information moving from enclosed/countable objects toward marks carried on a clay surface without proving a one-line token-to-writing genealogy.",
+      "sequence": [
+        "A clay envelope contains accounting tokens while sealing controls or authenticates the container.",
+        "A separate sealed numerical tablet fragment carries five numeral signs directly on a clay surface.",
+        "Both belong to the Late Uruk administrative ecology, so the audience can follow a change in where numerical information is carried while keeping multiple antecedent practices in view."
+      ],
+      "claim_ids": ["CLM-0011", "CLM-0012", "CLM-0013", "CLM-0014"],
+      "source_refs": [{"source_id": "SRC-0005", "locators": ["Visible Language, object descriptions Catalog No. 31, p. 65: ChM III-937a, sealed numerical tablet fragment with five numeral signs", "Visible Language, object description Catalog No. 32, pp. 65–66: broken clay envelope with tokens inside"]}],
+      "representativeness": "illustrative",
+      "limitations": ["The objects are from Chogha Mish in Iran, not an excavated sequence at Uruk.", "Coexistence and functional similarity do not establish that one object directly evolved into the other.", "Use this material to show an ecology of accounting media, not a universal token → tablet ladder."],
+      "provenance": [{"workstream": "WS02", "local_id": "WS02-MAT-001"}]
+    },
+    {
+      "id": "MAT-0002",
+      "kind": "object",
+      "label": "Uruk IV administrative tablet VAT 14682",
+      "what_audience_follows": "A small one-sided Uruk IV tablet turns quantities of milk into an organized durable account, making visible how early writing could work before it encoded continuous speech.",
+      "sequence": ["A small clay tablet is prepared for a short administrative account.", "Numerical and commodity signs are placed on one face to record quantities of milk.", "The apparently drawn signs are produced through repeated impressions of a straight reed stylus.", "The object preserves a structured relation among quantity, commodity and tablet position without requiring a recoverable sentence."],
+      "claim_ids": ["CLM-0019", "CLM-0020", "CLM-0024", "CLM-0025"],
+      "source_refs": [{"source_id": "SRC-0005", "locators": ["Visible Language, Catalog No. 44, p. 73: VAT 14682, Uruk IV, Eana District; short account of milk quantities", "Visible Language, Catalog No. 44 description: signs made by repeated impressions of a straight reed stylus"]}],
+      "representativeness": "illustrative",
+      "limitations": ["One tablet cannot represent the whole Uruk IV corpus.", "Its layout and sign structure do not recover continuous speech or prove the underlying language.", "Do not narrate the stylus technique as the already-mature wedge ductus of later cuneiform."],
+      "provenance": [{"workstream": "WS03", "local_id": "WS03-MAT-001"}]
+    },
+    {
+      "id": "MAT-0003",
+      "kind": "training_sequence",
+      "label": "House F teacher–student tablet 3N-T 397",
+      "what_audience_follows": "On one House F tablet, a competent model, a student's erased copy and an older exercise on the reverse expose learning as repeated copying, correction, memorization and revision rather than simple sign recognition.",
+      "sequence": ["On the obverse left, a competent hand writes eleven lines from Syllable Alphabet B as a model.", "On the obverse right, the student's copy is written, erased and prepared to be copied again.", "On the reverse, a longer earlier passage is written as revision of previously learned material.", "Across House F, comparable tablet formats let scholars reconstruct a staged curriculum while also showing that the exact order varied by school."],
+      "claim_ids": ["CLM-0027", "CLM-0029", "CLM-0031"],
+      "source_refs": [{"source_id": "SRC-0018", "locators": ["Section 'Elementary education in House F', paras. 10–16 / pp. 45–49", "Fig. 9: 3N-T 397 = UM 55-21-320, Type II teacher–student tablet", "Table 1 and paras. 11–12: Type II obverse model/copy and reverse revision logic"]}],
+      "representativeness": "illustrative",
+      "limitations": ["House F is an unusually rich eighteenth-century BCE Nippur household-school context and cannot be projected back to Uruk.", "Its curriculum was not a universal Mesopotamian standard; the source explicitly finds local variation.", "The teacher/student attribution is inferred from relative competence and tablet format, not from named biographies."],
+      "provenance": [{"workstream": "WS04", "local_id": "WS04-MAT-001"}]
+    },
+    {
+      "id": "MAT-0004",
+      "kind": "object",
+      "label": "P005390 / MMA 1988.433.2 administrative grain account",
+      "what_audience_follows": "An early tablet preserves grain-related quantities and categories in columns, letting the audience see writing functioning as durable classification even when the exact transaction and spoken language remain uncertain.",
+      "sequence": ["Quantities and grain-related entries are arranged across the obverse and reverse.", "The tablet preserves those relations after the immediate accounting encounter is gone.", "Modern readers can recover categories and quantities more securely than a complete spoken sentence or exact transaction type."],
+      "claim_ids": ["CLM-0034", "CLM-0040", "CLM-0042"],
+      "source_refs": [{"source_id": "SRC-0023", "locators": ["CDLI P005390 / MMA 1988.433.2; text obverse columns 1–2 and reverse columns 1–2", "Edition references: MSVO 3 no. 79; Frühe Schrift no. 4.79; CTMMA IV no. 180"]}, {"source_id": "SRC-0024", "locators": ["Met object no. 1988.433.2, object overview and artwork details"]}],
+      "representativeness": "representative",
+      "limitations": ["Provenience is qualified as probably Uruk and exact dating labels differ slightly between CDLI and the Met.", "The document lacks verbs; do not turn it into a fully specified delivery, tax or redistribution scene.", "Representative only of a preserved early administrative form, not all early writing."],
+      "provenance": [{"workstream": "WS05", "local_id": "WS05-MAT-001"}]
+    },
+    {
+      "id": "MAT-0005",
+      "kind": "documented_failure",
+      "label": "MMA 86.11.111: a written order that was not carried out",
+      "what_audience_follows": "A ca. 1632 BCE letter preserves a report that a royal security order was not implemented, exposing the distance between putting a command into writing and making people obey it.",
+      "sequence": ["A royal security order exists as an instruction that should be implemented.", "Marduk-mushallim reports that the order has not been carried out.", "The letter makes the failure retrievable to another party, but the document itself does not supply enforcement."],
+      "claim_ids": ["CLM-0037", "CLM-0040", "CLM-0043"],
+      "source_refs": [{"source_id": "SRC-0025", "locators": ["Met object no. 86.11.111; overview describing Marduk-mushallim's report on non-implementation of a royal security order", "Artwork details: Old Babylonian, ca. 1632 BCE, probably Sippar-Yahrurum"]}, {"source_id": "SRC-0021", "locators": ["CTMMA I no. 69, p. 87; plates 63–64 and 135–136"]}],
+      "representativeness": "exceptional",
+      "limitations": ["The Met presents the letter as unusual and its archaeological find context is unavailable.", "Do not generalize it into ordinary correspondence or claim that writing normally failed.", "Use attributed paraphrase unless translation rights are separately cleared."],
+      "provenance": [{"workstream": "WS05", "local_id": "WS05-MAT-002"}]
+    },
+    {
+      "id": "MAT-0006",
+      "kind": "training_object",
+      "label": "P228744: Old Babylonian Nippur lexical school tablet",
+      "what_audience_follows": "A fragmented school tablet preserves a learner's participation in a larger lexical-list tradition, making knowledge transmission visible as repeated classification and copying.",
+      "sequence": ["A learner copies lexical material onto a clay school tablet.", "The surviving reverse preserves ordered entries from a larger list tradition.", "The fragment can be linked to the Old Babylonian Nippur Ura 03 composite, showing one physical witness inside a reproducible curriculum."],
+      "claim_ids": ["CLM-0036", "CLM-0040", "CLM-0044"],
+      "source_refs": [{"source_id": "SRC-0026", "locators": ["CDLI P228744; N 6052 (+) UM 29-16-393", "Reverse columns 1–2, preserved lines 4–30", "Witness to CDLI Lexical 000001 / composite Q000001"]}],
+      "representativeness": "representative",
+      "limitations": ["Representative only within the formal Old Babylonian Nippur lexical-training tradition.", "The obverse is missing and detailed stratigraphy is not preserved.", "It cannot establish population-wide literacy."],
+      "provenance": [{"workstream": "WS05", "local_id": "WS05-MAT-003"}]
+    },
+    {
+      "id": "MAT-0007",
+      "kind": "copying_sequence",
+      "label": "ETCSL 3.1.19: royal correspondence becomes remembered text",
+      "what_audience_follows": "A political letter tradition associated with the end of Ur III survives not as the original dispatch but through later Old Babylonian copies, letting the audience follow writing changing from immediate communication into curated political and literary memory.",
+      "sequence": ["The composition narrates correspondence set in the final Ur III political crisis.", "Multiple Old Babylonian scribal manuscripts copy and preserve versions of the text centuries later.", "Modern editors reconstruct a composite from those witnesses, so today's readable text is the endpoint of copying and scholarly recovery rather than an untouched original letter."],
+      "claim_ids": ["CLM-0039", "CLM-0040", "CLM-0045"],
+      "source_refs": [{"source_id": "SRC-0027", "locators": ["ETCSL composition 3.1.19; composite text lines 1–53", "Witness list including 3N-T311 = IM 58418 and IM 13347"]}, {"source_id": "SRC-0022", "locators": ["ETCSL Manual §1.1: corpus construction and manuscript-date scope"]}],
+      "representativeness": "illustrative",
+      "limitations": ["The surviving witnesses are Old Babylonian school manuscripts, not the contemporary Ur III dispatch.", "Always separate narrated event date, manuscript date and modern composite edition.", "Direct quotation from the modern English translation requires rights review."],
+      "provenance": [{"workstream": "WS05", "local_id": "WS05-MAT-004"}]
+    },
+    {
+      "id": "MAT-0008",
+      "kind": "institutional_process",
+      "label": "Puzriš-Dagan livestock agency archive",
+      "what_audience_follows": "Thousands of surviving records let the audience follow livestock obligations becoming classifiable, authenticated and retrievable through officials, seals and archival procedure rather than through the tablet acting alone.",
+      "sequence": ["Livestock, taxation, royal gifts and diplomatic transfers generate individual administrative records.", "Officials and sealing practices attach responsibility and authentication to those records.", "Records accumulate into an archival system that can be grouped and retrieved across transactions.", "The reconstructed agency makes obligations visible at institutional scale, while enforcement still belongs to people and authorities."],
+      "claim_ids": ["CLM-0046", "CLM-0051", "CLM-0052", "CLM-0053"],
+      "source_refs": [{"source_id": "SRC-0033", "locators": ["§§1.2–1.5: reconstruction of the Puzriš-Dagan central livestock agency and archive of more than 13,500 tablets"]}],
+      "representativeness": "illustrative",
+      "limitations": ["This is a bounded Ur III royal-institution case, centuries after the origin of writing.", "The archive is selective and reconstructed; do not present it as a literal inventory of one stockyard or an empire-wide norm.", "Use it as a later test of the institutional-capacity feedback mechanism, not proof of that mechanism at Uruk."],
+      "provenance": [{"workstream": "WS06", "local_id": "WS06-MAT-001"}]
+    },
+    {
+      "id": "MAT-0009",
+      "kind": "transmission_process",
+      "label": "Hittite selective adaptation through trained scribal practice",
+      "what_audience_follows": "The Hittite case lets the audience follow cuneiform arriving through external specialist traditions, being learned and modified for a new linguistic environment, while only selected Mesopotamian practices travel with it.",
+      "sequence": ["Cuneiform reaches Anatolian courts and specialists through contact with established scribal traditions.", "Training uses lexical and bilingual material to reproduce competence across a new community of practice.", "Scribes adapt sign values and orthographic conventions rather than simply substituting Hittite words into an unchanged system.", "The receiving tradition adopts selected scholarly and literary practices while other Mesopotamian administrative conventions do not transfer uniformly."],
+      "claim_ids": ["CLM-0055", "CLM-0056", "CLM-0057", "CLM-0060", "CLM-0061", "CLM-0062"],
+      "source_refs": [{"source_id": "SRC-0037", "locators": ["pp. 3–13: Hittite curricula, bilingual lists and selective transfer on the cuneiform periphery"]}],
+      "representativeness": "illustrative",
+      "limitations": ["This is a process carrier synthesized from a bounded scholarly discussion, not a single excavated event sequence.", "The Hittite case cannot stand for every region that adopted cuneiform.", "Do not imply that all Mesopotamian bookkeeping/metrology disappeared from Anatolia; the claim is selective and non-uniform transfer."],
+      "provenance": [{"workstream": "WS07", "local_id": "WS07-MAT-001"}]
+    },
+    {
+      "id": "MAT-0010",
+      "kind": "recovery_sequence",
+      "label": "Cuneiform becomes readable again through comparative decipherment",
+      "what_audience_follows": "After living competence has broken, nineteenth-century scholars recover cuneiform step by step by copying inscriptions, cracking the simpler Old Persian system, comparing multilingual Behistun texts and then testing readings in Akkadian and Sumerian.",
+      "sequence": ["Travelers and scholars copy cuneiform inscriptions accurately enough for signs to be compared away from the monuments.", "Old Persian yields first because its system and language are comparatively tractable.", "Multilingual inscriptions, especially Behistun, provide cross-language constraints for harder cuneiform systems.", "Proposed Akkadian readings are tested comparatively; Sumerian is reconstructed later through accumulated bilingual and lexical evidence."],
+      "claim_ids": ["CLM-0065", "CLM-0066", "CLM-0070", "CLM-0071"],
+      "source_refs": [{"source_id": "SRC-0042", "locators": ["§§2–4: early copied inscriptions, Old Persian, Behistun and subsequent comparative decipherment steps"]}],
+      "representativeness": "representative",
+      "limitations": ["The process involved many scholars, corrections and failed hypotheses; do not reduce it to one hero or eureka moment.", "Modern decipherment is recovery after a competence break, not direct living transmission from ancient scribes."],
+      "provenance": [{"workstream": "WS08", "local_id": "WS08-MAT-001"}]
+    }
+  ],
+  "legacy_workstreams_without_materials": []
+}
