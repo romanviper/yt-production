@@ -3,12 +3,12 @@
   "product": "sumer-writing",
   "cycle_id": "C003",
   "status": "draft",
-  "section_count": 8,
+  "section_count": 7,
   "script_architecture": {
     "story_material_contract_version": 1,
-    "central_question": "Chữ viết có thật sự tự tạo ra sức mạnh của các xã hội Sumer, hay sức mạnh chỉ xuất hiện khi những dấu trên đất sét được con người duy trì, truy hồi và biến thành hành động?",
-    "audience_promise": "Bắt đầu từ một tablet gần năm thiên niên kỷ vẫn giữ được quantity và relation nhưng không trao lại một câu nói trọn vẹn. Từ vật thể đó, phim lần theo cách information rời khỏi trí nhớ người, trở thành record, phải được học và sao chép, có thể thất bại khi gặp thực tế, rồi chỉ tạo ra institutional capacity khi được nhúng vào người, procedure, archive và authority. Cuối cùng, khi người đọc biến mất nhưng clay còn lại, câu chuyện kiểm tra điều gì thực sự sống sót: vật thể, hay năng lực xã hội khiến vật thể có nghĩa.",
-    "design_rationale": "Rebuild C003 không giữ section architecture C002 làm mặc định. Material-aware handoff cho thấy long technical transformation từ proto-cuneiform tới mature wedge ductus chưa có object series đủ chặt để tự mang một movement, vì vậy section technical-transformation cũ bị loại bỏ thay vì để narrator manufacture propulsion. Full story được tổ chức quanh 8 narrative movements có carrier rõ: opening object; accounting ecology; useful-before-sentence threshold; reproduced competence and accumulated uses; failed written order; archive/procedure feedback; adaptation; competence break and recovery. Ba act vẫn cố định, còn section count giảm từ 9 xuống 8 để tránh chia một process thành question-only và answer-only fragments. P05/P06 giữ reversal→answer pair vì failure và institutional reconstruction có state change riêng, còn technical context được nhúng ngắn vào các section có material carrier thay vì đứng riêng.",
+    "central_question": "Chữ viết có tự tạo ra sức mạnh cho xã hội Sumer, hay sức mạnh chỉ xuất hiện khi con người biến những dấu bền vững thành một hệ thống có thể học, truy hồi và hành động dựa trên đó?",
+    "audience_promise": "Mở đầu bằng một tấm đất sét còn giữ được lượng và quan hệ nhưng không trả lại trọn vẹn lời nói đã từng bao quanh nó. Từ nghịch lý đó, phim lùi về những cách ghi đếm trước chữ viết, theo thông tin đi từ vật chứa lên bề mặt đất sét, rồi đi qua kho lưu trữ, người học nghề, một mệnh lệnh bị phớt lờ, quá trình thích nghi sang ngôn ngữ mới và cuối cùng là thời điểm vật thể còn nhưng năng lực đọc đã mất. Câu chuyện kết bằng việc hỏi thứ thực sự sống sót là đất sét hay mạng lưới con người khiến nó có nghĩa.",
+    "design_rationale": "Bản sửa này ưu tiên khả năng review thành phẩm ngay từ outline. P005390 không còn đứng một mình như một câu đố phân tích kéo dài; nó là cold open rồi lập tức dẫn khán giả vào quá trình vật chất ở Chogha Mish. Act 1 được nén từ ba phần xuống hai phần để tránh lặp lại việc nhìn và phân tích tablet. Act 2 được sắp lại theo thời gian: Puzriš-Dagan trước House F, rồi tới lá thư khoảng 1632 BCE, nhờ vậy lập luận không còn buộc câu chuyện phải quay ngược vài thế kỷ để tìm lời giải. Phần Hittite được giữ ngắn vì research chỉ hỗ trợ một process carrier chứ chưa có scene-level object sequence. Decipherment vẫn là endgame có action sequence mạnh nhất và là nơi duy nhất quay lại P005390 để khóa payoff.",
     "total_word_envelope": {
       "min": 8400,
       "max": 16800
@@ -18,14 +18,13 @@
         "id": "A01",
         "order": 1,
         "role": "opening",
-        "title": "Khi thông tin rời khỏi trí nhớ người",
-        "narrative_job": "Dùng một early tablet để phá mặc định 'writing = preserved speech', rồi lùi lại đủ xa để khán giả thấy family of accounting/authentication problems đã tồn tại trước tablet. Act kết khi viewer hiểu vì sao một surface record có thể hữu ích ngay cả trước khi hệ thống encode continuous speech.",
-        "entry_state": "Một tablet cổ dễ bị nhìn như một câu nói đã hóa đá chỉ chờ được dịch.",
-        "exit_state": "Khán giả thấy writing xuất hiện trong một ecology của record-making và nhận ra usefulness có thể đến từ việc giữ quantity, category và relation bền hơn cuộc gặp, không cần chờ một câu hoàn chỉnh.",
+        "title": "Khi thông tin rời khỏi cuộc gặp",
+        "narrative_job": "Biến nghịch lý của P005390 thành một câu hỏi lịch sử có chuyển động: nếu một tablet không giữ trọn lời nói, tại sao người ta vẫn cần loại vật thể này? Lùi về các thiết bị ghi đếm và xác thực cùng thời để khán giả thấy thông tin dần được đưa lên một bề mặt có thể xem lại; sau đó dùng VAT 14682 và P005390 để chứng minh hệ thống ấy đã hữu ích trước khi nó trở thành những câu viết liên tục.",
+        "entry_state": "Khán giả dễ nhìn một tablet cổ như một câu nói đã hóa đá chỉ chờ được dịch.",
+        "exit_state": "Khán giả thấy giá trị ban đầu của ghi chép nằm ở việc giữ lượng, loại và quan hệ qua thời gian; câu hỏi chuyển từ 'đọc câu này thế nào?' sang 'điều gì khiến một record hữu ích trở thành năng lực xã hội lâu dài?'.",
         "movement_ids": [
           "M01",
-          "M02",
-          "M03"
+          "M02"
         ]
       },
       {
@@ -33,13 +32,13 @@
         "order": 2,
         "role": "body",
         "title": "Khi dấu trở thành một hệ thống xã hội",
-        "narrative_job": "Chuyển trọng tâm khỏi signs sang human practice và institutional procedure. Trước hết cho thấy competence phải được tái tạo bằng copy/correction; sau đó phá assumption rằng readable written authority tự tạo compliance; cuối cùng dùng archive như bounded test để cho thấy record chỉ tăng capacity khi được nhúng trong authentication, retrieval và authority.",
-        "entry_state": "Viewer đã thấy early records hữu ích nhưng vẫn có thể gán năng lực cho bản thân tablet hoặc script.",
-        "exit_state": "Viewer hiểu power không nằm trong clay: nó nằm trong chain người–quy ước–xác thực–archive–retrieval–authority; record có thể mở rộng capacity nhưng không tự thi hành chính mình.",
+        "narrative_job": "Đi xuôi thời gian qua ba phép thử. Puzriš-Dagan cho thấy record tăng khả năng nhìn và truy hồi nghĩa vụ khi gắn với người, con dấu và kho lưu trữ. House F cho thấy hệ thống đó không tự truyền mình: năng lực phải được chép, sửa và học lại. Cuối cùng một mệnh lệnh hoàng gia không được thi hành đặt giới hạn rõ nhất: record có thể bảo toàn và truyền chỉ thị nhưng không tự biến nó thành hành động.",
+        "entry_state": "Khán giả đã thấy early records hữu ích nhưng vẫn có thể gán sức mạnh cho bản thân dấu viết hoặc vật liệu.",
+        "exit_state": "Khán giả hiểu chữ viết mở rộng năng lực khi nằm trong một chuỗi người–quy ước–xác thực–lưu trữ–truy hồi–quyền lực, nhưng ngay cả chuỗi biết đọc và truyền lệnh cũng không xóa bỏ khoảng cách giữa văn bản và hành động.",
         "movement_ids": [
+          "M03",
           "M04",
-          "M05",
-          "M06"
+          "M05"
         ]
       },
       {
@@ -47,12 +46,12 @@
         "order": 3,
         "role": "ending",
         "title": "Điều gì thực sự sống sót",
-        "narrative_job": "Dùng adaptation để test khả năng sống qua language/institution change, rồi đẩy distinction tới cực hạn: clay survives after competence breaks. Decipherment trở thành một second historical process phục dựng năng lực đọc, và opening tablet được reinterpret như bằng chứng rằng material survival và survival of meaning là hai lịch sử khác nhau.",
-        "entry_state": "Khán giả biết một tradition sống nhờ competent practice nhưng chưa biết practice đó có thể vượt khỏi môi trường Sumerian đến đâu.",
-        "exit_state": "Khán giả kết luận rằng cuneiform sống lâu nhờ communities có thể học, đổi và tái tạo convention; khi chain đó đứt, vật thể còn nhưng meaning phải được phục dựng từ đầu.",
+        "narrative_job": "Thử độ bền của truyền thống khi nó rời môi trường ngôn ngữ ban đầu, rồi đẩy bài toán tới cực hạn: cộng đồng đọc suy yếu nhưng đất sét vẫn còn. Quá trình giải mã hiện đại trở thành một lịch sử thứ hai của năng lực đọc—sao chép, so sánh và kiểm tra—trước khi phim quay lại P005390.",
+        "entry_state": "Khán giả biết năng lực của chữ viết phụ thuộc vào cộng đồng và thủ tục, nhưng chưa biết hệ thống ấy có thể sống qua thay đổi ngôn ngữ và đứt gãy truyền nghề tới đâu.",
+        "exit_state": "Khán giả phân biệt được sự sống sót của vật thể với sự sống sót của nghĩa: đất sét có thể tồn tại một mình, còn meaning chỉ tồn tại khi năng lực đọc được truyền hoặc được xây dựng lại.",
         "movement_ids": [
-          "M07",
-          "M08"
+          "M06",
+          "M07"
         ]
       }
     ],
@@ -61,10 +60,10 @@
         "id": "M01",
         "order": 1,
         "act_id": "A01",
-        "title": "Một tablet còn lại, một câu nói đã mất",
-        "narrative_job": "P005390 là opening carrier. Viewer nhìn quantity, grain-related categories và column relations còn tồn tại, nhưng exact transaction, full sentence và underlying speech không quay lại. Reward đầu tiên không phải 'đọc được tablet' mà là thấy chính xác cái gì survived và cái gì không.",
-        "entry_state": "Tablet được mặc định là lời nói cổ đã đóng băng.",
-        "exit_state": "Viewer hiểu durable marks có thể giữ structured relations mà không giữ toàn bộ speech; câu hỏi chuyển sang vì sao loại memory bị giới hạn này lại đáng tạo ra.",
+        "title": "Từ một tablet im lặng tới thông tin trên bề mặt",
+        "narrative_job": "P005390 chỉ làm cold open đủ lâu để đặt nghịch lý: một số lượng và quan hệ còn lại nhưng exact transaction/full speech không thể phục hồi chắc chắn. Thay vì ở lại phân tích object, phim lập tức lùi tới Chogha Mish và theo hai thiết bị cùng tồn tại—envelope chứa tokens và numerical tablet có dấu số trên bề mặt—để cho thấy vị trí của information đang thay đổi mà không dựng một genealogy giả.",
+        "entry_state": "Tablet được mặc định là lời nói cổ chỉ cần dịch.",
+        "exit_state": "Khán giả thấy bài toán rộng hơn việc dịch: con người đang thử nhiều cách để làm quantity/authentication tồn tại sau cuộc gặp, và một bước đáng chú ý là đưa thông tin lên bề mặt có thể nhìn lại.",
         "section_ids": [
           "P01"
         ]
@@ -73,10 +72,10 @@
         "id": "M02",
         "order": 2,
         "act_id": "A01",
-        "title": "Trước tablet, người ta đã vật lộn với cùng một vấn đề",
-        "narrative_job": "Chogha Mish cho thấy nhiều clay devices cùng xử lý counting/authentication. Một envelope giữ tokens; một numerical tablet đặt numeral signs trực tiếp lên surface. Movement cho thấy location của information đang thay đổi mà không biến hai object thành một genealogy bắt buộc.",
-        "entry_state": "Viewer biết cần durable relation nhưng chưa thấy các partial solutions trước writing.",
-        "exit_state": "Viewer thấy information có thể chuyển từ enclosed/countable objects sang marks trên surface; câu hỏi kế tiếp là một surface record như vậy thực sự làm được gì.",
+        "title": "Hữu ích trước khi thành câu",
+        "narrative_job": "VAT 14682 cho một account nhỏ, cụ thể; P005390 quay lại như một trường hợp rộng hơn. Khán giả theo quantity, commodity và cách sắp xếp trên clay để thấy surface record có thể giữ quan hệ vận hành lặp lại trước khi ta có thể phục hồi một câu nói liên tục. Các guardrail về chronology, language và writing threshold chỉ vào sau khi function đã rõ.",
+        "entry_state": "Khán giả đã thấy numerical information có thể nằm trên surface nhưng chưa biết vì sao kiểu record ấy đáng phát triển.",
+        "exit_state": "Khán giả hiểu early writing có thể làm administrative work hữu ích trước continuous speech; câu hỏi chuyển sang điều gì giúp những quy ước này tạo ra năng lực lớn hơn một tablet đơn lẻ.",
         "section_ids": [
           "P02"
         ]
@@ -84,11 +83,11 @@
       {
         "id": "M03",
         "order": 3,
-        "act_id": "A01",
-        "title": "Hữu ích trước khi thành câu",
-        "narrative_job": "VAT 14682 và P005390 cho viewer tự suy ra function từ quantity, commodity và layout trước khi nghe threshold debate. Chronology, language uncertainty và world-first guardrail chỉ vào sau changed interpretation.",
-        "entry_state": "Viewer vẫn có thể cho rằng writing chỉ đáng kể khi encode continuous speech.",
-        "exit_state": "Viewer hiểu early system đã làm được administrative work bằng durable structured relations; từ đây câu hỏi không còn là 'có phải câu chưa?' mà là 'điều gì khiến một record trở thành infrastructure sống qua nhiều thế hệ?'.",
+        "act_id": "A02",
+        "title": "Khi hàng nghìn record bắt đầu tạo ra một góc nhìn mới",
+        "narrative_job": "Nhảy có chủ ý tới Ur III và dùng Puzriš-Dagan như một phép thử muộn hơn của cơ chế feedback. Khán giả theo một livestock/obligation event thành record, record gắn với official/seal, nhiều record tích lại, rồi archive cho phép grouping và retrieval ở quy mô lớn hơn. Movement trả lời 'record làm được gì khi có cả một hệ thống quanh nó?' mà không back-project magnitude này về Uruk.",
+        "entry_state": "Early tablet đã hữu ích, nhưng sức mạnh vẫn dễ bị tưởng là nằm trong vật thể.",
+        "exit_state": "Khán giả thấy capacity xuất hiện từ network quanh record: classification, responsible people, authentication, accumulation và retrieval; bước tiếp theo là xem network ấy duy trì năng lực đọc bằng cách nào.",
         "section_ids": [
           "P03"
         ]
@@ -97,10 +96,10 @@
         "id": "M04",
         "order": 4,
         "act_id": "A02",
-        "title": "Đất sét không tự học cách được đọc",
-        "narrative_job": "House F teacher–student tablet, P228744 và later copying tradition chuyển continuity từ property của signs sang labor của people. Viewer theo model→copy→erasure→revision, rồi thấy lexical/political text tồn tại bằng repeated copying. Functional expansion được thể hiện qua what people keep reproducing, không bằng genre catalogue.",
-        "entry_state": "Early writing đã hữu ích, nhưng continuity có thể vẫn bị tưởng là tự nằm trong script.",
-        "exit_state": "Viewer thấy tradition chỉ sống khi competence được tái tạo và uses được copy/recombine; assumption mới xuất hiện: nếu competent people tạo và đọc written authority đúng, liệu record có tự biến thành action?",
+        "title": "Đất sét không tự truyền được cách đọc nó",
+        "narrative_job": "House F biến continuity thành hành động nhìn thấy được: model→student copy→erasure→revision. P228744 và later copies mở rộng cùng cơ chế: kiến thức tồn tại vì người ta liên tục chép, sửa và tái tạo convention, không phải vì clay tự bảo tồn competence.",
+        "entry_state": "P03 cho thấy một hệ thống record có thể mở rộng capacity, nhưng viewer chưa thấy chi phí con người để hệ thống ấy tiếp tục hoạt động.",
+        "exit_state": "Khán giả thấy continuity là lao động được lặp lại qua thế hệ; vì vậy một test tự nhiên xuất hiện: nếu người có năng lực đọc và một mệnh lệnh viết đúng đều có mặt, văn bản có tự trở thành hành động không?",
         "section_ids": [
           "P04"
         ]
@@ -110,9 +109,9 @@
         "order": 5,
         "act_id": "A02",
         "title": "Một mệnh lệnh được viết ra vẫn có thể thất bại",
-        "narrative_job": "MMA 86.11.111 là reversal carrier. Viewer theo một royal security order tới report rằng nó không được thực hiện. Document vẫn bảo toàn và truyền failure, nhưng không cung cấp enforcement.",
-        "entry_state": "Training và reproducibility khiến written authority dễ được đồng nhất với effective authority.",
-        "exit_state": "Assumption record=compliance bị phá bằng một bounded failure; viewer buộc phải hỏi mắt xích nào còn thiếu giữa inscription và action.",
+        "narrative_job": "MMA 86.11.111 là stress test sau hai phần positive mechanism. Viewer theo một royal security order tới report của Marduk-mushallim rằng order chưa được thực hiện. Document giữ chỉ thị và cả bằng chứng thất bại, nhưng không cung cấp enforcement. Đây là giới hạn, không phải phủ định giá trị của writing.",
+        "entry_state": "Khán giả đã thấy record có thể được tổ chức, truy hồi và truyền qua người có năng lực; written authority vì vậy rất dễ bị nhầm với effective authority.",
+        "exit_state": "Khán giả tách rõ persistence/coordination khỏi compliance: chữ viết có thể mở rộng trí nhớ và tầm nhìn của hệ thống nhưng vẫn cần quyền lực và hành động bên ngoài văn bản.",
         "section_ids": [
           "P05"
         ]
@@ -120,11 +119,11 @@
       {
         "id": "M06",
         "order": 6,
-        "act_id": "A02",
-        "title": "Quyền lực nằm ở hệ thống quanh tablet",
-        "narrative_job": "Puzriš-Dagan trả lời failure bằng một institutional process: individual livestock/obligation records gắn với officials và seals, tích lũy thành archive, rồi trở nên retrievable ở scale lớn hơn. MAT-0005 vẫn đứng cạnh làm counter-case để giữ boundary enforcement.",
-        "entry_state": "Viewer biết document có thể thất bại nhưng chưa có positive mechanism cho institutional capacity.",
-        "exit_state": "Viewer rebuild được conditional chain record→classification→responsible people/authentication→archive/retrieval→authority; writing tăng capacity khi chain này hoạt động, không phải vì clay tự có agency.",
+        "act_id": "A03",
+        "title": "Muốn sống sót, truyền thống phải biết thay đổi",
+        "narrative_job": "Giữ Hittite case ở đúng sức bằng chứng: một process carrier ngắn, không dựng one-court adoption scene. Khán giả theo competence đi vào môi trường ngôn ngữ mới qua specialists, curricula và copying; sign values/orthography được điều chỉnh và transfer diễn ra có chọn lọc. Survival được định nghĩa là khả năng tái tạo có biến đổi, không phải giữ nguyên một bản gốc.",
+        "entry_state": "Khán giả biết capacity và continuity phụ thuộc một community có kỹ năng, nhưng community ấy vẫn có thể bị tưởng là gắn chặt với một ngôn ngữ hay thiết chế duy nhất.",
+        "exit_state": "Khán giả phân biệt script survival, language survival và institutional survival; điều quyết định là competence có tiếp tục được tái tạo hay không.",
         "section_ids": [
           "P06"
         ]
@@ -133,24 +132,12 @@
         "id": "M07",
         "order": 7,
         "act_id": "A03",
-        "title": "Muốn sống sót, tradition phải học cách thay đổi",
-        "narrative_job": "Hittite process carrier cho thấy cuneiform đi vào môi trường ngôn ngữ mới qua specialists, curricula và copying; sign values/orthographic conventions được điều chỉnh và transfer có chọn lọc. ETCSL copying tradition làm continuity contrast: what survives is reproducible practice, không phải một unchanged original.",
-        "entry_state": "Institutional chain vừa thấy có vẻ gắn chặt với một language/culture setting.",
-        "exit_state": "Viewer phân biệt script, language và institution survival; continuity nằm ở competent adaptation. Vì vậy threat cuối trở nên rõ: chuyện gì xảy ra khi competence không còn được tái tạo?",
+        "title": "Đất sét còn, người đọc biến mất",
+        "narrative_job": "Không dựng scene về 'last reader'. Sau qualified decline chronology, action trở lại ở modern decipherment: accurate copying→Old Persian breakthrough→Behistun comparison→tested Akkadian/Sumerian readings. Ending quay lại P005390 để cho thấy object không tự nói; một community mới phải xây lại đủ competence để biết marks có thể nói gì và không thể nói gì.",
+        "entry_state": "P06 cho thấy truyền thống sống khi competence được thích nghi và truyền tiếp.",
+        "exit_state": "Opening object được reinterpret: material survival có thể kéo dài qua một competence break, nhưng meaning phải được truyền hoặc được phục dựng bằng một quá trình mới.",
         "section_ids": [
           "P07"
-        ]
-      },
-      {
-        "id": "M08",
-        "order": 8,
-        "act_id": "A03",
-        "title": "Đất sét còn, người đọc biến mất",
-        "narrative_job": "Decline chỉ dùng claim-supported chronology, không dựng scene quanh 75 CE vì thiếu object locator. Sau competence break, MAT-0010 cho viewer theo recovery sequence copy→Old Persian→Behistun comparison→tested Akkadian/Sumerian readings. Ending quay lại P005390.",
-        "entry_state": "Viewer biết survival phụ thuộc trained communities có thể tiếp tục adaptation.",
-        "exit_state": "Opening object được reinterpret: clay có thể tồn tại gần như một mình; meaning chỉ tồn tại khi competence được truyền hoặc được phục dựng sau một break.",
-        "section_ids": [
-          "P08"
         ]
       }
     ]
@@ -159,76 +146,51 @@
     {
       "id": "P01",
       "order": 1,
-      "title": "Một tấm đất sét giữ lại đúng một nửa câu chuyện",
+      "title": "Từ một tấm đất sét im lặng tới thông tin trên bề mặt",
       "movement_ids": [
         "M01"
       ],
-      "narrative_job": "Cold-open P005390 và trả reward ngay: grain-related quantities/categories và relations vẫn có thể được nhận diện, nhưng exact transaction, continuous sentence và underlying spoken voice không được phục hồi chắc chắn. Section không giải lịch sử writing; nó biến opening object thành một puzzle có answer đủ cụ thể để central question bắt đầu.",
-      "entry_state": "Khán giả nhìn tablet như một message cổ chỉ cần dịch.",
-      "exit_state": "Khán giả biết rõ cái gì survives và cái gì không, rồi muốn biết vì sao một record thiếu full speech vẫn đáng giữ hàng nghìn năm.",
-      "audience_experience": "Viewer ở lại với đúng một object. Họ lần theo các cột, quantity và grain-related entries mà modern scholarship còn đọc được, rồi chạm vào ranh giới nơi certainty dừng lại: không có verb để dựng một transaction trọn vẹn, không có voice để nghe lại. Tablet chuyển từ 'message chưa dịch' thành 'machine giữ relation nhưng làm rơi phần lớn encounter'.",
+      "narrative_job": "Cold-open P005390 chỉ đủ để đặt nghịch lý về thứ còn lại và thứ không thể phục hồi, rồi lập tức lùi tới MAT-0001. Section theo envelope-with-tokens và sealed numerical tablet ở Chogha Mish để cho khán giả thấy cùng một family of counting/authentication problems đang được giải bằng nhiều devices và numerical information bắt đầu xuất hiện trực tiếp trên clay surface.",
+      "entry_state": "Khán giả nhìn một tablet cổ như một message chỉ cần được dịch.",
+      "exit_state": "Khán giả thấy bài toán không phải chỉ là dịch chữ: trước writing đã có nhu cầu làm quantity/authentication tồn tại sau encounter, và surface record là một thay đổi vật chất đáng kể trong cách information được mang.",
+      "audience_experience": "1) P005390 xuất hiện như một vật thể có cấu trúc nhưng không trả lại exact transaction hay full speech. 2) Phim không ở lại giải puzzle mà lùi tới Chogha Mish. 3) Viewer gặp một clay envelope còn tokens bên trong, rồi một sealed numerical tablet có năm numeral signs ngay trên surface. 4) Hai object coexist nên change nằm ở nơi information được mang—từ bên trong vật chứa sang bề mặt có thể xem lại—không phải ở một 'missing link' tiến hóa bị bịa ra.",
       "material_ids": [
-        "MAT-0004"
+        "MAT-0004",
+        "MAT-0001"
       ],
-      "transition": "Nếu value của object không nằm ở việc giữ nguyên một câu nói, thì phải quay lại vấn đề mà nó giải: làm sao giữ quantity, category và responsibility sau khi những người có mặt đã rời đi?",
+      "transition": "Một con số đã có thể nằm trên surface. Nhưng để giải nghịch lý P005390, phần tiếp theo phải cho thấy một surface record làm được gì khi nó bắt đầu giữ quantity, commodity và relation cùng nhau.",
       "claim_ids": [
         "CLM-0034",
         "CLM-0040",
-        "CLM-0042"
-      ],
-      "dependencies": [],
-      "non_goal": "Không tuyên bố exact transaction, underlying language, ethnic inventor hay world-first; không biến uncertainty thành suspense giả; không rời object sang chronology lecture trước khi paradox đã land.",
-      "target_words": {
-        "min": 550,
-        "max": 850
-      }
-    },
-    {
-      "id": "P02",
-      "order": 2,
-      "title": "Khi thông tin bắt đầu rời khỏi vật chứa",
-      "movement_ids": [
-        "M02"
-      ],
-      "narrative_job": "Theo MAT-0001 như một process carrier. Envelope-with-tokens và sealed numerical tablet được đặt cạnh nhau để viewer thấy counting/authentication đang được giải bằng nhiều devices và numerical information có thể được mang trực tiếp trên clay surface. Không kể token→tablet như genealogy.",
-      "entry_state": "P01 chứng minh durable relation hữu ích nhưng chưa cho thấy family of problems và material experiments đứng trước nó.",
-      "exit_state": "Khán giả thấy một ecology của partial solutions thay vì một invention ladder, và nhận ra bước đáng chú ý là information bắt đầu nằm trên một surface có thể nhìn lại.",
-      "audience_experience": "Viewer theo hai Late-Uruk objects ở Chogha Mish: một clay envelope còn chứa tokens bên trong và một sealed numerical tablet fragment có năm numeral signs trên surface. Action quan trọng là vị trí của information thay đổi. Một device giữ count trong container; device kia để count hiện ngay trên clay. Hai vật coexist nên viewer thấy experimentation chứ không thấy một 'missing link' được bịa ra.",
-      "material_ids": [
-        "MAT-0001"
-      ],
-      "transition": "Một surface có thể mang con số trực tiếp, nhưng quantity trên clay vẫn chưa giải câu hỏi P01: làm sao surface đó giữ được relation đủ ổn định để một institution dùng nó sau encounter?",
-      "claim_ids": [
+        "CLM-0042",
         "CLM-0011",
         "CLM-0012",
         "CLM-0013",
         "CLM-0014"
       ],
-      "dependencies": [
-        "P01"
-      ],
-      "non_goal": "Không universal token code; không direct token→tablet genealogy; không đồng nhất counting với tax/tribute/market/ownership; không gọi Chogha Mish là excavated Uruk sequence.",
+      "dependencies": [],
+      "non_goal": "Không biến P005390 thành bounded puzzle kéo dài; không gọi grain/quantity là thứ casual viewer tự nhận ra nếu chưa có expert context; không universal token code; không direct token→tablet genealogy; không invent exact transaction hay underlying language.",
       "target_words": {
-        "min": 1050,
+        "min": 1150,
         "max": 1500
       }
     },
     {
-      "id": "P03",
-      "order": 3,
+      "id": "P02",
+      "order": 2,
       "title": "Một hệ thống làm được việc trước khi thành câu",
       "movement_ids": [
-        "M03"
+        "M02"
       ],
-      "narrative_job": "Dùng VAT 14682 rồi quay lại P005390 để viewer tự suy ra operational function từ quantity, commodity và layout. Chỉ sau reward mới đặt minimum chronology/threshold/language guardrails. Technical evolution tới mature cuneiform chỉ xuất hiện như bridge claim, không trở thành standalone movement vì current handoff thiếu tight comparative object series.",
-      "entry_state": "Viewer đã thấy numerical information lên surface nhưng chưa biết điều gì khiến early tablets vượt khỏi một dấu count đơn lẻ.",
-      "exit_state": "Khán giả hiểu structured layout có thể preserve repeatable operational relations trước continuous speech; writing threshold vẫn contested nhưng usefulness thì concrete.",
-      "audience_experience": "Viewer chuyển từ Chogha Mish sang VAT 14682: một small Uruk IV account đặt quantities of milk lên một mặt clay, bằng repeated impressions của straight reed stylus. Sau đó P005390 cho scale quan hệ rộng hơn: quantity, grain-related category và position across columns. Từ hai vật, viewer tự nhận ra surface không chỉ chứa marks; arrangement của marks giữ được relation có thể dùng lại.",
+      "narrative_job": "Dùng VAT 14682 rồi quay lại P005390 để biến 'surface record' thành một function cụ thể. Viewer theo quantity of milk, commodity signs và bố cục của account nhỏ trước; sau đó P005390 mở rộng scale quan hệ. Chỉ sau khi usefulness đã rõ mới đặt chronology/threshold/language guardrails.",
+      "entry_state": "Viewer đã thấy information có thể lên surface nhưng chưa biết điều gì khiến early tablet hơn một dấu đếm đơn lẻ.",
+      "exit_state": "Khán giả hiểu structured layout có thể giữ operational relations trước continuous speech; writing threshold còn tranh luận nhưng usefulness thì cụ thể.",
+      "audience_experience": "1) VAT 14682 cho một account nhỏ về quantities of milk trên một mặt clay. 2) Viewer theo việc numerical và commodity signs được đặt thành một arrangement có thể xem lại. 3) P005390 quay lại với nhiều quantity/grain-related categories và column relations hơn, nhưng vẫn không cho exact transaction hay full spoken sentence. 4) Reward là một distinction cụ thể: record có thể làm việc hành chính trước khi nó trở thành thứ ta kỳ vọng ở một câu viết trọn vẹn.",
       "material_ids": [
         "MAT-0002",
         "MAT-0004"
       ],
-      "transition": "Nếu marks có thể trở thành một usable convention mà không cần full sentence, durability tiếp theo không còn là vấn đề của clay: ai sẽ giữ convention đó đủ ổn định để người khác đọc, copy và mở rộng use?",
+      "transition": "Nếu record đã hữu ích như vậy, câu hỏi tiếp theo không còn là 'có phải câu chưa?' mà là khi nhiều record được gắn với người, xác thực và lưu trữ, chúng thay đổi năng lực của một institution tới đâu.",
       "claim_ids": [
         "CLM-0001",
         "CLM-0002",
@@ -243,12 +205,42 @@
         "CLM-0042"
       ],
       "dependencies": [
+        "P01"
+      ],
+      "non_goal": "Không mở bằng definition; không tuyên bố chắc underlying language hay world-first; không dựng technical-transformation montage thiếu object support; không gọi straight-reed impressions là mature wedge ductus.",
+      "target_words": {
+        "min": 1000,
+        "max": 1450
+      }
+    },
+    {
+      "id": "P03",
+      "order": 3,
+      "title": "Khi hàng nghìn record bắt đầu tạo ra một góc nhìn mới",
+      "movement_ids": [
+        "M03"
+      ],
+      "narrative_job": "Nhảy có chủ ý tới Puzriš-Dagan như một later bounded test, không phải continuation trực tiếp từ Uruk. Viewer theo một livestock/obligation event thành record, record gắn với officials/seals, nhiều records tích lại, rồi archive cho phép grouping và retrieval. Đây là lần đầu causal claim về institutional capacity được nhìn qua process thay vì đọc như abstraction.",
+      "entry_state": "P02 chứng minh một tablet có thể hữu ích, nhưng viewer vẫn có thể gán capacity cho bản thân record.",
+      "exit_state": "Khán giả thấy capacity nảy sinh từ chain record→classification→responsible people/authentication→accumulation→retrieval; writing mở rộng tầm nhìn khi cả hệ thống quanh nó hoạt động.",
+      "audience_experience": "1) Một livestock/obligation event tạo ra một record riêng. 2) Official và sealing practice gắn responsibility/authentication vào record. 3) Hàng nghìn records tích lại thành một archive có thể được nhóm và truy hồi. 4) Viewer thấy scale mới xuất hiện từ network quanh tablet, đồng thời được nhắc rõ đây là Ur III test case muộn hơn, không phải bằng chứng rằng Uruk đã có cùng magnitude.",
+      "material_ids": [
+        "MAT-0008"
+      ],
+      "transition": "Một archive chỉ hữu ích khi có người biết tạo, đọc và phân loại nó theo convention chung. Vì vậy phần kế tiếp đi vào thứ clay không thể tự bảo tồn: competence.",
+      "claim_ids": [
+        "CLM-0046",
+        "CLM-0051",
+        "CLM-0052",
+        "CLM-0053"
+      ],
+      "dependencies": [
         "P02"
       ],
-      "non_goal": "Không mở bằng definition; không tuyên bố chắc language hay world-first; không dựng technical-transformation montage không có object support; không gọi straight-reed impressions là mature wedge ductus.",
+      "non_goal": "Không back-project Ur III capacity về Uruk; không nói archive đại diện toàn population; không biến 13,500+ surviving records thành complete inventory hay empire-wide norm; không gán agency hoặc enforcement cho tablet.",
       "target_words": {
-        "min": 900,
-        "max": 1350
+        "min": 1550,
+        "max": 2150
       }
     },
     {
@@ -258,16 +250,16 @@
       "movement_ids": [
         "M04"
       ],
-      "narrative_job": "Biến 'writing system' thành human work. House F 3N-T 397 là primary carrier cho model→student copy→erasure→revision; P228744 cho lexical copying tradition; ETCSL 3.1.19 cho một political-letter tradition sống qua later manuscripts. Functional expansion được kể như things communities choose and learn to reproduce, không như ladder từ accounting tới literature.",
-      "entry_state": "P03 cho thấy convention hữu ích nhưng viewer vẫn có thể nghĩ durability nằm trong signs hoặc medium.",
-      "exit_state": "Khán giả thấy continuity là labor: competence phải được model, copy, correct, memorize và reproduce; writing càng có nhiều use thì càng phụ thuộc communities biết giữ convention sống.",
-      "audience_experience": "Viewer nhìn một House F tablet với competent model ở bên trái, student copy ở bên phải đã bị erase để viết lại, và older learned passage ở reverse để revision. Từ action copy/correct này, section mở ra P228744 như một physical witness của lexical tradition và ETCSL 3.1.19 như một text known through later copies. Audience thấy cùng một mechanism—repeated competent copying—có thể giữ classification, training và political memory qua thời gian.",
+      "narrative_job": "Biến continuity thành human work. House F 3N-T 397 là primary carrier cho model→student copy→erasure→revision; P228744 và ETCSL 3.1.19 chỉ mở rộng payoff rằng knowledge/text sống nhờ repeated competent copying, không nhờ durability của clay một mình.",
+      "entry_state": "P03 cho thấy một system of records có thể tăng capacity nhưng chưa cho thấy năng lực tạo và đọc hệ thống ấy được duy trì bằng cách nào.",
+      "exit_state": "Khán giả thấy continuity là labor: competence phải được model, copy, correct, memorize và reproduce; dấu bền không đồng nghĩa với truyền thống sống.",
+      "audience_experience": "1) Viewer gặp một House F tablet có competent model ở bên trái. 2) Student copy ở bên phải bị erase để viết lại. 3) Reverse giữ một bài cũ để revision. 4) P228744 và later copied text chỉ làm rộng cùng mechanism: communities giữ knowledge sống bằng việc tái tạo nó qua người, không phải bằng một original bất biến.",
       "material_ids": [
         "MAT-0003",
         "MAT-0006",
         "MAT-0007"
       ],
-      "transition": "Một community có thể giữ convention sống và làm record readable. Nhưng readability vẫn chưa phải power. Câu hỏi kế tiếp là thử nghiệm trực tiếp nhất: nếu một command được viết đúng và truyền đi, liệu people có làm theo?",
+      "transition": "Một community có thể giữ convention readable. Bây giờ có thể thử giới hạn mạnh hơn: nếu người đọc được một mệnh lệnh có authority, văn bản có tự làm cho hành động xảy ra không?",
       "claim_ids": [
         "CLM-0027",
         "CLM-0029",
@@ -283,8 +275,8 @@
       ],
       "non_goal": "Không back-project House F về Uruk; không universal edubba; không literacy-rate claims; không genre catalogue; không biến later manuscripts thành original Ur III dispatch; không invented student interiority.",
       "target_words": {
-        "min": 1150,
-        "max": 1700
+        "min": 1350,
+        "max": 1850
       }
     },
     {
@@ -294,14 +286,14 @@
       "movement_ids": [
         "M05"
       ],
-      "narrative_job": "Giữ MMA 86.11.111 như clean body reversal. Establish enough context để viewer hiểu royal security order should matter, rồi land fact rằng Marduk-mushallim reports it was not implemented. Không giải institutional chain trong cùng section.",
-      "entry_state": "Sau P04, competent copying và readable records dễ tạo assumption rằng written authority sẽ tự trở thành effective authority.",
-      "exit_state": "Khán giả có một counterexample khó né: writing preserves and transmits the command and its failure, nhưng tablet không supply compliance.",
-      "audience_experience": "Viewer theo một document có stakes thực hơn school exercise: có royal security order, có người chịu trách nhiệm report back, và report nói order chưa được thực hiện. Điều thay đổi không phải 'writing is weak' mà là agency bị tách ra: text có thể giữ instruction và bằng chứng failure, trong khi action ngoài đời vẫn thiếu.",
+      "narrative_job": "Giữ MMA 86.11.111 như bounded stress test sau khi positive mechanism đã được thiết lập ở P03–P04. Establish enough context để viewer hiểu royal security order đáng lẽ phải matter, rồi land fact rằng Marduk-mushallim reports nó chưa được thực hiện. Section không cần quay ngược thời gian để tìm answer khác; answer đã có ở hệ thống quanh record, còn case này đặt giới hạn enforcement.",
+      "entry_state": "Viewer đã thấy records có thể được tổ chức, truy hồi và đọc bởi trained people; written authority vì vậy dễ bị đồng nhất với effective authority.",
+      "exit_state": "Khán giả có một counterexample rõ: document bảo toàn và truyền instruction lẫn failure, nhưng compliance vẫn thuộc về people/authority/action ngoài text.",
+      "audience_experience": "1) Có một royal security order với stakes thực. 2) Có một người chịu trách nhiệm report back. 3) Report nói order chưa được thực hiện. 4) Tablet vẫn làm được hai việc—giữ instruction và khiến failure retrievable—nhưng chính success đó làm lộ thứ nó không làm được: enforcement.",
       "material_ids": [
         "MAT-0005"
       ],
-      "transition": "Nếu inscription không tự tạo compliance, power mà ta thường gán cho writing phải nằm ở những mắt xích quanh record. P06 đi tìm chính những mắt xích đó.",
+      "transition": "Nếu sức mạnh không nằm trong marks một mình mà trong community có thể dùng chúng, câu hỏi cuối của lifecycle là community ấy có thể sống qua một ngôn ngữ và setting mới tới đâu.",
       "claim_ids": [
         "CLM-0037",
         "CLM-0040",
@@ -310,63 +302,28 @@
       "dependencies": [
         "P04"
       ],
-      "non_goal": "Không generalize một exceptional non-compliance case thành norm; không phủ nhận value của written orders; không giải thích failure bằng speculative motive; không lắp archive/procedure answer trước khi reversal đã land.",
+      "non_goal": "Không generalize exceptional non-compliance thành norm; không phủ nhận value của written orders; không giải thích failure bằng speculative motive; không nói writing 'weak' hay powerless.",
       "target_words": {
-        "min": 850,
-        "max": 1250
+        "min": 900,
+        "max": 1300
       }
     },
     {
       "id": "P06",
       "order": 6,
-      "title": "Thứ quyền lực nằm quanh tấm đất sét",
+      "title": "Muốn sống sót, chữ hình nêm phải học cách thay đổi",
       "movement_ids": [
         "M06"
       ],
-      "narrative_job": "Dùng Puzriš-Dagan như bounded positive test của feedback model và MAT-0005 làm counter-case. Viewer theo records từ individual livestock/obligation events qua officials/seals tới accumulation, archival retrieval và institutional-scale visibility. Chain phải được nhìn thấy qua process, không đọc như checklist abstraction.",
-      "entry_state": "P05 để lại causal gap: record có thể giữ command mà không làm command xảy ra.",
-      "exit_state": "Khán giả hiểu writing tăng institutional capacity khi record được embedded trong people, authentication, archive, retrieval và authority; đồng thời thấy archive chỉ làm visible những gì system chọn record.",
-      "audience_experience": "Viewer chuyển từ một failed order sang hàng nghìn Puzriš-Dagan tablets. Một livestock transfer tạo record; official/seal gắn responsibility; nhiều records tích lại; archive cho phép grouping và retrieval qua transactions. Scale mới xuất hiện từ network chứ không từ một tablet. Đặt failed order cạnh process này, viewer thấy rõ missing link: record must be connected to procedure and people capable of acting.",
+      "narrative_job": "Kể Hittite selective adaptation như một process ngắn đúng với evidence ceiling. Không dựng court-adoption scene. Viewer theo external scribal traditions tới curricula/copying trong environment mới, rồi thấy sign values và orthographic conventions được điều chỉnh và transfer có chọn lọc.",
+      "entry_state": "P05 tách rõ text khỏi agency; continuity vì vậy nằm ở communities có thể dùng convention, không phải ở vật thể.",
+      "exit_state": "Khán giả phân biệt script survival, language survival và institutional survival; cuneiform sống lâu nhờ competent adaptation chứ không nhờ giữ nguyên một system.",
+      "audience_experience": "1) Cuneiform đi vào Anatolian environment qua contact với established scribal traditions. 2) Learners dùng lexical/bilingual material để tái tạo competence. 3) Scribes điều chỉnh sign values và orthographic conventions cho linguistic environment mới. 4) Chỉ một phần scholarly/literary/administrative practices được transfer. Đây là process được tổng hợp từ evidence, không phải một scene một lần.",
       "material_ids": [
-        "MAT-0008",
-        "MAT-0005"
+        "MAT-0009"
       ],
-      "transition": "Nếu continuity và capacity phụ thuộc một trained institutional chain, survival không thể chỉ là clay bền. Câu hỏi chuyển sang việc chain đó có thể sống khi language và institutional setting thay đổi hay không.",
+      "transition": "Adaptation cho thấy tradition có thể sống rất lâu nếu competence tiếp tục được tái tạo. Endgame vì vậy bắt đầu khi chính reproduction ecosystem co lại: clay còn, nhưng người đọc thì không.",
       "claim_ids": [
-        "CLM-0043",
-        "CLM-0046",
-        "CLM-0051",
-        "CLM-0052",
-        "CLM-0053"
-      ],
-      "dependencies": [
-        "P05"
-      ],
-      "non_goal": "Không back-project Ur III capacity về Uruk; không nói archive đại diện toàn population; không gán enforcement cho tablet; không biến 13,500+ surviving records thành literal complete inventory hay empire-wide norm.",
-      "target_words": {
-        "min": 1350,
-        "max": 2000
-      }
-    },
-    {
-      "id": "P07",
-      "order": 7,
-      "title": "Muốn sống sót, chữ hình nêm phải học cách thay đổi",
-      "movement_ids": [
-        "M07"
-      ],
-      "narrative_job": "Kể Hittite selective adaptation như survival process: external scribal traditions arrive; competence được học qua curricula/copying; sign values và orthography được điều chỉnh; transfer có chọn lọc. MAT-0007 là continuity contrast cho text surviving through copies. Không dựng one-court adoption scene vì research không có tight locator.",
-      "entry_state": "P06 chứng minh record power phụ thuộc trained chain, nhưng chain đó vẫn có thể bị tưởng là sản phẩm chỉ của Sumerian/Mesopotamian setting.",
-      "exit_state": "Khán giả phân biệt script survival, language survival và institutional survival; cuneiform sống qua adaptation vì communities tái tạo competence trong setting mới.",
-      "audience_experience": "Viewer không đi tour các nền văn minh. Họ theo một process: specialists mang cuneiform vào Anatolian environment; learners dùng lexical/bilingual material; scribes không chỉ thay word mà phải sửa sign values và orthographic conventions; một số scholarly/literary practices đi cùng, số khác không. ETCSL copying tradition làm echo: survival là selected material được competent people copy and adapt, không phải unchanged original.",
-      "material_ids": [
-        "MAT-0009",
-        "MAT-0007"
-      ],
-      "transition": "Adaptation chứng minh tradition có thể sống rất lâu nếu competence tiếp tục được tái tạo. Vì vậy endgame không phải 'tablet có bền không?' mà là điều gì xảy ra khi reproduction ecosystem co lại tới mức người đọc biến mất.",
-      "claim_ids": [
-        "CLM-0039",
-        "CLM-0045",
         "CLM-0055",
         "CLM-0056",
         "CLM-0057",
@@ -375,29 +332,29 @@
         "CLM-0062"
       ],
       "dependencies": [
-        "P06"
+        "P05"
       ],
       "non_goal": "Không civilization tour; không invent adoption scene/dialogue; không coi transfer là uniform; không đồng nhất cuneiform survival với Sumerian language survival; không direct lineage.",
       "target_words": {
-        "min": 1200,
-        "max": 1800
+        "min": 950,
+        "max": 1350
       }
     },
     {
-      "id": "P08",
-      "order": 8,
+      "id": "P07",
+      "order": 7,
       "title": "Khi đất sét phải học cách nói lần thứ hai",
       "movement_ids": [
-        "M08"
+        "M07"
       ],
-      "narrative_job": "Đóng lifecycle bằng competence break→recovery. 75 CE chỉ là qualified chronology anchor, không scene carrier. MAT-0010 mang action sequence của decipherment: accurate copying→Old Persian breakthrough→Behistun multilingual comparison→tested Akkadian/Sumerian recovery. Return P005390 là final reinterpretation, không second ending.",
-      "entry_state": "P07 đã làm rõ rằng survival nằm ở communities có thể tái tạo và adapt convention.",
+      "narrative_job": "Đóng lifecycle bằng competence break→recovery. 75 CE chỉ là qualified chronology anchor, không scene carrier. MAT-0010 mang action sequence của decipherment: accurate copying→Old Persian breakthrough→Behistun comparison→tested Akkadian/Sumerian readings. Return P005390 là final reinterpretation, không second ending.",
+      "entry_state": "P06 đã làm rõ survival phụ thuộc communities có thể tái tạo và adapt convention.",
       "exit_state": "Khán giả hiểu material survival và living continuity tách nhau: clay có thể còn khi competent practice mất; modern reading là một reconstruction process sau break.",
-      "audience_experience": "Viewer đi qua một khoảng trống có chủ ý: tablets survive nhưng không có defendable scene cho 'last reader'. Sau đó action quay trở lại ở modern recovery—inscriptions được copied đủ chính xác để compare; Old Persian yields first; Behistun constrains harder readings; Akkadian rồi Sumerian được tested cumulatively. Cuối phim trở lại P005390: object không hề bắt đầu 'nói' một mình; một new community đã rebuilt enough competence để hear what its marks can and cannot preserve.",
+      "audience_experience": "1) Viewer đi qua một khoảng trống có chủ ý: tablets survive nhưng outline không dựng 'last reader' vì evidence không cho phép. 2) Action trở lại khi inscriptions được copied đủ chính xác để compare. 3) Old Persian yields first; Behistun tạo constraints cho harder readings; Akkadian rồi Sumerian được tested cumulatively. 4) Phim trở lại P005390: object không tự nói; một community mới đã rebuilt enough competence để biết marks giữ được gì và làm mất gì.",
       "material_ids": [
         "MAT-0010"
       ],
-      "transition": "Kết central question: writing không tự tạo civilization hay power; durable marks trở thành historical force khi communities khiến chúng repeatable, retrievable và actionable—and khi chain ấy mất, meaning cũng mất cho tới khi được dựng lại.",
+      "transition": "Kết central question: chữ viết không tự tạo power. Durable marks trở thành historical force khi communities khiến chúng repeatable, retrievable và actionable; khi chain ấy mất, meaning cũng mất cho tới khi được dựng lại.",
       "claim_ids": [
         "CLM-0063",
         "CLM-0064",
@@ -410,14 +367,14 @@
         "CLM-0071"
       ],
       "dependencies": [
-        "P07"
+        "P06"
       ],
-      "non_goal": "Không gọi 75 CE là absolute last tablet/last reader; không tạo scene không có object locator; không scholar-hero/eureka arc; không direct living transmission; không mở thesis mới sau return P005390.",
+      "non_goal": "Không gọi 75 CE là absolute last tablet/last reader; không tạo scene thiếu object locator; không scholar-hero/eureka arc; không direct living transmission; không mở thesis mới sau return P005390.",
       "target_words": {
-        "min": 1350,
-        "max": 2100
+        "min": 1500,
+        "max": 2400
       }
     }
   ],
-  "last_human_amendment": "HA-20260817T074550367787Z"
+  "last_human_amendment": "HA-20260818T151800000000Z"
 }
