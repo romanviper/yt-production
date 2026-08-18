@@ -14,8 +14,22 @@
         "Scribes adapt sign values and orthographic conventions rather than simply substituting Hittite words into an unchanged system.",
         "The receiving tradition adopts selected scholarly and literary practices while other Mesopotamian administrative conventions do not transfer uniformly."
       ],
-      "claim_ids": ["WS07-CLM-001", "WS07-CLM-002", "WS07-CLM-003", "WS07-CLM-006", "WS07-CLM-007", "WS07-CLM-008"],
-      "source_refs": [{"source_id": "WS07-SRC-005", "locators": ["pp. 3–13: Hittite curricula, bilingual lists and selective transfer on the cuneiform periphery"]}],
+      "claim_ids": [
+        "WS07-CLM-001",
+        "WS07-CLM-002",
+        "WS07-CLM-003",
+        "WS07-CLM-006",
+        "WS07-CLM-007",
+        "WS07-CLM-008"
+      ],
+      "source_refs": [
+        {
+          "source_id": "WS07-SRC-005",
+          "locators": [
+            "pp. 3–13: Hittite curricula, bilingual lists and selective transfer on the cuneiform periphery"
+          ]
+        }
+      ],
       "representativeness": "illustrative",
       "limitations": [
         "This is a process carrier synthesized from a bounded scholarly discussion, not a single excavated event sequence.",
