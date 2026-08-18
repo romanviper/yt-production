@@ -39,6 +39,10 @@ SECTION_OPERATION_REWORK_STATES = {
     "revise_section": "changes_requested",
 }
 
+RESEARCH_REWORK_OPERATIONS = {"research_plan", "research_workstream", "research_synthesis"}
+RESEARCH_REWORK_STATE_PATH = Path("01_research/rework-state.json")
+RESEARCH_REWORK_REQUEST_PATH = Path("01_research/rework-request.md")
+
 
 def section_operation_state_error(operation: str, status: str | None, section: str | None) -> str | None:
     expected = SECTION_OPERATION_ENTRY_STATES.get(operation)
@@ -74,6 +78,179 @@ def clear_human_approval(state: dict) -> None:
     state["human_approved"] = False
     for key in ["approved_by", "approved_at", "approval_basis"]:
         state.pop(key, None)
+
+
+def _research_units(product_dir: Path) -> list[str]:
+    plan = read_json(product_dir / "01_research" / "plan.json")
+    return [str(item["id"]) for item in plan.get("workstreams", []) if item.get("id")]
+
+
+def _write_research_request(
+    product_dir: Path,
+    *,
+    operation: str,
+    request: str,
+    unit: str | None,
+    all_units: bool,
+) -> None:
+    scope = "all declared workstreams" if operation == "research_workstream" and all_units else (unit or operation)
+    path = product_dir / RESEARCH_REWORK_REQUEST_PATH
+    path.write_text(
+        "# Research Rework Request\n\n"
+        "Requested by: user\n\n"
+        f"Requested at: {datetime.now(timezone.utc).isoformat()}\n\n"
+        f"Start operation: `{operation}`\n\n"
+        f"Scope: `{scope}`\n\n"
+        "## Request\n\n"
+        f"{request.strip()}\n",
+        encoding="utf-8",
+    )
+
+
+def prepare_research_rework(
+    product_dir: Path,
+    operation: str,
+    request: str,
+    *,
+    unit: str | None = None,
+    all_units: bool = False,
+) -> str | None:
+    """Reopen research at one semantic layer and invalidate every downstream stage.
+
+    For a stage-level research_workstream request, all declared workstreams become
+    pending and the first unit is returned for routing. Existing workstream outputs
+    remain available as baselines; they are not destroyed merely to express rework.
+    """
+
+    if operation not in RESEARCH_REWORK_OPERATIONS:
+        raise ValueError(f"Operation {operation} is not a research rework operation.")
+    if not request.strip():
+        raise ValueError("Human rework request cannot be empty.")
+
+    product_dir = product_dir.resolve()
+    product_path = product_dir / "product.json"
+    product = read_json(product_path)
+    stages = product.setdefault("stages", {})
+    now = datetime.now(timezone.utc).isoformat()
+    selected_unit = unit
+    units: list[str] = []
+    pending_units: list[str] = []
+
+    if operation == "research_plan":
+        if stages.get("direction") != "approved":
+            raise ValueError("Research-plan rework requires approved product direction.")
+        plan_path = product_dir / "01_research" / "plan.json"
+        plan = read_json(plan_path)
+        plan["status"] = "draft"
+        plan.pop("approved_by", None)
+        plan.pop("approved_at", None)
+        write_json(plan_path, plan)
+        stages["research_plan"] = "changes_requested"
+        stages["research"] = "not_started"
+    else:
+        plan = read_json(product_dir / "01_research" / "plan.json")
+        if plan.get("status") != "approved":
+            raise ValueError("Research rework requires a human-approved research plan.")
+        units = _research_units(product_dir)
+        if operation == "research_workstream":
+            if not units:
+                raise ValueError("Approved research plan has no workstreams.")
+            if all_units:
+                pending_units = list(units)
+                selected_unit = selected_unit or units[0]
+            else:
+                if not selected_unit:
+                    raise ValueError("Specific workstream rework requires a unit.")
+                if selected_unit not in units:
+                    raise ValueError(f"Workstream {selected_unit} is not declared in the approved research plan.")
+                pending_units = [selected_unit]
+            if selected_unit not in units:
+                raise ValueError(f"Workstream {selected_unit} is not declared in the approved research plan.")
+        stages["research"] = "in_progress"
+
+    stages["outline"] = "changes_requested"
+    stages["sections"] = "paused"
+    stages["integration"] = "not_started"
+    stages["delivery"] = "not_started"
+    product["status"] = "research_rework"
+    cycle = product.setdefault("production_cycle", {})
+    cycle["status"] = "research_rework"
+    cycle["reason"] = request.strip()
+    write_json(product_path, product)
+
+    _write_research_request(
+        product_dir,
+        operation=operation,
+        request=request,
+        unit=selected_unit,
+        all_units=all_units,
+    )
+    write_json(
+        product_dir / RESEARCH_REWORK_STATE_PATH,
+        {
+            "schema_version": 1,
+            "status": "in_progress",
+            "requested_operation": operation,
+            "requested_at": now,
+            "scope": "all_workstreams" if operation == "research_workstream" and all_units else "single_target",
+            "selected_unit": selected_unit,
+            "declared_units": units,
+            "pending_units": pending_units,
+            "completed_units": [],
+            "request": request.strip(),
+        },
+    )
+    return selected_unit
+
+
+def research_rework_blocker(product_dir: Path) -> str | None:
+    """Return why downstream outline/synthesis must wait, if semantic research rework is active."""
+
+    path = product_dir / RESEARCH_REWORK_STATE_PATH
+    if not path.is_file():
+        return None
+    state = read_json(path)
+    operation = state.get("requested_operation")
+    pending = state.get("pending_units", [])
+    if operation == "research_workstream" and pending:
+        return "research workstream rework still has pending units: " + ", ".join(str(item) for item in pending)
+    if state.get("status") == "in_progress" and operation != "research_synthesis":
+        return f"research rework is still active from {operation}"
+    return None
+
+
+def apply_research_submission(product_dir: Path, operation: str, unit: str | None) -> None:
+    """Advance control-plane research rework state after a validated task submission."""
+
+    if operation not in RESEARCH_REWORK_OPERATIONS:
+        return
+    product_dir = product_dir.resolve()
+    state_path = product_dir / RESEARCH_REWORK_STATE_PATH
+    state = read_json(state_path) if state_path.is_file() else None
+    product_path = product_dir / "product.json"
+    product = read_json(product_path)
+    stages = product.setdefault("stages", {})
+
+    if operation == "research_plan":
+        stages["research_plan"] = "ready_for_review"
+    elif operation == "research_workstream":
+        stages["research"] = "in_progress"
+        if state and state.get("requested_operation") == "research_workstream" and unit:
+            pending = [item for item in state.get("pending_units", []) if item != unit]
+            completed = list(state.get("completed_units", []))
+            if unit not in completed:
+                completed.append(unit)
+            state["pending_units"] = pending
+            state["completed_units"] = completed
+            state["status"] = "workstreams_complete" if not pending else "in_progress"
+            write_json(state_path, state)
+    elif operation == "research_synthesis":
+        stages["research"] = "complete"
+        if state_path.is_file():
+            state_path.unlink()
+        (product_dir / RESEARCH_REWORK_REQUEST_PATH).unlink(missing_ok=True)
+
+    write_json(product_path, product)
 
 
 def apply_section_submission(product_dir: Path, operation: str, section: str | None) -> None:
