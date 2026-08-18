@@ -1,6 +1,6 @@
 # Voice Profile — Sumer Writing C002
 
-Status: approved
+Status: draft
 
 ## Product voice
 
