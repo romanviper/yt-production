@@ -14,8 +14,20 @@
         "Multilingual inscriptions, especially Behistun, provide cross-language constraints for harder cuneiform systems.",
         "Proposed Akkadian readings are tested comparatively; Sumerian is reconstructed later through accumulated bilingual and lexical evidence."
       ],
-      "claim_ids": ["WS08-CLM-003", "WS08-CLM-004", "WS08-CLM-008", "WS08-CLM-009"],
-      "source_refs": [{"source_id": "WS08-SRC-006", "locators": ["§§2–4: early copied inscriptions, Old Persian, Behistun and subsequent comparative decipherment steps"]}],
+      "claim_ids": [
+        "WS08-CLM-003",
+        "WS08-CLM-004",
+        "WS08-CLM-008",
+        "WS08-CLM-009"
+      ],
+      "source_refs": [
+        {
+          "source_id": "WS08-SRC-006",
+          "locators": [
+            "§§2–4: early copied inscriptions, Old Persian, Behistun and subsequent comparative decipherment steps"
+          ]
+        }
+      ],
       "representativeness": "representative",
       "limitations": [
         "The process involved many scholars, corrections and failed hypotheses; do not reduce it to one hero or eureka moment.",
