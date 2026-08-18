@@ -2,84 +2,91 @@
 
 Status: draft
 
-## Central causal spine
+## Trục nhân quả trung tâm
 
-Phim không dùng “chữ viết tạo ra văn minh Sumer” như premise fact. Câu trả lời được phép là **co-development followed by feedback**: institutional pressures ở southern Mesopotamia tạo nhu cầu ổn định quantity, category, person và obligation; nhiều accounting, sealing, numerical và visual practices tạo ecology cho proto-cuneiform; khi records được nhúng vào trained communities, authentication, archive, retrieval và authority, chúng có thể tăng một số năng lực phối hợp. Capacity tăng lại có thể tạo thêm nhu cầu record.
+Phim không dùng mệnh đề “chữ viết tạo ra văn minh Sumer” như một sự thật mặc định. Câu trả lời được phép là **cùng phát triển rồi tạo phản hồi**: áp lực hành chính ở nam Lưỡng Hà làm tăng nhu cầu giữ ổn định lượng, loại, người và nghĩa vụ; nhiều cách đếm, niêm phong và ghi dấu cùng tạo nên môi trường cho proto-cuneiform; về sau, khi record được gắn với người có kỹ năng, xác thực, kho lưu trữ, truy hồi và authority, chúng có thể làm tăng một số năng lực phối hợp. Năng lực tăng lại có thể tạo thêm nhu cầu ghi chép.
 
-Tác nhân xuyên suốt không phải một tablet, một script form hay một ethnic population. Continuity nằm ở một **reproducible social practice**: chọn relation cần giữ, biến chúng thành durable standardized marks, rồi duy trì người và procedure đủ năng lực để tạo, đọc, copy, adapt, retrieve và act on those marks.
+Tác nhân xuyên suốt không phải một tablet hay một dạng dấu cụ thể. Continuity nằm ở một **thực hành xã hội có thể tái tạo**: chọn quan hệ cần giữ, biến chúng thành dấu bền và đủ chuẩn hóa, rồi duy trì người và thủ tục có khả năng tạo, đọc, chép, thích nghi, truy hồi và hành động dựa trên các dấu đó.
 
-Viewer-facing question: **chữ viết có tự tạo ra sức mạnh, hay power chỉ xuất hiện khi một social system khiến marks trở nên có nghĩa và actionable?**
+Câu hỏi dành cho khán giả: **chữ viết có tự tạo ra sức mạnh, hay sức mạnh chỉ xuất hiện khi một hệ thống xã hội khiến các dấu trở nên có nghĩa và có thể dùng để hành động?**
 
-## Material-aware story spine
+## Xương sống câu chuyện theo vật liệu
 
-1. **P01 — P005390:** một tablet còn quantity/category/relation nhưng không trao full sentence hay exact transaction. Opening payoff là distinction giữa material survival và preserved speech.
-2. **P02 — MAT-0001:** clay envelope with tokens và sealed numerical tablet coexist ở Chogha Mish. Viewer thấy information moving onto surface mà không bị kể thành token→tablet genealogy.
-3. **P03 — VAT 14682 + P005390:** early tablets cho thấy durable structured relation có thể operationally useful trước continuous speech. Threshold/language/world-first qualifiers chỉ vào sau reward.
-4. **P04 — House F + P228744 + ETCSL 3.1.19:** continuity trở thành human labor: model, copy, erasure, revision, lexical repetition và later copying. Functional expansion được kể qua things communities reproduce, không qua genre ladder.
-5. **P05 — MMA 86.11.111:** written royal security order không được thi hành. Đây là body reversal tách documentary persistence khỏi enforcement.
-6. **P06 — Puzriš-Dagan + failed-order countercase:** individual records + officials/seals + archive/retrieval + authority tạo bounded institutional feedback. Writing tăng capacity only when embedded in procedure.
-7. **P07 — Hittite adaptation + copying continuity:** cuneiform survives by trained selective adaptation, không bằng purity của language/script.
-8. **P08 — competence break + MAT-0010:** 75 CE chỉ là qualified chronology anchor; decipherment là recovery sequence copy→compare→test. Return P005390 khóa final payoff.
+1. **P01 — P005390 + Chogha Mish:** P005390 chỉ đặt nghịch lý mở đầu rồi phim lập tức lùi về hai thiết bị ghi đếm cùng tồn tại: envelope chứa tokens và numerical tablet có dấu trên bề mặt. Người xem thấy thay đổi nằm ở nơi thông tin được mang, không phải ở một “missing link” bị dựng ra.
+2. **P02 — VAT 14682 + P005390:** một account nhỏ cho thấy quantity, commodity và layout đã tạo ra một record dùng được trước continuous speech. P005390 quay lại như trường hợp rộng hơn; threshold/language/world-first guardrails chỉ vào sau payoff.
+3. **P03 — Puzriš-Dagan:** nhảy có chủ ý tới Ur III như một phép thử muộn hơn. Viewer theo một record riêng lẻ qua official/seal, accumulation và retrieval để thấy capacity xuất hiện từ network quanh tablet.
+4. **P04 — House F + P228744 + later copies:** continuity trở thành human labor: model, copy, erasure, revision và repeated copying. Dấu bền không đồng nghĩa với năng lực đọc sống.
+5. **P05 — MMA 86.11.111:** một royal security order không được thực hiện. Đây là stress test tách documentary persistence khỏi enforcement.
+6. **P06 — Hittite adaptation:** giữ ở dạng process ngắn đúng sức bằng chứng. Competence đi vào môi trường ngôn ngữ mới, được học lại và điều chỉnh; survival là tái tạo có biến đổi, không phải giữ nguyên.
+7. **P07 — competence break + decipherment:** không dựng scene “last reader”. Sau khoảng đứt, modern decipherment cho một action sequence mới: copy → Old Persian → Behistun comparison → tested Akkadian/Sumerian readings. Cuối phim quay lại P005390.
 
-## Three-act state change
+## Ba act và thay đổi trạng thái
 
-### Act 1 — Khi thông tin rời khỏi trí nhớ người
+### Act 1 — Khi thông tin rời khỏi cuộc gặp
 
-Opening đi từ object paradox tới accounting ecology rồi tới early surface records. Act không hỏi “ai invented writing?” mà hỏi **why a limited record was useful enough to keep developing**. Exit state: viewer hiểu quantity/category/layout có thể preserve operational relation trước khi script trở thành language-explicit.
+Opening không ở lại quá lâu với một tablet. P005390 đặt câu hỏi, Chogha Mish cho thấy các giải pháp vật chất trước và song song với writing, rồi VAT 14682/P005390 cho thấy một surface record đã hữu ích trước khi nó trở thành continuous speech.
+
+Exit state: viewer hiểu lượng, loại và quan hệ có thể sống lâu hơn cuộc gặp; câu hỏi chuyển sang điều gì khiến một record hữu ích trở thành năng lực xã hội.
 
 ### Act 2 — Khi dấu trở thành một hệ thống xã hội
 
-Body chuyển từ marks sang people and procedure. House F cho thấy competence phải được reproduced. MMA 86.11.111 phá assumption readable written authority = compliance. Puzriš-Dagan sau đó rebuild positive mechanism: record→classification→responsible people/authentication→archive/retrieval→authority. Exit state: power nằm trong chain quanh tablet, không trong clay.
+Act đi xuôi thời gian. Puzriš-Dagan cho positive mechanism ở cấp institution: record gắn với người, xác thực, accumulation và retrieval. House F cho thấy mechanism đó phải được truyền qua lao động học và chép. MMA 86.11.111 đặt giới hạn cuối: ngay cả một written order trong một cộng đồng biết đọc vẫn không tự tạo compliance.
+
+Exit state: power không nằm trong clay. Writing có thể mở rộng memory, visibility và coordination, nhưng action vẫn phụ thuộc người, procedure và authority.
 
 ### Act 3 — Điều gì thực sự sống sót
 
-Hittite adaptation test continuity under linguistic/institutional change. Endgame tách material survival khỏi living competence: tablets remain after reading communities contract; modern decipherment reconstructs a new competence from evidence. Return P005390 closes the loop.
+Hittite case kiểm tra continuity khi language/institutional setting thay đổi. Sau đó material survival bị tách khỏi living competence: tablets còn nhưng cộng đồng đọc liên tục không còn. Decipherment trở thành quá trình xây lại competence từ evidence.
 
-## Retention discipline
+Exit state: clay có thể tồn tại một mình; meaning chỉ sống khi competence được truyền hoặc được phục dựng.
 
-- Mỗi section giữ một dominant viewer question.
-- Reward từ object/action/process phải land trước abstraction hoặc qualifier.
-- Transition chỉ được sinh từ limitation, failure hoặc consequence vừa được chứng minh.
-- Không dùng invented cliffhanger, withheld known fact hay “nhưng mọi chuyện chưa dừng ở đó”.
-- Một movement phải có carrier và state change; narrator không được manufacture propulsion bằng interpretation alone.
-- P05/P06 được giữ thành reversal→answer pair vì failure và institutional reconstruction là hai state changes khác nhau.
+## Kỷ luật giữ người xem
 
-## Material gaps that constrain the outline
+- Mỗi section có một thay đổi trạng thái chính và một carrier cụ thể.
+- Outline phải cho thấy 3–5 bước trải nghiệm đủ để human hình dung section trước khi draft, nhưng không khóa câu chữ hay nhịp paragraph.
+- Reward từ vật thể, hành động hoặc process phải đến trước abstraction dài.
+- Transition phải sinh từ limitation, consequence hoặc câu hỏi vừa được material chứng minh.
+- Narrator không được tạo chuyển động chỉ bằng việc nói “cách hiểu của chúng ta đang thay đổi”.
+- Một object puzzle được phép tồn tại, nhưng không được đứng thành section nếu toàn bộ movement chỉ là narrator-guided reinterpretation.
+- Khi chronology và logic xung đột, ưu tiên một đường đi lịch sử dễ theo; dùng later test case phải được báo rõ là test case, không giả continuation.
+- Không ép material yếu gánh section dài. P06 được giữ ngắn vì Hittite handoff hiện là process carrier, chưa phải scene-level object sequence.
 
-- **No invention scene:** WS01 không cho phép dựng một moment “writing was invented”.
-- **No standalone technical-transformation section:** shift từ proto-cuneiform tới mature wedge ductus có analytical support nhưng thiếu tight comparative object series trong current handoff.
-- **No Hittite court-adoption scene:** MAT-0009 supports process, không một one-moment conversion.
-- **No last-reader/75 CE scene:** chronology claim có support nhưng current handoff thiếu narrow object locator cho scene-level use.
-- **Uruk → Ur III gap must remain explicit:** Puzriš-Dagan tests the feedback mechanism later; it không prove magnitude ở Uruk.
+## Khoảng trống vật liệu còn giới hạn outline
 
-## Chronology guardrails
+- **Không có invention scene:** WS01 không cho phép dựng khoảnh khắc “writing was invented”.
+- **Không có standalone technical-transformation section:** chuyển từ proto-cuneiform tới mature wedge ductus có hỗ trợ phân tích nhưng thiếu chuỗi vật thể so sánh đủ chặt.
+- **Không có Hittite court-adoption scene:** MAT-0009 hỗ trợ một process, không một one-moment conversion; vì vậy P06 phải ngắn và không scene hóa.
+- **Không có last-reader/75 CE scene:** chronology có support nhưng thiếu narrow object locator cho scene-level use.
+- **Uruk → Ur III phải được nói rõ:** Puzriš-Dagan là phép thử muộn hơn của feedback mechanism, không chứng minh magnitude đó đã tồn tại ở Uruk.
+
+## Guardrail thời gian
 
 - Uruk IV khoảng 3350/3300–3200 BCE; Uruk III/Jemdet Nasr khoảng 3200–3000 BCE. Ưu tiên relative sequence, giữ qualifier.
 - Proto-cuneiform language không securely identified as Sumerian; không ethnic attribution.
+- Puzriš-Dagan là Ur III bounded institutional test; không back-project về origin phase.
 - House F và P228744 là Old Babylonian Nippur evidence; không back-project formal curriculum về Uruk.
 - MMA 86.11.111 là ca. 1632 BCE exceptional failure case; không generalize.
-- Puzriš-Dagan là Ur III bounded institutional test; không back-project về origin phase.
+- P03 → P04 → P05 phải giữ thứ tự thời gian tương đối: Ur III → Old Babylonian school evidence → ca. 1632 BCE failure case.
 - Script survival, language survival và institutional survival là ba timeline khác nhau.
 - 75 CE là latest-known dated anchor theo current claims, không absolute final date.
 - Modern decipherment là recovery after competence break, không direct transmission.
 
-## Term discipline
+## Kỷ luật thuật ngữ
 
-- **Writing:** graded analytical threshold; durable conventional marks with repeatable linguistic/lexical values. Accounting/proto-writing may preserve quantity/meaning without demonstrable language encoding.
-- **Proto-cuneiform:** Uruk IV–III system with limited phonology and uncertain underlying language; tránh gọi toàn bộ là mature cuneiform.
-- **Cuneiform:** later logo-syllabic tradition with semantic and phonological values; không stage tự nhiên hướng tới alphabet.
+- **Writing:** ngưỡng phân tích theo mức độ; durable conventional marks với giá trị lặp lại. Accounting/proto-writing có thể giữ quantity/meaning mà chưa chứng minh language encoding đầy đủ.
+- **Proto-cuneiform:** hệ Uruk IV–III với phonology hạn chế và underlying language chưa chắc chắn; tránh gọi toàn bộ là mature cuneiform.
+- **Cuneiform:** truyền thống logo-syllabic về sau với semantic và phonological values; không kể như một bước tự nhiên hướng tới alphabet.
 - Luôn tách script, language, population, scribal role, functional competence, literacy và institution.
 
-## Setup/payoff continuity
+## Setup / payoff
 
-- P005390 setup: marks survive, voice does not. Final payoff: object becomes readable only because competence was maintained or reconstructed.
-- Accounting-media setup: information leaves immediate encounter. Payoff: surface records preserve structured relations across time.
-- Early usefulness setup: record works before full speech. Payoff: durability requires human convention, not clay alone.
-- Training setup: competent copying keeps tradition alive. Payoff: competence still does not guarantee compliance.
-- Failed-order setup: inscription is not enforcement. Payoff: Puzriš-Dagan reveals the surrounding procedural chain.
-- Adaptation setup: continuity requires change. Payoff: when reproduction stops, material and meaning diverge.
+- **P005390:** mở đầu cho thấy marks survive nhưng full speech/exact transaction không được phục hồi; cuối phim object chỉ trở nên readable vì competence đã được truyền hoặc xây lại.
+- **Accounting media:** P01 cho thấy information chuyển vị trí từ vật chứa lên surface; P02 payoff bằng việc surface giữ được relation đủ để dùng.
+- **Institutional capacity:** P03 cho positive mechanism; P05 stress-test giới hạn enforcement thay vì bắt câu chuyện quay ngược thời gian để tìm answer.
+- **Training:** P04 cho thấy competence phải được tái tạo; P06 payoff ở cấp rộng hơn khi competence được thích nghi sang environment mới.
+- **Adaptation:** P06 chứng minh continuity cần change; P07 đẩy tới extreme case khi reproduction ngừng và meaning tách khỏi material.
 
-## Global exclusions
+## Loại trừ toàn cục
 
 - Không “ethnic Sumerians invented writing in 3200 BCE” và không uncontested world-first.
 - Không token→tablet→civilization linear ladder.
