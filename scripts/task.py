@@ -14,6 +14,7 @@ try:
     from scripts.consolidate_research import ensure_consolidated
     from scripts.context_packet import compile_packet
     from scripts.lifecycle import (
+        apply_research_submission,
         apply_section_submission,
         cancel_active_task,
         clear_active_pointer,
@@ -31,7 +32,14 @@ except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from common import load_registry, narration_text, product_relative, read_json, sha256, word_count, write_json
     from consolidate_research import ensure_consolidated
     from context_packet import compile_packet
-    from lifecycle import apply_section_submission, cancel_active_task, clear_active_pointer, task_submit_errors, task_transition_errors
+    from lifecycle import (
+        apply_research_submission,
+        apply_section_submission,
+        cancel_active_task,
+        clear_active_pointer,
+        task_submit_errors,
+        task_transition_errors,
+    )
     from operator_brief import empty_brief, render_brief, validate_brief_file
     from outcome_eval_contract import validate_outcome_review
     from outline_contract import MAX_SECTION_WORDS, validate_outline_contract
@@ -138,9 +146,6 @@ def verify_task(product_dir: Path, task_id: str, *, state_override: str | None =
     errors = validate_packet_contract(packet, task_dir / "context.md")
     if errors:
         return errors
-    # Freshness protects work that has not yet been submitted. Once submitted,
-    # router-owned state transitions and later human decisions may legitimately
-    # change an input while the packet remains the immutable historical record.
     effective_state = state_override or work.get("state")
     if effective_state in {"ready", "in_progress"}:
         for record in packet["inputs"]:
@@ -231,6 +236,7 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     work["submitted_at"] = datetime.now(timezone.utc).isoformat()
     work["updated_at"] = work["submitted_at"]
     write_json(work_path, work)
+    apply_research_submission(product_dir, work["operation"], work.get("target", {}).get("unit"))
     apply_section_submission(product_dir, work["operation"], work.get("target", {}).get("section"))
     return []
 
@@ -250,16 +256,23 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
             root = product_dir / "01_research" / "workstreams" / unit
             sources_doc = read_json(root / "sources.json")
             claims_doc = read_json(root / "claims.json")
+            materials_doc = read_json(root / "materials.json")
             sources = sources_doc.get("sources", [])
             claims = claims_doc.get("claims", [])
+            materials = materials_doc.get("materials", [])
             if sources_doc.get("status") != "complete":
                 errors.append("workstream sources status must be complete")
             if claims_doc.get("status") != "complete":
                 errors.append("workstream claims status must be complete")
+            if materials_doc.get("status") != "complete":
+                errors.append("workstream materials status must be complete")
             if not sources:
                 errors.append("workstream must contain at least one source")
             if not claims:
                 errors.append("workstream must contain at least one claim")
+            if not isinstance(materials, list):
+                errors.append("workstream materials must be a list")
+                materials = []
             source_ids = [item.get("id") for item in sources]
             expected_source = re.compile(rf"{re.escape(unit)}-SRC-\d{{3}}")
             for item in sources:
@@ -287,23 +300,65 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
             claim_ids = [item.get("id") for item in claims]
             if len(claim_ids) != len(set(claim_ids)):
                 errors.append("workstream has duplicate claim IDs")
-            if "Status: complete" not in (root / "synthesis.md").read_text(encoding="utf-8"):
+            expected_material = re.compile(rf"{re.escape(unit)}-MAT-\d{{3}}")
+            material_ids: list[str] = []
+            for item in materials:
+                material_id = item.get("id", "") if isinstance(item, dict) else ""
+                if not expected_material.fullmatch(material_id):
+                    errors.append(f"invalid namespaced material ID: {material_id or '?'}")
+                    continue
+                material_ids.append(material_id)
+                missing = [field for field in ["kind", "label", "what_audience_follows", "sequence", "claim_ids", "source_refs", "representativeness", "limitations"] if item.get(field) in (None, "", [])]
+                if missing:
+                    errors.append(f"material {material_id} missing: {', '.join(missing)}")
+                if item.get("representativeness") not in {"representative", "exceptional", "illustrative", "unknown"}:
+                    errors.append(f"material {material_id} has invalid representativeness")
+                sequence = item.get("sequence", [])
+                if not isinstance(sequence, list) or not sequence or not all(isinstance(step, str) and step.strip() for step in sequence):
+                    errors.append(f"material {material_id} requires a non-empty sequence")
+                for claim_id in item.get("claim_ids", []):
+                    if claim_id not in claim_ids:
+                        errors.append(f"material {material_id} references unknown local claim: {claim_id}")
+                refs = item.get("source_refs", [])
+                if not isinstance(refs, list) or not refs:
+                    errors.append(f"material {material_id} requires source_refs")
+                else:
+                    for ref in refs:
+                        if not isinstance(ref, dict) or ref.get("source_id") not in source_ids:
+                            errors.append(f"material {material_id} references unknown local source")
+                            continue
+                        locators = ref.get("locators", [])
+                        if not isinstance(locators, list) or not locators or not all(isinstance(loc, str) and loc.strip() for loc in locators):
+                            errors.append(f"material {material_id} source_ref requires narrow locators")
+            if len(material_ids) != len(set(material_ids)):
+                errors.append("workstream has duplicate material IDs")
+            synthesis_text = (root / "synthesis.md").read_text(encoding="utf-8")
+            if "Status: complete" not in synthesis_text:
                 errors.append("workstream synthesis status must be complete")
-            if word_count((root / "synthesis.md").read_text(encoding="utf-8")) > 2500:
+            if word_count(synthesis_text) > 2500:
                 errors.append("workstream synthesis exceeds 2,500 words")
         elif operation == "research_synthesis":
             sources_doc = read_json(product_dir / "01_research" / "source-index.json")
             claims_doc = read_json(product_dir / "01_research" / "claim-ledger.json")
+            materials_doc = read_json(product_dir / "01_research" / "material-ledger.json")
+            material_map = read_json(product_dir / "01_research" / "story-material-map.json")
             if sources_doc.get("status") != "complete":
                 errors.append("global source index status must be complete")
             if claims_doc.get("status") != "complete":
                 errors.append("global claim ledger status must be complete")
+            if materials_doc.get("status") != "complete":
+                errors.append("global material ledger status must be complete")
+            if material_map.get("status") != "complete":
+                errors.append("story material map status must be complete")
             for item in sources_doc.get("sources", []):
                 if not item.get("provenance"):
                     errors.append(f"global source {item.get('id', '?')} missing workstream provenance")
             for item in claims_doc.get("claims", []):
                 if not item.get("provenance"):
                     errors.append(f"global claim {item.get('id', '?')} missing workstream provenance")
+            for item in materials_doc.get("materials", []):
+                if not item.get("provenance"):
+                    errors.append(f"global material {item.get('id', '?')} missing workstream provenance")
             if "Status: complete" not in (product_dir / "01_research" / "research-synthesis.md").read_text(encoding="utf-8"):
                 errors.append("research synthesis status must be complete")
         elif operation == "outline":
