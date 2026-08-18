@@ -24,7 +24,7 @@ try:
         write_json,
     )
     from scripts.consolidate_research import verify_consolidation
-    from scripts.lifecycle import section_operation_state_error
+    from scripts.lifecycle import research_rework_blocker, section_operation_state_error
     from scripts.outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
     from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
     from scripts.story_plan_contract import verify_narration_pack
@@ -43,7 +43,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
         write_json,
     )
     from consolidate_research import verify_consolidation
-    from lifecycle import section_operation_state_error
+    from lifecycle import research_rework_blocker, section_operation_state_error
     from outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
     from packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
     from story_plan_contract import verify_narration_pack
@@ -124,6 +124,9 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
         if operation == "research_workstream" and unit not in declared_units:
             raise ValueError(f"Workstream {unit} is not declared in the approved research plan.")
     if operation == "research_synthesis":
+        blocker = research_rework_blocker(product_dir)
+        if blocker:
+            raise ValueError("Research synthesis cannot start yet: " + blocker)
         for expected_unit in sorted(declared_units):
             root = product_dir / "01_research" / "workstreams" / str(expected_unit)
             sources = read_json_local(root / "sources.json")
@@ -137,6 +140,8 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
         if consolidation_errors:
             raise ValueError("Research ledgers must be consolidated before synthesis: " + "; ".join(consolidation_errors))
     if operation == "outline":
+        if stages.get("research") not in {"approved", "complete"}:
+            raise ValueError("Research must be current before outline; finish semantic research rework and synthesis first.")
         sources = read_json_local(product_dir / "01_research" / "source-index.json")
         claims = read_json_local(product_dir / "01_research" / "claim-ledger.json")
         if sources.get("status") != "complete" or claims.get("status") != "complete":
