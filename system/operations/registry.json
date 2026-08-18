@@ -13,7 +13,10 @@
         "00_brief/product-brief.md",
         "00_brief/benchmark.md"
       ],
-      "optional_inputs": [],
+      "optional_inputs": [
+        "01_research/rework-request.md",
+        "01_research/plan.json"
+      ],
       "outputs": [
         "01_research/plan.json"
       ],
@@ -59,7 +62,11 @@
         "01_research/material-ledger.json",
         "01_research/workstreams/*/synthesis.md"
       ],
-      "optional_inputs": [],
+      "optional_inputs": [
+        "01_research/rework-request.md",
+        "01_research/research-synthesis.md",
+        "01_research/story-material-map.json"
+      ],
       "outputs": [
         "01_research/research-synthesis.md",
         "01_research/story-material-map.json"
