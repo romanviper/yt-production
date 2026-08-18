@@ -14,8 +14,20 @@
         "Records accumulate into an archival system that can be grouped and retrieved across transactions.",
         "The reconstructed agency makes obligations visible at institutional scale, while enforcement still belongs to people and authorities."
       ],
-      "claim_ids": ["WS06-CLM-001", "WS06-CLM-006", "WS06-CLM-007", "WS06-CLM-008"],
-      "source_refs": [{"source_id": "WS06-SRC-005", "locators": ["§§1.2–1.5: reconstruction of the Puzriš-Dagan central livestock agency and archive of more than 13,500 tablets"]}],
+      "claim_ids": [
+        "WS06-CLM-001",
+        "WS06-CLM-006",
+        "WS06-CLM-007",
+        "WS06-CLM-008"
+      ],
+      "source_refs": [
+        {
+          "source_id": "WS06-SRC-005",
+          "locators": [
+            "§§1.2–1.5: reconstruction of the Puzriš-Dagan central livestock agency and archive of more than 13,500 tablets"
+          ]
+        }
+      ],
       "representativeness": "illustrative",
       "limitations": [
         "This is a bounded Ur III royal-institution case, centuries after the origin of writing.",
