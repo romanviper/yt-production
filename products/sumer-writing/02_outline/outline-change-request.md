@@ -1,11 +1,13 @@
-# Outline Change Request — C002
+# Outline Change Request — C003
 
 Requested by: user
 
-Requested at: 2026-08-13T18:18:51.170286+00:00
+Requested at: 2026-08-18T20:45:00+07:00
 
-Previous cycle: C001
+Previous cycle: C002
 
 ## Required architecture change
 
-Bắt đầu production cycle C002 dưới harness Hard Boundaries, Soft Logic. Thiết kế lại toàn bộ kịch bản từ research đã duyệt: giữ ba act toàn phim opening–body–ending rõ ràng; thiết kế macro movements trước rồi mới cắt P## theo causal load và context/review boundaries; không dùng section count, beat sheet, payoff formula hay word quota làm khuôn mặc định. Giữ ổn định channel values, voice identity và causal system-as-protagonist; cho phép opening form, local route, movement count, section count và relative length thích ứng với vật liệu. Không dùng P01 hoặc story plan của cycle cũ làm template.
+Reopen production from the `research_workstream` layer before rebuilding the outline. Preserve valid existing research as baseline, rework WS01–WS08 under the material-aware research contract, rebuild research synthesis and the story-material map, then design the full outline again from whole-product story architecture rather than patching individual P## sections.
+
+The revised outline must let human review most of the audience experience before drafting: each section needs enough concrete historical material to show what the audience follows, what changes, which evidence carries that change, and why the next section becomes necessary. Section count, movement boundaries, opening carrier and relative length may change. Do not resume section design or drafting until the rebuilt outline is human-approved.
