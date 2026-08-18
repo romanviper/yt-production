@@ -34,13 +34,14 @@
       "outputs": [
         "01_research/workstreams/{unit}/sources.json",
         "01_research/workstreams/{unit}/claims.json",
+        "01_research/workstreams/{unit}/materials.json",
         "01_research/workstreams/{unit}/synthesis.md"
       ],
       "context_profile": "research"
     },
     "research_synthesis": {
       "target_kind": "product",
-      "max_context_tokens": 32000,
+      "max_context_tokens": 40000,
       "instruction_files": [
         "system/standards/evidence.md",
         "system/operations/research-synthesis.md"
@@ -49,17 +50,19 @@
         "00_brief/product-brief.md",
         "01_research/plan.json",
         "01_research/consolidation.json",
+        "01_research/material-ledger.json",
         "01_research/workstreams/*/synthesis.md"
       ],
       "optional_inputs": [],
       "outputs": [
-        "01_research/research-synthesis.md"
+        "01_research/research-synthesis.md",
+        "01_research/story-material-map.json"
       ],
       "context_profile": "research"
     },
     "outline": {
       "target_kind": "product",
-      "max_context_tokens": 24000,
+      "max_context_tokens": 30000,
       "execution_runtimes": [
         "legacy",
         "dsh"

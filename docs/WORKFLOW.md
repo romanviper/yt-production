@@ -46,26 +46,50 @@ DSH phải được cài riêng ở đúng version POC đã audit (`@deepseek-ai
 
 Không truyền `--runtime` thì task dùng packet precompile hiện tại. Nếu DSH lỗi hoặc bị loại bỏ, cancel/replace task và tạo lại `outline --runtime legacy`; không cần convert outline, story bible hay voice profile.
 
-## 3. Research
+## 3. Research: claim và material đi song song
 
-`research_plan` chia câu hỏi thành workstreams không trùng ownership. Mỗi `research_workstream` trả source/claim ledgers có locator, limitation, contradiction và provenance. Deterministic consolidation remap/deduplicate trước `research_synthesis`.
+`research_plan` chia câu hỏi thành workstreams không trùng ownership. Mỗi `research_workstream` trả ba ledger cục bộ:
+
+- `sources.json`: nguồn và locator;
+- `claims.json`: điều có thể khẳng định và mức chắc chắn;
+- `materials.json`: object/person/action/process/encounter/failure/consequence/sequence đủ chi tiết để lớp sau có thể dựng lại mà không bịa.
+
+`materials.json` không phải kho anecdote. Mỗi material phải gắn local claim IDs, source refs có locator hẹp, representativeness và limitation. Workstream không có material đủ chắc được phép trả danh sách rỗng.
+
+Deterministic consolidation remap/deduplicate source và claim, đồng thời remap material thành `material-ledger.json` mà không làm mất locator riêng của carrier. Research cũ chưa có material ledger được ghi thành `legacy_workstreams_without_materials`; đó là gap rõ ràng để rework có mục tiêu, không buộc research lại toàn bộ product.
+
+`research_synthesis` trả hai artifact:
+
+- `research-synthesis.md`: causal model và claim decisions;
+- `story-material-map.json`: phase nào có material đủ để mang story movement, candidate nào phù hợp opening/reversal/ending, và phase nào vẫn chỉ có abstract claims.
 
 Raw browsing context không đi vào outline hay writing.
 
-Trước outline, router sinh `outline-evidence-pack.json` quyết định từ claim ledger. Pack chỉ giữ claim ID, statement, type, confidence, status, source IDs và contradiction register; provenance chi tiết vẫn nằm ngoài creative prompt trong ledgers gốc.
+Trước outline, router sinh `outline-evidence-pack.json` quyết định từ claim ledger + material ledger + story-material-map. Pack giữ cả claim ceiling lẫn material candidates đã được synthesis chọn; provenance đầy đủ vẫn nằm ngoài creative prompt trong ledgers gốc.
 
-## 4. Whole-product architecture
+## 4. Whole-product architecture là lần review đầu tiên của video
 
 Outline schema v4 thiết kế theo thứ tự:
 
 1. central question và audience promise;
 2. đúng ba act toàn phim: `opening`, `body`, `ending`;
 3. số narrative movement cần cho causal arc;
-4. số `P##` cần cho context/review.
+4. material cụ thể có thể mang từng movement;
+5. số `P##` cần cho context/review sau khi story movement đã đứng được.
 
 Ba act là invariant. Movement count, section count và relative length là adaptive. Một movement có thể trải qua nhiều work unit; một work unit có thể chứa nhiều movement trong cùng act. Work unit không được băng qua act boundary vì assembly phải giữ ba phần rõ ràng.
 
-Section contract mới chỉ cần narrative job, entry/exit state, evidence allowance, dependencies và target range. Question/payoff/beat/shape ở cấp section không phải schema bắt buộc.
+Material-aware outline revision thêm vào mỗi section:
+
+- `audience_experience`: preview đủ để human hình dung audience sẽ theo cái gì từ entry tới exit, nhưng không viết narration hay beat sheet;
+- `material_ids`: `MAT-####` thực sự mang trải nghiệm đó;
+- `transition`: vì sao trạng thái mới khiến phần kế tiếp cần xuất hiện.
+
+`script_architecture.story_material_contract_version = 1` đánh dấu outline đã đi qua harness mới. Claim IDs vẫn là evidence ceiling; material IDs không thay thế claim support.
+
+Mục tiêu review: trước khi approve outline, human phải có thể đọc liên tục P01 → P02 → ... và nhìn thấy phần lớn trải nghiệm video. Nếu một section logic nghe đúng nhưng không có material đủ để kể, hoặc boundary cắt một process khiến section trước chỉ còn câu hỏi còn section sau giữ toàn bộ hành động, outline chưa production-ready.
+
+Section contract vẫn giữ narrative job, entry/exit state, evidence allowance, dependencies và target range. `audience_experience` mô tả câu chuyện nào xảy ra; writer sau này vẫn tự quyết cách kể bằng câu chữ.
 
 Approve rồi materialize:
 
@@ -74,9 +98,9 @@ python scripts/approval.py approve-outline products/<slug>
 python scripts/materialize_sections.py products/<slug>
 ```
 
-## 5. Lean story design
+## 5. Lean story design — transitional layer
 
-`design_section` tạo story-plan schema v3:
+`design_section` hiện vẫn tạo story-plan schema v3:
 
 - `audience_shift`;
 - `story_strategy` dạng free-form, không phải beat sheet;
@@ -87,6 +111,8 @@ python scripts/materialize_sections.py products/<slug>
 Không có compulsory payoff beat, numbered beats, claim-use explanation, opening move, ending move, paragraph count hoặc cadence.
 
 Human approval tạo narration-pack schema v2. Pack chỉ giữ compact claims và source refs; full authority/notes/limitations/provenance vẫn ở evidence artifacts, không chiếm writer context.
+
+Lớp này đang được giữ trong giai đoạn chuyển đổi để không phá lifecycle đang active. Sau khi material-aware outline được regression-test, có thể collapse chức năng evidence handoff vào materializer và bỏ `design_section` như một approval layer riêng.
 
 ## 6. Drafting
 
@@ -121,8 +147,8 @@ Review phải có verdict `pass / changes_requested / blocked`, observable diagn
 
 - Wording/pacing/arrangement hỏng, plan vẫn đúng → `request-changes` rồi `revise_section`.
 - Audience shift hoặc evidence selection hỏng → `request-story-plan-changes` rồi `design_section`.
-- Section boundary hoặc three-act arc hỏng → mở production cycle mới ở `outline`.
-- Evidence thiếu/contradicted → research escalation.
+- Section boundary hoặc whole-product story architecture hỏng → mở production cycle mới ở `outline`.
+- Evidence/material thiếu, contradicted hoặc quá trừu tượng để dựng carrier → research escalation.
 
 Nhưng khi human đơn giản muốn **làm lại một process**, không yêu cầu human tự nhớ current state. Dùng một command semantic:
 

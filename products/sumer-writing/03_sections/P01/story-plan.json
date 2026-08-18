@@ -2,14 +2,14 @@
   "schema_version": 3,
   "section": "P01",
   "status": "approved",
-  "audience_shift": "Khán giả bắt đầu với giả định rằng một tablet cổ là một thông điệp chỉ cần được dịch. Cuối P01, họ nhận ra điều lạ hơn: ngay cả khi không thể khôi phục một câu nói hoàn chỉnh, ta vẫn có thể thấy tablet đang giữ những quantity và relation có cấu trúc. Câu hỏi vì thế đổi từ ‘nó nói gì?’ sang ‘tại sao việc làm cho những relation như vậy tồn tại ngoài trí nhớ lại hữu ích?’",
-  "story_strategy": "Giữ P005390 làm carrier duy nhất của opening. Trả reward sớm bằng điều có thể quan sát: quantity, repetition, arrangement và grain-related signs cho thấy tablet đang giữ một relation có cấu trúc ngay cả khi ta chưa thể đọc nó như một câu hoàn chỉnh. Sau đó mới mở contradiction: vật thể vẫn giữ được một phần structure nhưng không trao lại chắc chắn underlying language, exact transaction hay một lời nói trọn vẹn. Không biến uncertainty thành disclaimer; mỗi giới hạn chỉ xuất hiện sau một điều viewer vừa hiểu được. Không mở rộng sang world-first, nguồn gốc chữ viết, chronology dài hay tranh luận định nghĩa. Kết section bằng câu hỏi earned: nếu một tablet không cần giữ lại trọn một câu nói mà vẫn giữ được một phần relation, tại sao con người lại cần làm cho những relation đó tồn tại ngoài trí nhớ?",
+  "audience_shift": "Khán giả bắt đầu bằng mô hình quen thuộc: tablet cổ là một message có ý nghĩa hoàn chỉnh nhưng hiện chưa được dịch. Cuối P01, họ phải tự đổi category của P005390: thứ chắc chắn nhất còn lại không phải một câu nói bị khóa trong đất sét, mà là một record có tổ chức mà scholarship vẫn nhận ra được quantity/grain classification và structural regularity dù language, exact transaction và full speech không còn chắc chắn. Từ sự đổi category đó mới sinh ra câu hỏi tiếp theo: nếu full speech không phải thứ cần được giữ lại, tại sao việc đưa những relation này ra ngoài trí nhớ lại đáng làm?",
+  "story_strategy": "Dùng P005390 như một reclassification puzzle, không như một ví dụ để narrator giảng về early writing. Viewer chỉ được tự nhận ra raw cue thật sự nhìn thấy trên vật thể: dấu được nhóm, lặp và chiếm những vị trí có tổ chức; tuyệt đối chưa gọi đó là quantity hay grain. Narrator nhanh chóng cung cấp classification chuyên môn hẹp nhất mà evidence cho phép: đây là một administrative tablet ghi các quantity liên quan đến grain. Sau đó không mở thêm kiến thức mới mà thử chính mô hình 'message cần dịch': lần lượt bỏ khỏi nó những gì evidence không cho khôi phục chắc chắn — underlying language, exact transaction, full sentence/voice. Local turn phải xảy ra ở đây: mỗi lớp certainty bị lấy đi làm tablet kém đọc được như speech nhưng đồng thời rõ hơn như một structured record. Tension vì thế đến từ việc vật thể đổi nghĩa ngay trước mắt viewer, không từ withholding fact hay mystery giả. Giữ toàn bộ P01 bám vào một object và một dominant question; không mở chronology, world-first, definition debate hay history-of-decipherment. Dừng ngay khi viewer đã đổi cách hiểu P005390 từ 'message bị thiếu bản dịch' thành 'record không cần giữ trọn speech để vẫn giữ được structure', vì chính limitation đó mới kiếm ra câu hỏi về externalized memory cho P02.",
   "word_budget": {
     "recommended": {
       "min": 500,
-      "max": 800
+      "max": 650
     },
-    "rationale": "Đủ để object và reveal land sớm, làm rõ giới hạn diễn giải rồi chuyển câu hỏi sang P02 mà không biến opening thành exposition."
+    "rationale": "P01 chỉ có một carrier, hai core claims và một state change chính: reclassify P005390 từ unread message thành structured record. 500–650 từ đủ cho raw cue, early expert clarification, controlled subtraction và category shift mà không biến uncertainty thành lecture."
   },
   "evidence_roles": {
     "core": [
@@ -21,12 +21,13 @@
     "exclude": []
   },
   "design_risks": [
-    "Biến uncertainty về language và transaction thành disclaimer pile.",
-    "Nói quá mức rằng tablet ghi một giao dịch cụ thể hoặc một câu hoàn chỉnh.",
-    "Rời P005390 quá sớm để giảng chronology, nguồn gốc chữ viết hoặc world-first.",
-    "Giữ mystery quá lâu thay vì trả micro-reveal ngay trong opening.",
-    "Mở đầu bằng provenance, tuổi hoặc archaeology quá lâu trước khi viewer nhận được observable clue đầu tiên."
+    "Để viewer tự suy ra quantity, grain hoặc transaction từ hình dạng dấu trước narrator clarification.",
+    "Dùng uncertainty như disclaimer pile thay vì làm động cơ cho category shift của object.",
+    "Nói thesis về externalized memory quá sớm, trước khi P005390 thực sự đổi từ 'message' thành 'record' trong đầu viewer.",
+    "Biến structural regularity thành bằng chứng cho exact syntax, exact transaction hoặc recovered voice mà evidence không cho phép.",
+    "Rời object sang chronology, definition, world-first hoặc decipherment ngay sau reveal và làm mất local dramatic problem.",
+    "Biến story strategy thành beat sheet/cadence prescription thay vì giữ writer tự chọn route để đạt đúng audience shift."
   ],
   "approved_by": "user",
-  "approved_at": "2026-08-17T15:30:00+07:00"
+  "approved_at": "2026-08-18T09:44:00+00:00"
 }

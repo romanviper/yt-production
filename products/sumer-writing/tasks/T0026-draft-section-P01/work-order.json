@@ -24,7 +24,6 @@
   ],
   "report_path": "tasks/T0026-draft-section-P01/report.md",
   "operator_brief_path": "tasks/T0026-draft-section-P01/operator-brief.json",
-  "updated_at": "2026-08-17T10:27:00.100000+00:00",
-  "cancel_reason": "router replacement by T0027-draft-section-P01",
-  "superseded_by": "T0027-draft-section-P01"
+  "updated_at": "2026-08-18T09:19:42.529743+00:00",
+  "cancel_reason": "human rework: design_section: Rework thiết kế P01 đứng trước T0026 để audience agency là evidence-readable: phân biệt raw cue mà non-specialist thực sự có thể nhận thấy với expert classification; không trình bày quantity hoặc grain như điều khán giả tự quan sát trước narrator clarification. Giữ P005390 làm carrier, giữ evidence ceiling hiện tại, entry/exit state và câu hỏi earned."
 }

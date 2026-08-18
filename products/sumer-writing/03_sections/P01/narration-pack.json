@@ -1,8 +1,8 @@
 {
   "schema_version": 2,
   "section": "P01",
-  "created_at": "2026-08-17T08:30:00+00:00",
-  "story_plan_sha256": "5c284d694c6ba475c6f2070c4324d9c20a486a517d6da8f9eff9252597988b90",
+  "created_at": "2026-08-18T09:44:00+00:00",
+  "story_plan_sha256": "e023872a80401750089367807ab549d2335f580234b9a7eb4ef235ea6aaf54e5",
   "evidence_pack_sha256": "8b29ea363f9db3db2f30b9f38095c150cf2a26ee7196a499baf43d9832bd16a3",
   "core_claims": [
     {

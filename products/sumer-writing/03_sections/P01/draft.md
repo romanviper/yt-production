@@ -1,25 +1,47 @@
 # P01 — Một mảnh đất sét không chịu nói
 
-Nhìn vào tấm đất sét được đánh số P005390, phản xạ gần như tự nhiên là hỏi: **nó viết gì?**
+Nhìn vào tấm đất sét này, rất dễ nghĩ rằng vấn đề của chúng ta chỉ là chưa biết đọc nó.
 
-Nhưng trước khi cố dịch nó, có một thứ đơn giản hơn mà ta đã có thể nhìn thấy. Trên bề mặt là những nhóm dấu được sắp theo trật tự, đi cùng các ký hiệu số lượng và những dấu liên quan đến ngũ cốc. Một số mẫu lặp lại; vị trí của chúng trên tablet cũng cho thấy đây không phải những vết khắc đặt cạnh nhau một cách ngẫu nhiên.
+Các dấu vẫn còn ở đó. Chúng đã sống sót qua hàng nghìn năm. Vậy thì việc còn lại, tưởng như, chỉ là tìm ra câu mà một người nào đó đã để lại.
 
-Nói cách khác, ta chưa cần biết từng dấu được đọc thành tiếng ra sao để nhận ra rằng vật này đang giữ một cấu trúc thông tin.
+Nhưng trước khi hỏi tấm đất sét này “nói gì”, hãy nhìn vào thứ thực sự còn trước mắt.
 
-Và rồi vấn đề bắt đầu.
+Các dấu không nằm rải rác một cách ngẫu nhiên. Chúng được đặt thành những nhóm. Một số dạng lặp lại. Những phần khác nhau của bề mặt dường như được sử dụng theo những cách khác nhau. Chỉ nhìn như vậy, ta chưa thể biết một dấu có nghĩa gì. Nhưng ít nhất có thể thấy: đây không phải một bề mặt bị đánh dấu tùy tiện.
 
-P005390 cho phép ta nói khá chắc rằng các quantity liên quan đến ngũ cốc đang được tổ chức trên bề mặt của nó. Nhưng chính xác chuyện gì đã xảy ra phía sau những con số ấy thì khó hơn nhiều. Đây là một lần giao? Một lần phân phối? Hay một loại thao tác khác? Những dấu còn lại không đủ để khóa chắc câu trả lời. Underlying language cũng không thể được phục hồi đơn giản chỉ bằng cách nhìn vào tablet rồi đọc nó như một câu văn hiện đại.
+Đến đây, chúng ta cần phần mà mắt thường không thể tự suy ra.
 
-Vì thế, điều còn lại sau hàng nghìn năm không phải một lời nói nguyên vẹn chờ được dịch. **Thứ sống sót rõ hơn là relation: quantity nào được đặt với category nào, những dấu nào đi cùng nhau, và chúng được tổ chức ở đâu trên bề mặt.**
+Các nhà nghiên cứu xếp P005390 vào loại tablet hành chính. Những gì được ghi trên đó liên quan đến các số lượng ngũ cốc.
 
-Đó là một khác biệt nhỏ, nhưng nó đổi hẳn câu hỏi.
+Vậy là tấm đất sét này không hoàn toàn câm. Ta biết nó đang giữ một loại thông tin có tổ chức.
 
-Nếu mục tiêu của vật này là giữ lại toàn bộ lời nói, P005390 trông như một thông điệp bị mất quá nhiều. Nhưng nếu điều cần giữ chỉ là một số quan hệ đủ ổn định để có thể được nhìn lại, thì việc thiếu một câu hoàn chỉnh không còn đồng nghĩa với việc record đã thất bại.
+Nhưng ngay lúc tưởng rằng cánh cửa đã mở, vấn đề lại đổi dạng.
 
-Đất sét làm được một việc rất cụ thể: arrangement của các dấu không phải tồn tại trong đầu một ai đó để tiếp tục tồn tại. Quantity vẫn nằm cạnh category của nó sau khi khoảnh khắc ghi dấu đã qua. Pattern vẫn nằm trên bề mặt. Một phần của relation đã được đặt ra ngoài trí nhớ sống và gắn vào một vật thể bền hơn.
+Ta vẫn không thể lấy P005390 và đọc lại một câu nói hoàn chỉnh.
 
-Nhưng P005390 chỉ cho chúng ta thấy **kết quả** của bước chuyển ấy. Nó chưa giải thích vì sao bước chuyển đó lại đáng làm.
+Ngôn ngữ đứng sau hệ thống dấu này chưa thể xác định chắc chắn. Với chính tablet này, giao dịch cụ thể từng xảy ra cũng không thể khôi phục chắc chắn. Các dấu còn lại. Một phần cấu trúc của bản ghi còn lại. Nhưng câu nói đầy đủ, giọng nói và hoàn cảnh chính xác không tự trở về cùng chúng.
 
-Bởi nếu một cộng đồng có thể dựa vào trí nhớ, sự hiện diện và những cách xác nhận trực tiếp, thì việc tạo ra cả một hệ thống dấu bền là thêm công việc. Muốn hiểu tại sao những relation như thế bắt đầu cần được cố định bên ngoài trí nhớ, ta phải đi lùi một bước: không hỏi chữ viết xuất hiện vào ngày nào, mà hỏi **trí nhớ và xác nhận bắt đầu gặp vấn đề gì**.
+Và đó là lúc cách nhìn ban đầu bắt đầu gặp vấn đề.
 
-Và trước khi những relation ấy được gom lên một bề mặt đất sét như P005390, con người đã có những cách nào để giữ quantity, category hay dấu xác nhận khỏi biến mất cùng khoảnh khắc?
+Nếu coi P005390 là một thông điệp đang chờ được dịch, nó trông giống một văn bản bị thiếu mất phần quan trọng nhất. Ta biết có những số lượng. Ta biết chúng liên quan đến ngũ cốc. Ta thấy các dấu được tổ chức. Nhưng ta không lấy lại được toàn bộ lời nói đứng sau chúng.
+
+Có lẽ ta đang đòi hỏi vật thể này phải là một thứ mà nó chưa chắc từng là.
+
+Bởi ngay cả khi lời nói không trở lại, cấu trúc vẫn chưa biến mất.
+
+Vị trí và sự phân bố của các dấu vẫn tạo ra những quy luật có thể nhận ra. Người nghiên cứu vẫn có thể phát hiện những mẫu hình trong cách chúng xuất hiện trên tablet, ngay cả khi giá trị phát âm của từng dấu hay ngôn ngữ phía sau còn chưa chắc chắn.
+
+Tấm đất sét vì thế bắt đầu đổi nghĩa ngay trước mắt chúng ta.
+
+Nó không còn giống một câu nói bị khóa, chỉ cần đúng chiếc chìa khóa để mở. Nó giống hơn với một bản ghi mà một phần quan hệ bên trong vẫn còn nguyên dấu vết, dù phần lời nói bao quanh chúng đã mất.
+
+Không phải toàn bộ câu.
+
+Không phải toàn bộ sự kiện.
+
+Nhưng đủ để cấu trúc không biến mất hoàn toàn.
+
+Và chính điều đó tạo ra câu hỏi tiếp theo.
+
+Nếu một bản ghi có thể giữ được thứ gì đó có ích mà không cần giữ trọn một câu nói, thì tại sao con người lại cần tạo ra một thứ như vậy ngay từ đầu?
+
+Tại sao một số quan hệ lại cần tồn tại bên ngoài trí nhớ của những người có mặt — đủ lâu để có thể được nhìn lại sau khi khoảnh khắc tạo ra chúng đã qua?

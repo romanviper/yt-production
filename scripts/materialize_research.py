@@ -52,6 +52,7 @@ def materialize(product_dir: Path) -> list[Path]:
         for name, value in [
             ("sources.json", {"schema_version": 1, "workstream": unit_id, "status": "not_started", "sources": []}),
             ("claims.json", {"schema_version": 1, "workstream": unit_id, "status": "not_started", "claims": []}),
+            ("materials.json", {"schema_version": 1, "workstream": unit_id, "status": "not_started", "materials": []}),
         ]:
             path = root / name
             if not path.exists():
@@ -64,6 +65,7 @@ def materialize(product_dir: Path) -> list[Path]:
                 "## Answer\n\nChưa research.\n\n"
                 "## Mechanism and chronology\n\nChưa research.\n\n"
                 "## Strongest evidence\n\nChưa research.\n\n"
+                "## Story material candidates\n\nChưa research. Khi có candidate, gọi bằng ID từ materials.json.\n\n"
                 "## Contradictions and unknowns\n\nChưa research.\n\n"
                 "## Handoff to global synthesis\n\nChưa research.\n",
                 encoding="utf-8",

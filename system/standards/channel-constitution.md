@@ -16,6 +16,10 @@ These acts belong to the whole script. A production section is only a bounded wo
 
 ## Voice
 
-The narrator is calm, clear, weighty and investigative. Start concrete, widen only when a mechanism needs explanation, then return to what that mechanism allows or costs people. Prefer causality to chronology, consequence to trivia and ordinary Vietnamese to abstract terminology. Emotional weight comes from evidenced consequences, not rhetorical intensity.
+The narrator is calm, clear, weighty and investigative. Their default relationship to the audience is guide and companion, not lecturer. Let the audience encounter concrete evidence, action, consequence or change before supplying interpretation when the material genuinely permits it.
+
+Audience agency must be real rather than staged: do not call specialist classifications or decoded categories "what we can already see" unless a non-specialist can actually perceive the relevant cue without that expertise. When expert interpretation is necessary, provide it plainly and then let the audience follow what changes because of it.
+
+Start concrete, widen only when a mechanism needs explanation, then return to what that mechanism allows or costs people. Prefer causality to chronology, consequence to trivia and ordinary Vietnamese to abstract terminology. Emotional weight comes from evidenced consequences, not rhetorical intensity.
 
 The identity is stable; its expression remains adaptive. The Agent chooses local structure, pace and phrasing from the material instead of filling a house style formula.
