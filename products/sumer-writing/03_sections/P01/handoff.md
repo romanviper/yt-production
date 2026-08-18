@@ -1,7 +1,21 @@
-# P01 Handoff
+# Handoff — P01 / C003 candidate
 
-P01 kết thúc sau khi P005390 được reclassify trong đầu viewer: từ một “thông điệp chưa dịch được” thành một bản ghi có cấu trúc. Viewer đã được narrator cung cấp classification hẹp rằng tablet ghi các số lượng liên quan đến ngũ cốc, đồng thời biết language, exact transaction và full speech vẫn không chắc chắn.
+## What this draft does
 
-Dominant question chuyển sang P02: nếu không cần giữ trọn lời nói mà một số relation vẫn đáng được cố định, vì sao con người cần làm chúng tồn tại bên ngoài trí nhớ?
+- Mở bằng P005390 đủ ngắn để đặt nghịch lý: bảng đất sét còn giữ được một phần thông tin nhưng không cho phép phục hồi chắc giao dịch, câu nói hay ngôn ngữ hoàn chỉnh.
+- Rời P005390 sớm và chuyển sang MAT-0001 tại Chogha Mish.
+- Cho khán giả theo một diễn tiến vật chất có thể nghe được không cần màn hình: phong bì đất sét chứa thẻ đếm → vật chứa được niêm phong → bảng số riêng có năm dấu số ngay trên bề mặt.
+- Khóa thay đổi của P01 ở việc **nơi thông tin được mang thay đổi**, không dựng token→tablet thành một đường tiến hóa trực tiếp.
+- Kết ở câu hỏi dẫn sang P02: khi bề mặt giữ thêm loại hàng và quan hệ, bản ghi bắt đầu làm được gì ngoài việc đếm?
 
-P02 không lặp lại reveal của P01. Hãy trả lời bằng các partial solutions cho memory/verification pressure; không biến P005390 thành một transaction cụ thể và không mở world-first/chronology debate.
+## Evidence ceiling used
+
+Materials: `MAT-0004`, `MAT-0001`.
+
+Claims: `CLM-0034`, `CLM-0040`, `CLM-0042`, `CLM-0011`, `CLM-0012`, `CLM-0013`, `CLM-0014`.
+
+Guardrails giữ nguyên: không exact transaction/language cho P005390; không universal token code; không direct token→tablet genealogy; không coi administration là nguyên nhân duy nhất.
+
+## Lifecycle note
+
+Draft này theo trực tiếp outline C003 hiện tại. `section.json`, story-plan và narration/evidence pack trong P01 vẫn là artifacts cũ của C002, nên không được dùng chúng để đánh giá intent của bản draft này. Draft chưa được human-approve và chưa thay đổi lifecycle state.
