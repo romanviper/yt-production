@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "workstream": "WS04",
+  "status": "complete",
+  "materials": [
+    {
+      "id": "WS04-MAT-001",
+      "kind": "training_sequence",
+      "label": "House F teacher–student tablet 3N-T 397",
+      "what_audience_follows": "On one House F tablet, a competent model, a student's erased copy and an older exercise on the reverse expose learning as repeated copying, correction, memorization and revision rather than simple sign recognition.",
+      "sequence": [
+        "On the obverse left, a competent hand writes eleven lines from Syllable Alphabet B as a model.",
+        "On the obverse right, the student's copy is written, erased and prepared to be copied again.",
+        "On the reverse, a longer earlier passage is written as revision of previously learned material.",
+        "Across House F, comparable tablet formats let scholars reconstruct a staged curriculum while also showing that the exact order varied by school."
+      ],
+      "claim_ids": [
+        "WS04-CLM-002",
+        "WS04-CLM-004",
+        "WS04-CLM-006"
+      ],
+      "source_refs": [
+        {
+          "source_id": "WS04-SRC-005",
+          "locators": [
+            "Section 'Elementary education in House F', paras. 10–16 / pp. 45–49",
+            "Fig. 9: 3N-T 397 = UM 55-21-320, Type II teacher–student tablet",
+            "Table 1 and paras. 11–12: Type II obverse model/copy and reverse revision logic"
+          ]
+        }
+      ],
+      "representativeness": "illustrative",
+      "limitations": [
+        "House F is an unusually rich eighteenth-century BCE Nippur household-school context and cannot be projected back to Uruk.",
+        "Its curriculum was not a universal Mesopotamian standard; the source explicitly finds local variation.",
+        "The teacher/student attribution is inferred from relative competence and tablet format, not from named biographies."
+      ]
+    }
+  ],
+  "gaps": []
+}
