@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "status": "in_progress",
+  "requested_operation": "research_workstream",
+  "requested_at": "2026-08-18T13:45:00+00:00",
+  "scope": "all_workstreams",
+  "selected_unit": "WS01",
+  "declared_units": [
+    "WS01",
+    "WS02",
+    "WS03",
+    "WS04",
+    "WS05",
+    "WS06",
+    "WS07",
+    "WS08"
+  ],
+  "pending_units": [
+    "WS01",
+    "WS02",
+    "WS03",
+    "WS04",
+    "WS05",
+    "WS06",
+    "WS07",
+    "WS08"
+  ],
+  "completed_units": [],
+  "request": "Rà lại toàn bộ WS01–WS08 theo harness material-aware mới; giữ research cũ khi đủ, bổ sung material và locator có mục tiêu, chạy lại research synthesis, rồi build lại toàn bộ outline trước khi quay lại section."
+}
