@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "workstream": "WS07",
+  "status": "complete",
+  "materials": [
+    {
+      "id": "WS07-MAT-001",
+      "kind": "transmission_process",
+      "label": "Hittite selective adaptation through trained scribal practice",
+      "what_audience_follows": "The Hittite case lets the audience follow cuneiform arriving through external specialist traditions, being learned and modified for a new linguistic environment, while only selected Mesopotamian practices travel with it.",
+      "sequence": [
+        "Cuneiform reaches Anatolian courts and specialists through contact with established scribal traditions.",
+        "Training uses lexical and bilingual material to reproduce competence across a new community of practice.",
+        "Scribes adapt sign values and orthographic conventions rather than simply substituting Hittite words into an unchanged system.",
+        "The receiving tradition adopts selected scholarly and literary practices while other Mesopotamian administrative conventions do not transfer uniformly."
+      ],
+      "claim_ids": ["WS07-CLM-001", "WS07-CLM-002", "WS07-CLM-003", "WS07-CLM-006", "WS07-CLM-007", "WS07-CLM-008"],
+      "source_refs": [{"source_id": "WS07-SRC-005", "locators": ["pp. 3–13: Hittite curricula, bilingual lists and selective transfer on the cuneiform periphery"]}],
+      "representativeness": "illustrative",
+      "limitations": [
+        "This is a process carrier synthesized from a bounded scholarly discussion, not a single excavated event sequence.",
+        "The Hittite case cannot stand for every region that adopted cuneiform.",
+        "Do not imply that all Mesopotamian bookkeeping/metrology disappeared from Anatolia; the claim is selective and non-uniform transfer."
+      ]
+    }
+  ],
+  "gaps": [
+    "If the outline wants a scene-level Hittite adoption episode, WS07 still needs an object-level source locator; the present material is strong enough for a process carrier but not for invented dialogue or a single adoption moment."
+  ]
+}
