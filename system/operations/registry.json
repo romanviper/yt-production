@@ -30,7 +30,13 @@
         "00_brief/product-brief.md",
         "01_research/workstreams/{unit}/brief.md"
       ],
-      "optional_inputs": [],
+      "optional_inputs": [
+        "01_research/rework-request.md",
+        "01_research/workstreams/{unit}/sources.json",
+        "01_research/workstreams/{unit}/claims.json",
+        "01_research/workstreams/{unit}/materials.json",
+        "01_research/workstreams/{unit}/synthesis.md"
+      ],
       "outputs": [
         "01_research/workstreams/{unit}/sources.json",
         "01_research/workstreams/{unit}/claims.json",
