@@ -8,8 +8,10 @@
     "section": null,
     "unit": "WS01"
   },
-  "state": "ready",
+  "state": "cancelled",
   "created_at": "2026-08-18T13:27:00+00:00",
+  "updated_at": "2026-08-18T14:46:33+00:00",
+  "cancel_reason": "The user-directed all-workstream material-aware research handoff was completed directly; this routed WS01 task is stale and no longer represents the current research state.",
   "context_packet": "tasks/T0029-research-workstream-WS01/context.md",
   "packet_manifest": "tasks/T0029-research-workstream-WS01/packet.json",
   "allowed_write_paths": [
