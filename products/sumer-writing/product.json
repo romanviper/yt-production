@@ -4,7 +4,7 @@
   "working_title": "Chữ viết đã tạo ra nền văn minh Sumer như thế nào?",
   "language": "vi",
   "format": "long_form_history_documentary",
-  "status": "research_rework",
+  "status": "outline_rebuild_pending",
   "created_at": "2026-08-12",
   "target": {
     "duration_minutes": {
@@ -67,7 +67,7 @@
   "stages": {
     "direction": "approved",
     "research_plan": "approved",
-    "research": "in_progress",
+    "research": "complete",
     "outline": "changes_requested",
     "sections": "paused",
     "integration": "not_started",
@@ -75,7 +75,7 @@
   },
   "production_cycle": {
     "id": "C003",
-    "status": "research_rework",
+    "status": "outline_rebuild_pending",
     "previous": "C002",
     "started_at": "2026-08-18T13:45:00+00:00",
     "reason": "Semantic rework reopened the product from the research_workstream layer. Preserve valid existing research as baseline, rebuild story-material handoffs across WS01–WS08, rerun research synthesis, then rebuild the full outline before any section work resumes."
