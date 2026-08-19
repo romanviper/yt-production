@@ -2,7 +2,7 @@
 
 ## Responsibility
 
-Write one section that achieves its audience shift. Upstream design defines intent, evidence and movement; do not paraphrase it.
+Write one section that achieves its audience shift. Upstream design defines intent, evidence and movement; do not paraphrase it. In a material-aware outline, `audience_experience` and `material_ids` specify what the audience should follow, not wording to explain back to them.
 
 Prefer **material → change → consequence → only needed explanation**. Let the audience meet material before interpretation when evidence permits.
 
