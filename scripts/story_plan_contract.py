@@ -207,10 +207,31 @@ def _outline_section(outline: dict[str, Any], section: str) -> dict[str, Any]:
 
 
 def is_direct_authorship_outline(outline: dict[str, Any]) -> bool:
+    """Canonical direct-authorship switch: only the writer-authorship contract has this authority."""
+
+    architecture = outline.get("script_architecture", {})
+    return architecture.get("writer_authorship_contract_version") == 1
+
+
+def is_legacy_material_aware_outline(outline: dict[str, Any]) -> bool:
+    """Identify material-aware compatibility without promoting it into the canonical writer path."""
+
     architecture = outline.get("script_architecture", {})
     return (
-        architecture.get("writer_authorship_contract_version") == 1
-        or architecture.get("story_material_contract_version") == 1
+        architecture.get("writer_authorship_contract_version") != 1
+        and architecture.get("story_material_contract_version") == 1
+    )
+
+
+def writer_authorship_migration_message(outline: dict[str, Any]) -> str | None:
+    """Explain why a legacy material-aware outline is not ready for clean canonical replay."""
+
+    if not is_legacy_material_aware_outline(outline):
+        return None
+    return (
+        "Legacy material-aware outline: migrate/rebuild the outline under "
+        "script_architecture.writer_authorship_contract_version: 1 and obtain human approval "
+        "before canonical writer-authorship replay."
     )
 
 
@@ -380,7 +401,7 @@ def verify_narration_pack(product_dir: Path, section: str) -> list[str]:
         if outline.get("status") != "approved":
             errors.append("current outline is not human-approved")
         if not is_direct_authorship_outline(outline):
-            errors.append("direct narration pack requires current writer-authorship contract or compatible material-aware outline")
+            errors.append("direct narration pack requires script_architecture.writer_authorship_contract_version: 1")
         for label, value in [
             ("section state", state.get("cycle_id")),
             ("evidence pack", evidence.get("cycle_id")),
