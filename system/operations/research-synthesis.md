@@ -11,36 +11,39 @@ Hợp nhất các workstream handoff thành một mental model có thể dùng �
 
 ## Rules
 
-- Không mở hoặc rewrite toàn bộ local/global ledger trong task này; `consolidation.json` xác nhận chúng đã được remap và giữ provenance.
-- Dùng workstream synthesis làm bounded handoff. Nếu handoff thiếu evidence cần thiết, trả blocker về đúng workstream thay vì nạp mọi ledger để bù.
-- Conflict giữa workstream trở thành contradiction, không bị “giải quyết” bằng trung bình hóa.
-- Phân biệt evidence về chronology, mechanism, magnitude và lived experience.
-- Xác định claim trụ cột nào đủ support, cần qualify hoặc phải loại.
-- `research-synthesis.md` tổ chức theo causal chain và open decisions, không theo WS01, WS02…
+- Không mở hoặc rewrite toàn bộ local/global ledger; `consolidation.json` xác nhận provenance.
+- Dùng workstream synthesis làm bounded handoff. Thiếu evidence thì trả blocker đúng workstream.
+- Conflict trở thành contradiction, không trung bình hóa.
+- Phân biệt chronology, mechanism, magnitude, lived experience và reconstructable detail.
+- `research-synthesis.md` tổ chức theo causal chain, không theo WS01, WS02…
 
 ## Story material map
 
-`story-material-map.json` không phải outline và không quyết định section. Nó chỉ trả lời: ở từng phase của causal chain, **có vật liệu cụ thể nào đủ chắc để audience theo một thay đổi hay không?**
+Map không phải outline. Với mỗi major phase, nó trả hai câu hỏi riêng:
 
-Schema tối thiểu:
+1. material có support movement không?
+2. narration bằng âm thanh có thể thuật lại **cái gì tồn tại, được làm, thay đổi, thất bại hoặc để lại hậu quả** mà không để scholarly interpretation gánh phần lớn movement?
 
-- `schema_version: 1`, `product`, `status: complete`;
-- `phases[]`: mỗi phase có `id`, `story_function`, `state_change`, `material_ids`, `evidence_strength`, `gap`;
-- `opening_candidates`, `reversal_candidates`, `ending_candidates`: danh sách material IDs phù hợp nếu có;
-- `gaps`: những chặng logic quan trọng vẫn chỉ có abstract claims hoặc material quá yếu.
+Phân loại:
 
-Chỉ dùng `MAT-####` có trong `material-ledger.json`. Một material có thể được dùng ở nhiều phase; map không tạo material mới và không được nâng inference thành fact.
+- **A — strong recountable material:** có trạng thái cụ thể → action/change → trạng thái/hệ quả mới;
+- **B — illustrative material:** có object/case/process nhưng movement vẫn phụ thuộc đáng kể vào synthesis;
+- **C — material gap:** logic có support nhưng thiếu reconstructable detail để story hóa trung thực.
+
+Không yêu cầu mọi phase phải là scene. Process kéo dài nhiều thế kỷ vẫn hợp lệ nếu sequence thay đổi có evidence.
+
+Schema mới nên dùng `schema_version: 2` và giữ các field cũ, đồng thời mỗi `phases[]` thêm:
+
+- `carrier_class`: `A`, `B` hoặc `C`;
+- `audio_reconstruction`: một câu ngắn nói listener có thể hình dung/thuật lại điều gì;
+- `material_ids`, `evidence_strength`, `gap` như trước.
+
+`opening_candidates`, `reversal_candidates`, `ending_candidates` chỉ dùng `MAT-####` có trong ledger. Map không tạo material mới.
+
+Legacy map schema 1 vẫn đọc được cho product đã khóa outline; mọi synthesis mới/rework phải xuất schema 2.
 
 ## Carrier sufficiency
 
-Một candidate carrier có thể là object, person, action, process, documented encounter, failure, consequence hoặc sequence. Không bắt buộc event chain và không ưu tiên anecdote hơn evidence.
+Nếu opening, major reversal hoặc ending rơi vào loại C, surface gap trước khi outline khóa architecture. Loại B có thể dùng có chủ đích nhưng outline phải biết explanation vẫn đang gánh movement.
 
-Với mỗi major phase, phân biệt:
-
-- material đủ sức mang một thay đổi mà audience có thể theo;
-- material chỉ minh họa cho explanation;
-- gap: chưa có vật liệu concrete đủ dùng.
-
-Nếu opening/body reversal/ending dự kiến phụ thuộc vào carrier nhưng handoff chỉ có abstract claims hoặc locator quá rộng, ghi gap rõ ràng để trả về workstream trước khi outline khóa kiến trúc.
-
-Đừng coi một object là carrier chỉ vì nó có hình ảnh tốt hoặc một claim thú vị. Phải có đủ evidence để biết audience có thể theo cái gì đang thay đổi, xảy ra, thất bại, được làm hoặc để lại consequence.
+Đừng coi object là carrier chỉ vì visual tốt. Audience phải có thể theo một state/action/change/failure/consequence. Không nâng inference thành fact và không săn anecdote để lấp gap.
