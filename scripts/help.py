@@ -8,7 +8,6 @@ make task PRODUCT=<slug> OPERATION=research_plan
 make task PRODUCT=<slug> OPERATION=research_workstream UNIT=WS01
 make task PRODUCT=<slug> OPERATION=outline RUNTIME=dsh
 make run PRODUCT=<slug> TASK=<task-id>
-make task PRODUCT=<slug> OPERATION=design_section SECTION=P04
 make task PRODUCT=<slug> OPERATION=draft_section SECTION=P04
 make task PRODUCT=<slug> OPERATION=review_section SECTION=P04
 make show PRODUCT=<slug>
@@ -21,6 +20,10 @@ make impact PRODUCT=<slug> SECTION=P04
 make assemble PRODUCT=<slug>
 make test
 
+Material-aware section lifecycle:
+approve outline -> materialize sections -> draft_section -> review_section
+Story-plan/design_section is legacy compatibility only and is not part of the active material-aware flow.
+
 Task lifecycle:
 python scripts/task.py list products/<slug>
 python scripts/task.py submit products/<slug> <task-id>
@@ -30,8 +33,6 @@ python scripts/task.py state products/<slug> <task-id> closed
 Human approval commands:
 python scripts/approval.py approve-plan products/<slug>
 python scripts/approval.py approve-outline products/<slug>
-python scripts/approval.py approve-story-plan products/<slug> P04
-python scripts/approval.py request-story-plan-changes products/<slug> P04 --request "..."
 python scripts/approval.py approve-section products/<slug> P04
 python scripts/approval.py request-changes products/<slug> P04 --request "..."
 python scripts/approval.py start-new-cycle products/<slug> --request "..."
