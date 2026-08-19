@@ -1,23 +1,23 @@
-# Handoff — P01 / C003 candidate
+# Handoff — P01 / C003
 
-## Draft intent
+## Audience shift
 
-P005390 chỉ mở nghịch lý đủ ngắn: bảng còn giữ số lượng/cấu trúc nhưng không cho phép phục hồi chắc giao dịch, câu nói hay ngôn ngữ. Draft rời vật thể này sớm và chuyển sang Chogha Mish.
+P01 chuyển điểm nhìn từ “chữ viết xuất hiện như một phát minh đột ngột” sang một bài toán đã tồn tại trước đó: làm sao giữ lượng, loại, xác thực và quan hệ hành chính đủ bền để người khác có thể kiểm tra lại ngoài trí nhớ của người có mặt.
 
-Chuyển động chính do `MAT-0001` mang: phong bì đất sét chứa thẻ đếm → vật chứa được niêm phong → một bảng số riêng mang năm dấu số ngay trên bề mặt. Thay đổi của section là **nơi thông tin số được mang chuyển từ bên trong vật chứa lên chính bề mặt đất sét**. Narration chỉ giải thích phần cần thiết và chặn hiểu lầm về một chuỗi token→tablet tuyến tính.
+## Route đã dùng
 
-Kết section ở giới hạn mới: một con số trên bề mặt vẫn chưa cho biết nó gắn với thứ gì hay các dấu có thể tổ chức quan hệ ra sao. P02 tiếp tục từ chính giới hạn đó.
+Draft bắt đầu từ vấn đề thông tin phải sống lâu hơn một lần giao tiếp, rồi đi qua continuity mạnh nhất ở numerical systems. Token được dùng như một phản ví dụ cho câu chuyện tiến hóa quá tuyến tính: chúng đa chức năng, dù một số late simple tokens trong bullae có chức năng số/kế toán. Từ đó section dựng “ecology” gồm đếm, seals, bullae, numerical tablets, iconography và institutional practice thay cho token→tablet ladder.
+
+Phần cuối đặt administration như major pressure nhưng không monocause; tách accounting context khỏi tax/tribute/market/redistribution; sau đó giới thiệu feedback model giữa institutional demand và records như hypothesis cần tiếp tục test.
 
 ## Evidence ceiling
 
-Materials: `MAT-0004`, `MAT-0001`.
+Claims sử dụng: `CLM-0011`–`CLM-0018`.
 
-Claims: `CLM-0034`, `CLM-0040`, `CLM-0042`, `CLM-0011`, `CLM-0012`, `CLM-0013`, `CLM-0014`.
+Giữ các biên: không invention scene; không ethnic attribution; không universal token code; không direct token→tablet genealogy; không gọi tax/tribute/redistribution khi evidence chỉ cho accounting context; không biến co-occurrence thành one-way causation.
 
-Giữ các biên: không exact transaction/language cho P005390; không universal token code; không direct token→tablet genealogy; không coi hành chính là nguyên nhân duy nhất.
+## Continuity out
 
-## Harness note
+P01 kết ở câu hỏi earned cho P02: nếu nhu cầu giữ thông tin và nhiều recording practices đã có, điều gì khiến hệ thống dấu mới trên tablet thực sự khác biệt và hữu ích?
 
-Bản này được viết lại theo material-aware draft harness mới nhất trên branch: ưu tiên `material → change → consequence → explanation cần thiết`, cắt explanatory echo và meta-commentary, đồng thời giữ trải nghiệm có thể theo bằng âm thanh mà không cần hình ảnh làm thay phần suy luận.
-
-Draft chưa được human-approve và không thay đổi lifecycle state.
+Draft ở trạng thái `ready_for_review`; chưa human-approved.

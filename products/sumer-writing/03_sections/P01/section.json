@@ -1,36 +1,38 @@
 {
-  "schema_version": 2,
+  "schema_version": 4,
   "id": "P01",
-  "title": "Một mảnh đất sét không chịu nói",
+  "title": "Trước chữ viết đã có một bài toán phải giải",
   "order": 1,
   "status": "ready_for_review",
   "human_approved": false,
   "dependencies": [],
-  "narrative_job": "Cold-open P005390. Trong 20–30 giây phải có micro-reveal đủ cụ thể để viewer biết mình đang nhìn một paradox thật; full reveal trong 60–90 giây/~140–210 từ trước chronology/definition. Sau đó chuyển ngay sang câu hỏi earned: nếu tablet chưa trao lại full speech, tại sao loại relation này vẫn đáng giữ qua thời gian?",
-  "entry_state": "Khán giả coi tablet như thông điệp chỉ cần dịch.",
-  "exit_state": "Khán giả biết cái gì còn/mất và giữ một câu hỏi đơn giản: loại memory này giải quyết điều gì mà trí nhớ của người có mặt không giải quyết được?",
+  "narrative_job": "Thiết lập các pressure và information practices trước/sát thời điểm proto-cuneiform xuất hiện, đồng thời phá hai shortcut: một invention event duy nhất và token→tablet như đường tiến hóa tất định. Section phải kết thúc khi audience đã hiểu vì sao durable, inspectable records trở nên đáng giá mà chưa cần biết 'ai phát minh chữ viết'.",
+  "entry_state": "Chữ viết được hình dung như một ý tưởng xuất hiện đột ngột.",
+  "exit_state": "Khán giả hiểu formation là một ecology gồm numerical practices, seals/bullae/tablets và institutional demand; administration là pressure lớn nhưng không phải nguyên nhân duy nhất.",
   "target_words": {
-    "min": 500,
-    "max": 800
+    "min": 1050,
+    "max": 1550
   },
-  "cycle_id": "C002",
+  "cycle_id": "C003",
+  "outline_sha256": "d707db0c172a9db579593a136791d2b1e629892315e31bedfa0d795b8c92da9d",
+  "transition": "Nếu nhu cầu và các recording practices đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.",
   "movement_ids": [
     "M01"
   ],
   "macro_movements": [
     {
       "id": "M01",
-      "title": "Một tablet còn dấu nhưng không còn giọng nói",
-      "narrative_job": "P005390 phải trả micro-reveal trong 20–30 giây và full reveal trong 60–90 giây/~140–210 từ: quantity/layout/relation còn, nhưng full sentence/language/transaction chắc chắn thì không. Viewer được giải một phần mystery ngay, rồi mystery đổi dạng: nếu đây chưa phải speech đầy đủ, tại sao nó vẫn đáng tạo ra và giữ lại?",
-      "entry_state": "Mọi dấu trên clay có thể bị mặc định là câu chữ trực tiếp từ Sumer.",
-      "exit_state": "Mystery đổi từ 'nó nói gì?' sang 'một record chưa nói trọn câu có thể giải quyết vấn đề gì tốt hơn trí nhớ người?'."
+      "title": "Trước chữ viết đã có một bài toán phải giải",
+      "narrative_job": "Xác lập formation pressure và ecology: nhu cầu giữ thông tin hành chính/xác thực tăng trong bối cảnh thiết chế lớn hơn, nhưng evidence không cho phép một nguyên nhân duy nhất hay một genealogy tuyến tính. Movement phải khiến câu hỏi chuyển từ 'ai phát minh?' sang 'những áp lực và thực hành nào khiến durable recording trở nên hữu ích?'.",
+      "entry_state": "Nguồn gốc được tưởng như một invention event đơn lẻ.",
+      "exit_state": "Nguồn gốc được hiểu như một quá trình nhiều thực hành và nhiều áp lực cùng hội tụ; administration là trọng tâm nhưng không phải monocause."
     }
   ],
   "acts": [
     {
       "id": "A01",
       "role": "opening",
-      "title": "Một vật thể chưa chịu kể chuyện"
+      "title": "Khi một xã hội cần trí nhớ ngoài con người"
     }
   ]
 }

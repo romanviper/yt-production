@@ -1,77 +1,27 @@
-# P01 — Từ một tấm đất sét im lặng tới thông tin trên bề mặt
+# P01 — Trước chữ viết đã có một bài toán phải giải
 
-Trên tấm đất sét mang mã P005390, các dấu vẫn còn khá rõ sau gần năm nghìn năm.
+Chúng ta thường kể lịch sử chữ viết từ khoảnh khắc một dấu xuất hiện trên đất sét. Cách kể ấy rất hấp dẫn, bởi nó cho câu chuyện một điểm bắt đầu rõ ràng: trước đó con người chưa viết, sau đó họ viết. Nhưng bằng chứng ở miền nam Mesopotamia không cho chúng ta một khoảnh khắc gọn gàng như thế. Khi những hệ thống dấu sớm nhất xuất hiện, chúng bước vào một thế giới đã có sẵn một vấn đề khó hơn nhiều: làm thế nào để một lượng hàng, một loại vật phẩm, một sự xác nhận hay một nghĩa vụ vẫn còn có thể được kiểm tra khi người đã đếm, đã giao, đã nhận hay đã chứng kiến không còn đứng ở đó nữa?
 
-Chúng không trả lại cho chúng ta một giọng nói.
+Đó là một vấn đề của trí nhớ, nhưng không chỉ là trí nhớ cá nhân. Khi việc quản lý ngày càng đòi hỏi phải đếm, phân loại và xác thực nhiều thứ hơn, lời nhớ của một người trở nên mong manh. Thông tin cần tồn tại đủ lâu để người khác có thể nhìn lại. Nó cần giữ được một cấu trúc nào đó: bao nhiêu, thuộc loại nào, có liên quan tới ai hoặc tới thao tác nào. Và trước khi có một hệ thống mà chúng ta sẵn sàng gọi là chữ viết, người Mesopotamia đã thử giải những phần của bài toán ấy bằng nhiều cách khác nhau.
 
-Các nhà nghiên cứu xác định đây là một bảng hành chính thuộc giai đoạn Uruk III. Trên đó có những số lượng liên quan đến ngũ cốc, được sắp xếp thành các phần và các cột. Nhưng từ riêng tấm bảng này, ta không thể phục hồi chắc chắn giao dịch cụ thể đã xảy ra, không thể dựng lại một câu nói trọn vẹn, và cũng không thể xác định chắc chắn ngôn ngữ nằm phía sau hệ thống dấu.
+Dấu vết chắc nhất nối những thực hành trước chữ viết với proto-cuneiform không nằm ở một bảng từ vựng cổ xưa nào. Nó nằm ở con số. Các hệ thống số cho thấy sự liên tục vật chất mạnh hơn nhiều so với phần lớn những dấu không phải số. Điều đó quan trọng, bởi nó gợi ý rằng nhu cầu ghi lại lượng không phải một công dụng xuất hiện sau khi chữ viết đã được phát minh. Trái lại, việc giữ lượng ổn định qua thời gian đã là một trong những năng lực mà các cộng đồng tìm cách xây dựng trước khi hệ thống dấu trên tablet đạt hình thức về sau.
 
-Đất sét còn. Một phần cấu trúc của thông tin còn. Bối cảnh cụ thể đã tạo ra bản ghi thì không còn nguyên vẹn với nó.
+Trong câu chuyện phổ biến về nguồn gốc chữ viết, những vật nhỏ bằng đất sét thường được gọi là token và được xếp thành bước đầu tiên của một chiếc thang: token trở thành bulla, bulla trở thành tablet, tablet trở thành chữ viết. Chiếc thang đó có ưu điểm là dễ nhớ. Vấn đề là bằng chứng không đơn giản như vậy.
 
-Nếu mục đích của chữ viết chỉ là giữ lại lời nói, P005390 có vẻ như một vật thể thiếu mất phần quan trọng nhất.
+Các token thời đồ đá mới không phải tất cả đều là những đơn vị của một mã kế toán thống nhất kéo dài hàng thiên niên kỷ. Chúng có nhiều chức năng, và chỉ riêng việc một vật nhỏ bằng đất sét tồn tại không đủ để nói nó đang đại diện cho hàng hóa hay con số theo một quy ước chung. Ở những giai đoạn muộn hơn, một số token đơn giản đặt trong bulla rõ ràng có chức năng số hoặc kế toán. Nhưng từ đó nhảy thẳng tới kết luận rằng toàn bộ lịch sử token là một hệ thống kế toán đang từ từ tiến hóa thành chữ viết sẽ biến một phần bằng chứng có thật thành một câu chuyện quá trơn tru.
 
-Nhưng có thể nó đang trả lời một bài toán khác.
+Thay vì một chiếc thang, chúng ta nên hình dung một môi trường gồm nhiều thực hành tồn tại song song. Có đếm. Có niêm phong và dấu seal. Có bulla. Có tablet số. Có hình ảnh và dấu hiệu dùng để phân loại hoặc xác thực. Và có những thiết chế ngày càng cần giữ thông tin vượt khỏi khoảnh khắc giao tiếp trực tiếp. Không một thành phần nào trong số đó, đứng riêng, cho chúng ta một đường huyết thống hoàn chỉnh dẫn tới chữ viết. Nhưng đặt cạnh nhau, chúng cho thấy một xã hội đang thử nhiều cách để làm cho thông tin bền hơn, có thể kiểm tra hơn và ít phụ thuộc hơn vào trí nhớ của một người duy nhất.
 
-Muốn thấy bài toán đó, ta phải rời tấm bảng này một lúc và nhìn sang Chogha Mish, ở miền tây nam Iran, vào cuối thời Uruk.
+Ở đây, quy mô hành chính là một áp lực lớn. Những văn bản proto-cuneiform sớm còn lại chủ yếu thuộc bối cảnh hành chính, và đó không phải một chi tiết nhỏ. Một hệ thống phải theo dõi số lượng, loại hàng và các quan hệ lặp lại có lý do rất thực tế để cần record. Nhưng “phần lớn những gì còn lại là hành chính” không đồng nghĩa với “hành chính là nguyên nhân duy nhất sinh ra chữ viết”. Corpus còn lại đã đi qua hàng nghìn năm của bảo tồn, thất lạc, đào bới và lựa chọn. Những gì sống sót không phải là một mẫu hoàn hảo của toàn bộ đời sống xã hội đã từng tồn tại.
 
-Ở đó, các nhà khảo cổ tìm thấy nhiều đồ vật bằng đất sét liên quan đến ghi đếm và xác thực. Chúng không xếp thành một hàng tiến hóa đẹp mắt. Chúng cùng tồn tại, như những cách khác nhau để giải những phần khác nhau của cùng một vấn đề.
+Ngay cả khi một tablet cho chúng ta con số và hàng hóa, chúng ta cũng phải cẩn thận với câu chuyện mà mình gắn vào nó. Một record có thể thuộc một bối cảnh kế toán mà vẫn chưa cho phép ta chắc chắn đó là thuế, cống nạp, trao đổi thị trường hay phân phối lại. Những cơ chế ấy không phải các từ có thể thay thế cho nhau. Muốn gọi một giao dịch là nghĩa vụ lao động, quyền sở hữu hay phân phối lại, ta cần thêm bằng chứng về dòng hàng, người tham gia, quota, thời hạn, seal hoặc điều kiện chuyển giao. Con số chứng minh rằng một thứ đang được đếm. Nó không tự nói cho chúng ta biết toàn bộ thiết chế đứng sau phép đếm đó.
 
-Một trong số đó là một phong bì bằng đất sét đã vỡ.
+Sự dè dặt này không làm câu chuyện yếu đi. Ngược lại, nó giúp thấy rõ vấn đề mà các record đang giải quyết. Khi một tổ chức phải dựa vào nhiều người, nhiều lần chuyển giao và nhiều lần kiểm tra, thông tin không thể chỉ sống trong đầu người có mặt ở lần giao dịch đầu tiên. Một record bền có thể giúp một quan hệ được mang sang thời điểm khác và đặt trước mắt một người khác. Ở mức đó, nhu cầu của thiết chế và sự phát triển của kỹ thuật ghi chép có thể đã thúc đẩy lẫn nhau: tổ chức lớn hơn tạo thêm nhu cầu record; record tốt hơn, đến lượt nó, có khả năng mở rộng một số năng lực tổ chức.
 
-Bên trong lớp vỏ vẫn còn những thẻ đất sét nhỏ dùng trong việc ghi đếm. Lớp vỏ bên ngoài được niêm phong. Muốn giữ một lượng thông tin, hệ thống này dùng những vật nhỏ nằm bên trong một vật chứa, rồi dùng dấu niêm phong để kiểm soát hay xác thực vật chứa đó.
+Nhưng đây vẫn là một mô hình phản hồi cần được kiểm tra, không phải một phán quyết rằng thành phố lớn sinh ra chữ viết hay chữ viết sinh ra thành phố lớn. Hai hiện tượng xuất hiện cùng nhau cho thấy chúng tương thích và tạo áp lực cho nhau; sự đồng xuất hiện đó không tự chứng minh một mũi tên nguyên nhân duy nhất. Chính vì vậy, câu hỏi “ai phát minh ra chữ viết?” có thể khiến chúng ta nhìn sai chỗ ngay từ đầu. Nó đi tìm một người, một thời điểm và một bước nhảy, trong khi bằng chứng đang chỉ về một quá trình phân tán hơn.
 
-Thông tin số nằm bên trong.
+Trước khi những dấu sớm nhất trên tablet có thể làm điều mà chúng ta ngày nay mong đợi ở một câu viết, đã có một hệ sinh thái của đếm, phân loại, niêm phong, xác thực và lưu dấu. Một số thành phần của nó rất cũ. Một số chỉ liên kết với nhau rõ hơn ở những giai đoạn muộn. Một số đường nối vẫn còn tranh luận. Điều chắc chắn hơn là nhu cầu giữ thông tin ổn định đã tồn tại trước khi câu chuyện có thể được rút gọn thành một “phát minh”.
 
-Nhưng Chogha Mish còn cho ta một vật khác.
+Và đó mới là điểm xuất phát hữu ích. Không phải một thiên tài vô danh bỗng nghĩ ra chữ viết, mà là một xã hội đã có những thứ cần nhớ theo cách trí nhớ con người không còn đủ đáng tin cậy cho mọi tình huống. Khi nhu cầu ấy gặp những thực hành ghi đếm và xác thực đã có sẵn, đất sét bắt đầu trở thành nơi thông tin có thể ở lại.
 
-Một mảnh bảng số cũng đã được niêm phong. Trên chính bề mặt của nó có năm dấu số.
-
-Không có những thẻ đếm nằm trong một lớp vỏ.
-
-Con số đã xuất hiện trên mặt đất sét.
-
-Hai vật này không chứng minh rằng chiếc phong bì trực tiếp biến thành chiếc bảng. Cũng không có cơ sở để coi mọi loại thẻ đất sét cổ như một mã kế toán duy nhất kéo dài hàng nghìn năm. Thẻ đếm, phong bì, con dấu, bảng số và những thực hành hành chính khác tạo thành một hệ sinh thái phức tạp hơn nhiều.
-
-Nhưng khi đặt hai vật cạnh nhau, một thay đổi vật chất hiện ra rất rõ.
-
-Ở một vật, lượng được mang bởi những vật nhỏ nằm trong lớp vỏ.
-
-Ở vật kia, lượng được mang bằng dấu ngay trên bề mặt.
-
-Bề mặt đất sét bắt đầu làm một việc mới.
-
-Nó không chỉ bọc lấy thông tin hay nhận một dấu niêm phong. Chính nó trở thành nơi thông tin số được ghi lại.
-
-Một vật thể giờ có thể mang dấu số trên chính thân nó. Thông tin không còn nhất thiết phải nằm trong những vật rời được chứa bên trong.
-
-Ta vẫn chưa có một câu viết.
-
-Ta thậm chí chưa có lý do để gọi mọi thứ ở đây là chữ viết.
-
-Nhưng ta đã có một bề mặt đang trở thành nơi giữ quan hệ giữa dấu và lượng.
-
-Các hệ thống số cũng là nơi bằng chứng cho thấy sự liên tục vật chất rõ nhất giữa những phương tiện ghi đếm trước chữ viết và proto-cuneiform sau đó. Với những loại dấu khác, đường liên tục không chắc như vậy.
-
-Vì thế, thứ hiện ra ở Chogha Mish không phải một khoảnh khắc phát minh duy nhất.
-
-Đó là nhiều giải pháp vật chất cùng tồn tại: thẻ để ghi đếm, lớp vỏ và con dấu để kiểm soát hay xác thực, bảng số để đưa con số lên bề mặt.
-
-Quy mô hành chính là một áp lực quan trọng trong quá trình này. Khi lượng thông tin cần được ghi đếm và theo dõi tăng lên, những phương tiện ghi chép ổn định hơn trở nên có giá trị hơn. Nhưng bằng chứng không cho phép biến hành chính thành nguyên nhân duy nhất của chữ viết.
-
-P005390 vì thế bắt đầu bớt kỳ lạ.
-
-Tấm bảng ấy không cần phải bảo quản nguyên vẹn một lời nói để trở nên hữu ích.
-
-Nó có thể giữ một phần thông tin có cấu trúc trên một vật thể bền, ngay cả khi bối cảnh cụ thể của việc ghi chép không còn đi cùng nó.
-
-Chogha Mish mới chỉ cho ta thấy bước đầu của chuyện đó: con số có thể rời khỏi vật chứa và xuất hiện trên bề mặt.
-
-Nhưng một con số đứng một mình vẫn rất hạn chế.
-
-Nó chưa cho biết số đó gắn với thứ gì. Nó chưa cho biết nhiều dấu trên cùng một bảng có thể được tổ chức ra sao để giữ một quan hệ phức tạp hơn việc đếm đơn thuần.
-
-Đó là giới hạn mà phần tiếp theo phải vượt qua.
-
-Khi số lượng, loại hàng và vị trí của các dấu bắt đầu cùng nằm trên một bề mặt, bảng đất sét không còn chỉ mang một con số.
-
-Nó bắt đầu mang một cấu trúc có thể được dùng lại.
+Nhưng nếu những nhu cầu ấy đã tồn tại, và nhiều công cụ để giữ thông tin cũng đã tồn tại, thì một câu hỏi khó hơn lập tức xuất hiện: điều gì khiến hệ thống dấu mới trên tablet thực sự khác biệt — và hữu ích — so với những gì đã có trước nó?

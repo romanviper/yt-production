@@ -1,7 +1,5 @@
 # Continuity Input — P01
 
-Cycle: `C003`
-
 Dependencies: Không có.
 
 ## Prior handoff
