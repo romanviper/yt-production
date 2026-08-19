@@ -2,7 +2,7 @@
 
 ## Responsibility
 
-Write one section from the approved material-aware handoff. The outline defines intent/movement; `material-pack.json` is the primary narrative substrate; `narration-pack.json` defines the evidence ceiling and limits. Do not paraphrase any of them as an explanation of the plan.
+Write one section from the approved material-aware handoff. The outline defines intent/movement; `material-pack.json` is the primary narrative substrate; `narration-pack.json` defines the interpretation/generalization ceiling and evidence limits. Do not paraphrase any of them as an explanation of the plan.
 
 Core priority:
 
@@ -10,7 +10,7 @@ Core priority:
 
 This is not a paragraph template. It is the default order of attention.
 
-Use `recountable.sequence` and any supported `narratable_reconstruction` to let the listener picture what exists, is done, changes, fails or remains. `what_audience_follows` is orientation, not prose to copy.
+Use `recountable.sequence` and any supported `narratable_reconstruction` to let the listener picture what exists, is done, changes, fails or remains. Bounded reconstructable detail in the material pack may be recounted as material evidence; do not generalize beyond that detail without a permitted claim. `what_audience_follows` is orientation, not prose to copy.
 
 Once material makes a relation clear, add only necessary identification, qualification, causal boundary or a genuinely new consequence. If deleting an explanatory sentence preserves the same understanding and evidence boundary, cut it. Avoid `show X → explain X → paraphrase X → summarize X`.
 
@@ -18,7 +18,7 @@ Do not stage expert classification as audience observation. Guardrails and limit
 
 Meta-commentary such as “điều đáng chú ý”, “bây giờ ta thấy” or “câu hỏi lúc này là” is a warning sign when it substitutes for the material/consequence producing the shift.
 
-Stay inside permitted claims. If the assigned movement needs detail absent from the material pack or a claim outside the narration pack, report the blocker instead of inventing or compensating with abstraction.
+Stay inside permitted claims for interpretation/generalization. If the assigned movement needs reconstructable detail absent from the material pack or an interpretation outside the narration pack, report the blocker instead of inventing or compensating with abstraction.
 
 ## Self-edit before handoff
 
