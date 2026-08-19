@@ -21,7 +21,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/replay.py
     from task import create_task
 
 
-REPLAY_STEPS = ("outline", "design_section", "draft_section")
+REPLAY_STEPS = ("outline", "draft_section")
 STATE_PATH = "replay-state.json"
 LOG_PATH = "replay-requests.jsonl"
 
@@ -41,7 +41,7 @@ def _log(product_dir: Path, record: dict[str, Any]) -> None:
 
 def _step_range(start: str, through: str) -> list[str]:
     if start not in REPLAY_STEPS or through not in REPLAY_STEPS:
-        raise ValueError("Replay supports outline, design_section and draft_section.")
+        raise ValueError("Replay supports outline and draft_section.")
     start_index = REPLAY_STEPS.index(start)
     end_index = REPLAY_STEPS.index(through)
     if end_index < start_index:
@@ -50,8 +50,8 @@ def _step_range(start: str, through: str) -> list[str]:
 
 
 def _require_section(steps: list[str], section: str | None) -> None:
-    if any(step != "outline" for step in steps) and not section:
-        raise ValueError("Replay through section work requires --section P##.")
+    if "draft_section" in steps and not section:
+        raise ValueError("Replay through draft_section requires --section P##.")
 
 
 def _work_state(product_dir: Path, task_id: str) -> str | None:
@@ -116,17 +116,13 @@ def start_replay(
     if start == "outline":
         outline = read_json(product_dir / "02_outline" / "outline.json")
         if outline.get("status") != "approved":
-            raise ValueError(
-                "Replay from outline requires an approved baseline; finish the current outline or use rework.py."
-            )
+            raise ValueError("Replay from outline requires an approved baseline; finish the current outline or use rework.py.")
 
     existing_path = _state_path(product_dir)
     if existing_path.is_file():
         existing = read_json(existing_path)
         if existing.get("status") == "active":
-            raise ValueError(
-                f"Replay {existing.get('id', '?')} is already active; finish or cancel it before starting another."
-            )
+            raise ValueError(f"Replay {existing.get('id', '?')} is already active; finish or cancel it first.")
 
     replay_id = "RP-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     work = _route_step(
@@ -138,7 +134,7 @@ def start_replay(
         execution_runtime=execution_runtime,
     )
     state: dict[str, Any] = {
-        "schema_version": 1,
+        "schema_version": 2,
         "id": replay_id,
         "status": "active",
         "requested_by": "user",
@@ -158,7 +154,7 @@ def start_replay(
     _log(
         product_dir,
         {
-            "schema_version": 1,
+            "schema_version": 2,
             "id": replay_id,
             "requested_by": "user",
             "requested_at": state["created_at"],
@@ -191,13 +187,6 @@ def _outline_ready(product_dir: Path) -> bool:
     return read_json(product_dir / "02_outline" / "outline.json").get("status") == "approved"
 
 
-def _design_ready(product_dir: Path, section: str) -> bool:
-    root = product_dir / "03_sections" / section
-    plan = read_json(root / "story-plan.json")
-    state = read_json(root / "section.json")
-    return plan.get("status") == "approved" and state.get("status") == "ready_for_draft"
-
-
 def continue_replay(product_dir: Path) -> dict[str, Any]:
     product_dir = product_dir.resolve()
     path = _state_path(product_dir)
@@ -214,16 +203,9 @@ def continue_replay(product_dir: Path) -> dict[str, Any]:
         state["blocked_on"] = "task_completion"
         return _write_state(product_dir, state)
 
-    section = state.get("section")
     if current_step == "outline" and not _outline_ready(product_dir):
         state["blocked_on"] = "outline_approval"
         return _write_state(product_dir, state)
-    if current_step == "design_section":
-        if not section:
-            raise ValueError("Replay design step is missing section.")
-        if not _design_ready(product_dir, str(section)):
-            state["blocked_on"] = "story_plan_approval"
-            return _write_state(product_dir, state)
 
     next_index = int(state["current_index"]) + 1
     steps = list(state["steps"])
@@ -240,6 +222,7 @@ def continue_replay(product_dir: Path) -> dict[str, Any]:
         created = [str(path.relative_to(product_dir)) for path in materialize(product_dir)]
         _record_event(state, "sections_materialized", archived=archived, created=created)
 
+    section = state.get("section")
     work = _route_step(
         product_dir,
         next_step,
