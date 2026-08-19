@@ -16,8 +16,8 @@ task:
 
 replay:
 	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)
-	@test -n "$(FROM)" || (echo "Thiếu FROM=outline|design_section|draft_section" && exit 1)
-	@test -n "$(THROUGH)" || (echo "Thiếu THROUGH=outline|design_section|draft_section" && exit 1)
+	@test -n "$(FROM)" || (echo "Thiếu FROM=outline|draft_section" && exit 1)
+	@test -n "$(THROUGH)" || (echo "Thiếu THROUGH=outline|draft_section" && exit 1)
 	@test -n "$(REQUEST)" || (echo "Thiếu REQUEST=..." && exit 1)
 	@$(PYTHON) scripts/replay.py start "products/$(PRODUCT)" --from "$(FROM)" --through "$(THROUGH)" $(if $(SECTION),--section "$(SECTION)") --request "$(REQUEST)" $(if $(RUNTIME),--runtime "$(RUNTIME)")
 
