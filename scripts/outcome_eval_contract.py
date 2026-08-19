@@ -40,9 +40,9 @@ def outcome_review_template(section: str) -> str:
         f"# Outcome Evaluation — {section}\n\n"
         "Verdict: changes_requested\n\n"
         "## Outcome judgment\n\n"
-        "Describe what the listener can reconstruct and whether the section advances its act.\n\n"
+        "Judge the listener progression, authorship, section objective, causal clarity, continuity and evidence integrity.\n\n"
         "## Issues\n\n"
         "For each material issue: location, observation, impact, responsible layer, revision scope and acceptance test.\n\n"
         "## Routing\n\n"
-        "Route the result to prose_execution, product_architecture or evidence. Use expository_reconstruction_failure when the listener mainly receives interpretation instead of reconstructable reality.\n"
+        "Route the result to prose_execution, product_architecture or evidence. Diagnose method only after an outcome problem is established.\n"
     )
