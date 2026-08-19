@@ -3,8 +3,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 try:
     from scripts.common import word_count
 except ModuleNotFoundError:
@@ -42,9 +40,9 @@ def outcome_review_template(section: str) -> str:
         f"# Outcome Evaluation — {section}\n\n"
         "Verdict: changes_requested\n\n"
         "## Outcome judgment\n\n"
-        "Describe what the audience experiences and whether the section advances its act.\n\n"
+        "Describe what the listener can reconstruct and whether the section advances its act.\n\n"
         "## Issues\n\n"
         "For each material issue: location, observation, impact, responsible layer, revision scope and acceptance test.\n\n"
         "## Routing\n\n"
-        "Route the result to prose_execution, local_design, product_architecture or evidence.\n"
+        "Route the result to prose_execution, product_architecture or evidence. Use expository_reconstruction_failure when the listener mainly receives interpretation instead of reconstructable reality.\n"
     )
