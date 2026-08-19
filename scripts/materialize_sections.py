@@ -94,11 +94,8 @@ def materialize(product_dir: Path) -> list[Path]:
 
     claims_doc = read_json(product_dir / "01_research" / "claim-ledger.json")
     sources_doc = read_json(product_dir / "01_research" / "source-index.json")
-    material_ledger_path = product_dir / "01_research" / "material-ledger.json"
-    materials_doc = read_json(material_ledger_path)
     claims = {item["id"]: item for item in claims_doc.get("claims", [])}
     sources = {item["id"]: item for item in sources_doc.get("sources", [])}
-    materials = {item["id"]: item for item in materials_doc.get("materials", []) if item.get("id")}
 
     contract_errors = validate_outline_contract(outline, set(claims), product.get("target"))
     if contract_errors:
@@ -106,7 +103,17 @@ def materialize(product_dir: Path) -> list[Path]:
     outline = normalize_outline_contract(outline, product.get("target"))
     current_contract = outline.get("schema_version") == OUTLINE_SCHEMA_VERSION
     material_aware = _material_aware(outline)
-    _validate_material_aware_outline(outline, materials)
+
+    material_ledger_path = product_dir / "01_research" / "material-ledger.json"
+    materials: dict[str, dict[str, Any]] = {}
+    if material_aware:
+        if not material_ledger_path.is_file():
+            raise FileNotFoundError("Material-aware outline requires 01_research/material-ledger.json.")
+        materials_doc = read_json(material_ledger_path)
+        if materials_doc.get("status") != "complete":
+            raise ValueError("Material-aware section materialization requires a complete material ledger.")
+        materials = {item["id"]: item for item in materials_doc.get("materials", []) if item.get("id")}
+        _validate_material_aware_outline(outline, materials)
 
     cycle_id = product.get("production_cycle", {}).get("id")
     if current_contract and cycle_id and outline.get("cycle_id") != cycle_id:
