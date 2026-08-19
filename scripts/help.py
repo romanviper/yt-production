@@ -20,9 +20,16 @@ make impact PRODUCT=<slug> SECTION=P04
 make assemble PRODUCT=<slug>
 make test
 
-Material-aware section lifecycle:
+Current section lifecycle:
 approve outline -> materialize sections -> draft_section -> review_section
-Story-plan/design_section is legacy compatibility only and is not part of the active material-aware flow.
+Story-plan/design_section is legacy compatibility only.
+
+Bounded writer evidence access:
+python scripts/draft_evidence.py products/<slug> <task-id> scope
+python scripts/draft_evidence.py products/<slug> <task-id> sources
+python scripts/draft_evidence.py products/<slug> <task-id> source --id SRC-0001
+python scripts/draft_evidence.py products/<slug> <task-id> search --query "term"
+python scripts/draft_evidence.py products/<slug> <task-id> record --source-id SRC-0001 --parent-locator "..." --locator "..." --detail "..."
 
 Task lifecycle:
 python scripts/task.py list products/<slug>
