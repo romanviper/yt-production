@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create cycle-safe section workspaces and deterministic writer handoffs."""
+"""Create cycle-safe section workspaces and deterministic route-neutral writer handoffs."""
 
 from __future__ import annotations
 
@@ -10,66 +10,24 @@ from typing import Any
 
 try:
     from scripts.common import read_json, sha256, write_json
-    from scripts.outline_contract import OUTLINE_SCHEMA_VERSION, normalize_outline_contract, render_outline_value, render_section_question_payoff, validate_outline_contract
-    from scripts.story_plan_contract import build_narration_pack, empty_story_plan
+    from scripts.outline_contract import (
+        OUTLINE_SCHEMA_VERSION,
+        normalize_outline_contract,
+        render_outline_value,
+        render_section_question_payoff,
+        validate_outline_contract,
+    )
+    from scripts.story_plan_contract import build_narration_pack, empty_story_plan, is_direct_authorship_outline
 except ModuleNotFoundError:
     from common import read_json, sha256, write_json
-    from outline_contract import OUTLINE_SCHEMA_VERSION, normalize_outline_contract, render_outline_value, render_section_question_payoff, validate_outline_contract
-    from story_plan_contract import build_narration_pack, empty_story_plan
-
-
-def _material_aware(outline: dict[str, Any]) -> bool:
-    return outline.get("script_architecture", {}).get("story_material_contract_version") == 1
-
-
-def _material_projection(material: dict[str, Any], section_claim_ids: set[str]) -> dict[str, Any]:
-    linked_claim_ids = list(material.get("claim_ids", []))
-    permitted_claim_ids = [claim_id for claim_id in linked_claim_ids if claim_id in section_claim_ids]
-    recountable = {
-        "what_audience_follows": material.get("what_audience_follows", ""),
-        "sequence": list(material.get("sequence", [])),
-    }
-    if isinstance(material.get("narratable_reconstruction"), dict):
-        recountable["narratable_reconstruction"] = material["narratable_reconstruction"]
-    return {
-        key: value
-        for key, value in {
-            "id": material.get("id"),
-            "kind": material.get("kind"),
-            "label": material.get("label"),
-            "recountable": recountable,
-            "linked_claim_ids": linked_claim_ids,
-            "permitted_claim_ids": permitted_claim_ids,
-            "source_refs": list(material.get("source_refs", [])),
-            "representativeness": material.get("representativeness"),
-            "limitations": list(material.get("limitations", [])),
-            "narratability": material.get("narratability", "legacy_unrated"),
-        }.items()
-        if value not in (None, "", [])
-    }
-
-
-def _validate_material_aware_outline(outline: dict[str, Any], materials: dict[str, dict[str, Any]]) -> None:
-    if not _material_aware(outline):
-        return
-    for section in outline.get("sections", []):
-        section_id = section.get("id", "?")
-        for field in ["audience_experience", "transition"]:
-            if not isinstance(section.get(field), str) or not section[field].strip():
-                raise ValueError(f"Material-aware outline section {section_id} requires {field}.")
-        material_ids = section.get("material_ids")
-        if not isinstance(material_ids, list) or not material_ids or not all(isinstance(item, str) and item for item in material_ids):
-            raise ValueError(f"Material-aware outline section {section_id} requires material_ids.")
-        unknown = [material_id for material_id in material_ids if material_id not in materials]
-        if unknown:
-            raise ValueError(f"Section {section_id} references missing materials: {', '.join(unknown)}")
-        section_claim_ids = set(section.get("claim_ids", []))
-        for material_id in material_ids:
-            linked = set(materials[material_id].get("claim_ids", []))
-            if linked and not linked.intersection(section_claim_ids):
-                raise ValueError(
-                    f"Section {section_id} material {material_id} has no linked claim inside the section evidence ceiling."
-                )
+    from outline_contract import (
+        OUTLINE_SCHEMA_VERSION,
+        normalize_outline_contract,
+        render_outline_value,
+        render_section_question_payoff,
+        validate_outline_contract,
+    )
+    from story_plan_contract import build_narration_pack, empty_story_plan, is_direct_authorship_outline
 
 
 def materialize(product_dir: Path) -> list[Path]:
@@ -83,26 +41,15 @@ def materialize(product_dir: Path) -> list[Path]:
 
     claims_doc = read_json(product_dir / "01_research" / "claim-ledger.json")
     sources_doc = read_json(product_dir / "01_research" / "source-index.json")
-    claims = {item["id"]: item for item in claims_doc.get("claims", [])}
-    sources = {item["id"]: item for item in sources_doc.get("sources", [])}
+    claims = {item["id"]: item for item in claims_doc.get("claims", []) if isinstance(item, dict) and item.get("id")}
+    sources = {item["id"]: item for item in sources_doc.get("sources", []) if isinstance(item, dict) and item.get("id")}
 
     contract_errors = validate_outline_contract(outline, set(claims), product.get("target"))
     if contract_errors:
         raise ValueError("Invalid approved outline: " + "; ".join(contract_errors))
     outline = normalize_outline_contract(outline, product.get("target"))
     current_contract = outline.get("schema_version") == OUTLINE_SCHEMA_VERSION
-    material_aware = _material_aware(outline)
-
-    material_ledger_path = product_dir / "01_research" / "material-ledger.json"
-    materials: dict[str, dict[str, Any]] = {}
-    if material_aware:
-        if not material_ledger_path.is_file():
-            raise FileNotFoundError("Material-aware outline requires 01_research/material-ledger.json.")
-        materials_doc = read_json(material_ledger_path)
-        if materials_doc.get("status") != "complete":
-            raise ValueError("Material-aware section materialization requires a complete material ledger.")
-        materials = {item["id"]: item for item in materials_doc.get("materials", []) if item.get("id")}
-        _validate_material_aware_outline(outline, materials)
+    direct_authorship = is_direct_authorship_outline(outline)
 
     cycle_id = product.get("production_cycle", {}).get("id")
     if current_contract and cycle_id and outline.get("cycle_id") != cycle_id:
@@ -146,11 +93,11 @@ def materialize(product_dir: Path) -> list[Path]:
                 )
 
         state = {
-            "schema_version": 3 if material_aware else (2 if current_contract else 1),
+            "schema_version": 4 if direct_authorship else (2 if current_contract else 1),
             "id": section_id,
             "title": item["title"],
             "order": item["order"],
-            "status": "ready_for_draft" if material_aware else "needs_story_plan",
+            "status": "ready_for_draft" if direct_authorship else "needs_story_plan",
             "human_approved": False,
             "dependencies": item.get("dependencies", []),
             "narrative_job": item["narrative_job"],
@@ -160,10 +107,8 @@ def materialize(product_dir: Path) -> list[Path]:
             "cycle_id": cycle_id,
             "outline_sha256": sha256(outline_path),
         }
-        if material_aware:
-            state["audience_experience"] = item["audience_experience"]
-            state["material_ids"] = list(item["material_ids"])
-            state["transition"] = item["transition"]
+        if isinstance(item.get("transition"), str) and item["transition"].strip():
+            state["transition"] = item["transition"].strip()
         if current_contract:
             section_acts = list(dict.fromkeys(movement["act_id"] for movement in section_movements))
             state["movement_ids"] = [movement["id"] for movement in section_movements]
@@ -206,23 +151,18 @@ def materialize(product_dir: Path) -> list[Path]:
             section_acts = list(dict.fromkeys(movement["act_id"] for movement in section_movements))
             act_lines = [f"{acts[act_id]['role']} — {acts[act_id]['title']}" for act_id in section_acts]
             movement_lines = [f"{movement['id']} — {movement['title']}" for movement in section_movements]
-            material_block = ""
-            if material_aware:
-                material_block = (
-                    f"\n\n## Audience experience\n\n{item['audience_experience']}\n\n"
-                    f"## Story material\n\n{render_outline_value(item['material_ids'])}\n\n"
-                    f"## Transition\n\n{item['transition']}"
-                )
+            transition = render_outline_value(item.get("transition"), "Section kế tiếp theo whole-product progression.")
+            evidence_territory = render_outline_value(item.get("claim_ids"), "Không có claim allowance.")
             text = (
                 f"# {section_id} — {item['title']}\n\n"
                 f"Cycle: `{cycle_id}`\n\n"
                 f"## Whole-script acts\n\n{render_outline_value(act_lines)}\n\n"
                 f"## Macro movements\n\n{render_outline_value(movement_lines)}\n\n"
-                f"## Narrative job\n\n{item['narrative_job']}\n\n"
+                f"## Section objective\n\n{item['narrative_job']}\n\n"
                 f"## Entry state\n\n{item['entry_state']}\n\n"
-                f"## Exit state\n\n{item['exit_state']}"
-                f"{material_block}\n\n"
-                f"## Anchor options\n\n{render_outline_value(item.get('anchor_options'))}\n\n"
+                f"## Exit state\n\n{item['exit_state']}\n\n"
+                f"## Evidence territory\n\n{evidence_territory}\n\n"
+                f"## Transition\n\n{transition}\n\n"
                 f"## Continuity in\n\n{render_outline_value(item.get('continuity_in'))}\n\n"
                 f"## Continuity out\n\n{render_outline_value(item.get('continuity_out'))}\n\n"
                 f"## Non-goal\n\n{render_outline_value(item.get('non_goal'))}\n"
@@ -266,49 +206,28 @@ def materialize(product_dir: Path) -> list[Path]:
 
         evidence_path = root / "evidence-pack.json"
         evidence_doc = {
-            "schema_version": 2 if material_aware else 1,
+            "schema_version": 3 if direct_authorship else 1,
             "section": section_id,
             "claims": selected_claims,
             "sources": [sources[source_id] for source_id in sorted(selected_source_ids)],
-            "rule": "Only claims in this pack may appear as substantive historical interpretations or generalizations in the draft.",
+            "rule": (
+                "These claims define the section truth territory. Writer may use any subset and any narrative route. "
+                "Source-level resolution may increase through bounded retrieval; new interpretation/generalization requires evidence authority."
+            ),
         }
-        if material_aware:
+        if direct_authorship:
             evidence_doc.update(
                 {
                     "cycle_id": cycle_id,
                     "outline_sha256": sha256(outline_path),
                     "claim_ids": list(item.get("claim_ids", [])),
+                    "source_ids": sorted(selected_source_ids),
                 }
             )
         write_json(evidence_path, evidence_doc)
         created.append(evidence_path)
 
-        if material_aware:
-            section_claim_ids = set(item.get("claim_ids", []))
-            selected_materials = [
-                _material_projection(materials[material_id], section_claim_ids)
-                for material_id in item["material_ids"]
-            ]
-            material_path = root / "material-pack.json"
-            write_json(
-                material_path,
-                {
-                    "schema_version": 2,
-                    "section": section_id,
-                    "cycle_id": cycle_id,
-                    "outline_sha256": sha256(outline_path),
-                    "material_ledger_sha256": sha256(material_ledger_path),
-                    "material_ids": list(item["material_ids"]),
-                    "materials": selected_materials,
-                    "writer_contract": (
-                        "Recountable fields are bounded source-supported reality and may carry narrative movement. "
-                        "permitted_claim_ids identify linked claims also inside this section's evidence ceiling. "
-                        "Any interpretation or generalization beyond the bounded material detail must stay inside the narration-pack permitted claims. "
-                        "Limitations constrain narration; what_audience_follows is orientation, not prose to paraphrase."
-                    ),
-                },
-            )
-            created.append(material_path)
+        if direct_authorship:
             narration_path = root / "narration-pack.json"
             build_narration_pack(product_dir, section_id)
             created.append(narration_path)
@@ -331,7 +250,7 @@ def materialize(product_dir: Path) -> list[Path]:
             )
             created.append(continuity)
 
-    if material_aware:
+    if direct_authorship:
         product.setdefault("stages", {})["sections"] = "ready_for_draft"
         product["status"] = "sections_materialized"
         product.setdefault("production_cycle", {})["status"] = "sections_materialized"
