@@ -2,166 +2,212 @@
 
 ## 1. Mental model
 
-Repo tách ba lớp:
+Repo separates **decision ownership**, not information ownership.
 
-| Layer | Chức năng | Nơi thực thi |
+| Layer | Owns | Does not own |
 |---|---|---|
-| Hard boundaries | authority, write scope, state, approval, packet integrity, evidence provenance, cycle integrity, hard cap | router, permissions, validators |
-| Soft logic | ordering, paragraph count, rhythm, phrasing | Agent phán đoán từ material |
-| Outcome evaluation | story motion, reconstruction, voice, causality, listening experience | review Agent rồi human gate |
+| Research | truth, source, locator, claim, confidence, contradiction, qualification, provenance | story route, carrier, reveal strategy |
+| Outline | central question, progression, section objective, entry/exit state, evidence territory, boundaries, continuity | paragraph order, carrier, exact narrative route |
+| Writer | factual selection inside allowance, narrative/causal route, POV, scale, imagery, reveal timing, prose craft | truth-ceiling expansion, approval |
+| Review | observable outcome judgment and diagnosis | enforcing one preferred storytelling method |
+| Harness | authority, write scope, lifecycle, approval, provenance, evidence ceiling, cycle/hash integrity, resource caps | authorship |
 
-Product Agent không sửa control plane. System Architect không trộn system change với product content trong cùng commit.
+Product Agent không sửa control plane. Human approval remains external.
 
-Human không phải tự sửa nhiều state để yêu cầu chạy lại một operation. Semantic rework reopen đúng lifecycle state, invalidate downstream khi cần và tạo task canonical mới.
+## 2. Current pipeline
 
-## 2. Pipeline hiện hành
+`Research`
+→ authoritative evidence store
 
-Đường material-aware:
+`Outline`
+→ architecture + objectives + evidence scope
 
-`research_workstream`
-→ `research_synthesis`
-→ `outline`
-→ deterministic `materialize_sections`
-→ `draft_section`
-→ `review_section`
+`Materialize`
+→ deterministic section state + truth/evidence handoff
 
-`story-plan` không còn là approval gate hoặc writer interface của material-aware cycle.
+`Draft`
+→ creative authorship + bounded on-demand evidence resolution
 
-Artifact story-plan cũ vẫn có thể tồn tại trong cycle/history legacy. `design_section` chỉ còn compatibility route cho artifact cũ và không được semantic rework sử dụng để cứu lỗi của material-aware product.
+`Review`
+→ outcome-first evaluation
 
-## 3. Claim, material và interpretation
+Không có intermediate creative-planning layer trên path mới. `design_section` / `story-plan` chỉ còn compatibility cho legacy products.
 
-Ba lớp không được trộn:
+## 3. Research: authoritative evidence, not pre-authored story
 
-- **Claim:** ta được phép khẳng định điều gì. Nó giữ evidence ceiling, qualification, counterevidence và causal boundary.
-- **Material:** narrator có thể thuật lại vật thể, người, hành động, process, trạng thái, failure hoặc consequence nào. Đây là nguồn chính tạo narrative experience.
-- **Interpretation:** material đó có ý nghĩa gì đối với movement hoặc thesis.
+Mỗi workstream bắt buộc trả:
 
-Nguyên tắc: `what evidence supports` ≠ `what narration can recount` ≠ `what it means`.
+- `sources.json`;
+- `claims.json`;
+- `synthesis.md`.
 
-`materials.json` giữ `sequence`, locator hẹp, claim IDs, representativeness, limitations và khi research mới/rework cho phép thì thêm `narratable_reconstruction` + `narratability`. Research cũ có sequence đủ cụ thể không bị ép research lại chỉ để đổi schema.
+Research giữ source/locator/provenance, chronology, claim/confidence/status, contradiction/counterevidence, qualification và factual limitation.
 
-Researcher giữ raw reconstructable reality; không thêm weather, cảm xúc, dialogue, motive, sensory detail hay action không được nguồn support.
+`materials.json` là **optional evidence-preservation artifact**. Dùng khi primary object/case có detail dễ mất qua compression hoặc provenance/limitation phức tạp. Nó không phải mandatory abstraction giữa claim và writer.
 
-## 4. Research synthesis
+Output mới không bắt buộc `what_audience_follows`, narratability class, carrier role, opening/reversal/ending candidate hay sequence kể chuyện. Legacy fields vẫn có thể tồn tại nhưng không có creative authority.
 
-`research_synthesis` tạo causal model và `story-material-map.json`.
+`consolidate_research.py` luôn giữ source/claim ledgers authoritative. Nếu optional materials tồn tại, chúng được remap provenance như evidence preservation; absence of material không block synthesis/outline.
 
-Với synthesis mới, map đánh giá không chỉ material có support logic hay không mà còn listener có thể hình dung/thuật lại điều gì qua audio:
+`research_synthesis` trả `research-synthesis.md`: causal/chronological model, contradictions, confidence/qualification và evidence gaps. `story-material-map.json` là legacy compatibility artifact, không còn output bắt buộc.
 
-- A: strong recountable material;
-- B: illustrative material, vẫn cần synthesis đáng kể;
-- C: material gap.
+## 4. Outline: architecture of inquiry/progression
 
-Critical phase loại C phải surface gap trước khi outline khóa architecture. Không yêu cầu mọi phase phải là scene hoặc event chain.
+Current/revised outline dùng schema v4 và đặt:
 
-## 5. Outline là lần review đầu tiên của video
+`script_architecture.writer_authorship_contract_version = 1`
 
-Outline quyết định **câu chuyện nào diễn ra**; writer quyết định **kể nó bằng prose như thế nào**.
+Outline quyết định:
 
-Material-aware outline dùng `script_architecture.story_material_contract_version = 1` và mỗi section phải có:
-
-- `narrative_job`, entry/exit state;
-- `audience_experience` mô tả reconstructable reality audience theo dõi;
-- `material_ids`;
-- `claim_ids`;
+- central question và audience promise;
+- đúng ba whole-script acts;
+- narrative movements;
+- section objective (`narrative_job`);
+- entry / exit state;
+- section boundary;
+- `claim_ids` làm evidence territory;
+- dependencies / continuity;
 - `transition`;
-- dependencies và target range.
+- word envelope.
 
-`audience_experience` không được chỉ là interpretation. Nếu bỏ lời giải thích, material vẫn phải còn state/action/change/failure/consequence có thể hình dung. Nếu không: thiếu detail → research; boundary/movement sai → outline. Không đẩy lỗi xuống writer.
+Outline không được bắt writer theo một carrier, object sequence, mental imagery sequence, reveal order hay paragraph route.
 
-## 6. Materialization và cycle integrity
+Legacy C003/older artifacts có thể còn `story_material_contract_version`, `audience_experience`, `material_ids`. Materializer mới đọc được chúng để migration không phá product, nhưng bỏ các field creative-route đó khỏi writer handoff.
 
-Sau human approval:
+Human review ở outline stage đánh giá architecture/evidence scope. Không cần nhìn thấy gần như toàn bộ prose trước khi approve; deep storytelling judgment có thể hợp lệ chỉ xuất hiện ở draft.
+
+## 5. Deterministic section handoff
+
+Sau human-approved outline:
 
 ```bash
-python scripts/approval.py approve-outline products/<slug>
 python scripts/materialize_sections.py products/<slug> --archive-previous-cycle
 ```
 
-Materializer deterministic tạo cho material-aware section:
+Direct-authoring section được tạo ở `ready_for_draft` với:
 
-- `section.json` với đúng `cycle_id`, outline hash, `audience_experience`, `material_ids`, transition và status `ready_for_draft`;
-- `brief.md` từ outline hiện tại;
-- `material-pack.json` chứa trực tiếp reconstructable material + source locators + limitations;
-- `evidence-pack.json` chứa claim allowance;
-- `narration-pack.json` schema material-aware, nối claim ceiling và evidence limits;
+- `section.json`: cycle/hash, objective, entry/exit, movements, dependencies, transition;
+- `brief.md`: objective, state change, evidence territory, continuity;
+- `evidence-pack.json`: approved claims + reviewed supporting source records;
+- `narration-pack.json`: truth ceiling, qualifications, guardrails và bounded retrieval scope;
 - `continuity-in.md`.
 
-Nó **không tạo story-plan** cho material-aware section.
+Không tạo `material-pack.json`. Không cần `story-plan.json` trên path mới.
 
-Materializer fail-closed nếu material không tồn tại hoặc cần claim nằm ngoài claim ceiling của section. Validator fail nếu section/evidence/material/narration pack khác cycle hoặc stale so với approved outline.
+Claims là permissions, không phải danh sách paragraph bắt buộc.
 
-Không được có trạng thái outline C003 nhưng section packet C002.
+## 6. Writer authorship
 
-## 7. Drafting
+`draft_section` nhận destination và truth boundary, không nhận route.
 
-Writer nhận:
+Writer tự quyết:
 
-- Creative Boundaries;
-- Channel Constitution;
-- story bible + voice profile;
-- local section brief;
-- material pack;
-- narration pack;
-- approved dependency handoffs.
+- fact nào dùng/bỏ trong allowance;
+- narrative/causal route;
+- POV/scale;
+- object/person/process/contrast nếu hữu ích;
+- reveal timing;
+- exposition placement;
+- imagery, vocabulary, rhythm, sentence craft.
 
-Writer không nhận story-plan trong material-aware cycle.
+Target là **crafted narration intended to be spoken aloud**, không mặc định conversational.
 
-Mặc định ưu tiên:
+Một route mà Research/Outline/Harness chưa dự đoán vẫn hợp lệ nếu đạt objective, evidence-safe, continuity đúng và không invent.
 
-`reconstructable reality → evidenced action/change → consequence → only needed interpretation`
+Concrete-first, before/after, recount-before-interpret, process sequence, raw clue, deletion pass… là optional heuristics. Chúng có thể giúp sửa document mode nhưng không phải schema validity.
 
-Đây không phải paragraph template. Writer tự quyết opening, ordering, paragraph, rhythm, transition và phrasing.
+## 7. Bounded evidence retrieval
 
-Guardrail mặc định là silent constraint. Trước handoff writer tự cắt explanation echo, repeated payoff, guardrail exposition và meta-commentary không tạo thêm fact/boundary/consequence.
-
-Target range không phải quota; hard cap 3.000 từ/work unit vẫn được máy giữ.
-
-## 8. Outcome evaluation
-
-`review_section` kiểm tra outcome độc lập. Audio test mạnh là:
-
-> Sau mỗi stretch chính, listener có thể kể lại cái gì vừa tồn tại, được làm, thay đổi, thất bại hoặc tạo consequence không?
-
-Nếu listener chủ yếu chỉ có thể nói “narrator vừa giải thích rằng X có nghĩa Y”, flag `expository_reconstruction_failure`.
-
-Routing mới của material-aware flow:
-
-- `prose_execution`: material/outline đủ, writer dùng prose sai;
-- `product_architecture`: movement, material selection hoặc section boundary sai;
-- `evidence`: detail/claim cần thiết thiếu hoặc không đủ chắc.
-
-Không dùng `local_design` như nơi mặc định cứu lỗi vì active flow không còn story-plan design layer.
-
-## 9. Rework và replay
-
-Semantic rework vẫn là interface ưu tiên:
+Draft/revision packet có `evidence_access` dùng:
 
 ```bash
-python scripts/rework.py products/<slug> draft_section --section P01 --request "Rewrite prose from the same approved material handoff"
-python scripts/rework.py products/<slug> outline --request "Rebuild the story architecture"
-python scripts/rework.py products/<slug> research_workstream --request "Reopen material evidence"
+python scripts/draft_evidence.py products/<slug> <task-id> scope
+python scripts/draft_evidence.py products/<slug> <task-id> claims
+python scripts/draft_evidence.py products/<slug> <task-id> sources
+python scripts/draft_evidence.py products/<slug> <task-id> source --id SRC-0001
+python scripts/draft_evidence.py products/<slug> <task-id> search --query "term"
 ```
 
-Compatibility-only operations không được semantic rework route tới.
+Scope được suy ra từ `claim_ids` của section và các reviewed sources support chúng. Không có arbitrary path argument và không scan repo.
 
-Replay active path chỉ còn:
+Writer có thể tăng factual resolution: measurement, physical description, location, documented action, chronology detail hoặc source detail. Optional evidence-preservation `details` có thể được trả nếu nằm trong cùng claim/source graph.
+
+Nếu Agent đọc thêm passage từ approved source URL/locator và muốn dùng detail mới, ghi nó vào audit trace:
+
+```bash
+python scripts/draft_evidence.py products/<slug> <task-id> record \
+  --source-id SRC-0001 \
+  --parent-locator "reviewed locator" \
+  --locator "narrower locator" \
+  --detail "source-level factual detail"
+```
+
+Mọi capability call ghi full request/response vào `tasks/<task-id>/evidence-trace.jsonl`, file này nằm ngoài model write scope.
+
+Boundary:
+
+> Writer may increase evidence resolution, but may not silently expand the truth ceiling.
+
+New claim, causal conclusion, thesis, contradiction hoặc generalization phải quay về research/evidence authority trước khi được narration như approved fact.
+
+## 8. Outcome-first review
+
+Review hỏi trước:
+
+- section có đạt objective không;
+- listener có đi qua progression có ý nghĩa không;
+- narration có cảm giác authored không;
+- information có thành experience/world/process/relationship phù hợp không;
+- listening experience có tốt không;
+- causal logic, continuity và evidence integrity có giữ không.
+
+Chỉ sau khi outcome fail mới dùng mechanics làm diagnostic heuristic. Không fail một draft chỉ vì thiếu carrier, raw clue, before/after, process sequence hoặc recount-before-interpret.
+
+Routing hiện hành:
+
+- `prose_execution` → sửa draft/revision;
+- `product_architecture` → reopen outline/cycle;
+- `evidence` → reopen research/evidence.
+
+Không có `local_design/story-plan` authority trên path mới.
+
+Pseudo-agency chỉ là conditional integrity rule: nếu narration staged audience discovery, evidence phải thực sự accessible trước specialist classification. Không yêu cầu mọi section cho audience tự suy luận.
+
+## 9. Hard boundaries retained
+
+Harness vẫn hard-enforce:
+
+- task authority và allowed writes;
+- packet freshness/integrity;
+- lifecycle states;
+- human approvals;
+- cycle/hash integrity;
+- source/claim provenance;
+- evidence ceiling và qualification;
+- no invention;
+- contradiction handling;
+- context/write caps.
+
+Creative method không được đưa vào hard schema chỉ vì nó từng giúp một draft cụ thể.
+
+## 10. Replay and migration
+
+Current replay path:
 
 `outline → materialize → draft_section`
 
-```bash
-python scripts/replay.py start products/<slug> --from outline --through draft_section --section P01 --request "Regression"
-```
+Legacy products không có direct-authorship marker vẫn có thể dùng story-plan compatibility path. New/revised outline phải dùng `writer_authorship_contract_version: 1`.
 
-## 10. Production cycles và assembly
+Không rewrite product content chỉ để migration/test pass. Nếu một existing outline vẫn encode exact carrier/route từ harness cũ, rebuild outline bằng current architecture harness rồi chờ human approval trước clean draft replay.
 
-Cycle mới giữ research đã duyệt trừ khi rework bắt đầu từ research. Old section workspaces được archive recoverably dưới `03_sections/_history/<cycle>/` trước rematerialization.
+## 11. Audit rule for future harness changes
 
-`assemble.py` chỉ ghép section đã human-approved. Git history, task reports, hashes và product-local history giữ provenance/audit trail.
+Với mỗi schema/validator/lifecycle/instruction/compiler/evaluation rule, hỏi:
 
-## Minimal handoff prompt
+1. Nó bảo vệ hard boundary? → hard-enforce.
+2. Nó là observable quality target? → evaluator judge.
+3. Nó chỉ mô tả một cách cụ thể để đạt target? → optional heuristic, không schema validity.
 
-```text
-Đọc AGENTS.md, rồi thực hiện task active của products/<slug>. Chỉ dùng compiled packet, không quét repo và không tự approve output.
-```
+Success criterion:
+
+> Harness bảo vệ truth và workflow thật chặt, nhưng không quyết định hộ creative Agent cách kể câu chuyện.
