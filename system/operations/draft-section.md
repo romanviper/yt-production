@@ -2,26 +2,68 @@
 
 ## Responsibility
 
-Write one section from the approved material-aware handoff. The outline defines intent/movement; `material-pack.json` is the primary narrative substrate; `narration-pack.json` defines the interpretation/generalization ceiling and evidence limits. Do not paraphrase any of them as an explanation of the plan.
+Write one authored section that achieves the approved section objective while staying inside evidence, continuity and lifecycle boundaries.
 
-Core priority:
+The outline defines **destination and evidence territory**. The writer owns the route.
 
-**reconstructable reality → evidenced action/change → consequence → only the interpretation still needed**
+Writer may decide:
 
-This is not a paragraph template. It is the default order of attention.
+- which permitted facts to use or omit;
+- narrative and causal route;
+- POV and scale;
+- whether an object, person, process, contrast or no single carrier is useful;
+- compression, reveal timing and exposition placement;
+- imagery, vocabulary, rhythm and sentence craft.
 
-Use `recountable.sequence` and any supported `narratable_reconstruction` to let the listener picture what exists, is done, changes, fails or remains. Bounded reconstructable detail in the material pack may be recounted as material evidence; do not generalize beyond that detail without a permitted claim. `what_audience_follows` is orientation, not prose to copy.
+A valid draft may use a route that Research, Outline and Harness did not predict, provided it reaches the section objective, remains evidence-safe, preserves continuity and does not invent.
 
-Once material makes a relation clear, add only necessary identification, qualification, causal boundary or a genuinely new consequence. If deleting an explanatory sentence preserves the same understanding and evidence boundary, cut it. Avoid `show X → explain X → paraphrase X → summarize X`.
+## Outcome target
 
-Do not stage expert classification as audience observation. Guardrails and limitations are silent by default; speak one only when omission would create a material misconception.
+Produce **crafted narration intended to be spoken aloud**.
 
-Meta-commentary such as “điều đáng chú ý”, “bây giờ ta thấy” or “câu hỏi lúc này là” is a warning sign when it substitutes for the material/consequence producing the shift.
+Judge your own draft by whether it:
 
-Stay inside permitted claims for interpretation/generalization. If the assigned movement needs reconstructable detail absent from the material pack or an interpretation outside the narration pack, report the blocker instead of inventing or compensating with abstraction.
+- creates meaningful progression rather than merely restating information;
+- feels authored rather than like a research memo read aloud;
+- transforms information into an experience appropriate to the subject;
+- lets a listener form a world, process, relationship or conceptual model in the mind when useful;
+- maintains curiosity, tension, surprise, understanding or emotional weight when appropriate;
+- keeps causal logic understandable;
+- reaches the approved exit state;
+- preserves continuity;
+- stays inside the truth ceiling and never invents unsupported detail.
 
-## Self-edit before handoff
+Do not treat conversational prose as the default. Voice can be reflective, cinematic, analytical, restrained or intimate when consistent with the product voice and spoken delivery.
 
-Draft freely, then make one deletion pass. Cut repeated payoff, explanation after material already lands, guardrail exposition, meta-narration and abstraction that adds no fact, necessary clarification, boundary or consequence.
+## Evidence authority and bounded retrieval
 
-Do not target a percentage cut. Do not pad. Write natural spoken Vietnamese. Do not self-approve.
+`narration-pack.json` defines the approved claim/evidence ceiling. Claims are permissions, not mandatory paragraphs.
+
+When the packet exposes bounded evidence access, use it when additional resolution would improve the section. You may retrieve source records, locators, notes and preserved source-level detail supporting approved claims.
+
+Writer may increase evidence resolution but may not silently expand the truth ceiling.
+
+Retrieval may add factual resolution such as measurement, physical description, location, documented action, chronology detail or an explicitly supported source sequence. If retrieval would require a new claim, causal conclusion, thesis, contradiction or generalization, report an evidence blocker and route it through research authority instead of narrating it as approved fact.
+
+Do not scan the repository freely. All retrieved evidence must come through the bounded capability and remain audit/reconstructable.
+
+## Conditional audience-agency rule
+
+Do not require the audience to infer from a raw clue in every section.
+
+But if narration presents a conclusion as something the audience has just discovered for themselves, the relevant evidence must actually be accessible before specialist classification. Do not manufacture audience discovery by supplying the expert category first and pretending the inference was spontaneous.
+
+## Optional heuristics, not invariants
+
+If the draft becomes lecture/document mode, possible recovery moves include:
+
+- move closer to a concrete object/person/process;
+- recount before interpreting;
+- use a before/after or contrast;
+- delay explanation;
+- cut explanatory echo;
+- change scale or POV.
+
+These are tools, not compliance rules. Do not use them when another evidence-safe route produces the stronger outcome.
+
+Do not pad. Do not self-approve.
