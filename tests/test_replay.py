@@ -30,7 +30,7 @@ class ReplayTests(unittest.TestCase):
                     request="Replay current harness through P01 draft.",
                 )
 
-            self.assertEqual(["outline", "design_section", "draft_section"], state["steps"])
+            self.assertEqual(["outline", "draft_section"], state["steps"])
             self.assertEqual("outline", state["current_step"])
             self.assertEqual("T0100-outline-outline", state["current_task"])
             routed.assert_called_once()
@@ -55,12 +55,12 @@ class ReplayTests(unittest.TestCase):
             write_json(
                 product / "replay-state.json",
                 {
-                    "schema_version": 1,
+                    "schema_version": 2,
                     "id": "RP-1",
                     "status": "active",
                     "request": "Replay",
                     "section": "P01",
-                    "steps": ["outline", "design_section", "draft_section"],
+                    "steps": ["outline", "draft_section"],
                     "current_index": 0,
                     "current_step": "outline",
                     "current_task": "T0100-outline-outline",
@@ -75,18 +75,18 @@ class ReplayTests(unittest.TestCase):
             self.assertEqual("outline_approval", state["blocked_on"])
             self.assertEqual("outline", state["current_step"])
 
-    def test_continue_after_outline_approval_materializes_then_routes_design(self) -> None:
+    def test_continue_after_outline_approval_materializes_then_routes_draft(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = Path(temp) / "products" / "demo"
             write_json(
                 product / "replay-state.json",
                 {
-                    "schema_version": 1,
+                    "schema_version": 2,
                     "id": "RP-1",
                     "status": "active",
                     "request": "Replay",
                     "section": "P01",
-                    "steps": ["outline", "design_section", "draft_section"],
+                    "steps": ["outline", "draft_section"],
                     "current_index": 0,
                     "current_step": "outline",
                     "current_task": "T0100-outline-outline",
@@ -99,41 +99,12 @@ class ReplayTests(unittest.TestCase):
             with (
                 patch("scripts.replay._archive_if_needed", return_value=[]),
                 patch("scripts.replay.materialize", return_value=[]),
-                patch("scripts.replay.create_task", return_value={"id": "T0101-design-section-P01"}) as create,
+                patch("scripts.replay.create_task", return_value={"id": "T0101-draft-section-P01"}) as create,
             ):
                 state = continue_replay(product)
 
-            self.assertEqual("design_section", state["current_step"])
-            self.assertEqual("T0101-design-section-P01", state["current_task"])
-            create.assert_called_once_with(product.resolve(), "design_section", "P01", None, False, None)
-
-    def test_continue_after_story_plan_approval_routes_draft_without_state_mutation(self) -> None:
-        with tempfile.TemporaryDirectory() as temp:
-            product = Path(temp) / "products" / "demo"
-            write_json(
-                product / "replay-state.json",
-                {
-                    "schema_version": 1,
-                    "id": "RP-1",
-                    "status": "active",
-                    "request": "Replay",
-                    "section": "P01",
-                    "steps": ["outline", "design_section", "draft_section"],
-                    "current_index": 1,
-                    "current_step": "design_section",
-                    "current_task": "T0101-design-section-P01",
-                    "history": [],
-                },
-            )
-            write_json(product / "tasks" / "T0101-design-section-P01" / "work-order.json", {"state": "ready_for_review"})
-            write_json(product / "03_sections" / "P01" / "story-plan.json", {"status": "approved"})
-            write_json(product / "03_sections" / "P01" / "section.json", {"status": "ready_for_draft"})
-
-            with patch("scripts.replay.create_task", return_value={"id": "T0102-draft-section-P01"}) as create:
-                state = continue_replay(product)
-
             self.assertEqual("draft_section", state["current_step"])
-            self.assertEqual("T0102-draft-section-P01", state["current_task"])
+            self.assertEqual("T0101-draft-section-P01", state["current_task"])
             create.assert_called_once_with(product.resolve(), "draft_section", "P01", None, False, None)
 
 
