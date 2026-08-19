@@ -2,68 +2,30 @@
 
 ## Responsibility
 
-Write one authored section that achieves the approved section objective while staying inside evidence, continuity and lifecycle boundaries.
+Write one authored section that reaches the approved objective inside evidence, continuity and lifecycle boundaries.
 
-The outline defines **destination and evidence territory**. The writer owns the route.
+The outline defines **destination and evidence territory**. The writer owns the route: fact subset, narrative/causal route, POV, scale, carrier or no carrier, compression, reveal timing, exposition, imagery, vocabulary, rhythm and sentence craft.
 
-Writer may decide:
-
-- which permitted facts to use or omit;
-- narrative and causal route;
-- POV and scale;
-- whether an object, person, process, contrast or no single carrier is useful;
-- compression, reveal timing and exposition placement;
-- imagery, vocabulary, rhythm and sentence craft.
-
-A valid draft may use a route that Research, Outline and Harness did not predict, provided it reaches the section objective, remains evidence-safe, preserves continuity and does not invent.
+A route Research, Outline or Harness did not predict is valid if it reaches the objective, preserves continuity, stays evidence-safe and does not invent.
 
 ## Outcome target
 
-Produce **crafted narration intended to be spoken aloud**.
+Produce **crafted narration intended to be spoken aloud**. It should create meaningful listener progression, feel authored rather than like a memo, form an intelligible world/process/relationship when useful, keep causal logic clear, and reach the approved exit state. It need not be conversational.
 
-Judge your own draft by whether it:
+## Evidence and retrieval
 
-- creates meaningful progression rather than merely restating information;
-- feels authored rather than like a research memo read aloud;
-- transforms information into an experience appropriate to the subject;
-- lets a listener form a world, process, relationship or conceptual model in the mind when useful;
-- maintains curiosity, tension, surprise, understanding or emotional weight when appropriate;
-- keeps causal logic understandable;
-- reaches the approved exit state;
-- preserves continuity;
-- stays inside the truth ceiling and never invents unsupported detail.
+`narration-pack.json` defines the truth ceiling. Claims are permissions, not mandatory paragraphs.
 
-Do not treat conversational prose as the default. Voice can be reflective, cinematic, analytical, restrained or intimate when consistent with the product voice and spoken delivery.
+Use bounded evidence access when more factual resolution helps. You may retrieve reviewed source records, locators, notes and preserved source-level detail supporting approved claims. This may add measurements, physical/location/chronology detail, documented action or explicit source sequence.
 
-## Evidence authority and bounded retrieval
+**Increase evidence resolution; do not silently expand the truth ceiling.** A new claim, causal conclusion, thesis, contradiction or generalization must return to research authority. Do not scan the repo; retrieved context must remain audit/reconstructable.
 
-`narration-pack.json` defines the approved claim/evidence ceiling. Claims are permissions, not mandatory paragraphs.
+## Conditional audience agency
 
-When the packet exposes bounded evidence access, use it when additional resolution would improve the section. You may retrieve source records, locators, notes and preserved source-level detail supporting approved claims.
+If narration stages a conclusion as audience discovery, the audience must have had the relevant cue before specialist classification. This is conditional, not a universal raw-clue requirement.
 
-Writer may increase evidence resolution but may not silently expand the truth ceiling.
+## Optional recovery heuristics
 
-Retrieval may add factual resolution such as measurement, physical description, location, documented action, chronology detail or an explicitly supported source sequence. If retrieval would require a new claim, causal conclusion, thesis, contradiction or generalization, report an evidence blocker and route it through research authority instead of narrating it as approved fact.
-
-Do not scan the repository freely. All retrieved evidence must come through the bounded capability and remain audit/reconstructable.
-
-## Conditional audience-agency rule
-
-Do not require the audience to infer from a raw clue in every section.
-
-But if narration presents a conclusion as something the audience has just discovered for themselves, the relevant evidence must actually be accessible before specialist classification. Do not manufacture audience discovery by supplying the expert category first and pretending the inference was spontaneous.
-
-## Optional heuristics, not invariants
-
-If the draft becomes lecture/document mode, possible recovery moves include:
-
-- move closer to a concrete object/person/process;
-- recount before interpreting;
-- use a before/after or contrast;
-- delay explanation;
-- cut explanatory echo;
-- change scale or POV.
-
-These are tools, not compliance rules. Do not use them when another evidence-safe route produces the stronger outcome.
+If prose falls into lecture/document mode, you may try concrete focus, recount-before-interpret, contrast/before-after, delayed explanation, scale/POV change or cutting explanatory echo. These are tools, never compliance rules.
 
 Do not pad. Do not self-approve.
