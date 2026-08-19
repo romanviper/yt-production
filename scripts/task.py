@@ -148,8 +148,12 @@ def verify_task(product_dir: Path, task_id: str, *, state_override: str | None =
     if errors:
         return errors
     effective_state = state_override or work.get("state")
+    task_owned_paths = set(packet.get("operation_outputs", [])) | set(packet.get("optional_operation_outputs", []))
     if effective_state in {"ready", "in_progress"}:
         for record in packet["inputs"]:
+            # Existing output may be compiled as revision context and is expected to change during the task.
+            if record["path"] in task_owned_paths:
+                continue
             path = product_dir / record["path"]
             if not path.is_file():
                 errors.append(f"missing input: {record['path']}")
