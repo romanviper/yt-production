@@ -22,20 +22,6 @@ def _material_aware(outline: dict[str, Any]) -> bool:
     return outline.get("script_architecture", {}).get("story_material_contract_version") == 1
 
 
-def _compatibility_story_plan(section_id: str, cycle_id: str | None) -> dict[str, Any]:
-    """Keep the historical filename without giving it creative authority."""
-
-    return {
-        "schema_version": 0,
-        "section": section_id,
-        "cycle_id": cycle_id,
-        "status": "approved",
-        "authority": "compatibility_only",
-        "generated_from": "approved_outline_material_handoff",
-        "note": "Not a writer input and not a human approval gate. Retained only for old tooling/history compatibility.",
-    }
-
-
 def _material_projection(material: dict[str, Any]) -> dict[str, Any]:
     recountable = {
         "what_audience_follows": material.get("what_audience_follows", ""),
@@ -314,9 +300,6 @@ def materialize(product_dir: Path) -> list[Path]:
                 },
             )
             created.append(material_path)
-            story_plan_path = root / "story-plan.json"
-            write_json(story_plan_path, _compatibility_story_plan(section_id, cycle_id))
-            created.append(story_plan_path)
             narration_path = root / "narration-pack.json"
             build_narration_pack(product_dir, section_id)
             created.append(narration_path)
