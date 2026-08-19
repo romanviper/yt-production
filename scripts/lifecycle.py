@@ -103,7 +103,7 @@ def _mark_markdown_status(path: Path, status: str) -> None:
         if line.startswith("Status:"):
             lines[index] = f"Status: {status}"
             replaced = True
-            break
+n            break
     if not replaced:
         lines.insert(0, f"Status: {status}")
         lines.insert(1, "")
@@ -155,13 +155,7 @@ def prepare_research_rework(
     unit: str | None = None,
     all_units: bool = False,
 ) -> str | None:
-    """Reopen research at one semantic layer and invalidate every downstream stage.
-
-    For a stage-level research_workstream request, all declared workstreams become
-    pending and the first unit is returned for routing. Existing evidence content
-    remains available as a baseline, while status markers prevent stale downstream
-    synthesis or outline tasks from being treated as current.
-    """
+    """Reopen research at one semantic layer and invalidate every downstream stage."""
 
     if operation not in RESEARCH_REWORK_OPERATIONS:
         raise ValueError(f"Operation {operation} is not a research rework operation.")
@@ -251,8 +245,6 @@ def prepare_research_rework(
 
 
 def research_rework_blocker(product_dir: Path) -> str | None:
-    """Return why downstream outline/synthesis must wait, if semantic research rework is active."""
-
     path = product_dir / RESEARCH_REWORK_STATE_PATH
     if not path.is_file():
         return None
@@ -267,8 +259,6 @@ def research_rework_blocker(product_dir: Path) -> str | None:
 
 
 def apply_research_submission(product_dir: Path, operation: str, unit: str | None) -> None:
-    """Advance control-plane research rework state after a validated task submission."""
-
     if operation not in RESEARCH_REWORK_OPERATIONS:
         return
     product_dir = product_dir.resolve()
@@ -331,8 +321,6 @@ def cancel_active_task(
     reason: str,
     replacement: str | None = None,
 ) -> str | None:
-    """Cancel the routed task, then clear ACTIVE. Task validity lives in work-order state, not the pointer."""
-
     product_dir = product_dir.resolve()
     path = product_dir / "tasks" / "ACTIVE.json"
     if not path.is_file():
@@ -379,12 +367,15 @@ def prepare_section_rework(product_dir: Path, operation: str, section: str, requ
     outline = read_json(product_dir / "02_outline" / "outline.json")
     if outline.get("status") != "approved":
         raise ValueError("Section rework requires a human-approved outline.")
+    material_aware = outline.get("script_architecture", {}).get("story_material_contract_version") == 1
 
     root = product_dir / "03_sections" / section
     state_path = root / "section.json"
     state = read_json(state_path)
 
     if operation == "design_section":
+        if material_aware:
+            raise ValueError("Material-aware sections have no story-plan design layer; route architecture changes to outline.")
         plan_path = root / "story-plan.json"
         plan = read_json(plan_path)
         plan["status"] = "draft"
@@ -393,9 +384,10 @@ def prepare_section_rework(product_dir: Path, operation: str, section: str, requ
         write_json(plan_path, plan)
         _write_request(root / "story-plan-change-request.md", f"Story Plan Rework — {section}", request)
     elif operation == "draft_section":
-        plan = read_json(root / "story-plan.json")
-        if plan.get("status") != "approved":
-            raise ValueError("Draft rework requires an approved story plan.")
+        if not material_aware:
+            plan = read_json(root / "story-plan.json")
+            if plan.get("status") != "approved":
+                raise ValueError("Legacy draft rework requires an approved story plan.")
         pack_errors = verify_narration_pack(product_dir, section)
         if pack_errors:
             raise ValueError("Draft rework requires a valid narration pack: " + "; ".join(pack_errors))
