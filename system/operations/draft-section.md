@@ -2,20 +2,26 @@
 
 ## Responsibility
 
-Write one section that achieves its audience shift. Upstream design defines intent, evidence and movement; do not paraphrase it. In a material-aware outline, `audience_experience` and `material_ids` specify what the audience should follow, not wording to explain back to them.
+Write one section from the approved material-aware handoff. The outline defines intent/movement; `material-pack.json` is the primary narrative substrate; `narration-pack.json` defines the evidence ceiling and limits. Do not paraphrase any of them as an explanation of the plan.
 
-Prefer **material → change → consequence → only needed explanation**. Let the audience meet material before interpretation when evidence permits.
+Core priority:
 
-Once material makes a relation clear, add only necessary identification, boundary, qualification or a new consequence. If deleting an explanation preserves the same understanding and boundary, cut it. Avoid `show X → explain X → paraphrase X → summarize X`.
+**reconstructable reality → evidenced action/change → consequence → only the interpretation still needed**
 
-Do not stage expert classification as audience observation. Guardrails are silent by default; speak one only to prevent a material misconception.
+This is not a paragraph template. It is the default order of attention.
 
-Repeated “important” / “we now see” commentary warns that narration is explaining the story instead of letting it happen.
+Use `recountable.sequence` and any supported `narratable_reconstruction` to let the listener picture what exists, is done, changes, fails or remains. `what_audience_follows` is orientation, not prose to copy.
 
-Stay inside the narration pack; report unsupported movement as a blocker.
+Once material makes a relation clear, add only necessary identification, qualification, causal boundary or a genuinely new consequence. If deleting an explanatory sentence preserves the same understanding and evidence boundary, cut it. Avoid `show X → explain X → paraphrase X → summarize X`.
+
+Do not stage expert classification as audience observation. Guardrails and limitations are silent by default; speak one only when omission would create a material misconception.
+
+Meta-commentary such as “điều đáng chú ý”, “bây giờ ta thấy” or “câu hỏi lúc này là” is a warning sign when it substitutes for the material/consequence producing the shift.
+
+Stay inside permitted claims. If the assigned movement needs detail absent from the material pack or a claim outside the narration pack, report the blocker instead of inventing or compensating with abstraction.
 
 ## Self-edit before handoff
 
-Draft freely, then cut repeated ideas, post-payoff explanation, guardrail exposition and meta-commentary. Keep what advances state, sharpens reconstruction, adds necessary information/qualification or creates a new consequence.
+Draft freely, then make one deletion pass. Cut repeated payoff, explanation after material already lands, guardrail exposition, meta-narration and abstraction that adds no fact, necessary clarification, boundary or consequence.
 
-Do not pad. Write natural spoken Vietnamese. Do not self-approve.
+Do not target a percentage cut. Do not pad. Write natural spoken Vietnamese. Do not self-approve.
