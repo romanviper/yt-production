@@ -164,7 +164,8 @@
           "claims",
           "sources",
           "source",
-          "search"
+          "search",
+          "record"
         ]
       },
       "context_profile": "creative_draft"
@@ -231,7 +232,8 @@
           "claims",
           "sources",
           "source",
-          "search"
+          "search",
+          "record"
         ]
       },
       "context_profile": "creative_revision"
