@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate product state, modular boundaries, and active context packets."""
+"""Validate product state, hard boundaries, and active context packets."""
 
 from __future__ import annotations
 
@@ -13,13 +13,13 @@ from pathlib import Path
 try:
     from scripts.common import read_json, sha256
     from scripts.outline_contract import validate_outline_contract
-    from scripts.story_plan_contract import verify_narration_pack
+    from scripts.story_plan_contract import is_direct_authorship_outline, verify_narration_pack
     from scripts.task import verify_active_pointer, verify_task
     from scripts.voice_profile_contract import validate_voice_profile
 except ModuleNotFoundError:
     from common import read_json, sha256
     from outline_contract import validate_outline_contract
-    from story_plan_contract import verify_narration_pack
+    from story_plan_contract import is_direct_authorship_outline, verify_narration_pack
     from task import verify_active_pointer, verify_task
     from voice_profile_contract import validate_voice_profile
 
@@ -40,70 +40,6 @@ def safe_json(path: Path, issues: list[Issue]) -> dict:
     except (json.JSONDecodeError, ValueError, OSError) as exc:
         issues.append(Issue("ERROR", str(path), f"Invalid JSON: {exc}"))
         return {}
-
-
-def _material_aware_outline_errors(product_dir: Path, outline: dict, claim_ids: set[str]) -> list[Issue]:
-    issues: list[Issue] = []
-    architecture = outline.get("script_architecture", {})
-    if architecture.get("story_material_contract_version") != 1:
-        return issues
-
-    material_path = product_dir / "01_research" / "material-ledger.json"
-    if not material_path.is_file():
-        return [Issue("ERROR", str(material_path), "Material-aware outline requires a material ledger.")]
-    try:
-        material_doc = read_json(material_path)
-    except (json.JSONDecodeError, ValueError, OSError) as exc:
-        return [Issue("ERROR", str(material_path), f"Invalid material ledger: {exc}")]
-    materials = {
-        item.get("id"): item
-        for item in material_doc.get("materials", [])
-        if isinstance(item, dict) and item.get("id")
-    }
-    if material_doc.get("status") != "complete":
-        issues.append(Issue("ERROR", str(material_path), "Material-aware outline requires a complete material ledger."))
-
-    for section in outline.get("sections", []):
-        if not isinstance(section, dict):
-            continue
-        section_id = section.get("id", "?")
-        for field in ["audience_experience", "transition"]:
-            if not isinstance(section.get(field), str) or not section[field].strip():
-                issues.append(Issue("ERROR", f"02_outline/outline.json#{section_id}", f"Material-aware section requires {field}."))
-        material_ids = section.get("material_ids")
-        if not isinstance(material_ids, list) or not material_ids or not all(isinstance(item, str) and item for item in material_ids):
-            issues.append(Issue("ERROR", f"02_outline/outline.json#{section_id}", "Material-aware section requires material_ids."))
-            continue
-        unknown = [material_id for material_id in material_ids if material_id not in materials]
-        if unknown:
-            issues.append(Issue("ERROR", f"02_outline/outline.json#{section_id}", "Unknown material IDs: " + ", ".join(unknown)))
-        section_claims = set(section.get("claim_ids", []))
-        unknown_claims = sorted(section_claims - claim_ids)
-        if unknown_claims:
-            issues.append(Issue("ERROR", f"02_outline/outline.json#{section_id}", "Unknown claim IDs: " + ", ".join(unknown_claims)))
-        for material_id in material_ids:
-            material = materials.get(material_id)
-            if not material:
-                continue
-            linked = set(material.get("claim_ids", []))
-            unknown_links = sorted(linked - claim_ids)
-            if unknown_links:
-                issues.append(
-                    Issue(
-                        "ERROR",
-                        f"01_research/material-ledger.json#{material_id}",
-                        "Material references unknown claims: " + ", ".join(unknown_links),
-                    )
-                )
-            if linked and not linked.intersection(section_claims):
-                issues.append(
-                    Issue(
-                        "ERROR",
-                        f"02_outline/outline.json#{section_id}",
-                        f"Material {material_id} has no linked claim inside the section evidence ceiling.",
-                    )
-                )
-    return issues
 
 
 def validate_product(product_dir: Path) -> list[Issue]:
@@ -165,13 +101,37 @@ def validate_product(product_dir: Path) -> list[Issue]:
         if claim.get("status") in {"supported", "qualified"} and not claim.get("sources"):
             issues.append(Issue("ERROR", f"{claim_path}#{index}", "Supported/qualified claim requires sources."))
 
+    # Optional material preservation remains auditable when present, but it is
+    # not a prerequisite for outline/drafting and carries no storytelling authority.
+    material_path = product_dir / "01_research" / "material-ledger.json"
+    if material_path.is_file():
+        try:
+            material_doc = read_json(material_path)
+        except (json.JSONDecodeError, ValueError, OSError) as exc:
+            issues.append(Issue("ERROR", str(material_path), f"Invalid optional material ledger: {exc}"))
+            material_doc = {}
+        for item in material_doc.get("materials", []) if isinstance(material_doc.get("materials", []), list) else []:
+            if not isinstance(item, dict):
+                issues.append(Issue("ERROR", str(material_path), "Optional material entries must be objects."))
+                continue
+            material_id = item.get("id", "?")
+            for claim_id in item.get("claim_ids", []) if isinstance(item.get("claim_ids", []), list) else []:
+                if claim_id not in claim_ids:
+                    issues.append(Issue("ERROR", f"{material_path}#{material_id}", f"Unknown claim: {claim_id}"))
+            for ref in item.get("source_refs", []) if isinstance(item.get("source_refs", []), list) else []:
+                if not isinstance(ref, dict) or ref.get("source_id") not in source_ids:
+                    issues.append(Issue("ERROR", f"{material_path}#{material_id}", "Optional material references unknown source."))
+
     outline = safe_json(outline_path, issues)
     if outline.get("sections"):
         for message in validate_outline_contract(outline, claim_ids, product.get("target")):
             issues.append(Issue("ERROR", str(outline_path), message))
-    issues.extend(_material_aware_outline_errors(product_dir, outline, claim_ids))
-    section_ids = {section.get("id") for section in outline.get("sections", []) if isinstance(section, dict) and section.get("id")}
-    material_aware = outline.get("script_architecture", {}).get("story_material_contract_version") == 1
+    section_ids = {
+        section.get("id")
+        for section in outline.get("sections", [])
+        if isinstance(section, dict) and section.get("id")
+    }
+    direct_authorship = is_direct_authorship_outline(outline)
     outline_cycle = outline.get("cycle_id")
 
     section_root = product_dir / "03_sections"
@@ -182,12 +142,15 @@ def validate_product(product_dir: Path) -> list[Issue]:
             for message in validate_voice_profile(voice_profile_path.read_text(encoding="utf-8")):
                 issues.append(Issue("ERROR", str(voice_profile_path), message))
 
-        sections_need_sync = product.get("stages", {}).get("sections") in {"human_sync_required", "ready_to_materialize"}
+        sections_need_sync = product.get("stages", {}).get("sections") in {
+            "human_sync_required",
+            "ready_to_materialize",
+        }
         if not sections_need_sync:
             for section_id in section_ids:
-                root = section_root / section_id
+                root = section_root / str(section_id)
                 required = ["section.json", "brief.md", "evidence-pack.json", "continuity-in.md"]
-                required += ["material-pack.json", "narration-pack.json"] if material_aware else ["story-plan.json"]
+                required += ["narration-pack.json"] if direct_authorship else ["story-plan.json"]
                 for name in required:
                     if not (root / name).is_file():
                         issues.append(Issue("ERROR", str(root / name), "Approved outline requires materialized section."))
@@ -195,7 +158,7 @@ def validate_product(product_dir: Path) -> list[Issue]:
                 if not state_path.is_file():
                     continue
                 state = safe_json(state_path, issues)
-                if material_aware:
+                if direct_authorship:
                     if state.get("cycle_id") != outline_cycle:
                         issues.append(
                             Issue(
@@ -209,7 +172,7 @@ def validate_product(product_dir: Path) -> list[Issue]:
                 if state.get("status") == "approved" and state.get("human_approved") is not True:
                     issues.append(Issue("ERROR", str(state_path), "Approved section requires human_approved=true."))
                 if state.get("status") in {"ready_for_draft", "ready_for_review", "review_complete", "approved"}:
-                    for message in verify_narration_pack(product_dir, section_id):
+                    for message in verify_narration_pack(product_dir, str(section_id)):
                         issues.append(Issue("ERROR", str(root / "narration-pack.json"), message))
 
     validated_task_ids: set[str] = set()
