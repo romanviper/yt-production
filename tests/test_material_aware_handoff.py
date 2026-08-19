@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -10,7 +9,12 @@ from scripts.context_packet import compile_packet
 from scripts.draft_evidence import DraftEvidenceBroker, EvidenceAccessError
 from scripts.materialize_sections import materialize
 from scripts.new_product import DEFAULT_TEMPLATE_ROOT, create_product
-from scripts.story_plan_contract import verify_narration_pack
+from scripts.story_plan_contract import (
+    is_direct_authorship_outline,
+    is_legacy_material_aware_outline,
+    verify_narration_pack,
+    writer_authorship_migration_message,
+)
 from scripts.task import create_task, validate_output_contract
 
 
@@ -78,8 +82,14 @@ def make_direct_authorship_fixture(root: Path) -> Path:
             "provenance": [{"workstream": "WS02", "local_id": "WS02-CLM-001"}],
         },
     ]
-    write_json(product / "01_research" / "source-index.json", {"schema_version": 1, "product": "demo", "status": "complete", "sources": sources})
-    write_json(product / "01_research" / "claim-ledger.json", {"schema_version": 1, "product": "demo", "status": "complete", "claims": claims})
+    write_json(
+        product / "01_research" / "source-index.json",
+        {"schema_version": 1, "product": "demo", "status": "complete", "sources": sources},
+    )
+    write_json(
+        product / "01_research" / "claim-ledger.json",
+        {"schema_version": 1, "product": "demo", "status": "complete", "claims": claims},
+    )
     write_json(
         product / "01_research" / "material-ledger.json",
         {
@@ -151,15 +161,23 @@ def make_direct_authorship_fixture(root: Path) -> Path:
 
 
 class AuthorshipBoundaryRegression(unittest.TestCase):
-    def test_creative_route_freedom_is_not_a_schema_requirement(self) -> None:
+    def test_canonical_direct_authorship_materializes_route_neutral_writer_packet(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = make_direct_authorship_fixture(Path(temp))
+            outline = json.loads((product / "02_outline" / "outline.json").read_text(encoding="utf-8"))
+            self.assertTrue(is_direct_authorship_outline(outline))
+            self.assertFalse(is_legacy_material_aware_outline(outline))
+            self.assertIsNone(writer_authorship_migration_message(outline))
+
             materialize(product)
             root = product / "03_sections" / "P01"
-
-            self.assertEqual("ready_for_draft", json.loads((root / "section.json").read_text(encoding="utf-8"))["status"])
+            self.assertEqual(
+                "ready_for_draft",
+                json.loads((root / "section.json").read_text(encoding="utf-8"))["status"],
+            )
             self.assertFalse((root / "story-plan.json").exists())
             self.assertFalse((root / "material-pack.json").exists())
+            self.assertEqual([], verify_narration_pack(product, "P01"))
 
             packet, context = compile_packet(product, "draft_section", "T9999-draft-section-P01", section="P01")
             self.assertIn("evidence_access", packet)
@@ -167,8 +185,9 @@ class AuthorshipBoundaryRegression(unittest.TestCase):
             self.assertNotIn("story-plan.json", context)
             self.assertNotIn("material_ids", context)
             self.assertNotIn("what_audience_follows", context)
+            self.assertNotIn("prescribed carrier", context)
 
-            # A deliberately non-carrier-specific route is system-valid. Quality remains a review concern.
+            # Upstream did not prescribe this comparative conceptual route; system validity is outcome/evidence scoped.
             (root / "draft.md").write_text(
                 "# P01\n\nThe section develops the approved question through a comparative conceptual route using only the permitted fact.\n",
                 encoding="utf-8",
@@ -200,45 +219,63 @@ class AuthorshipBoundaryRegression(unittest.TestCase):
             self.assertEqual([], searched["results"])
             recorded = broker.call(
                 "record",
-                {"source_id": "SRC-0001", "parent_locator": "p. 10", "locator": "p. 10, table 2", "detail": "Measured dimension is 12 cm."},
+                {
+                    "source_id": "SRC-0001",
+                    "parent_locator": "p. 10",
+                    "locator": "p. 10, table 2",
+                    "detail": "Measured dimension is 12 cm.",
+                },
             )
             self.assertTrue(recorded["truth_ceiling_unchanged"])
 
-            trace = [json.loads(line) for line in (product / "tasks" / work["id"] / "evidence-trace.jsonl").read_text(encoding="utf-8").splitlines()]
+            trace = [
+                json.loads(line)
+                for line in (product / "tasks" / work["id"] / "evidence-trace.jsonl")
+                .read_text(encoding="utf-8")
+                .splitlines()
+            ]
             source_entry = next(item for item in trace if item["capability"] == "source" and item["response"])
             self.assertEqual("SRC-0001", source_entry["response"]["source"]["id"])
             record_entry = next(item for item in trace if item["capability"] == "record")
             self.assertEqual("Measured dimension is 12 cm.", record_entry["response"]["detail"])
 
-    def test_c003_compatibility_materializes_but_clean_replay_requires_outline_rebuild(self) -> None:
+    def test_legacy_material_aware_marker_stays_on_compatibility_path(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
-            product = Path(temp) / "products" / "sumer-writing"
-            shutil.copytree(SOURCE_PRODUCT, product)
-            section_root = product / "03_sections"
-            if section_root.exists():
-                shutil.rmtree(section_root)
-            section_root.mkdir(parents=True)
-
+            product = make_direct_authorship_fixture(Path(temp))
             outline_path = product / "02_outline" / "outline.json"
             outline = json.loads(outline_path.read_text(encoding="utf-8"))
-            self.assertEqual("C003", outline["cycle_id"])
-            self.assertEqual(1, outline["script_architecture"]["story_material_contract_version"])
-            self.assertIn("MAT-0001", outline["sections"][0]["narrative_job"])
-            outline["status"] = "approved"
+            architecture = outline["script_architecture"]
+            architecture.pop("writer_authorship_contract_version")
+            architecture["story_material_contract_version"] = 1
             write_json(outline_path, outline)
+
+            self.assertFalse(is_direct_authorship_outline(outline))
+            self.assertTrue(is_legacy_material_aware_outline(outline))
+            migration = writer_authorship_migration_message(outline)
+            self.assertIsNotNone(migration)
+            self.assertIn("migrate/rebuild", migration)
+            self.assertIn("writer_authorship_contract_version: 1", migration)
 
             materialize(product)
             root = product / "03_sections" / "P01"
             state = json.loads((root / "section.json").read_text(encoding="utf-8"))
-            self.assertEqual("ready_for_draft", state["status"])
+            self.assertEqual("needs_story_plan", state["status"])
+            self.assertTrue((root / "story-plan.json").exists())
             self.assertFalse((root / "material-pack.json").exists())
-            self.assertFalse((root / "story-plan.json").exists())
-            self.assertEqual([], verify_narration_pack(product, "P01"))
+            self.assertFalse((root / "narration-pack.json").exists())
 
-            # Do not expand the context cap or rewrite product content just to replay an old route-heavy outline.
-            # Rebuild the outline under writer_authorship_contract_version=1 before the clean P01 regression.
-            with self.assertRaisesRegex(ValueError, "exceeds budget"):
-                compile_packet(product, "draft_section", "T9998-draft-section-P01", section="P01")
+    def test_sumer_c003_requires_outline_migration_before_clean_p01_replay(self) -> None:
+        outline = json.loads((SOURCE_PRODUCT / "02_outline" / "outline.json").read_text(encoding="utf-8"))
+        self.assertEqual("C003", outline["cycle_id"])
+        self.assertEqual(1, outline["script_architecture"]["story_material_contract_version"])
+        self.assertNotIn("writer_authorship_contract_version", outline["script_architecture"])
+        self.assertFalse(is_direct_authorship_outline(outline))
+        self.assertTrue(is_legacy_material_aware_outline(outline))
+
+        migration = writer_authorship_migration_message(outline)
+        self.assertIsNotNone(migration)
+        self.assertIn("migrate/rebuild the outline", migration)
+        self.assertIn("human approval", migration)
 
 
 if __name__ == "__main__":
