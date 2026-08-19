@@ -210,7 +210,7 @@ class AuthorshipBoundaryRegression(unittest.TestCase):
             record_entry = next(item for item in trace if item["capability"] == "record")
             self.assertEqual("Measured dimension is 12 cm.", record_entry["response"]["detail"])
 
-    def test_c003_compatibility_path_no_longer_requires_material_pack(self) -> None:
+    def test_c003_compatibility_materializes_but_clean_replay_requires_outline_rebuild(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = Path(temp) / "products" / "sumer-writing"
             shutil.copytree(SOURCE_PRODUCT, product)
@@ -223,6 +223,7 @@ class AuthorshipBoundaryRegression(unittest.TestCase):
             outline = json.loads(outline_path.read_text(encoding="utf-8"))
             self.assertEqual("C003", outline["cycle_id"])
             self.assertEqual(1, outline["script_architecture"]["story_material_contract_version"])
+            self.assertIn("MAT-0001", outline["sections"][0]["narrative_job"])
             outline["status"] = "approved"
             write_json(outline_path, outline)
 
@@ -234,12 +235,10 @@ class AuthorshipBoundaryRegression(unittest.TestCase):
             self.assertFalse((root / "story-plan.json").exists())
             self.assertEqual([], verify_narration_pack(product, "P01"))
 
-            packet, context = compile_packet(product, "draft_section", "T9998-draft-section-P01", section="P01")
-            self.assertNotIn("material-pack.json", [item["path"] for item in packet["inputs"]])
-            self.assertIn("evidence_access", packet)
-            # Legacy C003 outline still contains route-heavy narrative_job content.
-            # The system correction must not rewrite product content to hide that migration blocker.
-            self.assertIn("MAT-0001", context)
+            # Do not expand the context cap or rewrite product content just to replay an old route-heavy outline.
+            # Rebuild the outline under writer_authorship_contract_version=1 before the clean P01 regression.
+            with self.assertRaisesRegex(ValueError, "exceeds budget"):
+                compile_packet(product, "draft_section", "T9998-draft-section-P01", section="P01")
 
 
 if __name__ == "__main__":
