@@ -272,13 +272,15 @@ def compile_packet(
     input_tokens = estimate_tokens("\n".join(input_blocks)) if input_blocks else 0
 
     outputs = [render_pattern(item, section, unit) for item in spec["outputs"]]
+    optional_outputs = [render_pattern(item, section, unit) for item in spec.get("optional_outputs", [])]
     output_baselines = []
-    for relative in outputs:
+    for relative, required in [(item, True) for item in outputs] + [(item, False) for item in optional_outputs]:
         path = product_dir / relative
         output_baselines.append(
             {
                 "path": relative,
                 "sha256": sha256(path) if path.is_file() else None,
+                "required": required,
             }
         )
     report_path = f"tasks/{task_id}/report.md"
@@ -289,7 +291,21 @@ def compile_packet(
             f"tasks/{task_id}/runtime-trace.jsonl",
             f"tasks/{task_id}/runtime-run.json",
         ]
-    model_write_paths = outputs + [report_path, operator_brief_path]
+
+    evidence_access = spec.get("evidence_access")
+    evidence_packet: dict[str, Any] | None = None
+    if evidence_access is not None:
+        if operation not in {"draft_section", "revise_section"}:
+            raise ValueError("Bounded writer evidence access is allowed only for draft/revise operations.")
+        evidence_packet = {
+            "kind": evidence_access["kind"],
+            "adapter": evidence_access["adapter"],
+            "interface_version": evidence_access["interface_version"],
+            "capabilities": list(evidence_access["capabilities"]),
+            "trace_path": f"tasks/{task_id}/evidence-trace.jsonl",
+        }
+
+    model_write_paths = outputs + optional_outputs + [report_path, operator_brief_path]
     allowed = model_write_paths
     write_label = "Model-writable paths" if runtime == "dsh" else "Allowed writes"
     displayed_write_paths = model_write_paths if runtime == "dsh" else allowed
@@ -328,10 +344,23 @@ def compile_packet(
                 "Write full operational detail to `report.md`. Write only decision-relevant summary to `operator-brief.json`.",
                 "The final chat response must use the rendered operator brief, not the task report.",
                 "",
-                "Only the material inside this packet is task context. Do not scan the repository.",
-                "",
             ]
         )
+        if evidence_packet is not None:
+            header.extend(
+                [
+                    "Task context is this packet plus the bounded evidence capability below. Do not scan the repository.",
+                    f"Evidence adapter: `python {evidence_packet['adapter']} products/{product_dir.name} {task_id} <capability>`.",
+                    "Capabilities: " + ", ".join(f"`{item}`" for item in evidence_packet["capabilities"]) + ".",
+                    "Use it only to increase source-level resolution inside the approved claim/source scope.",
+                    "Every capability call is audit-logged. If external source reading adds detail, record it through the adapter before relying on it.",
+                    "New claims, causal conclusions, contradictions or generalizations must be routed back to evidence authority.",
+                    "",
+                ]
+            )
+        else:
+            header.extend(["Only the material inside this packet is task context. Do not scan the repository.", ""])
+
     packet_text = "\n".join(header + blocks).rstrip() + "\n"
     tokens = estimate_tokens(packet_text)
     budget = int(spec["max_context_tokens"])
@@ -358,6 +387,7 @@ def compile_packet(
         "instruction_files": [repo_relative(path) for path in instruction_paths],
         "inputs": input_records,
         "operation_outputs": outputs,
+        "optional_operation_outputs": optional_outputs,
         "output_baselines": output_baselines,
         "allowed_write_paths": allowed,
         "report_path": report_path,
@@ -369,6 +399,8 @@ def compile_packet(
             f"python scripts/operator_brief.py validate products/{product_dir.name}/{operator_brief_path}",
         ],
     }
+    if evidence_packet is not None:
+        packet["evidence_access"] = evidence_packet
     if runtime == "dsh":
         packet["execution_runtime"] = {
             "kind": "dsh",
