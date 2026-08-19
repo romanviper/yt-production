@@ -22,7 +22,9 @@ def _material_aware(outline: dict[str, Any]) -> bool:
     return outline.get("script_architecture", {}).get("story_material_contract_version") == 1
 
 
-def _material_projection(material: dict[str, Any]) -> dict[str, Any]:
+def _material_projection(material: dict[str, Any], section_claim_ids: set[str]) -> dict[str, Any]:
+    linked_claim_ids = list(material.get("claim_ids", []))
+    permitted_claim_ids = [claim_id for claim_id in linked_claim_ids if claim_id in section_claim_ids]
     recountable = {
         "what_audience_follows": material.get("what_audience_follows", ""),
         "sequence": list(material.get("sequence", [])),
@@ -36,7 +38,8 @@ def _material_projection(material: dict[str, Any]) -> dict[str, Any]:
             "kind": material.get("kind"),
             "label": material.get("label"),
             "recountable": recountable,
-            "claim_ids": list(material.get("claim_ids", [])),
+            "linked_claim_ids": linked_claim_ids,
+            "permitted_claim_ids": permitted_claim_ids,
             "source_refs": list(material.get("source_refs", [])),
             "representativeness": material.get("representativeness"),
             "limitations": list(material.get("limitations", [])),
@@ -60,12 +63,12 @@ def _validate_material_aware_outline(outline: dict[str, Any], materials: dict[st
         unknown = [material_id for material_id in material_ids if material_id not in materials]
         if unknown:
             raise ValueError(f"Section {section_id} references missing materials: {', '.join(unknown)}")
-        claim_ids = set(section.get("claim_ids", []))
+        section_claim_ids = set(section.get("claim_ids", []))
         for material_id in material_ids:
-            extra = [claim_id for claim_id in materials[material_id].get("claim_ids", []) if claim_id not in claim_ids]
-            if extra:
+            linked = set(materials[material_id].get("claim_ids", []))
+            if linked and not linked.intersection(section_claim_ids):
                 raise ValueError(
-                    f"Section {section_id} material {material_id} needs claims outside the section evidence ceiling: {', '.join(extra)}"
+                    f"Section {section_id} material {material_id} has no linked claim inside the section evidence ceiling."
                 )
 
 
@@ -267,7 +270,7 @@ def materialize(product_dir: Path) -> list[Path]:
             "section": section_id,
             "claims": selected_claims,
             "sources": [sources[source_id] for source_id in sorted(selected_source_ids)],
-            "rule": "Only claims in this pack may appear as substantive historical claims in the draft.",
+            "rule": "Only claims in this pack may appear as substantive historical interpretations or generalizations in the draft.",
         }
         if material_aware:
             evidence_doc.update(
@@ -281,12 +284,16 @@ def materialize(product_dir: Path) -> list[Path]:
         created.append(evidence_path)
 
         if material_aware:
-            selected_materials = [_material_projection(materials[material_id]) for material_id in item["material_ids"]]
+            section_claim_ids = set(item.get("claim_ids", []))
+            selected_materials = [
+                _material_projection(materials[material_id], section_claim_ids)
+                for material_id in item["material_ids"]
+            ]
             material_path = root / "material-pack.json"
             write_json(
                 material_path,
                 {
-                    "schema_version": 1,
+                    "schema_version": 2,
                     "section": section_id,
                     "cycle_id": cycle_id,
                     "outline_sha256": sha256(outline_path),
@@ -294,8 +301,10 @@ def materialize(product_dir: Path) -> list[Path]:
                     "material_ids": list(item["material_ids"]),
                     "materials": selected_materials,
                     "writer_contract": (
-                        "Use recountable reality as the primary narrative substrate. Limitations constrain narration; "
-                        "what_audience_follows is orientation, not prose to paraphrase."
+                        "Recountable fields are bounded source-supported reality and may carry narrative movement. "
+                        "permitted_claim_ids identify linked claims also inside this section's evidence ceiling. "
+                        "Any interpretation or generalization beyond the bounded material detail must stay inside the narration-pack permitted claims. "
+                        "Limitations constrain narration; what_audience_follows is orientation, not prose to paraphrase."
                     ),
                 },
             )
