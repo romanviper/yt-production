@@ -8,10 +8,10 @@ from pathlib import Path
 
 try:
     from scripts.common import read_json, write_json
-    from scripts.story_plan_contract import verify_narration_pack
+    from scripts.story_plan_contract import is_direct_authorship_outline, verify_narration_pack
 except ModuleNotFoundError:  # Direct execution from scripts/
     from common import read_json, write_json
-    from story_plan_contract import verify_narration_pack
+    from story_plan_contract import is_direct_authorship_outline, verify_narration_pack
 
 
 TASK_LIVE_STATES = {"ready", "in_progress"}
@@ -367,15 +367,15 @@ def prepare_section_rework(product_dir: Path, operation: str, section: str, requ
     outline = read_json(product_dir / "02_outline" / "outline.json")
     if outline.get("status") != "approved":
         raise ValueError("Section rework requires a human-approved outline.")
-    material_aware = outline.get("script_architecture", {}).get("story_material_contract_version") == 1
+    direct_authorship = is_direct_authorship_outline(outline)
 
     root = product_dir / "03_sections" / section
     state_path = root / "section.json"
     state = read_json(state_path)
 
     if operation == "design_section":
-        if material_aware:
-            raise ValueError("Material-aware sections have no story-plan design layer; route architecture changes to outline.")
+        if direct_authorship:
+            raise ValueError("Current direct-authoring sections have no story-plan layer; route architecture changes to outline.")
         plan_path = root / "story-plan.json"
         plan = read_json(plan_path)
         plan["status"] = "draft"
@@ -384,7 +384,7 @@ def prepare_section_rework(product_dir: Path, operation: str, section: str, requ
         write_json(plan_path, plan)
         _write_request(root / "story-plan-change-request.md", f"Story Plan Rework — {section}", request)
     elif operation == "draft_section":
-        if not material_aware:
+        if not direct_authorship:
             plan = read_json(root / "story-plan.json")
             if plan.get("status") != "approved":
                 raise ValueError("Legacy draft rework requires an approved story plan.")
