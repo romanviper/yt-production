@@ -32,30 +32,29 @@ MATERIAL_FIELDS = (
     "kind",
     "label",
     "what_audience_follows",
+    "narratable_reconstruction",
     "sequence",
     "claim_ids",
     "source_refs",
     "representativeness",
     "limitations",
+    "narratability",
 )
 
 
 def compact_claim(claim: dict[str, Any]) -> dict[str, Any]:
-    """Keep fields needed to allocate claims without loading the full research ledger."""
-
     return {field: claim.get(field) for field in CLAIM_FIELDS if claim.get(field) not in (None, "", [])}
 
 
 def compact_material(material: dict[str, Any]) -> dict[str, Any]:
-    """Keep reconstructable carrier detail and its evidence boundaries."""
-
     return {field: material.get(field) for field in MATERIAL_FIELDS if material.get(field) not in (None, "", [])}
 
 
 def _validate_material_map(material_map: dict[str, Any]) -> list[str]:
     errors: list[str] = []
-    if material_map.get("schema_version") != 1:
-        errors.append("story material map schema_version must be 1")
+    version = material_map.get("schema_version")
+    if version not in {1, 2}:
+        errors.append("story material map schema_version must be 1 or 2")
     if material_map.get("status") != "complete":
         errors.append("story material map status must be complete")
     phases = material_map.get("phases")
@@ -81,6 +80,11 @@ def _validate_material_map(material_map: dict[str, Any]) -> list[str]:
         gap = phase.get("gap")
         if gap is not None and not isinstance(gap, str):
             errors.append(f"story material phase {phase_id or index + 1} gap must be text or null")
+        if version == 2:
+            if phase.get("carrier_class") not in {"A", "B", "C"}:
+                errors.append(f"story material phase {phase_id or index + 1} carrier_class must be A, B or C")
+            if not isinstance(phase.get("audio_reconstruction"), str) or not phase["audio_reconstruction"].strip():
+                errors.append(f"story material phase {phase_id or index + 1} audio_reconstruction is required")
     for field in ["opening_candidates", "reversal_candidates", "ending_candidates"]:
         values = material_map.get(field)
         if not isinstance(values, list) or not all(isinstance(item, str) and item for item in values):
@@ -132,7 +136,7 @@ def expected_pack(product_dir: Path) -> dict[str, Any]:
         raise ValueError("Story material map references unknown material IDs: " + ", ".join(unknown))
 
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "product": claims_doc.get("product", product_dir.name),
         "status": "complete",
         "claim_ledger_sha256": sha256(claim_path),
@@ -143,8 +147,8 @@ def expected_pack(product_dir: Path) -> dict[str, Any]:
         "story_material_map": material_map,
         "contradiction_register": claims_doc.get("contradiction_register", []),
         "scope_note": (
-            "This pack is for architecture design. Claims define what may be asserted; materials preserve the concrete "
-            "objects/actions/processes that may carry story movement. Full provenance remains authoritative in the global ledgers."
+            "Claims define what may be asserted. Materials preserve what narration can reconstruct. "
+            "The story-material map evaluates where those materials can carry movement. Interpretation must not replace either layer."
         ),
     }
 
