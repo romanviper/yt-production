@@ -2,65 +2,72 @@
 
 ## Responsibility
 
-Design the audience's complete three-act journey before cutting it into bounded production work units. Do not write narration.
+Design **where the story must go**, not the route the writer must take to get there. Do not write narration and do not pre-author local storytelling mechanics.
 
-Human review must reveal most of the film before prose exists: what the audience follows, what happens/changes, which evidence carries it and why the next section becomes necessary.
+Outline owns architecture of inquiry/progression:
+
+- central question and audience promise;
+- whole-product progression;
+- section objective / narrative job;
+- entry state and exit state;
+- section boundaries;
+- evidence territory through approved `claim_ids`;
+- dependencies and continuity;
+- why the next section becomes necessary;
+- bounded word allocation.
+
+It does not own exact carrier, object sequence, mental imagery sequence, precise narrative route, reveal strategy, paragraph order or storytelling mechanics.
 
 ## Design order
 
 1. Define central question, audience promise and final change in understanding.
 2. Design exactly three audience-facing acts: opening, body and ending.
-3. Design as many narrative movements as the causal material requires.
-4. Match each important movement to concrete material from the evidence pack.
-5. Test whether material itself can carry the state change without narrator commentary manufacturing it.
-6. Only then place `P##` work-unit boundaries.
+3. Within those acts, design as many movements as the inquiry/causal progression requires.
+4. Define each movement's objective and audience state change.
+5. Assign approved evidence territory (`claim_ids`) broad enough for the writer to solve that objective without silently expanding the truth ceiling.
+6. Only then place `P##` work-unit boundaries at meaningful state/context/review limits.
 
-Three acts are invariant. Movement count, section count, relative length and local form are adaptive.
+Three acts are invariant. Movement count, section count, relative length and local storytelling form are adaptive.
 
-## Outline as a story preview
+## Section abstraction level
 
-For every material-aware section include:
+A current section should let a human answer:
 
-- `audience_experience`: concise preview of the **reconstructable reality** the listener will follow from entry to exit;
-- `material_ids`: `MAT-####` records that make the experience reconstructable;
-- `transition`: why the resulting state creates the next section or closes the central question.
+- Section này đang hỏi hoặc làm rõ điều gì?
+- Audience bắt đầu với nhận thức nào?
+- Audience cần kết thúc với nhận thức nào?
+- Evidence territory nào được phép dùng?
+- Section này đóng vai trò gì trong whole-product progression?
+- Vì sao section kế tiếp trở nên cần thiết?
 
-`audience_experience` should primarily say what exists, is done, changes, fails or leaves a consequence. Do not replace the sequence with its interpretation.
+Use existing fields `narrative_job`, `entry_state`, `exit_state`, `claim_ids`, `dependencies`, `target_words` and `transition` for that architecture.
 
-Weak:
+Set `script_architecture.writer_authorship_contract_version: 1` for new/revised outlines produced under this harness.
 
-> Viewer nhận ra thông tin đã chuyển lên bề mặt.
+Legacy `story_material_contract_version`, `audience_experience` and `material_ids` may remain readable in older artifacts, but they are compatibility metadata only. New output must not require or generate them.
 
-Stronger:
+## Writer freedom test
 
-> Viewer gặp clay envelope còn tokens bên trong, rồi một numerical tablet khác có numeral marks trực tiếp trên surface. Hai vật cùng tồn tại nên section can show a change in where numerical information is carried without inventing a direct genealogy.
+Before approving a section architecture, ask:
 
-Interpretation belongs mainly in narrative job, exit state or payoff—not as a substitute for material.
+> Could a competent writer achieve this objective through a different evidence-safe narrative route than the one I personally imagine?
 
-Set `script_architecture.story_material_contract_version: 1` for material-aware outlines.
+If yes, the outline is at the right abstraction level.
 
-A human should be able to read P01 → P02 → ... and roughly imagine the film without waiting for narration. Wording, paragraph order, exact reveal timing and cadence remain writer decisions.
+If a section only works when one exact carrier, object sequence or reveal order is followed, either:
 
-## Carrier and boundary check
+- the objective/evidence territory is too narrow and should be reframed; or
+- the evidence itself is insufficient and research must be reopened.
 
-A carrier may be object, person, action, process, consequence, contrast, failure or bounded puzzle. Event chain is not mandatory. But selected material must create an evidenced before/after, action/change or consequence.
-
-For every section ask:
-
-- What does the listener actually picture or follow besides an argument?
-- Which `MAT-####` records make it possible?
-- Do section `claim_ids` cover every substantive assertion required by those materials?
-- If all narrator explanation were removed, would the remaining material still contain a reconstructable state/action/change/consequence?
-- Can the same experience be followed by audio without relying on visual annotation to perform the reasoning?
-- Does the section boundary cut the process so one section gets only analysis while another gets all action?
-
-If no because research lacks detail → route to research. If material exists but boundary is wrong → fix outline. Do not pass the rescue job to writer.
+Do not solve that problem by encoding the preferred route into the outline.
 
 ## Evidence use
 
-Claims answer **what may be asserted**. Materials answer **what may be recounted**. Interpretation answers **what it means**. A section needs the first two; the third must not replace either.
+`claim_ids` define the approved truth territory for substantive historical interpretation/generalization. They are an allowance, not a list of facts that must all appear.
 
-`material_ids` do not replace `claim_ids`. Every material must fit inside the section claim ceiling. The story-material map is recommendation/gap metadata, not a mandatory section structure.
+Outline may identify factual gaps or evidence constraints, but it should not rank material by narratability or decide opening/reversal/ending carriers.
+
+Optional preserved material may exist in research for source-detail retention. It is not a mandatory abstraction between claim and writer and does not become section authority merely because it exists.
 
 ## Current outline contract
 
@@ -70,11 +77,8 @@ Schema v4 contains:
 - exactly three ordered acts;
 - ordered movements assigned once to those acts;
 - contiguous movement/section mappings;
-- section narrative job, entry/exit state, evidence allowance, dependencies and estimated word range;
-- for material-aware revisions: `audience_experience`, `material_ids`, `transition`.
-
-Do not lock opening sentence, paragraph order, exact reveal timing, cadence or fixed beats. Outline decides **what story happens**; writer decides **how to tell it**.
+- section narrative job, entry/exit state, evidence allowance, dependencies, transition and estimated word range.
 
 `story-bible.md` keeps global causal spine, chronology, terms, entities, setup/payoff continuity and exclusions. `voice-profile.md` captures product-specific variation without copying benchmark surface style.
 
-All three artifacts remain `draft` until user approval. If a critical movement lacks recountable material, surface that gap rather than calling the architecture production-ready.
+All three artifacts remain `draft` until user approval. Human review at outline stage judges architecture and evidence scope; deep storytelling judgment may legitimately wait until a draft exists.
