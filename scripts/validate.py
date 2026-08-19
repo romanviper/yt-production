@@ -195,7 +195,7 @@ def validate_product(product_dir: Path) -> list[Issue]:
                                 f"Approved outline requires materialized section for current cycle {outline_cycle}; found {state.get('cycle_id')}.",
                             )
                         )
-                    if state.get("outline_sha256") != sha256(outline_path):
+                    elif state.get("outline_sha256") != sha256(outline_path):
                         issues.append(Issue("ERROR", str(state_path), "Materialized section is stale relative to approved outline."))
                 if state.get("status") == "approved" and state.get("human_approved") is not True:
                     issues.append(Issue("ERROR", str(state_path), "Approved section requires human_approved=true."))
