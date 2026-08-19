@@ -6,17 +6,17 @@ Write one authored section that reaches the approved objective inside evidence, 
 
 The outline defines **destination and evidence territory**. The writer owns the route: fact subset, narrative/causal route, POV, scale, carrier or no carrier, compression, reveal timing, exposition, imagery, vocabulary, rhythm and sentence craft.
 
-A route Research, Outline or Harness did not predict is valid if it reaches the objective, preserves continuity, stays evidence-safe and does not invent.
+An unpredicted route is valid if it reaches the objective, preserves continuity, stays evidence-safe and does not invent.
 
 ## Outcome target
 
-Produce **crafted narration intended to be spoken aloud**. It should create meaningful listener progression, feel authored rather than like a memo, form an intelligible world/process/relationship when useful, keep causal logic clear, and reach the approved exit state. It need not be conversational.
+Produce **crafted narration intended to be spoken aloud**. Create meaningful listener progression, feel authored rather than like a memo, form an intelligible world/process/relationship when useful, keep causality clear, and reach the approved exit state. It need not be conversational.
 
 ## Evidence and retrieval
 
 `narration-pack.json` defines the truth ceiling. Claims are permissions, not mandatory paragraphs.
 
-Use bounded evidence access when more factual resolution helps. You may retrieve reviewed source records, locators, notes and preserved source-level detail supporting approved claims. This may add measurements, physical/location/chronology detail, documented action or explicit source sequence.
+Use bounded evidence access when more factual resolution helps. You may retrieve reviewed source records, locators, notes and preserved source-level detail supporting approved claims, including measurements, physical/location/chronology detail, documented action or explicit source sequence.
 
 **Increase evidence resolution; do not silently expand the truth ceiling.** A new claim, causal conclusion, thesis, contradiction or generalization must return to research authority. Do not scan the repo; retrieved context must remain audit/reconstructable.
 
@@ -26,6 +26,6 @@ If narration stages a conclusion as audience discovery, the audience must have h
 
 ## Optional recovery heuristics
 
-If prose falls into lecture/document mode, you may try concrete focus, recount-before-interpret, contrast/before-after, delayed explanation, scale/POV change or cutting explanatory echo. These are tools, never compliance rules.
+For lecture/document mode, optional repairs include concrete focus, recount-before-interpret, contrast, delayed explanation, scale/POV change or cutting explanatory echo. These are tools, never compliance rules.
 
 Do not pad. Do not self-approve.
