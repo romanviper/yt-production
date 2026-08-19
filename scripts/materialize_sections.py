@@ -153,6 +153,9 @@ def materialize(product_dir: Path) -> list[Path]:
             movement_lines = [f"{movement['id']} — {movement['title']}" for movement in section_movements]
             transition = render_outline_value(item.get("transition"), "Section kế tiếp theo whole-product progression.")
             evidence_territory = render_outline_value(item.get("claim_ids"), "Không có claim allowance.")
+            legacy_anchor_block = ""
+            if not direct_authorship:
+                legacy_anchor_block = f"\n\n## Anchor options\n\n{render_outline_value(item.get('anchor_options'))}"
             text = (
                 f"# {section_id} — {item['title']}\n\n"
                 f"Cycle: `{cycle_id}`\n\n"
@@ -161,7 +164,8 @@ def materialize(product_dir: Path) -> list[Path]:
                 f"## Section objective\n\n{item['narrative_job']}\n\n"
                 f"## Entry state\n\n{item['entry_state']}\n\n"
                 f"## Exit state\n\n{item['exit_state']}\n\n"
-                f"## Evidence territory\n\n{evidence_territory}\n\n"
+                f"## Evidence territory\n\n{evidence_territory}"
+                f"{legacy_anchor_block}\n\n"
                 f"## Transition\n\n{transition}\n\n"
                 f"## Continuity in\n\n{render_outline_value(item.get('continuity_in'))}\n\n"
                 f"## Continuity out\n\n{render_outline_value(item.get('continuity_out'))}\n\n"
