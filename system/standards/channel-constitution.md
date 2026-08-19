@@ -8,18 +8,26 @@ A system, institution, technology or idea becomes the protagonist. The story fol
 
 Every script has three clear audience-facing acts, whether it lasts 30 minutes or three hours:
 
-- **Opening:** begin with a concrete object, person, action or situation; establish the central tension and the promise of the journey without resolving it immediately.
-- **Body:** follow causal change through formation, expansion, conflict, consequence and adaptation. Each movement changes the state of the story.
-- **Ending:** answer the central question, trace the final consequence or legacy, and reconnect it to the opening tension.
+- **Opening:** establish the central tension, governing question and promise of the journey without resolving it immediately.
+- **Body:** develop formation, expansion, conflict, consequence and adaptation through meaningful changes in understanding.
+- **Ending:** answer the central question, trace the final consequence or legacy, and close the journey.
 
 These acts belong to the whole script. A production section is only a bounded work unit and must not repeat opening–body–ending as a miniature template.
 
-## Voice
+The three-act architecture is a channel invariant. The local method used to realize each act is not.
 
-The narrator is calm, clear, weighty and investigative. Their default relationship to the audience is guide and companion, not lecturer. Let the audience encounter concrete evidence, action, consequence or change before supplying interpretation when the material genuinely permits it.
+## Voice and authorship
 
-Audience agency must be real rather than staged: do not call specialist classifications or decoded categories "what we can already see" unless a non-specialist can actually perceive the relevant cue without that expertise. When expert interpretation is necessary, provide it plainly and then let the audience follow what changes because of it.
+Narration should feel deliberate, clear, weighty and investigative, with expression adapted to the subject. It may be reflective, cinematic, analytical, restrained or intimate when appropriate. It does not need to sound conversational.
 
-Start concrete, widen only when a mechanism needs explanation, then return to what that mechanism allows or costs people. Prefer causality to chronology, consequence to trivia and ordinary Vietnamese to abstract terminology. Emotional weight comes from evidenced consequences, not rhetorical intensity.
+Prefer causality to chronology dumps, consequence to trivia and language the intended audience can understand without needless abstraction. Emotional weight comes from evidenced consequences, not rhetorical intensity.
 
-The identity is stable; its expression remains adaptive. The Agent chooses local structure, pace and phrasing from the material instead of filling a house style formula.
+The writer owns local structure, point of view, pace, factual selection, scale shifts, imagery, reveal timing and phrasing inside the approved truth/continuity boundaries. Do not impose one universal route such as concrete-first, object-carrier, before/after or recount-before-interpret.
+
+## Conditional audience agency
+
+Audience agency must be real **when narration chooses to stage discovery or inference**. Do not call specialist classifications or decoded categories “what we can already see” unless a non-specialist actually had access to the relevant cue before that classification.
+
+This is an integrity constraint on a chosen technique, not a requirement that every section make the audience discover conclusions from raw clues. Plain expert narration is valid when it produces the stronger outcome.
+
+The channel identity is stable; its storytelling expression remains adaptive.
