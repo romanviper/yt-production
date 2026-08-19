@@ -55,8 +55,8 @@
       "include_dependency_handoffs": true,
       "max_context_tokens": 11000,
       "instruction_files": ["system/core/creative-boundaries.md", "system/standards/channel-constitution.md", "system/operations/draft-section.md"],
-      "required_inputs": ["02_outline/story-bible.md", "02_outline/voice-profile.md", "03_sections/{section}/section.json", "03_sections/{section}/brief.md", "03_sections/{section}/material-pack.json", "03_sections/{section}/narration-pack.json", "03_sections/{section}/continuity-in.md"],
-      "optional_inputs": ["03_sections/{section}/draft-rework-request.md"],
+      "required_inputs": ["02_outline/story-bible.md", "02_outline/voice-profile.md", "03_sections/{section}/section.json", "03_sections/{section}/brief.md", "03_sections/{section}/narration-pack.json", "03_sections/{section}/continuity-in.md"],
+      "optional_inputs": ["03_sections/{section}/material-pack.json", "03_sections/{section}/story-plan.json", "03_sections/{section}/draft-rework-request.md"],
       "outputs": ["03_sections/{section}/draft.md", "03_sections/{section}/handoff.md"],
       "context_profile": "creative_draft"
     },
@@ -65,8 +65,8 @@
       "include_dependency_handoffs": true,
       "max_context_tokens": 14000,
       "instruction_files": ["system/core/creative-boundaries.md", "system/standards/channel-constitution.md", "system/standards/outcome-evaluation.md", "system/operations/review-section.md"],
-      "required_inputs": ["02_outline/story-bible.md", "02_outline/voice-profile.md", "03_sections/{section}/section.json", "03_sections/{section}/brief.md", "03_sections/{section}/material-pack.json", "03_sections/{section}/narration-pack.json", "03_sections/{section}/draft.md"],
-      "optional_inputs": [],
+      "required_inputs": ["02_outline/story-bible.md", "02_outline/voice-profile.md", "03_sections/{section}/section.json", "03_sections/{section}/brief.md", "03_sections/{section}/narration-pack.json", "03_sections/{section}/draft.md"],
+      "optional_inputs": ["03_sections/{section}/material-pack.json", "03_sections/{section}/story-plan.json"],
       "outputs": ["03_sections/{section}/review.md"],
       "context_profile": "evaluation"
     },
@@ -75,8 +75,8 @@
       "include_dependency_handoffs": true,
       "max_context_tokens": 12000,
       "instruction_files": ["system/core/creative-boundaries.md", "system/standards/channel-constitution.md", "system/operations/revise-section.md"],
-      "required_inputs": ["02_outline/story-bible.md", "02_outline/voice-profile.md", "03_sections/{section}/section.json", "03_sections/{section}/brief.md", "03_sections/{section}/material-pack.json", "03_sections/{section}/narration-pack.json", "03_sections/{section}/draft.md", "03_sections/{section}/review.md", "03_sections/{section}/change-request.md"],
-      "optional_inputs": [],
+      "required_inputs": ["02_outline/story-bible.md", "02_outline/voice-profile.md", "03_sections/{section}/section.json", "03_sections/{section}/brief.md", "03_sections/{section}/narration-pack.json", "03_sections/{section}/draft.md", "03_sections/{section}/review.md", "03_sections/{section}/change-request.md"],
+      "optional_inputs": ["03_sections/{section}/material-pack.json", "03_sections/{section}/story-plan.json"],
       "outputs": ["03_sections/{section}/draft.md", "03_sections/{section}/handoff.md", "03_sections/{section}/revision-log.md"],
       "context_profile": "creative_revision"
     },
