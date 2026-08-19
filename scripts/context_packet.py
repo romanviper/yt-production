@@ -140,8 +140,6 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
         if consolidation_errors:
             raise ValueError("Research ledgers must be consolidated before synthesis: " + "; ".join(consolidation_errors))
     if operation == "outline":
-        if stages.get("research") not in {"approved", "complete"}:
-            raise ValueError("Research must be current before outline; finish semantic research rework and synthesis first.")
         sources = read_json_local(product_dir / "01_research" / "source-index.json")
         claims = read_json_local(product_dir / "01_research" / "claim-ledger.json")
         if sources.get("status") != "complete" or claims.get("status") != "complete":
@@ -149,6 +147,14 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
         synthesis = product_dir / "01_research" / "research-synthesis.md"
         synthesis_text = synthesis.read_text(encoding="utf-8")
         legacy_approved = stages.get("research") == "approved" and "Status: ready_for_review" in synthesis_text
+        approved_baseline_replay = (
+            stages.get("research") not in {"approved", "complete"}
+            and bool(product.get("production_cycle", {}).get("previous"))
+            and "Status: complete" in synthesis_text
+            and research_rework_blocker(product_dir) is None
+        )
+        if stages.get("research") not in {"approved", "complete"} and not approved_baseline_replay:
+            raise ValueError("Research must be current before outline; finish semantic research rework and synthesis first.")
         if "Status: complete" not in synthesis_text and not legacy_approved:
             raise ValueError("Research synthesis must be complete before outline.")
         build_outline_evidence_pack(product_dir)
