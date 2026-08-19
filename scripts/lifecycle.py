@@ -103,7 +103,7 @@ def _mark_markdown_status(path: Path, status: str) -> None:
         if line.startswith("Status:"):
             lines[index] = f"Status: {status}"
             replaced = True
-n            break
+            break
     if not replaced:
         lines.insert(0, f"Status: {status}")
         lines.insert(1, "")
