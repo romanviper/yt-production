@@ -85,13 +85,22 @@ def _material_aware_outline_errors(product_dir: Path, outline: dict, claim_ids: 
             material = materials.get(material_id)
             if not material:
                 continue
-            uncovered = [claim_id for claim_id in material.get("claim_ids", []) if claim_id not in section_claims]
-            if uncovered:
+            linked = set(material.get("claim_ids", []))
+            unknown_links = sorted(linked - claim_ids)
+            if unknown_links:
+                issues.append(
+                    Issue(
+                        "ERROR",
+                        f"01_research/material-ledger.json#{material_id}",
+                        "Material references unknown claims: " + ", ".join(unknown_links),
+                    )
+                )
+            if linked and not linked.intersection(section_claims):
                 issues.append(
                     Issue(
                         "ERROR",
                         f"02_outline/outline.json#{section_id}",
-                        f"Material {material_id} needs claims outside section evidence ceiling: {', '.join(uncovered)}",
+                        f"Material {material_id} has no linked claim inside the section evidence ceiling.",
                     )
                 )
     return issues
