@@ -46,22 +46,15 @@ def _write_outline_rework_request(product_dir: Path, request: str) -> None:
 
 
 def _ensure_outline_invalidated_for_research(product_dir: Path, request: str) -> None:
-    """Research rework makes any approved downstream outline non-current."""
-
     outline_path = product_dir / "02_outline" / "outline.json"
     if not outline_path.is_file():
         return
     outline = read_json(outline_path)
     if outline.get("status") == "approved":
-        start_new_cycle(
-            product_dir,
-            "Research was reopened before the next outline. " + request.strip(),
-        )
+        start_new_cycle(product_dir, "Research was reopened before the next outline. " + request.strip())
 
 
 def _resolve_research_unit(product_dir: Path, unit: str | None) -> tuple[str, bool]:
-    """No --unit means semantic rework of the whole workstream layer, starting at the first declared WS."""
-
     plan = read_json(product_dir / "01_research" / "plan.json")
     units = [str(item["id"]) for item in plan.get("workstreams", []) if item.get("id")]
     if not units:
@@ -110,10 +103,16 @@ def rework(
     registry = load_registry()
     if operation not in registry:
         raise ValueError(f"Unknown operation: {operation}")
+    spec = registry[operation]
+    if spec.get("compatibility_only"):
+        raise ValueError(
+            f"{operation} is compatibility-only and cannot be reopened through semantic rework. "
+            "Route story/material architecture changes to outline, evidence gaps to research, or prose changes to draft_section."
+        )
     if not request.strip():
         raise ValueError("Human rework request cannot be empty.")
 
-    target_kind = registry[operation]["target_kind"]
+    target_kind = spec["target_kind"]
     all_workstreams = False
     if operation == "research_workstream":
         unit, all_workstreams = _resolve_research_unit(product_dir, unit)
