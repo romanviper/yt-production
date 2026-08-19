@@ -2,7 +2,9 @@
   "schema_version": 4,
   "product": "sumer-writing",
   "cycle_id": "C003",
-  "status": "draft",
+  "status": "approved",
+  "approved_by": "user",
+  "approved_at": "2026-08-19T10:07:00+00:00",
   "section_count": 8,
   "script_architecture": {
     "writer_authorship_contract_version": 1,
