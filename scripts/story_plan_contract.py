@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lean story-design contract and deterministic evidence handoff."""
+"""Legacy story-plan compatibility plus deterministic narration handoff."""
 
 from __future__ import annotations
 
@@ -17,6 +17,7 @@ except ModuleNotFoundError:  # Direct execution from scripts/
 
 
 STORY_PLAN_SCHEMA_VERSION = 3
+MATERIAL_AWARE_NARRATION_SCHEMA_VERSION = 3
 ROLE_NAMES = ("core", "optional", "guardrail", "exclude")
 LEGACY_ROLE_MAP = {
     "narrated": "core",
@@ -103,6 +104,8 @@ def validate_story_plan(
     current_target_words: dict[str, int] | None = None,
     require_current: bool = False,
 ) -> list[str]:
+    """Legacy compatibility validator. New material-aware sections do not depend on this artifact."""
+
     errors: list[str] = []
     schema_version = plan.get("schema_version")
     if schema_version in {1, 2} and require_current:
@@ -200,7 +203,108 @@ def _compact_source(source: dict[str, Any]) -> dict[str, Any]:
     return {key: source[key] for key in keys if key in source and source[key] not in (None, "", [])}
 
 
-def build_narration_pack(product_dir: Path, section: str) -> dict[str, Any]:
+def _outline_section(outline: dict[str, Any], section: str) -> dict[str, Any]:
+    matches = [item for item in outline.get("sections", []) if isinstance(item, dict) and item.get("id") == section]
+    if len(matches) != 1:
+        raise ValueError(f"Outline must contain exactly one section {section}.")
+    return matches[0]
+
+
+def _is_material_aware(outline: dict[str, Any]) -> bool:
+    return outline.get("script_architecture", {}).get("story_material_contract_version") == 1
+
+
+def _build_material_aware_narration_pack(product_dir: Path, section: str) -> dict[str, Any]:
+    root = product_dir.resolve() / "03_sections" / section
+    outline_path = product_dir / "02_outline" / "outline.json"
+    outline = read_json(outline_path)
+    if outline.get("status") != "approved":
+        raise ValueError("Material-aware narration pack requires a human-approved outline.")
+    section_spec = _outline_section(outline, section)
+    state = read_json(root / "section.json")
+    evidence_path = root / "evidence-pack.json"
+    material_path = root / "material-pack.json"
+    brief_path = root / "brief.md"
+    evidence = read_json(evidence_path)
+    material = read_json(material_path)
+
+    cycle_id = outline.get("cycle_id")
+    if state.get("cycle_id") != cycle_id:
+        raise ValueError(f"Section {section} cycle does not match outline cycle {cycle_id}.")
+    if evidence.get("cycle_id") != cycle_id or material.get("cycle_id") != cycle_id:
+        raise ValueError(f"Section {section} handoff artifacts do not match outline cycle {cycle_id}.")
+
+    claims = evidence.get("claims", [])
+    claim_ids = [item.get("id") for item in claims if isinstance(item, dict) and item.get("id")]
+    expected_claim_ids = list(section_spec.get("claim_ids", []))
+    if claim_ids != expected_claim_ids:
+        raise ValueError("Evidence pack claim order/content differs from approved outline allowance.")
+
+    material_ids = [item.get("id") for item in material.get("materials", []) if isinstance(item, dict) and item.get("id")]
+    expected_material_ids = list(section_spec.get("material_ids", []))
+    if material_ids != expected_material_ids:
+        raise ValueError("Material pack differs from approved outline material selection.")
+
+    sources = {item["id"]: item for item in evidence.get("sources", []) if isinstance(item, dict) and item.get("id")}
+    selected_sources = {
+        source_id
+        for claim in claims
+        for source_id in claim.get("sources", [])
+        if isinstance(source_id, str)
+    }
+    missing_sources = selected_sources - sources.keys()
+    if missing_sources:
+        raise ValueError("Narration claims reference missing sources: " + ", ".join(sorted(missing_sources)))
+
+    qualifications = []
+    for claim in claims:
+        if claim.get("status") == "qualified" or claim.get("counterevidence"):
+            qualifications.append(
+                {
+                    "id": claim.get("id"),
+                    "constraint": claim.get("narrative_implication") or claim.get("statement"),
+                    "counterevidence": claim.get("counterevidence", ""),
+                }
+            )
+
+    guardrails = []
+    non_goal = section_spec.get("non_goal")
+    if isinstance(non_goal, str) and non_goal.strip():
+        guardrails.append({"source": "outline.non_goal", "constraint": non_goal.strip()})
+    for item in material.get("materials", []):
+        for limitation in item.get("limitations", []):
+            guardrails.append(
+                {
+                    "source": item.get("id"),
+                    "constraint": limitation,
+                }
+            )
+
+    pack = {
+        "schema_version": MATERIAL_AWARE_NARRATION_SCHEMA_VERSION,
+        "section": section,
+        "cycle_id": cycle_id,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "outline_sha256": sha256(outline_path),
+        "brief_sha256": sha256(brief_path),
+        "evidence_pack_sha256": sha256(evidence_path),
+        "material_pack_sha256": sha256(material_path),
+        "permitted_claims": [_compact_claim(claim) for claim in claims],
+        "qualifications": qualifications,
+        "guardrails": guardrails,
+        "excluded_claim_ids": [],
+        "exclusion_rule": "Any substantive historical claim not listed in permitted_claims is excluded by default.",
+        "source_refs": [_compact_source(sources[source_id]) for source_id in sorted(selected_sources)],
+        "writer_contract": (
+            "Story material is the primary source for narrative movement. Claims define the evidence ceiling. "
+            "Qualifications and guardrails constrain wording; they are silent unless needed to prevent a material misconception."
+        ),
+    }
+    write_json(root / "narration-pack.json", pack)
+    return pack
+
+
+def _build_legacy_narration_pack(product_dir: Path, section: str) -> dict[str, Any]:
     root = product_dir.resolve() / "03_sections" / section
     plan_path = root / "story-plan.json"
     evidence_path = root / "evidence-pack.json"
@@ -254,11 +358,76 @@ def build_narration_pack(product_dir: Path, section: str) -> dict[str, Any]:
     return pack
 
 
+def build_narration_pack(product_dir: Path, section: str) -> dict[str, Any]:
+    outline = read_json(product_dir.resolve() / "02_outline" / "outline.json")
+    if _is_material_aware(outline):
+        return _build_material_aware_narration_pack(product_dir, section)
+    return _build_legacy_narration_pack(product_dir, section)
+
+
 def verify_narration_pack(product_dir: Path, section: str) -> list[str]:
     root = product_dir.resolve() / "03_sections" / section
     try:
-        plan = read_json(root / "story-plan.json")
         pack = read_json(root / "narration-pack.json")
+    except (FileNotFoundError, ValueError) as exc:
+        return [f"invalid narration pack: {exc}"]
+
+    if pack.get("schema_version") == MATERIAL_AWARE_NARRATION_SCHEMA_VERSION:
+        errors: list[str] = []
+        try:
+            outline_path = product_dir.resolve() / "02_outline" / "outline.json"
+            outline = read_json(outline_path)
+            state = read_json(root / "section.json")
+            evidence_path = root / "evidence-pack.json"
+            material_path = root / "material-pack.json"
+            brief_path = root / "brief.md"
+            evidence = read_json(evidence_path)
+            material = read_json(material_path)
+            section_spec = _outline_section(outline, section)
+        except (FileNotFoundError, ValueError) as exc:
+            return [f"invalid material-aware narration pack: {exc}"]
+
+        cycle_id = outline.get("cycle_id")
+        if outline.get("status") != "approved":
+            errors.append("current outline is not human-approved")
+        if not _is_material_aware(outline):
+            errors.append("material-aware narration pack requires story_material_contract_version=1")
+        for label, value in [
+            ("section state", state.get("cycle_id")),
+            ("evidence pack", evidence.get("cycle_id")),
+            ("material pack", material.get("cycle_id")),
+            ("narration pack", pack.get("cycle_id")),
+        ]:
+            if value != cycle_id:
+                errors.append(f"{label} cycle {value!r} does not match outline cycle {cycle_id!r}")
+
+        if pack.get("outline_sha256") != sha256(outline_path):
+            errors.append("narration pack is stale relative to outline")
+        if pack.get("brief_sha256") != sha256(brief_path):
+            errors.append("narration pack is stale relative to section brief")
+        if pack.get("evidence_pack_sha256") != sha256(evidence_path):
+            errors.append("narration pack is stale relative to evidence pack")
+        if pack.get("material_pack_sha256") != sha256(material_path):
+            errors.append("narration pack is stale relative to material pack")
+        if material.get("outline_sha256") != sha256(outline_path):
+            errors.append("material pack is stale relative to outline")
+        if evidence.get("outline_sha256") != sha256(outline_path):
+            errors.append("evidence pack is stale relative to outline")
+
+        expected_claim_ids = list(section_spec.get("claim_ids", []))
+        evidence_claim_ids = [item.get("id") for item in evidence.get("claims", []) if isinstance(item, dict)]
+        permitted_ids = [item.get("id") for item in pack.get("permitted_claims", []) if isinstance(item, dict)]
+        if evidence_claim_ids != expected_claim_ids or permitted_ids != expected_claim_ids:
+            errors.append("section claim allowance differs from approved outline")
+
+        expected_material_ids = list(section_spec.get("material_ids", []))
+        material_ids = [item.get("id") for item in material.get("materials", []) if isinstance(item, dict)]
+        if material_ids != expected_material_ids:
+            errors.append("section material selection differs from approved outline")
+        return errors
+
+    try:
+        plan = read_json(root / "story-plan.json")
         evidence = read_json(root / "evidence-pack.json")
         state = read_json(root / "section.json")
     except (FileNotFoundError, ValueError) as exc:
