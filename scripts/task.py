@@ -89,8 +89,6 @@ def create_task(
     task_id = next_task_id(product_dir, operation, section, unit)
     packet, context = compile_packet(product_dir, operation, task_id, section, unit, execution_runtime)
 
-    # Replacement is a lifecycle transition, not a pointer overwrite. Only
-    # cancel the old routed task after the new canonical packet compiled.
     if replace:
         cancel_active_task(product_dir, reason=f"router replacement by {task_id}", replacement=task_id)
 
@@ -116,9 +114,12 @@ def create_task(
         "packet_manifest": product_relative(product_dir, packet_path),
         "allowed_write_paths": packet["allowed_write_paths"],
         "outputs": packet["operation_outputs"],
+        "optional_outputs": packet.get("optional_operation_outputs", []),
         "report_path": packet["report_path"],
         "operator_brief_path": packet["operator_brief_path"],
     }
+    if "evidence_access" in packet:
+        work_order["evidence_access"] = packet["evidence_access"]
     if "execution_runtime" in packet:
         work_order["execution_runtime"] = packet["execution_runtime"]
         work_order["runtime_owned_paths"] = packet.get("runtime_owned_paths", [])
@@ -158,6 +159,12 @@ def verify_task(product_dir: Path, task_id: str, *, state_override: str | None =
         errors.append("context budget exceeded")
     if work["allowed_write_paths"] != packet["allowed_write_paths"]:
         errors.append("work-order scope differs from packet")
+    if work.get("outputs") != packet.get("operation_outputs"):
+        errors.append("work-order required outputs differ from packet")
+    if work.get("optional_outputs", []) != packet.get("optional_operation_outputs", []):
+        errors.append("work-order optional outputs differ from packet")
+    if work.get("evidence_access") != packet.get("evidence_access"):
+        errors.append("work-order evidence access differs from packet")
     if work.get("authority") != "product_agent" or work.get("authority") != packet.get("authority"):
         errors.append("invalid or mismatched product task authority")
     expected_manifest = f"tasks/{task_id}/packet.json"
@@ -212,8 +219,10 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     changed_outputs = 0
     for record in packet.get("output_baselines", []):
         path = product_dir / record["path"]
+        required = record.get("required", True)
         if not path.is_file():
-            errors.append(f"missing output: {record['path']}")
+            if required:
+                errors.append(f"missing output: {record['path']}")
         elif sha256(path) != record.get("sha256"):
             changed_outputs += 1
     report = task_dir / "report.md"
@@ -241,6 +250,53 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     return []
 
 
+def _validate_optional_materials(root: Path, unit: str, source_ids: list[str], claim_ids: list[str]) -> list[str]:
+    errors: list[str] = []
+    path = root / "materials.json"
+    if not path.is_file():
+        return errors
+    document = read_json(path)
+    if document.get("status") == "not_started":
+        return errors
+    if document.get("status") != "complete":
+        return ["optional workstream materials status must be complete or not_started"]
+    materials = document.get("materials", [])
+    if not isinstance(materials, list):
+        return ["optional workstream materials must be a list"]
+    expected_material = re.compile(rf"{re.escape(unit)}-MAT-\d{{3}}")
+    seen: set[str] = set()
+    for item in materials:
+        if not isinstance(item, dict):
+            errors.append("optional material must be an object")
+            continue
+        material_id = item.get("id", "")
+        if not expected_material.fullmatch(material_id) or material_id in seen:
+            errors.append(f"invalid or duplicate namespaced material ID: {material_id or '?'}")
+            continue
+        seen.add(material_id)
+        for claim_id in item.get("claim_ids", []) if isinstance(item.get("claim_ids", []), list) else []:
+            if claim_id not in claim_ids:
+                errors.append(f"material {material_id} references unknown local claim: {claim_id}")
+        refs = item.get("source_refs", [])
+        if refs is not None and not isinstance(refs, list):
+            errors.append(f"material {material_id} source_refs must be a list")
+            refs = []
+        for ref in refs:
+            if not isinstance(ref, dict) or ref.get("source_id") not in source_ids:
+                errors.append(f"material {material_id} references unknown local source")
+                continue
+            locators = ref.get("locators", [])
+            if not isinstance(locators, list) or not all(isinstance(loc, str) and loc.strip() for loc in locators):
+                errors.append(f"material {material_id} source_ref locators must be strings")
+        limitations = item.get("limitations", [])
+        if limitations is not None and (
+            not isinstance(limitations, list)
+            or not all(isinstance(value, str) and value.strip() for value in limitations)
+        ):
+            errors.append(f"material {material_id} limitations must be a list of strings")
+    return errors
+
+
 def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
     operation = work["operation"]
     target = work.get("target", {})
@@ -256,23 +312,16 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
             root = product_dir / "01_research" / "workstreams" / unit
             sources_doc = read_json(root / "sources.json")
             claims_doc = read_json(root / "claims.json")
-            materials_doc = read_json(root / "materials.json")
             sources = sources_doc.get("sources", [])
             claims = claims_doc.get("claims", [])
-            materials = materials_doc.get("materials", [])
             if sources_doc.get("status") != "complete":
                 errors.append("workstream sources status must be complete")
             if claims_doc.get("status") != "complete":
                 errors.append("workstream claims status must be complete")
-            if materials_doc.get("status") != "complete":
-                errors.append("workstream materials status must be complete")
             if not sources:
                 errors.append("workstream must contain at least one source")
             if not claims:
                 errors.append("workstream must contain at least one claim")
-            if not isinstance(materials, list):
-                errors.append("workstream materials must be a list")
-                materials = []
             source_ids = [item.get("id") for item in sources]
             expected_source = re.compile(rf"{re.escape(unit)}-SRC-\d{{3}}")
             for item in sources:
@@ -300,38 +349,7 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
             claim_ids = [item.get("id") for item in claims]
             if len(claim_ids) != len(set(claim_ids)):
                 errors.append("workstream has duplicate claim IDs")
-            expected_material = re.compile(rf"{re.escape(unit)}-MAT-\d{{3}}")
-            material_ids: list[str] = []
-            for item in materials:
-                material_id = item.get("id", "") if isinstance(item, dict) else ""
-                if not expected_material.fullmatch(material_id):
-                    errors.append(f"invalid namespaced material ID: {material_id or '?'}")
-                    continue
-                material_ids.append(material_id)
-                missing = [field for field in ["kind", "label", "what_audience_follows", "sequence", "claim_ids", "source_refs", "representativeness", "limitations"] if item.get(field) in (None, "", [])]
-                if missing:
-                    errors.append(f"material {material_id} missing: {', '.join(missing)}")
-                if item.get("representativeness") not in {"representative", "exceptional", "illustrative", "unknown"}:
-                    errors.append(f"material {material_id} has invalid representativeness")
-                sequence = item.get("sequence", [])
-                if not isinstance(sequence, list) or not sequence or not all(isinstance(step, str) and step.strip() for step in sequence):
-                    errors.append(f"material {material_id} requires a non-empty sequence")
-                for claim_id in item.get("claim_ids", []):
-                    if claim_id not in claim_ids:
-                        errors.append(f"material {material_id} references unknown local claim: {claim_id}")
-                refs = item.get("source_refs", [])
-                if not isinstance(refs, list) or not refs:
-                    errors.append(f"material {material_id} requires source_refs")
-                else:
-                    for ref in refs:
-                        if not isinstance(ref, dict) or ref.get("source_id") not in source_ids:
-                            errors.append(f"material {material_id} references unknown local source")
-                            continue
-                        locators = ref.get("locators", [])
-                        if not isinstance(locators, list) or not locators or not all(isinstance(loc, str) and loc.strip() for loc in locators):
-                            errors.append(f"material {material_id} source_ref requires narrow locators")
-            if len(material_ids) != len(set(material_ids)):
-                errors.append("workstream has duplicate material IDs")
+            errors.extend(_validate_optional_materials(root, str(unit), source_ids, claim_ids))
             synthesis_text = (root / "synthesis.md").read_text(encoding="utf-8")
             if "Status: complete" not in synthesis_text:
                 errors.append("workstream synthesis status must be complete")
@@ -340,25 +358,16 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
         elif operation == "research_synthesis":
             sources_doc = read_json(product_dir / "01_research" / "source-index.json")
             claims_doc = read_json(product_dir / "01_research" / "claim-ledger.json")
-            materials_doc = read_json(product_dir / "01_research" / "material-ledger.json")
-            material_map = read_json(product_dir / "01_research" / "story-material-map.json")
             if sources_doc.get("status") != "complete":
                 errors.append("global source index status must be complete")
             if claims_doc.get("status") != "complete":
                 errors.append("global claim ledger status must be complete")
-            if materials_doc.get("status") != "complete":
-                errors.append("global material ledger status must be complete")
-            if material_map.get("status") != "complete":
-                errors.append("story material map status must be complete")
             for item in sources_doc.get("sources", []):
                 if not item.get("provenance"):
                     errors.append(f"global source {item.get('id', '?')} missing workstream provenance")
             for item in claims_doc.get("claims", []):
                 if not item.get("provenance"):
                     errors.append(f"global claim {item.get('id', '?')} missing workstream provenance")
-            for item in materials_doc.get("materials", []):
-                if not item.get("provenance"):
-                    errors.append(f"global material {item.get('id', '?')} missing workstream provenance")
             if "Status: complete" not in (product_dir / "01_research" / "research-synthesis.md").read_text(encoding="utf-8"):
                 errors.append("research synthesis status must be complete")
         elif operation == "outline":
@@ -370,6 +379,12 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
             expected_cycle = product.get("production_cycle", {}).get("id")
             if expected_cycle and outline.get("cycle_id") != expected_cycle:
                 errors.append(f"outline cycle_id must match current product cycle {expected_cycle}")
+            architecture = outline.get("script_architecture", {})
+            if architecture.get("writer_authorship_contract_version") != 1:
+                errors.append("new/revised outline must set script_architecture.writer_authorship_contract_version=1")
+            for section in outline.get("sections", []):
+                if not isinstance(section.get("transition"), str) or not section["transition"].strip():
+                    errors.append(f"outline section {section.get('id', '?')} transition is required")
             voice_profile = (product_dir / "02_outline" / "voice-profile.md").read_text(encoding="utf-8")
             errors.extend(validate_voice_profile(voice_profile))
             if outline.get("status") == "approved":
