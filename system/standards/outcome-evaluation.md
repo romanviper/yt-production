@@ -7,6 +7,7 @@ Evaluate the draft that exists, not whether it followed one preferred route.
 - **Arc contribution:** does the section advance its assigned role?
 - **Narrative movement:** does story/understanding change, or does prose mainly restate?
 - **Material carries motion:** do objects, actions, processes, failures or consequences carry most movement, with narration adding only what material cannot safely make clear?
+- **Outline realization:** when `audience_experience`/`material_ids` exist, does the draft make that progression happen rather than verbalize the outline's interpretation?
 - **Audience agency/readability:** can a non-specialist encounter the raw clue and infer something before specialist classification?
 - **Narrator stance:** guide/recount/clarify, or repeatedly tell the audience what to see and think?
 - **Causal clarity:** can the listener follow pressure → mechanism → consequence where relevant?
