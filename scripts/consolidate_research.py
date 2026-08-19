@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministically consolidate local research ledgers before AI synthesis."""
+"""Deterministically consolidate authoritative research ledgers before AI synthesis."""
 
 from __future__ import annotations
 
@@ -21,7 +21,6 @@ MANIFEST_PATH = Path("01_research/consolidation.json")
 SOURCE_INDEX_PATH = Path("01_research/source-index.json")
 CLAIM_LEDGER_PATH = Path("01_research/claim-ledger.json")
 MATERIAL_LEDGER_PATH = Path("01_research/material-ledger.json")
-MATERIAL_REPRESENTATIVENESS = {"representative", "exceptional", "illustrative", "unknown"}
 
 
 def _list(value: Any) -> list[Any]:
@@ -59,8 +58,9 @@ def _input_records(product_dir: Path) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     for unit in plan.get("workstreams", []):
         unit_id = unit.get("id", "")
+        root = product_dir / "01_research" / "workstreams" / unit_id
         for name in ["sources.json", "claims.json"]:
-            path = product_dir / "01_research" / "workstreams" / unit_id / name
+            path = root / name
             if not path.is_file():
                 raise FileNotFoundError(f"Missing research ledger: {product_relative(product_dir, path)}")
             records.append(
@@ -70,7 +70,7 @@ def _input_records(product_dir: Path) -> list[dict[str, Any]]:
                     "bytes": path.stat().st_size,
                 }
             )
-        material_path = product_dir / "01_research" / "workstreams" / unit_id / "materials.json"
+        material_path = root / "materials.json"
         if material_path.is_file():
             records.append(
                 {
@@ -87,15 +87,13 @@ def validate_global_ledgers(product_dir: Path) -> list[str]:
     try:
         sources_doc = read_json(product_dir / SOURCE_INDEX_PATH)
         claims_doc = read_json(product_dir / CLAIM_LEDGER_PATH)
-        materials_doc = read_json(product_dir / MATERIAL_LEDGER_PATH)
     except (FileNotFoundError, ValueError) as exc:
         return [f"invalid consolidated research ledger: {exc}"]
+
     if sources_doc.get("status") != "complete":
         errors.append("global source index status must be complete")
     if claims_doc.get("status") != "complete":
         errors.append("global claim ledger status must be complete")
-    if materials_doc.get("status") != "complete":
-        errors.append("global material ledger status must be complete")
 
     source_ids: set[str] = set()
     for item in sources_doc.get("sources", []):
@@ -122,8 +120,21 @@ def validate_global_ledgers(product_dir: Path) -> list[str]:
             if source_id not in source_ids:
                 errors.append(f"global claim {claim_id or '?'} references unknown source: {source_id}")
 
+    material_path = product_dir / MATERIAL_LEDGER_PATH
+    if not material_path.is_file():
+        return errors
+    try:
+        materials_doc = read_json(material_path)
+    except (ValueError, OSError) as exc:
+        return errors + [f"invalid optional material ledger: {exc}"]
+    if materials_doc.get("status") != "complete":
+        errors.append("optional global material ledger status must be complete")
+
     material_ids: set[str] = set()
     for item in materials_doc.get("materials", []):
+        if not isinstance(item, dict):
+            errors.append("global material entries must be objects")
+            continue
         material_id = item.get("id", "")
         if not re.fullmatch(r"MAT-\d{4}", material_id):
             errors.append(f"invalid global material ID: {material_id or '?'}")
@@ -132,38 +143,30 @@ def validate_global_ledgers(product_dir: Path) -> list[str]:
         material_ids.add(material_id)
         if not item.get("provenance"):
             errors.append(f"global material {material_id or '?'} missing workstream provenance")
-        if not isinstance(item.get("kind"), str) or not item.get("kind", "").strip():
-            errors.append(f"global material {material_id or '?'} missing kind")
-        if not isinstance(item.get("label"), str) or not item.get("label", "").strip():
-            errors.append(f"global material {material_id or '?'} missing label")
-        if not isinstance(item.get("what_audience_follows"), str) or not item.get("what_audience_follows", "").strip():
-            errors.append(f"global material {material_id or '?'} missing what_audience_follows")
-        sequence = item.get("sequence")
-        if not isinstance(sequence, list) or not sequence or not all(isinstance(step, str) and step.strip() for step in sequence):
-            errors.append(f"global material {material_id or '?'} requires a non-empty sequence")
-        refs = item.get("source_refs")
-        if not isinstance(refs, list) or not refs:
-            errors.append(f"global material {material_id or '?'} requires source_refs")
-        else:
-            for ref in refs:
-                if not isinstance(ref, dict) or ref.get("source_id") not in source_ids:
-                    errors.append(f"global material {material_id or '?'} references unknown source")
-                    continue
-                locators = ref.get("locators")
-                if not isinstance(locators, list) or not locators or not all(isinstance(loc, str) and loc.strip() for loc in locators):
-                    errors.append(f"global material {material_id or '?'} source_ref requires narrow locators")
-        linked_claims = item.get("claim_ids")
-        if not isinstance(linked_claims, list) or not linked_claims:
-            errors.append(f"global material {material_id or '?'} requires claim_ids")
-        else:
-            for claim_id in linked_claims:
-                if claim_id not in claim_ids:
-                    errors.append(f"global material {material_id or '?'} references unknown claim: {claim_id}")
-        if item.get("representativeness") not in MATERIAL_REPRESENTATIVENESS:
-            errors.append(f"global material {material_id or '?'} has invalid representativeness")
-    legacy_gaps = materials_doc.get("legacy_workstreams_without_materials", [])
-    if not isinstance(legacy_gaps, list) or not all(isinstance(item, str) for item in legacy_gaps):
-        errors.append("material ledger legacy_workstreams_without_materials must be a list")
+        refs = item.get("source_refs", [])
+        if not isinstance(refs, list):
+            errors.append(f"global material {material_id or '?'} source_refs must be a list")
+            refs = []
+        for ref in refs:
+            if not isinstance(ref, dict) or ref.get("source_id") not in source_ids:
+                errors.append(f"global material {material_id or '?'} references unknown source")
+                continue
+            locators = ref.get("locators", [])
+            if not isinstance(locators, list) or not all(isinstance(loc, str) and loc.strip() for loc in locators):
+                errors.append(f"global material {material_id or '?'} source_ref locators must be strings")
+        linked_claims = item.get("claim_ids", [])
+        if not isinstance(linked_claims, list):
+            errors.append(f"global material {material_id or '?'} claim_ids must be a list")
+            linked_claims = []
+        for claim_id in linked_claims:
+            if claim_id not in claim_ids:
+                errors.append(f"global material {material_id or '?'} references unknown claim: {claim_id}")
+        limitations = item.get("limitations", [])
+        if limitations is not None and (
+            not isinstance(limitations, list)
+            or not all(isinstance(value, str) and value.strip() for value in limitations)
+        ):
+            errors.append(f"global material {material_id or '?'} limitations must be a list of strings")
     return errors
 
 
@@ -171,9 +174,10 @@ def _manifest(product_dir: Path, mode: str) -> dict[str, Any]:
     outputs = []
     for relative in [SOURCE_INDEX_PATH, CLAIM_LEDGER_PATH, MATERIAL_LEDGER_PATH]:
         path = product_dir / relative
-        outputs.append({"path": relative.as_posix(), "sha256": sha256(path), "bytes": path.stat().st_size})
+        if path.is_file():
+            outputs.append({"path": relative.as_posix(), "sha256": sha256(path), "bytes": path.stat().st_size})
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "generator": GENERATOR,
         "mode": mode,
         "created_at": datetime.now(timezone.utc).isoformat(),
@@ -197,19 +201,18 @@ def verify_consolidation(product_dir: Path) -> list[str]:
         errors.append(f"research consolidation generator must be {GENERATOR}")
     if manifest.get("inputs") != expected_inputs:
         errors.append("research consolidation is stale relative to workstream ledgers")
-    expected_outputs = {SOURCE_INDEX_PATH.as_posix(), CLAIM_LEDGER_PATH.as_posix(), MATERIAL_LEDGER_PATH.as_posix()}
     output_records = manifest.get("outputs")
-    if (
-        not isinstance(output_records, list)
-        or not all(isinstance(item, dict) for item in output_records)
-        or {item.get("path") for item in output_records} != expected_outputs
-    ):
-        errors.append("research consolidation must declare source, claim and material ledgers")
+    if not isinstance(output_records, list) or not all(isinstance(item, dict) for item in output_records):
+        errors.append("research consolidation outputs must be compiled records")
     else:
+        declared = {item.get("path") for item in output_records}
+        for required in [SOURCE_INDEX_PATH.as_posix(), CLAIM_LEDGER_PATH.as_posix()]:
+            if required not in declared:
+                errors.append(f"research consolidation must declare {required}")
         for record in output_records:
-            path = product_dir / record["path"]
+            path = product_dir / str(record.get("path", ""))
             if not path.is_file() or sha256(path) != record.get("sha256") or path.stat().st_size != record.get("bytes"):
-                errors.append(f"stale consolidated research output: {record['path']}")
+                errors.append(f"stale consolidated research output: {record.get('path')}")
     errors.extend(validate_global_ledgers(product_dir))
     return errors
 
@@ -220,11 +223,11 @@ def consolidate(product_dir: Path) -> dict[str, Any]:
     source_records: list[dict[str, Any]] = []
     claim_records: list[dict[str, Any]] = []
     material_records: list[dict[str, Any]] = []
-    legacy_material_gaps: list[str] = []
     source_by_key: dict[tuple[str, ...], dict[str, Any]] = {}
     claim_by_statement: dict[str, dict[str, Any]] = {}
     local_source_map: dict[tuple[str, str], str] = {}
     local_claim_map: dict[tuple[str, str], str] = {}
+    workstreams_with_materials: list[str] = []
 
     for unit in plan.get("workstreams", []):
         unit_id = unit.get("id", "")
@@ -235,10 +238,8 @@ def consolidate(product_dir: Path) -> dict[str, Any]:
         materials_doc = read_json(material_path) if material_path.is_file() else None
         if sources_doc.get("status") != "complete" or claims_doc.get("status") != "complete":
             raise ValueError(f"Incomplete workstream ledgers: {unit_id}")
-        if materials_doc is not None and materials_doc.get("status") != "complete":
-            raise ValueError(f"Incomplete workstream material ledger: {unit_id}")
-        if materials_doc is None:
-            legacy_material_gaps.append(unit_id)
+        if materials_doc is not None and materials_doc.get("status") not in {"complete", "not_started"}:
+            raise ValueError(f"Invalid optional workstream material ledger status: {unit_id}")
         if "Status: complete" not in (root / "synthesis.md").read_text(encoding="utf-8"):
             raise ValueError(f"Incomplete workstream synthesis: {unit_id}")
 
@@ -301,30 +302,19 @@ def consolidate(product_dir: Path) -> dict[str, Any]:
             local_claim_map[(unit_id, local_id)] = record["id"]
 
         local_material_ids: set[str] = set()
-        for material in materials_doc.get("materials", []) if materials_doc is not None else []:
+        raw_materials = materials_doc.get("materials", []) if materials_doc and materials_doc.get("status") == "complete" else []
+        if raw_materials:
+            workstreams_with_materials.append(unit_id)
+        for material in raw_materials:
+            if not isinstance(material, dict):
+                raise ValueError(f"Optional material in {unit_id} must be an object")
             local_id = material.get("id", "")
             if not re.fullmatch(rf"{re.escape(unit_id)}-MAT-\d{{3}}", local_id) or local_id in local_material_ids:
                 raise ValueError(f"Invalid or duplicate local material ID: {local_id or '?'}")
             local_material_ids.add(local_id)
-            for field in ["kind", "label", "what_audience_follows"]:
-                if not isinstance(material.get(field), str) or not material[field].strip():
-                    raise ValueError(f"Material {local_id} missing {field}")
-            sequence = material.get("sequence")
-            if not isinstance(sequence, list) or not sequence or not all(isinstance(step, str) and step.strip() for step in sequence):
-                raise ValueError(f"Material {local_id} requires a non-empty sequence")
-            local_claim_refs = material.get("claim_ids")
-            if not isinstance(local_claim_refs, list) or not local_claim_refs:
-                raise ValueError(f"Material {local_id} requires claim_ids")
-            mapped_claims = []
-            for claim_id in local_claim_refs:
-                mapped = local_claim_map.get((unit_id, claim_id))
-                if not mapped:
-                    raise ValueError(f"Material {local_id} references unknown local claim: {claim_id}")
-                if mapped not in mapped_claims:
-                    mapped_claims.append(mapped)
-            refs = material.get("source_refs")
-            if not isinstance(refs, list) or not refs:
-                raise ValueError(f"Material {local_id} requires source_refs")
+            refs = material.get("source_refs", [])
+            if not isinstance(refs, list):
+                raise ValueError(f"Material {local_id} source_refs must be a list")
             mapped_refs = []
             for ref in refs:
                 if not isinstance(ref, dict):
@@ -333,21 +323,24 @@ def consolidate(product_dir: Path) -> dict[str, Any]:
                 mapped_source = local_source_map.get((unit_id, source_id))
                 if not mapped_source:
                     raise ValueError(f"Material {local_id} references unknown local source: {source_id}")
-                locators = ref.get("locators")
-                if not isinstance(locators, list) or not locators or not all(isinstance(loc, str) and loc.strip() for loc in locators):
-                    raise ValueError(f"Material {local_id} source_ref requires narrow locators")
+                locators = ref.get("locators", [])
+                if not isinstance(locators, list) or not all(isinstance(loc, str) and loc.strip() for loc in locators):
+                    raise ValueError(f"Material {local_id} source_ref locators must be strings")
                 mapped_refs.append({"source_id": mapped_source, "locators": list(locators)})
-            representativeness = material.get("representativeness")
-            if representativeness not in MATERIAL_REPRESENTATIVENESS:
-                raise ValueError(f"Material {local_id} has invalid representativeness")
-            limitations = material.get("limitations", [])
-            if not isinstance(limitations, list) or not all(isinstance(item, str) and item.strip() for item in limitations):
-                raise ValueError(f"Material {local_id} limitations must be a list of strings")
+            mapped_claims = []
+            local_claim_refs = material.get("claim_ids", [])
+            if not isinstance(local_claim_refs, list):
+                raise ValueError(f"Material {local_id} claim_ids must be a list")
+            for claim_id in local_claim_refs:
+                mapped = local_claim_map.get((unit_id, claim_id))
+                if not mapped:
+                    raise ValueError(f"Material {local_id} references unknown local claim: {claim_id}")
+                if mapped not in mapped_claims:
+                    mapped_claims.append(mapped)
             record = copy.deepcopy(material)
             record["id"] = f"MAT-{len(material_records) + 1:04d}"
             record["claim_ids"] = mapped_claims
             record["source_refs"] = mapped_refs
-            record["limitations"] = list(limitations)
             record["provenance"] = [{"workstream": unit_id, "local_id": local_id}]
             material_records.append(record)
 
@@ -362,11 +355,12 @@ def consolidate(product_dir: Path) -> dict[str, Any]:
     write_json(
         product_dir / MATERIAL_LEDGER_PATH,
         {
-            "schema_version": 1,
+            "schema_version": 2,
             "product": product_dir.name,
             "status": "complete",
+            "purpose": "optional_evidence_preservation",
             "materials": material_records,
-            "legacy_workstreams_without_materials": legacy_material_gaps,
+            "workstreams_with_materials": workstreams_with_materials,
         },
     )
     manifest = _manifest(product_dir, "deterministic")
