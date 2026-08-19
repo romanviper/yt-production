@@ -51,35 +51,34 @@ class DraftEvidenceBroker:
         self.packet_path = self.task_dir / "packet.json"
         self.work = read_json(self.work_path)
         self.packet = read_json(self.packet_path)
-        self._validate_task()
+        self._validate_task_contract()
 
         target = self.work.get("target", {})
         self.section = str(target.get("section") or "")
         self.root = self.product_dir / "03_sections" / self.section
         self.narration_path = self.root / "narration-pack.json"
+        self.evidence_path = self.root / "evidence-pack.json"
         self.narration = read_json(self.narration_path)
-        self.claim_ledger_path = self.product_dir / "01_research" / "claim-ledger.json"
-        self.source_index_path = self.product_dir / "01_research" / "source-index.json"
+        self.evidence = read_json(self.evidence_path)
         self.material_ledger_path = self.product_dir / "01_research" / "material-ledger.json"
-        self.claim_ledger = read_json(self.claim_ledger_path)
-        self.source_index = read_json(self.source_index_path)
         self.material_ledger = read_json(self.material_ledger_path) if self.material_ledger_path.is_file() else None
 
+        self._validate_fresh_handoff()
         self.allowed_claim_ids, self.allowed_source_ids = self._scope_from_narration()
         self.claims_by_id = {
             item.get("id"): item
-            for item in self.claim_ledger.get("claims", [])
+            for item in self.evidence.get("claims", [])
             if isinstance(item, dict) and item.get("id")
         }
         self.sources_by_id = {
             item.get("id"): item
-            for item in self.source_index.get("sources", [])
+            for item in self.evidence.get("sources", [])
             if isinstance(item, dict) and item.get("id")
         }
         self._validate_scope()
         self.trace_path = self.task_dir / "evidence-trace.jsonl"
 
-    def _validate_task(self) -> None:
+    def _validate_task_contract(self) -> None:
         if self.work.get("id") != self.task_id or self.packet.get("task_id") != self.task_id:
             raise EvidenceAccessError("task id does not match work-order/packet")
         if self.work.get("operation") != self.packet.get("operation"):
@@ -108,6 +107,13 @@ class DraftEvidenceBroker:
         if record is None or not narration_path.is_file() or sha256(narration_path) != record.get("sha256"):
             raise EvidenceAccessError("narration pack is missing or stale relative to task creation")
 
+    def _validate_fresh_handoff(self) -> None:
+        expected = self.narration.get("evidence_pack_sha256")
+        if not isinstance(expected, str) or not self.evidence_path.is_file() or sha256(self.evidence_path) != expected:
+            raise EvidenceAccessError("evidence pack is stale relative to narration authority")
+        if self.evidence.get("section") != self.section:
+            raise EvidenceAccessError("evidence pack section differs from task target")
+
     def _scope_from_narration(self) -> tuple[list[str], list[str]]:
         if self.narration.get("schema_version") == 4:
             scope = self.narration.get("retrieval_scope")
@@ -123,11 +129,9 @@ class DraftEvidenceBroker:
                 if isinstance(item, dict) and item.get("id")
             ]
             sources = [
-                source_id
+                item.get("id")
                 for item in self.narration.get("source_refs", [])
-                if isinstance(item, dict)
-                for source_id in [item.get("id")]
-                if isinstance(source_id, str)
+                if isinstance(item, dict) and isinstance(item.get("id"), str)
             ]
         if not isinstance(claims, list) or not all(isinstance(item, str) and re.fullmatch(r"CLM-\d{4}", item) for item in claims):
             raise EvidenceAccessError("retrieval claim scope is invalid")
@@ -153,6 +157,8 @@ class DraftEvidenceBroker:
             raise EvidenceAccessError("retrieval source scope exceeds approved claim graph: " + ", ".join(extra))
 
     def _preserved_details(self, source_id: str) -> list[dict[str, Any]]:
+        """Expose only route-neutral optional detail; legacy story fields stay hidden."""
+
         if not isinstance(self.material_ledger, dict):
             return []
         results = []
@@ -170,26 +176,16 @@ class DraftEvidenceBroker:
             ]
             if not matching_refs:
                 continue
-            factual = {
-                key: value
-                for key, value in material.items()
-                if key
-                not in {
-                    "id",
-                    "claim_ids",
-                    "source_refs",
-                    "provenance",
-                    "narratability",
-                    "what_audience_follows",
-                    "representativeness",
-                }
-                and value not in (None, "", [])
-            }
+            details = material.get("details")
+            if details in (None, "", []):
+                continue
             results.append(
                 {
                     "material_id": material.get("id"),
+                    "label": material.get("label"),
+                    "kind": material.get("kind"),
                     "locators": [loc for ref in matching_refs for loc in ref.get("locators", [])],
-                    "preserved_detail": factual,
+                    "details": details,
                     "limitations": material.get("limitations", []),
                     "authority": "optional_evidence_preservation_only",
                 }
@@ -204,7 +200,10 @@ class DraftEvidenceBroker:
             "section": self.section,
             "capability": capability,
             "arguments": arguments,
+            "response": response,
             "response_sha256": _json_hash(response) if response is not None else None,
+            "evidence_pack_sha256": sha256(self.evidence_path),
+            "optional_material_ledger_sha256": sha256(self.material_ledger_path) if self.material_ledger_path.is_file() else None,
             "error": error,
             "truth_ceiling_unchanged": True,
         }
@@ -272,11 +271,11 @@ class DraftEvidenceBroker:
         if source_id not in self.allowed_source_ids:
             raise EvidenceAccessError(f"source {source_id!r} is outside approved section scope")
         return {
-            "source": self.sources_by_id[source_id],
+            "source": self.sources_by_id[str(source_id)],
             "preserved_details": self._preserved_details(str(source_id)),
             "retrieval_instruction": (
-                "Read only the approved source URL/locators returned here. If external reading adds factual detail used in drafting, "
-                "call record with this source id and one approved parent locator so the evidence access remains auditable."
+                "Open only the approved source URL/locators returned here. If external reading adds factual detail used in drafting, "
+                "call record with this source id and one reviewed parent locator before relying on it."
             ),
         }
 
@@ -297,10 +296,7 @@ class DraftEvidenceBroker:
                 ranked.append((score, f"claim:{claim_id}", {"kind": "claim", "record": item}))
         for source_id in self.allowed_source_ids:
             item = self.sources_by_id[source_id]
-            source_payload = {
-                "source": item,
-                "preserved_details": self._preserved_details(source_id),
-            }
+            source_payload = {"source": item, "preserved_details": self._preserved_details(source_id)}
             haystack = json.dumps(source_payload, ensure_ascii=False, sort_keys=True).casefold()
             score = sum(haystack.count(term) for term in terms)
             if score:
@@ -364,7 +360,6 @@ def main() -> int:
 
     args = parser.parse_args()
     broker = DraftEvidenceBroker(args.product, args.task_id)
-    arguments: dict[str, Any]
     if args.capability == "claims":
         arguments = {} if args.ids is None else {"ids": args.ids}
     elif args.capability == "source":
