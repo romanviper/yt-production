@@ -136,19 +136,14 @@
       "max_context_tokens": 11000,
       "instruction_files": [
         "system/core/creative-boundaries.md",
-        "system/standards/channel-constitution.md",
         "system/operations/draft-section.md"
       ],
       "required_inputs": [
-        "02_outline/story-bible.md",
-        "02_outline/voice-profile.md",
         "03_sections/{section}/section.json",
-        "03_sections/{section}/brief.md",
         "03_sections/{section}/narration-pack.json",
         "03_sections/{section}/continuity-in.md"
       ],
       "optional_inputs": [
-        "03_sections/{section}/story-plan.json",
         "03_sections/{section}/draft-rework-request.md"
       ],
       "outputs": [
