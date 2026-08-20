@@ -1,13 +1,26 @@
 {
   "schema_version": 1,
-  "status": "in_progress",
-  "headline": "",
-  "material_points": [],
+  "task_id": "T0030-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "Draft P01 đã hoàn tất và sẵn sàng để review.",
+  "material_points": [
+    "Draft tiếng Việt dài 1.482 từ, đúng tiêu đề, mission và transition đã duyệt.",
+    "Audience đi từ phát minh đột ngột sang ecology gồm thực hành số, seals/bullae/tablets và nhu cầu thể chế.",
+    "Draft giữ ranh giới: hành chính là áp lực lớn, không phải nguyên nhân duy nhất; phản hồi thiết chế–hồ sơ vẫn là giả thuyết."
+  ],
   "decision": {
-    "required": false,
-    "question": "",
-    "recommendation": "",
-    "options": []
-  },
-  "next_step": ""
+    "required": true,
+    "question": "Bạn có approve draft P01 hay yêu cầu rework?",
+    "recommendation": "Review bản thảo và approve nếu nhịp giải thích cùng các ranh giới evidence đã đạt.",
+    "options": [
+      {
+        "label": "Approve draft P01",
+        "effect": "Chấp nhận draft tại checkpoint review và cho phép operation kế tiếp được route riêng."
+      },
+      {
+        "label": "Request rework",
+        "effect": "Giữ task tại checkpoint review và trả lại yêu cầu chỉnh sửa cụ thể."
+      }
+    ]
+  }
 }
