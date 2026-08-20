@@ -120,13 +120,20 @@ def active_prose_task(product_dir: Path, section: str, status: str | None) -> tu
     task_id = active.get("task_id")
     if not isinstance(task_id, str) or not task_id:
         return None, []
-    errors = _task_scope_errors(product_dir, task_id, section, live=True)
-    if errors:
-        return None, errors
-    work = read_json(product_dir / "tasks" / task_id / "work-order.json")
+
+    work_path = product_dir / "tasks" / task_id / "work-order.json"
+    if not work_path.is_file():
+        return None, [f"routed prose task {task_id} is missing work-order.json"]
+    work = read_json(work_path)
+    if work.get("state") not in LIVE_TASK_STATES:
+        return None, []
+
     expected_operation = "draft_section" if status == "ready_for_draft" else "revise_section" if status == "changes_requested" else None
     if expected_operation is None or work.get("operation") != expected_operation:
         return None, []
+    errors = _task_scope_errors(product_dir, task_id, section, live=True)
+    if errors:
+        return None, errors
     return task_id, []
 
 
