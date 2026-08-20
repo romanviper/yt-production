@@ -17,8 +17,10 @@ try:
     from scripts.lifecycle import (
         apply_research_submission,
         apply_section_submission,
-        cancel_active_task,
+        cancel_live_task_conflicts,
         clear_active_pointer,
+        heal_active_pointer,
+        live_task_conflicts,
         task_submit_errors,
         task_transition_errors,
     )
@@ -37,8 +39,10 @@ except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from lifecycle import (
         apply_research_submission,
         apply_section_submission,
-        cancel_active_task,
+        cancel_live_task_conflicts,
         clear_active_pointer,
+        heal_active_pointer,
+        live_task_conflicts,
         task_submit_errors,
         task_transition_errors,
     )
@@ -76,14 +80,7 @@ def create_task(
     execution_runtime: str | None = None,
 ) -> dict:
     product_dir = product_dir.resolve()
-    active_file = active_path(product_dir)
-    if active_file.is_file() and not replace:
-        active = read_json(active_file)
-        existing_ref = active.get("work_order")
-        if active.get("task_id") and existing_ref:
-            existing = product_dir / existing_ref
-            if existing.is_file() and read_json(existing).get("state") in {"ready", "in_progress"}:
-                raise ValueError(f"Task {active['task_id']} còn active; close/cancel hoặc dùng --replace có chủ đích.")
+    heal_active_pointer(product_dir)
 
     if operation == "research_synthesis":
         ensure_consolidated(product_dir)
@@ -91,8 +88,22 @@ def create_task(
     task_id = next_task_id(product_dir, operation, section, unit)
     packet, context = compile_packet(product_dir, operation, task_id, section, unit, execution_runtime)
 
-    if replace:
-        cancel_active_task(product_dir, reason=f"router replacement by {task_id}", replacement=task_id)
+    conflicts = live_task_conflicts(product_dir, operation, section, unit)
+    if conflicts and not replace:
+        raise ValueError(
+            "Live task conflict on requested scope: "
+            + ", ".join(conflicts)
+            + ". Close/cancel it or use --replace intentionally."
+        )
+    if conflicts:
+        cancel_live_task_conflicts(
+            product_dir,
+            operation,
+            section,
+            unit,
+            reason=f"router replacement by {task_id}",
+            replacement=task_id,
+        )
 
     task_dir = product_dir / "tasks" / task_id
     task_dir.mkdir(parents=True, exist_ok=False)
@@ -131,7 +142,7 @@ def create_task(
     if errors:
         raise ValueError("Router produced invalid task artifacts: " + "; ".join(errors))
     write_json(
-        active_file,
+        active_path(product_dir),
         {
             "task_id": task_id,
             "work_order": product_relative(product_dir, work_path),
@@ -190,7 +201,7 @@ def verify_task(product_dir: Path, task_id: str, *, state_override: str | None =
 
 
 def verify_active_pointer(product_dir: Path, task_id: str) -> list[str]:
-    """Validate routing metadata only. ACTIVE.json is not task execution authority."""
+    """Validate routing metadata only. ACTIVE.json is never task execution authority."""
 
     product_dir = product_dir.resolve()
     path = active_path(product_dir)
@@ -220,7 +231,6 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     errors = task_submit_errors(work.get("state"))
     errors.extend(verify_task(product_dir, task_id))
     if work.get("operation") in {"draft_section", "revise_section"}:
-        errors.extend(verify_active_pointer(product_dir, task_id))
         errors.extend(validate_evidence_trace(product_dir, task_id))
     if errors:
         return errors
@@ -257,6 +267,7 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     apply_section_submission(product_dir, work["operation"], work.get("target", {}).get("section"))
     if work.get("operation") in {"draft_section", "revise_section"}:
         record_submitted_prose(product_dir, task_id)
+    clear_active_pointer(product_dir, task_id, reason="task submitted; routing returned to idle")
     return []
 
 
@@ -494,10 +505,11 @@ def main() -> int:
         print(json.dumps(work, ensure_ascii=False, indent=2))
         return 0
     if args.command == "show":
+        heal_active_pointer(args.product.resolve())
         active = read_json(active_path(args.product.resolve()))
         context_ref = active.get("context_packet")
         if not context_ref:
-            parser.error("No routed task in tasks/ACTIVE.json")
+            parser.error("No routed live task in tasks/ACTIVE.json")
         context = args.product.resolve() / context_ref
         print(context.read_text(encoding="utf-8"))
         return 0
@@ -511,9 +523,10 @@ def main() -> int:
         product = args.product.resolve()
         task_id = args.task_id
         if not task_id:
-            task_id = read_json(active_path(product)).get("task_id")
+            heal_active_pointer(product)
+            task_id = read_json(active_path(product)).get("task_id") if active_path(product).is_file() else None
         if not task_id:
-            parser.error("No routed task in tasks/ACTIVE.json")
+            parser.error("No routed live task in tasks/ACTIVE.json")
         path = product / "tasks" / task_id / "operator-brief.json"
         errors = validate_brief_file(path)
         if errors:
