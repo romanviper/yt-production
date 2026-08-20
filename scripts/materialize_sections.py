@@ -80,6 +80,7 @@ def materialize(product_dir: Path) -> list[Path]:
             else [movements[item["movement_id"]]]
         )
         section_path = root / "section.json"
+        existing_state: dict[str, Any] | None = None
         if section_path.exists() and current_contract:
             existing_state = read_json(section_path)
             if existing_state.get("cycle_id") != cycle_id:
@@ -91,6 +92,18 @@ def materialize(product_dir: Path) -> list[Path]:
                     f"Existing {section_id} is already in production state {existing_state.get('status')!r}; "
                     "do not overwrite it with a rematerialization."
                 )
+
+        mission: str | None = None
+        if direct_authorship:
+            outline_mission = item.get("mission")
+            existing_mission = existing_state.get("mission") if isinstance(existing_state, dict) else None
+            candidate = outline_mission if isinstance(outline_mission, str) and outline_mission.strip() else existing_mission
+            if not isinstance(candidate, str) or not candidate.strip():
+                raise ValueError(
+                    f"Direct-authorship section {section_id} requires a non-empty mission before materialization; "
+                    "do not infer one from title or architecture prose."
+                )
+            mission = candidate.strip()
 
         state = {
             "schema_version": 4 if direct_authorship else (2 if current_contract else 1),
@@ -107,6 +120,8 @@ def materialize(product_dir: Path) -> list[Path]:
             "cycle_id": cycle_id,
             "outline_sha256": sha256(outline_path),
         }
+        if mission is not None:
+            state["mission"] = mission
         if isinstance(item.get("transition"), str) and item["transition"].strip():
             state["transition"] = item["transition"].strip()
         if current_contract:
