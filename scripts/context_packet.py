@@ -27,7 +27,7 @@ try:
     from scripts.lifecycle import research_rework_blocker, section_operation_state_error
     from scripts.outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
     from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
-    from scripts.story_plan_contract import verify_narration_pack
+    from scripts.story_plan_contract import is_direct_authorship_outline, verify_narration_pack
 except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.py
     from common import (
         REPO_ROOT,
@@ -46,7 +46,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
     from lifecycle import research_rework_blocker, section_operation_state_error
     from outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
     from packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
-    from story_plan_contract import verify_narration_pack
+    from story_plan_contract import is_direct_authorship_outline, verify_narration_pack
 
 
 HARNESS_PATH = REPO_ROOT / "system" / "harness.json"
@@ -64,6 +64,24 @@ DSH_OUTLINE_CAPABILITIES = [
     "submit",
 ]
 DSH_OUTLINE_ADAPTER = "scripts/outline_runtime.py"
+
+LEGACY_DRAFT_INSTRUCTION_FILES = [
+    "system/core/creative-boundaries.md",
+    "system/standards/channel-constitution.md",
+    "system/operations/draft-section.md",
+]
+LEGACY_DRAFT_REQUIRED_INPUTS = [
+    "02_outline/story-bible.md",
+    "02_outline/voice-profile.md",
+    "03_sections/{section}/section.json",
+    "03_sections/{section}/brief.md",
+    "03_sections/{section}/narration-pack.json",
+    "03_sections/{section}/continuity-in.md",
+]
+LEGACY_DRAFT_OPTIONAL_INPUTS = [
+    "03_sections/{section}/story-plan.json",
+    "03_sections/{section}/draft-rework-request.md",
+]
 
 
 def load_harness() -> dict[str, Any]:
@@ -210,6 +228,25 @@ def read_json_local(path: Path) -> dict[str, Any]:
     return value
 
 
+def _draft_context_lists(product_dir: Path, operation: str, spec: dict[str, Any]) -> tuple[list[str], list[str], list[str]]:
+    """Keep canonical writer-authorship minimal while preserving the legacy draft compatibility packet."""
+
+    instruction_files = list(spec["instruction_files"])
+    required_inputs = list(spec["required_inputs"])
+    optional_inputs = list(spec.get("optional_inputs", []))
+    if operation != "draft_section":
+        return instruction_files, required_inputs, optional_inputs
+
+    outline = read_json_local(product_dir / "02_outline" / "outline.json")
+    if is_direct_authorship_outline(outline):
+        return instruction_files, required_inputs, optional_inputs
+    return (
+        list(LEGACY_DRAFT_INSTRUCTION_FILES),
+        list(LEGACY_DRAFT_REQUIRED_INPUTS),
+        list(LEGACY_DRAFT_OPTIONAL_INPUTS),
+    )
+
+
 def compile_packet(
     product_dir: Path,
     operation: str,
@@ -232,13 +269,14 @@ def compile_packet(
     runtime = resolve_execution_runtime(operation, spec, execution_runtime)
     validate_preconditions(product_dir, operation, section, unit)
 
-    instruction_paths = [(REPO_ROOT / item).resolve() for item in spec["instruction_files"]]
+    instruction_files, required_inputs, optional_inputs = _draft_context_lists(product_dir, operation, spec)
+    instruction_paths = [(REPO_ROOT / item).resolve() for item in instruction_files]
     for path in instruction_paths:
         if not path.is_file():
             raise FileNotFoundError(f"Missing instruction: {repo_relative(path)}")
     validate_prompt_layers(instruction_paths, profile, harness)
-    input_paths = expand_inputs(product_dir, spec["required_inputs"], section, unit)
-    input_paths += expand_optional_inputs(product_dir, spec.get("optional_inputs", []), section, unit)
+    input_paths = expand_inputs(product_dir, required_inputs, section, unit)
+    input_paths += expand_optional_inputs(product_dir, optional_inputs, section, unit)
     if spec.get("include_dependency_handoffs") and section:
         state = read_json_local(product_dir / "03_sections" / section / "section.json")
         for dependency in state.get("dependencies", []):
