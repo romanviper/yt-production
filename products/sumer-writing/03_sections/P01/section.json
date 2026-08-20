@@ -35,5 +35,12 @@
       "role": "opening",
       "title": "Khi một xã hội cần trí nhớ ngoài con người"
     }
-  ]
+  ],
+  "prose_provenance": {
+    "task_id": "T0030-draft-section-P01",
+    "operation": "draft_section",
+    "submitted_at": "2026-08-20T14:23:19.872765+00:00",
+    "draft_sha256": "be735d0288ef617796b44fa2595c14978fd491895368eeacd43a2a7c5649cace",
+    "handoff_sha256": "ac2f7aba51f3c4c1dc07244c48920b0e99c5d11d8c409f3a98c48423d8352f46"
+  }
 }

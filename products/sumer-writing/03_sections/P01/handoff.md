@@ -1,5 +1,0 @@
-# Handoff — P01
-
-- **Audience movement:** Khán giả đi từ hình dung chữ viết là một ý tưởng xuất hiện đột ngột sang cách hiểu formation như một ecology: thực hành số tạo mối liên tục vật chất mạnh nhất; token, seals, bullae, iconography và tablets là các thành phần song song; nhu cầu thể chế khiến hồ sơ bền trở nên hữu ích.
-- **Continuity facts:** Giữ ranh giới rằng token có nhiều chức năng và không chứng minh một mã kế toán tiêu chuẩn kéo dài hàng thiên niên kỷ; liên tục của dấu phi số kém chắc chắn hơn hệ thống số; corpus sớm chủ yếu hành chính nhưng không chứng minh hành chính là nguyên nhân duy nhất; không đồng nhất market exchange, tax, tribute, redistribution, labor coordination, obligation và ownership nếu thiếu bằng chứng riêng.
-- **Limits / risks:** Mô hình phản hồi giữa tăng trưởng thiết chế và năng lực ghi chép chỉ là giả thuyết có độ chắc chắn vừa phải; không được nâng sự đồng hiện thành quan hệ nhân quả một chiều. Section sau cần trả lời điểm khác biệt và tính hữu ích của hệ thống dấu mới mà không back-project bằng chứng muộn hơn.
