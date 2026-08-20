@@ -12,6 +12,7 @@ import re
 
 try:
     from scripts.common import narration_text, read_json, sha256, word_count, write_json
+    from scripts.lifecycle import heal_active_pointer, settle_related_tasks, sync_section_progress
     from scripts.outline_contract import MAX_SECTION_WORDS, validate_outline_contract
     from scripts.outcome_eval_contract import review_verdict, validate_outcome_review
     from scripts.research_plan_contract import validate_research_plan_contract
@@ -20,6 +21,7 @@ try:
     from scripts.voice_profile_contract import set_voice_profile_status, validate_voice_profile
 except ModuleNotFoundError:
     from common import narration_text, read_json, sha256, word_count, write_json
+    from lifecycle import heal_active_pointer, settle_related_tasks, sync_section_progress
     from outline_contract import MAX_SECTION_WORDS, validate_outline_contract
     from outcome_eval_contract import review_verdict, validate_outcome_review
     from research_plan_contract import validate_research_plan_contract
@@ -41,6 +43,30 @@ def update_stage(product_dir: Path, stage: str, value: str) -> None:
     product = read_json(path)
     product.setdefault("stages", {})[stage] = value
     write_json(path, product)
+
+
+def _complete_human_approval(
+    product_dir: Path,
+    *,
+    reason: str,
+    operations: set[str],
+    section: str | None = None,
+    sync_sections: bool = False,
+) -> None:
+    """Finish approval bookkeeping without making routing metadata authoritative."""
+
+    settle_related_tasks(
+        product_dir,
+        section=section,
+        operations=operations,
+        final_state="closed",
+        reason=reason,
+    )
+    # ACTIVE is disposable routing metadata. Heal stale/terminal pointers, but
+    # preserve a genuinely live unrelated owner for conflict detection.
+    heal_active_pointer(product_dir)
+    if sync_sections:
+        sync_section_progress(product_dir)
 
 
 def _amendment_id() -> str:
@@ -103,7 +129,7 @@ def _record_human_amendment(
         "approved_at": approved_at,
         "accepted_files": [
             {
-                "path": str(path.resolve().relative_to(product_dir.resolve())),
+                "path": path.resolve().relative_to(product_dir.resolve()).as_posix(),
                 "sha256": sha256(path),
             }
             for path in selected
@@ -160,6 +186,11 @@ def approve_plan(product_dir: Path) -> None:
     plan["approved_at"] = datetime.now(timezone.utc).isoformat()
     write_json(path, plan)
     update_stage(product_dir, "research_plan", "approved")
+    _complete_human_approval(
+        product_dir,
+        reason="human approved research plan",
+        operations={"research_plan"},
+    )
 
 
 def approve_outline(product_dir: Path) -> None:
@@ -194,6 +225,11 @@ def approve_outline(product_dir: Path) -> None:
         voice_path.write_text(original_voice, encoding="utf-8")
         raise ValueError("Outline validation failed: " + "; ".join(issue.message for issue in structural))
     update_stage(product_dir, "outline", "approved")
+    _complete_human_approval(
+        product_dir,
+        reason="human approved outline",
+        operations={"outline"},
+    )
 
 
 def human_amend_outline(product_dir: Path, request: str, paths: list[str]) -> dict:
@@ -299,6 +335,13 @@ def approve_section(product_dir: Path, section: str) -> None:
         }
     )
     write_json(state_path, state)
+    _complete_human_approval(
+        product_dir,
+        reason=f"human approved section {section}",
+        operations={"draft_section", "revise_section", "review_section"},
+        section=section,
+        sync_sections=True,
+    )
 
 
 def approve_story_plan(product_dir: Path, section: str) -> None:
@@ -357,6 +400,13 @@ def approve_story_plan(product_dir: Path, section: str) -> None:
     state = read_json(state_path)
     state.update({"status": "ready_for_draft", "human_approved": False})
     write_json(state_path, state)
+    _complete_human_approval(
+        product_dir,
+        reason=f"human approved story plan for {section}",
+        operations={"design_section"},
+        section=section,
+        sync_sections=True,
+    )
 
 
 def human_amend_section(product_dir: Path, section: str, request: str, paths: list[str]) -> dict:

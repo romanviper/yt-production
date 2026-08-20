@@ -13,10 +13,14 @@ try:
     from scripts.common import load_registry, narration_text, product_relative, read_json, sha256, word_count, write_json
     from scripts.consolidate_research import ensure_consolidated
     from scripts.context_packet import compile_packet
+    from scripts.draft_lifecycle_contract import record_submitted_prose, validate_evidence_trace
     from scripts.lifecycle import (
+        apply_research_submission,
         apply_section_submission,
-        cancel_active_task,
+        cancel_live_task_conflicts,
         clear_active_pointer,
+        heal_active_pointer,
+        live_task_conflicts,
         task_submit_errors,
         task_transition_errors,
     )
@@ -31,7 +35,17 @@ except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from common import load_registry, narration_text, product_relative, read_json, sha256, word_count, write_json
     from consolidate_research import ensure_consolidated
     from context_packet import compile_packet
-    from lifecycle import apply_section_submission, cancel_active_task, clear_active_pointer, task_submit_errors, task_transition_errors
+    from draft_lifecycle_contract import record_submitted_prose, validate_evidence_trace
+    from lifecycle import (
+        apply_research_submission,
+        apply_section_submission,
+        cancel_live_task_conflicts,
+        clear_active_pointer,
+        heal_active_pointer,
+        live_task_conflicts,
+        task_submit_errors,
+        task_transition_errors,
+    )
     from operator_brief import empty_brief, render_brief, validate_brief_file
     from outcome_eval_contract import validate_outcome_review
     from outline_contract import MAX_SECTION_WORDS, validate_outline_contract
@@ -66,14 +80,7 @@ def create_task(
     execution_runtime: str | None = None,
 ) -> dict:
     product_dir = product_dir.resolve()
-    active_file = active_path(product_dir)
-    if active_file.is_file() and not replace:
-        active = read_json(active_file)
-        existing_ref = active.get("work_order")
-        if active.get("task_id") and existing_ref:
-            existing = product_dir / existing_ref
-            if existing.is_file() and read_json(existing).get("state") in {"ready", "in_progress"}:
-                raise ValueError(f"Task {active['task_id']} còn active; close/cancel hoặc dùng --replace có chủ đích.")
+    heal_active_pointer(product_dir)
 
     if operation == "research_synthesis":
         ensure_consolidated(product_dir)
@@ -81,17 +88,30 @@ def create_task(
     task_id = next_task_id(product_dir, operation, section, unit)
     packet, context = compile_packet(product_dir, operation, task_id, section, unit, execution_runtime)
 
-    # Replacement is a lifecycle transition, not a pointer overwrite. Only
-    # cancel the old routed task after the new canonical packet compiled.
-    if replace:
-        cancel_active_task(product_dir, reason=f"router replacement by {task_id}", replacement=task_id)
+    conflicts = live_task_conflicts(product_dir, operation, section, unit)
+    if conflicts and not replace:
+        raise ValueError(
+            "Live task conflict on requested scope: "
+            + ", ".join(conflicts)
+            + ". Close/cancel it or use --replace intentionally."
+        )
+    if conflicts:
+        cancel_live_task_conflicts(
+            product_dir,
+            operation,
+            section,
+            unit,
+            reason=f"router replacement by {task_id}",
+            replacement=task_id,
+        )
 
     task_dir = product_dir / "tasks" / task_id
     task_dir.mkdir(parents=True, exist_ok=False)
     packet_path = task_dir / "packet.json"
     context_path = task_dir / "context.md"
     write_json(packet_path, packet)
-    context_path.write_text(context, encoding="utf-8")
+    with context_path.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(context)
     operator_brief_path = product_dir / packet["operator_brief_path"]
     write_json(operator_brief_path, empty_brief())
 
@@ -108,9 +128,12 @@ def create_task(
         "packet_manifest": product_relative(product_dir, packet_path),
         "allowed_write_paths": packet["allowed_write_paths"],
         "outputs": packet["operation_outputs"],
+        "optional_outputs": packet.get("optional_operation_outputs", []),
         "report_path": packet["report_path"],
         "operator_brief_path": packet["operator_brief_path"],
     }
+    if "evidence_access" in packet:
+        work_order["evidence_access"] = packet["evidence_access"]
     if "execution_runtime" in packet:
         work_order["execution_runtime"] = packet["execution_runtime"]
         work_order["runtime_owned_paths"] = packet.get("runtime_owned_paths", [])
@@ -120,7 +143,7 @@ def create_task(
     if errors:
         raise ValueError("Router produced invalid task artifacts: " + "; ".join(errors))
     write_json(
-        active_file,
+        active_path(product_dir),
         {
             "task_id": task_id,
             "work_order": product_relative(product_dir, work_path),
@@ -138,12 +161,12 @@ def verify_task(product_dir: Path, task_id: str, *, state_override: str | None =
     errors = validate_packet_contract(packet, task_dir / "context.md")
     if errors:
         return errors
-    # Freshness protects work that has not yet been submitted. Once submitted,
-    # router-owned state transitions and later human decisions may legitimately
-    # change an input while the packet remains the immutable historical record.
     effective_state = state_override or work.get("state")
+    task_owned_paths = set(packet.get("operation_outputs", [])) | set(packet.get("optional_operation_outputs", []))
     if effective_state in {"ready", "in_progress"}:
         for record in packet["inputs"]:
+            if record["path"] in task_owned_paths:
+                continue
             path = product_dir / record["path"]
             if not path.is_file():
                 errors.append(f"missing input: {record['path']}")
@@ -153,6 +176,12 @@ def verify_task(product_dir: Path, task_id: str, *, state_override: str | None =
         errors.append("context budget exceeded")
     if work["allowed_write_paths"] != packet["allowed_write_paths"]:
         errors.append("work-order scope differs from packet")
+    if work.get("outputs") != packet.get("operation_outputs"):
+        errors.append("work-order required outputs differ from packet")
+    if work.get("optional_outputs", []) != packet.get("optional_operation_outputs", []):
+        errors.append("work-order optional outputs differ from packet")
+    if work.get("evidence_access") != packet.get("evidence_access"):
+        errors.append("work-order evidence access differs from packet")
     if work.get("authority") != "product_agent" or work.get("authority") != packet.get("authority"):
         errors.append("invalid or mismatched product task authority")
     expected_manifest = f"tasks/{task_id}/packet.json"
@@ -173,7 +202,7 @@ def verify_task(product_dir: Path, task_id: str, *, state_override: str | None =
 
 
 def verify_active_pointer(product_dir: Path, task_id: str) -> list[str]:
-    """Validate routing metadata only. ACTIVE.json is not task execution authority."""
+    """Validate routing metadata only. ACTIVE.json is never task execution authority."""
 
     product_dir = product_dir.resolve()
     path = active_path(product_dir)
@@ -202,13 +231,17 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     packet = read_json(task_dir / "packet.json")
     errors = task_submit_errors(work.get("state"))
     errors.extend(verify_task(product_dir, task_id))
+    if work.get("operation") in {"draft_section", "revise_section"}:
+        errors.extend(validate_evidence_trace(product_dir, task_id))
     if errors:
         return errors
     changed_outputs = 0
     for record in packet.get("output_baselines", []):
         path = product_dir / record["path"]
+        required = record.get("required", True)
         if not path.is_file():
-            errors.append(f"missing output: {record['path']}")
+            if required:
+                errors.append(f"missing output: {record['path']}")
         elif sha256(path) != record.get("sha256"):
             changed_outputs += 1
     report = task_dir / "report.md"
@@ -231,8 +264,59 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     work["submitted_at"] = datetime.now(timezone.utc).isoformat()
     work["updated_at"] = work["submitted_at"]
     write_json(work_path, work)
+    apply_research_submission(product_dir, work["operation"], work.get("target", {}).get("unit"))
     apply_section_submission(product_dir, work["operation"], work.get("target", {}).get("section"))
+    if work.get("operation") in {"draft_section", "revise_section"}:
+        record_submitted_prose(product_dir, task_id)
+    clear_active_pointer(product_dir, task_id, reason="task submitted; routing returned to idle")
     return []
+
+
+def _validate_optional_materials(root: Path, unit: str, source_ids: list[str], claim_ids: list[str]) -> list[str]:
+    errors: list[str] = []
+    path = root / "materials.json"
+    if not path.is_file():
+        return errors
+    document = read_json(path)
+    if document.get("status") == "not_started":
+        return errors
+    if document.get("status") != "complete":
+        return ["optional workstream materials status must be complete or not_started"]
+    materials = document.get("materials", [])
+    if not isinstance(materials, list):
+        return ["optional workstream materials must be a list"]
+    expected_material = re.compile(rf"{re.escape(unit)}-MAT-\d{{3}}")
+    seen: set[str] = set()
+    for item in materials:
+        if not isinstance(item, dict):
+            errors.append("optional material must be an object")
+            continue
+        material_id = item.get("id", "")
+        if not expected_material.fullmatch(material_id) or material_id in seen:
+            errors.append(f"invalid or duplicate namespaced material ID: {material_id or '?'}")
+            continue
+        seen.add(material_id)
+        for claim_id in item.get("claim_ids", []) if isinstance(item.get("claim_ids", []), list) else []:
+            if claim_id not in claim_ids:
+                errors.append(f"material {material_id} references unknown local claim: {claim_id}")
+        refs = item.get("source_refs", [])
+        if refs is not None and not isinstance(refs, list):
+            errors.append(f"material {material_id} source_refs must be a list")
+            refs = []
+        for ref in refs:
+            if not isinstance(ref, dict) or ref.get("source_id") not in source_ids:
+                errors.append(f"material {material_id} references unknown local source")
+                continue
+            locators = ref.get("locators", [])
+            if not isinstance(locators, list) or not all(isinstance(loc, str) and loc.strip() for loc in locators):
+                errors.append(f"material {material_id} source_ref locators must be strings")
+        limitations = item.get("limitations", [])
+        if limitations is not None and (
+            not isinstance(limitations, list)
+            or not all(isinstance(value, str) and value.strip() for value in limitations)
+        ):
+            errors.append(f"material {material_id} limitations must be a list of strings")
+    return errors
 
 
 def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
@@ -287,9 +371,11 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
             claim_ids = [item.get("id") for item in claims]
             if len(claim_ids) != len(set(claim_ids)):
                 errors.append("workstream has duplicate claim IDs")
-            if "Status: complete" not in (root / "synthesis.md").read_text(encoding="utf-8"):
+            errors.extend(_validate_optional_materials(root, str(unit), source_ids, claim_ids))
+            synthesis_text = (root / "synthesis.md").read_text(encoding="utf-8")
+            if "Status: complete" not in synthesis_text:
                 errors.append("workstream synthesis status must be complete")
-            if word_count((root / "synthesis.md").read_text(encoding="utf-8")) > 2500:
+            if word_count(synthesis_text) > 2500:
                 errors.append("workstream synthesis exceeds 2,500 words")
         elif operation == "research_synthesis":
             sources_doc = read_json(product_dir / "01_research" / "source-index.json")
@@ -315,6 +401,12 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
             expected_cycle = product.get("production_cycle", {}).get("id")
             if expected_cycle and outline.get("cycle_id") != expected_cycle:
                 errors.append(f"outline cycle_id must match current product cycle {expected_cycle}")
+            architecture = outline.get("script_architecture", {})
+            if architecture.get("writer_authorship_contract_version") != 1:
+                errors.append("new/revised outline must set script_architecture.writer_authorship_contract_version=1")
+            for section in outline.get("sections", []):
+                if not isinstance(section.get("transition"), str) or not section["transition"].strip():
+                    errors.append(f"outline section {section.get('id', '?')} transition is required")
             voice_profile = (product_dir / "02_outline" / "voice-profile.md").read_text(encoding="utf-8")
             errors.extend(validate_voice_profile(voice_profile))
             if outline.get("status") == "approved":
@@ -414,10 +506,11 @@ def main() -> int:
         print(json.dumps(work, ensure_ascii=False, indent=2))
         return 0
     if args.command == "show":
+        heal_active_pointer(args.product.resolve())
         active = read_json(active_path(args.product.resolve()))
         context_ref = active.get("context_packet")
         if not context_ref:
-            parser.error("No routed task in tasks/ACTIVE.json")
+            parser.error("No routed live task in tasks/ACTIVE.json")
         context = args.product.resolve() / context_ref
         print(context.read_text(encoding="utf-8"))
         return 0
@@ -431,9 +524,10 @@ def main() -> int:
         product = args.product.resolve()
         task_id = args.task_id
         if not task_id:
-            task_id = read_json(active_path(product)).get("task_id")
+            heal_active_pointer(product)
+            task_id = read_json(active_path(product)).get("task_id") if active_path(product).is_file() else None
         if not task_id:
-            parser.error("No routed task in tasks/ACTIVE.json")
+            parser.error("No routed live task in tasks/ACTIVE.json")
         path = product / "tasks" / task_id / "operator-brief.json"
         errors = validate_brief_file(path)
         if errors:

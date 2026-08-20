@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "P01 mới đã được draft từ story plan reclassification và đang chờ bạn review.",
+  "material_points": [
+    "Opening giữ P005390 làm carrier duy nhất; viewer chỉ tự thấy grouping/repetition/placement trước khi narrator cung cấp classification quantity/grain.",
+    "Story motion là message → uncertainty về language/transaction/full speech → structured record, thay vì lecture về early writing.",
+    "Draft dừng ở câu hỏi earned về việc vì sao relation cần tồn tại ngoài trí nhớ; không thêm evidence ngoài CLM-0042 và CLM-0024."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Bạn duyệt hướng draft P01 này hay muốn request changes?",
+    "recommendation": "Review trước local story flow và độ tự nhiên của narration; chưa approve section nếu vẫn còn vấn đề storytelling.",
+    "options": [
+      {
+        "label": "Duyệt hướng",
+        "effect": "Giữ draft để chuyển sang outcome review/approval theo lifecycle."
+      },
+      {
+        "label": "Request changes",
+        "effect": "Reopen draft P01 với feedback cụ thể."
+      }
+    ]
+  },
+  "next_step": ""
+}

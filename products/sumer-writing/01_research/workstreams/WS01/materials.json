@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "workstream": "WS01",
+  "status": "complete",
+  "materials": [],
+  "gaps": [
+    "WS01 can bound definition, chronology and attribution, but its current object-level evidence does not securely reconstruct a single 'invention moment'. Do not force a scene here; use WS03/WS05 objects for concrete early-writing carriers."
+  ]
+}

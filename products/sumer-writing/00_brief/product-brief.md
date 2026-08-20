@@ -43,5 +43,5 @@ Status: direction approved by user on 2026-08-12.
 
 - Ngôn ngữ: tiếng Việt.
 - Thời lượng: 60–120 phút.
-- Section count dự kiến cho pilot: 10, được outline quyết định và người dùng duyệt.
+- Section count do outline quyết định; C003 hiện đã được duyệt với 8 section.
 

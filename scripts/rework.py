@@ -11,12 +11,17 @@ from pathlib import Path
 try:
     from scripts.approval import start_new_cycle
     from scripts.common import load_registry, read_json
-    from scripts.lifecycle import cancel_active_task, prepare_section_rework
+    from scripts.lifecycle import (
+        RESEARCH_REWORK_OPERATIONS,
+        cancel_active_task,
+        prepare_research_rework,
+        prepare_section_rework,
+    )
     from scripts.task import create_task
 except ModuleNotFoundError:  # Direct execution: python scripts/rework.py
     from approval import start_new_cycle
     from common import load_registry, read_json
-    from lifecycle import cancel_active_task, prepare_section_rework
+    from lifecycle import RESEARCH_REWORK_OPERATIONS, cancel_active_task, prepare_research_rework, prepare_section_rework
     from task import create_task
 
 
@@ -38,6 +43,27 @@ def _write_outline_rework_request(product_dir: Path, request: str) -> None:
         f"## Required architecture change\n\n{request.strip()}\n",
         encoding="utf-8",
     )
+
+
+def _ensure_outline_invalidated_for_research(product_dir: Path, request: str) -> None:
+    outline_path = product_dir / "02_outline" / "outline.json"
+    if not outline_path.is_file():
+        return
+    outline = read_json(outline_path)
+    if outline.get("status") == "approved":
+        start_new_cycle(product_dir, "Research was reopened before the next outline. " + request.strip())
+
+
+def _resolve_research_unit(product_dir: Path, unit: str | None) -> tuple[str, bool]:
+    plan = read_json(product_dir / "01_research" / "plan.json")
+    units = [str(item["id"]) for item in plan.get("workstreams", []) if item.get("id")]
+    if not units:
+        raise ValueError("Approved research plan has no workstreams.")
+    if unit:
+        if unit not in units:
+            raise ValueError(f"Workstream {unit} is not declared in the approved research plan.")
+        return unit, False
+    return units[0], True
 
 
 def _record_rework(
@@ -77,14 +103,23 @@ def rework(
     registry = load_registry()
     if operation not in registry:
         raise ValueError(f"Unknown operation: {operation}")
+    spec = registry[operation]
+    if spec.get("compatibility_only"):
+        raise ValueError(
+            f"{operation} is compatibility-only and cannot be reopened through semantic rework. "
+            "Route story/material architecture changes to outline, evidence gaps to research, or prose changes to draft_section."
+        )
     if not request.strip():
         raise ValueError("Human rework request cannot be empty.")
 
-    target_kind = registry[operation]["target_kind"]
-    if target_kind == "section" and not section:
+    target_kind = spec["target_kind"]
+    all_workstreams = False
+    if operation == "research_workstream":
+        unit, all_workstreams = _resolve_research_unit(product_dir, unit)
+    elif target_kind == "section" and not section:
         raise ValueError(f"{operation} requires --section P##")
-    if target_kind == "unit" and not unit:
-        raise ValueError(f"{operation} requires --unit WS##")
+    elif target_kind == "unit" and not unit:
+        raise ValueError(f"{operation} requires --unit")
     if target_kind == "product" and (section or unit):
         raise ValueError(f"{operation} targets the product; omit --section/--unit")
 
@@ -94,6 +129,15 @@ def rework(
         prepare_section_rework(product_dir, operation, str(section), request)
     elif operation == "outline":
         _write_outline_rework_request(product_dir, request)
+    elif operation in RESEARCH_REWORK_OPERATIONS:
+        _ensure_outline_invalidated_for_research(product_dir, request)
+        unit = prepare_research_rework(
+            product_dir,
+            operation,
+            request,
+            unit=unit,
+            all_units=all_workstreams,
+        )
 
     work = create_task(product_dir, operation, section, unit, False, execution_runtime)
     _record_rework(
@@ -113,7 +157,10 @@ def main() -> int:
     parser.add_argument("product", type=Path)
     parser.add_argument("operation", choices=sorted(load_registry()))
     parser.add_argument("--section")
-    parser.add_argument("--unit")
+    parser.add_argument(
+        "--unit",
+        help="Optional for research_workstream; omit it to rework the whole workstream layer from the first declared unit.",
+    )
     parser.add_argument("--request", required=True)
     parser.add_argument("--runtime", choices=["legacy", "dsh"])
     args = parser.parse_args()

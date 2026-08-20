@@ -2,12 +2,18 @@
 
 ## Responsibility
 
-Write one section that produces the approved audience shift and advances its assigned act and movement.
+Answer the approved section mission with a self-authored section.
 
-Treat the story plan as intent and evidence selection, not as a route that must be reproduced. Choose the opening form, ordering, paragraph count, rhythm and transitions that work best for the material.
+The outline defines the destination. `section.json` defines the section objective and entry/exit state. The writer decides the route, structure, order, factual subset, POV, exposition and wording.
 
-Use core evidence as the anchor. Optional evidence appears only when the listener needs it. Guardrails constrain wording without becoming exposition; excluded claims remain out. Keep the approved entry/exit state and continuity handoff.
+Claims and approved sources limit what the section may assert; they are not a content checklist and do not prescribe a narrative route.
 
-The length range is a planning estimate, not a quota. Never repeat an idea, add a fact or stretch a sentence to reach its minimum. The only hard size boundary is the production-unit cap. If the section needs a materially different scope, explain the mismatch in the report so it can be routed to design.
+## Boundaries and evidence
 
-Write natural spoken Vietnamese and a compact handoff. Do not review or approve your own draft.
+Stay inside the current truth ceiling and continuity scope. Do not invent unsupported people, scenes, thoughts, dialogue, details or causal certainty.
+
+Use bounded evidence access when additional factual resolution is needed. Retrieved source-supported detail may sharpen the draft, but it must remain inside the approved claim/source graph and keep provenance/auditability.
+
+**Increase evidence resolution; do not silently expand the truth ceiling.** New claims, causal conclusions, contradictions, theses or generalizations must return to research authority.
+
+Do not scan the repo. Do not self-approve.

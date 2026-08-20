@@ -1,37 +1,23 @@
-# Voice Profile — Sumer Writing C002
+# Voice Profile — Sumer Writing C003
 
 Status: approved
 
 ## Product voice
 
-Giọng kể bình tĩnh, sáng rõ và có sức nặng của một cuộc điều tra. Narrator không đứng ngoài đọc kết luận; viewer được dẫn qua **question → evidence → changed interpretation**. Một thời điểm chỉ giữ một dominant question. Câu hỏi kế tiếp phải sinh từ limitation, failure hoặc consequence vừa land, không dùng cliffhanger giả.
-
-Mỗi lần mở rộng khái niệm phải bắt đầu hoặc nhanh chóng trở về một **carrier có provenance**: vật thể, thao tác, role hoặc consequence. Carrier tạo concreteness; để tạo propulsion, đoạn kể còn cần state change—một puzzle được giải, capability xuất hiện, expectation bị phá, chain được rebuild hoặc competence biến mất rồi được phục dựng.
-
-Câu tiếng Việt ưu tiên động từ nhân quả cụ thể: “ổn định”, “phân loại”, “xác thực”, “truy hồi”, “đào tạo”, “thi hành”. Thuật ngữ Anh chỉ giữ khi bản dịch dễ làm mất ranh giới; lần đầu phải giải thích bằng lời Việt thông thường.
+Giọng kể bình tĩnh, sáng rõ, có sức nặng và mang tinh thần điều tra. Bộ phim theo lịch sử của chữ viết như một hệ thống xã hội–kỹ thuật: nó hình thành, mở rộng chức năng, tạo năng lực mới, gặp giới hạn, thích nghi và để lại di sản. Sự chắc chắn trong giọng kể phải đi theo độ chắc của bằng chứng; không dùng cường điệu để bù cho chỗ evidence yếu.
 
 ## Borrowed functions
 
-Từ các benchmark lớn chỉ học causal macro arc, material anchor, primary-text presence, event/action propulsion, circular callback và khả năng chuyển nhịp giữa người–vật–institution. Không học cadence, persona hay chapter sequence. Retention phải đến từ **earned curiosity**: câu trả lời hiện tại tạo ra vấn đề kế tiếp.
+Từ *Fall of Civilizations* và các benchmark lịch sử dài, chỉ học những chức năng tổng quát: giữ được một causal macro arc, chuyển scale khi cần, tôn trọng nguồn và uncertainty, và để vật thể, con người hoặc thực hành lịch sử xuất hiện khi evidence thực sự hỗ trợ chúng. Benchmark là tiêu chuẩn chức năng, không phải template sáng tác.
 
 ## Original expression
 
-Trục riêng của product là khoảng cách giữa **dấu bền** và **năng lực xã hội khiến dấu có nghĩa**. P005390 cho micro-reward rất sớm rồi đổi mystery; P03 cho viewer tự suy ra function trước definition; P05 biến complexity thành work; P06 phá assumption record=compliance; P07 rebuild power từng mắt xích; P08 biến adaptation thành survival problem; P09 quay lại opening sau competence break.
-
-Nhịp câu linh hoạt: câu ngắn khóa reveal/state change, câu dài hơn chỉ khi nối mechanism đã có carrier. Sau một đoạn abstraction, phải trả lại object/action/consequence trước khi mở abstraction mới.
+Bản tiếng Việt phải có nhịp và cách diễn đạt riêng của sản phẩm này. Khi thuật ngữ học thuật cần thiết, dùng nó chính xác nhưng không để vocabulary phân tích thay thế cho lịch sử đang được kể. Qualifier chỉ xuất hiện ở nơi thiếu nó sẽ làm sai nghĩa. Hệ thống là protagonist, nhưng hậu quả đối với con người, trách nhiệm, kỹ năng, access và continuity vẫn phải được nhìn thấy khi nguồn cho phép.
 
 ## Prohibited imitation
 
-Không dùng motif ruins-in-the-present, cadence, chapter order, narrator persona, signature transition hay wording của *Fall of Civilizations* hoặc kênh tham chiếu khác. Không thêm dialogue, nội tâm, sensory scene hay certainty không có nguồn. Không dùng “nhưng mọi chuyện chưa dừng ở đó”, “điều họ không biết là…” hoặc withholding fact đã biết để giả tạo suspense. Toàn phim có opening–body–ending; từng P## không tự dựng mini-hook–explanation–payoff công thức.
+Không sao chép wording, cadence, motif, narrator persona, signature transition, chapter sequence hay opening formula của benchmark. Không dùng “Sumer invented writing” như settled fact; không kể token → tablet → civilization như một chiếc thang tất định; không gán agency tự trị cho clay hay writing; không biến archive thành toàn bộ society hoặc school evidence thành population literacy.
 
 ## Draft tests
 
-- Trong mỗi đoạn, có thể trả lời ngay: viewer đang muốn biết **một câu gì**?
-- Câu hỏi kế tiếp có được sinh ra từ answer/limitation trước, hay chỉ là teaser gắn thêm?
-- Reward chính của đoạn đã land trước definition/qualifier chưa?
-- Mỗi stretch abstraction có carrier; mỗi section dài có ít nhất một state-changing action/event/puzzle.
-- P03–P05 không trở thành lecture valley; P06 được giữ đủ space như midpoint reversal; P07 trả đúng câu hỏi “missing link”.
-- Script, language, population, competence, literacy và institution không bị trộn.
-- Qualifier rõ nhưng không tạo disclaimer pile.
-- Human texture không vượt evidence ceiling và không biến thành invented drama.
-- Không có câu nào có thể bị nhầm là mô phỏng bề mặt của benchmark.
+Khi review hoặc revise, kiểm tra bốn điều: section có đạt entry→exit state đã duyệt không; causal claim có nằm trong evidence ceiling không; uncertainty quan trọng có được giữ đúng mức không; và prose có đứng được bằng logic, bằng chứng và expression riêng thay vì dựa vào việc mô phỏng benchmark không.

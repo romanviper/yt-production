@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate product state, modular boundaries, and active context packets."""
+"""Validate product state, hard boundaries, and active context packets."""
 
 from __future__ import annotations
 
@@ -11,15 +11,17 @@ from dataclasses import dataclass
 from pathlib import Path
 
 try:
-    from scripts.common import read_json
+    from scripts.common import read_json, sha256
+    from scripts.draft_lifecycle_contract import validate_canonical_draft_lifecycle
     from scripts.outline_contract import validate_outline_contract
-    from scripts.story_plan_contract import verify_narration_pack
+    from scripts.story_plan_contract import is_direct_authorship_outline, verify_narration_pack
     from scripts.task import verify_active_pointer, verify_task
     from scripts.voice_profile_contract import validate_voice_profile
 except ModuleNotFoundError:
-    from common import read_json
+    from common import read_json, sha256
+    from draft_lifecycle_contract import validate_canonical_draft_lifecycle
     from outline_contract import validate_outline_contract
-    from story_plan_contract import verify_narration_pack
+    from story_plan_contract import is_direct_authorship_outline, verify_narration_pack
     from task import verify_active_pointer, verify_task
     from voice_profile_contract import validate_voice_profile
 
@@ -101,11 +103,36 @@ def validate_product(product_dir: Path) -> list[Issue]:
         if claim.get("status") in {"supported", "qualified"} and not claim.get("sources"):
             issues.append(Issue("ERROR", f"{claim_path}#{index}", "Supported/qualified claim requires sources."))
 
+    material_path = product_dir / "01_research" / "material-ledger.json"
+    if material_path.is_file():
+        try:
+            material_doc = read_json(material_path)
+        except (json.JSONDecodeError, ValueError, OSError) as exc:
+            issues.append(Issue("ERROR", str(material_path), f"Invalid optional material ledger: {exc}"))
+            material_doc = {}
+        for item in material_doc.get("materials", []) if isinstance(material_doc.get("materials", []), list) else []:
+            if not isinstance(item, dict):
+                issues.append(Issue("ERROR", str(material_path), "Optional material entries must be objects."))
+                continue
+            material_id = item.get("id", "?")
+            for claim_id in item.get("claim_ids", []) if isinstance(item.get("claim_ids", []), list) else []:
+                if claim_id not in claim_ids:
+                    issues.append(Issue("ERROR", f"{material_path}#{material_id}", f"Unknown claim: {claim_id}"))
+            for ref in item.get("source_refs", []) if isinstance(item.get("source_refs", []), list) else []:
+                if not isinstance(ref, dict) or ref.get("source_id") not in source_ids:
+                    issues.append(Issue("ERROR", f"{material_path}#{material_id}", "Optional material references unknown source."))
+
     outline = safe_json(outline_path, issues)
     if outline.get("sections"):
         for message in validate_outline_contract(outline, claim_ids, product.get("target")):
             issues.append(Issue("ERROR", str(outline_path), message))
-    section_ids = {section.get("id") for section in outline.get("sections", []) if isinstance(section, dict) and section.get("id")}
+    section_ids = {
+        section.get("id")
+        for section in outline.get("sections", [])
+        if isinstance(section, dict) and section.get("id")
+    }
+    direct_authorship = is_direct_authorship_outline(outline)
+    outline_cycle = outline.get("cycle_id")
 
     section_root = product_dir / "03_sections"
     if outline.get("status") == "approved":
@@ -114,27 +141,49 @@ def validate_product(product_dir: Path) -> list[Issue]:
         else:
             for message in validate_voice_profile(voice_profile_path.read_text(encoding="utf-8")):
                 issues.append(Issue("ERROR", str(voice_profile_path), message))
-        # A human-amended outline may intentionally lead its deterministic section
-        # projections. Keep the outline valid while downstream work is explicitly
-        # marked for sync; do not pretend the old section artifacts are current.
-        sections_need_sync = product.get("stages", {}).get("sections") in {
-            "human_sync_required",
-            "ready_to_materialize",
-        }
-        if not sections_need_sync:
-            for section_id in section_ids:
-                root = section_root / section_id
-                for name in ["section.json", "brief.md", "evidence-pack.json", "story-plan.json", "continuity-in.md"]:
-                    if not (root / name).is_file():
-                        issues.append(Issue("ERROR", str(root / name), "Approved outline requires materialized section."))
-                state_path = root / "section.json"
-                if state_path.is_file():
-                    state = safe_json(state_path, issues)
-                    if state.get("status") == "approved" and state.get("human_approved") is not True:
-                        issues.append(Issue("ERROR", str(state_path), "Approved section requires human_approved=true."))
-                    if state.get("status") in {"ready_for_draft", "ready_for_review", "review_complete", "approved"}:
-                        for message in verify_narration_pack(product_dir, section_id):
-                            issues.append(Issue("ERROR", str(root / "narration-pack.json"), message))
+
+        full_materialization_expected = (
+            product.get("status") == "sections_materialized"
+            or product.get("production_cycle", {}).get("status") == "sections_materialized"
+        )
+        for section_id in section_ids:
+            root = section_root / str(section_id)
+            required = ["section.json", "brief.md", "evidence-pack.json", "continuity-in.md"]
+            required += ["narration-pack.json"] if direct_authorship else ["story-plan.json"]
+            materialized = any((root / name).is_file() for name in required)
+            if not materialized:
+                if full_materialization_expected:
+                    for name in required:
+                        issues.append(Issue("ERROR", str(root / name), "Declared full materialization is missing section artifact."))
+                continue
+            for name in required:
+                if not (root / name).is_file():
+                    issues.append(Issue("ERROR", str(root / name), "Materialized section is incomplete."))
+            state_path = root / "section.json"
+            if not state_path.is_file():
+                continue
+            state = safe_json(state_path, issues)
+            if direct_authorship:
+                mission = state.get("mission")
+                if not isinstance(mission, str) or not mission.strip():
+                    issues.append(Issue("ERROR", str(state_path), "Direct-authorship section requires a non-empty mission."))
+                if state.get("cycle_id") != outline_cycle:
+                    issues.append(
+                        Issue(
+                            "ERROR",
+                            str(state_path),
+                            f"Materialized section must match current outline cycle {outline_cycle}; found {state.get('cycle_id')}.",
+                        )
+                    )
+                elif state.get("outline_sha256") != sha256(outline_path):
+                    issues.append(Issue("ERROR", str(state_path), "Materialized section is stale relative to approved outline."))
+                for message in validate_canonical_draft_lifecycle(product_dir, str(section_id), state):
+                    issues.append(Issue("ERROR", str(root / "draft.md"), message))
+            if state.get("status") == "approved" and state.get("human_approved") is not True:
+                issues.append(Issue("ERROR", str(state_path), "Approved section requires human_approved=true."))
+            if state.get("status") in {"ready_for_draft", "ready_for_review", "review_complete", "approved"}:
+                for message in verify_narration_pack(product_dir, str(section_id)):
+                    issues.append(Issue("ERROR", str(root / "narration-pack.json"), message))
 
     validated_task_ids: set[str] = set()
     active_path = product_dir / "tasks" / "ACTIVE.json"
@@ -151,9 +200,6 @@ def validate_product(product_dir: Path) -> list[Issue]:
             except (FileNotFoundError, KeyError, json.JSONDecodeError, ValueError) as exc:
                 issues.append(Issue("ERROR", str(active_path), f"Invalid active task: {exc}"))
 
-    # Submitted tasks are production candidates even after ACTIVE.json moves on.
-    # Keep their router-generated packet/context integrity enforceable until a
-    # human decision closes or cancels the task.
     tasks_dir = product_dir / "tasks"
     if tasks_dir.is_dir():
         for work_path in sorted(tasks_dir.glob("T*/work-order.json")):

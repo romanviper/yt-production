@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "workstream": "WS05",
+  "status": "complete",
+  "materials": [
+    {
+      "id": "WS05-MAT-001",
+      "kind": "object",
+      "label": "P005390 / MMA 1988.433.2 administrative grain account",
+      "what_audience_follows": "An early tablet preserves grain-related quantities and categories in columns, letting the audience see writing functioning as durable classification even when the exact transaction and spoken language remain uncertain.",
+      "sequence": [
+        "Quantities and grain-related entries are arranged across the obverse and reverse.",
+        "The tablet preserves those relations after the immediate accounting encounter is gone.",
+        "Modern readers can recover categories and quantities more securely than a complete spoken sentence or exact transaction type."
+      ],
+      "claim_ids": [
+        "WS05-CLM-001",
+        "WS05-CLM-007",
+        "WS05-CLM-009"
+      ],
+      "source_refs": [
+        {
+          "source_id": "WS05-SRC-006",
+          "locators": [
+            "CDLI P005390 / MMA 1988.433.2; text obverse columns 1–2 and reverse columns 1–2",
+            "Edition references: MSVO 3 no. 79; Frühe Schrift no. 4.79; CTMMA IV no. 180"
+          ]
+        },
+        {
+          "source_id": "WS05-SRC-007",
+          "locators": [
+            "Met object no. 1988.433.2, object overview and artwork details"
+          ]
+        }
+      ],
+      "representativeness": "representative",
+      "limitations": [
+        "Provenience is qualified as probably Uruk and exact dating labels differ slightly between CDLI and the Met.",
+        "The document lacks verbs; do not turn it into a fully specified delivery, tax or redistribution scene.",
+        "Representative only of a preserved early administrative form, not all early writing."
+      ]
+    },
+    {
+      "id": "WS05-MAT-002",
+      "kind": "documented_failure",
+      "label": "MMA 86.11.111: a written order that was not carried out",
+      "what_audience_follows": "A ca. 1632 BCE letter preserves a report that a royal security order was not implemented, exposing the distance between putting a command into writing and making people obey it.",
+      "sequence": [
+        "A royal security order exists as an instruction that should be implemented.",
+        "Marduk-mushallim reports that the order has not been carried out.",
+        "The letter makes the failure retrievable to another party, but the document itself does not supply enforcement."
+      ],
+      "claim_ids": [
+        "WS05-CLM-004",
+        "WS05-CLM-007",
+        "WS05-CLM-010"
+      ],
+      "source_refs": [
+        {
+          "source_id": "WS05-SRC-008",
+          "locators": [
+            "Met object no. 86.11.111; overview describing Marduk-mushallim's report on non-implementation of a royal security order",
+            "Artwork details: Old Babylonian, ca. 1632 BCE, probably Sippar-Yahrurum"
+          ]
+        },
+        {
+          "source_id": "WS05-SRC-004",
+          "locators": [
+            "CTMMA I no. 69, p. 87; plates 63–64 and 135–136"
+          ]
+        }
+      ],
+      "representativeness": "exceptional",
+      "limitations": [
+        "The Met presents the letter as unusual and its archaeological find context is unavailable.",
+        "Do not generalize it into ordinary correspondence or claim that writing normally failed.",
+        "Use attributed paraphrase unless translation rights are separately cleared."
+      ]
+    },
+    {
+      "id": "WS05-MAT-003",
+      "kind": "training_object",
+      "label": "P228744: Old Babylonian Nippur lexical school tablet",
+      "what_audience_follows": "A fragmented school tablet preserves a learner's participation in a larger lexical-list tradition, making knowledge transmission visible as repeated classification and copying.",
+      "sequence": [
+        "A learner copies lexical material onto a clay school tablet.",
+        "The surviving reverse preserves ordered entries from a larger list tradition.",
+        "The fragment can be linked to the Old Babylonian Nippur Ura 03 composite, showing one physical witness inside a reproducible curriculum."
+      ],
+      "claim_ids": [
+        "WS05-CLM-003",
+        "WS05-CLM-007",
+        "WS05-CLM-011"
+      ],
+      "source_refs": [
+        {
+          "source_id": "WS05-SRC-009",
+          "locators": [
+            "CDLI P228744; N 6052 (+) UM 29-16-393",
+            "Reverse columns 1–2, preserved lines 4–30",
+            "Witness to CDLI Lexical 000001 / composite Q000001"
+          ]
+        }
+      ],
+      "representativeness": "representative",
+      "limitations": [
+        "Representative only within the formal Old Babylonian Nippur lexical-training tradition.",
+        "The obverse is missing and detailed stratigraphy is not preserved.",
+        "It cannot establish population-wide literacy."
+      ]
+    },
+    {
+      "id": "WS05-MAT-004",
+      "kind": "copying_sequence",
+      "label": "ETCSL 3.1.19: royal correspondence becomes remembered text",
+      "what_audience_follows": "A political letter tradition associated with the end of Ur III survives not as the original dispatch but through later Old Babylonian copies, letting the audience follow writing changing from immediate communication into curated political and literary memory.",
+      "sequence": [
+        "The composition narrates correspondence set in the final Ur III political crisis.",
+        "Multiple Old Babylonian scribal manuscripts copy and preserve versions of the text centuries later.",
+        "Modern editors reconstruct a composite from those witnesses, so today's readable text is the endpoint of copying and scholarly recovery rather than an untouched original letter."
+      ],
+      "claim_ids": [
+        "WS05-CLM-006",
+        "WS05-CLM-007",
+        "WS05-CLM-012"
+      ],
+      "source_refs": [
+        {
+          "source_id": "WS05-SRC-010",
+          "locators": [
+            "ETCSL composition 3.1.19; composite text lines 1–53",
+            "Witness list including 3N-T311 = IM 58418 and IM 13347"
+          ]
+        },
+        {
+          "source_id": "WS05-SRC-005",
+          "locators": [
+            "ETCSL Manual §1.1: corpus construction and manuscript-date scope"
+          ]
+        }
+      ],
+      "representativeness": "illustrative",
+      "limitations": [
+        "The surviving witnesses are Old Babylonian school manuscripts, not the contemporary Ur III dispatch.",
+        "Always separate narrated event date, manuscript date and modern composite edition.",
+        "Direct quotation from the modern English translation requires rights review."
+      ]
+    }
+  ],
+  "gaps": []
+}

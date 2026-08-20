@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -24,10 +25,10 @@ try:
         write_json,
     )
     from scripts.consolidate_research import verify_consolidation
-    from scripts.lifecycle import section_operation_state_error
+    from scripts.lifecycle import research_rework_blocker, section_operation_state_error
     from scripts.outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
     from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
-    from scripts.story_plan_contract import verify_narration_pack
+    from scripts.story_plan_contract import is_direct_authorship_outline, verify_narration_pack
 except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.py
     from common import (
         REPO_ROOT,
@@ -43,10 +44,10 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
         write_json,
     )
     from consolidate_research import verify_consolidation
-    from lifecycle import section_operation_state_error
+    from lifecycle import research_rework_blocker, section_operation_state_error
     from outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
     from packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
-    from story_plan_contract import verify_narration_pack
+    from story_plan_contract import is_direct_authorship_outline, verify_narration_pack
 
 
 HARNESS_PATH = REPO_ROOT / "system" / "harness.json"
@@ -64,6 +65,24 @@ DSH_OUTLINE_CAPABILITIES = [
     "submit",
 ]
 DSH_OUTLINE_ADAPTER = "scripts/outline_runtime.py"
+
+LEGACY_DRAFT_INSTRUCTION_FILES = [
+    "system/core/creative-boundaries.md",
+    "system/standards/channel-constitution.md",
+    "system/operations/draft-section.md",
+]
+LEGACY_DRAFT_REQUIRED_INPUTS = [
+    "02_outline/story-bible.md",
+    "02_outline/voice-profile.md",
+    "03_sections/{section}/section.json",
+    "03_sections/{section}/brief.md",
+    "03_sections/{section}/narration-pack.json",
+    "03_sections/{section}/continuity-in.md",
+]
+LEGACY_DRAFT_OPTIONAL_INPUTS = [
+    "03_sections/{section}/story-plan.json",
+    "03_sections/{section}/draft-rework-request.md",
+]
 
 
 def load_harness() -> dict[str, Any]:
@@ -124,6 +143,9 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
         if operation == "research_workstream" and unit not in declared_units:
             raise ValueError(f"Workstream {unit} is not declared in the approved research plan.")
     if operation == "research_synthesis":
+        blocker = research_rework_blocker(product_dir)
+        if blocker:
+            raise ValueError("Research synthesis cannot start yet: " + blocker)
         for expected_unit in sorted(declared_units):
             root = product_dir / "01_research" / "workstreams" / str(expected_unit)
             sources = read_json_local(root / "sources.json")
@@ -144,6 +166,14 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
         synthesis = product_dir / "01_research" / "research-synthesis.md"
         synthesis_text = synthesis.read_text(encoding="utf-8")
         legacy_approved = stages.get("research") == "approved" and "Status: ready_for_review" in synthesis_text
+        approved_baseline_replay = (
+            stages.get("research") not in {"approved", "complete"}
+            and bool(product.get("production_cycle", {}).get("previous"))
+            and "Status: complete" in synthesis_text
+            and research_rework_blocker(product_dir) is None
+        )
+        if stages.get("research") not in {"approved", "complete"} and not approved_baseline_replay:
+            raise ValueError("Research must be current before outline; finish semantic research rework and synthesis first.")
         if "Status: complete" not in synthesis_text and not legacy_approved:
             raise ValueError("Research synthesis must be complete before outline.")
         build_outline_evidence_pack(product_dir)
@@ -191,12 +221,68 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
 
 
 def read_json_local(path: Path) -> dict[str, Any]:
-    import json
-
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
         raise ValueError(f"Expected JSON object: {path}")
     return value
+
+
+def _draft_context_lists(product_dir: Path, operation: str, spec: dict[str, Any]) -> tuple[list[str], list[str], list[str]]:
+    """Keep canonical writer-authorship minimal while preserving the legacy draft compatibility packet."""
+
+    instruction_files = list(spec["instruction_files"])
+    required_inputs = list(spec["required_inputs"])
+    optional_inputs = list(spec.get("optional_inputs", []))
+    if operation != "draft_section":
+        return instruction_files, required_inputs, optional_inputs
+
+    outline = read_json_local(product_dir / "02_outline" / "outline.json")
+    if is_direct_authorship_outline(outline):
+        return instruction_files, required_inputs, optional_inputs
+    return (
+        list(LEGACY_DRAFT_INSTRUCTION_FILES),
+        list(LEGACY_DRAFT_REQUIRED_INPUTS),
+        list(LEGACY_DRAFT_OPTIONAL_INPUTS),
+    )
+
+
+def _audience_readable_mission(state: dict[str, Any]) -> str:
+    """Return the explicit canonical section mission; never synthesize one from other fields."""
+
+    mission = state.get("mission")
+    if not isinstance(mission, str) or not mission.strip():
+        raise ValueError("Direct-authorship section requires a non-empty mission before drafting.")
+    return mission.strip()
+
+
+def _canonical_writer_projection(relative: str, path: Path, section: str) -> str | None:
+    """Expose only mission/control state and truth-ceiling IDs to canonical writers."""
+
+    section_rel = f"03_sections/{section}/section.json"
+    narration_rel = f"03_sections/{section}/narration-pack.json"
+    if relative == section_rel:
+        state = read_json_local(path)
+        projection = {
+            "section": state.get("id"),
+            "title": state.get("title"),
+            "mission": _audience_readable_mission(state),
+            "entry_state": state.get("entry_state"),
+            "exit_state": state.get("exit_state"),
+            "transition": state.get("transition"),
+            "target_words": state.get("target_words"),
+        }
+        return json.dumps(projection, ensure_ascii=False, indent=2)
+    if relative == narration_rel:
+        pack = read_json_local(path)
+        scope = pack.get("retrieval_scope", {})
+        claim_ids = scope.get("claim_ids", []) if isinstance(scope, dict) else []
+        projection = {
+            "section": pack.get("section"),
+            "cycle_id": pack.get("cycle_id"),
+            "truth_ceiling": {"claim_ids": claim_ids},
+        }
+        return json.dumps(projection, ensure_ascii=False, indent=2)
+    return None
 
 
 def compile_packet(
@@ -221,13 +307,14 @@ def compile_packet(
     runtime = resolve_execution_runtime(operation, spec, execution_runtime)
     validate_preconditions(product_dir, operation, section, unit)
 
-    instruction_paths = [(REPO_ROOT / item).resolve() for item in spec["instruction_files"]]
+    instruction_files, required_inputs, optional_inputs = _draft_context_lists(product_dir, operation, spec)
+    instruction_paths = [(REPO_ROOT / item).resolve() for item in instruction_files]
     for path in instruction_paths:
         if not path.is_file():
             raise FileNotFoundError(f"Missing instruction: {repo_relative(path)}")
     validate_prompt_layers(instruction_paths, profile, harness)
-    input_paths = expand_inputs(product_dir, spec["required_inputs"], section, unit)
-    input_paths += expand_optional_inputs(product_dir, spec.get("optional_inputs", []), section, unit)
+    input_paths = expand_inputs(product_dir, required_inputs, section, unit)
+    input_paths += expand_optional_inputs(product_dir, optional_inputs, section, unit)
     if spec.get("include_dependency_handoffs") and section:
         state = read_json_local(product_dir / "03_sections" / section / "section.json")
         for dependency in state.get("dependencies", []):
@@ -239,6 +326,10 @@ def compile_packet(
                 if dependency_state.get("status") == "approved" and dependency_state.get("human_approved") is True:
                     input_paths.append(dependency_handoff.resolve())
     input_paths = list(dict.fromkeys(input_paths))
+
+    direct_writer = False
+    if operation == "draft_section":
+        direct_writer = is_direct_authorship_outline(read_json_local(product_dir / "02_outline" / "outline.json"))
 
     blocks: list[str] = []
     instruction_blocks: list[str] = []
@@ -260,20 +351,23 @@ def compile_packet(
         relative = product_relative(product_dir, path)
         input_records.append({"path": relative, "sha256": sha256(path), "bytes": path.stat().st_size})
         if runtime == "legacy":
-            content = path.read_text(encoding="utf-8")
+            projected = _canonical_writer_projection(relative, path, str(section)) if direct_writer and section else None
+            content = projected if projected is not None else path.read_text(encoding="utf-8")
             block = [f"# BEGIN INPUT: {relative}", content.rstrip(), f"# END INPUT: {relative}", ""]
             blocks.extend(block)
             input_blocks.extend(block)
     input_tokens = estimate_tokens("\n".join(input_blocks)) if input_blocks else 0
 
     outputs = [render_pattern(item, section, unit) for item in spec["outputs"]]
+    optional_outputs = [render_pattern(item, section, unit) for item in spec.get("optional_outputs", [])]
     output_baselines = []
-    for relative in outputs:
+    for relative, required in [(item, True) for item in outputs] + [(item, False) for item in optional_outputs]:
         path = product_dir / relative
         output_baselines.append(
             {
                 "path": relative,
                 "sha256": sha256(path) if path.is_file() else None,
+                "required": required,
             }
         )
     report_path = f"tasks/{task_id}/report.md"
@@ -284,7 +378,21 @@ def compile_packet(
             f"tasks/{task_id}/runtime-trace.jsonl",
             f"tasks/{task_id}/runtime-run.json",
         ]
-    model_write_paths = outputs + [report_path, operator_brief_path]
+
+    evidence_access = spec.get("evidence_access")
+    evidence_packet: dict[str, Any] | None = None
+    if evidence_access is not None:
+        if operation not in {"draft_section", "revise_section"}:
+            raise ValueError("Bounded writer evidence access is allowed only for draft/revise operations.")
+        evidence_packet = {
+            "kind": evidence_access["kind"],
+            "adapter": evidence_access["adapter"],
+            "interface_version": evidence_access["interface_version"],
+            "capabilities": list(evidence_access["capabilities"]),
+            "trace_path": f"tasks/{task_id}/evidence-trace.jsonl",
+        }
+
+    model_write_paths = outputs + optional_outputs + [report_path, operator_brief_path]
     allowed = model_write_paths
     write_label = "Model-writable paths" if runtime == "dsh" else "Allowed writes"
     displayed_write_paths = model_write_paths if runtime == "dsh" else allowed
@@ -323,10 +431,23 @@ def compile_packet(
                 "Write full operational detail to `report.md`. Write only decision-relevant summary to `operator-brief.json`.",
                 "The final chat response must use the rendered operator brief, not the task report.",
                 "",
-                "Only the material inside this packet is task context. Do not scan the repository.",
-                "",
             ]
         )
+        if evidence_packet is not None:
+            header.extend(
+                [
+                    "Task context is this packet plus the bounded evidence capability below. Do not scan the repository.",
+                    f"Evidence adapter: `python {evidence_packet['adapter']} products/{product_dir.name} {task_id} <capability>`.",
+                    "Capabilities: " + ", ".join(f"`{item}`" for item in evidence_packet["capabilities"]) + ".",
+                    "Use it only to increase source-level resolution inside the approved claim/source scope.",
+                    "Every capability call is audit-logged. If external source reading adds detail, record it through the adapter before relying on it.",
+                    "New claims, causal conclusions, contradictions or generalizations must be routed back to evidence authority.",
+                    "",
+                ]
+            )
+        else:
+            header.extend(["Only the material inside this packet is task context. Do not scan the repository.", ""])
+
     packet_text = "\n".join(header + blocks).rstrip() + "\n"
     tokens = estimate_tokens(packet_text)
     budget = int(spec["max_context_tokens"])
@@ -353,6 +474,7 @@ def compile_packet(
         "instruction_files": [repo_relative(path) for path in instruction_paths],
         "inputs": input_records,
         "operation_outputs": outputs,
+        "optional_operation_outputs": optional_outputs,
         "output_baselines": output_baselines,
         "allowed_write_paths": allowed,
         "report_path": report_path,
@@ -364,6 +486,8 @@ def compile_packet(
             f"python scripts/operator_brief.py validate products/{product_dir.name}/{operator_brief_path}",
         ],
     }
+    if evidence_packet is not None:
+        packet["evidence_access"] = evidence_packet
     if runtime == "dsh":
         packet["execution_runtime"] = {
             "kind": "dsh",
@@ -388,7 +512,8 @@ def main() -> int:
     packet, text = compile_packet(args.product, args.operation, args.task_id, args.section, args.unit, args.runtime)
     output = args.out or args.product / "tasks" / args.task_id / "context.md"
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(text, encoding="utf-8")
+    with output.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(text)
     write_json(output.with_name("packet.json"), packet)
     print(f"Compiled {output} (~{packet['estimated_context_tokens']} tokens / {packet['max_context_tokens']}).")
     return 0

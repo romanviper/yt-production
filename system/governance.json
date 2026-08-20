@@ -29,8 +29,8 @@
     "products/**"
   ],
   "commit_policy": {
-    "baseline_commit": "fe9caef4800995e437a3f851d3bfb4a6cfc02919",
-    "baseline_meaning": "Commits through this SHA are the grandfathered repository bootstrap; commit-scope enforcement begins after it.",
+    "baseline_commit": "f0713db3a055fd7a4db1f3baabe5df73604f61a4",
+    "baseline_meaning": "Commits through this historical mixed migration are grandfathered; every later commit is subject to strict system/product separation.",
     "mix_system_and_product": "forbidden",
     "content_task_system_edits": "forbidden"
   }

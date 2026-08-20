@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "workstream": "WS08",
+  "status": "complete",
+  "materials": [
+    {
+      "id": "WS08-MAT-001",
+      "kind": "recovery_sequence",
+      "label": "Cuneiform becomes readable again through comparative decipherment",
+      "what_audience_follows": "After living competence has broken, nineteenth-century scholars recover cuneiform step by step by copying inscriptions, cracking the simpler Old Persian system, comparing multilingual Behistun texts and then testing readings in Akkadian and Sumerian.",
+      "sequence": [
+        "Travelers and scholars copy cuneiform inscriptions accurately enough for signs to be compared away from the monuments.",
+        "Old Persian yields first because its system and language are comparatively tractable.",
+        "Multilingual inscriptions, especially Behistun, provide cross-language constraints for harder cuneiform systems.",
+        "Proposed Akkadian readings are tested comparatively; Sumerian is reconstructed later through accumulated bilingual and lexical evidence."
+      ],
+      "claim_ids": [
+        "WS08-CLM-003",
+        "WS08-CLM-004",
+        "WS08-CLM-008",
+        "WS08-CLM-009"
+      ],
+      "source_refs": [
+        {
+          "source_id": "WS08-SRC-006",
+          "locators": [
+            "§§2–4: early copied inscriptions, Old Persian, Behistun and subsequent comparative decipherment steps"
+          ]
+        }
+      ],
+      "representativeness": "representative",
+      "limitations": [
+        "The process involved many scholars, corrections and failed hypotheses; do not reduce it to one hero or eureka moment.",
+        "Modern decipherment is recovery after a competence break, not direct living transmission from ancient scribes."
+      ]
+    }
+  ],
+  "gaps": [
+    "The 75 CE tablet is a strong latest-known chronological anchor in current evidence, but the present WS08 source handoff does not provide a sufficiently narrow object identifier for scene-level use. Keep '75 CE' as a qualified endpoint claim unless a later task adds object-level metadata."
+  ]
+}

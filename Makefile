@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: help new task run show brief check research-units sections impact human-outline human-section assemble test
+.PHONY: help new task replay replay-continue run show brief check research-units sections impact human-outline human-section assemble test
 
 help:
 	@$(PYTHON) scripts/help.py
@@ -13,6 +13,17 @@ task:
 	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)
 	@test -n "$(OPERATION)" || (echo "Thiếu OPERATION=<name>" && exit 1)
 	@$(PYTHON) scripts/task.py create "products/$(PRODUCT)" "$(OPERATION)" $(if $(SECTION),--section "$(SECTION)") $(if $(UNIT),--unit "$(UNIT)") $(if $(RUNTIME),--runtime "$(RUNTIME)")
+
+replay:
+	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)
+	@test -n "$(FROM)" || (echo "Thiếu FROM=outline|draft_section" && exit 1)
+	@test -n "$(THROUGH)" || (echo "Thiếu THROUGH=outline|draft_section" && exit 1)
+	@test -n "$(REQUEST)" || (echo "Thiếu REQUEST=..." && exit 1)
+	@$(PYTHON) scripts/replay.py start "products/$(PRODUCT)" --from "$(FROM)" --through "$(THROUGH)" $(if $(SECTION),--section "$(SECTION)") --request "$(REQUEST)" $(if $(RUNTIME),--runtime "$(RUNTIME)")
+
+replay-continue:
+	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)
+	@$(PYTHON) scripts/replay.py continue "products/$(PRODUCT)"
 
 run:
 	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)

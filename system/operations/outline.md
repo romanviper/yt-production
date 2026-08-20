@@ -2,29 +2,43 @@
 
 ## Responsibility
 
-Design the audience's complete three-act journey before cutting it into bounded production work units. Do not write narration.
+Design **where the story must go**, not how the writer must get there. Do not write narration or pre-author local storytelling mechanics.
+
+Outline owns:
+
+- central question and audience promise;
+- whole-product progression and exactly three acts;
+- movement/section objective;
+- entry and exit state;
+- section boundaries;
+- approved evidence territory via `claim_ids`;
+- dependencies, continuity, transition and word allocation.
+
+It does not own exact carrier, object/imagery sequence, narrative route, reveal strategy, paragraph order or local mechanics.
 
 ## Design order
 
-1. Define the central question, audience promise and final change in understanding.
-2. Design exactly three audience-facing acts: opening, body and ending.
-3. Within those acts, design as many narrative movements as the causal material requires.
-4. Only then place `P##` work-unit boundaries at meaningful state changes or context/review limits.
+1. Define question, promise and final understanding.
+2. Design opening, body and ending.
+3. Add only the movements the inquiry/causal progression needs.
+4. Give each movement an objective/state change.
+5. Assign enough approved claim territory for a writer to solve that objective without expanding truth.
+6. Cut `P##` work units at meaningful state/context/review limits.
 
-The three acts are a channel invariant. Movement count, section count, relative length and local form are not. Never choose ten sections first or make every section repeat a hook–explanation–payoff template.
+Movement count, section count, length and local form remain adaptive.
 
-## Current outline contract
+## Section contract
 
-Schema v4 contains:
+A section must make clear: what it is trying to establish/explore, audience entry/exit state, evidence territory, whole-product role and why the next section follows. Use `narrative_job`, `entry_state`, `exit_state`, `claim_ids`, `dependencies`, `target_words` and `transition`.
 
-- a whole-script architecture with the central question, audience promise and duration-derived word envelope;
-- exactly three ordered acts, each with its own job and entry/exit state;
-- ordered narrative movements assigned once to those acts;
-- contiguous movement/section mappings that may be many-to-many inside one act;
-- for each section: one narrative job, entry/exit state, evidence allowance, dependencies and an estimated word range.
+New/revised output sets `script_architecture.writer_authorship_contract_version: 1`.
 
-Section-level question, payoff, planned beats, structural-role labels and budget justifications are optional creative notes, not required fields.
+Legacy `story_material_contract_version`, `audience_experience` and `material_ids` may remain readable but have no authority in new output.
 
-`story-bible.md` keeps only global causal spine, chronology, terms, entities, setup/payoff continuity and exclusions. `voice-profile.md` captures product-specific variation inside the Channel Constitution in 150–450 words. It learns functions from benchmarks without imitating surface style.
+## Freedom test
 
-All three artifacts remain `draft` until the user approves them.
+A competent writer should be able to reach the section objective through more than one evidence-safe route. If the section only works with one carrier/reveal order, reframe the objective/evidence territory or reopen research; do not encode the preferred route.
+
+`claim_ids` are permissions, not facts that must all appear. Optional preserved material is evidence retention only, not story architecture.
+
+Schema v4 keeps whole-script acts/movements, section architecture and word envelope. `story-bible.md` keeps global causal/chronology/term/continuity constraints; `voice-profile.md` keeps product voice. All remain draft until human approval.

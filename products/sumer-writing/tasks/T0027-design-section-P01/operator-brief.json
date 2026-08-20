@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "P01 đã được redesign lần hai: harness audience-readable được giữ, nhưng local story engine chuyển sang reclassification của chính P005390.",
+  "material_points": [
+    "Viewer chỉ tự đọc raw graphic organization; quantity/grain vẫn là narrator-supplied expert classification.",
+    "Narrative motion không còn là giải thích tablet chứa gì, mà là thử và phá category 'message awaiting translation' bằng controlled subtraction: language, exact transaction và full speech không chắc, nhưng structured record vẫn còn.",
+    "State change cuối P01: unread message → structured record; chính limitation đó mới kiếm ra câu hỏi externalized memory cho P02. Evidence ceiling vẫn chỉ CLM-0042 và CLM-0024; 500–650 từ."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Bạn duyệt local story design mới này để chuyển P01 sang draft, hay muốn rework tiếp story plan?",
+    "recommendation": "Duyệt nếu category shift của P005390 đã đủ làm động cơ kể chuyện mà không cần thêm evidence hay beat formula.",
+    "options": [
+      {
+        "label": "Duyệt",
+        "effect": "Khóa story plan và mở draft P01 bằng narration pack mới."
+      },
+      {
+        "label": "Chỉnh",
+        "effect": "Giữ P01 ở story-plan review và tiếp tục sửa local story design."
+      }
+    ]
+  },
+  "next_step": ""
+}

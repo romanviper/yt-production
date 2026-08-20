@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "slug": "sumer-writing",
-  "working_title": "Chữ viết đã tạo ra nền văn minh Sumer như thế nào?",
+  "working_title": "Chữ viết đã thay đổi xã hội Sumer như thế nào?",
   "language": "vi",
   "format": "long_form_history_documentary",
   "status": "outline_approved",
@@ -67,17 +67,17 @@
   "stages": {
     "direction": "approved",
     "research_plan": "approved",
-    "research": "approved",
+    "research": "complete",
     "outline": "approved",
-    "sections": "ready_to_materialize",
+    "sections": "paused",
     "integration": "not_started",
     "delivery": "not_started"
   },
   "production_cycle": {
-    "id": "C002",
+    "id": "C003",
     "status": "outline_approved",
-    "previous": "C001",
-    "started_at": "2026-08-13T18:18:51.170286+00:00",
-    "reason": "Bắt đầu production cycle C002 dưới harness Hard Boundaries, Soft Logic. Thiết kế lại toàn bộ kịch bản từ research đã duyệt: giữ ba act toàn phim opening–body–ending rõ ràng; thiết kế macro movements trước rồi mới cắt P## theo causal load và context/review boundaries; không dùng section count, beat sheet, payoff formula hay word quota làm khuôn mặc định. Giữ ổn định channel values, voice identity và causal system-as-protagonist; cho phép opening form, local route, movement count, section count và relative length thích ứng với vật liệu. Không dùng P01 hoặc story plan của cycle cũ làm template."
+    "previous": "C002",
+    "started_at": "2026-08-18T13:45:00+00:00",
+    "reason": "The clean writer-authorship-v1 outline was explicitly approved by the user on 2026-08-19. Legacy material-aware artifacts and the contaminated P01 output have been removed from the active product surface; section work remains paused until the next canonical task is routed."
   }
 }

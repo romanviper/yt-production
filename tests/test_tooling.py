@@ -1439,6 +1439,94 @@ class ModularProductionTests(unittest.TestCase):
             self.assertEqual(3, len(result["manifest"]["sections"]))
             self.assertTrue((product / "03_sections" / "P01" / "draft.md").is_file())
 
+    def test_human_approval_closes_design_task_and_routes_draft_immediately(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 3)
+            materialize_sections(product)
+            design = create_task(product, "design_section", "P01", None, False)
+
+            make_approved_story_plan(product, "P01")
+
+            persisted = json.loads(
+                (product / "tasks" / design["id"] / "work-order.json").read_text(encoding="utf-8")
+            )
+            active = json.loads((product / "tasks" / "ACTIVE.json").read_text(encoding="utf-8"))
+            self.assertEqual("closed", persisted["state"])
+            self.assertIsNone(active["task_id"])
+            draft = create_task(product, "draft_section", "P01", None, False)
+            self.assertEqual("ready", draft["state"])
+
+    def test_submitted_task_left_in_active_is_self_healed(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            state_path = product / "product.json"
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            state["stages"]["direction"] = "approved"
+            write_json(state_path, state)
+            first = create_task(product, "research_plan", None, None, False)
+            work_path = product / "tasks" / first["id"] / "work-order.json"
+            work = json.loads(work_path.read_text(encoding="utf-8"))
+            work["state"] = "ready_for_review"
+            write_json(work_path, work)
+
+            second = create_task(product, "research_plan", None, None, False)
+
+            active = json.loads((product / "tasks" / "ACTIVE.json").read_text(encoding="utf-8"))
+            self.assertEqual(second["id"], active["task_id"])
+
+    def test_terminal_task_left_in_active_does_not_block(self) -> None:
+        for terminal_state in ["closed", "cancelled"]:
+            with self.subTest(terminal_state=terminal_state), tempfile.TemporaryDirectory() as temp:
+                product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+                state_path = product / "product.json"
+                state = json.loads(state_path.read_text(encoding="utf-8"))
+                state["stages"]["direction"] = "approved"
+                write_json(state_path, state)
+                first = create_task(product, "research_plan", None, None, False)
+                work_path = product / "tasks" / first["id"] / "work-order.json"
+                work = json.loads(work_path.read_text(encoding="utf-8"))
+                work["state"] = terminal_state
+                write_json(work_path, work)
+
+                second = create_task(product, "research_plan", None, None, False)
+
+                self.assertNotEqual(first["id"], second["id"])
+
+    def test_human_story_plan_amendment_supersedes_live_draft_and_allows_replacement(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            make_approved_outline(product, 3)
+            materialize_sections(product)
+            make_approved_story_plan(product, "P01")
+            first = create_task(product, "draft_section", "P01", None, False)
+
+            human_amend_section(
+                product,
+                "P01",
+                "Accept the human story-plan adjustment and replace the routed draft task.",
+                ["story-plan.json"],
+            )
+
+            persisted = json.loads(
+                (product / "tasks" / first["id"] / "work-order.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual("cancelled", persisted["state"])
+            replacement = create_task(product, "draft_section", "P01", None, False)
+            self.assertNotEqual(first["id"], replacement["id"])
+
+    def test_genuine_live_scope_conflict_still_blocks(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = create_product(Path(temp) / "products", "demo", "Demo", DEFAULT_TEMPLATE_ROOT)
+            state_path = product / "product.json"
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            state["stages"]["direction"] = "approved"
+            write_json(state_path, state)
+            first = create_task(product, "research_plan", None, None, False)
+
+            with self.assertRaisesRegex(ValueError, first["id"]):
+                create_task(product, "research_plan", None, None, False)
+
 
 if __name__ == "__main__":
     unittest.main()

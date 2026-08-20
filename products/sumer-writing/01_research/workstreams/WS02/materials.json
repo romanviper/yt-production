@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "workstream": "WS02",
+  "status": "complete",
+  "materials": [
+    {
+      "id": "WS02-MAT-001",
+      "kind": "process",
+      "label": "Late-Uruk accounting media at Chogha Mish",
+      "what_audience_follows": "Two coexisting clay accounting devices—an envelope that contains tokens and a sealed numerical tablet—show information moving from enclosed/countable objects toward marks carried on a clay surface without proving a one-line token-to-writing genealogy.",
+      "sequence": [
+        "A clay envelope contains accounting tokens while sealing controls or authenticates the container.",
+        "A separate sealed numerical tablet fragment carries five numeral signs directly on a clay surface.",
+        "Both belong to the Late Uruk administrative ecology, so the audience can follow a change in where numerical information is carried while keeping multiple antecedent practices in view."
+      ],
+      "claim_ids": [
+        "WS02-CLM-001",
+        "WS02-CLM-002",
+        "WS02-CLM-003",
+        "WS02-CLM-004"
+      ],
+      "source_refs": [
+        {
+          "source_id": "WS02-SRC-001",
+          "locators": [
+            "Visible Language, object descriptions Catalog No. 31, p. 65: ChM III-937a, sealed numerical tablet fragment with five numeral signs",
+            "Visible Language, object description Catalog No. 32, pp. 65–66: broken clay envelope with tokens inside"
+          ]
+        }
+      ],
+      "representativeness": "illustrative",
+      "limitations": [
+        "The objects are from Chogha Mish in Iran, not an excavated sequence at Uruk.",
+        "Coexistence and functional similarity do not establish that one object directly evolved into the other.",
+        "Use this material to show an ecology of accounting media, not a universal token → tablet ladder."
+      ]
+    }
+  ],
+  "gaps": []
+}

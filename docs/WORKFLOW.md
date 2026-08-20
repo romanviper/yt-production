@@ -2,198 +2,212 @@
 
 ## 1. Mental model
 
-Repo tách ba thứ vốn dễ bị trộn:
+Repo separates **decision ownership**, not information ownership.
 
-| Layer | Chức năng | Nơi thực thi |
+| Layer | Owns | Does not own |
 |---|---|---|
-| Hard boundaries | authority, write scope, state, approval, packet integrity, evidence provenance, hard cap | router, permissions, validators |
-| Soft logic | opening form, fact order, local structure, rhythm, paragraph count, phrasing | Agent phán đoán từ material |
-| Outcome evaluation | story motion, voice, causality, repetition, listening experience | review Agent rồi human gate |
+| Research | truth, source, locator, claim, confidence, contradiction, qualification, provenance | story route, carrier, reveal strategy |
+| Outline | central question, progression, section objective, entry/exit state, evidence territory, boundaries, continuity | paragraph order, carrier, exact narrative route |
+| Writer | factual selection inside allowance, narrative/causal route, POV, scale, imagery, reveal timing, prose craft | truth-ceiling expansion, approval |
+| Review | observable outcome judgment and diagnosis | enforcing one preferred storytelling method |
+| Harness | authority, write scope, lifecycle, approval, provenance, evidence ceiling, cycle/hash integrity, resource caps | authorship |
 
-Product Agent không sửa control plane. System Architect không trộn system change với product content trong cùng commit.
+Product Agent không sửa control plane. Human approval remains external.
 
-Human authority có một đường ngắn riêng. Khi người dùng trực tiếp feedback hoặc yêu cầu sửa một output cụ thể, Agent có thể sửa file đó rồi chạy một lệnh `human-amend-*`; không tạo task mới chỉ để hợp thức hóa quyết định của human.
+## 2. Current pipeline
 
-**Safety cứng, workflow mềm.** Packet integrity, evidence ceiling, write scope và human approval không được bypass. Nhưng human không phải tự sửa nhiều state để yêu cầu chạy lại một operation: semantic rework sẽ reopen đúng lifecycle state rồi tạo task canonical mới.
+`Research`
+→ authoritative evidence store
 
-## 2. Task packets và lifecycle
+`Outline`
+→ architecture + objectives + evidence scope
 
-`scripts/task.py create` biên dịch đúng một operation thành:
+`Materialize`
+→ deterministic section state + truth/evidence handoff
 
-- immutable `context.md`;
-- `packet.json` có input hashes, context profile, instruction/input token metrics và evaluation gate;
-- `work-order.json` có allowed writes;
-- `operator-brief.json` cho handoff ngắn.
+`Draft`
+→ creative authorship + bounded on-demand evidence resolution
 
-Hard-policy files và operator-interface không được nạp vào prompt sáng tạo. Creative packet chỉ dùng allowlist ngắn và bị chặn nếu evaluation-only policy lọt vào writer context.
+`Review`
+→ outcome-first evaluation
 
-Registry chỉ route operation, input, output, profile và budget. Tiêu chí semantic nằm đúng một lần trong operation instruction, Channel Constitution hoặc Outcome Evaluation; compiler không lặp lại chúng thành một acceptance prompt thứ hai.
+Không có intermediate creative-planning layer trên path mới. `design_section` / `story-plan` chỉ còn compatibility cho legacy products.
 
-`work-order.json.state` và packet validity là authority cho lifecycle của task. `tasks/ACTIVE.json` chỉ là **routing pointer** để Agent biết task nào đang được giao; pointer không tự làm một task hợp lệ hoặc vô hiệu. `--replace` phải cancel/supersede task cũ trước khi route task mới, thay vì chỉ ghi đè ACTIVE.
+## 3. Research: authoritative evidence, not pre-authored story
 
-Các rule canonical cho task state, section-operation entry state, submit state và rework state nằm trong `scripts/lifecycle.py`. `context_packet.py`, `task.py` và human rework cùng dùng mapping này; không tự định nghĩa state machine riêng ở từng script.
+Mỗi workstream bắt buộc trả:
 
-Agent đọc đúng ACTIVE → work order → packet. Nó không quét repo.
+- `sources.json`;
+- `claims.json`;
+- `synthesis.md`.
 
-Riêng POC `outline`, operator có thể chọn runtime DSH on-demand:
+Research giữ source/locator/provenance, chronology, claim/confidence/status, contradiction/counterevidence, qualification và factual limitation.
 
-```bash
-python scripts/task.py create products/<slug> outline --runtime dsh
-python scripts/outline_runtime.py run products/<slug> <task-id>
-```
+`materials.json` là **optional evidence-preservation artifact**. Dùng khi primary object/case có detail dễ mất qua compression hoặc provenance/limitation phức tạp. Nó không phải mandatory abstraction giữa claim và writer.
 
-DSH phải được cài riêng ở đúng version POC đã audit (`@deepseek-ai/dsh@0.1.0-rc.5`) và cung cấp executable `dsh`; repo không phụ thuộc npm package này để chạy control plane hoặc test. Trước model call, runner dump fully composed config và fail-closed nếu một guarded tool row không bị disable hoặc MCP broker không đúng interface. Runtime headless chạy trong thư mục tạm rỗng, tắt telemetry và chỉ nhìn thấy capability broker theo scope của packet. `runtime-trace.jsonl` giữ nguyên payload context/evidence đã trả cho model; `runtime-run.json` giữ version, composed config, seed/patch hash và kết quả run. Hai file là runtime-owned, không phải factual authority hay product artifact.
+Output mới không bắt buộc `what_audience_follows`, narratability class, carrier role, opening/reversal/ending candidate hay sequence kể chuyện. Legacy fields vẫn có thể tồn tại nhưng không có creative authority.
 
-Không truyền `--runtime` thì task dùng packet precompile hiện tại. Nếu DSH lỗi hoặc bị loại bỏ, cancel/replace task và tạo lại `outline --runtime legacy`; không cần convert outline, story bible hay voice profile.
+`consolidate_research.py` luôn giữ source/claim ledgers authoritative. Nếu optional materials tồn tại, chúng được remap provenance như evidence preservation; absence of material không block synthesis/outline.
 
-## 3. Research
+`research_synthesis` trả `research-synthesis.md`: causal/chronological model, contradictions, confidence/qualification và evidence gaps. `story-material-map.json` là legacy compatibility artifact, không còn output bắt buộc.
 
-`research_plan` chia câu hỏi thành workstreams không trùng ownership. Mỗi `research_workstream` trả source/claim ledgers có locator, limitation, contradiction và provenance. Deterministic consolidation remap/deduplicate trước `research_synthesis`.
+## 4. Outline: architecture of inquiry/progression
 
-Raw browsing context không đi vào outline hay writing.
+Current/revised outline dùng schema v4 và đặt:
 
-Trước outline, router sinh `outline-evidence-pack.json` quyết định từ claim ledger. Pack chỉ giữ claim ID, statement, type, confidence, status, source IDs và contradiction register; provenance chi tiết vẫn nằm ngoài creative prompt trong ledgers gốc.
+`script_architecture.writer_authorship_contract_version = 1`
 
-## 4. Whole-product architecture
+Outline quyết định:
 
-Outline schema v4 thiết kế theo thứ tự:
+- central question và audience promise;
+- đúng ba whole-script acts;
+- narrative movements;
+- section objective (`narrative_job`);
+- entry / exit state;
+- section boundary;
+- `claim_ids` làm evidence territory;
+- dependencies / continuity;
+- `transition`;
+- word envelope.
 
-1. central question và audience promise;
-2. đúng ba act toàn phim: `opening`, `body`, `ending`;
-3. số narrative movement cần cho causal arc;
-4. số `P##` cần cho context/review.
+Outline không được bắt writer theo một carrier, object sequence, mental imagery sequence, reveal order hay paragraph route.
 
-Ba act là invariant. Movement count, section count và relative length là adaptive. Một movement có thể trải qua nhiều work unit; một work unit có thể chứa nhiều movement trong cùng act. Work unit không được băng qua act boundary vì assembly phải giữ ba phần rõ ràng.
+Legacy C003/older artifacts có thể còn `story_material_contract_version`, `audience_experience`, `material_ids`. Materializer mới đọc được chúng để migration không phá product, nhưng bỏ các field creative-route đó khỏi writer handoff.
 
-Section contract mới chỉ cần narrative job, entry/exit state, evidence allowance, dependencies và target range. Question/payoff/beat/shape ở cấp section không phải schema bắt buộc.
+Human review ở outline stage đánh giá architecture/evidence scope. Không cần nhìn thấy gần như toàn bộ prose trước khi approve; deep storytelling judgment có thể hợp lệ chỉ xuất hiện ở draft.
 
-Approve rồi materialize:
+## 5. Deterministic section handoff
 
-```bash
-python scripts/approval.py approve-outline products/<slug>
-python scripts/materialize_sections.py products/<slug>
-```
-
-## 5. Lean story design
-
-`design_section` tạo story-plan schema v3:
-
-- `audience_shift`;
-- `story_strategy` dạng free-form, không phải beat sheet;
-- `core / optional / guardrail / exclude`;
-- `word_budget.recommended` như estimate;
-- optional design risks.
-
-Không có compulsory payoff beat, numbered beats, claim-use explanation, opening move, ending move, paragraph count hoặc cadence.
-
-Human approval tạo narration-pack schema v2. Pack chỉ giữ compact claims và source refs; full authority/notes/limitations/provenance vẫn ở evidence artifacts, không chiếm writer context.
-
-## 6. Drafting
-
-Writer nhận:
-
-- Creative Boundaries;
-- Channel Constitution;
-- product story bible và voice profile;
-- local brief;
-- approved lean story plan;
-- compact narration pack;
-- approved dependency handoffs.
-
-Nếu draft được mở lại bằng semantic rework, writer còn nhận one-shot `draft-rework-request.md`. File này chỉ truyền human intent cho lần draft đó và được router bỏ sau submit; nó không trở thành writer rule toàn cục.
-
-Nó tự chọn local route. Target range không phải quota: submit không lỗi chỉ vì draft ngắn hơn estimate. Padding bị cấm; hard cap 3.000 từ/work unit vẫn được máy giữ.
-
-## 7. Outcome evaluation
-
-`review_section` là gate bắt buộc trước human section approval. Nó kiểm tra outcome và route lỗi về đúng layer:
-
-- `prose_execution`;
-- `local_design`;
-- `product_architecture`;
-- `evidence`.
-
-Review phải có verdict `pass / changes_requested / blocked`, observable diagnosis và acceptance test. `approve-section` chỉ mở khi review hoàn chỉnh và verdict là `pass`.
-
-## 8. Feedback routing và semantic rework
-
-Đường chuyên biệt vẫn giữ để operator có thể route feedback chính xác:
-
-- Wording/pacing/arrangement hỏng, plan vẫn đúng → `request-changes` rồi `revise_section`.
-- Audience shift hoặc evidence selection hỏng → `request-story-plan-changes` rồi `design_section`.
-- Section boundary hoặc three-act arc hỏng → mở production cycle mới ở `outline`.
-- Evidence thiếu/contradicted → research escalation.
-
-Nhưng khi human đơn giản muốn **làm lại một process**, không yêu cầu human tự nhớ current state. Dùng một command semantic:
-
-```bash
-python scripts/rework.py products/<slug> draft_section --section P01 \
-  --request "Rewrite from the same approved story plan"
-
-python scripts/rework.py products/<slug> design_section --section P04 \
-  --request "Redesign this section from the approved evidence"
-
-python scripts/rework.py products/<slug> outline \
-  --request "Reopen whole-product architecture"
-```
-
-`rework.py` thực hiện theo intent:
-
-1. cancel task đang được route và clear ACTIVE;
-2. reopen đúng operation state từ `scripts/lifecycle.py`;
-3. invalidate downstream product stages khi section đã được mở lại;
-4. tạo task mới bằng **canonical `scripts/context_packet.py`**;
-5. ghi audit trail vào `rework-requests.jsonl`.
-
-Human không cần gọi `task.py state`, sửa `section.json` hay hand-author `packet.json/context.md`. Low-level `task.py state` vẫn tồn tại cho recovery/debugging, nhưng terminal task không được reopen; muốn chạy lại thì tạo task mới hoặc dùng semantic rework.
-
-Không thêm một writer rule toàn cục cho một lỗi một lần. Chỉ pattern lặp mới trở thành eval; chỉ invariant thật sự mới vào constitution/hard boundary.
-
-### Human-directed amendment
-
-Sau khi human trực tiếp sửa file, hoặc Agent áp đúng feedback đã được human chỉ định:
-
-```bash
-python scripts/approval.py human-amend-outline products/<slug> \
-  --request "Human correction" --path outline.json
-
-python scripts/approval.py human-amend-section products/<slug> P04 \
-  --request "Human prose correction" --path draft.md
-```
-
-Có thể lặp `--path`. Outline allowlist chỉ gồm `outline.json`, `story-bible.md`, `voice-profile.md`; section allowlist chỉ gồm `story-plan.json`, `draft.md`, `handoff.md`.
-
-Lệnh accept thực hiện trong một bước: validate contract/hard cap, giữ evidence ceiling, ghi SHA-256 vào `human-amendments.jsonl`, hủy task active bị supersede và xóa con trỏ ACTIVE. Human-edited draft hợp lệ có thể chuyển thẳng sang `approved` mà không cần `review_section` hoặc `revise_section`. Nếu `outline.json` đổi sau khi sections đã tồn tại, sections được đánh dấu `human_sync_required`; nội dung cũ không bị xóa nhưng không còn được coi là current.
-
-## 9. Production cycles
-
-Đường semantic được ưu tiên:
-
-```bash
-python scripts/rework.py products/<slug> outline --request "Yêu cầu kiến trúc"
-```
-
-Nếu outline đang approved, command này mở production cycle mới rồi tạo outline task canonical. Expert path cũ vẫn tồn tại:
-
-```bash
-python scripts/approval.py start-new-cycle products/<slug> --request "Yêu cầu kiến trúc"
-python scripts/task.py create products/<slug> outline --replace
-```
-
-Cycle mới giữ research đã duyệt, pause sections cũ và buộc outline output dùng cycle ID mới. Sau khi approve outline, lệnh sau chuyển section workspaces cũ vào `03_sections/_history/<cycle>/` rồi materialize workspaces mới:
+Sau human-approved outline:
 
 ```bash
 python scripts/materialize_sections.py products/<slug> --archive-previous-cycle
 ```
 
-Archive là recoverable; Git history và task reports vẫn giữ audit trail.
+Direct-authoring section được tạo ở `ready_for_draft` với:
 
-## 10. Assembly
+- `section.json`: cycle/hash, objective, entry/exit, movements, dependencies, transition;
+- `brief.md`: objective, state change, evidence territory, continuity;
+- `evidence-pack.json`: approved claims + reviewed supporting source records;
+- `narration-pack.json`: truth ceiling, qualifications, guardrails và bounded retrieval scope;
+- `continuity-in.md`.
 
-`assemble.py` chỉ ghép section đã human-approved. Với schema v4, delivery hiển thị ba act audience-facing; production IDs chỉ nằm trong comment/manifest, không biến thành chapter giả.
+Không tạo `material-pack.json`. Không cần `story-plan.json` trên path mới.
 
-## Minimal handoff prompt
+Claims là permissions, không phải danh sách paragraph bắt buộc.
 
-```text
-Đọc AGENTS.md, rồi thực hiện task active của products/<slug>. Chỉ dùng compiled packet, không quét repo và không tự approve output.
+## 6. Writer authorship
+
+`draft_section` nhận destination và truth boundary, không nhận route.
+
+Writer tự quyết:
+
+- fact nào dùng/bỏ trong allowance;
+- narrative/causal route;
+- POV/scale;
+- object/person/process/contrast nếu hữu ích;
+- reveal timing;
+- exposition placement;
+- imagery, vocabulary, rhythm, sentence craft.
+
+Target là **crafted narration intended to be spoken aloud**, không mặc định conversational.
+
+Một route mà Research/Outline/Harness chưa dự đoán vẫn hợp lệ nếu đạt objective, evidence-safe, continuity đúng và không invent.
+
+Concrete-first, before/after, recount-before-interpret, process sequence, raw clue, deletion pass… là optional heuristics. Chúng có thể giúp sửa document mode nhưng không phải schema validity.
+
+## 7. Bounded evidence retrieval
+
+Draft/revision packet có `evidence_access` dùng:
+
+```bash
+python scripts/draft_evidence.py products/<slug> <task-id> scope
+python scripts/draft_evidence.py products/<slug> <task-id> claims
+python scripts/draft_evidence.py products/<slug> <task-id> sources
+python scripts/draft_evidence.py products/<slug> <task-id> source --id SRC-0001
+python scripts/draft_evidence.py products/<slug> <task-id> search --query "term"
 ```
+
+Scope được suy ra từ `claim_ids` của section và các reviewed sources support chúng. Không có arbitrary path argument và không scan repo.
+
+Writer có thể tăng factual resolution: measurement, physical description, location, documented action, chronology detail hoặc source detail. Optional evidence-preservation `details` có thể được trả nếu nằm trong cùng claim/source graph.
+
+Nếu Agent đọc thêm passage từ approved source URL/locator và muốn dùng detail mới, ghi nó vào audit trace:
+
+```bash
+python scripts/draft_evidence.py products/<slug> <task-id> record \
+  --source-id SRC-0001 \
+  --parent-locator "reviewed locator" \
+  --locator "narrower locator" \
+  --detail "source-level factual detail"
+```
+
+Mọi capability call ghi full request/response vào `tasks/<task-id>/evidence-trace.jsonl`, file này nằm ngoài model write scope.
+
+Boundary:
+
+> Writer may increase evidence resolution, but may not silently expand the truth ceiling.
+
+New claim, causal conclusion, thesis, contradiction hoặc generalization phải quay về research/evidence authority trước khi được narration như approved fact.
+
+## 8. Outcome-first review
+
+Review hỏi trước:
+
+- section có đạt objective không;
+- listener có đi qua progression có ý nghĩa không;
+- narration có cảm giác authored không;
+- information có thành experience/world/process/relationship phù hợp không;
+- listening experience có tốt không;
+- causal logic, continuity và evidence integrity có giữ không.
+
+Chỉ sau khi outcome fail mới dùng mechanics làm diagnostic heuristic. Không fail một draft chỉ vì thiếu carrier, raw clue, before/after, process sequence hoặc recount-before-interpret.
+
+Routing hiện hành:
+
+- `prose_execution` → sửa draft/revision;
+- `product_architecture` → reopen outline/cycle;
+- `evidence` → reopen research/evidence.
+
+Không có `local_design/story-plan` authority trên path mới.
+
+Pseudo-agency chỉ là conditional integrity rule: nếu narration staged audience discovery, evidence phải thực sự accessible trước specialist classification. Không yêu cầu mọi section cho audience tự suy luận.
+
+## 9. Hard boundaries retained
+
+Harness vẫn hard-enforce:
+
+- task authority và allowed writes;
+- packet freshness/integrity;
+- lifecycle states;
+- human approvals;
+- cycle/hash integrity;
+- source/claim provenance;
+- evidence ceiling và qualification;
+- no invention;
+- contradiction handling;
+- context/write caps.
+
+Creative method không được đưa vào hard schema chỉ vì nó từng giúp một draft cụ thể.
+
+## 10. Replay and migration
+
+Current replay path:
+
+`outline → materialize → draft_section`
+
+Legacy products không có direct-authorship marker vẫn có thể dùng story-plan compatibility path. New/revised outline phải dùng `writer_authorship_contract_version: 1`.
+
+Không rewrite product content chỉ để migration/test pass. Nếu một existing outline vẫn encode exact carrier/route từ harness cũ, rebuild outline bằng current architecture harness rồi chờ human approval trước clean draft replay.
+
+## 11. Audit rule for future harness changes
+
+Với mỗi schema/validator/lifecycle/instruction/compiler/evaluation rule, hỏi:
+
+1. Nó bảo vệ hard boundary? → hard-enforce.
+2. Nó là observable quality target? → evaluator judge.
+3. Nó chỉ mô tả một cách cụ thể để đạt target? → optional heuristic, không schema validity.
+
+Success criterion:
+
+> Harness bảo vệ truth và workflow thật chặt, nhưng không quyết định hộ creative Agent cách kể câu chuyện.

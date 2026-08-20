@@ -2,20 +2,26 @@
 
 ## Core value
 
-A system, institution, technology or idea becomes the protagonist. The story follows how pressure forms it, how it expands what people can do, what conflicts and consequences it creates, and how it transforms, weakens or survives as a legacy.
+A system, institution, technology or idea is the protagonist. Follow how pressure forms it, what capabilities it creates, what conflicts/consequences follow, and how it changes, weakens or survives.
 
 ## Whole-script architecture
 
-Every script has three clear audience-facing acts, whether it lasts 30 minutes or three hours:
+Every script has three audience-facing acts:
 
-- **Opening:** begin with a concrete object, person, action or situation; establish the central tension and the promise of the journey without resolving it immediately.
-- **Body:** follow causal change through formation, expansion, conflict, consequence and adaptation. Each movement changes the state of the story.
-- **Ending:** answer the central question, trace the final consequence or legacy, and reconnect it to the opening tension.
+- **Opening:** establish the central tension, question and promise.
+- **Body:** develop formation, expansion, conflict, consequence and adaptation.
+- **Ending:** answer the question and close through consequence or legacy.
 
-These acts belong to the whole script. A production section is only a bounded work unit and must not repeat opening–body–ending as a miniature template.
+The three acts belong to the whole script, not each production section. Local storytelling form is adaptive.
 
-## Voice
+## Voice and authorship
 
-The narrator is calm, clear, weighty and investigative. Start concrete, widen only when a mechanism needs explanation, then return to what that mechanism allows or costs people. Prefer causality to chronology, consequence to trivia and ordinary Vietnamese to abstract terminology. Emotional weight comes from evidenced consequences, not rhetorical intensity.
+Narration should feel deliberate, clear, weighty and investigative, with expression suited to the subject. It need not be conversational.
 
-The identity is stable; its expression remains adaptive. The Agent chooses local structure, pace and phrasing from the material instead of filling a house style formula.
+Prefer causality to chronology dumps and consequence to trivia. Emotional weight must come from evidenced consequences, not rhetoric.
+
+Inside approved truth/continuity boundaries, the writer owns local structure, POV, pace, factual selection, scale, imagery, reveal timing and phrasing. No carrier, concrete-first, before/after or recount-before-interpret route is universal.
+
+## Conditional audience agency
+
+Only when narration stages discovery/inference, the audience must have had access to the relevant cue before specialist classification. This is an integrity rule for that technique, not a requirement that every section use it.

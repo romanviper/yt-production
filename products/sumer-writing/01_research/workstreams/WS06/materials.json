@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "workstream": "WS06",
+  "status": "complete",
+  "materials": [
+    {
+      "id": "WS06-MAT-001",
+      "kind": "institutional_process",
+      "label": "Puzriš-Dagan livestock agency archive",
+      "what_audience_follows": "Thousands of surviving records let the audience follow livestock obligations becoming classifiable, authenticated and retrievable through officials, seals and archival procedure rather than through the tablet acting alone.",
+      "sequence": [
+        "Livestock, taxation, royal gifts and diplomatic transfers generate individual administrative records.",
+        "Officials and sealing practices attach responsibility and authentication to those records.",
+        "Records accumulate into an archival system that can be grouped and retrieved across transactions.",
+        "The reconstructed agency makes obligations visible at institutional scale, while enforcement still belongs to people and authorities."
+      ],
+      "claim_ids": [
+        "WS06-CLM-001",
+        "WS06-CLM-006",
+        "WS06-CLM-007",
+        "WS06-CLM-008"
+      ],
+      "source_refs": [
+        {
+          "source_id": "WS06-SRC-005",
+          "locators": [
+            "§§1.2–1.5: reconstruction of the Puzriš-Dagan central livestock agency and archive of more than 13,500 tablets"
+          ]
+        }
+      ],
+      "representativeness": "illustrative",
+      "limitations": [
+        "This is a bounded Ur III royal-institution case, centuries after the origin of writing.",
+        "The archive is selective and reconstructed; do not present it as a literal inventory of one stockyard or an empire-wide norm.",
+        "Use it as a later test of the institutional-capacity feedback mechanism, not proof of that mechanism at Uruk."
+      ]
+    }
+  ],
+  "gaps": []
+}

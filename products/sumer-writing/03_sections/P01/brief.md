@@ -1,28 +1,41 @@
-# P01 — Một mảnh đất sét không chịu nói
+# P01 — Trước chữ viết đã có một bài toán phải giải
+
+Cycle: `C003`
 
 ## Whole-script acts
 
-- opening — Một vật thể chưa chịu kể chuyện
+- opening — Khi một xã hội cần trí nhớ ngoài con người
 
 ## Macro movements
 
-- M01 — Một tablet còn dấu nhưng không còn giọng nói
+- M01 — Trước chữ viết đã có một bài toán phải giải
 
-## Narrative job
+## Section objective
 
-Cold-open P005390. Trong 20–30 giây phải có micro-reveal đủ cụ thể để viewer biết mình đang nhìn một paradox thật; full reveal trong 60–90 giây/~140–210 từ trước chronology/definition. Sau đó chuyển ngay sang câu hỏi earned: nếu tablet chưa trao lại full speech, tại sao loại relation này vẫn đáng giữ qua thời gian?
+Thiết lập các pressure và information practices trước/sát thời điểm proto-cuneiform xuất hiện, đồng thời phá hai shortcut: một invention event duy nhất và token→tablet như đường tiến hóa tất định. Section phải kết thúc khi audience đã hiểu vì sao durable, inspectable records trở nên đáng giá mà chưa cần biết 'ai phát minh chữ viết'.
 
 ## Entry state
 
-Khán giả coi tablet như thông điệp chỉ cần dịch.
+Chữ viết được hình dung như một ý tưởng xuất hiện đột ngột.
 
 ## Exit state
 
-Khán giả biết cái gì còn/mất và giữ một câu hỏi đơn giản: loại memory này giải quyết điều gì mà trí nhớ của người có mặt không giải quyết được?
+Khán giả hiểu formation là một ecology gồm numerical practices, seals/bullae/tablets và institutional demand; administration là pressure lớn nhưng không phải nguyên nhân duy nhất.
 
-## Anchor options
+## Evidence territory
 
-Không có.
+- CLM-0011
+- CLM-0012
+- CLM-0013
+- CLM-0014
+- CLM-0015
+- CLM-0016
+- CLM-0017
+- CLM-0018
+
+## Transition
+
+Nếu nhu cầu và các recording practices đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.
 
 ## Continuity in
 
@@ -34,4 +47,4 @@ Không có.
 
 ## Non-goal
 
-Không tuyên bố language/transaction/world-first; không trì hoãn reward đầu tiên tới cuối phút đầu; không rời object sang exposition dài ngay sau reveal; không tạo mystery bằng cách giấu fact đã biết.
+Không invention scene; không ethnic attribution; không universal token code; không direct token→tablet genealogy; không biến administrative pressure thành monocause.

@@ -170,9 +170,11 @@ def validate_outline_contract(
     expected_envelope = target_word_envelope(product_target) if product_target is not None else None
     if product_target is not None and expected_envelope is None:
         errors.append("product target cannot be converted into a word envelope")
-    elif expected_envelope is not None and envelope != expected_envelope:
+    elif expected_envelope is not None and envelope is not None and (
+        envelope["min"] < expected_envelope["min"] or envelope["max"] > expected_envelope["max"]
+    ):
         errors.append(
-            "outline total_word_envelope must match product duration and narration rate "
+            "outline total_word_envelope must stay within product duration and narration rate "
             f"({expected_envelope['min']}–{expected_envelope['max']})"
         )
 

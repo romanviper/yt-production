@@ -54,14 +54,20 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
 
     for field in ["instruction_files", "operation_outputs", "allowed_write_paths"]:
         _validate_path_list(packet, field, errors)
+    optional_outputs = packet.get("optional_operation_outputs", [])
+    if not isinstance(optional_outputs, list):
+        errors.append("packet.optional_operation_outputs must be a list")
+    else:
+        for index, item in enumerate(optional_outputs):
+            if not _is_relative_product_path(item):
+                errors.append(f"packet.optional_operation_outputs[{index}] must be a product-relative path")
     for field in ["report_path", "operator_brief_path"]:
         if field in packet and not _is_relative_product_path(packet[field]):
             errors.append(f"packet.{field} must be a product-relative path")
 
-    for field in ["validation"]:
-        value = packet.get(field)
-        if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
-            errors.append(f"packet.{field} must be a list of strings")
+    value = packet.get("validation")
+    if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+        errors.append("packet.validation must be a list of strings")
 
     if schema_version in {1, 2, 3}:
         value = packet.get("acceptance_criteria")
@@ -123,6 +129,31 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
     elif "runtime_owned_paths" in packet:
         errors.append("packet.runtime_owned_paths requires packet.execution_runtime")
 
+    evidence_access = packet.get("evidence_access")
+    if evidence_access is not None:
+        if packet.get("operation") not in {"draft_section", "revise_section"}:
+            errors.append("packet.evidence_access is allowed only for draft_section or revise_section")
+        if not isinstance(evidence_access, dict):
+            errors.append("packet.evidence_access must be an object")
+        else:
+            if evidence_access.get("kind") != "bounded_claim_sources":
+                errors.append("packet.evidence_access.kind must be bounded_claim_sources")
+            if evidence_access.get("adapter") != "scripts/draft_evidence.py":
+                errors.append("packet.evidence_access.adapter must be scripts/draft_evidence.py")
+            if evidence_access.get("interface_version") != 1:
+                errors.append("packet.evidence_access.interface_version must be 1")
+            capabilities = evidence_access.get("capabilities")
+            if not isinstance(capabilities, list) or not capabilities or not all(
+                isinstance(item, str) and item for item in capabilities
+            ):
+                errors.append("packet.evidence_access.capabilities must be a non-empty list of strings")
+            expected_trace = f"tasks/{packet.get('task_id')}/evidence-trace.jsonl"
+            if evidence_access.get("trace_path") != expected_trace:
+                errors.append("packet.evidence_access.trace_path must be the task evidence trace")
+            allowed = packet.get("allowed_write_paths", [])
+            if isinstance(allowed, list) and expected_trace in allowed:
+                errors.append("evidence trace must stay outside model write scope")
+
     inputs = packet.get("inputs")
     if not isinstance(inputs, list):
         errors.append("packet.inputs must be a list of compiled input records")
@@ -157,13 +188,21 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
             digest = record.get("sha256")
             if digest is not None and (not isinstance(digest, str) or not SHA256_PATTERN.fullmatch(digest)):
                 errors.append(f"packet.output_baselines[{index}].sha256 must be null or a SHA-256 digest")
+            required = record.get("required")
+            if required is not None and not isinstance(required, bool):
+                errors.append(f"packet.output_baselines[{index}].required must be boolean when present")
 
     outputs = packet.get("operation_outputs")
+    optional_outputs = packet.get("optional_operation_outputs", [])
     allowed = packet.get("allowed_write_paths")
     if isinstance(outputs, list) and isinstance(allowed, list):
         for path in outputs:
             if path not in allowed:
                 errors.append(f"operation output is outside packet write scope: {path}")
+    if isinstance(optional_outputs, list) and isinstance(allowed, list):
+        for path in optional_outputs:
+            if path not in allowed:
+                errors.append(f"optional operation output is outside packet write scope: {path}")
     for field in ["report_path", "operator_brief_path"]:
         path = packet.get(field)
         if isinstance(path, str) and isinstance(allowed, list) and path not in allowed:

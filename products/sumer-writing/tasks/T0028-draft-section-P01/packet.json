@@ -1,21 +1,21 @@
 {
   "schema_version": 4,
   "compiler": "scripts/context_packet.py",
-  "context_sha256": "11d19c40be6c09a7f0ddb016fa0b9d7f9a610d7cac129ee4eb94eb64395ea4aa",
+  "context_sha256": "533a4abd41c4ee049f119eae9e83a89bec950054eb372eebf556c85883f1b3fa",
   "authority": "product_agent",
-  "task_id": "T0027-draft-section-P01",
+  "task_id": "T0028-draft-section-P01",
   "product": "sumer-writing",
   "operation": "draft_section",
   "target": {
     "section": "P01",
     "unit": null
   },
-  "created_at": "2026-08-17T10:27:00+00:00",
+  "created_at": "2026-08-18T09:44:30+00:00",
   "context_profile": "creative_draft",
   "max_context_tokens": 9000,
-  "estimated_context_tokens": 8458,
-  "prompt_instruction_tokens": 1181,
-  "input_tokens": 7073,
+  "estimated_context_tokens": 3853,
+  "prompt_instruction_tokens": 1541,
+  "input_tokens": 2107,
   "boundary_enforcement": [
     "authority_and_write_scope",
     "ai_task_state_or_human_amendment_provenance",
@@ -47,13 +47,13 @@
     },
     {
       "path": "03_sections/P01/story-plan.json",
-      "sha256": "5c284d694c6ba475c6f2070c4324d9c20a486a517d6da8f9eff9252597988b90",
-      "bytes": 2623
+      "sha256": "e023872a80401750089367807ab549d2335f580234b9a7eb4ef235ea6aaf54e5",
+      "bytes": 3278
     },
     {
       "path": "03_sections/P01/narration-pack.json",
-      "sha256": "92a2cd17c251931ee36c5e84bd24fb45241d6b105aac1bfbad2ec807a5e5f096",
-      "bytes": 3512
+      "sha256": "ee5b16534b1ebbd502817e71667f4179845b1e7b168ef74e21cb9ff5157c6e49",
+      "bytes": 3497
     },
     {
       "path": "03_sections/P01/continuity-in.md",
@@ -78,15 +78,15 @@
   "allowed_write_paths": [
     "03_sections/P01/draft.md",
     "03_sections/P01/handoff.md",
-    "tasks/T0027-draft-section-P01/report.md",
-    "tasks/T0027-draft-section-P01/operator-brief.json"
+    "tasks/T0028-draft-section-P01/report.md",
+    "tasks/T0028-draft-section-P01/operator-brief.json"
   ],
-  "report_path": "tasks/T0027-draft-section-P01/report.md",
-  "operator_brief_path": "tasks/T0027-draft-section-P01/operator-brief.json",
+  "report_path": "tasks/T0028-draft-section-P01/report.md",
+  "operator_brief_path": "tasks/T0028-draft-section-P01/operator-brief.json",
   "validation": [
     "python scripts/validate.py products/sumer-writing",
-    "python scripts/task.py verify products/sumer-writing T0027-draft-section-P01",
+    "python scripts/task.py verify products/sumer-writing T0028-draft-section-P01",
     "python scripts/check_scope.py products/sumer-writing",
-    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0027-draft-section-P01/operator-brief.json"
+    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0028-draft-section-P01/operator-brief.json"
   ]
 }
