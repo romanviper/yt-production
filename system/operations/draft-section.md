@@ -8,11 +8,13 @@ The outline defines the destination. `section.json` defines the section objectiv
 
 Claims and approved sources limit what the section may assert; they are not a content checklist and do not prescribe a narrative route.
 
+For canonical direct-authorship drafting, claim IDs in the packet are a truth boundary, not ready-made writing material. Resolve the relevant claims through the bounded evidence adapter before drafting. Do not bypass that adapter by opening `narration-pack.json`, `evidence-pack.json` or research ledgers directly.
+
 ## Boundaries and evidence
 
 Stay inside the current truth ceiling and continuity scope. Do not invent unsupported people, scenes, thoughts, dialogue, details or causal certainty.
 
-Use bounded evidence access when additional factual resolution is needed. Retrieved source-supported detail may sharpen the draft, but it must remain inside the approved claim/source graph and keep provenance/auditability.
+Use bounded evidence access to inspect the approved claims and increase factual resolution when the section needs it. Retrieved source-supported detail may sharpen the draft, but it must remain inside the approved claim/source graph and keep provenance/auditability.
 
 **Increase evidence resolution; do not silently expand the truth ceiling.** New claims, causal conclusions, contradictions, theses or generalizations must return to research authority.
 
