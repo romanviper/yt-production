@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "slug": "sumer-writing",
-  "working_title": "Chữ viết đã tạo ra nền văn minh Sumer như thế nào?",
+  "working_title": "Chữ viết đã thay đổi xã hội Sumer như thế nào?",
   "language": "vi",
   "format": "long_form_history_documentary",
   "status": "outline_approved",
@@ -78,6 +78,6 @@
     "status": "outline_approved",
     "previous": "C002",
     "started_at": "2026-08-18T13:45:00+00:00",
-    "reason": "Material-aware research handoff is complete and the clean writer-authorship-v1 outline was explicitly approved by the user on 2026-08-19. Section work remains paused until the next canonical production step is routed."
+    "reason": "The clean writer-authorship-v1 outline was explicitly approved by the user on 2026-08-19. Legacy material-aware artifacts and the contaminated P01 output have been removed from the active product surface; section work remains paused until the next canonical task is routed."
   }
 }
