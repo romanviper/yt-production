@@ -2,30 +2,18 @@
 
 ## Responsibility
 
-Write one authored section that reaches the approved objective inside evidence, continuity and lifecycle boundaries.
+Answer the approved section mission with a self-authored section.
 
-The outline defines **destination and evidence territory**. The writer owns the route: fact subset, narrative/causal route, POV, scale, carrier or no carrier, compression, reveal timing, exposition, imagery, vocabulary, rhythm and sentence craft.
+The outline defines the destination. `section.json` defines the section objective and entry/exit state. The writer decides the route, structure, order, factual subset, POV, exposition and wording.
 
-An unpredicted route is valid if it reaches the objective, preserves continuity, stays evidence-safe and does not invent.
+Claims and approved sources limit what the section may assert; they are not a content checklist and do not prescribe a narrative route.
 
-## Outcome target
+## Boundaries and evidence
 
-Produce **crafted narration intended to be spoken aloud**. Create meaningful listener progression, feel authored rather than like a memo, form an intelligible world/process/relationship when useful, keep causality clear, and reach the approved exit state. It need not be conversational.
+Stay inside the current truth ceiling and continuity scope. Do not invent unsupported people, scenes, thoughts, dialogue, details or causal certainty.
 
-## Evidence and retrieval
+Use bounded evidence access when additional factual resolution is needed. Retrieved source-supported detail may sharpen the draft, but it must remain inside the approved claim/source graph and keep provenance/auditability.
 
-`narration-pack.json` defines the truth ceiling. Claims are permissions, not mandatory paragraphs.
+**Increase evidence resolution; do not silently expand the truth ceiling.** New claims, causal conclusions, contradictions, theses or generalizations must return to research authority.
 
-Use bounded evidence access when more factual resolution helps. You may retrieve reviewed source records, locators, notes and preserved source-level detail supporting approved claims, including measurements, physical/location/chronology detail, documented action or explicit source sequence.
-
-**Increase evidence resolution; do not silently expand the truth ceiling.** A new claim, causal conclusion, thesis, contradiction or generalization must return to research authority. Do not scan the repo; retrieved context must remain audit/reconstructable.
-
-## Conditional audience agency
-
-If narration stages a conclusion as audience discovery, the audience must have had the relevant cue before specialist classification. This is conditional, not a universal raw-clue requirement.
-
-## Optional recovery heuristics
-
-For lecture/document mode, optional repairs include concrete focus, recount-before-interpret, contrast, delayed explanation, scale/POV change or cutting explanatory echo. These are tools, never compliance rules.
-
-Do not pad. Do not self-approve.
+Do not scan the repo. Do not self-approve.
