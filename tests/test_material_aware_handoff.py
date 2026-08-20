@@ -264,18 +264,13 @@ class AuthorshipBoundaryRegression(unittest.TestCase):
             self.assertFalse((root / "material-pack.json").exists())
             self.assertFalse((root / "narration-pack.json").exists())
 
-    def test_sumer_c003_requires_outline_migration_before_clean_p01_replay(self) -> None:
+    def test_sumer_c003_is_current_canonical_writer_authorship_outline(self) -> None:
         outline = json.loads((SOURCE_PRODUCT / "02_outline" / "outline.json").read_text(encoding="utf-8"))
         self.assertEqual("C003", outline["cycle_id"])
-        self.assertEqual(1, outline["script_architecture"]["story_material_contract_version"])
-        self.assertNotIn("writer_authorship_contract_version", outline["script_architecture"])
-        self.assertFalse(is_direct_authorship_outline(outline))
-        self.assertTrue(is_legacy_material_aware_outline(outline))
-
-        migration = writer_authorship_migration_message(outline)
-        self.assertIsNotNone(migration)
-        self.assertIn("migrate/rebuild the outline", migration)
-        self.assertIn("human approval", migration)
+        self.assertEqual(1, outline["script_architecture"]["writer_authorship_contract_version"])
+        self.assertTrue(is_direct_authorship_outline(outline))
+        self.assertFalse(is_legacy_material_aware_outline(outline))
+        self.assertIsNone(writer_authorship_migration_message(outline))
 
 
 if __name__ == "__main__":
