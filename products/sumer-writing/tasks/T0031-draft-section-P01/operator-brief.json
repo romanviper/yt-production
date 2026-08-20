@@ -1,13 +1,22 @@
 {
   "schema_version": 1,
-  "status": "in_progress",
-  "headline": "",
-  "material_points": [],
+  "status": "ready_for_review",
+  "headline": "P01 đã được viết lại từ bounded evidence và sẵn sàng để review.",
+  "material_points": [
+    "Bản mới dùng chi tiết cụ thể về Uruk, clay balls, tokens, seals và numerical tablets thay vì chỉ paraphrase claim.",
+    "Cấu trúc chuyển từ urban information pressure sang overlapping recording practices rồi tới giá trị của durable administrative records.",
+    "Truth ceiling vẫn giữ nguyên CLM-0011 đến CLM-0018; không dùng genealogy token→tablet tuyến tính hay administrative monocause."
+  ],
   "decision": {
-    "required": false,
-    "question": "",
-    "recommendation": "",
-    "options": []
+    "required": true,
+    "question": "Bạn có muốn review chất lượng P01 mới không?",
+    "recommendation": "Review bản mới trước khi approve hoặc yêu cầu revise tiếp.",
+    "options": [
+      {
+        "label": "Review P01",
+        "effect": "Đánh giá mission payoff, historical progression và storytelling của bản rewrite."
+      }
+    ]
   },
   "next_step": ""
 }
