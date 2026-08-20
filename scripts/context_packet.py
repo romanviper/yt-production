@@ -247,14 +247,15 @@ def _draft_context_lists(product_dir: Path, operation: str, spec: dict[str, Any]
 
 
 def _audience_readable_mission(state: dict[str, Any]) -> str:
-    """Derive a plain historical question from approved section architecture without changing its meaning."""
+    """Expose an explicit section mission without synthesizing new creative or historical meaning."""
 
+    explicit = str(state.get("mission") or "").strip()
+    if explicit:
+        return explicit
     title = str(state.get("title") or "").strip()
-    if not title:
-        return "Câu hỏi lịch sử nào section này phải trả lời?"
-    if title.endswith("?"):
+    if title:
         return title
-    return f"Điều gì trong lịch sử giải thích cho ý này: “{title}”?"
+    return "Hoàn thành objective đã duyệt của section."
 
 
 def _canonical_writer_projection(relative: str, path: Path, section: str) -> str | None:
