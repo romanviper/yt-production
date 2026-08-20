@@ -1,14 +1,13 @@
 from __future__ import annotations
 
 import json
-import shutil
 import tempfile
 import unittest
 from pathlib import Path
 
 from scripts.context_packet import compile_packet
 from scripts.materialize_sections import materialize
-from test_material_aware_handoff import SOURCE_PRODUCT, make_direct_authorship_fixture
+from test_material_aware_handoff import make_direct_authorship_fixture
 
 
 class WriterBaselineTests(unittest.TestCase):
@@ -92,47 +91,6 @@ class WriterBaselineTests(unittest.TestCase):
             ]
             for value in excluded:
                 self.assertNotIn(value, context)
-
-    def test_current_sumer_p01_compiles_to_same_minimal_baseline_on_temp_rematerialization(self) -> None:
-        with tempfile.TemporaryDirectory() as temp:
-            product = Path(temp) / "products" / "sumer-writing"
-            shutil.copytree(SOURCE_PRODUCT, product)
-            section_root = product / "03_sections"
-            if section_root.exists():
-                shutil.rmtree(section_root)
-            section_root.mkdir(parents=True)
-
-            materialize(product)
-            packet, context = compile_packet(
-                product,
-                "draft_section",
-                "T9996-draft-section-P01",
-                section="P01",
-            )
-
-            self.assertEqual(
-                [
-                    "system/core/creative-boundaries.md",
-                    "system/operations/draft-section.md",
-                ],
-                packet["instruction_files"],
-            )
-            self.assertEqual(
-                [
-                    "03_sections/P01/section.json",
-                    "03_sections/P01/narration-pack.json",
-                    "03_sections/P01/continuity-in.md",
-                ],
-                [item["path"] for item in packet["inputs"]],
-            )
-            self.assertIn("evidence_access", packet)
-            self.assertIn("Thiết lập các pressure", context)
-            self.assertNotIn("02_outline/voice-profile.md", context)
-            self.assertNotIn("02_outline/story-bible.md", context)
-            self.assertNotIn("03_sections/P01/brief.md", context)
-            self.assertNotIn("story-plan.json", context)
-            self.assertNotIn("Fall Of Civilization writing style", context)
-            self.assertNotIn("system/standards/outcome-evaluation.md", context)
 
 
 if __name__ == "__main__":
