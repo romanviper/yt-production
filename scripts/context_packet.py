@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -220,8 +221,6 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
 
 
 def read_json_local(path: Path) -> dict[str, Any]:
-    import json
-
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
         raise ValueError(f"Expected JSON object: {path}")
@@ -245,6 +244,47 @@ def _draft_context_lists(product_dir: Path, operation: str, spec: dict[str, Any]
         list(LEGACY_DRAFT_REQUIRED_INPUTS),
         list(LEGACY_DRAFT_OPTIONAL_INPUTS),
     )
+
+
+def _audience_readable_mission(state: dict[str, Any]) -> str:
+    """Derive a plain historical question from approved section architecture without changing its meaning."""
+
+    title = str(state.get("title") or "").strip()
+    if not title:
+        return "Câu hỏi lịch sử nào section này phải trả lời?"
+    if title.endswith("?"):
+        return title
+    return f"Điều gì trong lịch sử giải thích cho ý này: “{title}”?"
+
+
+def _canonical_writer_projection(relative: str, path: Path, section: str) -> str | None:
+    """Expose only mission/control state and truth-ceiling IDs to canonical writers."""
+
+    section_rel = f"03_sections/{section}/section.json"
+    narration_rel = f"03_sections/{section}/narration-pack.json"
+    if relative == section_rel:
+        state = read_json_local(path)
+        projection = {
+            "section": state.get("id"),
+            "title": state.get("title"),
+            "mission": _audience_readable_mission(state),
+            "entry_state": state.get("entry_state"),
+            "exit_state": state.get("exit_state"),
+            "transition": state.get("transition"),
+            "target_words": state.get("target_words"),
+        }
+        return json.dumps(projection, ensure_ascii=False, indent=2)
+    if relative == narration_rel:
+        pack = read_json_local(path)
+        scope = pack.get("retrieval_scope", {})
+        claim_ids = scope.get("claim_ids", []) if isinstance(scope, dict) else []
+        projection = {
+            "section": pack.get("section"),
+            "cycle_id": pack.get("cycle_id"),
+            "truth_ceiling": {"claim_ids": claim_ids},
+        }
+        return json.dumps(projection, ensure_ascii=False, indent=2)
+    return None
 
 
 def compile_packet(
@@ -289,6 +329,10 @@ def compile_packet(
                     input_paths.append(dependency_handoff.resolve())
     input_paths = list(dict.fromkeys(input_paths))
 
+    direct_writer = False
+    if operation == "draft_section":
+        direct_writer = is_direct_authorship_outline(read_json_local(product_dir / "02_outline" / "outline.json"))
+
     blocks: list[str] = []
     instruction_blocks: list[str] = []
     input_blocks: list[str] = []
@@ -309,7 +353,8 @@ def compile_packet(
         relative = product_relative(product_dir, path)
         input_records.append({"path": relative, "sha256": sha256(path), "bytes": path.stat().st_size})
         if runtime == "legacy":
-            content = path.read_text(encoding="utf-8")
+            projected = _canonical_writer_projection(relative, path, str(section)) if direct_writer and section else None
+            content = projected if projected is not None else path.read_text(encoding="utf-8")
             block = [f"# BEGIN INPUT: {relative}", content.rstrip(), f"# END INPUT: {relative}", ""]
             blocks.extend(block)
             input_blocks.extend(block)
