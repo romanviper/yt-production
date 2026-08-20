@@ -4,7 +4,7 @@
   "title": "Trước chữ viết đã có một bài toán phải giải",
   "mission": "Điều gì khiến việc giữ thông tin bằng những dấu bền trên đất sét trở nên hữu ích?",
   "order": 1,
-  "status": "ready_for_draft",
+  "status": "ready_for_review",
   "human_approved": false,
   "dependencies": [],
   "narrative_job": "Thiết lập các pressure và information practices trước/sát thời điểm proto-cuneiform xuất hiện, đồng thời phá hai shortcut: một invention event duy nhất và token→tablet như đường tiến hóa tất định. Section phải kết thúc khi audience đã hiểu vì sao durable, inspectable records trở nên đáng giá mà chưa cần biết 'ai phát minh chữ viết'.",
@@ -37,10 +37,10 @@
     }
   ],
   "prose_provenance": {
-    "task_id": "T0030-draft-section-P01",
+    "task_id": "T0031-draft-section-P01",
     "operation": "draft_section",
-    "submitted_at": "2026-08-20T14:23:19.872765+00:00",
-    "draft_sha256": "be735d0288ef617796b44fa2595c14978fd491895368eeacd43a2a7c5649cace",
-    "handoff_sha256": "ac2f7aba51f3c4c1dc07244c48920b0e99c5d11d8c409f3a98c48423d8352f46"
+    "submitted_at": "2026-08-20T16:30:00+00:00",
+    "draft_sha256": "70e47297fa4df26dad32c1aadae202372089827a9cffd99426253bad7cb6acfe",
+    "handoff_sha256": "6755f01f0f01081017d72b6779ee16c574f7a2cd7c6e6aa99372eb5921412c45"
   }
 }
