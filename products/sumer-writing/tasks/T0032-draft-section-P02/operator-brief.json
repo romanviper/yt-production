@@ -1,13 +1,26 @@
 {
   "schema_version": 1,
-  "status": "in_progress",
-  "headline": "",
-  "material_points": [],
+  "status": "ready_for_review",
+  "headline": "P02 đã được viết mới từ bounded evidence và sẵn sàng để human review.",
+  "material_points": [
+    "Draft dùng P005390 làm vật chứng, giải thích cách số lượng, dấu và cases/subcases giữ repeatable relations trước câu liên tục.",
+    "Ranh giới writing/proto-writing, proto-cuneiform/mature cuneiform và khả năng underlying language là Sumerian đều được giữ qualified.",
+    "Không gán giao dịch chính xác cho P005390, không biến layout thành spoken syntax, và không dùng administration như monocause hay exclusive use."
+  ],
   "decision": {
-    "required": false,
-    "question": "",
-    "recommendation": "",
-    "options": []
+    "required": true,
+    "question": "Bạn có muốn approve P02 hay yêu cầu revise?",
+    "recommendation": "Review P02 trước; chỉ approve nếu mission answer, audience readability và truth-ceiling qualifications đều đạt.",
+    "options": [
+      {
+        "label": "Approve P02",
+        "effect": "Chấp nhận checkpoint và cho phép lifecycle materialize operation tiếp theo."
+      },
+      {
+        "label": "Request changes",
+        "effect": "Mở lại P02 để revise trong cùng truth ceiling trước khi approve."
+      }
+    ]
   },
   "next_step": ""
 }

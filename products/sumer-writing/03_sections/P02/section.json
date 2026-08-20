@@ -4,7 +4,7 @@
   "title": "Hữu ích trước khi thành câu",
   "mission": "Vì sao một hệ thống ghi dấu có thể hữu ích ngay cả trước khi nó ghi được một câu nói liên tục?",
   "order": 2,
-  "status": "ready_for_draft",
+  "status": "ready_for_review",
   "human_approved": false,
   "dependencies": [
     "P01"
@@ -37,5 +37,12 @@
       "role": "opening",
       "title": "Khi một xã hội cần trí nhớ ngoài con người"
     }
-  ]
+  ],
+  "prose_provenance": {
+    "task_id": "T0032-draft-section-P02",
+    "operation": "draft_section",
+    "submitted_at": "2026-08-20T17:11:10.744716+00:00",
+    "draft_sha256": "6ffa4c99811d81641d3b5e31581e97bfbc476eacf36831958340b7029debea1d",
+    "handoff_sha256": "13cd95b66172709c9361946e0724535923d562415ebf851564294043028c1c5e"
+  }
 }
