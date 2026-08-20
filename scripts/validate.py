@@ -142,38 +142,46 @@ def validate_product(product_dir: Path) -> list[Issue]:
             for message in validate_voice_profile(voice_profile_path.read_text(encoding="utf-8")):
                 issues.append(Issue("ERROR", str(voice_profile_path), message))
 
-        sections_need_sync = product.get("stages", {}).get("sections") in {
-            "human_sync_required",
-            "ready_to_materialize",
-        }
-        if not sections_need_sync:
-            for section_id in section_ids:
-                root = section_root / str(section_id)
-                required = ["section.json", "brief.md", "evidence-pack.json", "continuity-in.md"]
-                required += ["narration-pack.json"] if direct_authorship else ["story-plan.json"]
-                for name in required:
-                    if not (root / name).is_file():
-                        issues.append(Issue("ERROR", str(root / name), "Approved outline requires materialized section."))
-                state_path = root / "section.json"
-                if not state_path.is_file():
-                    continue
-                state = safe_json(state_path, issues)
-                if direct_authorship:
-                    if state.get("cycle_id") != outline_cycle:
-                        issues.append(
-                            Issue(
-                                "ERROR",
-                                str(state_path),
-                                f"Approved outline requires materialized section for current cycle {outline_cycle}; found {state.get('cycle_id')}.",
-                            )
+        # Section workspaces are modular. Before the product explicitly declares
+        # full materialization, missing future sections are valid; any section that
+        # does exist must still be complete, current, and evidence-safe.
+        full_materialization_expected = (
+            product.get("status") == "sections_materialized"
+            or product.get("production_cycle", {}).get("status") == "sections_materialized"
+        )
+        for section_id in section_ids:
+            root = section_root / str(section_id)
+            required = ["section.json", "brief.md", "evidence-pack.json", "continuity-in.md"]
+            required += ["narration-pack.json"] if direct_authorship else ["story-plan.json"]
+            materialized = any((root / name).is_file() for name in required)
+            if not materialized:
+                if full_materialization_expected:
+                    for name in required:
+                        issues.append(Issue("ERROR", str(root / name), "Declared full materialization is missing section artifact."))
+                continue
+            for name in required:
+                if not (root / name).is_file():
+                    issues.append(Issue("ERROR", str(root / name), "Materialized section is incomplete."))
+            state_path = root / "section.json"
+            if not state_path.is_file():
+                continue
+            state = safe_json(state_path, issues)
+            if direct_authorship:
+                if state.get("cycle_id") != outline_cycle:
+                    issues.append(
+                        Issue(
+                            "ERROR",
+                            str(state_path),
+                            f"Materialized section must match current outline cycle {outline_cycle}; found {state.get('cycle_id')}.",
                         )
-                    elif state.get("outline_sha256") != sha256(outline_path):
-                        issues.append(Issue("ERROR", str(state_path), "Materialized section is stale relative to approved outline."))
-                if state.get("status") == "approved" and state.get("human_approved") is not True:
-                    issues.append(Issue("ERROR", str(state_path), "Approved section requires human_approved=true."))
-                if state.get("status") in {"ready_for_draft", "ready_for_review", "review_complete", "approved"}:
-                    for message in verify_narration_pack(product_dir, str(section_id)):
-                        issues.append(Issue("ERROR", str(root / "narration-pack.json"), message))
+                    )
+                elif state.get("outline_sha256") != sha256(outline_path):
+                    issues.append(Issue("ERROR", str(state_path), "Materialized section is stale relative to approved outline."))
+            if state.get("status") == "approved" and state.get("human_approved") is not True:
+                issues.append(Issue("ERROR", str(state_path), "Approved section requires human_approved=true."))
+            if state.get("status") in {"ready_for_draft", "ready_for_review", "review_complete", "approved"}:
+                for message in verify_narration_pack(product_dir, str(section_id)):
+                    issues.append(Issue("ERROR", str(root / "narration-pack.json"), message))
 
     validated_task_ids: set[str] = set()
     active_path = product_dir / "tasks" / "ACTIVE.json"
