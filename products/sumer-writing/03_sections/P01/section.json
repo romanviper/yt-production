@@ -2,6 +2,7 @@
   "schema_version": 4,
   "id": "P01",
   "title": "Trước chữ viết đã có một bài toán phải giải",
+  "mission": "Điều gì khiến việc giữ thông tin bằng những dấu bền trên đất sét trở nên hữu ích?",
   "order": 1,
   "status": "ready_for_draft",
   "human_approved": false,
