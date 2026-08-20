@@ -42,11 +42,6 @@ class WriterLifecycleRegression(unittest.TestCase):
             state = json.loads(state_path.read_text(encoding="utf-8"))
             self.assertEqual([], validate_canonical_draft_lifecycle(product, "P01", state))
 
-            # Retrieval is optional; once used, its trace must be reconstructable.
-            broker = DraftEvidenceBroker(product, task_id)
-            broker.call("scope")
-            self.assertEqual([], validate_evidence_trace(product, task_id))
-
             task_dir = product / "tasks" / task_id
             (task_dir / "report.md").write_text("Draft completed inside the routed task scope.\n", encoding="utf-8")
             write_json(
@@ -67,6 +62,18 @@ class WriterLifecycleRegression(unittest.TestCase):
                     "next_step": "",
                 },
             )
+
+            # Direct-authorship drafts cannot submit by reading claim prose out of band.
+            missing_trace = submit_task(product, task_id)
+            self.assertTrue(any("must resolve approved claims" in item for item in missing_trace))
+
+            broker = DraftEvidenceBroker(product, task_id)
+            broker.call("scope")
+            scope_only = submit_task(product, task_id)
+            self.assertTrue(any("must inspect approved claims" in item for item in scope_only))
+
+            broker.call("claims", {"ids": ["CLM-0001"]})
+            self.assertEqual([], validate_evidence_trace(product, task_id))
             self.assertEqual([], submit_task(product, task_id))
 
             submitted = json.loads(state_path.read_text(encoding="utf-8"))
