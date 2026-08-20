@@ -12,12 +12,14 @@ from pathlib import Path
 
 try:
     from scripts.common import read_json, sha256
+    from scripts.draft_lifecycle_contract import validate_canonical_draft_lifecycle
     from scripts.outline_contract import validate_outline_contract
     from scripts.story_plan_contract import is_direct_authorship_outline, verify_narration_pack
     from scripts.task import verify_active_pointer, verify_task
     from scripts.voice_profile_contract import validate_voice_profile
 except ModuleNotFoundError:
     from common import read_json, sha256
+    from draft_lifecycle_contract import validate_canonical_draft_lifecycle
     from outline_contract import validate_outline_contract
     from story_plan_contract import is_direct_authorship_outline, verify_narration_pack
     from task import verify_active_pointer, verify_task
@@ -101,8 +103,6 @@ def validate_product(product_dir: Path) -> list[Issue]:
         if claim.get("status") in {"supported", "qualified"} and not claim.get("sources"):
             issues.append(Issue("ERROR", f"{claim_path}#{index}", "Supported/qualified claim requires sources."))
 
-    # Optional material preservation remains auditable when present, but it is
-    # not a prerequisite for outline/drafting and carries no storytelling authority.
     material_path = product_dir / "01_research" / "material-ledger.json"
     if material_path.is_file():
         try:
@@ -142,9 +142,6 @@ def validate_product(product_dir: Path) -> list[Issue]:
             for message in validate_voice_profile(voice_profile_path.read_text(encoding="utf-8")):
                 issues.append(Issue("ERROR", str(voice_profile_path), message))
 
-        # Section workspaces are modular. Before the product explicitly declares
-        # full materialization, missing future sections are valid; any section that
-        # does exist must still be complete, current, and evidence-safe.
         full_materialization_expected = (
             product.get("status") == "sections_materialized"
             or product.get("production_cycle", {}).get("status") == "sections_materialized"
@@ -167,6 +164,9 @@ def validate_product(product_dir: Path) -> list[Issue]:
                 continue
             state = safe_json(state_path, issues)
             if direct_authorship:
+                mission = state.get("mission")
+                if not isinstance(mission, str) or not mission.strip():
+                    issues.append(Issue("ERROR", str(state_path), "Direct-authorship section requires a non-empty mission."))
                 if state.get("cycle_id") != outline_cycle:
                     issues.append(
                         Issue(
@@ -177,6 +177,8 @@ def validate_product(product_dir: Path) -> list[Issue]:
                     )
                 elif state.get("outline_sha256") != sha256(outline_path):
                     issues.append(Issue("ERROR", str(state_path), "Materialized section is stale relative to approved outline."))
+                for message in validate_canonical_draft_lifecycle(product_dir, str(section_id), state):
+                    issues.append(Issue("ERROR", str(root / "draft.md"), message))
             if state.get("status") == "approved" and state.get("human_approved") is not True:
                 issues.append(Issue("ERROR", str(state_path), "Approved section requires human_approved=true."))
             if state.get("status") in {"ready_for_draft", "ready_for_review", "review_complete", "approved"}:
