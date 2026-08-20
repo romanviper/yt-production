@@ -5,13 +5,14 @@ from __future__ import annotations
 
 import hashlib
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 try:
-    from scripts.common import read_json, sha256
+    from scripts.common import read_json, sha256, write_json
 except ModuleNotFoundError:
-    from common import read_json, sha256
+    from common import read_json, sha256, write_json
 
 
 LIVE_TASK_STATES = {"ready", "in_progress"}
@@ -127,6 +128,32 @@ def active_prose_task(product_dir: Path, section: str, status: str | None) -> tu
     if expected_operation is None or work.get("operation") != expected_operation:
         return None, []
     return task_id, []
+
+
+def record_submitted_prose(product_dir: Path, task_id: str) -> None:
+    """Bind current prose bytes to the official submitted task."""
+
+    product_dir = product_dir.resolve()
+    work = read_json(product_dir / "tasks" / task_id / "work-order.json")
+    operation = work.get("operation")
+    if operation not in PROSE_OPERATIONS:
+        return
+    section = str(work.get("target", {}).get("section") or "")
+    root = product_dir / "03_sections" / section
+    draft = root / "draft.md"
+    handoff = root / "handoff.md"
+    if not draft.is_file() or not handoff.is_file():
+        raise FileNotFoundError(f"Submitted prose task {task_id} requires draft.md and handoff.md")
+    state_path = root / "section.json"
+    state = read_json(state_path)
+    state["prose_provenance"] = {
+        "task_id": task_id,
+        "operation": operation,
+        "submitted_at": datetime.now(timezone.utc).isoformat(),
+        "draft_sha256": sha256(draft),
+        "handoff_sha256": sha256(handoff),
+    }
+    write_json(state_path, state)
 
 
 def submitted_prose_errors(product_dir: Path, section: str, state: dict[str, Any]) -> list[str]:
