@@ -3,7 +3,7 @@
   "id": "P01",
   "title": "Trước chữ viết đã có một bài toán phải giải",
   "order": 1,
-  "status": "ready_for_review",
+  "status": "ready_for_draft",
   "human_approved": false,
   "dependencies": [],
   "narrative_job": "Thiết lập các pressure và information practices trước/sát thời điểm proto-cuneiform xuất hiện, đồng thời phá hai shortcut: một invention event duy nhất và token→tablet như đường tiến hóa tất định. Section phải kết thúc khi audience đã hiểu vì sao durable, inspectable records trở nên đáng giá mà chưa cần biết 'ai phát minh chữ viết'.",
