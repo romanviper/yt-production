@@ -25,8 +25,29 @@ def _json_hash(value: Any) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def validate_evidence_trace(product_dir: Path, task_id: str) -> list[str]:
-    """An absent trace means retrieval was unused; a present trace must be reconstructable."""
+def _requires_brokered_claim_resolution(product_dir: Path, work: dict[str, Any]) -> bool:
+    """Direct-authorship drafts must resolve claim IDs through the bounded evidence broker."""
+
+    if work.get("operation") != "draft_section":
+        return False
+    outline_path = product_dir / "02_outline" / "outline.json"
+    if not outline_path.is_file():
+        return False
+    try:
+        outline = read_json(outline_path)
+    except (ValueError, json.JSONDecodeError, OSError):
+        return False
+    architecture = outline.get("script_architecture")
+    return isinstance(architecture, dict) and architecture.get("writer_authorship_contract_version") == 1
+
+
+def validate_evidence_trace(
+    product_dir: Path,
+    task_id: str,
+    *,
+    require_resolution: bool = True,
+) -> list[str]:
+    """Validate trace integrity and, on submission, require brokered claim resolution for direct drafts."""
 
     product_dir = product_dir.resolve()
     task_dir = product_dir / "tasks" / task_id
@@ -36,14 +57,21 @@ def validate_evidence_trace(product_dir: Path, task_id: str) -> list[str]:
     except (FileNotFoundError, ValueError, json.JSONDecodeError) as exc:
         return [f"cannot audit evidence trace for {task_id}: {exc}"]
 
+    resolution_required = require_resolution and _requires_brokered_claim_resolution(product_dir, work)
     access = packet.get("evidence_access")
     if not isinstance(access, dict):
+        if resolution_required:
+            return [f"task {task_id} direct-authorship draft requires bounded evidence access"]
         return []
     trace_rel = access.get("trace_path")
     if not isinstance(trace_rel, str) or not trace_rel:
         return [f"task {task_id} evidence access is missing trace_path"]
     trace_path = product_dir / trace_rel
     if not trace_path.is_file():
+        if resolution_required:
+            return [
+                f"task {task_id} direct-authorship draft must resolve approved claims through bounded evidence access before submission"
+            ]
         return []
 
     section = str(work.get("target", {}).get("section") or "")
@@ -57,6 +85,7 @@ def validate_evidence_trace(product_dir: Path, task_id: str) -> list[str]:
         return [f"task {task_id} evidence trace exists but is empty"]
 
     errors: list[str] = []
+    successful_capabilities: set[str] = set()
     for index, line in enumerate(lines, start=1):
         try:
             record = json.loads(line)
@@ -78,6 +107,13 @@ def validate_evidence_trace(product_dir: Path, task_id: str) -> list[str]:
         expected_response_hash = _json_hash(response) if response is not None else None
         if record.get("response_sha256") != expected_response_hash:
             errors.append(f"task {task_id} evidence trace line {index} response hash is invalid")
+        if capability in allowed_capabilities and record.get("error") is None and response is not None:
+            successful_capabilities.add(str(capability))
+
+    if resolution_required and "claims" not in successful_capabilities:
+        errors.append(
+            f"task {task_id} direct-authorship draft must inspect approved claims through the bounded 'claims' capability before submission"
+        )
     return errors
 
 
@@ -103,7 +139,7 @@ def _task_scope_errors(product_dir: Path, task_id: str, section: str, *, live: b
         errors.append(f"task {task_id} does not own draft and handoff write scope")
     if work.get("allowed_write_paths") != packet.get("allowed_write_paths"):
         errors.append(f"task {task_id} work-order scope differs from packet")
-    errors.extend(validate_evidence_trace(product_dir, task_id))
+    errors.extend(validate_evidence_trace(product_dir, task_id, require_resolution=not live))
     return errors
 
 
