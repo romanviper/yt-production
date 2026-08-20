@@ -27,7 +27,12 @@ def write_json(path: Path, value: Any) -> None:
 
 
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    data = path.read_bytes()
+    # Repository artifacts are text. Git may materialize them with CRLF on
+    # Windows, but provenance must describe content rather than checkout style.
+    if b"\x00" not in data:
+        data = data.replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 def estimate_tokens(text: str) -> int:
@@ -93,8 +98,8 @@ def expand_optional_inputs(product_dir: Path, patterns: list[str], section: str 
 
 
 def repo_relative(path: Path) -> str:
-    return str(path.resolve().relative_to(REPO_ROOT))
+    return path.resolve().relative_to(REPO_ROOT).as_posix()
 
 
 def product_relative(product_dir: Path, path: Path) -> str:
-    return str(path.resolve().relative_to(product_dir.resolve()))
+    return path.resolve().relative_to(product_dir.resolve()).as_posix()

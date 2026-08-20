@@ -42,7 +42,7 @@ def product_task_violations(
     policy = governance or load_governance()
     if work.get("authority") != "product_agent":
         return [f"Unexpected task authority: {work.get('authority')}"]
-    prefix = str(product_dir.resolve().relative_to(REPO_ROOT))
+    prefix = product_dir.resolve().relative_to(REPO_ROOT).as_posix()
     allowed = [f"{prefix}/{path}" for path in work["allowed_write_paths"]]
     allowed.append(f"{prefix}/tasks/{work['id']}/*")
     allowed.append(f"{prefix}/tasks/ACTIVE.json")

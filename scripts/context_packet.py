@@ -512,7 +512,8 @@ def main() -> int:
     packet, text = compile_packet(args.product, args.operation, args.task_id, args.section, args.unit, args.runtime)
     output = args.out or args.product / "tasks" / args.task_id / "context.md"
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(text, encoding="utf-8")
+    with output.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(text)
     write_json(output.with_name("packet.json"), packet)
     print(f"Compiled {output} (~{packet['estimated_context_tokens']} tokens / {packet['max_context_tokens']}).")
     return 0

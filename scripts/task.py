@@ -110,7 +110,8 @@ def create_task(
     packet_path = task_dir / "packet.json"
     context_path = task_dir / "context.md"
     write_json(packet_path, packet)
-    context_path.write_text(context, encoding="utf-8")
+    with context_path.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(context)
     operator_brief_path = product_dir / packet["operator_brief_path"]
     write_json(operator_brief_path, empty_brief())
 
