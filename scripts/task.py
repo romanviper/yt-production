@@ -13,6 +13,7 @@ try:
     from scripts.common import load_registry, narration_text, product_relative, read_json, sha256, word_count, write_json
     from scripts.consolidate_research import ensure_consolidated
     from scripts.context_packet import compile_packet
+    from scripts.draft_lifecycle_contract import record_submitted_prose, validate_evidence_trace
     from scripts.lifecycle import (
         apply_research_submission,
         apply_section_submission,
@@ -32,6 +33,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from common import load_registry, narration_text, product_relative, read_json, sha256, word_count, write_json
     from consolidate_research import ensure_consolidated
     from context_packet import compile_packet
+    from draft_lifecycle_contract import record_submitted_prose, validate_evidence_trace
     from lifecycle import (
         apply_research_submission,
         apply_section_submission,
@@ -151,7 +153,6 @@ def verify_task(product_dir: Path, task_id: str, *, state_override: str | None =
     task_owned_paths = set(packet.get("operation_outputs", [])) | set(packet.get("optional_operation_outputs", []))
     if effective_state in {"ready", "in_progress"}:
         for record in packet["inputs"]:
-            # Existing output may be compiled as revision context and is expected to change during the task.
             if record["path"] in task_owned_paths:
                 continue
             path = product_dir / record["path"]
@@ -218,6 +219,9 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     packet = read_json(task_dir / "packet.json")
     errors = task_submit_errors(work.get("state"))
     errors.extend(verify_task(product_dir, task_id))
+    if work.get("operation") in {"draft_section", "revise_section"}:
+        errors.extend(verify_active_pointer(product_dir, task_id))
+        errors.extend(validate_evidence_trace(product_dir, task_id))
     if errors:
         return errors
     changed_outputs = 0
@@ -251,6 +255,8 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     write_json(work_path, work)
     apply_research_submission(product_dir, work["operation"], work.get("target", {}).get("unit"))
     apply_section_submission(product_dir, work["operation"], work.get("target", {}).get("section"))
+    if work.get("operation") in {"draft_section", "revise_section"}:
+        record_submitted_prose(product_dir, task_id)
     return []
 
 
