@@ -108,38 +108,46 @@ def _task_scope_errors(product_dir: Path, task_id: str, section: str, *, live: b
 
 
 def active_prose_task(product_dir: Path, section: str, status: str | None) -> tuple[str | None, list[str]]:
-    """Return the routed live prose task when the section is actively being authored/revised."""
+    """Return the live prose task that owns this section; ACTIVE.json is irrelevant to authority."""
 
-    active_path = product_dir / "tasks" / "ACTIVE.json"
-    if not active_path.is_file():
-        return None, []
-    try:
-        active = read_json(active_path)
-    except (ValueError, json.JSONDecodeError):
-        return None, []
-    task_id = active.get("task_id")
-    if not isinstance(task_id, str) or not task_id:
-        return None, []
-
-    work_path = product_dir / "tasks" / task_id / "work-order.json"
-    if not work_path.is_file():
-        return None, [f"routed prose task {task_id} is missing work-order.json"]
-    work = read_json(work_path)
-    if work.get("state") not in LIVE_TASK_STATES:
-        return None, []
-
+    product_dir = product_dir.resolve()
     expected_operation = "draft_section" if status == "ready_for_draft" else "revise_section" if status == "changes_requested" else None
-    if expected_operation is None or work.get("operation") != expected_operation:
+    if expected_operation is None:
         return None, []
-    errors = _task_scope_errors(product_dir, task_id, section, live=True)
+
+    tasks_dir = product_dir / "tasks"
+    if not tasks_dir.is_dir():
+        return None, []
+
+    owners: list[str] = []
+    errors: list[str] = []
+    for work_path in sorted(tasks_dir.glob("T*/work-order.json")):
+        try:
+            work = read_json(work_path)
+        except (json.JSONDecodeError, ValueError, OSError) as exc:
+            errors.append(f"invalid live prose work order {work_path.parent.name}: {exc}")
+            continue
+        if work.get("state") not in LIVE_TASK_STATES:
+            continue
+        if work.get("operation") != expected_operation:
+            continue
+        if work.get("target", {}).get("section") != section:
+            continue
+        task_id = str(work.get("id") or work_path.parent.name)
+        task_errors = _task_scope_errors(product_dir, task_id, section, live=True)
+        if task_errors:
+            errors.extend(task_errors)
+        else:
+            owners.append(task_id)
+
     if errors:
         return None, errors
-    return task_id, []
+    if len(owners) > 1:
+        return None, [f"{section} has multiple live prose tasks: {', '.join(owners)}"]
+    return (owners[0], []) if owners else (None, [])
 
 
 def record_submitted_prose(product_dir: Path, task_id: str) -> None:
-    """Bind current prose bytes to the official submitted task."""
-
     product_dir = product_dir.resolve()
     work = read_json(product_dir / "tasks" / task_id / "work-order.json")
     operation = work.get("operation")
@@ -187,8 +195,6 @@ def submitted_prose_errors(product_dir: Path, section: str, state: dict[str, Any
 
 
 def validate_canonical_draft_lifecycle(product_dir: Path, section: str, state: dict[str, Any]) -> list[str]:
-    """Reject prose files that appear outside a live or submitted canonical task lifecycle."""
-
     product_dir = product_dir.resolve()
     root = product_dir / "03_sections" / section
     draft = root / "draft.md"
