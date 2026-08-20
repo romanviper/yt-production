@@ -120,6 +120,7 @@ def make_direct_authorship_fixture(root: Path) -> Path:
                 "id": f"P{number:02d}",
                 "order": number,
                 "title": f"Part {number}",
+                "mission": f"What historical change must Part {number} explain?",
                 "movement_ids": [f"M{number:02d}"],
                 "narrative_job": f"Change listener state from {number - 1} to {number} without prescribing how.",
                 "entry_state": f"State {number - 1}",
@@ -171,23 +172,22 @@ class AuthorshipBoundaryRegression(unittest.TestCase):
 
             materialize(product)
             root = product / "03_sections" / "P01"
-            self.assertEqual(
-                "ready_for_draft",
-                json.loads((root / "section.json").read_text(encoding="utf-8"))["status"],
-            )
+            state = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            self.assertEqual("ready_for_draft", state["status"])
+            self.assertEqual("What historical change must Part 1 explain?", state["mission"])
             self.assertFalse((root / "story-plan.json").exists())
             self.assertFalse((root / "material-pack.json").exists())
             self.assertEqual([], verify_narration_pack(product, "P01"))
 
             packet, context = compile_packet(product, "draft_section", "T9999-draft-section-P01", section="P01")
             self.assertIn("evidence_access", packet)
+            self.assertIn("What historical change must Part 1 explain?", context)
             self.assertNotIn("material-pack.json", context)
             self.assertNotIn("story-plan.json", context)
             self.assertNotIn("material_ids", context)
             self.assertNotIn("what_audience_follows", context)
             self.assertNotIn("prescribed carrier", context)
 
-            # Upstream did not prescribe this comparative conceptual route; system validity is outcome/evidence scoped.
             (root / "draft.md").write_text(
                 "# P01\n\nThe section develops the approved question through a comparative conceptual route using only the permitted fact.\n",
                 encoding="utf-8",
@@ -195,6 +195,26 @@ class AuthorshipBoundaryRegression(unittest.TestCase):
             (root / "handoff.md").write_text("Listener reaches State 1.\n", encoding="utf-8")
             work = {"operation": "draft_section", "target": {"section": "P01"}}
             self.assertEqual([], validate_output_contract(product, work))
+
+    def test_direct_authorship_requires_explicit_mission_before_materialization_and_task(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            outline_path = product / "02_outline" / "outline.json"
+            outline = json.loads(outline_path.read_text(encoding="utf-8"))
+            outline["sections"][0].pop("mission")
+            write_json(outline_path, outline)
+            with self.assertRaisesRegex(ValueError, "requires a non-empty mission"):
+                materialize(product)
+
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            materialize(product)
+            state_path = product / "03_sections" / "P01" / "section.json"
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            state.pop("mission")
+            write_json(state_path, state)
+            with self.assertRaisesRegex(ValueError, "requires a non-empty mission"):
+                compile_packet(product, "draft_section", "T9998-draft-section-P01", section="P01")
 
     def test_retrieval_increases_resolution_but_cannot_escape_claim_source_scope(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
