@@ -1,6 +1,6 @@
 # Story Bible — Sumer Writing C003
 
-Status: draft
+Status: canonical companion to the approved C003 outline
 
 ## Trục nhân quả trung tâm
 
@@ -12,7 +12,7 @@ Câu hỏi trung tâm dành cho khán giả là: **chữ viết đã thay đổi
 
 ## Whole-product causal progression
 
-1. **Formation pressure / ecology:** trước một hệ thống writing rõ ràng đã có nhu cầu và nhiều phương thức để giữ quantity, classification và authentication. Administration là pressure lớn nhưng không phải monocause; không có một invention scene hay genealogy tuyến tính được phép mặc định.
+1. **Formation pressure / ecology:** trước một hệ thống writing rõ ràng đã có nhu cầu và nhiều phương thức để giữ quantity, classification và authentication. Administration là pressure lớn nhưng không phải monocause; không có một invention event hay genealogy tuyến tính được phép mặc định.
 2. **Early usefulness:** một record có thể giữ những quan hệ lặp lại đủ để làm việc trước khi continuous speech hay underlying language được phục hồi chắc chắn. Writing threshold vì vậy là một boundary phải qualified, không phải opening verdict.
 3. **Functional expansion:** writing tích lũy thêm economic, political, religious, legal/normative, correspondence, lexical, scholarly và literary uses theo kiểu additions/recombinations, không phải chiếc thang accounting → literature.
 4. **Institutional feedback:** record tăng capacity khi gắn với classification, responsible people, authentication, accumulation và retrieval. Later institutional evidence có thể test mechanism này nhưng không được back-project magnitude về Uruk.
@@ -32,7 +32,7 @@ Các bước trên là **state progression của toàn bộ phim**, không phả
 - Evidence Old Babylonian về school/curriculum cho thấy later reproduction mechanism; không back-project một formal school system về origin phase.
 - Ca. 1632 BCE failed-order case là exceptional bounded evidence; không generalize thành norm.
 - 75 CE là latest-known dated anchor theo current research, không absolute last tablet hay last reader.
-- Modern decipherment xảy ra sau competence break và phải được kể như recovery, không living continuity.
+- Modern decipherment xảy ra sau competence break và phải được hiểu như recovery, không living continuity.
 
 ## Kỷ luật thuật ngữ
 
@@ -53,16 +53,16 @@ Các bước trên là **state progression của toàn bộ phim**, không phả
 - Không biến later copied/composite texts thành transparent original speech.
 - Không direct Sumer → modern writing lineage; modern legacy mạnh nhất là recovery-mediated knowledge và ancient transmission chains có evidence.
 
-## Khoảng trống vật liệu phải tiếp tục giới hạn draft
+## Evidence limits
 
-- Không có defensible single invention scene.
-- Long technical shift từ proto-cuneiform sang mature wedge ductus chưa có tight comparative object sequence đủ để tự gánh một scene/section.
-- Hittite adaptation hiện được support tốt ở process level, không ở one-moment court adoption scene.
-- 75 CE endpoint chưa có narrow object locator đủ để scene hóa “last tablet/last reader”.
+- Không có defensible single invention event.
+- Long technical shift từ proto-cuneiform sang mature wedge ductus chưa có tight state-by-state comparative evidence.
+- Hittite adaptation hiện được support tốt ở process level, không ở một single documented adoption event.
+- 75 CE là qualified endpoint anchor nhưng current research không support claim về một absolute “last tablet” hoặc “last reader”.
 - Uruk → Ur III chronological jump phải luôn minh bạch khi later evidence được dùng để test feedback mechanism.
 
 ## Continuity và payoff toàn phim
 
-Opening phải tạo được nhu cầu điều tra sức mạnh của durable records; body phải lần lượt mở rộng rồi giới hạn claim về sức mạnh đó; ending phải phân biệt material survival với living competence và recovered meaning. Final understanding không phải “clay was powerful” mà là: **durable marks trở thành historical force khi communities khiến chúng repeatable, retrievable và actionable; khi chain ấy đứt, material có thể còn nhưng meaning không tự tồn tại.**
+Whole-product progression phải tạo được nhu cầu điều tra sức mạnh của durable records, sau đó lần lượt mở rộng rồi giới hạn claim về sức mạnh đó, và cuối cùng phân biệt material survival với living competence và recovered meaning. Final understanding không phải “clay was powerful” mà là: **durable marks trở thành historical force khi communities khiến chúng repeatable, retrievable và actionable; khi chain ấy đứt, material có thể còn nhưng meaning không tự tồn tại.**
 
 Story Bible không chỉ định exact object, imagery sequence, discovery device, reveal timing, scene order hay paragraph mechanics cho bất kỳ P## nào. Những quyết định đó thuộc writer trong evidence ceiling của outline.
