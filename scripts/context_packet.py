@@ -247,15 +247,12 @@ def _draft_context_lists(product_dir: Path, operation: str, spec: dict[str, Any]
 
 
 def _audience_readable_mission(state: dict[str, Any]) -> str:
-    """Expose an explicit section mission without synthesizing new creative or historical meaning."""
+    """Return the explicit canonical section mission; never synthesize one from other fields."""
 
-    explicit = str(state.get("mission") or "").strip()
-    if explicit:
-        return explicit
-    title = str(state.get("title") or "").strip()
-    if title:
-        return title
-    return "Hoàn thành objective đã duyệt của section."
+    mission = state.get("mission")
+    if not isinstance(mission, str) or not mission.strip():
+        raise ValueError("Direct-authorship section requires a non-empty mission before drafting.")
+    return mission.strip()
 
 
 def _canonical_writer_projection(relative: str, path: Path, section: str) -> str | None:
