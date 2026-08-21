@@ -1,6 +1,5 @@
 {
-  "task_id": null,
-  "status": "idle",
-  "updated_at": "2026-08-20T17:11:10.745717+00:00",
-  "reason": "task submitted; routing returned to idle"
+  "task_id": "T0033-draft-section-P03",
+  "work_order": "tasks/T0033-draft-section-P03/work-order.json",
+  "context_packet": "tasks/T0033-draft-section-P03/context.md"
 }

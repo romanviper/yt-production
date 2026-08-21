@@ -1,0 +1,35 @@
+{
+  "schema_version": 4,
+  "compiler": "scripts/context_packet.py",
+  "context_sha256": "a0ded0ee5c965df3b18bf99a51e9ad6c349ac677a77d4f496e96642590765794",
+  "authority": "product_agent",
+  "task_id": "T0033-draft-section-P03",
+  "product": "sumer-writing",
+  "operation": "draft_section",
+  "target": {"section": "P03", "unit": null},
+  "created_at": "2026-08-21T14:55:00+00:00",
+  "context_profile": "creative_draft",
+  "max_context_tokens": 11000,
+  "estimated_context_tokens": 1630,
+  "prompt_instruction_tokens": 774,
+  "input_tokens": 473,
+  "boundary_enforcement": ["authority_and_write_scope","ai_task_state_or_human_amendment_provenance","input_freshness_and_packet_integrity","evidence_provenance_and_narration_ceiling","context_and_production_unit_hard_caps"],
+  "evaluation_gate": "review_section_or_human_amendment",
+  "instruction_files": ["system/core/creative-boundaries.md","system/operations/draft-section.md"],
+  "inputs": [
+    {"path":"03_sections/P03/section.json","sha256":"660e33e4d10c754cc0291f24148d8c1b331d8a3db48318ea60b25dbb2095bd00","bytes":2519},
+    {"path":"03_sections/P03/narration-pack.json","sha256":"7deb11785f985b3e7a61ab617951cc6b6ef40ee14f3dec2990d00cbf3abbe579","bytes":1978},
+    {"path":"03_sections/P03/continuity-in.md","sha256":"c10bf716061fc6f40762271d8892c9583f05e29a46399fd623e7dd7fd18c7143","bytes":215}
+  ],
+  "operation_outputs": ["03_sections/P03/draft.md","03_sections/P03/handoff.md"],
+  "optional_operation_outputs": [],
+  "output_baselines": [
+    {"path":"03_sections/P03/draft.md","sha256":null,"required":true},
+    {"path":"03_sections/P03/handoff.md","sha256":null,"required":true}
+  ],
+  "allowed_write_paths": ["03_sections/P03/draft.md","03_sections/P03/handoff.md","tasks/T0033-draft-section-P03/report.md","tasks/T0033-draft-section-P03/operator-brief.json"],
+  "report_path": "tasks/T0033-draft-section-P03/report.md",
+  "operator_brief_path": "tasks/T0033-draft-section-P03/operator-brief.json",
+  "validation": ["python scripts/validate.py products/sumer-writing","python scripts/task.py verify products/sumer-writing T0033-draft-section-P03","python scripts/check_scope.py products/sumer-writing","python scripts/operator_brief.py validate products/sumer-writing/tasks/T0033-draft-section-P03/operator-brief.json"],
+  "evidence_access": {"kind":"bounded_claim_sources","adapter":"scripts/draft_evidence.py","interface_version":1,"capabilities":["scope","claims","sources","source","search","record"],"trace_path":"tasks/T0033-draft-section-P03/evidence-trace.jsonl"}
+}

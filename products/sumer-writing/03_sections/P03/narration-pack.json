@@ -1,0 +1,22 @@
+{
+  "schema_version": 4,
+  "section": "P03",
+  "cycle_id": "C003",
+  "created_at": "2026-08-21T14:55:00+00:00",
+  "outline_sha256": "d707db0c172a9db579593a136791d2b1e629892315e31bedfa0d795b8c92da9d",
+  "brief_sha256": "ea8581149676c2591387062f71fff7fc4a7f01399828decaab46196872784e88",
+  "evidence_pack_sha256": "1fede5b3628b766c2c3b4ab1bb533516097c85f17b2f3ec7058c2daccea8061d",
+  "permitted_claims": [{"id":"CLM-0035"},{"id":"CLM-0036"},{"id":"CLM-0037"},{"id":"CLM-0038"},{"id":"CLM-0039"},{"id":"CLM-0040"},{"id":"CLM-0041"},{"id":"CLM-0043"},{"id":"CLM-0044"},{"id":"CLM-0045"}],
+  "qualifications": [],
+  "guardrails": [{"source":"outline.non_goal","constraint":"Không genre catalogue; không accounting→literature ladder; không biến later manuscripts thành original dispatches; không dùng translation hiện đại như primary voice chưa qua rights review."}],
+  "excluded_claim_ids": [],
+  "exclusion_rule": "Any substantive historical interpretation/generalization outside permitted_claims requires evidence-authority validation before narration.",
+  "source_refs": [],
+  "retrieval_scope": {
+    "claim_ids": ["CLM-0035","CLM-0036","CLM-0037","CLM-0038","CLM-0039","CLM-0040","CLM-0041","CLM-0043","CLM-0044","CLM-0045"],
+    "source_ids": ["SRC-0001","SRC-0004","SRC-0016","SRC-0021","SRC-0022","SRC-0023","SRC-0024","SRC-0025","SRC-0026","SRC-0027","SRC-0028"],
+    "adapter": "scripts/draft_evidence.py",
+    "rule": "Writer may increase source-level factual resolution inside these sources but may not silently expand the truth ceiling."
+  },
+  "writer_contract": "Permitted claims define a truth ceiling, not a required content list or narrative route. The writer may use any evidence-safe subset and any authored structure that reaches the section objective. Bounded evidence retrieval may add factual resolution from approved supporting sources; new claims, causal conclusions, contradictions or generalizations must return to research authority."
+}

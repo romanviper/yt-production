@@ -8,7 +8,7 @@
     "section": "P02",
     "unit": null
   },
-  "state": "ready_for_review",
+  "state": "closed",
   "created_at": "2026-08-20T16:44:00+00:00",
   "context_packet": "tasks/T0032-draft-section-P02/context.md",
   "packet_manifest": "tasks/T0032-draft-section-P02/packet.json",
@@ -40,5 +40,5 @@
     "trace_path": "tasks/T0032-draft-section-P02/evidence-trace.jsonl"
   },
   "submitted_at": "2026-08-20T17:11:10.723714+00:00",
-  "updated_at": "2026-08-20T17:11:10.723714+00:00"
+  "updated_at": "2026-08-21T14:55:00+00:00"
 }
