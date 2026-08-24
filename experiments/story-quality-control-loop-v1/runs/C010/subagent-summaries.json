@@ -1,0 +1,216 @@
+{
+ "schema_version": "story-quality-subagent-summaries/1",
+ "cycle_id": "C010",
+ "calls": [
+  {
+   "seq": 1,
+   "wave": "A",
+   "actor": "sa-0-72fc4af0",
+   "role": "thread_verdict_mapper",
+   "assignment": "Resolve 4 retained thread IDs; bind verdict turns to candidate blobs or record planner_attested fallback",
+   "declared_read_set": [
+    "session-read tool for exact thread IDs",
+    "reviews/C000-planner-review.md",
+    "CALIBRATION-SEED-C010.json"
+   ],
+   "result_status": "completed",
+   "bounded_summary": {
+    "threads_resolved_directly": 0,
+    "resolution_mode": "planner_attested_only for all 4 (exact-ID reads failed in this runtime DB; discovery searches zero hits)",
+    "key_binding": "thread 6a8482d8 turn 75be696a -> human ordinal verdict 'improved ~3 to 5-6, remained average', seed binds preference B over blobs 7dcc1033/3424c985",
+    "non_gold_confirmed": [
+     "8.1 checkpoint report",
+     "lost artifacts turn",
+     "system/lifecycle thread",
+     "run-01..05 machine/self scores"
+    ]
+   },
+   "output_digest": {
+    "path_outside_repo": "C:/Users/Admin/AppData/Local/hermes/cache/delegation/live/deleg_db89e1b8/task-0.log",
+    "sha256_at_cycle_close": "76a7740474eca96b580847ea877798803b1ecd0ad5a2654d8b0260c134c29695"
+   },
+   "model": "stealth/ox-alpha (inherited)",
+   "usage": {
+    "input_tokens": null,
+    "output_tokens": null
+   }
+  },
+  {
+   "seq": 2,
+   "wave": "A",
+   "actor": "sa-1-24597c0a",
+   "role": "artifact_linker",
+   "assignment": "Map every seed anchor to commit/path/blob; reject mutable-only bindings; resolve boundary-fixture material at 3748447",
+   "declared_read_set": [
+    "CALIBRATION-SEED-C010.json",
+    "git plumbing read-only"
+   ],
+   "result_status": "completed",
+   "bounded_summary": {
+    "anchors_resolved_exact_sha": "12/12 across 4 seed anchors + 3 supporting pack blobs",
+    "mutable_only_bindings_rejected": 0,
+    "relation_notes": "both A1 drafts distinct from current main P01 draft; benchmark blob present on main, absent from dd93c67 tree",
+    "boundary_material_blobs": {
+     "p01_section_json": "61b303d6d065b7c48694e38ac09a36d9cb7d6a74",
+     "p01_draft": "3424c98525b3946e3803be562b8113c79f5117e8",
+     "p01_handoff": "31b576b22abaa1fdf381f6984076402186563c8b",
+     "p02_section_json": "f3867ddff60a9be65f8c38eff4b30a0667443071",
+     "p02_draft": "a40c7854172b3ebeab4fa326d39f8655f24db8d6",
+     "p02_handoff": "dbb2f394e7e1d756bb9dab01237621a5ac2e153b"
+    }
+   },
+   "output_digest": {
+    "path_outside_repo": "C:/Users/Admin/AppData/Local/hermes/cache/delegation/live/deleg_db89e1b8/task-1.log",
+    "sha256_at_cycle_close": "03f98541acc096efe3c60966156f655dd4e1c8ed3437608433b6dde4d25a7bbc"
+   },
+   "model": "stealth/ox-alpha (inherited)",
+   "usage": {
+    "input_tokens": null,
+    "output_tokens": null
+   }
+  },
+  {
+   "seq": 3,
+   "wave": "A",
+   "actor": "sa-2-ef0fac61",
+   "role": "gold_method_auditor",
+   "assignment": "Classify every seed label (human_authorized/objective_hard_gate/historical_diagnostic/unusable); test fixture feasibility; plan expansion to >=12 cases",
+   "declared_read_set": [
+    "CALIBRATION-SEED-C010.json",
+    "WORK-ORDER-C010.md",
+    "EVALUATION-CONTRACT.md",
+    "reviews/C000-planner-review.md"
+   ],
+   "result_status": "completed",
+   "bounded_summary": {
+    "classifications": {
+     "A1": "human_authorized close_call_ordinal_gold (direction only)",
+     "A2": "objective_hard_gate BLOCKED as trap: 'cỡ bàn tay' IS sourced in pack CRR-02/SRC-0023; flag reserved to user",
+     "A3": "objective_hard_gate usable via named-detail presence check + G3 structural clause (lexical n-gram method rejected: cross-language, max common run 0 at k>=6)",
+     "A4": "historical_diagnostic only"
+    },
+    "verdict": "needs_user_gold_for:[close_call >=2 human verdicts bound to existing blobs incl. G2-vs-H2 adjudication; A2 keep-or-remove flag]"
+   },
+   "output_digest": {
+    "path_outside_repo": "C:/Users/Admin/AppData/Local/hermes/cache/delegation/live/deleg_db89e1b8/task-2.log",
+    "sha256_at_cycle_close": "98d08fe8c20d17f6900e5b824708799f73842ed6dd6f38f2407291e543d2740b"
+   },
+   "model": "stealth/ox-alpha (inherited)",
+   "usage": {
+    "input_tokens": null,
+    "output_tokens": null
+   }
+  },
+  {
+   "seq": 4,
+   "wave": "B",
+   "actor": "sa-0-cae5e20b",
+   "role": "fixture_integrity_auditor",
+   "assignment": "Hash-verify 10 bundle files vs fixture-build.json; resolve declared git blobs; reproduce transforms deterministically",
+   "declared_read_set": [
+    "runs/C010/bundles/**",
+    "fixture-build.json",
+    "exact git objects"
+   ],
+   "result_status": "completed",
+   "bounded_summary": {
+    "files_checked": 10,
+    "hash_mismatches": 0,
+    "blob_resolution_failures": 0,
+    "transform_repro_checks": "all reported reproducible incl. byte-for-byte identity for C1-a/C1-b/F1; D1 prefix-at-paragraph-boundary; O1 splice verbatim + marker; F2 sentence verbatim from b9d08c4b"
+   },
+   "output_digest": {
+    "path_outside_repo": "C:/Users/Admin/AppData/Local/hermes/cache/delegation/live/deleg_467bdbe8/task-0.log",
+    "sha256_at_cycle_close": "dfd0b72d74ce168ddf27e9e963153e6361a28a450a781fbb61463c2c6c1044f5"
+   },
+   "model": "stealth/ox-alpha (inherited)",
+   "usage": {
+    "input_tokens": null,
+    "output_tokens": null
+   }
+  },
+  {
+   "seq": 5,
+   "wave": "B",
+   "actor": "sa-1-c0812bec",
+   "role": "gold_leakage_auditor",
+   "assignment": "Scan every bundle for FoC excerpts, anchor/gold/judge identifiers, prompt/review strings, provenance markers",
+   "declared_read_set": [
+    "runs/C010/bundles/case-*.md",
+    "benchmark blob (reference only)",
+    "JUDGE-PROMPT-C010.md",
+    "reviews/C000-planner-review.md"
+   ],
+   "result_status": "completed",
+   "bounded_summary": {
+    "bundles_scanned": 10,
+    "findings": [],
+    "verdict": "clean",
+    "method_note": "word-level sequence matching vs benchmark blob: zero verbatim runs >=12 tokens in any bundle"
+   },
+   "output_digest": {
+    "path_outside_repo": "C:/Users/Admin/AppData/Local/hermes/cache/delegation/live/deleg_467bdbe8/task-1.log",
+    "sha256_at_cycle_close": "73d5a361b36e305077cc0ad405d6b599f3266023fd86e6257076452fe56d21a6"
+   },
+   "model": "stealth/ox-alpha (inherited)",
+   "usage": {
+    "input_tokens": null,
+    "output_tokens": null
+   }
+  },
+  {
+   "seq": 6,
+   "wave": "B",
+   "actor": "sa-2-b3943baf",
+   "role": "methodology_auditor",
+   "assignment": "Count categories vs Wave B minimums; search for missed legal transforms; rule on mandatory stop before judges; specify user-gold requirements; feasibility of 10 reversals + 7 duplicates",
+   "declared_read_set": [
+    "WORK-ORDER-C010.md",
+    "CALIBRATION-SEED-C010.json",
+    "EVALUATION-CONTRACT.md",
+    "fixture-build.json",
+    "anchor-registry.json"
+   ],
+   "result_status": "completed",
+   "bounded_summary": {
+    "counts": {
+     "unique_cases": 9,
+     "by_category": {
+      "obvious_defect": 3,
+      "close_call": 1,
+      "outline_boundary_trap": 3,
+      "factual_or_imitation_trap": 2
+     }
+    },
+    "shortfall_vs_minimum": {
+     "unique_cases": 3,
+     "close_call": 2,
+     "factual_or_imitation_trap": 1
+    },
+    "reversal_duplicate_at_stop": "0_of_10 / 0_of_7 (correctly not run)",
+    "close_call_cannot_include": [
+     "O3/F2 stay traps",
+     "A4 lacks user verdict"
+    ],
+    "stop_before_judges": "mandatory",
+    "user_gold_needed": [
+     ">=2 human verdicts bound to existing durable pairs (incl. G2 521ded0d vs H2 4e75f451)",
+     "one more durable pair verdict recommended vs FoC-matched reference",
+     "A2 keep/remove adjudication of 'cỡ bàn tay' locator flag"
+    ],
+    "verdict": "needs_user_gold_correct"
+   },
+   "output_digest": {
+    "path_outside_repo": "C:/Users/Admin/AppData/Local/hermes/cache/delegation/live/deleg_467bdbe8/task-2.log",
+    "sha256_at_cycle_close": "7cf66cecdf24719a6f80de4ed06cf50bdbe46f778bcd05cd0d4fdd78785782fa"
+   },
+   "model": "stealth/ox-alpha (inherited)",
+   "usage": {
+    "input_tokens": null,
+    "output_tokens": null
+   }
+  }
+ ],
+ "judges_dispatched": 0,
+ "note": "Transcript paths point outside the repository; sha256 values bind exact byte state at cycle close so conclusions above remain verifiable."
+}

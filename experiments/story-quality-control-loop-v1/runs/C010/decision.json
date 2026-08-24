@@ -1,0 +1,33 @@
+{
+  "cycle_id": "C010",
+  "status": "awaiting_planner_review",
+  "worker_recommendation": "stop",
+  "terminal_label": "needs_user_gold",
+  "reason_codes": [
+    "wave_b_minimum_not_met_9_of_12_unique_cases",
+    "close_call_category_1_of_3_only_authentic_human_verdict_bindable_to_blobs",
+    "factual_or_imitation_trap_category_2_of_3_after_A2_premise_failed_reverification",
+    "A2_cỡ_bàn_tay_is_sourced_in_pack_CRR_02_flag_adjudication_reserved_to_user",
+    "cross_language_lexical_overlap_method_rejected_zero_common_runs_k_ge_6",
+    "judges_dispatched_zero_stop_mandated_before_first_substantive_judge_call",
+    "all_constructible_fixtures_deterministic_integrity_audited_leakage_clean"
+  ],
+  "hard_gates": {
+    "cycle_reproducibility": true
+  },
+  "historical_result_reproducible": null,
+  "unverified_claims": [
+    "thread verdicts bound via planner_attested documents only (reviews/C000-planner-review.md, CALIBRATION-SEED-C010.json); original thread bytes unreadable in this worker runtime",
+    "F1 structural-contamination gold rests on named-detail presence check plus G3 structural clause; final semantic judgment reserved for future blind judges",
+    "subagent transcript hashes bind cache files outside repo; digests valid at cycle close time only"
+  ],
+  "user_gold_request": {
+    "to_reach_wave_B_minimum": [
+      "verdict 1 (required): user preference between variant-G2 blob 521ded0d2a66d2b6217f2184f65d417384dac4b5 and variant-H2 blob 4e75f45191045c85011653d8280bfd175219582f (direction suffices; converts diagnostic A4 into close_call gold #2)",
+      "verdict 2 (required): user direction on one more durable committed pair, recommended against the FoC-matched reference blob 391febd843f0d99a8ba3730ae447b4e2eefb9061 (also fills known_missing 'durable human blind verdict versus FoC')",
+      "adjudication 3 (required): keep-or-remove ruling on the 'cỡ bàn tay' locator flag in variant-C-r2 blob 1d8031216c10ff85b8dc7332d603be82e1ec85e3 (restores aggregate-mask factual trap)"
+    ],
+    "note": "Numeric anchors remain optional; without them anchor-score-error metrics stay not_estimable and are not part of the T1 pass rule."
+  },
+  "next_authority": "planner_reviewer"
+}

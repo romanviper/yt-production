@@ -1,0 +1,18 @@
+{
+  "schema_version": "story-quality-leakage-audit/1",
+  "cycle_id": "C010",
+  "scanned": {"bundle_files": 10, "list": ["case-C1-a.md", "case-C1-b.md", "case-D1.md", "case-D2.md", "case-D3.md", "case-F1.md", "case-F2.md", "case-O1.md", "case-O2.md", "case-O3.md"]},
+  "checks": {
+    "foc_excerpt_ge_12_tokens": {"method": "worker_lead token n-gram set intersection + independent auditor word-level SequenceMatcher", "hits": 0},
+    "anchor_and_governance_identifiers": {"terms": ["A-HUMAN", "A-AGGREGATE", "A-BENCHMARK", "A-GOODHART", "gold", "judge", "C000", "C010", "planner", "work order", "repo paths", "SHA hashes", "branch names"], "hits": 0},
+    "provenance_markers_and_writer_identity": {"terms": ["CRR-", "SRC-", "CLM-", "Ox Alpha", "ox-alpha"], "hits": 0},
+    "judge_prompt_string_overlap": {"method": "common token run vs JUDGE-PROMPT-C010.md, threshold 10", "max_observed_run_below_threshold": true},
+    "planner_review_string_overlap": {"method": "distinctive-token screen vs reviews/C000-planner-review.md", "hits": 0}
+  },
+  "declared_exceptions_not_leakage": [
+    "translated story details in case-F1 (sư tử, công chúa Damascus, sighting 18 tháng Sáu) are the trap's subject matter, verified absent from narration-pack-v2/v3-render/SOURCE-ADDENDUM except prohibition rule R7 which mentions sư tử only as banned",
+    "blocker-note conventions inside candidates are original committed bytes of those candidates"
+  ],
+  "auditors": ["worker_lead (independent scan)", "sa-1-c0812bec gold_leakage_auditor"],
+  "verdict": "clean"
+}

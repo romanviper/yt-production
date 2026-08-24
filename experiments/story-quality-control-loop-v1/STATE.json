@@ -3,10 +3,10 @@
   "protocol_version": 1,
   "product": "sumer-writing",
   "canonical_branch": "main",
-  "status": "ready_for_worker",
+  "status": "awaiting_planner_review",
   "current_cycle": "C010",
   "current_work_order": "experiments/story-quality-control-loop-v1/WORK-ORDER-C010.md",
-  "next_authority": "worker_lead",
+  "next_authority": "planner_reviewer",
   "promotion_authority": "user_only",
   "historical_quality_claim": {
     "score": 8.1,
@@ -54,8 +54,8 @@
     "allow_product_writes": false,
     "allow_protected_system_writes": false
   },
-  "last_checkpoint": "experiments/story-quality-control-loop-v1/runs/C000/CHECKPOINT.md",
-  "last_checkpoint_commit": "1356872769eaa6b8b1b2f3a74595ec58b7b9f95e",
+  "last_checkpoint": "experiments/story-quality-control-loop-v1/runs/C010/CHECKPOINT.md",
+  "last_checkpoint_commit": null,
   "last_planner_review": "experiments/story-quality-control-loop-v1/reviews/C000-planner-review.md",
   "last_review_outcome": "accepted_with_remediation",
   "artifact_contract_version": 2,

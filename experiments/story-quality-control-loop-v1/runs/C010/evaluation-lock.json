@@ -1,0 +1,53 @@
+{
+  "schema_version": "story-quality-evaluation-lock/1",
+  "cycle_id": "C010",
+  "status_at_freeze": "needs_user_gold_stopped_before_judges",
+  "frozen_state": {
+    "judge_prompt": {"path": "experiments/story-quality-control-loop-v1/JUDGE-PROMPT-C010.md", "sha256": "22195d9db082fed18c577d7594c629633b4472d736bcf1f6d8ac5d6ad27898da"},
+    "rubric": "embedded in JUDGE-PROMPT-C010.md (9 production dimensions, Evaluation-Contract anchors) + hard gates G1/G2/G3 independent of averages",
+    "calibration_seed": {"path": "experiments/story-quality-control-loop-v1/CALIBRATION-SEED-C010.json", "sha256": "d4ba3b369b1c4eec4cc6a13d63e3ab09a24399a843624539f03cbd27c3c22932"},
+    "fixtures_frozen_before_judgments": true,
+    "fixture_manifest": "runs/C010/fixture-build.json",
+    "gold_key": "runs/C010/gold-key.json (confidential, never in bundles)",
+    "anchor_registry": "runs/C010/anchor-registry.json"
+  },
+  "candidate_and_pair_unit": {
+    "unit": "one blind presentation = one candidate copy or one A/B pair of copies; case = the fixture identity across all judges/orders",
+    "aggregation_rule": "judges within one case are aggregated to a single case result before any case-level conclusion; multiple judges never count as independent story cases"
+  },
+  "hard_gates_and_minimum_dimension_rule": {
+    "hard_gates": ["evidence_factuality", "outline_boundary", "anti_imitation"],
+    "rule": "any judge-reported hard failure fails the case overall regardless of dimension scores or preference",
+    "minimum_dimension_gate_for_later_T1": "no critical dimension below threshold on winner; threshold NOT tuned here"
+  },
+  "defect_taxonomy_functional_tags": ["hook_missing", "audience_promise_absent", "exit_state_missing", "question_without_payoff", "causal_bridge_broken", "analysis_restates_inference", "section_boundary_bleed", "writes_next_section_mission", "transition_displaced", "ending_not_earned_at_end", "thesis_replaced_by_foreign_emphasis", "structural_imitation_same_hook_and_beat_order", "imported_detail_outside_carrier_surface", "unsupported_detail_inserted", "detail_outside_evidence_affordance"],
+  "comparator": {
+    "blob": "391febd843f0d99a8ba3730ae447b4e2eefb9061",
+    "path_on_main": "competitor's scripts/The sumerians FoC opening - Equal P01",
+    "semantic_matching_rule": "p01_equivalent label verified by planner seed; semantic/detail-level matching audited in C010 via named-detail presence check + G3 structural clause (same hook mechanism + distinctive beat order); lexical >=14-token rule retained as signal only and must NEVER be used as pass evidence because comparator is English and candidates are Vietnamese"
+  },
+  "estimator_ci_margin_reserved_for_FoC_evaluation": null,
+  "future_T1_policy": {
+    "candidate_count": "exactly one baseline + exactly one treatment arm per pair; no best-of-many selection",
+    "retry_policy": "formatting-only repair permitted once per judge; substantive re-judgment forbidden",
+    "selection_rule": "winner = majority-preference with no hard-gate failure and no critical-dimension collapse; ties do not promote",
+    "qualified_capabilities_after_this_cycle": [
+      "blind panel protocol frozen (prompt hash above)",
+      "fixture construction discipline demonstrated deterministic and reproducible",
+      "leakage screening method proven effective",
+      "gold-key confidentiality separation proven",
+      "A-HUMAN ordinal direction usable as sign-only gold"
+    ],
+    "unqualified_capabilities_until_planner_reissue": [
+      "gold-direction accuracy / duplicate consistency / reversed-order consistency / position bias thresholds UNTESTED (not_estimable without judgments)",
+      "close-call category below minimum",
+      "factual/imitation trap category below minimum",
+      "aggregate-mask probe unverified pending user flag adjudication",
+      "numeric anchor calibration not_estimable (no numeric human anchors exist)",
+      "FoC parity estimation of any kind"
+    ],
+    "model_family_limits": "single runtime family available this cycle; any future panel must either add a second family or record single-family provisional"
+  },
+  "threshold_tuning_note": "The historical 8.0 production threshold was NOT tuned and remains untouched; C010 performed no FoC parity claim.",
+  "immutable_from_now": "After any future first substantive judge call under this lock, prompt, rubric, fixtures, gold and aggregation are immutable; changes require a new planner work order."
+}

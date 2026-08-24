@@ -1,0 +1,85 @@
+{
+ "checks": [
+  {
+   "check_id": "parse_all_json",
+   "result": "pass",
+   "detail": "10 files"
+  },
+  {
+   "check_id": "parse_events_jsonl",
+   "result": "pass",
+   "detail": "6 events (terminal validation event appended later)"
+  },
+  {
+   "check_id": "changes_literal_empty_array",
+   "result": "pass",
+   "detail": "'[]\\n'"
+  },
+  {
+   "check_id": "fixture_hashes_match",
+   "result": "pass",
+   "detail": ""
+  },
+  {
+   "check_id": "declared_git_blobs_resolve",
+   "result": "pass",
+   "detail": "5 distinct blobs"
+  },
+  {
+   "check_id": "allowlist_subset_and_protected_clean",
+   "result": "pass",
+   "detail": "changed=22; extra=[]; protected=[]; c000_touched=[]"
+  },
+  {
+   "check_id": "pending_writes_note",
+   "result": "pass",
+   "detail": "validation.json now; STATE.json flip before final recheck per work order step 5"
+  },
+  {
+   "check_id": "git_diff_check",
+   "result": "pass",
+   "detail": "exit 0"
+  }
+ ],
+ "artifact_sha256": {
+  "manifest.json": "e8a0604254e0125f266b0902a3a265b693fca56ecc2b8de685ac50553c22e7b0",
+  "source-index.json": "6a271097d1733c72c893577ccf31ae06af99fe57d3a3074c7f6a7cafcf6ba387",
+  "subagent-summaries.json": "530b2e3599450b81c75da7b47d18561abc010b415c7642d4e9bfceddeb86c8a7",
+  "anchor-registry.json": "1a19b899994d7b6f1475abc695e052041faf3c69906f36f605d3be7a506fbffc",
+  "gold-key.json": "a4c42322b3af7318c3521bf2e7334f3f4b5a696233bc97c3f29fe1fe360c9185",
+  "fixture-build.json": "b5d5ea9a3ffd2ca7de97536b8bb4ccb93a169ea90ea6d73b51445d784e98d3f4",
+  "leakage-audit.json": "d2fa9b229f16bfefed6661434561117b8700079104c6c25bd6a81a05578747b0",
+  "evaluation-lock.json": "4518bce73e294874ef58caa0f85defc92a5a0953365ce6f9fb401560adec1e68",
+  "decision.json": "414a71e326541357aae67aa252a20fd249cfbdb6e91c8cd4be608f9ef1a2934c",
+  "changes.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "CHECKPOINT.md": "35aa9f0f95dbb2b76c4aa469122476f45afc37128b6d21ac79918a0a12141db1"
+ },
+ "bundle_sha256": {
+  "case-C1-a.md": "4e67ca8c2e4cc1cdbd774cb3e186198cdc17b9b6f6fdf26c79ee7773d45be779",
+  "case-C1-b.md": "70e47297fa4df26dad32c1aadae202372089827a9cffd99426253bad7cb6acfe",
+  "case-D1.md": "fc3013bcfa15d073b2cd54a48b44f59c93695f276fd68a8f5cd6e41c86951db7",
+  "case-D2.md": "da538d56b33f508a75ca23edbda23b3e664497fad245fc0b647ec08eab123b79",
+  "case-D3.md": "b7dad60b14d203e122072befde7e7e99635b8cdbdf1c4487b19c90f86b80fafb",
+  "case-F1.md": "bb4d800ca7a83f3c5d8010824391f5a38fc2c9076afe2c037c5e5537baa347c2",
+  "case-F2.md": "a5f486db8d8f5453ef1a37339e89f474e070a41a9acd0b2105da89d2a19eb6cc",
+  "case-O1.md": "7764180aad05ef33313b64dda5c02004c9827bca4c56e2f4ebba92ec11353f47",
+  "case-O2.md": "b8f20ec20e5ce083edd860a7ab8f56f854da68b4d50360232b469d0faedbafb2",
+  "case-O3.md": "c10450ac8842792527a4ea48b0567c60478e862472a404261ddfb131f18d87a1"
+ },
+ "elapsed_seconds": 0.3,
+ "overall": "pass",
+ "final_recheck": {
+  "when": "after terminal validation event appended and STATE.json flip",
+  "events_count": 7,
+  "event_chain_ok": true,
+  "parse_all_json_jsonl_ok": true,
+  "git_diff_check_exit": 0,
+  "allowlist_extra_paths": [],
+  "protected_or_c000_touches": [],
+  "artifact_immutability_vs_recorded_digests": true,
+  "state_json_sha256_at_freeze": "7a97124cff561aba997aa1415d84ae50d039a93465fdb4b4b9f091020803f866",
+  "commit_sha": null,
+  "note": "Commit SHA unknowable pre-commit by design; planner binds it at next review per contract v2.",
+  "result": "pass"
+ }
+}

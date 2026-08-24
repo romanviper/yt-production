@@ -1,0 +1,28 @@
+{
+  "schema_version": "story-quality-gold-key/1",
+  "cycle_id": "C010",
+  "frozen_before_judgments": true,
+  "confidentiality": "KHÔNG được đưa vào bất kỳ judge bundle nào; chỉ dùng chấm điểm sau khi judge nộp bài và để planner kiểm tra",
+  "key": {
+    "C1": {
+      "presentation_type": "pair",
+      "gold_preference": "B",
+      "gold_basis": "human_authorized_nonblind_ordinal (thread 6a8482d8 turn 75be696a, planner-attested)",
+      "scope": "direction only; B remained medium and below FoC; không dùng cho magnitude",
+      "blob_A": "7dcc1033cc76a61ae85a04bd699e9494d56f94cf",
+      "blob_B": "3424c98525b3946e3803be562b8113c79f5117e8"
+    },
+    "D1": {"expected": "hard_fail", "gate": "outline_fidelity_entry_exit", "defect_tag_expected": ["exit_state_missing", "question_without_payoff"], "source_blob": "7dcc1033cc76a61ae85a04bd699e9494d56f94cf", "transform": "head_truncation_>=50pct_at_paragraph_boundary"},
+    "D2": {"expected": "hard_fail_or_major_causal_defect", "gate": "causal_progression", "defect_tag_expected": ["causal_bridge_broken", "analysis_restates_inference"], "source_blob": "3424c98525b3946e3803be562b8113c79f5117e8", "transform": "adjacent_paragraph_swap_mid"},
+    "D3": {"expected": "hard_fail", "gate": "hook_audience_promise", "defect_tag_expected": ["hook_missing", "audience_promise_absent"], "source_blob": "521ded0d2a66d2b6217f2184f65d417384dac4b5", "transform": "delete_first_body_paragraph"},
+    "O1": {"expected": "hard_fail", "gate": "section_boundary", "defect_tag_expected": ["section_boundary_bleed", "writes_next_section_mission"], "source_blobs": ["3424c98525b3946e3803be562b8113c79f5117e8", "a40c7854172b3ebeab4fa326d39f8655f24db8d6"], "marker_in_fixture": "[chuyển-tiếp]"},
+    "O2": {"expected": "fail_or_major", "gate": "payoff_transition_position", "defect_tag_expected": ["transition_displaced", "ending_not_earned_at_end"], "source_blob": "7dcc1033cc76a61ae85a04bd699e9494d56f94cf", "transform": "move_final_paragraph_to_middle"},
+    "O3": {"expected": "hard_fail", "gate": "emphasis_thesis_invariant", "defect_tag_expected": ["thesis_replaced_by_foreign_emphasis"], "source_blobs": ["4e75f45191045c85011653d8280bfd175219582f", "7dcc1033cc76a61ae85a04bd699e9494d56f94cf"]},
+    "F1": {"expected": "hard_fail", "gate": "anti_imitation_structural_G3", "defect_tag_expected": ["structural_imitation_same_hook_and_beat_order", "imported_detail_outside_carrier_surface"], "source_blob": "b9d08c4b5201fa21f3358f6a7c3af6e084340692", "note": "zero lexical overlap expected (cross-language); detection requires structural review + named-detail check, lexical checker must NOT be used as pass evidence"},
+    "F2": {"expected": "fail_on_evidence_gate", "gate": "factuality_unsupported_detail", "defect_tag_expected": ["unsupported_detail_inserted", "detail_outside_evidence_affordance"], "source_blob_base": "7dcc1033cc76a61ae85a04bd699e9494d56f94cf", "inserted_from_blob": "b9d08c4b5201fa21f3358f6a7c3af6e084340692"}
+  },
+  "not_scored_this_cycle": {
+    "A4_pair_G2_vs_H2": "diagnostic only; no preference gold exists; excluded from gold-direction denominator",
+    "A2_aggregate_mask_probe_C_r2": "blocked pending user keep/remove adjudication of the 'cỡ bàn tay' locator flag (detail IS sourced in pack CRR-02/SRC-0023)"
+  }
+}
