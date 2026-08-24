@@ -1,0 +1,57 @@
+{
+  "schema_version": "story-quality-control-state/1",
+  "protocol_version": 1,
+  "product": "sumer-writing",
+  "canonical_branch": "main",
+  "status": "ready_for_worker",
+  "current_cycle": "C000",
+  "current_work_order": "experiments/story-quality-control-loop-v1/WORK-ORDER-C000.md",
+  "next_authority": "worker_lead",
+  "promotion_authority": "user_only",
+  "historical_quality_claim": {
+    "score": 8.1,
+    "label": "historical_summary_only",
+    "candidate_artifact": "missing",
+    "rubric_artifact": "missing",
+    "evaluator_artifact": "missing",
+    "source_commit": "2cebbbd9f45ffa68bec453db1616cd740455825a"
+  },
+  "forensic_refs": {
+    "old_five_run_checkpoint": "e29a984dfbda80cc52afa66af0a42a34ba136669",
+    "post_run05_pause_checkpoint": "2cebbbd9f45ffa68bec453db1616cd740455825a",
+    "validation_branch_head_observed": "7b0328aca7142a6e83f0caa65a0b5df2270a9963",
+    "legacy_multi_role_branch_head": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9",
+    "foc_p01_benchmark_blob_on_main": "391febd843f0d99a8ba3730ae447b4e2eefb9061"
+  },
+  "retained_task_ids": [
+    {
+      "title": "Cập nhật tiến độ commit",
+      "thread_id": "6a8c0f91-b1c0-83ec-800b-c7bdf4307d85",
+      "status": "forensic_read_only"
+    },
+    {
+      "title": "So sánh draft P01 FoC",
+      "thread_id": "6a869f7b-9604-83ec-9fb4-22c18f935993",
+      "status": "forensic_read_only"
+    },
+    {
+      "title": "Important - Harness build agent",
+      "thread_id": "6a8417c3-df24-83ec-9f6c-8b3caec178f1",
+      "status": "forensic_read_only"
+    },
+    {
+      "title": "Review harness Agent",
+      "thread_id": "6a8482d8-58d0-83ec-b464-a0e7ef2bc690",
+      "status": "forensic_read_only"
+    }
+  ],
+  "cycle_limits": {
+    "max_concurrent_subagents": 3,
+    "max_candidates": 0,
+    "max_revisions": 0,
+    "allow_product_writes": false,
+    "allow_protected_system_writes": false
+  },
+  "last_checkpoint": null,
+  "last_checkpoint_commit": null
+}
