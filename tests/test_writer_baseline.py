@@ -66,6 +66,7 @@ class WriterBaselineTests(unittest.TestCase):
 
             # The writer sees a plain mission projection plus control states, not upstream architecture prose.
             self.assertIn('"mission"', context)
+            self.assertIn("listener encountering the history", context)
             self.assertIn('"entry_state"', context)
             self.assertIn('"exit_state"', context)
             self.assertNotIn('"narrative_job"', context)
@@ -172,6 +173,7 @@ class WriterBaselineTests(unittest.TestCase):
             )
             self.assertIn("evidence_access", packet)
             self.assertIn('"mission"', context)
+            self.assertIn("listener encountering the history", context)
             self.assertIn("CLM-0011", context)
             self.assertNotIn('"narrative_job"', context)
             self.assertNotIn("permitted_claims", context)
