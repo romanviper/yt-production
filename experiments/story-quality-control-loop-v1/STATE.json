@@ -3,10 +3,10 @@
   "protocol_version": 1,
   "product": "sumer-writing",
   "canonical_branch": "main",
-  "status": "ready_for_worker",
+  "status": "awaiting_planner_review",
   "current_cycle": "C000",
   "current_work_order": "experiments/story-quality-control-loop-v1/WORK-ORDER-C000.md",
-  "next_authority": "worker_lead",
+  "next_authority": "planner_reviewer",
   "promotion_authority": "user_only",
   "historical_quality_claim": {
     "score": 8.1,
@@ -52,6 +52,6 @@
     "allow_product_writes": false,
     "allow_protected_system_writes": false
   },
-  "last_checkpoint": null,
+  "last_checkpoint": "experiments/story-quality-control-loop-v1/runs/C000/CHECKPOINT.md",
   "last_checkpoint_commit": null
 }

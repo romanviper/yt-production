@@ -1,0 +1,114 @@
+{
+  "schema_version": "story-quality-hypotheses/1",
+  "cycle_id": "C000",
+  "note": "Mỗi hypothesis là một can thiệp nhỏ nhất độc lập; KHÔNG gộp thành một treatment. Evidence strength dùng provenance class của C000. Mọi test design chạy trên main với clean roles; FoC bị che khỏi writer.",
+  "hypotheses": [
+    {
+      "id": "H-C000-01",
+      "area": "neutral_route_free_material_detail_resolution",
+      "observed_defect": "Research đã resolve material detail cụ thể nhưng handoff P01 làm phẳng thành abstract claims; replay 6,6 -> 6,7 chỉ nhích +0,1 sau evidence work (checkpoint_assertion).",
+      "proposed_smallest_intervention": "Neutral `details` contract cho record mới: detail tường thuật có source+locator bắt buộc; story-routing fields (carrier/sequence) bị reject ở record mới, legacy record vẫn đọc được; ledger trung gian giữ resolution tới writer packet.",
+      "evidence_strength": "checkpoint_assertion (cost: evidence lookups 10->7 sau neutral material ledger) + durable harness-v2 delta mô tả carrier layer trên branch cũ",
+      "confounds": [
+        "score 6,6 vs 6,7 cùng evaluator unknown => sai số chấm có thể lớn hơn delta",
+        "evidence work và replay không được randomize"
+      ],
+      "expected_quality_cost_effect": "Quality: tăng concrete historical world mà không đổi truth ceiling. Cost: lookup giảm kỳ vọng (~10->7 assertion); packet tăng nhẹ do details field.",
+      "clean_test_design": "Trên main: một A/B pair P01 fixture, arm control = claims-only pack, arm treatment = claims + neutral details contract; cùng writer model/tier, writer không thấy FoC/rubric; blind judge duy nhất chấm dimension `concrete historical world` + evidence-span validity >=90%.",
+      "invalidation_criterion": "Treatment không cải thiện median `concrete historical world` >= +0,5 hoặc evidence-span validity < 90% => bỏ contract, không mở revision thêm.",
+      "priority": "P1"
+    },
+    {
+      "id": "H-C000-02",
+      "area": "compact_writer_outcome_instruction",
+      "observed_defect": "Writer outcome instruction hiện hành dài; prototype validation branch đã thu gọn còn một dòng listener-first (7b0328ac) nhưng chưa từng được test sạch trên main.",
+      "proposed_smallest_intervention": "Thay instruction outcome bằng bản một dòng đã validate (evidence limits assertions, không mọi caveat cần được narrate) trong writer packet — không đụng metric, không quota.",
+      "evidence_strength": "durable diff tại pin SHA (nội dung chính xác), hiệu quả quality chỉ là checkpoint_assertion giai đoạn sau",
+      "confounds": [
+        "prototype từng chạy cùng các điều chỉnh khác (retrieval, reviewer tách) nên không tách được đóng góp riêng",
+        "self/machine score từng lệch mạnh với user verdict trên branch cũ"
+      ],
+      "expected_quality_cost_effect": "Quality: giảm report-mode, giữ spoken clarity. Cost: writer prompt ngắn đi (~không đo được từ assertion cũ; ghi unknown).",
+      "clean_test_design": "A/B pair trên main: control = instruction hiện hành, treatment = dòng một dòng; cùng pack/evidence; judge mù chấm `spoken clarity` và `voice/originality`; anti-imitation checker 14-token chạy cả hai arm.",
+      "invalidation_criterion": "Median `spoken clarity` giảm hoặc judge bấm derivative resemblance >=3/10 trên treatment => revert về instruction cũ.",
+      "priority": "P2"
+    },
+    {
+      "id": "H-C000-03",
+      "area": "clean_writer_vs_independent_reviewer",
+      "observed_defect": "Cả run-01..05 lẫn chuỗi post-run-05 để writer tham gia tự review/diễn giải tiến bộ; internal gate từng PASS false-positive ở bước 6,9 trong khi external calibration cho <7 (checkpoint_assertion).",
+      "proposed_smallest_intervention": "Topology tối thiểu: clean writer (không thấy score/rubric/FoC) + independent reviewer riêng session/prompt + tối đa một diagnosed revision; lead không chấm.",
+      "evidence_strength": "negative_control durable (REVIEW-C-r2 self-review conflict disclosure; PROCESS-V4 role split) + checkpoint_assertion (false-positive pass)",
+      "confounds": [
+        "reviewer independence chưa từng đo định lượng (bias rate unknown)",
+        "multi-writer merge trên branch cũ từng mất voice consistency — cần tránh merge mặc định"
+      ],
+      "expected_quality_cost_effect": "Quality: loại false-positive gate, tin cậy được signal pass/fail. Cost: +1 agent call mỗi candidate; revision packet theo assertion ~5,9–6,6k thay vì ~13,3k.",
+      "clean_test_design": "Calibration trong C010 (không generation): cho reviewer độc lập chấm lại 2–3 artifact cũ còn bền vững (gồm case từng được self/machine chấm cao nhưng user đánh giá thấp); so kết quả reviewer vs verdict user đã ghi; đo duplicate consistency và reversed-order consistency theo EVALUATION-CONTRACT mục 6.",
+      "invalidation_criterion": "Reviewer độc lập vẫn đồng thuận false-positive với gate cũ (gold-direction accuracy <85%) => topology chưa đủ; escalate lên planner chứ không tự thêm vai.",
+      "priority": "P1"
+    },
+    {
+      "id": "H-C000-04",
+      "area": "scored_production_gate_minimum_dimension_no_averaging",
+      "observed_defect": "Gate comment-only/approval kiểu aggregate từng pass prose đúng-nhưng-khô (constraint 3 của checkpoint) và composite che dimension yếu; composite 8,1 không tái tạo được từ breakdown 8,6/8,7/8,5/9,0/6,7 (mean=8,3).",
+      "proposed_smallest_intervention": "Production gate theo minimum dimension: mọi production dimension >=8/10 mới pass; raw human-immediacy ghi riêng diagnostic, không trộn; composite chỉ hiển thị, không phải gate.",
+      "evidence_strength": "checkpoint_assertion (điều chỉnh prototype) + arithmetic verification nội bộ C000 (breakdown không tái tạo composite)",
+      "confounds": [
+        "rubric đầy đủ và weighting của chuỗi cũ missing => không biết dimension cũ map thế nào vào rubric v1 hiện hành",
+        "threshold 8/10 lấy từ checkpoint, chưa calibration"
+      ],
+      "expected_quality_cost_effect": "Quality: không chấp nhận draft mạnh tổng hợp nhưng yếu một trục. Cost: nhiều candidate fail gate sớm => chi phí selection tính vào treatment (system fairness).",
+      "clean_test_design": "Trong C010: khóa rubric/judge prompt/trọng số trước generation; chạy gate minimum-dimension trên calibration set gồm obvious-defect case + close-call case; đo gold-direction accuracy >=85%, position bias <=5pp; xác nhận gate bắt đúng case có một dimension yếu dù median cao.",
+      "invalidation_criterion": "Gate pass case mà panel/user đánh giá fail (gold accuracy <85%) hoặc chặn >35% case không majority => threshold/rubric phải khóa lại, không dùng cho generation.",
+      "priority": "P1"
+    },
+    {
+      "id": "H-C000-05",
+      "area": "p01_p02_boundary_audit",
+      "observed_defect": "P01 từng hấp thụ một phần job của P02 làm yếu movement và exit boundary của cả hai (checkpoint constraint 2); candidate 8,1 chưa từng qua boundary audit trước khi pause.",
+      "proposed_smallest_intervention": "Một boundary audit độc lập duy nhất trên candidate đã qua development gate: kiểm tra exit-state P01, transition mở đúng nhu cầu P02, không viết hộ mission P02; output là pass/violation list, không edit prose.",
+      "evidence_strength": "checkpoint_assertion (constraint isolation) + outline invariants là canonical_main state",
+      "confounds": [
+        "tiêu chí 'viết hộ mission' mang tính đánh giá; cần rubric hóa trước khi audit để auditor không tự bịa chuẩn",
+        "chưa có audit nào chạy bao giờ => không có baseline false-positive"
+      ],
+      "expected_quality_cost_effect": "Quality: bảo vệ section movement hai phía biên. Cost: ~1 auditor call mỗi candidate.",
+      "clean_test_design": "Sau khi có candidate development-gate đầu tiên (C030/C040): auditor mù với writer/editor nhận section.json entry/exit + candidate, trả violation tags theo danh sách cố định; dry-run protocol trên cặp section approved cũ (P01/P02 hiện có trên main) để đo tỷ lệ báo động giả trước khi dùng thật.",
+      "invalidation_criterion": "Auditor báo violation trên cặp section đã được user duyệt mà không chỉ ra được span cụ thể => rubric boundary phải làm lại.",
+      "priority": "P2"
+    },
+    {
+      "id": "H-C000-06",
+      "area": "one_diagnosed_senior_edit_pass",
+      "observed_defect": "Bước nhảy lớn nhất chuỗi cũ là senior-edited candidate (6,9 -> 8,1 checkpoint_assertion) nhưng cơ chế, identity, diagnosis input đều missing; đồng thời bounded revision thường chỉ +0,2..+0,7.",
+      "proposed_smallest_intervention": "Tối đa một diagnosed senior-edit pass cho candidate thắng development gate; editor chỉ thấy candidate + evidence note + defect taxonomy của chính candidate (không FoC excerpt, không quota số).",
+      "evidence_strength": "checkpoint_assertion (score jump) — mức bằng chứng yếu nhất registry này",
+      "confounds": [
+        "senior editor có thể chính là nguyên nhân Goodhart ngược nếu thấy metric",
+        "jump 8,1 có thể do tích lũy toàn chuỗi chứ không riêng edit cuối",
+        "candidate 8,1 missing => không phân tích được edit thực tế đã làm gì"
+      ],
+      "expected_quality_cost_effect": "Quality: kỳ vọng +0,5..+1,5 trên dimension bị defect tag (suy luận từ jump cũ, strength thấp). Cost: +1 editor call + revision re-eval.",
+      "clean_test_design": "Chỉ ở C040 sau khi C010 khóa evaluator: A/B pair candidate-before vs candidate-after-one-edit, judge mù ba người, primary = median story delta và majority win/tie; editor log diagnosis đầu vào để tách đóng góp edit khỏi tích lũy.",
+      "invalidation_criterion": "Delta median < +0,2 hoặc bất kỳ critical dimension giảm >=0,3 => hủy quyền editor cho cycle kế, quay lại writer-only revision.",
+      "priority": "P3"
+    },
+    {
+      "id": "H-C000-07",
+      "area": "durability_and_trace_enforcement",
+      "observed_defect": "Toàn bộ chuỗi post-run-05 mất vì candidate/scorecard/evaluator output sống trong transient files ngoài tree commit; G0 reproducibility vi phạm retroactively (không có hash nào resolve được cho 8,1).",
+      "proposed_smallest_intervention": "Thuộc C020 system task (cần authority riêng): durability enforcement — candidate/rubric/scorecard phải commit hoặc hash-bound trước khi score được ghi nhận; events.jsonl append-only; không score nếu thiếu artifact hash (đã là luật CONTRACT, cần cơ chế cưỡng chế chứ không chỉ văn bản).",
+      "evidence_strength": "verified fact (missing artifacts registry của C000; tree checkpoint không chứa candidate)",
+      "confounds": [
+        "thuộc system path — không được worker hay cycle product nào sửa ngoài C020",
+        "over-engineering nguy cơ nếu áp ngay cho experiment nhỏ: cân bằng với throughput"
+      ],
+      "expected_quality_cost_effect": "Quality: gián tiếp (mọi score sau này đáng tin). Cost: nhẹ ở mỗi cycle (commit discipline); heavy once ở C020.",
+      "clean_test_design": "Không test trong C000. Acceptance test đề xuất cho C020: cố tình submit scorecard thiếu candidate hash trong fixture => hệ thống/ceremony phải từ chối ghi score; và recovery drill: tái lập timeline từ artifacts mà không đọc memory/thread.",
+      "invalidation_criterion": "Nếu C020 triển khai xong mà vẫn tồn tại đường ghi score không hash-bound (audit tìm được counterexample) => enforcement coi như chưa đạt, chặn promotion C200.",
+      "priority": "P1"
+    }
+  ],
+  "explicitly_rejected_as_single_treatment": "Không được gộp H-01..H-07 thành một mega-treatment; planner diagnosis #3 cấm đổi evidence+structure+prose cùng cycle."
+}

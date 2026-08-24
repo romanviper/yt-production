@@ -1,0 +1,208 @@
+{
+  "schema_version": "story-quality-source-index/1",
+  "cycle_id": "C000",
+  "note": "Benchmark text không được đọc trong cycle này; chỉ metadata/hash. Thread content chưa bao giờ được đưa vào timeline (unverified).",
+  "refs": [
+    {
+      "id": "SRC-PAUSE-CHECKPOINT",
+      "kind": "git_blob_at_commit",
+      "ref": "2cebbbd9f45ffa68bec453db1616cd740455825a:experiments/p01-harness-audit-20260824/pause-checkpoint-20260824.md",
+      "content_hash_git_blob": "96db3a2863a2d61eb00d1d7ece3028061e6711ba",
+      "resolved": true,
+      "provenance_class": "forensic_branch",
+      "durability": "durable",
+      "permitted_use": "forensic_only",
+      "claims_supported": [
+        "chuỗi score post-run-05: 6.6 -> 7.3 -> 6.7 -> 6.9 -> 8.1 (checkpoint_assertion)",
+        "breakdown candidate 8.1: causal 8.6, question/payoff 8.7, density 8.5, continuity 9.0, human_immediacy 6.7 (checkpoint_assertion)",
+        "supersede kết luận run-05 rằng harness v2 đã đủ",
+        "candidate 8.1 chưa qua production gate / evidence audit / boundary audit; không phải draft P01 chính thức",
+        "cost assertions: packet ~1.900 token, writer instruction 878/1.500, revision ~5.9–6.6k vs ~13.3k cũ, evidence lookups 10 -> 7",
+        "regression 81/82 pass; failure duy nhất là whole-product cleanliness với 42 stale product errors"
+      ],
+      "caveat": "Toàn bộ score/cost là văn bản checkpoint; raw usage/test output không còn. Composite 8.1 không tái tạo được từ breakdown."
+    },
+    {
+      "id": "SRC-OLD-AUDIT-TREE",
+      "kind": "git_tree",
+      "ref": "e29a984dfbda80cc52afa66af0a42a34ba136669:experiments/p01-harness-audit-20260824/",
+      "subtree_hash": "b7ff0c9ba34a1a425c5a90fd0661612ec191c783",
+      "key_blobs": {
+        "audit.md": "0fde81318f8efb9080fccf6eb256bdea55ce4605",
+        "harness-v1.md": "1870d58eb3b08aa8b6f445761c9566218176222a",
+        "harness-v2.md": "231f23cb8903cad24b2ad9be280b437ef59fec57",
+        "run-01/draft.md": "3e34bb49721707ab38223cb62471c943c9457d2e",
+        "run-01/writer-note.md": "e202bb1843b598997a1e64207576b6c39d699742",
+        "run-02/draft.md": "d30ff731abdda54ec4f38bef3a2bd9308ab50eec",
+        "run-02/writer-note.md": "4898d684cc30f295383049b32126d9d9b0b65ddf",
+        "run-03/draft.md": "5e127b301389335f4a3985e5319d5be242d32584",
+        "run-03/writer-note.md": "72e21af5f4f7f0071ec0d2d1ab53a69e660f037a",
+        "run-04/draft.md": "c2b8460835200ac23c8d3184f2d744fdd4336d3d",
+        "run-04/writer-note.md": "0af8477da27027960580c00f19aa291c0fef5220",
+        "run-05/draft.md": "659b08255edd82f6b9db815d1c17347c3b8b1666",
+        "run-05/writer-note.md": "b86615dba740b74ebd60d4900936e873288a29dd"
+      },
+      "resolved": true,
+      "provenance_class": "forensic_branch",
+      "durability": "durable",
+      "permitted_use": "evaluator_only",
+      "claims_supported": [
+        "run-01..05 tồn tại nguyên vẹn: cùng writer tự viết/tự sửa/tự diễn giải => confound đã được checkpoint thừa nhận",
+        "chỉ dùng làm historical control, không phải resume baseline"
+      ],
+      "caveat": "Không phân tích sâu run-01..05 trong C000 theo work order."
+    },
+    {
+      "id": "SRC-VOICE-NEGATIVE-CONTROLS",
+      "kind": "git_files_at_commit",
+      "ref": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9:experiments/p01-voice-v1/",
+      "files": [
+        {"path": "EXPERIMENT-LOG.md", "blob": "6d4644b0b8f583b0ba6f69c8e5383c05b1dbe00b"},
+        {"path": "EXPERIMENT-LOG-v2.md", "blob": "bfb6daebfe6045990c622f46fc30c17b4c8e5c90", "size_bytes": 3711},
+        {"path": "EXPERIMENT-LOG-v3.md", "blob": "599c62cee615ba7b94784afbf36cc68a9029351a", "size_bytes": 3119},
+        {"path": "EXPERIMENT-LOG-v4.md", "blob": "975925fabf7b05bcb77300cda06c6856f8182249", "size_bytes": 1871},
+        {"path": "EXPERIMENT-LOG-v5.md", "blob": "0313b66d1227b560e62634bfb559fd1b58eb3f87", "size_bytes": 1907},
+        {"path": "HARNESS-V2-DELTA.md", "blob": "d9779c1c6b53718a2e548c88be6aa1a0e0448e2f"},
+        {"path": "PROCESS-V4.md", "blob": "387cecd70b0313cc518b07c5127dfe7a2076eb80"},
+        {"path": "drafts/REVIEW-C-r2.md", "blob": "b47aef1e358012b467e42bc651a17cf33dbd3fc5", "role": "negative_control_metadata"},
+        {"path": "drafts/REVIEW-D.md", "blob": "6d91faba1a0e9f0f95bfac4a3d76a24980e88e92", "role": "negative_control_metadata"},
+        {"path": "drafts/REVIEW-E-round1.md", "blob": "1951e5953754887ec7d9964beacdd26cc9ea3886", "role": "negative_control_metadata"},
+        {"path": "drafts/REVIEW-F-round1.md", "blob": "4486bca30283583cad3ad8970008ea8c1ac78e38", "role": "negative_control_metadata"},
+        {"path": "drafts/REVIEW-G.md", "blob": "09e4a706cb7dd541751fcfd1f865a38eb2b6d6e1", "role": "negative_control_metadata"},
+        {"path": "drafts/REVIEW-H.md", "blob": "62b51c9a2aa7e5c143507942c77cd463a9a4685c", "role": "negative_control_metadata"}
+      ],
+      "resolved": true,
+      "provenance_class": "forensic_branch",
+      "durability": "durable",
+      "permitted_use": "evaluator_only",
+      "claims_supported": [
+        "metric trong creative prompt gây Goodhart/stiffness (vòng G, EXPERIMENT-LOG-v5)",
+        "self-review cùng session với writer là xung đột lợi ích (ghi nhận trong REVIEW-C-r2.md)",
+        "multi-role PROCESS-V4 tách planner/writer x2/reviewer-truth/reviewer-narrative/verifier/user làm negative control cho self-review",
+        "blocker-note convention hoạt động đúng thiết kế"
+      ],
+      "caveat": "Drafts variant-*.md và pack/** KHÔNG đọc trong C000 theo work order; chỉ review metadata và log."
+    },
+    {
+      "id": "SRC-WRITER-OUTCOME-PROTOTYPE",
+      "kind": "git_commit_diff",
+      "ref": "7b0328aca7142a6e83f0caa65a0b5df2270a9963",
+      "parent": "581e44a20df957b1be51002c6100fa8a33025dce",
+      "subject": "validate revised P01 writer outcome instruction",
+      "changed_paths": ["system/operations/draft-section.md"],
+      "diff_stat": "1 file changed, 1 insertion(+), 1 deletion(-)",
+      "resolved": true,
+      "provenance_class": "forensic_branch",
+      "durability": "durable",
+      "permitted_use": "forensic_only",
+      "claims_supported": [
+        "writer-outcome prototype = đúng một dòng instruction listener-first trong system/operations/draft-section.md",
+        "không phải resume lineage; chỉ dùng lập diff/provenance map"
+      ],
+      "caveat": "Branch origin/validation/p01-harness-20260824 quan sát đúng tại pin SHA này lúc chạy preflight."
+    },
+    {
+      "id": "SRC-BENCHMARK-BLOB",
+      "kind": "external_benchmark_blob_metadata",
+      "ref": "391febd843f0d99a8ba3730ae447b4e2eefb9061",
+      "path_on_main": "competitor's scripts/The sumerians FoC opening - Equal P01",
+      "size_bytes": 3591,
+      "resolved": true,
+      "provenance_class": "external_benchmark",
+      "durability": "durable",
+      "permitted_use": "evaluator_only",
+      "claims_supported": [
+        "benchmark P01-equivalent tồn tại bền vững trên main với hash ổn định để khóa comparator sau này"
+      ],
+      "caveat": "Nội dung blob KHÔNG được đọc trong C000; chỉ resolve metadata/hash."
+    },
+    {
+      "id": "SRC-BRANCH-METADATA",
+      "kind": "branch_refs",
+      "refs": {
+        "agent/ox-alpha-p01-alt": {"observed_sha": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9", "matches_pin": true},
+        "origin/validation/p01-harness-20260824": {"observed_sha": "7b0328aca7142a6e83f0caa65a0b5df2270a9963", "matches_pin": true}
+      },
+      "resolved": true,
+      "provenance_class": "forensic_branch",
+      "durability": "durable",
+      "permitted_use": "forensic_only",
+      "claims_supported": ["không có branch shift so với hai SHA pin tại thời điểm preflight"],
+      "caveat": "Nội dung luôn đọc bằng SHA pin, không qua branch name."
+    },
+    {
+      "id": "SRC-ACTIVE-TASK-BINDING",
+      "kind": "canonical_main_file",
+      "ref": "products/sumer-writing/tasks/ACTIVE.json + T0031-draft-section-P01/{work-order.json,context.md}",
+      "sha256": {
+        "ACTIVE.json": "4aca7d5fa9aee68a3702d69686219c085bc7a05a1223564b2de9c55840b01ec6",
+        "work-order.json": "c7bfd8b55463d559e6d3300f313232a6ca51e61ea97886990124ad4c05177fe3",
+        "context.md": "8d4bb4051ec800efb6053058f9f6ca633c09f2bf32f3d5c3a576fcbcb75694cf"
+      },
+      "resolved": true,
+      "provenance_class": "canonical_main",
+      "durability": "durable",
+      "permitted_use": "production_input",
+      "claims_supported": [
+        "bind current canonical state: active task T0031-draft-section-P01, state ready, KHÔNG thực thi"
+      ],
+      "caveat": "C000 không được ghi bất kỳ path nào của product."
+    },
+    {
+      "id": "THREAD-6A8C0F91",
+      "kind": "conversation_thread",
+      "thread_id": "6a8c0f91-b1c0-83ec-800b-c7bdf4307d85",
+      "title_claimed": "Cập nhật tiến độ commit",
+      "resolved": false,
+      "provenance_class": "untrusted_thread",
+      "durability": "unverified",
+      "permitted_use": "forensic_only",
+      "claims_supported": [],
+      "caveat": "Thread ID không resolve được bằng công cụ session-read hiện có; không tìm theo title gần giống, không gửi message vào thread cũ (theo work order)."
+    },
+    {
+      "id": "THREAD-6A869F7B",
+      "kind": "conversation_thread",
+      "thread_id": "6a869f7b-9604-83ec-9fb4-22c18f935993",
+      "title_claimed": "So sánh draft P01 FoC",
+      "resolved": false,
+      "provenance_class": "untrusted_thread",
+      "durability": "unverified",
+      "permitted_use": "forensic_only",
+      "claims_supported": [],
+      "caveat": "Như THREAD-6A8C0F91."
+    },
+    {
+      "id": "THREAD-6A8417C3",
+      "kind": "conversation_thread",
+      "thread_id": "6a8417c3-df24-83ec-9f6c-8b3caec178f1",
+      "title_claimed": "Important - Harness build agent",
+      "resolved": false,
+      "provenance_class": "untrusted_thread",
+      "durability": "unverified",
+      "permitted_use": "forensic_only",
+      "claims_supported": [],
+      "caveat": "Như THREAD-6A8C0F91."
+    },
+    {
+      "id": "THREAD-6A8482D8",
+      "kind": "conversation_thread",
+      "thread_id": "6a8482d8-58d0-83ec-b464-a0e7ef2bc690",
+      "title_claimed": "Review harness Agent",
+      "resolved": false,
+      "provenance_class": "untrusted_thread",
+      "durability": "unverified",
+      "permitted_use": "forensic_only",
+      "claims_supported": [],
+      "caveat": "Như THREAD-6A8C0F91."
+    }
+  ],
+  "missing_artifacts_registry": [
+    "candidate 8.1 body/hash/diff",
+    "evaluator outputs (identity/model/rubric/weighting) cho cả 5 score",
+    "comparator snapshot đã khóa tại thời điểm chấm",
+    "replay artifacts post-run-05",
+    "raw usage/test telemetry của chuỗi post-run-05",
+    "prototype runtime diff (transient files ngoài tree checkpoint)"
+  ]
+}

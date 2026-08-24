@@ -1,0 +1,69 @@
+{
+  "schema_version": "story-quality-run/1",
+  "cycle_id": "C000",
+  "protocol_path": "experiments/story-quality-control-loop-v1/CONTROL-LOOP.md",
+  "protocol_sha256": "54be114eb1c411a84cad2bf013d4c7defb493a81306b10e8d0db9eb33ce683e5",
+  "work_order_path": "experiments/story-quality-control-loop-v1/WORK-ORDER-C000.md",
+  "work_order_sha256": "f628aff58cee01302b97961f46a5b75ba9847d29598e021a87eadd7d9ab90537",
+  "main_base_sha": "aa778ac3e7f5823b1b1a3bf2d5b1138ee3970b78",
+  "hypothesis_id": null,
+  "task_binding": {
+    "product": "sumer-writing",
+    "active_task_id": "T0031-draft-section-P01",
+    "work_order_sha256": "c7bfd8b55463d559e6d3300f313232a6ca51e61ea97886990124ad4c05177fe3",
+    "context_packet_sha256": "8d4bb4051ec800efb6053058f9f6ca633c09f2bf32f3d5c3a576fcbcb75694cf"
+  },
+  "packet_file_hashes": {
+    "experiments/story-quality-control-loop-v1/CONTROL-LOOP.md": "54be114eb1c411a84cad2bf013d4c7defb493a81306b10e8d0db9eb33ce683e5",
+    "experiments/story-quality-control-loop-v1/EVALUATION-CONTRACT.md": "9da07838d2a03d30ea354e943dd2a658553edae36428004fbeb93310b512180b",
+    "experiments/story-quality-control-loop-v1/RUN-ARTIFACT-CONTRACT.md": "268869b7d2901e386a11e8a26b11327624fbdd2b7712da837a3ca148083c956f",
+    "experiments/story-quality-control-loop-v1/FORENSIC-SEED.md": "387cb1baaa3e4e5c371a4d89052ec7f6d231b67a8ea419c797edbd7db77c05a2",
+    "experiments/story-quality-control-loop-v1/STATE.json_at_preflight": "10517e53161547e8d50c88c5f0cecd5c30ce1d9cca44a8857180b95323190600",
+    "products/sumer-writing/tasks/ACTIVE.json": "4aca7d5fa9aee68a3702d69686219c085bc7a05a1223564b2de9c55840b01ec6"
+  },
+  "forensic_pins": {
+    "post_run05_pause_checkpoint": {
+      "sha": "2cebbbd9f45ffa68bec453db1616cd740455825a",
+      "subject": "checkpoint paused P01 harness quality audit",
+      "key_path": "experiments/p01-harness-audit-20260824/pause-checkpoint-20260824.md"
+    },
+    "old_five_run_branch_state": {
+      "sha": "e29a984dfbda80cc52afa66af0a42a34ba136669"
+    },
+    "legacy_multi_role_branch_head": {
+      "pin": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9",
+      "branch_observed": "refs/heads/agent/ox-alpha-p01-alt",
+      "shifted_from_pin": false
+    },
+    "validation_branch_head_observed": {
+      "pin": "7b0328aca7142a6e83f0caa65a0b5df2270a9963",
+      "branch_observed": "refs/remotes/origin/validation/p01-harness-20260824",
+      "shifted_from_pin": false
+    },
+    "foc_p01_benchmark_blob_on_main": {
+      "blob": "391febd843f0d99a8ba3730ae447b4e2eefb9061",
+      "path": "competitor's scripts/The sumerians FoC opening - Equal P01",
+      "size_bytes": 3591,
+      "text_read_in_cycle": false
+    }
+  },
+  "frozen_inputs": [
+    {"id": "pause_checkpoint_20260824", "uri": "git:2cebbbd9f45ffa68bec453db1616cd740455825a:experiments/p01-harness-audit-20260824/pause-checkpoint-20260824.md", "sha256_or_git_blob": "96db3a2863a2d61eb00d1d7ece3028061e6711ba"},
+    {"id": "old_audit_tree", "uri": "git:e29a984dfbda80cc52afa66af0a42a34ba136669:experiments/p01-harness-audit-20260824/", "sha256_or_git_blob": "b7ff0c9ba34a1a425c5a90fd0661612ec191c783"},
+    {"id": "voice_negative_controls", "uri": "git:dd93c67ee3067c0eb96bebad8dedbd51f270d3c9:experiments/p01-voice-v1/", "sha256_or_git_blob": "3140ca4fd5eacca6aa2eb7307e5f06c76dda4a5e"},
+    {"id": "writer_outcome_prototype_diff", "uri": "git:7b0328aca7142a6e83f0caa65a0b5df2270a9963", "sha256_or_git_blob": null},
+    {"id": "benchmark_blob_metadata_only", "uri": "git:391febd843f0d99a8ba3730ae447b4e2eefb9061", "sha256_or_git_blob": "391febd843f0d99a8ba3730ae447b4e2eefb9061"}
+  ],
+  "agents": [
+    {"role": "worker_lead", "model": "stealth/ox-alpha", "effort": "unknown", "write_access": true},
+    {"role": "post_run05_forensic", "model": "stealth/ox-alpha (inherited)", "effort": "unknown", "write_access": false},
+    {"role": "integrity_mapper", "model": "stealth/ox-alpha (inherited)", "effort": "unknown", "write_access": false}
+  ],
+  "budget": {
+    "token_cap": null,
+    "max_subagents": 3,
+    "max_candidates": 0,
+    "max_revisions": 0
+  },
+  "cycle_kind": "forensic_no_generation_no_evaluation"
+}

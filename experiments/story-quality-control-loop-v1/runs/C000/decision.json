@@ -1,0 +1,34 @@
+{
+  "cycle_id": "C000",
+  "status": "awaiting_planner_review",
+  "worker_recommendation": "retest",
+  "reason_codes": [
+    "lost_loop_reconstructed_with_provenance_classes",
+    "candidate_81_historical_summary_only_and_byte_level_unrecoverable",
+    "internal_gate_false_positive_recorded_at_step_6_9",
+    "composite_81_not_reproducible_from_stored_breakdown",
+    "retained_thread_ids_unresolvable_marked_unverified_per_work_order",
+    "all_seven_hypotheses_require_clean_retest_on_main_before_any_treatment"
+  ],
+  "hard_gates": {
+    "reproducibility": true,
+    "governance_scope_allowlist": true,
+    "no_benchmark_text_read": true,
+    "no_draft_generated": true,
+    "no_harness_change": true
+  },
+  "unverified_claims": [
+    "checkpoint_assertion: composite scores 6.6/7.3/6.7/6.9/8.1 (evaluator identity/model/rubric/weighting missing)",
+    "checkpoint_assertion: breakdown candidate 8.1 (8.6/8.7/8.5/9.0/6.7)",
+    "checkpoint_assertion: internal false-positive pass tai buoc 6.9",
+    "checkpoint_assertion: cost figures (~1.900 token packet; 878/1.500 writer instruction; revision ~5.9-6.6k vs ~13.3k; lookups 10->7)",
+    "checkpoint_assertion: regression 81/82 voi 42 stale product errors",
+    "thread_only_assertion: noi dung 4 retained thread IDs (khong resolve duoc trong session DB profile nay)"
+  ],
+  "subagent_outputs_digest": {
+    "post_run05_forensic_sha256": null,
+    "integrity_mapper_sha256": null,
+    "note": "digest dien o events.jsonl sau khi tong hop"
+  },
+  "next_authority": "planner_reviewer"
+}
