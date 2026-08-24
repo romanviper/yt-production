@@ -1,8 +1,17 @@
 {
   "schema_version": 1,
-  "status": "in_progress",
-  "headline": "",
-  "material_points": [],
-  "decision": {"required": false, "question": "", "recommendation": "", "options": []},
-  "next_step": ""
+  "status": "draft_completed",
+  "headline": "P03 draft completed",
+  "material_points": [
+    "Writing is framed as expanding from bookkeeping into a broader information system.",
+    "Draft and handoff outputs were created.",
+    "Validation commands remain to be executed."
+  ],
+  "decision": {
+    "required": false,
+    "question": "",
+    "recommendation": "",
+    "options": []
+  },
+  "next_step": "review_section"
 }
