@@ -38,7 +38,7 @@ Chuỗi thứ hai chỉ còn summary ở commit `2cebbbd9f45ffa68bec453db1616cd7
 ### Worker lead
 
 - Là filesystem writer duy nhất trong cycle.
-- Điều phối tối đa ba subagent cùng lúc.
+- Điều phối tối đa ba subagent **đồng thời**; planner có thể cho phép nhiều wave và không giới hạn tổng số call.
 - Truyền snapshot/đường dẫn được phép cho subagent; không bảo họ tự scan repo.
 - Tổng hợp artifact, chạy validation, commit checkpoint trên `main`, rồi dừng.
 - Không tự sửa work order, rubric hoặc hypothesis sau khi thấy output.
@@ -179,7 +179,7 @@ Không cho nhiều agent cùng sửa một file. Nếu cần lưu output subagen
 Nếu người dùng cung cấp token cap, worker phải copy nguyên số đó vào manifest. Nếu chưa có cap số, dùng operation cap:
 
 - C000: 0 draft, tối đa 3 subagent, 1 synthesis pass.
-- C010: 0 draft, tối đa 3 evaluator, chỉ artifact đã tồn tại.
+- C010: 0 fresh production draft; số wave/judge do work order khóa theo độ tin cậy cần đạt. Mặc định không có token cap và không có total-subagent-call cap; giới hạn ba chỉ là concurrency.
 - Development cycle: tối đa 2 fresh drafts và 1 revision của winner.
 - Không chạy replicate, new treatment hoặc new section nếu chưa qua planner checkpoint.
 

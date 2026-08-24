@@ -1,0 +1,104 @@
+{
+  "schema_version": "story-quality-calibration-seed/1",
+  "cycle_id": "C010",
+  "purpose": "Seed a promotion-safe evaluator preflight. Worker may expand this into deterministic fixtures before judges run, but may not invent human gold or change labels after seeing judgments.",
+  "benchmark": {
+    "ref": "391febd843f0d99a8ba3730ae447b4e2eefb9061",
+    "path": "competitor's scripts/The sumerians FoC opening - Equal P01",
+    "git_blob": "391febd843f0d99a8ba3730ae447b4e2eefb9061",
+    "permitted_use": "evaluator_only",
+    "matching_status": "p01_equivalent_label_and_blob_verified; semantic_matching_must_be_audited_in_C010"
+  },
+  "planner_seed_anchors": [
+    {
+      "id": "A-HUMAN-ORDINAL-OLD-NEW",
+      "type": "human_ordinal_story_direction",
+      "candidate_a": {
+        "ref": "246e4a093225bd5aa4ec02e9121bbad8eb4b3365:products/sumer-writing/03_sections/P01/draft.md",
+        "git_blob": "7dcc1033cc76a61ae85a04bd699e9494d56f94cf"
+      },
+      "candidate_b": {
+        "ref": "c3daaa30c95e92a009560fa7d808c5f4a6425352:products/sumer-writing/03_sections/P01/draft.md",
+        "git_blob": "3424c98525b3946e3803be562b8113c79f5117e8"
+      },
+      "gold": {
+        "preference": "B",
+        "scope": "ordinal improvement only; B remained medium and below FoC",
+        "source": "thread:6a8482d8-58d0-83ec-b464-a0e7ef2bc690 turn:75be696a-d549-4783-b5cc-c2acfeac77b2",
+        "strength": "human_authorized_nonblind_ordinal"
+      }
+    },
+    {
+      "id": "A-AGGREGATE-MASK-FACTUAL",
+      "type": "factual_hard_gate_and_aggregate_mask",
+      "candidate": {
+        "ref": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9:experiments/p01-voice-v1/drafts/variant-C-r2.md",
+        "git_blob": "1d8031216c10ff85b8dc7332d603be82e1ec85e3"
+      },
+      "diagnostic_source": {
+        "ref": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9:experiments/p01-voice-v1/drafts/REVIEW-C-r2.md",
+        "git_blob": "b47aef1e358012b467e42bc651a17cf33dbd3fc5"
+      },
+      "gold": {
+        "required": "G1 must not pass while the unsupported 'cỡ bàn tay' detail remains; high aggregate story score cannot compensate",
+        "strength": "planner_frozen_hard_gate_direction_requires_source_pack_reverification"
+      }
+    },
+    {
+      "id": "A-BENCHMARK-CONTAMINATION",
+      "type": "evidence_and_anti_imitation_hard_gate",
+      "candidate": {
+        "ref": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9:experiments/p01-voice-v1/drafts/variant-B.md",
+        "git_blob": "b9d08c4b5201fa21f3358f6a7c3af6e084340692"
+      },
+      "diagnostic_source": {
+        "ref": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9:experiments/p01-voice-v1/EXPERIMENT-LOG.md",
+        "git_blob": "6d4644b0b8f583b0ba6f69c8e5383c05b1dbe00b"
+      },
+      "gold": {
+        "required": "overall hard fail; imported FoC material outside the allowed carrier/evidence surface must be detected",
+        "strength": "planner_frozen_hard_gate_direction_requires_blob_comparison"
+      }
+    },
+    {
+      "id": "A-GOODHART-DIMENSION-SPLIT",
+      "type": "dimension_separation_diagnostic_not_gold",
+      "candidate_a": {
+        "ref": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9:experiments/p01-voice-v1/drafts/variant-G2.md",
+        "git_blob": "521ded0d2a66d2b6217f2184f65d417384dac4b5"
+      },
+      "candidate_b": {
+        "ref": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9:experiments/p01-voice-v1/drafts/variant-H2.md",
+        "git_blob": "4e75f45191045c85011653d8280bfd175219582f"
+      },
+      "diagnostic_source": {
+        "ref": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9:experiments/p01-voice-v1/EXPERIMENT-LOG-v5.md",
+        "git_blob": "0313b66d1227b560e62634bfb559fd1b58eb3f87"
+      },
+      "expected_diagnostic": "Do not force one overall gold. Evaluator should expose G2's higher concrete density and H2's stronger flow/spoken naturalness instead of hiding the tradeoff in a composite."
+    }
+  ],
+  "supporting_evaluator_only_blobs": [
+    {"ref": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9:experiments/p01-voice-v1/pack/narration-pack-v2.json", "git_blob": "fbde42c4c309af1b9cb210e3b4bb586f530554d3"},
+    {"ref": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9:experiments/p01-voice-v1/pack/narration-pack-v3-render.md", "git_blob": "1de2c21001c6aa8d65f18941623776813bf4d1dc"},
+    {"ref": "dd93c67ee3067c0eb96bebad8dedbd51f270d3c9:experiments/p01-voice-v1/pack/SOURCE-ADDENDUM.md", "git_blob": "2e64d256e93693aa2b167c929013c99787a0eea6"}
+  ],
+  "required_expansion_before_judging": {
+    "minimum_unique_gold_cases": 12,
+    "categories": ["obvious_defect", "close_call", "outline_or_boundary_trap", "factual_or_imitation_trap"],
+    "minimum_per_category": 3,
+    "minimum_reversed_order_presentations": 10,
+    "minimum_duplicate_presentations": 7,
+    "rules": [
+      "Human gold requires exact thread/message or committed user-verdict binding to exact candidate blobs.",
+      "Objective hard-gate fixtures may use deterministic transformations frozen and hash-bound before judging.",
+      "Synthetic creative rewrites and worker-invented preference labels are forbidden.",
+      "Historical self-review may be diagnostic but never gold."
+    ]
+  },
+  "known_missing_at_dispatch": [
+    "promotion-grade numeric human anchors",
+    "durable human blind verdict versus FoC",
+    "pre-existing exact outline-boundary trap"
+  ]
+}

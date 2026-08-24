@@ -3,10 +3,10 @@
   "protocol_version": 1,
   "product": "sumer-writing",
   "canonical_branch": "main",
-  "status": "awaiting_planner_review",
-  "current_cycle": "C000",
-  "current_work_order": "experiments/story-quality-control-loop-v1/WORK-ORDER-C000.md",
-  "next_authority": "planner_reviewer",
+  "status": "ready_for_worker",
+  "current_cycle": "C010",
+  "current_work_order": "experiments/story-quality-control-loop-v1/WORK-ORDER-C010.md",
+  "next_authority": "worker_lead",
   "promotion_authority": "user_only",
   "historical_quality_claim": {
     "score": 8.1,
@@ -27,31 +27,40 @@
     {
       "title": "Cập nhật tiến độ commit",
       "thread_id": "6a8c0f91-b1c0-83ec-800b-c7bdf4307d85",
-      "status": "forensic_read_only"
+      "status": "resolved_untrusted_historical_assertion"
     },
     {
       "title": "So sánh draft P01 FoC",
       "thread_id": "6a869f7b-9604-83ec-9fb4-22c18f935993",
-      "status": "forensic_read_only"
+      "status": "resolved_untrusted_historical_assertion"
     },
     {
       "title": "Important - Harness build agent",
       "thread_id": "6a8417c3-df24-83ec-9f6c-8b3caec178f1",
-      "status": "forensic_read_only"
+      "status": "resolved_untrusted_historical_assertion"
     },
     {
       "title": "Review harness Agent",
       "thread_id": "6a8482d8-58d0-83ec-b464-a0e7ef2bc690",
-      "status": "forensic_read_only"
+      "status": "resolved_untrusted_historical_assertion"
     }
   ],
   "cycle_limits": {
     "max_concurrent_subagents": 3,
+    "max_total_subagent_calls": null,
+    "token_cap": null,
     "max_candidates": 0,
     "max_revisions": 0,
     "allow_product_writes": false,
     "allow_protected_system_writes": false
   },
   "last_checkpoint": "experiments/story-quality-control-loop-v1/runs/C000/CHECKPOINT.md",
-  "last_checkpoint_commit": null
+  "last_checkpoint_commit": "1356872769eaa6b8b1b2f3a74595ec58b7b9f95e",
+  "last_planner_review": "experiments/story-quality-control-loop-v1/reviews/C000-planner-review.md",
+  "last_review_outcome": "accepted_with_remediation",
+  "artifact_contract_version": 2,
+  "planner_frozen_inputs": [
+    "experiments/story-quality-control-loop-v1/CALIBRATION-SEED-C010.json",
+    "experiments/story-quality-control-loop-v1/JUDGE-PROMPT-C010.md"
+  ]
 }
