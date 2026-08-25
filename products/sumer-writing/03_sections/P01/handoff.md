@@ -1,16 +1,20 @@
 # Handoff — P01
 
-## Trạng thái đạt được
+## Exit state reached
 
-Khán giả rời phần này với một mô hình hình thành theo “hệ sinh thái”, không phải khoảnh khắc phát minh đơn lẻ. Tính liên tục vật chất mạnh nhất nằm ở các thực hành số; token, con dấu, hình ảnh, bullae, phiến số và thực hành tổ chức cùng tồn tại nhưng không tạo thành một chuỗi tuyến tính đã được chứng minh. Quy mô hành chính là áp lực lớn vì thông tin phải tồn tại ngoài trí nhớ cá nhân, song không đủ để kết luận quản trị là nguyên nhân duy nhất.
+Khán giả rời P01 với mô hình formation như một ecology vật chất gồm thực hành số, vật đếm, seals/bullae, numerical tablets, cách bố trí dấu trên đất sét và institutional demand. Administration hiện ra như một áp lực lớn và một phần của vòng phản hồi, không phải nguyên nhân duy nhất.
 
-## Nhịp chuyển tiếp
+## Carrier state
 
-Phần kết đã đặt câu hỏi mở: nếu nhu cầu ghi chép và các kỹ thuật thành phần đã có, hệ thống dấu mới khác các công cụ cũ ở đâu, và khác biệt ấy làm nó hữu ích theo cách nào? Phần sau có thể đi thẳng vào khả năng tổ chức quan hệ giữa số lượng, đối tượng và dấu trên cùng một bề mặt, không cần nhắc lại toàn bộ lịch sử token.
+Khoản hàng hóa ban đầu đã được chuyển từ một sự kiện kiểm đếm thoáng qua thành một vật ghi bền có thể được người khác xem lại, đặt cạnh các bảng khác và kiểm tra sau lần giao nhận.
 
-## Giới hạn cần giữ
+## Evidence limits carried forward
 
-- Không biến token → bulla → tablet thành dòng phát triển tất yếu.
-- Không đồng nhất phân phối, điều phối lao động, nghĩa vụ và sở hữu.
-- Không suy từ corpus hành chính còn lại sang kết luận “hành chính là nguyên nhân duy nhất”.
-- Mô hình phản hồi giữa tổ chức và ghi chép chỉ là diễn giải có điều kiện; tác động năng lực về sau chưa được chứng minh trong phần này.
+- Không dùng token như một bộ mã kế toán thống nhất kéo dài hàng thiên niên kỷ.
+- Không kể formation như chuỗi tuyến tính token → bulla → tablet → writing.
+- Không đồng nhất accounting context với market exchange, tax, tribute, redistribution, labor coordination, obligation hoặc ownership.
+- Không suy từ corpus hành chính được bảo tồn sang kết luận administration là nguyên nhân duy nhất.
+
+## Transition out
+
+Nếu nhu cầu và các recording practices đã tồn tại, phần tiếp theo cần hỏi điều gì khiến hệ thống dấu mới thực sự khác biệt, linh hoạt và hữu ích hơn một bản đếm bền.

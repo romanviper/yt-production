@@ -37,14 +37,14 @@
     }
   ],
   "prose_provenance": {
-    "task_id": "T0043-draft-section-P01",
+    "task_id": "T0044-draft-section-P01",
     "operation": "draft_section",
-    "submitted_at": "2026-08-25T12:16:56.858524+00:00",
-    "draft_sha256": "21b9d553601a24b577decc766e029f190c68e829e6c05c2be7f353a50c3fd2c4",
-    "handoff_sha256": "0d9fc90163326942d7a17b42bf226f1e318bf60d36c3376de8f5cb42e6a514ca",
+    "submitted_at": "2026-08-25T12:51:33.663902+00:00",
+    "draft_sha256": "466d1fd87f6df3a8779f3feb06b29063fadff19af3a747808be92e9ac9432212",
+    "handoff_sha256": "164cad9aa8b99d5c24cd69a055b3d5d6d67768c81ceff7fb0789f4c25a7a22cd",
     "schema_version": 2,
     "packet_schema_version": 5,
-    "task_packet_sha256": "b683b89ca27ea802c89840737891227a1a1ebb9c169e6a52d094d65088cdc03c"
+    "task_packet_sha256": "b343ac83824223eb9c388eaa8d5b0b7dfbb13a527263c38410e8e6a7c21b47fd"
   },
   "review_provenance": {
     "task_id": "T0036-review-section-P01",

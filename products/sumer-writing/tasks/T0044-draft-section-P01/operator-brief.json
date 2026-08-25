@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "task_id": "T0044-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "P01 v3 đã sẵn sàng cho vòng phản hồi ngắn.",
+  "material_points": [
+    "Draft 1.423 từ đi theo một khoản hàng hóa từ lúc đếm đến bản ghi đất sét có thể kiểm tra lại.",
+    "Một chi tiết nguồn vật chất được ghi trước story route; 5 biến đổi được khóa trước khi mở claim prose.",
+    "Tất cả 8 claim đã được resolve; bản viết qua đúng một polish rồi dừng."
+  ],
+  "decision": {
+    "required": true,
+    "question": "P01 v3 đã tiến gần hơn tới cách kể show-first mong muốn chưa?",
+    "recommendation": "Đọc draft và phản hồi trực tiếp về mạch trải nghiệm, phần tell và giọng kể.",
+    "options": [
+      {
+        "label": "Approve",
+        "effect": "Chấp nhận P01 tại checkpoint hiện tại."
+      },
+      {
+        "label": "Request rework",
+        "effect": "Giữ checkpoint và route một vòng sửa ngắn từ feedback mới."
+      }
+    ]
+  }
+}
