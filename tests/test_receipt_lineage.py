@@ -204,6 +204,16 @@ class ReceiptLineageTests(unittest.TestCase):
             old_packet["schema_version"] = 4
             write_json(old_packet_path, old_packet)
             self.assertEqual([], validate_packet_contract(old_packet, product / "tasks" / draft_id / "context.md"))
+            with self.assertRaisesRegex(EvidenceAccessError, "packet schema or hash has changed"):
+                compile_packet(product, "review_section", "T9997-downgraded-review-P01", section="P01")
+
+            root = product / "03_sections" / "P01"
+            state_path = root / "section.json"
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            state["prose_provenance"].pop("schema_version")
+            state["prose_provenance"].pop("packet_schema_version")
+            state["prose_provenance"].pop("task_packet_sha256")
+            write_json(state_path, state)
             packet, context = compile_packet(product, "review_section", "T9997-review-section-P01", section="P01")
             projection = packet["recorded_evidence_projection"]
             self.assertEqual("legacy_unverifiable", projection["recorded_evidence_state"])
@@ -215,7 +225,6 @@ class ReceiptLineageTests(unittest.TestCase):
             frozen_review.pop("recorded_evidence_projection")
             self.assertEqual([], validate_packet_contract(frozen_review))
 
-            root = product / "03_sections" / "P01"
             state = json.loads((root / "section.json").read_text(encoding="utf-8"))
             state["status"] = "changes_requested"
             write_json(root / "section.json", state)
@@ -231,6 +240,48 @@ class ReceiptLineageTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(EvidenceAccessError, "schema-v5 draft predecessor"):
                 create_task(product, "revise_section", "P01", None, False)
+
+    def test_v5_prose_provenance_binds_packet_schema_hash_and_submission_timestamp(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            materialize(product)
+            draft_id = submit_fixture_prose(product, ["Timestamp-bound draft detail."])
+            root = product / "03_sections" / "P01"
+            state = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            provenance = state["prose_provenance"]
+            self.assertEqual(2, provenance["schema_version"])
+            self.assertEqual(5, provenance["packet_schema_version"])
+
+            work_path = product / "tasks" / draft_id / "work-order.json"
+            work = json.loads(work_path.read_text(encoding="utf-8"))
+            work["submitted_at"] = "2001-01-01T00:00:00+00:00"
+            write_json(work_path, work)
+            with self.assertRaisesRegex(EvidenceAccessError, "timestamp differs"):
+                compile_packet(product, "review_section", "T9987-review-section-P01", section="P01")
+
+        with tempfile.TemporaryDirectory() as temp:
+            product, _, revision_id = _revised_fixture(
+                temp,
+                ["Inherited timestamp-bound detail."],
+                ["Direct timestamp-bound detail."],
+            )
+            work_path = product / "tasks" / revision_id / "work-order.json"
+            work = json.loads(work_path.read_text(encoding="utf-8"))
+            work["submitted_at"] = "2001-01-01T00:00:00.000001+00:00"
+            write_json(work_path, work)
+            with self.assertRaisesRegex(EvidenceAccessError, "timestamp differs"):
+                compile_packet(product, "review_section", "T9986-review-section-P01", section="P01")
+
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            materialize(product)
+            draft_id = submit_fixture_prose(product, ["Schema-bound draft detail."])
+            packet_path = product / "tasks" / draft_id / "packet.json"
+            packet = json.loads(packet_path.read_text(encoding="utf-8"))
+            packet["schema_version"] = 4
+            write_json(packet_path, packet)
+            with self.assertRaisesRegex(EvidenceAccessError, "packet schema or hash has changed"):
+                compile_packet(product, "review_section", "T9985-review-section-P01", section="P01")
 
     def test_predecessor_trace_attestation_binds_nonrecord_content_and_absence(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

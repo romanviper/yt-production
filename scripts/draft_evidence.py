@@ -165,7 +165,33 @@ def _validated_provenance(
         provenance.get("submitted_at"),
         f"section {section} prose provenance submitted_at",
     )
-    if provenance_at < submitted_at:
+    provenance_schema = provenance.get("schema_version")
+    if provenance_schema == 2:
+        expected_keys = {
+            "schema_version",
+            "task_id",
+            "operation",
+            "submitted_at",
+            "draft_sha256",
+            "handoff_sha256",
+            "packet_schema_version",
+            "task_packet_sha256",
+        }
+        if set(provenance) != expected_keys:
+            raise EvidenceAccessError("bound prose provenance has an invalid shape")
+        if (
+            provenance.get("packet_schema_version") != RECEIPT_LINEAGE_PACKET_SCHEMA
+            or packet.get("schema_version") != RECEIPT_LINEAGE_PACKET_SCHEMA
+            or provenance.get("task_packet_sha256") != sha256(packet_path)
+        ):
+            raise EvidenceAccessError("bound prose provenance packet schema or hash has changed")
+        if provenance_at != submitted_at:
+            raise EvidenceAccessError("bound prose provenance timestamp differs from submitted work order")
+    elif provenance_schema is not None:
+        raise EvidenceAccessError("prose provenance schema is unsupported")
+    elif packet.get("schema_version") == RECEIPT_LINEAGE_PACKET_SCHEMA:
+        raise EvidenceAccessError("schema-v5 prose task is missing bound provenance")
+    elif provenance_at < submitted_at:
         raise EvidenceAccessError("section prose provenance predates its submitted prose task")
     return provenance, work, packet, packet_path, submitted_at
 
@@ -1148,6 +1174,8 @@ def build_review_record_projection(product_dir: Path, section: str) -> dict[str,
         )
     except EvidenceAccessError as provenance_error:
         candidate = state.get("prose_provenance")
+        if isinstance(candidate, dict) and candidate.get("schema_version") == 2:
+            raise provenance_error
         if isinstance(candidate, dict) and _safe_task_id(candidate.get("task_id")):
             candidate_packet = product_dir / "tasks" / str(candidate["task_id"]) / "packet.json"
             try:

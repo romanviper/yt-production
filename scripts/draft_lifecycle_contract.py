@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -18,6 +17,8 @@ except ModuleNotFoundError:
 LIVE_TASK_STATES = {"ready", "in_progress"}
 SUBMITTED_TASK_STATES = {"ready_for_review", "closed"}
 PROSE_OPERATIONS = {"draft_section", "revise_section"}
+BOUND_PROSE_PROVENANCE_SCHEMA = 2
+BOUND_PACKET_SCHEMA = 5
 
 
 def _json_hash(value: Any) -> str:
@@ -204,7 +205,10 @@ def active_prose_task(product_dir: Path, section: str, status: str | None) -> tu
 
 def record_submitted_prose(product_dir: Path, task_id: str) -> None:
     product_dir = product_dir.resolve()
-    work = read_json(product_dir / "tasks" / task_id / "work-order.json")
+    task_dir = product_dir / "tasks" / task_id
+    work = read_json(task_dir / "work-order.json")
+    packet_path = task_dir / "packet.json"
+    packet = read_json(packet_path)
     operation = work.get("operation")
     if operation not in PROSE_OPERATIONS:
         return
@@ -216,13 +220,25 @@ def record_submitted_prose(product_dir: Path, task_id: str) -> None:
         raise FileNotFoundError(f"Submitted prose task {task_id} requires draft.md and handoff.md")
     state_path = root / "section.json"
     state = read_json(state_path)
-    state["prose_provenance"] = {
+    submitted_at = work.get("submitted_at")
+    if not isinstance(submitted_at, str) or not submitted_at:
+        raise ValueError(f"Submitted prose task {task_id} is missing submitted_at")
+    provenance = {
         "task_id": task_id,
         "operation": operation,
-        "submitted_at": datetime.now(timezone.utc).isoformat(),
+        "submitted_at": submitted_at,
         "draft_sha256": sha256(draft),
         "handoff_sha256": sha256(handoff),
     }
+    if packet.get("schema_version") == BOUND_PACKET_SCHEMA:
+        provenance.update(
+            {
+                "schema_version": BOUND_PROSE_PROVENANCE_SCHEMA,
+                "packet_schema_version": BOUND_PACKET_SCHEMA,
+                "task_packet_sha256": sha256(packet_path),
+            }
+        )
+    state["prose_provenance"] = provenance
     if operation == "revise_section":
         cycle_id = state.get("cycle_id")
         prior = state.get("revision_pass")
@@ -243,6 +259,42 @@ def submitted_prose_errors(product_dir: Path, section: str, state: dict[str, Any
     if not isinstance(task_id, str) or not task_id:
         return [f"{section} canonical draft provenance is missing task_id"]
     errors = _task_scope_errors(product_dir, task_id, section, live=False)
+    task_dir = product_dir / "tasks" / task_id
+    try:
+        work = read_json(task_dir / "work-order.json")
+        packet_path = task_dir / "packet.json"
+        packet = read_json(packet_path)
+    except (FileNotFoundError, ValueError, json.JSONDecodeError) as exc:
+        errors.append(f"{section} cannot verify submitted prose provenance binding: {exc}")
+        work = {}
+        packet = {}
+        packet_path = task_dir / "packet.json"
+    provenance_schema = provenance.get("schema_version")
+    if provenance_schema == BOUND_PROSE_PROVENANCE_SCHEMA:
+        expected_keys = {
+            "schema_version",
+            "task_id",
+            "operation",
+            "submitted_at",
+            "draft_sha256",
+            "handoff_sha256",
+            "packet_schema_version",
+            "task_packet_sha256",
+        }
+        if set(provenance) != expected_keys:
+            errors.append(f"{section} bound prose provenance has an invalid shape")
+        if (
+            provenance.get("packet_schema_version") != BOUND_PACKET_SCHEMA
+            or packet.get("schema_version") != BOUND_PACKET_SCHEMA
+            or provenance.get("task_packet_sha256") != (sha256(packet_path) if packet_path.is_file() else None)
+        ):
+            errors.append(f"{section} prose provenance packet binding has changed")
+        if provenance.get("submitted_at") != work.get("submitted_at"):
+            errors.append(f"{section} prose provenance timestamp differs from submitted work order")
+    elif provenance_schema is not None:
+        errors.append(f"{section} prose provenance schema is unsupported")
+    elif packet.get("schema_version") == BOUND_PACKET_SCHEMA:
+        errors.append(f"{section} schema-v5 prose task requires bound provenance")
     root = product_dir / "03_sections" / section
     draft = root / "draft.md"
     handoff = root / "handoff.md"
@@ -250,7 +302,6 @@ def submitted_prose_errors(product_dir: Path, section: str, state: dict[str, Any
         errors.append(f"{section} draft differs from submitted task provenance")
     if handoff.is_file() and provenance.get("handoff_sha256") != sha256(handoff):
         errors.append(f"{section} handoff differs from submitted task provenance")
-    task_dir = product_dir / "tasks" / task_id
     if not (task_dir / "report.md").is_file():
         errors.append(f"{section} submitted prose task is missing report.md")
     if not (task_dir / "operator-brief.json").is_file():
