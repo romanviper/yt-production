@@ -1,25 +1,59 @@
-# Trước chữ viết đã có một bài toán phải giải
+# P01 — Prose test
 
-Nếu hình dung chữ viết như một ý tưởng bỗng xuất hiện trọn vẹn, ta sẽ bắt đầu từ câu hỏi sai. Trước khi có một hệ thống dấu đủ sức ghi lại lời nói, đã có một bài toán vật chất giản dị hơn: làm sao giữ được thông tin sau khi hành động tạo ra nó đã kết thúc? Một lượng hàng hóa vừa được đếm. Một sự chuyển giao vừa diễn ra. Vật đã rời chỗ, những người có mặt cũng có thể rời đi. Cái còn thiếu không nhất thiết là một câu văn. Cái còn thiếu là một dấu vết đủ bền để kết quả của thao tác không biến mất cùng khoảnh khắc ấy.
+Khối đất sét rộng chưa đầy tám centimet đã vỡ. Qua khe hở, những viên đất sét nhỏ hiện ra: gần hình cầu, bầu dục, tất cả bị giữ trong một lớp vỏ khác.
 
-Hãy theo chính quá trình đó. Ban đầu, hàng hóa có thể được gom thành nhóm và đếm. Việc đếm đã là một công nghệ thông tin: nó biến nhiều vật riêng lẻ thành một lượng có thể thao tác theo quy ước. Trong chuỗi thực hành dẫn tới proto-cuneiform, các hệ thống số cho ta vết nối vật chất chắc nhất giữa những thiết bị có trước chữ viết và những bản đất sét mang dấu về sau. Vết nối này mạnh hơn nhiều so với việc cố truy một đường liên tục cho hình dạng của từng dấu không phải số.
+Vật được tìm thấy tại Chogha Mish. Chính vết vỡ cho mắt một lối vào. Khi bulla còn nguyên, đất sét khép kín quanh những viên nhỏ; từ bên ngoài, chúng biến mất.
 
-Nhưng một kết quả đếm chỉ hữu ích trong lúc thực hiện thì chưa giải quyết được bài toán. Khi hàng hóa và người đếm tách khỏi nhau, lượng ấy cần một vật mang nó đi tiếp. Những đồ vật nhỏ bằng đất sét thường được gọi là token là một phần của lịch sử này. Tuy nhiên, không thể lấy sự tồn tại lâu dài của token làm bằng chứng rằng suốt hàng thiên niên kỷ đã có một mã kế toán chuẩn hóa duy nhất. Các hiện vật ấy có nhiều chức năng. Chỉ trong một số trường hợp muộn, những token đơn giản nằm trong bullae, tức các vỏ đất sét, mới cho thấy rõ vai trò số và kiểm kê.
+Nhưng bề mặt không trống. Những bulla nguyên khác tại Chogha Mish thường có dấu in từ hơn một con dấu. Một số chiếc còn mang vết số. Đầu bút ấn xuống đất sét ướt rồi nhấc lên. Ngón tay hoặc một vật đất sét khác ép vào lớp vỏ rồi rời đi. Các vết ấy vẫn còn.
 
-Giới hạn đó rất quan trọng, bởi nó chặn một câu chuyện quá gọn: token biến thành bulla, bulla biến thành tablet, rồi chữ viết ra đời. Bằng chứng không cho phép xếp mọi thứ thành một hàng như vậy. Thứ hiện ra là một hệ sinh thái thực hành song song: các cách biểu diễn số lượng, token, con dấu, bullae, hình tượng, những bản ghi số và hoạt động của các thiết chế. Chúng có thể gặp nhau, bổ sung nhau và tạo điều kiện cho một hệ thống dấu mới; ta không thể đo chính xác mỗi thành phần đã đóng góp bao nhiêu.
+Muốn lấy bớt một viên, phải mở lớp vỏ. Muốn đặt thêm một viên rồi khép nó lại, phải tạo ra một bề mặt mới. Lớp đất sét và những con dấu khiến việc can thiệp khó diễn ra mà không để lại dấu vết.
 
-Trong hệ sinh thái ấy, đất sét làm thay đổi vị trí của thông tin. Một vật đếm có thể đại diện cho lượng. Một lớp bọc có thể giữ những vật đếm. Một dấu niêm phong có thể đưa thao tác xác nhận lên vật chất. Nhưng khi lượng và loại được đặt trực tiếp thành dấu trên bề mặt một miếng đất sét, kết quả trở nên nhìn thấy mà không cần lặp lại toàn bộ hành động ban đầu. Bề mặt ấy có thể ở lại sau cuộc chuyển giao. Nó có thể đi sang một khâu khác. Nó có thể được đặt cạnh một bản ghi khác để đối chiếu. Thông tin bắt đầu tách khỏi trí nhớ của những người từng có mặt.
+Nhưng lớp vỏ cũng tạo ra một khó khăn khác. Nếu không mở nó, làm sao biết những gì nằm trong đó?
 
-Đó là ích lợi cốt lõi của dấu bền: không phải vẻ trang trọng của một phát minh, mà là khả năng kéo dài đời sống của một thao tác. Việc đếm chỉ xảy ra một lần; dấu về lượng còn lại. Hàng hóa có thể di chuyển; bản ghi vẫn có thể lưu một kết quả. Một người không chứng kiến khoảnh khắc đầu tiên vẫn có một vật thể để xem xét. Khi nhiều dấu cùng nằm trên một bề mặt, chúng còn có thể giữ các quan hệ mà những token riêng lẻ khó bộc lộ ngay: lượng nào đi cùng loại nào, mục nào thuộc cùng một bản ghi, phần nào cần được phân biệt với phần khác.
+Các vết đếm dường như đưa câu trả lời lên bề mặt. Những hõm và dấu niêm phong có thể cho phép kiểm tra một phần hồ sơ mà không cần mở nó. Thật dễ hình dung mỗi dấu ngoài là bản sao của một vật giấu bên trong.
 
-Khi quy mô hoạt động có tổ chức tăng lên, lợi ích ấy càng rõ. Nhiều lần đếm, nhiều lần chuyển, nhiều người và nhiều thời điểm tạo ra số việc mà trí nhớ trực tiếp khó gánh hết. Các thiết chế vì thế tạo một áp lực lớn đối với việc ghi lại. Tư liệu proto-cuneiform sớm nhất còn được bảo tồn chủ yếu mang tính hành chính, nên áp lực này không phải phỏng đoán tùy ý. Những bản đất sét cho thấy việc ghi chép đã bám rất chặt vào các bối cảnh kế toán và quản lý.
+Vật chứng không cho phép chúng ta đi xa đến thế.
 
-Tuy vậy, “hành chính” chỉ xác định được một vùng hoạt động, chưa tự động cho biết chính xác cơ chế đang diễn ra. Từ một bản ghi có số và hàng hóa, ta thường nhận ra bối cảnh kế toán chắc hơn là nhận ra đó là trao đổi thị trường, thuế, cống nạp hay phân phối lại. Tên người, loại hàng, hệ đo và cấu trúc văn bản đôi khi giúp thu hẹp khả năng, nhưng cách đọc dấu và bối cảnh thiết chế vẫn chưa hoàn chỉnh. Phân phối lại, điều phối lao động, ghi nghĩa vụ và xác lập quyền sở hữu cũng không phải bốn tên gọi thay thế cho cùng một việc. Mỗi cơ chế cần bằng chứng riêng; một bản đất sét thậm chí có thể tham gia hơn một cơ chế.
+Với nhiều chiếc còn nguyên, chúng ta vẫn chưa có một đối chiếu chắc chắn giữa hai phía. Không thể mặc định mỗi dấu bên ngoài là bản sao của một token bên trong. Phần ngoài có thể cho phép kiểm tra nhanh; phần trong có thể giữ một lớp kiểm tra khác. Nhưng quan hệ chính xác giữa chúng vẫn chưa rõ.
 
-Vì thế, không nên biến nhu cầu quản lý thành một nguyên nhân duy nhất. Việc các thiết chế đô thị phát triển cùng các hệ thống ghi chép cho thấy chúng tương thích và tạo áp lực cho nhau; sự đồng xuất hiện ấy không chứng minh một mũi tên nhân quả chỉ đi theo một hướng. Mô hình thận trọng hơn là một vòng phản hồi. Hoạt động có tổ chức mở rộng làm tăng nhu cầu giữ thông tin. Những bản ghi tốt hơn lại có thể giúp thiết chế xử lý nhiều hoạt động hơn. Ở giai đoạn này, bằng chứng cho phép thấy áp lực và khả năng tương hỗ, chứ chưa cho phép tuyên bố rằng một bên đơn độc sinh ra bên kia.
+Trong những trường hợp ấy, bề mặt không chỉ mang dấu niêm phong. Các vết số có thể mang thêm một phần nội dung của hồ sơ.
 
-Điều này cũng giải thích tại sao độ bền của đất sét chỉ trở nên có ý nghĩa khi đặt trong cả một hệ sinh thái. Đất sét tự nó không tạo ra nhu cầu. Con dấu tự nó không tạo thành chữ viết. Một hệ đếm tự nó chưa ghi được mọi khác biệt mà một thiết chế cần theo dõi. Nhưng khi các thực hành số, niêm phong, bọc bằng đất sét, tạo dấu trên bề mặt và lưu giữ được dùng lặp lại, chúng cùng biến một kết quả thoáng qua thành một đối tượng có thể mang đi, giữ lại và kiểm tra. Giá trị không nằm trong một mảnh đất sét cô lập; nó nằm ở chuỗi hành động mà mảnh đất sét có thể nối lại sau khi con người và hàng hóa đã tách nhau.
+Khảo cổ học không giải câu đố này bằng cách trao cho chúng ta “bước kế tiếp”. Thay vào đó, Chogha Mish để lại một vật khác trong cùng khoảng Late Uruk, từ năm 3350 đến 3100 trước Công nguyên. Khoảng niên đại ấy quá rộng để đặt hai vật thành trước và sau.
 
-Vậy trước chữ viết đã có một bài toán phải giải: làm cho thông tin sống lâu hơn sự kiện, đi xa hơn người chứng kiến và chịu được việc kiểm tra trong một mạng lưới hoạt động ngày càng dày. Các thực hành số tạo chiếc cầu vật chất rõ nhất. Token, bullae, con dấu, hình tượng, bản ghi số và nhu cầu thiết chế tạo nên môi trường hình thành, không phải các bậc thang của một câu chuyện tất định. Hành chính là một áp lực lớn, nhưng không phải lời giải duy nhất cho nguồn gốc.
+Vật mới không phải khối rỗng đã được lấy hết những viên nhỏ. Nó là một giải pháp khác bằng cùng thứ vật liệu: một mảnh đất sét đặc, dài 4,8 centimet, đủ nhỏ để nằm gọn trong lòng bàn tay.
 
-Đến đây, nhu cầu đã có và nhiều cách giữ dấu cũng đã có. Câu hỏi kế tiếp vì thế trở nên sắc hơn: điều gì đã khiến những dấu mới trên đất sét không chỉ bền, mà còn đủ khác biệt và đủ hữu ích để trở thành một hệ thống?
+Không có khoang kín. Không có gì bên trong để lắc, lấy ra hay đối chiếu.
+
+Nhưng trên mặt nó là năm dấu số. Cùng bề mặt ấy còn giữ nhiều lượt con dấu với hình những con vật — trong đó vẫn nhận ra một con bò.
+
+Không còn khoang kín. Không còn token để lấy ra đối chiếu. Trước mắt chỉ còn năm dấu số và những lượt con dấu trên bề mặt.
+
+Nhưng năm dấu ấy đang đếm thứ gì?
+
+Câu trả lời hấp dẫn nhất dường như cũng nằm trên bề mặt ấy: một con bò. Năm dấu. Một con bò. Năm con bò.
+
+Nhưng con bò ấy thuộc về cảnh được lăn ra từ con dấu. Catalog không gọi nó là dấu chỉ thứ hàng đang được đếm; cũng không xác định một dấu nào khác trên mảnh vỡ cho biết đối tượng ấy là gì. Mảnh bảng không cho chúng ta đi xa hơn. Năm dấu vẫn hiện rõ. Ý nghĩa của chúng thì không.
+
+Muốn hiểu vì sao, hãy đặt bên cạnh nó một dấu tròn nhỏ trên những bảng proto-cuneiform khác. Dấu được tạo chỉ bằng cách ấn đầu bút tròn xuống đất sét. Trong các bản ghi ấy, nhóm dấu số thường xuất hiện trước; tiếp theo là dấu chỉ vật được tính, rồi mới đến dấu liên quan tới một người hoặc một văn phòng.
+
+Nếu che những dấu phía sau đi, hõm tròn không giữ được một giá trị duy nhất.
+
+Trong một hệ đếm, nó có thể chỉ mười vò đất sét chứa dầu bơ. Khi đi với lúa mạch, cũng hõm tròn ấy có thể mang một lượng khoảng 150 lít. Trong hệ đo diện tích, nó có thể mở ra một thửa đất khoảng sáu hecta.
+
+Hình dạng của dấu không đổi. Thứ được đặt cạnh nó đã đổi — và cả con số cũng đổi theo.
+
+Vì thế, người kiểm tra một bảng đất sét như thế không thể chỉ đếm những hõm trên mặt bảng. Họ phải nhận ra vật nào đang được tính và quy ước đo nào đang vận hành. Đất sét có thể còn nguyên; nhưng với người không biết quy ước ấy, cùng những dấu đó không trả lại cùng một lượng.
+
+Đây là điều bề mặt có thể làm: trên nhiều bảng, nó đặt một lượng trước đối tượng được tính, rồi nối chúng với một người hoặc văn phòng liên quan. Nhưng những cụm dấu ấy đã ghi lại ngôn ngữ — hay mới chỉ tổ chức ý nghĩa mà không cần một câu nói hoàn chỉnh?
+
+Đây đã là chữ viết, hay vẫn là một hệ ghi sổ bằng dấu?
+
+Trước khi trả lời, hãy đặt mảnh bảng ấy xuống.
+
+Tại Uruk, camera lùi khỏi một bảng đất sét. Trên khu thành cao, vài trăm bảng được tìm thấy nằm rải trong tàn tích của quần thể về sau được gọi là Eanna.
+
+Camera lùi thêm. Khi chữ viết xuất hiện, Uruk đã trải rộng khoảng 500 hecta, tính cả khu thành thấp.
+
+Nhưng một thành phố rộng 500 hecta không tự đọc được một dấu tròn. Vài trăm bảng cũng không cho biết có bao nhiêu người hiểu chúng. Khi hồ sơ rời khỏi người tạo ra, người khác chỉ khôi phục được cùng giá trị nếu nhận ra cùng những quy ước.
+
+Ai đã có thể đọc những dấu ấy — và họ giữ ý nghĩa của chúng ổn định bằng cách nào?

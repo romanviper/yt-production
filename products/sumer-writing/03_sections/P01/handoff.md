@@ -1,5 +1,7 @@
 # Handoff — P01
 
-P01 kết thúc với một trạng thái quan sát được: kết quả đếm và chuyển giao đã được tách khỏi khoảnh khắc ban đầu, mang trên bề mặt đất sét để có thể lưu, chuyển và đối chiếu. Khán giả đã đi qua ecology gồm thực hành số, token, bullae, con dấu, bản ghi số và nhu cầu thiết chế; hành chính được giữ đúng vai trò là áp lực lớn nhưng không phải nguyên nhân duy nhất.
+Đây là checkpoint prose test 1.025 từ, chưa phải full P01 và chưa đạt exit state của section.
 
-Áp lực sang phần kế tiếp: khi nhu cầu ghi và các thực hành lưu dấu đều đã tồn tại, điều gì khiến hệ thống dấu mới khác biệt và hữu ích hơn những cách giữ thông tin trước đó?
+Opening 125 từ mới giữ riêng bulla vỡ và các bulla nguyên khác. Nó đi từ khe vỡ thấy những viên nhỏ sang các động tác tạo dấu trên đất sét ướt, rồi để phần prose cũ tự mở khó khăn kiểm tra lớp vỏ kín. Không có protagonist giả định hoặc thesis đặt trước cảnh.
+
+Cold viewer tự hỏi liệu dấu ngoài có cho biết chính xác số viên bên trong hay không, nhưng gọi bản đầu là phân tích hiện vật và bị rơi ở câu narrator tổng kết trừu tượng. Evidence check đồng thời phát hiện câu đó nhập các hiện vật khác nhau và làm mất lượng từ. Cả hai lỗi đã được xử lý trong một correction duy nhất bằng cách bỏ câu tổng kết và khôi phục “thường/một số”. Không chạy audit lần hai. Phần Uruk phía cuối giữ nguyên. Cần human review riêng opening trước khi viết tiếp.

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "Opening show-first 125 từ đã sẵn sàng để review.",
+  "material_points": [
+    "Opening đi từ khe vỡ và những viên đất sét sang các động tác tạo dấu, không nói thesis trước.",
+    "Cold viewer tự nảy ra đúng câu hỏi về quan hệ giữa dấu ngoài và vật bên trong.",
+    "Một correction duy nhất đã bỏ câu tổng kết trừu tượng và khôi phục lượng từ đúng; không chạy audit lần hai."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Opening này đã bớt cảm giác phân tích hiện vật và bắt đầu giống một trải nghiệm khám phá chưa?",
+    "recommendation": "Chỉ review 125 từ đầu; chưa đánh giá lại toàn P01 ở checkpoint này.",
+    "options": [
+      {
+        "label": "Pass opening",
+        "effect": "Giữ opening và chọn microbeat kế tiếp để chuyển đổi."
+      },
+      {
+        "label": "Sửa opening",
+        "effect": "Chỉ chỉnh tiếp 125 từ đầu, không viết lan sang phần sau."
+      }
+    ]
+  },
+  "next_step": ""
+}

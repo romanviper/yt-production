@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "Microbeat Uruk 135 từ đã hoàn tất.",
+  "material_points": [
+    "Camera lùi từ một bảng ra Eanna rồi Uruk, không suy ra toàn dân biết đọc.",
+    "Cold viewer không bị rơi và tự hỏi người đọc học dấu ở đâu.",
+    "Evidence check tìm hai từ quá tay; cả hai đã được sửa trong một lần."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Microbeat này có đủ tự nhiên để đi tiếp?",
+    "recommendation": "Review riêng 135 từ cuối trước khi mở microbeat về người ghi chép.",
+    "options": [
+      {
+        "label": "Đi tiếp",
+        "effect": "Viết 100–150 từ về nhóm người học và giữ quy ước."
+      },
+      {
+        "label": "Sửa microbeat",
+        "effect": "Chỉ chỉnh 135 từ cuối rồi dừng lại."
+      }
+    ]
+  },
+  "next_step": ""
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "Beat 5 đã hoàn tất; prose test P01 hiện 923 từ.",
+  "material_points": [
+    "Beat bác cách đọc năm dấu thành năm con bò bằng chính giới hạn của hiện vật.",
+    "Cold listener hiểu dấu số phụ thuộc đối tượng và hệ đo, rồi tự hỏi khi nào ghi sổ trở thành chữ viết.",
+    "Evidence re-audit PASS; chưa mở camera sang Uruk hoặc sửa harness."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Duyệt beat 5 để mở beat quy mô Uruk?",
+    "recommendation": "Review đoạn mới trước khi writer mở camera sang thành phố và cộng đồng người đọc.",
+    "options": [
+      {
+        "label": "Mở beat Uruk",
+        "effect": "Writer viết nhịp thành phố và cộng đồng duy trì quy ước."
+      },
+      {
+        "label": "Sửa beat 5",
+        "effect": "Chỉ chỉnh phần số–đối tượng rồi kiểm tra lại."
+      }
+    ]
+  },
+  "next_step": ""
+}

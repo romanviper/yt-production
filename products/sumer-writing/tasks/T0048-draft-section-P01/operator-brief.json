@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "Prose test P01 612 từ đã sẵn sàng review.",
+  "material_points": [
+    "Mở bằng clay envelope vỡ; dừng khi ChM III-937A xuất hiện.",
+    "Hai cold listeners nhớ được chuỗi vật thể và muốn nghe tiếp.",
+    "Rủi ro: listener vẫn suy đoán tablet phát triển trực tiếp từ bulla."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Đoạn này đã đủ sức sống để mở rộng tiếp chưa?",
+    "recommendation": "Review đoạn hiện tại trước khi writer giải nghĩa năm dấu số.",
+    "options": [
+      {
+        "label": "Mở rộng tiếp",
+        "effect": "Tiếp tục từ câu hỏi về năm dấu số."
+      },
+      {
+        "label": "Sửa đoạn test",
+        "effect": "Chỉ chỉnh đoạn hiện tại rồi review lại."
+      }
+    ]
+  },
+  "next_step": ""
+}

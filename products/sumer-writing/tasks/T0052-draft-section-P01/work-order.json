@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "id": "T0052-draft-section-P01",
+  "product": "sumer-writing",
+  "operation": "draft_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "state": "ready_for_review",
+  "created_at": "2026-08-25T16:34:56.217843+00:00",
+  "context_packet": "tasks/T0052-draft-section-P01/context.md",
+  "packet_manifest": "tasks/T0052-draft-section-P01/packet.json",
+  "allowed_write_paths": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md",
+    "tasks/T0052-draft-section-P01/report.md",
+    "tasks/T0052-draft-section-P01/operator-brief.json"
+  ],
+  "outputs": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md"
+  ],
+  "optional_outputs": [],
+  "report_path": "tasks/T0052-draft-section-P01/report.md",
+  "operator_brief_path": "tasks/T0052-draft-section-P01/operator-brief.json",
+  "evidence_access": {
+    "kind": "bounded_claim_sources",
+    "adapter": "scripts/draft_evidence.py",
+    "interface_version": 3,
+    "capabilities": [
+      "scope",
+      "resolve_claims",
+      "claims",
+      "sources",
+      "source",
+      "search",
+      "record"
+    ],
+    "trace_path": "tasks/T0052-draft-section-P01/evidence-trace.jsonl",
+    "required_before_submit": [
+      "resolve_claims"
+    ]
+  },
+  "submitted_at": "2026-08-25T16:46:27.623197+00:00",
+  "updated_at": "2026-08-25T16:46:27.623197+00:00"
+}

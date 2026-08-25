@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "Prose test P01 553 từ đã qua evidence audit.",
+  "material_points": [
+    "Camera tách rõ bulla vỡ, nhóm bulla nguyên vẹn và bảng đặc cùng thời.",
+    "Evidence auditor PASS; không còn ghép đặc điểm từ nhiều hiện vật.",
+    "Cold listener nghe tiếp chủ động và hỏi cả ý nghĩa lẫn độ tin cậy của năm dấu."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Duyệt đoạn này để writer bắt đầu beat 5?",
+    "recommendation": "Review prose hiện tại; chỉ mở rộng nếu evidence fidelity và nhịp kể đều đạt.",
+    "options": [
+      {
+        "label": "Duyệt beat 5",
+        "effect": "Writer tiếp tục từ câu hỏi năm dấu đang đếm gì."
+      },
+      {
+        "label": "Sửa cục bộ",
+        "effect": "Chỉ chỉnh đoạn hiện tại rồi chạy lại checkpoint."
+      }
+    ]
+  },
+  "next_step": ""
+}
