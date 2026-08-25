@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "task_id": "T0043-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "P01 mới đã sẵn sàng để người dùng đọc",
+  "material_points": [
+    "Bản mới 1.497 từ, đúng trần và đã qua một polish ngắn.",
+    "Route intent được ghi trước claim prose; resolve_claims toàn scope đã đạt.",
+    "Bài kể dùng mô hình hệ sinh thái, giữ giới hạn nhân quả về hành chính."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Bạn phê duyệt P01 hay yêu cầu chỉnh sửa?",
+    "recommendation": "Đọc draft và handoff; phê duyệt nếu route và giới hạn bằng chứng đã đạt.",
+    "options": [
+      {
+        "label": "Phê duyệt P01",
+        "effect": "Cho phép workflow route bước kế tiếp."
+      },
+      {
+        "label": "Yêu cầu chỉnh sửa",
+        "effect": "Giữ checkpoint và tạo rework từ phản hồi cụ thể."
+      }
+    ]
+  },
+  "next_step": ""
+}
