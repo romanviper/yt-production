@@ -6,38 +6,53 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+from datetime import datetime, timedelta
 from pathlib import Path, PurePosixPath
 from typing import Any
 
 try:
     from scripts.common import sha256
     from scripts.draft_evidence import (
+        EvidenceAccessError,
         MAX_REVIEW_RECORD_DETAIL_CHARS,
+        MAX_REVIEW_RECORD_PARENT_LOCATOR_CHARS,
         MAX_REVIEW_RECORD_PROJECTION_TOKENS,
         MAX_REVIEW_RECORD_RECEIPTS,
         MAX_REVIEW_RECORD_TOTAL_DETAIL_CHARS,
+        RECEIPT_LIMITATION,
+        RECEIPT_LINEAGE_ANCHOR_SCHEMA,
+        RECEIPT_LINEAGE_PACKET_SCHEMA,
         REVIEW_RECORD_DATA_RULE,
         REVIEW_RECORD_PROJECTION_END,
+        REVIEW_RECORD_PROJECTION_SCHEMA,
         REVIEW_RECORD_PROJECTION_START,
         REVIEW_RECORD_SERIALIZATION_MARGIN_TOKENS,
+        build_review_record_projection,
     )
 except ModuleNotFoundError:  # Direct execution from scripts/
     from common import sha256
     from draft_evidence import (
+        EvidenceAccessError,
         MAX_REVIEW_RECORD_DETAIL_CHARS,
+        MAX_REVIEW_RECORD_PARENT_LOCATOR_CHARS,
         MAX_REVIEW_RECORD_PROJECTION_TOKENS,
         MAX_REVIEW_RECORD_RECEIPTS,
         MAX_REVIEW_RECORD_TOTAL_DETAIL_CHARS,
+        RECEIPT_LIMITATION,
+        RECEIPT_LINEAGE_ANCHOR_SCHEMA,
+        RECEIPT_LINEAGE_PACKET_SCHEMA,
         REVIEW_RECORD_DATA_RULE,
         REVIEW_RECORD_PROJECTION_END,
+        REVIEW_RECORD_PROJECTION_SCHEMA,
         REVIEW_RECORD_PROJECTION_START,
         REVIEW_RECORD_SERIALIZATION_MARGIN_TOKENS,
+        build_review_record_projection,
     )
 
 
-PACKET_SCHEMA_VERSION = 4
-SUPPORTED_PACKET_SCHEMAS = {1, 2, 3, PACKET_SCHEMA_VERSION}
-INTEGRITY_PACKET_SCHEMAS = {3, PACKET_SCHEMA_VERSION}
+PACKET_SCHEMA_VERSION = RECEIPT_LINEAGE_PACKET_SCHEMA
+SUPPORTED_PACKET_SCHEMAS = {1, 2, 3, 4, PACKET_SCHEMA_VERSION}
+INTEGRITY_PACKET_SCHEMAS = {3, 4, PACKET_SCHEMA_VERSION}
 PACKET_COMPILER = "scripts/context_packet.py"
 SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
 
@@ -45,6 +60,15 @@ SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
 def _json_hash(value: Any) -> str:
     text = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _estimated_projection_tokens(value: dict[str, Any]) -> int:
+    canonical = json.loads(json.dumps(value, ensure_ascii=False))
+    telemetry = canonical.get("telemetry")
+    if isinstance(telemetry, dict):
+        telemetry["estimated_projection_tokens"] = 0
+    encoded = json.dumps(canonical, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return (len(encoded) + 3) // 4 + REVIEW_RECORD_SERIALIZATION_MARGIN_TOKENS
 
 
 def _is_relative_product_path(value: Any) -> bool:
@@ -62,6 +86,476 @@ def _validate_path_list(packet: dict[str, Any], field: str, errors: list[str]) -
     for index, item in enumerate(value):
         if not _is_relative_product_path(item):
             errors.append(f"packet.{field}[{index}] must be a product-relative path")
+
+
+def _safe_task_id(value: Any) -> bool:
+    return (
+        isinstance(value, str)
+        and re.fullmatch(r"T\d{4,}-[A-Za-z0-9][A-Za-z0-9-]*", value) is not None
+        and "/" not in value
+        and "\\" not in value
+    )
+
+
+def _valid_digest(value: Any) -> bool:
+    return isinstance(value, str) and SHA256_PATTERN.fullmatch(value) is not None
+
+
+def _valid_utc_timestamp(value: Any) -> bool:
+    if not isinstance(value, str) or not value:
+        return False
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return parsed.tzinfo is not None and parsed.utcoffset() == timedelta(0)
+
+
+def _input_hash(packet: dict[str, Any], relative: str) -> str | None:
+    matches = [
+        item
+        for item in packet.get("inputs", [])
+        if isinstance(item, dict) and item.get("path") == relative
+    ]
+    if len(matches) != 1:
+        return None
+    digest = matches[0].get("sha256")
+    return digest if isinstance(digest, str) else None
+
+
+def _validate_receipt_telemetry(
+    projection: dict[str, Any],
+    records: list[Any],
+    origins: list[Any],
+    errors: list[str],
+) -> None:
+    telemetry = projection.get("telemetry")
+    if not isinstance(telemetry, dict):
+        errors.append("recorded evidence projection telemetry must be an object")
+        return
+    numeric_fields = [
+        "scanned_lines",
+        "ignored_non_record",
+        "dropped_malformed",
+        "dropped_error",
+        "dropped_mismatch",
+        "dropped_duplicate",
+        "dropped_cap",
+        "eligible_receipts",
+        "included_receipts",
+        "estimated_projection_tokens",
+    ]
+    if projection.get("schema_version") == REVIEW_RECORD_PROJECTION_SCHEMA:
+        numeric_fields.append("origin_count")
+    for field in numeric_fields:
+        value = telemetry.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            errors.append(f"recorded evidence projection telemetry {field} must be non-negative integer")
+    expected_limits = {
+        "max_receipts": MAX_REVIEW_RECORD_RECEIPTS,
+        "max_detail_chars": MAX_REVIEW_RECORD_DETAIL_CHARS,
+        "max_total_detail_chars": MAX_REVIEW_RECORD_TOTAL_DETAIL_CHARS,
+        "max_projection_tokens": MAX_REVIEW_RECORD_PROJECTION_TOKENS,
+        "serialization_margin_tokens": REVIEW_RECORD_SERIALIZATION_MARGIN_TOKENS,
+    }
+    for field, expected in expected_limits.items():
+        if telemetry.get(field) != expected:
+            errors.append(f"recorded evidence projection telemetry {field} has invalid limit")
+    if telemetry.get("included_receipts") != len(records):
+        errors.append("recorded evidence projection telemetry count differs from records")
+    if telemetry.get("eligible_receipts") != len(records):
+        errors.append("recorded evidence projection must not subset valid receipts")
+    if projection.get("schema_version") == REVIEW_RECORD_PROJECTION_SCHEMA and telemetry.get("origin_count") != len(origins):
+        errors.append("recorded evidence projection telemetry origin count differs from origins")
+    if telemetry.get("dropped_cap") != 0:
+        errors.append("recorded evidence projection must fail instead of dropping valid receipts at caps")
+    estimated = telemetry.get("estimated_projection_tokens")
+    recomputed = _estimated_projection_tokens(projection)
+    if estimated != recomputed:
+        errors.append("recorded evidence projection telemetry token estimate is not canonical")
+    if recomputed > MAX_REVIEW_RECORD_PROJECTION_TOKENS:
+        errors.append("recorded evidence projection exceeds token cap")
+
+
+def _validate_receipt_projection_v1(projection: dict[str, Any], errors: list[str]) -> None:
+    if projection.get("projection_kind") != "submitted_prose_record_receipts":
+        errors.append("recorded evidence projection kind is invalid")
+    source_task_id = projection.get("source_task_id")
+    safe_source_task_id = _safe_task_id(source_task_id)
+    if not safe_source_task_id:
+        errors.append("recorded evidence projection source_task_id is invalid or contains traversal")
+    if projection.get("source_operation") not in {"draft_section", "revise_section"}:
+        errors.append("recorded evidence projection source operation must be submitted prose")
+    expected_source_trace = f"tasks/{source_task_id}/evidence-trace.jsonl" if safe_source_task_id else None
+    if not safe_source_task_id or projection.get("source_trace_path") != expected_source_trace:
+        errors.append("recorded evidence projection trace path must match source task")
+    for field in [
+        "source_trace_sha256",
+        "source_task_packet_sha256",
+        "narration_pack_sha256",
+        "evidence_pack_sha256",
+        "records_sha256",
+    ]:
+        if not _valid_digest(projection.get(field)):
+            errors.append(f"recorded evidence projection {field} must be a SHA-256 digest")
+    if projection.get("truth_ceiling_unchanged") is not True:
+        errors.append("recorded evidence projection must preserve truth ceiling")
+    records = projection.get("records")
+    if not isinstance(records, list) or not records:
+        errors.append("recorded evidence projection records must be a non-empty list")
+        records = []
+    elif len(records) > MAX_REVIEW_RECORD_RECEIPTS:
+        errors.append("recorded evidence projection exceeds receipt cap")
+    seen_records: set[tuple[str, str, str, str]] = set()
+    total_detail_chars = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, dict) or set(record) != {
+            "source_id",
+            "parent_locator",
+            "locator",
+            "detail",
+            "response_sha256",
+        }:
+            errors.append(f"recorded evidence projection record {index} has invalid shape")
+            continue
+        source_id = record.get("source_id")
+        parent_locator = record.get("parent_locator")
+        locator = record.get("locator")
+        detail = record.get("detail")
+        if not isinstance(source_id, str) or not re.fullmatch(r"SRC-\d{4}", source_id):
+            errors.append(f"recorded evidence projection record {index} has invalid source_id")
+        if not isinstance(parent_locator, str) or not parent_locator:
+            errors.append(f"recorded evidence projection record {index} has invalid parent_locator")
+        if not isinstance(locator, str) or not locator or len(locator) > 1000:
+            errors.append(f"recorded evidence projection record {index} has invalid locator")
+        if not isinstance(detail, str) or not detail or len(detail) > MAX_REVIEW_RECORD_DETAIL_CHARS:
+            errors.append(f"recorded evidence projection record {index} has invalid detail")
+        else:
+            total_detail_chars += len(detail)
+        if not _valid_digest(record.get("response_sha256")):
+            errors.append(f"recorded evidence projection record {index} has invalid response_sha256")
+        if all(isinstance(item, str) for item in [source_id, parent_locator, locator, detail]):
+            key = (source_id, parent_locator, locator, detail)
+            if key in seen_records:
+                errors.append("recorded evidence projection records must be deduplicated")
+            seen_records.add(key)
+    if total_detail_chars > MAX_REVIEW_RECORD_TOTAL_DETAIL_CHARS:
+        errors.append("recorded evidence projection exceeds total detail cap")
+    if records and projection.get("records_sha256") != _json_hash(records):
+        errors.append("recorded evidence projection records hash is invalid")
+    _validate_receipt_telemetry(projection, records, [], errors)
+
+
+def _validate_receipt_origin(origin: Any, index: int, errors: list[str]) -> dict[str, Any] | None:
+    expected = {
+        "task_id",
+        "operation",
+        "trace_path",
+        "trace_sha256",
+        "task_packet_path",
+        "task_packet_sha256",
+        "records_sha256",
+        "record_count",
+    }
+    if not isinstance(origin, dict) or set(origin) != expected:
+        errors.append(f"recorded evidence projection origin {index} has invalid shape")
+        return None
+    task_id = origin.get("task_id")
+    if not _safe_task_id(task_id):
+        errors.append(f"recorded evidence projection origin {index} task_id is invalid or contains traversal")
+        return origin
+    if origin.get("operation") not in {"draft_section", "revise_section"}:
+        errors.append(f"recorded evidence projection origin {index} operation is invalid")
+    if origin.get("trace_path") != f"tasks/{task_id}/evidence-trace.jsonl":
+        errors.append(f"recorded evidence projection origin {index} trace path must match task")
+    if origin.get("task_packet_path") != f"tasks/{task_id}/packet.json":
+        errors.append(f"recorded evidence projection origin {index} packet path must match task")
+    for field in ["trace_sha256", "task_packet_sha256", "records_sha256"]:
+        if not _valid_digest(origin.get(field)):
+            errors.append(f"recorded evidence projection origin {index} {field} must be a SHA-256 digest")
+    count = origin.get("record_count")
+    if not isinstance(count, int) or isinstance(count, bool) or count < 1:
+        errors.append(f"recorded evidence projection origin {index} record_count must be positive")
+    return origin
+
+
+def _validate_receipt_projection_v2(projection: dict[str, Any], packet: dict[str, Any], errors: list[str]) -> None:
+    expected_keys = {
+        "schema_version",
+        "projection_kind",
+        "recorded_evidence_state",
+        "section",
+        "cycle_id",
+        "depth",
+        "current_prose_task",
+        "receipt_origins",
+        "narration_pack_sha256",
+        "evidence_pack_sha256",
+        "records",
+        "records_sha256",
+        "truth_ceiling_unchanged",
+        "receipt_limitations",
+        "telemetry",
+    }
+    if set(projection) != expected_keys:
+        errors.append("recorded evidence projection v2 has invalid top-level shape")
+    if projection.get("projection_kind") != "submitted_prose_record_receipts":
+        errors.append("recorded evidence projection kind is invalid")
+    state = projection.get("recorded_evidence_state")
+    if state not in {"projected", "none", "legacy_unverifiable"}:
+        errors.append("recorded evidence projection state is invalid")
+    target = packet.get("target") if isinstance(packet.get("target"), dict) else {}
+    if projection.get("section") != target.get("section"):
+        errors.append("recorded evidence projection section differs from review target")
+    if not isinstance(projection.get("cycle_id"), str) or not projection.get("cycle_id"):
+        errors.append("recorded evidence projection cycle_id must be non-empty")
+    depth = projection.get("depth")
+    if depth not in {0, 1}:
+        errors.append("recorded evidence projection depth must be 0 or 1")
+    if not _valid_digest(projection.get("narration_pack_sha256")) or not _valid_digest(projection.get("evidence_pack_sha256")):
+        errors.append("recorded evidence projection truth ceiling hashes must be SHA-256 digests")
+    if projection.get("truth_ceiling_unchanged") is not True:
+        errors.append("recorded evidence projection must preserve truth ceiling")
+    if projection.get("receipt_limitations") != RECEIPT_LIMITATION:
+        errors.append("recorded evidence projection must state the receipt limitation exactly")
+
+    current = projection.get("current_prose_task")
+    expected_current_keys = {
+        "task_id",
+        "operation",
+        "submitted_at",
+        "task_packet_path",
+        "task_packet_sha256",
+        "draft_sha256",
+        "handoff_sha256",
+    }
+    if current is None:
+        if state != "legacy_unverifiable" or depth != 0:
+            errors.append("only depth-0 legacy_unverifiable projection may have null current_prose_task")
+    elif not isinstance(current, dict) or set(current) != expected_current_keys:
+        errors.append("recorded evidence projection current_prose_task has invalid shape")
+    else:
+        task_id = current.get("task_id")
+        if not _safe_task_id(task_id):
+            errors.append("recorded evidence projection current task id is invalid or contains traversal")
+        operation = current.get("operation")
+        if operation not in {"draft_section", "revise_section"}:
+            errors.append("recorded evidence projection current operation is invalid")
+        elif depth == 0 and operation != "draft_section":
+            errors.append("depth-0 recorded evidence projection must point to draft_section")
+        elif depth == 1 and operation != "revise_section":
+            errors.append("depth-1 recorded evidence projection must point to revise_section")
+        if _safe_task_id(task_id) and current.get("task_packet_path") != f"tasks/{task_id}/packet.json":
+            errors.append("recorded evidence projection current packet path must match task")
+        if not _valid_utc_timestamp(current.get("submitted_at")):
+            errors.append("recorded evidence projection current submitted_at must be UTC")
+        for field in ["task_packet_sha256", "draft_sha256", "handoff_sha256"]:
+            if not _valid_digest(current.get(field)):
+                errors.append(f"recorded evidence projection current {field} must be a SHA-256 digest")
+
+    origins_value = projection.get("receipt_origins")
+    if not isinstance(origins_value, list):
+        errors.append("recorded evidence projection receipt_origins must be a list")
+        origins: list[dict[str, Any]] = []
+    else:
+        origins = []
+        for index, origin_value in enumerate(origins_value):
+            origin = _validate_receipt_origin(origin_value, index, errors)
+            if origin is not None:
+                origins.append(origin)
+    origin_ids = [origin.get("task_id") for origin in origins]
+    if len(origin_ids) != len(set(origin_ids)):
+        errors.append("recorded evidence projection origins must be unique")
+    if len(origins) > depth + 1:
+        errors.append("recorded evidence projection has more origins than its lineage depth permits")
+    if current is not None and origins:
+        current_id = current.get("task_id")
+        current_operation = current.get("operation")
+        if depth == 0 and any(origin.get("task_id") != current_id or origin.get("operation") != "draft_section" for origin in origins):
+            errors.append("depth-0 receipt origin must be the current draft task")
+        if depth == 1:
+            current_positions = [index for index, origin in enumerate(origins) if origin.get("task_id") == current_id]
+            if current_positions and (current_positions != [len(origins) - 1] or origins[-1].get("operation") != current_operation):
+                errors.append("current revision receipt origin must be last")
+            inherited = [origin for origin in origins if origin.get("task_id") != current_id]
+            if any(origin.get("operation") != "draft_section" for origin in inherited) or len(inherited) > 1:
+                errors.append("depth-1 inherited receipt origin must be exactly the explicit draft predecessor")
+
+    records_value = projection.get("records")
+    if not isinstance(records_value, list):
+        errors.append("recorded evidence projection records must be a list")
+        records: list[dict[str, Any]] = []
+    else:
+        records = records_value
+    if len(records) > MAX_REVIEW_RECORD_RECEIPTS:
+        errors.append("recorded evidence projection exceeds receipt cap")
+    total_detail_chars = 0
+    seen_records: set[tuple[str, str, str, str, str]] = set()
+    groups: dict[str, list[dict[str, Any]]] = {str(origin.get("task_id")): [] for origin in origins}
+    for index, record in enumerate(records):
+        expected_record_keys = {
+            "origin_task_id",
+            "source_id",
+            "parent_locator",
+            "locator",
+            "detail",
+            "response_sha256",
+        }
+        if not isinstance(record, dict) or set(record) != expected_record_keys:
+            errors.append(f"recorded evidence projection record {index} has invalid shape")
+            continue
+        origin_task_id = record.get("origin_task_id")
+        source_id = record.get("source_id")
+        parent_locator = record.get("parent_locator")
+        locator = record.get("locator")
+        detail = record.get("detail")
+        if origin_task_id not in groups:
+            errors.append(f"recorded evidence projection record {index} names an undeclared origin")
+        if not isinstance(source_id, str) or not re.fullmatch(r"SRC-\d{4}", source_id):
+            errors.append(f"recorded evidence projection record {index} has invalid source_id")
+        if (
+            not isinstance(parent_locator, str)
+            or not parent_locator.strip()
+            or len(parent_locator) > MAX_REVIEW_RECORD_PARENT_LOCATOR_CHARS
+        ):
+            errors.append(f"recorded evidence projection record {index} has invalid parent_locator")
+        if not isinstance(locator, str) or not locator or len(locator) > 1000:
+            errors.append(f"recorded evidence projection record {index} has invalid locator")
+        if not isinstance(detail, str) or not detail or len(detail) > MAX_REVIEW_RECORD_DETAIL_CHARS:
+            errors.append(f"recorded evidence projection record {index} has invalid detail")
+        else:
+            total_detail_chars += len(detail)
+        if not _valid_digest(record.get("response_sha256")):
+            errors.append(f"recorded evidence projection record {index} has invalid response_sha256")
+        if all(isinstance(item, str) for item in [origin_task_id, source_id, parent_locator, locator, detail]):
+            key = (origin_task_id, source_id, parent_locator, locator, detail)
+            if key in seen_records:
+                errors.append("recorded evidence projection records must be deduplicated per origin")
+            seen_records.add(key)
+        if isinstance(origin_task_id, str) and origin_task_id in groups:
+            groups[origin_task_id].append({key: value for key, value in record.items() if key != "origin_task_id"})
+    if total_detail_chars > MAX_REVIEW_RECORD_TOTAL_DETAIL_CHARS:
+        errors.append("recorded evidence projection exceeds total detail cap")
+    if projection.get("records_sha256") != _json_hash(records):
+        errors.append("recorded evidence projection records hash is invalid")
+    for index, origin in enumerate(origins):
+        origin_records = groups.get(str(origin.get("task_id")), [])
+        if origin.get("record_count") != len(origin_records):
+            errors.append(f"recorded evidence projection origin {index} count differs from records")
+        if origin.get("records_sha256") != _json_hash(origin_records):
+            errors.append(f"recorded evidence projection origin {index} records hash is invalid")
+    if state == "projected" and (not records or not origins):
+        errors.append("projected recorded evidence state requires records and origins")
+    if state in {"none", "legacy_unverifiable"} and (records or origins):
+        errors.append(f"recorded evidence state {state} must not carry receipts")
+    _validate_receipt_telemetry(projection, records, origins, errors)
+
+
+def _validate_receipt_lineage_anchor(packet: dict[str, Any], errors: list[str]) -> None:
+    anchor = packet.get("receipt_lineage_anchor")
+    expected_keys = {
+        "schema_version",
+        "state",
+        "section",
+        "cycle_id",
+        "depth",
+        "predecessor",
+        "predecessor_trace",
+        "receipt_origin",
+        "narration_pack_sha256",
+        "evidence_pack_sha256",
+        "truth_ceiling_unchanged",
+    }
+    if not isinstance(anchor, dict) or set(anchor) != expected_keys:
+        errors.append("packet.receipt_lineage_anchor must have the exact v1 shape")
+        return
+    if anchor.get("schema_version") != RECEIPT_LINEAGE_ANCHOR_SCHEMA:
+        errors.append("receipt lineage anchor schema_version is invalid")
+    if anchor.get("state") not in {"present", "none"}:
+        errors.append("receipt lineage anchor state must be present or none")
+    target = packet.get("target") if isinstance(packet.get("target"), dict) else {}
+    section = target.get("section")
+    if anchor.get("section") != section:
+        errors.append("receipt lineage anchor section differs from revision target")
+    if not isinstance(anchor.get("cycle_id"), str) or not anchor.get("cycle_id"):
+        errors.append("receipt lineage anchor cycle_id must be non-empty")
+    if anchor.get("depth") != 1:
+        errors.append("receipt lineage anchor depth must be exactly 1")
+    for field in ["narration_pack_sha256", "evidence_pack_sha256"]:
+        if not _valid_digest(anchor.get(field)):
+            errors.append(f"receipt lineage anchor {field} must be a SHA-256 digest")
+    if anchor.get("truth_ceiling_unchanged") is not True:
+        errors.append("receipt lineage anchor must preserve truth ceiling")
+
+    predecessor = anchor.get("predecessor")
+    expected_predecessor_keys = {
+        "task_id",
+        "operation",
+        "submitted_at",
+        "task_packet_path",
+        "task_packet_sha256",
+        "draft_sha256",
+        "handoff_sha256",
+    }
+    if not isinstance(predecessor, dict) or set(predecessor) != expected_predecessor_keys:
+        errors.append("receipt lineage anchor predecessor has invalid shape")
+        return
+    task_id = predecessor.get("task_id")
+    if not _safe_task_id(task_id):
+        errors.append("receipt lineage predecessor task_id is invalid or contains traversal")
+    if predecessor.get("operation") != "draft_section":
+        errors.append("receipt lineage predecessor must be draft_section")
+    if _safe_task_id(task_id) and predecessor.get("task_packet_path") != f"tasks/{task_id}/packet.json":
+        errors.append("receipt lineage predecessor packet path must match task")
+    if not _valid_utc_timestamp(predecessor.get("submitted_at")):
+        errors.append("receipt lineage predecessor submitted_at must be UTC")
+    for field in ["task_packet_sha256", "draft_sha256", "handoff_sha256"]:
+        if not _valid_digest(predecessor.get(field)):
+            errors.append(f"receipt lineage predecessor {field} must be a SHA-256 digest")
+    if isinstance(section, str):
+        if _input_hash(packet, f"03_sections/{section}/draft.md") != predecessor.get("draft_sha256"):
+            errors.append("revision draft input differs from receipt lineage predecessor")
+        if _input_hash(packet, f"03_sections/{section}/handoff.md") != predecessor.get("handoff_sha256"):
+            errors.append("revision handoff input differs from receipt lineage predecessor")
+        if _input_hash(packet, f"03_sections/{section}/narration-pack.json") != anchor.get("narration_pack_sha256"):
+            errors.append("revision narration input differs from receipt lineage truth ceiling")
+
+    predecessor_trace = anchor.get("predecessor_trace")
+    expected_trace_path = f"tasks/{task_id}/evidence-trace.jsonl" if _safe_task_id(task_id) else None
+    if not isinstance(predecessor_trace, dict) or set(predecessor_trace) != {"state", "path", "sha256"}:
+        errors.append("receipt lineage predecessor trace attestation has invalid shape")
+        predecessor_trace = None
+    elif predecessor_trace.get("path") != expected_trace_path:
+        errors.append("receipt lineage predecessor trace path must match task")
+    if isinstance(predecessor_trace, dict):
+        trace_state = predecessor_trace.get("state")
+        trace_digest = predecessor_trace.get("sha256")
+        if trace_state == "present":
+            if not _valid_digest(trace_digest):
+                errors.append("present receipt lineage predecessor trace must carry a SHA-256 digest")
+        elif trace_state == "absent":
+            if trace_digest is not None:
+                errors.append("absent receipt lineage predecessor trace must carry explicit null sha256")
+        else:
+            errors.append("receipt lineage predecessor trace state must be present or absent")
+
+    origin = anchor.get("receipt_origin")
+    if anchor.get("state") == "none":
+        if origin is not None:
+            errors.append("receipt lineage state none requires explicit null receipt_origin")
+    elif anchor.get("state") == "present":
+        validated = _validate_receipt_origin(origin, 0, errors)
+        if validated is not None and (
+            validated.get("task_id") != task_id
+            or validated.get("operation") != "draft_section"
+            or validated.get("task_packet_path") != predecessor.get("task_packet_path")
+            or validated.get("task_packet_sha256") != predecessor.get("task_packet_sha256")
+            or not isinstance(predecessor_trace, dict)
+            or predecessor_trace.get("state") != "present"
+            or validated.get("trace_path") != predecessor_trace.get("path")
+            or validated.get("trace_sha256") != predecessor_trace.get("sha256")
+        ):
+            errors.append("receipt lineage origin differs from exact draft predecessor")
 
 
 def validate_packet_contract(packet: dict[str, Any], context_path: Path | None = None) -> list[str]:
@@ -193,130 +687,30 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
         if not isinstance(review_contract_version, int) or isinstance(review_contract_version, bool) or review_contract_version < 1:
             errors.append("packet.review_contract_version must be a positive integer")
 
+    anchor = packet.get("receipt_lineage_anchor")
+    if schema_version == PACKET_SCHEMA_VERSION and packet.get("operation") == "revise_section":
+        _validate_receipt_lineage_anchor(packet, errors)
+    elif anchor is not None:
+        errors.append("packet.receipt_lineage_anchor is allowed only on schema-v5 revise_section packets")
+
     receipt_projection = packet.get("recorded_evidence_projection")
+    if schema_version == PACKET_SCHEMA_VERSION and packet.get("operation") == "review_section" and receipt_projection is None:
+        errors.append("schema-v5 review packet requires explicit recorded_evidence_projection state")
     if receipt_projection is not None:
         if packet.get("operation") != "review_section":
             errors.append("packet.recorded_evidence_projection is allowed only for review_section")
         if not isinstance(receipt_projection, dict):
             errors.append("packet.recorded_evidence_projection must be an object")
+        elif receipt_projection.get("schema_version") == 1:
+            if schema_version == PACKET_SCHEMA_VERSION:
+                errors.append("schema-v5 review packet requires recorded evidence projection schema_version 2")
+            _validate_receipt_projection_v1(receipt_projection, errors)
+        elif receipt_projection.get("schema_version") == REVIEW_RECORD_PROJECTION_SCHEMA:
+            if schema_version != PACKET_SCHEMA_VERSION:
+                errors.append("recorded evidence projection schema_version 2 requires packet schema_version 5")
+            _validate_receipt_projection_v2(receipt_projection, packet, errors)
         else:
-            if receipt_projection.get("schema_version") != 1:
-                errors.append("recorded evidence projection schema_version must be 1")
-            if receipt_projection.get("projection_kind") != "submitted_prose_record_receipts":
-                errors.append("recorded evidence projection kind is invalid")
-            source_task_id = receipt_projection.get("source_task_id")
-            safe_source_task_id = (
-                isinstance(source_task_id, str)
-                and re.fullmatch(r"T\d{4,}-[A-Za-z0-9][A-Za-z0-9-]*", source_task_id) is not None
-                and "/" not in source_task_id
-                and "\\" not in source_task_id
-            )
-            if not safe_source_task_id:
-                errors.append("recorded evidence projection source_task_id is invalid or contains traversal")
-            if receipt_projection.get("source_operation") not in {"draft_section", "revise_section"}:
-                errors.append("recorded evidence projection source operation must be submitted prose")
-            expected_source_trace = (
-                f"tasks/{source_task_id}/evidence-trace.jsonl" if safe_source_task_id else None
-            )
-            if not safe_source_task_id or receipt_projection.get("source_trace_path") != expected_source_trace:
-                errors.append("recorded evidence projection trace path must match source task")
-            for field in [
-                "source_trace_sha256",
-                "source_task_packet_sha256",
-                "narration_pack_sha256",
-                "evidence_pack_sha256",
-                "records_sha256",
-            ]:
-                digest = receipt_projection.get(field)
-                if not isinstance(digest, str) or not SHA256_PATTERN.fullmatch(digest):
-                    errors.append(f"recorded evidence projection {field} must be a SHA-256 digest")
-            if receipt_projection.get("truth_ceiling_unchanged") is not True:
-                errors.append("recorded evidence projection must preserve truth ceiling")
-
-            records = receipt_projection.get("records")
-            if not isinstance(records, list) or not records:
-                errors.append("recorded evidence projection records must be a non-empty list")
-                records = []
-            elif len(records) > MAX_REVIEW_RECORD_RECEIPTS:
-                errors.append("recorded evidence projection exceeds receipt cap")
-            seen_records: set[tuple[str, str, str, str]] = set()
-            total_detail_chars = 0
-            for index, record in enumerate(records):
-                if not isinstance(record, dict) or set(record) != {
-                    "source_id",
-                    "parent_locator",
-                    "locator",
-                    "detail",
-                    "response_sha256",
-                }:
-                    errors.append(f"recorded evidence projection record {index} has invalid shape")
-                    continue
-                source_id = record.get("source_id")
-                parent_locator = record.get("parent_locator")
-                locator = record.get("locator")
-                detail = record.get("detail")
-                if not isinstance(source_id, str) or not re.fullmatch(r"SRC-\d{4}", source_id):
-                    errors.append(f"recorded evidence projection record {index} has invalid source_id")
-                if not isinstance(parent_locator, str) or not parent_locator:
-                    errors.append(f"recorded evidence projection record {index} has invalid parent_locator")
-                if not isinstance(locator, str) or not locator or len(locator) > 1000:
-                    errors.append(f"recorded evidence projection record {index} has invalid locator")
-                if not isinstance(detail, str) or not detail or len(detail) > MAX_REVIEW_RECORD_DETAIL_CHARS:
-                    errors.append(f"recorded evidence projection record {index} has invalid detail")
-                else:
-                    total_detail_chars += len(detail)
-                response_digest = record.get("response_sha256")
-                if not isinstance(response_digest, str) or not SHA256_PATTERN.fullmatch(response_digest):
-                    errors.append(f"recorded evidence projection record {index} has invalid response_sha256")
-                if all(isinstance(item, str) for item in [source_id, parent_locator, locator, detail]):
-                    key = (source_id, parent_locator, locator, detail)
-                    if key in seen_records:
-                        errors.append("recorded evidence projection records must be deduplicated")
-                    seen_records.add(key)
-            if total_detail_chars > MAX_REVIEW_RECORD_TOTAL_DETAIL_CHARS:
-                errors.append("recorded evidence projection exceeds total detail cap")
-            if records and receipt_projection.get("records_sha256") != _json_hash(records):
-                errors.append("recorded evidence projection records hash is invalid")
-
-            telemetry = receipt_projection.get("telemetry")
-            if not isinstance(telemetry, dict):
-                errors.append("recorded evidence projection telemetry must be an object")
-            else:
-                numeric_fields = [
-                    "scanned_lines",
-                    "ignored_non_record",
-                    "dropped_malformed",
-                    "dropped_error",
-                    "dropped_mismatch",
-                    "dropped_duplicate",
-                    "dropped_cap",
-                    "eligible_receipts",
-                    "included_receipts",
-                    "estimated_projection_tokens",
-                ]
-                for field in numeric_fields:
-                    value = telemetry.get(field)
-                    if not isinstance(value, int) or isinstance(value, bool) or value < 0:
-                        errors.append(f"recorded evidence projection telemetry {field} must be non-negative integer")
-                expected_limits = {
-                    "max_receipts": MAX_REVIEW_RECORD_RECEIPTS,
-                    "max_detail_chars": MAX_REVIEW_RECORD_DETAIL_CHARS,
-                    "max_total_detail_chars": MAX_REVIEW_RECORD_TOTAL_DETAIL_CHARS,
-                    "max_projection_tokens": MAX_REVIEW_RECORD_PROJECTION_TOKENS,
-                    "serialization_margin_tokens": REVIEW_RECORD_SERIALIZATION_MARGIN_TOKENS,
-                }
-                for field, expected in expected_limits.items():
-                    if telemetry.get(field) != expected:
-                        errors.append(f"recorded evidence projection telemetry {field} has invalid limit")
-                if telemetry.get("included_receipts") != len(records):
-                    errors.append("recorded evidence projection telemetry count differs from records")
-                if telemetry.get("eligible_receipts") != len(records):
-                    errors.append("recorded evidence projection must not subset valid receipts")
-                if telemetry.get("dropped_cap") != 0:
-                    errors.append("recorded evidence projection must fail instead of dropping valid receipts at caps")
-                estimated = telemetry.get("estimated_projection_tokens")
-                if isinstance(estimated, int) and estimated > MAX_REVIEW_RECORD_PROJECTION_TOKENS:
-                    errors.append("recorded evidence projection exceeds token cap")
+            errors.append("recorded evidence projection schema_version is unsupported")
 
     if context_path is not None and context_path.is_file():
         context_text = context_path.read_text(encoding="utf-8")
@@ -348,42 +742,166 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
             ):
                 product_dir = task_dir.parents[1]
                 section = packet.get("target", {}).get("section") if isinstance(packet.get("target"), dict) else None
-                source_task_id = receipt_projection.get("source_task_id")
-                safe_source_task_id = (
-                    isinstance(source_task_id, str)
-                    and re.fullmatch(r"T\d{4,}-[A-Za-z0-9][A-Za-z0-9-]*", source_task_id) is not None
-                    and "/" not in source_task_id
-                    and "\\" not in source_task_id
-                )
-                expected_source_trace = (
-                    f"tasks/{source_task_id}/evidence-trace.jsonl" if safe_source_task_id else None
-                )
-                safe_source_trace = receipt_projection.get("source_trace_path") == expected_source_trace
-                bound_paths = [
-                    (
-                        product_dir / str(receipt_projection.get("source_trace_path") or ""),
-                        receipt_projection.get("source_trace_sha256"),
-                        "source trace",
-                    ),
-                    (
-                        product_dir / "tasks" / str(source_task_id or "") / "packet.json",
-                        receipt_projection.get("source_task_packet_sha256"),
-                        "source task packet",
-                    ),
-                    (
-                        product_dir / "03_sections" / str(section or "") / "narration-pack.json",
-                        receipt_projection.get("narration_pack_sha256"),
-                        "narration pack",
-                    ),
-                    (
-                        product_dir / "03_sections" / str(section or "") / "evidence-pack.json",
-                        receipt_projection.get("evidence_pack_sha256"),
-                        "evidence pack",
-                    ),
-                ] if safe_source_task_id and safe_source_trace else []
+                if receipt_projection.get("schema_version") == 1:
+                    source_task_id = receipt_projection.get("source_task_id")
+                    expected_source_trace = (
+                        f"tasks/{source_task_id}/evidence-trace.jsonl" if _safe_task_id(source_task_id) else None
+                    )
+                    safe_source_trace = receipt_projection.get("source_trace_path") == expected_source_trace
+                    bound_paths = [
+                        (
+                            product_dir / str(receipt_projection.get("source_trace_path") or ""),
+                            receipt_projection.get("source_trace_sha256"),
+                            "source trace",
+                        ),
+                        (
+                            product_dir / "tasks" / str(source_task_id or "") / "packet.json",
+                            receipt_projection.get("source_task_packet_sha256"),
+                            "source task packet",
+                        ),
+                        (
+                            product_dir / "03_sections" / str(section or "") / "narration-pack.json",
+                            receipt_projection.get("narration_pack_sha256"),
+                            "narration pack",
+                        ),
+                        (
+                            product_dir / "03_sections" / str(section or "") / "evidence-pack.json",
+                            receipt_projection.get("evidence_pack_sha256"),
+                            "evidence pack",
+                        ),
+                    ] if _safe_task_id(source_task_id) and safe_source_trace else []
+                else:
+                    bound_paths = [
+                        (
+                            product_dir / "03_sections" / str(section or "") / "narration-pack.json",
+                            receipt_projection.get("narration_pack_sha256"),
+                            "narration pack",
+                        ),
+                        (
+                            product_dir / "03_sections" / str(section or "") / "evidence-pack.json",
+                            receipt_projection.get("evidence_pack_sha256"),
+                            "evidence pack",
+                        ),
+                    ]
+                    current = receipt_projection.get("current_prose_task")
+                    if isinstance(current, dict) and _safe_task_id(current.get("task_id")):
+                        current_id = current["task_id"]
+                        if current.get("task_packet_path") == f"tasks/{current_id}/packet.json":
+                            bound_paths.append(
+                                (
+                                    product_dir / current["task_packet_path"],
+                                    current.get("task_packet_sha256"),
+                                    "current prose task packet",
+                                )
+                            )
+                        draft_rel = f"03_sections/{section}/draft.md"
+                        handoff_rel = f"03_sections/{section}/handoff.md"
+                        if _input_hash(packet, draft_rel) != current.get("draft_sha256"):
+                            errors.append("review draft input differs from current prose receipt provenance")
+                        if _input_hash(packet, handoff_rel) != current.get("handoff_sha256"):
+                            errors.append("review handoff input differs from current prose receipt provenance")
+                        for prose_rel, expected_digest in [
+                            (draft_rel, current.get("draft_sha256")),
+                            (handoff_rel, current.get("handoff_sha256")),
+                        ]:
+                            prose_path = product_dir / prose_rel
+                            if not prose_path.is_file() or sha256(prose_path) != expected_digest:
+                                errors.append(f"stale input: {prose_rel}")
+                    origins = receipt_projection.get("receipt_origins", [])
+                    if isinstance(origins, list):
+                        for origin in origins:
+                            if not isinstance(origin, dict) or not _safe_task_id(origin.get("task_id")):
+                                continue
+                            origin_id = origin["task_id"]
+                            if (
+                                origin.get("trace_path") == f"tasks/{origin_id}/evidence-trace.jsonl"
+                                and origin.get("task_packet_path") == f"tasks/{origin_id}/packet.json"
+                            ):
+                                bound_paths.extend(
+                                    [
+                                        (
+                                            product_dir / origin["trace_path"],
+                                            origin.get("trace_sha256"),
+                                            f"receipt origin {origin_id} trace",
+                                        ),
+                                        (
+                                            product_dir / origin["task_packet_path"],
+                                            origin.get("task_packet_sha256"),
+                                            f"receipt origin {origin_id} task packet",
+                                        ),
+                                    ]
+                                )
+                    try:
+                        rebuilt_projection = build_review_record_projection(product_dir, str(section or ""))
+                    except (
+                        EvidenceAccessError,
+                        FileNotFoundError,
+                        OSError,
+                        ValueError,
+                        KeyError,
+                        json.JSONDecodeError,
+                    ):
+                        errors.append("recorded evidence projection cannot reconstruct its declared prose lineage")
+                    else:
+                        if _json_hash(rebuilt_projection) != _json_hash(receipt_projection):
+                            errors.append("recorded evidence projection differs from reconstructed prose lineage")
                 for bound_path, expected_digest, label in bound_paths:
                     if not bound_path.is_file() or sha256(bound_path) != expected_digest:
                         errors.append(f"recorded evidence projection is stale relative to {label}")
+
+        task_dir = context_path.parent
+        if (
+            isinstance(anchor, dict)
+            and task_dir.name == packet.get("task_id")
+            and task_dir.parent.name == "tasks"
+        ):
+            product_dir = task_dir.parents[1]
+            section = packet.get("target", {}).get("section") if isinstance(packet.get("target"), dict) else None
+            predecessor = anchor.get("predecessor")
+            bound_anchor_paths: list[tuple[Path, Any, str]] = [
+                (
+                    product_dir / "03_sections" / str(section or "") / "narration-pack.json",
+                    anchor.get("narration_pack_sha256"),
+                    "lineage narration pack",
+                ),
+                (
+                    product_dir / "03_sections" / str(section or "") / "evidence-pack.json",
+                    anchor.get("evidence_pack_sha256"),
+                    "lineage evidence pack",
+                ),
+            ]
+            if isinstance(predecessor, dict) and _safe_task_id(predecessor.get("task_id")):
+                predecessor_id = predecessor["task_id"]
+                if predecessor.get("task_packet_path") == f"tasks/{predecessor_id}/packet.json":
+                    bound_anchor_paths.append(
+                        (
+                            product_dir / predecessor["task_packet_path"],
+                            predecessor.get("task_packet_sha256"),
+                            "lineage predecessor task packet",
+                        )
+                    )
+            predecessor_trace = anchor.get("predecessor_trace")
+            if (
+                isinstance(predecessor_trace, dict)
+                and isinstance(predecessor, dict)
+                and _safe_task_id(predecessor.get("task_id"))
+                and predecessor_trace.get("path")
+                == f"tasks/{predecessor['task_id']}/evidence-trace.jsonl"
+            ):
+                trace_path = product_dir / predecessor_trace["path"]
+                if predecessor_trace.get("state") == "present":
+                    bound_anchor_paths.append(
+                        (
+                            trace_path,
+                            predecessor_trace.get("sha256"),
+                            "lineage predecessor trace",
+                        )
+                    )
+                elif predecessor_trace.get("state") == "absent" and trace_path.exists():
+                    errors.append("receipt lineage anchor is stale relative to absent predecessor trace")
+            for bound_path, expected_digest, label in bound_anchor_paths:
+                if not bound_path.is_file() or sha256(bound_path) != expected_digest:
+                    errors.append(f"receipt lineage anchor is stale relative to {label}")
 
     inputs = packet.get("inputs")
     if not isinstance(inputs, list):

@@ -23,7 +23,7 @@ from scripts.task import create_task, submit_task, verify_task
 from test_material_aware_handoff import SOURCE_PRODUCT, make_direct_authorship_fixture, write_json
 
 
-def submit_fixture_prose(product: Path, details: list[str]) -> str:
+def submit_fixture_prose(product: Path, details: list[str], draft_body: str = "A supported historical progression.") -> str:
     root = product / "03_sections" / "P01"
     work = create_task(product, "draft_section", "P01", None, False)
     task_id = work["id"]
@@ -39,7 +39,7 @@ def submit_fixture_prose(product: Path, details: list[str]) -> str:
                 "detail": detail,
             },
         )
-    (root / "draft.md").write_text("# P01\n\nA supported historical progression.\n", encoding="utf-8")
+    (root / "draft.md").write_text(f"# P01\n\n{draft_body}\n", encoding="utf-8")
     (root / "handoff.md").write_text("Listener reaches the assigned exit state.\n", encoding="utf-8")
     task_root = product / "tasks" / task_id
     (task_root / "report.md").write_text("Draft completed within routed evidence scope.\n", encoding="utf-8")
@@ -233,7 +233,7 @@ class WriterBaselineTests(unittest.TestCase):
             else:
                 self.assertIn('"next": null', context)
             self.assertNotIn("FULL_OUTLINE_REVIEW_SENTINEL", context)
-            self.assertNotIn("recorded_evidence_projection", packet)
+            self.assertEqual("legacy_unverifiable", packet["recorded_evidence_projection"]["recorded_evidence_state"])
             outline_record = next(item for item in packet["inputs"] if item["path"] == "02_outline/outline.json")
             self.assertEqual(sha256(outline_path), outline_record["sha256"])
 
@@ -246,12 +246,11 @@ class WriterBaselineTests(unittest.TestCase):
             write_json(outline_path, outline)
             materialize(product)
             root = product / "03_sections" / "P01"
+            submit_fixture_prose(product, [], draft_body="historical-detail " * 1300)
             state_path = root / "section.json"
             state = json.loads(state_path.read_text(encoding="utf-8"))
             state["status"] = "changes_requested"
             write_json(state_path, state)
-            (root / "draft.md").write_text("# P01\n\n" + ("historical detail " * 1300), encoding="utf-8")
-            (root / "handoff.md").write_text("Preserve the current exit state.\n", encoding="utf-8")
             (root / "change-request.md").write_text(
                 "# Change Request — P01\n\n## Approved revision scope\n\n"
                 "Fix it.\n",
@@ -372,9 +371,9 @@ class WriterBaselineTests(unittest.TestCase):
             compiled_context_path = review_root / "context.md"
             self.assertEqual([], validate_packet_contract(packet, compiled_context_path))
             tampered_packet = json.loads(json.dumps(packet))
-            tampered_packet["recorded_evidence_projection"]["source_task_id"] = "T-forged-source"
-            tampered_packet["recorded_evidence_projection"]["source_trace_path"] = (
-                "tasks/T-forged-source/evidence-trace.jsonl"
+            tampered_packet["recorded_evidence_projection"]["current_prose_task"]["task_id"] = "T9999-forged-source"
+            tampered_packet["recorded_evidence_projection"]["current_prose_task"]["task_packet_path"] = (
+                "tasks/T9999-forged-source/packet.json"
             )
             self.assertTrue(
                 any(
@@ -383,8 +382,8 @@ class WriterBaselineTests(unittest.TestCase):
                 )
             )
             traversal_packet = json.loads(json.dumps(packet))
-            traversal_packet["recorded_evidence_projection"]["source_task_id"] = "../../escape"
-            traversal_packet["recorded_evidence_projection"]["source_trace_path"] = "../../escape/evidence-trace.jsonl"
+            traversal_packet["recorded_evidence_projection"]["current_prose_task"]["task_id"] = "../../escape"
+            traversal_packet["recorded_evidence_projection"]["current_prose_task"]["task_packet_path"] = "../../escape/packet.json"
             self.assertTrue(
                 any(
                     "contains traversal" in error
@@ -405,21 +404,20 @@ class WriterBaselineTests(unittest.TestCase):
                 handle.write("\n")
             self.assertTrue(
                 any(
-                    "stale relative to source trace" in error
+                    "stale relative to" in error and "trace" in error
                     for error in validate_packet_contract(packet, compiled_context_path)
                 )
             )
 
             root = product / "03_sections" / "P01"
             (root / "draft.md").write_text("# P01\n\nTAMPERED_AFTER_SUBMISSION\n", encoding="utf-8")
-            stale_packet, stale_context = compile_packet(
-                product,
-                "review_section",
-                "T9994-review-section-P01",
-                section="P01",
-            )
-            self.assertNotIn("recorded_evidence_projection", stale_packet)
-            self.assertNotIn("VALID_RECORDED_DETAIL", stale_context)
+            with self.assertRaisesRegex(EvidenceAccessError, "current prose differs"):
+                compile_packet(
+                    product,
+                    "review_section",
+                    "T9994-review-section-P01",
+                    section="P01",
+                )
 
     def test_review_hard_stops_instead_of_subsetting_valid_receipts_over_caps(self) -> None:
         cases = [
@@ -470,8 +468,8 @@ class WriterBaselineTests(unittest.TestCase):
                 section="P01",
             )
 
-            self.assertNotIn("recorded_evidence_projection", packet)
-            self.assertNotIn("IMMUTABLE HANDLING RULE", context)
+            self.assertEqual("legacy_unverifiable", packet["recorded_evidence_projection"]["recorded_evidence_state"])
+            self.assertIn("IMMUTABLE HANDLING RULE", context)
 
     def test_current_sumer_c003_p01_smoke_compiles_to_minimal_writer_packet(self) -> None:
         """Use current Sumer artifacts while refreshing only stale derived hashes in a temporary copy."""

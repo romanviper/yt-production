@@ -30,6 +30,7 @@ try:
         REVIEW_RECORD_PROJECTION_END,
         REVIEW_RECORD_PROJECTION_START,
         build_review_record_projection,
+        build_revision_receipt_lineage_anchor,
     )
     from scripts.lifecycle import research_rework_blocker, section_operation_state_error
     from scripts.outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
@@ -55,6 +56,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
         REVIEW_RECORD_PROJECTION_END,
         REVIEW_RECORD_PROJECTION_START,
         build_review_record_projection,
+        build_revision_receipt_lineage_anchor,
     )
     from lifecycle import research_rework_blocker, section_operation_state_error
     from outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
@@ -102,6 +104,7 @@ LEGACY_REVISE_REQUIRED_INPUTS = [
     "03_sections/{section}/brief.md",
     "03_sections/{section}/narration-pack.json",
     "03_sections/{section}/draft.md",
+    "03_sections/{section}/handoff.md",
     "03_sections/{section}/review.md",
     "03_sections/{section}/change-request.md",
 ]
@@ -484,6 +487,11 @@ def compile_packet(
             block = [f"# BEGIN INPUT: {relative}", content.rstrip(), f"# END INPUT: {relative}", ""]
             blocks.extend(block)
             input_blocks.extend(block)
+    receipt_lineage_anchor = (
+        build_revision_receipt_lineage_anchor(product_dir, str(section), input_records)
+        if operation == "revise_section" and section
+        else None
+    )
     recorded_evidence_projection = (
         build_review_record_projection(product_dir, str(section))
         if operation == "review_section" and section
@@ -643,6 +651,8 @@ def compile_packet(
     }
     if spec.get("review_contract_version") is not None:
         packet["review_contract_version"] = int(spec["review_contract_version"])
+    if receipt_lineage_anchor is not None:
+        packet["receipt_lineage_anchor"] = receipt_lineage_anchor
     if recorded_evidence_projection is not None:
         packet["recorded_evidence_projection"] = recorded_evidence_projection
     if evidence_packet is not None:

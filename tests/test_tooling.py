@@ -1277,18 +1277,20 @@ class ModularProductionTests(unittest.TestCase):
             materialize_sections(product)
             make_approved_story_plan(product, "P06")
             root = product / "03_sections" / "P06"
+            draft_work = create_task(product, "draft_section", "P06", None, False)
+            DraftEvidenceBroker(product, draft_work["id"]).call("resolve_claims")
             (root / "draft.md").write_text("Draft P06.", encoding="utf-8")
             (root / "handoff.md").write_text("Exit state P06.", encoding="utf-8")
-            state = json.loads((root / "section.json").read_text(encoding="utf-8"))
-            state["status"] = "ready_for_review"
-            write_json(root / "section.json", state)
+            (product / "tasks" / draft_work["id"] / "report.md").write_text("Draft ready.\n", encoding="utf-8")
+            write_json(product / "tasks" / draft_work["id"] / "operator-brief.json", valid_operator_brief())
+            self.assertEqual([], submit_task(product, draft_work["id"]))
             review_packet, review_context = compile_packet(product, "review_section", "T0001", section="P06")
             self.assertEqual(
                 ["03_sections/P06/review.md", "tasks/T0001/report.md", "tasks/T0001/operator-brief.json"],
                 review_packet["allowed_write_paths"],
             )
             self.assertNotIn("03_sections/P05/draft.md", review_context)
-            self.assertNotIn("recorded_evidence_projection", review_packet)
+            self.assertEqual("none", review_packet["recorded_evidence_projection"]["recorded_evidence_state"])
             request_changes(product, "P06", "Fix ISSUE-01 only; preserve the entry scene.")
             (root / "review.md").write_text("ISSUE-01: causal link is unsupported.", encoding="utf-8")
             revision_packet, revision_context = compile_packet(product, "revise_section", "T0002", section="P06")
@@ -1302,6 +1304,7 @@ class ModularProductionTests(unittest.TestCase):
                 "03_sections/P06/brief.md",
                 "03_sections/P06/narration-pack.json",
                 "03_sections/P06/draft.md",
+                "03_sections/P06/handoff.md",
                 "03_sections/P06/review.md",
                 "03_sections/P06/change-request.md",
                 "03_sections/P06/story-plan.json",

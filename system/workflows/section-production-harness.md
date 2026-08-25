@@ -6,7 +6,7 @@ Use this workflow for a new section draft or a bounded section rework. Product a
 
 1. **Operator** starts from current `main`, records the base SHA, routes tasks and runs validations. The operator does not approve a section.
 2. **Writer** receives only the active draft packet and bounded evidence broker. It cannot read prior drafts, reviewer scoring, competitor prose or the repository at large.
-3. **Reviewer** is a fresh agent. It receives the review packet, the compact current/next-section boundary projection, a bounded projection of valid source-detail receipts recorded by the submitted prose task, and bounded evidence access. It evaluates but never rewrites. Receipt projection saves duplicate source opening but does not widen the narration truth ceiling.
+3. **Reviewer** is a fresh agent. It receives the review packet, the compact current/next-section boundary projection, a bounded receipt projection with an explicit `projected`, `none` or `legacy_unverifiable` state, and bounded evidence access. The projection names the current prose task and every receipt origin. It evaluates but never rewrites. Receipts save duplicate source opening but neither widen the narration truth ceiling nor prove that revised prose used a recorded detail correctly.
 4. **Reviser** is a fresh agent used only after a diagnosed `changes_requested` result. It sees the routed change request, current prose, compact mission/boundary control and narration truth ceiling, then performs one bounded pass.
 5. **User** is the only section approval authority.
 
@@ -19,6 +19,8 @@ Never let one agent write, score and explain its own improvement. FoC or another
 3. Route `review_section` to a fresh reviewer. Reviewer calls `resolve_claims`, emits the production-gate block and submits.
 4. If every hard gate passes and every evidence-adjusted dimension is at least 8, stop at human approval.
 5. If the verdict is `changes_requested`, route the smallest approved change through one `revise_section` task, then run one fresh review. A second revision is a blocker or a new user-authorized production cycle.
+
+At revision routing, packet schema v5 captures one immutable draft-to-revision receipt anchor. A revision with no new trace inherits valid draft receipts through that anchor; a revision with new receipts contributes a deterministic union with origin IDs preserved. The review never recurses or searches task history. Missing or changed anchors, traces, packets, hashes, section/cycle bindings, UTC timestamps or predecessor input hashes are hard stops. Frozen v4 lineage is not inferred and is surfaced as `legacy_unverifiable`.
 
 ## Cost and stop policy
 
