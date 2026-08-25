@@ -51,6 +51,16 @@ from scripts.common import word_count
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+STORY_ROUTE = {
+    "carrier": "a marked clay object",
+    "entry_observable_state": "Wet clay sits unmarked in one pair of hands.",
+    "transformations": [
+        {"observable_change": "Marks cross the wet surface.", "question_or_consequence": "The object now preserves a visible difference."},
+        {"observable_change": "The clay hardens and changes hands.", "question_or_consequence": "Another person can inspect marks made earlier."},
+        {"observable_change": "A reader uses the marks to choose an action.", "question_or_consequence": "The object changes what happens elsewhere."},
+    ],
+    "exit_observable_state": "The marked object now carries a recoverable instruction between people.",
+}
 
 
 def write_json(path: Path, value: dict) -> None:
@@ -917,13 +927,7 @@ class ModularProductionTests(unittest.TestCase):
             write_json(product / "tasks" / work["id"] / "operator-brief.json", valid_operator_brief())
             DraftEvidenceBroker(product, work["id"]).call(
                 "resolve_claims",
-                {
-                    "route_intent": (
-                        "Follow one unstable historical condition as it changes what can be seen and understood. "
-                        "Let each transformation produce a live question whose answer changes the listener's model, "
-                        "then carry that change into a consequence that makes the assigned exit state feel earned rather than announced."
-                    )
-                },
+                {"story_route": STORY_ROUTE},
             )
             self.assertEqual([], submit_task(product, work["id"]))
 
@@ -1289,13 +1293,7 @@ class ModularProductionTests(unittest.TestCase):
             draft_work = create_task(product, "draft_section", "P06", None, False)
             DraftEvidenceBroker(product, draft_work["id"]).call(
                 "resolve_claims",
-                {
-                    "route_intent": (
-                        "Follow one unstable historical condition as it changes what can be seen and understood. "
-                        "Let each transformation produce a live question whose answer changes the listener's model, "
-                        "then carry that change into a consequence that makes the assigned exit state feel earned rather than announced."
-                    )
-                },
+                {"story_route": STORY_ROUTE},
             )
             (root / "draft.md").write_text("Draft P06.", encoding="utf-8")
             (root / "handoff.md").write_text("Exit state P06.", encoding="utf-8")

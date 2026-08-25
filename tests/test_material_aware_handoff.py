@@ -20,11 +20,25 @@ from scripts.task import create_task, validate_output_contract
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PRODUCT = REPO_ROOT / "products" / "sumer-writing"
-ROUTE_INTENT = (
-    "Follow one unstable historical condition as it changes what can be seen and understood. "
-    "Let each transformation produce a live question whose answer changes the listener's model, "
-    "then carry that change into a consequence that makes the assigned exit state feel earned rather than announced."
-)
+STORY_ROUTE = {
+    "carrier": "a measured clay object",
+    "entry_observable_state": "The object begins as an unmarked piece of clay in one pair of hands.",
+    "transformations": [
+        {
+            "observable_change": "Marks appear across the wet surface.",
+            "question_or_consequence": "The marks make the object carry something beyond its shape.",
+        },
+        {
+            "observable_change": "The clay hardens and leaves the original hands.",
+            "question_or_consequence": "What can another person recover from the fixed marks?",
+        },
+        {
+            "observable_change": "A later reader turns the marked object into an instruction.",
+            "question_or_consequence": "The object now changes an action at a different time and place.",
+        },
+    ],
+    "exit_observable_state": "The same clay object now carries a recoverable instruction between people.",
+}
 
 
 def write_json(path: Path, value: dict) -> None:
@@ -231,7 +245,7 @@ class AuthorshipBoundaryRegression(unittest.TestCase):
             scope = broker.call("scope")
             self.assertEqual(["CLM-0001"], scope["claim_ids"])
             self.assertEqual(["SRC-0001"], scope["source_ids"])
-            broker.call("resolve_claims", {"route_intent": ROUTE_INTENT})
+            broker.call("resolve_claims", {"story_route": STORY_ROUTE})
 
             allowed = broker.call("source", {"id": "SRC-0001"})
             self.assertEqual("SRC-0001", allowed["source"]["id"])

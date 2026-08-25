@@ -31,9 +31,20 @@ MAX_REVIEW_RECORD_PROJECTION_TOKENS = 2400
 REVIEW_RECORD_SERIALIZATION_MARGIN_TOKENS = 96
 LEGACY_EVIDENCE_INTERFACE_VERSION = 1
 ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION = 2
+STORY_ROUTE_EVIDENCE_INTERFACE_VERSION = 3
 MIN_ROUTE_INTENT_CHARS = 200
 MAX_ROUTE_INTENT_CHARS = 2000
 ROUTE_INTENT_COPY_WINDOW_WORDS = 10
+STORY_ROUTE_COPY_WINDOW_WORDS = 10
+MIN_STORY_ROUTE_CARRIER_CHARS = 3
+MAX_STORY_ROUTE_CARRIER_CHARS = 160
+MIN_STORY_ROUTE_STATE_CHARS = 10
+MAX_STORY_ROUTE_STATE_CHARS = 280
+MIN_STORY_ROUTE_STEP_CHARS = 10
+MAX_STORY_ROUTE_STEP_CHARS = 280
+MIN_STORY_ROUTE_TRANSFORMATIONS = 3
+MAX_STORY_ROUTE_TRANSFORMATIONS = 6
+MAX_STORY_ROUTE_TOTAL_CHARS = 2400
 REVIEW_RECORD_PROJECTION_START = "# BEGIN BOUNDED EVIDENCE RECEIPT PROJECTION"
 REVIEW_RECORD_PROJECTION_END = "# END BOUNDED EVIDENCE RECEIPT PROJECTION"
 REVIEW_RECORD_DATA_RULE = (
@@ -499,7 +510,11 @@ class DraftEvidenceBroker:
         if access.get("kind") != "bounded_claim_sources" or access.get("adapter") != "scripts/draft_evidence.py":
             raise EvidenceAccessError("task packet evidence access contract is invalid")
         interface_version = access.get("interface_version")
-        if interface_version not in {LEGACY_EVIDENCE_INTERFACE_VERSION, ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION}:
+        if interface_version not in {
+            LEGACY_EVIDENCE_INTERFACE_VERSION,
+            ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
+            STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
+        }:
             raise EvidenceAccessError("task packet evidence access interface is unsupported")
         self.evidence_interface_version = int(interface_version)
         expected_trace = f"tasks/{self.task_id}/evidence-trace.jsonl"
@@ -656,9 +671,17 @@ class DraftEvidenceBroker:
                 "Call resolve_claims before submission when the task packet requires it."
             ),
         }
-        if self.evidence_interface_version == ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION:
-            response["composition_contract"] = self._route_first_composition_contract()
+        if self.evidence_interface_version in {
+            ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
+            STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
+        }:
+            response["composition_contract"] = self._composition_contract()
         return response
+
+    def _composition_contract(self) -> dict[str, str]:
+        if self.evidence_interface_version == STORY_ROUTE_EVIDENCE_INTERFACE_VERSION:
+            return self._story_route_composition_contract()
+        return self._route_first_composition_contract()
 
     @staticmethod
     def _route_first_composition_contract() -> dict[str, str]:
@@ -672,6 +695,22 @@ class DraftEvidenceBroker:
             ),
             "anti_template_rule": (
                 "Claim ids, object-key order and ledger order prescribe no paragraph order, beat count or required coverage."
+            ),
+        }
+
+    @staticmethod
+    def _story_route_composition_contract() -> dict[str, str]:
+        return {
+            "evidence_role": "constraint_support_and_correction",
+            "sequence_authority": "none",
+            "presentation_order": "deterministic_task_hash_with_no_story_authority",
+            "route_rule": (
+                "Commit one materially observable carrier moving through ordered changes in the world, material or action. "
+                "Each change must create a question or consequence before claim prose becomes visible."
+            ),
+            "anti_template_rule": (
+                "Transformations are not topics, claims, themes, explanations or caveat order. Claim records may only "
+                "constrain, support or correct the already-authored route."
             ),
         }
 
@@ -708,6 +747,116 @@ class DraftEvidenceBroker:
                 if tuple(words[index : index + ROUTE_INTENT_COPY_WINDOW_WORDS]) in intent_windows:
                     raise EvidenceAccessError("route_intent must describe route shape without copying claim prose")
         return intent
+
+    @staticmethod
+    def _bounded_story_route_text(value: Any, *, field: str, minimum: int, maximum: int) -> str:
+        if not isinstance(value, str):
+            raise EvidenceAccessError(f"story_route.{field} must be text")
+        normalized = value.strip()
+        if not minimum <= len(normalized) <= maximum:
+            raise EvidenceAccessError(
+                f"story_route.{field} must be {minimum}-{maximum} characters"
+            )
+        return normalized
+
+    def _validated_story_route(self, value: Any) -> dict[str, Any]:
+        if not isinstance(value, dict):
+            raise EvidenceAccessError("story_route must be an object")
+        required = {
+            "carrier",
+            "entry_observable_state",
+            "transformations",
+            "exit_observable_state",
+        }
+        if set(value) != required:
+            raise EvidenceAccessError(
+                "story_route requires exactly carrier, entry_observable_state, transformations and exit_observable_state"
+            )
+
+        carrier = self._bounded_story_route_text(
+            value.get("carrier"),
+            field="carrier",
+            minimum=MIN_STORY_ROUTE_CARRIER_CHARS,
+            maximum=MAX_STORY_ROUTE_CARRIER_CHARS,
+        )
+        entry_state = self._bounded_story_route_text(
+            value.get("entry_observable_state"),
+            field="entry_observable_state",
+            minimum=MIN_STORY_ROUTE_STATE_CHARS,
+            maximum=MAX_STORY_ROUTE_STATE_CHARS,
+        )
+        exit_state = self._bounded_story_route_text(
+            value.get("exit_observable_state"),
+            field="exit_observable_state",
+            minimum=MIN_STORY_ROUTE_STATE_CHARS,
+            maximum=MAX_STORY_ROUTE_STATE_CHARS,
+        )
+        raw_transformations = value.get("transformations")
+        if (
+            not isinstance(raw_transformations, list)
+            or not MIN_STORY_ROUTE_TRANSFORMATIONS
+            <= len(raw_transformations)
+            <= MAX_STORY_ROUTE_TRANSFORMATIONS
+        ):
+            raise EvidenceAccessError(
+                "story_route.transformations must contain 3-6 ordered transformations"
+            )
+
+        transformations: list[dict[str, str]] = []
+        route_text = [carrier, entry_state]
+        for index, item in enumerate(raw_transformations):
+            if not isinstance(item, dict) or set(item) != {"observable_change", "question_or_consequence"}:
+                raise EvidenceAccessError(
+                    "each story_route transformation requires exactly observable_change and question_or_consequence"
+                )
+            observable_change = self._bounded_story_route_text(
+                item.get("observable_change"),
+                field=f"transformations[{index}].observable_change",
+                minimum=MIN_STORY_ROUTE_STEP_CHARS,
+                maximum=MAX_STORY_ROUTE_STEP_CHARS,
+            )
+            question_or_consequence = self._bounded_story_route_text(
+                item.get("question_or_consequence"),
+                field=f"transformations[{index}].question_or_consequence",
+                minimum=MIN_STORY_ROUTE_STEP_CHARS,
+                maximum=MAX_STORY_ROUTE_STEP_CHARS,
+            )
+            transformations.append(
+                {
+                    "observable_change": observable_change,
+                    "question_or_consequence": question_or_consequence,
+                }
+            )
+            route_text.extend([observable_change, question_or_consequence])
+        route_text.append(exit_state)
+        if sum(len(item) for item in route_text) > MAX_STORY_ROUTE_TOTAL_CHARS:
+            raise EvidenceAccessError(
+                f"story_route text must total no more than {MAX_STORY_ROUTE_TOTAL_CHARS} characters"
+            )
+
+        combined_text = "\n".join(route_text)
+        if re.search(r"\b(?:CLM|SRC)-\d{4}\b", combined_text, flags=re.IGNORECASE):
+            raise EvidenceAccessError("story_route must not contain claim or source ids")
+        route_words = re.findall(r"[\wÀ-ỹ]+", combined_text.casefold(), flags=re.UNICODE)
+        route_windows = {
+            tuple(route_words[index : index + STORY_ROUTE_COPY_WINDOW_WORDS])
+            for index in range(max(0, len(route_words) - STORY_ROUTE_COPY_WINDOW_WORDS + 1))
+        }
+        for claim in self.claims_by_id.values():
+            statement = claim.get("statement")
+            if not isinstance(statement, str):
+                continue
+            claim_words = re.findall(r"[\wÀ-ỹ]+", statement.casefold(), flags=re.UNICODE)
+            for index in range(max(0, len(claim_words) - STORY_ROUTE_COPY_WINDOW_WORDS + 1)):
+                if tuple(claim_words[index : index + STORY_ROUTE_COPY_WINDOW_WORDS]) in route_windows:
+                    raise EvidenceAccessError("story_route must not copy a 10-word window from claim prose")
+
+        return {
+            "carrier": carrier,
+            "entry_observable_state": entry_state,
+            "transformations": transformations,
+            "exit_observable_state": exit_state,
+        }
 
     def _has_route_first_resolution(self) -> bool:
         if not self.trace_path.is_file():
@@ -753,18 +902,70 @@ class DraftEvidenceBroker:
                 return True
         return False
 
+    def _has_story_route_resolution(self) -> bool:
+        if not self.trace_path.is_file():
+            return False
+        expected_evidence_hash = sha256(self.evidence_path)
+        for line in self.trace_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                record = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            response = record.get("response")
+            arguments = record.get("arguments")
+            if not isinstance(response, dict) or not isinstance(arguments, dict):
+                continue
+            try:
+                story_route = self._validated_story_route(arguments.get("story_route"))
+            except EvidenceAccessError:
+                continue
+            attestation = response.get("story_route_attestation")
+            if (
+                record.get("capability") == "resolve_claims"
+                and record.get("error") is None
+                and record.get("task_id") == self.task_id
+                and record.get("section") == self.section
+                and record.get("evidence_pack_sha256") == expected_evidence_hash
+                and record.get("response_sha256") == _json_hash(response)
+                and record.get("truth_ceiling_unchanged") is True
+                and set(arguments) == {"story_route"}
+                and isinstance(response.get("resolved_claim_ids"), list)
+                and response["resolved_claim_ids"] == self._order_neutral_ids(self.allowed_claim_ids)
+                and response.get("truth_ceiling_unchanged") is True
+                and isinstance(response.get("claim_records"), dict)
+                and set(response["claim_records"]) == set(self.allowed_claim_ids)
+                and "claims" not in response
+                and isinstance(attestation, dict)
+                and attestation.get("status") == "recorded_before_claim_resolution"
+                and attestation.get("schema_version") == 1
+                and attestation.get("canonical_sha256") == _json_hash(story_route)
+                and attestation.get("transformation_count") == len(story_route["transformations"])
+                and attestation.get("authority") == "creative_route_only_not_evidence"
+            ):
+                return True
+        return False
+
     def _require_route_first_resolution(self) -> None:
+        if self.work.get("operation") != "draft_section":
+            return
         if (
             self.evidence_interface_version == ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION
-            and self.work.get("operation") == "draft_section"
             and not self._has_route_first_resolution()
         ):
             raise EvidenceAccessError("route-first draft must resolve_claims with route_intent before claim/search access")
+        if (
+            self.evidence_interface_version == STORY_ROUTE_EVIDENCE_INTERFACE_VERSION
+            and not self._has_story_route_resolution()
+        ):
+            raise EvidenceAccessError("story-route draft must resolve_claims with story_route before claim/search access")
 
     def resolve_claims(self, arguments: dict[str, Any]) -> dict[str, Any]:
         """Resolve the whole scoped claim graph once, compactly and auditably."""
 
         route_intent: str | None = None
+        story_route: dict[str, Any] | None = None
         if self.evidence_interface_version == ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION:
             if self.work.get("operation") != "draft_section":
                 raise EvidenceAccessError("route-first evidence interface is limited to draft_section")
@@ -773,6 +974,14 @@ class DraftEvidenceBroker:
             if self._has_route_first_resolution():
                 raise EvidenceAccessError("route-first claim scope has already been resolved; use claims for later lookup")
             route_intent = self._validated_route_intent(arguments.get("route_intent"))
+        elif self.evidence_interface_version == STORY_ROUTE_EVIDENCE_INTERFACE_VERSION:
+            if self.work.get("operation") != "draft_section":
+                raise EvidenceAccessError("story-route evidence interface is limited to draft_section")
+            if set(arguments) != {"story_route"}:
+                raise EvidenceAccessError("resolve_claims requires exactly story_route for a story-route draft")
+            if self._has_story_route_resolution():
+                raise EvidenceAccessError("story-route claim scope has already been resolved; use claims for later lookup")
+            story_route = self._validated_story_route(arguments.get("story_route"))
         elif arguments:
             raise EvidenceAccessError("resolve_claims takes no arguments on the legacy evidence interface")
         if len(self.allowed_claim_ids) > MAX_RESOLVED_CLAIMS:
@@ -810,21 +1019,17 @@ class DraftEvidenceBroker:
             }
             for source_id in self.allowed_source_ids
         ]
-        if self.evidence_interface_version == ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION:
-            assert route_intent is not None
+        if self.evidence_interface_version in {
+            ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
+            STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
+        }:
             claims_by_id = {record["id"]: record for record in resolved}
             sources_by_id = {record["id"]: record for record in sources}
             presented_claim_ids = self._order_neutral_ids(list(claims_by_id))
             presented_source_ids = self._order_neutral_ids(list(sources_by_id))
             response = {
                 "section": self.section,
-                "composition_contract": self._route_first_composition_contract(),
-                "route_intent_attestation": {
-                    "status": "recorded_before_claim_resolution",
-                    "sha256": hashlib.sha256(route_intent.encode("utf-8")).hexdigest(),
-                    "characters": len(route_intent),
-                    "authority": "creative_route_only_not_evidence",
-                },
+                "composition_contract": self._composition_contract(),
                 "resolved_claim_ids": presented_claim_ids,
                 "claim_records": {
                     claim_id: claims_by_id[claim_id]
@@ -837,6 +1042,23 @@ class DraftEvidenceBroker:
                 "truth_ceiling_unchanged": True,
                 "rule": "Use only these resolved records and their reviewed support; route new meaning to evidence authority.",
             }
+            if self.evidence_interface_version == ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION:
+                assert route_intent is not None
+                response["route_intent_attestation"] = {
+                    "status": "recorded_before_claim_resolution",
+                    "sha256": hashlib.sha256(route_intent.encode("utf-8")).hexdigest(),
+                    "characters": len(route_intent),
+                    "authority": "creative_route_only_not_evidence",
+                }
+            else:
+                assert story_route is not None
+                response["story_route_attestation"] = {
+                    "schema_version": 1,
+                    "status": "recorded_before_claim_resolution",
+                    "canonical_sha256": _json_hash(story_route),
+                    "transformation_count": len(story_route["transformations"]),
+                    "authority": "creative_route_only_not_evidence",
+                }
         else:
             response = {
                 "section": self.section,
@@ -873,10 +1095,13 @@ class DraftEvidenceBroker:
         if outside:
             raise EvidenceAccessError("claim is outside approved section scope: " + ", ".join(outside))
         records = [self.claims_by_id[item] for item in ids]
-        if self.evidence_interface_version == ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION:
+        if self.evidence_interface_version in {
+            ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
+            STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
+        }:
             records_by_id = {record["id"]: record for record in records}
             return {
-                "composition_contract": self._route_first_composition_contract(),
+                "composition_contract": self._composition_contract(),
                 "claim_records": {
                     claim_id: records_by_id[claim_id]
                     for claim_id in self._order_neutral_ids(list(records_by_id))
@@ -887,7 +1112,10 @@ class DraftEvidenceBroker:
     def sources(self, arguments: dict[str, Any]) -> dict[str, Any]:
         if arguments:
             raise EvidenceAccessError("sources takes no arguments")
-        if self.evidence_interface_version == ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION:
+        if self.evidence_interface_version in {
+            ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
+            STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
+        }:
             return {
                 "source_records": {
                     item: self.sources_by_id[item]
@@ -1465,7 +1693,9 @@ def main() -> int:
     sub = parser.add_subparsers(dest="capability", required=True)
     sub.add_parser("scope")
     resolve = sub.add_parser("resolve_claims")
-    resolve.add_argument("--route-intent")
+    route_group = resolve.add_mutually_exclusive_group()
+    route_group.add_argument("--route-intent")
+    route_group.add_argument("--story-route-json")
 
     claims = sub.add_parser("claims")
     claims.add_argument("--id", dest="ids", action="append")
@@ -1487,7 +1717,14 @@ def main() -> int:
     args = parser.parse_args()
     broker = DraftEvidenceBroker(args.product, args.task_id)
     if args.capability == "resolve_claims":
-        arguments = {} if args.route_intent is None else {"route_intent": args.route_intent}
+        if args.story_route_json is not None:
+            try:
+                story_route = json.loads(args.story_route_json)
+            except json.JSONDecodeError as exc:
+                parser.error(f"--story-route-json must contain valid JSON: {exc}")
+            arguments = {"story_route": story_route}
+        else:
+            arguments = {} if args.route_intent is None else {"route_intent": args.route_intent}
     elif args.capability == "claims":
         arguments = {} if args.ids is None else {"ids": args.ids}
     elif args.capability == "source":

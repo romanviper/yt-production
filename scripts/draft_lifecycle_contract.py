@@ -21,9 +21,20 @@ PROSE_OPERATIONS = {"draft_section", "revise_section"}
 BOUND_PROSE_PROVENANCE_SCHEMA = 2
 BOUND_PACKET_SCHEMA = 5
 ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION = 2
+STORY_ROUTE_EVIDENCE_INTERFACE_VERSION = 3
 MIN_ROUTE_INTENT_CHARS = 200
 MAX_ROUTE_INTENT_CHARS = 2000
 ROUTE_INTENT_COPY_WINDOW_WORDS = 10
+STORY_ROUTE_COPY_WINDOW_WORDS = 10
+MIN_STORY_ROUTE_CARRIER_CHARS = 3
+MAX_STORY_ROUTE_CARRIER_CHARS = 160
+MIN_STORY_ROUTE_STATE_CHARS = 10
+MAX_STORY_ROUTE_STATE_CHARS = 280
+MIN_STORY_ROUTE_STEP_CHARS = 10
+MAX_STORY_ROUTE_STEP_CHARS = 280
+MIN_STORY_ROUTE_TRANSFORMATIONS = 3
+MAX_STORY_ROUTE_TRANSFORMATIONS = 6
+MAX_STORY_ROUTE_TOTAL_CHARS = 2400
 
 
 def _json_hash(value: Any) -> str:
@@ -61,6 +72,131 @@ def _route_intent_error(value: Any, evidence: dict[str, Any]) -> str | None:
             if tuple(words[index : index + ROUTE_INTENT_COPY_WINDOW_WORDS]) in intent_windows:
                 return "route_intent copies claim prose"
     return None
+
+
+def _bounded_story_route_text(
+    value: Any,
+    *,
+    field: str,
+    minimum: int,
+    maximum: int,
+) -> tuple[str | None, str | None]:
+    if not isinstance(value, str):
+        return None, f"story_route.{field} must be text"
+    normalized = value.strip()
+    if not minimum <= len(normalized) <= maximum:
+        return None, f"story_route.{field} must be {minimum}-{maximum} characters"
+    return normalized, None
+
+
+def _normalized_story_route(
+    value: Any,
+    evidence: dict[str, Any],
+) -> tuple[dict[str, Any] | None, str | None]:
+    if not isinstance(value, dict):
+        return None, "story_route must be an object"
+    required = {
+        "carrier",
+        "entry_observable_state",
+        "transformations",
+        "exit_observable_state",
+    }
+    if set(value) != required:
+        return None, (
+            "story_route requires exactly carrier, entry_observable_state, transformations and exit_observable_state"
+        )
+
+    carrier, error = _bounded_story_route_text(
+        value.get("carrier"),
+        field="carrier",
+        minimum=MIN_STORY_ROUTE_CARRIER_CHARS,
+        maximum=MAX_STORY_ROUTE_CARRIER_CHARS,
+    )
+    if error:
+        return None, error
+    entry_state, error = _bounded_story_route_text(
+        value.get("entry_observable_state"),
+        field="entry_observable_state",
+        minimum=MIN_STORY_ROUTE_STATE_CHARS,
+        maximum=MAX_STORY_ROUTE_STATE_CHARS,
+    )
+    if error:
+        return None, error
+    exit_state, error = _bounded_story_route_text(
+        value.get("exit_observable_state"),
+        field="exit_observable_state",
+        minimum=MIN_STORY_ROUTE_STATE_CHARS,
+        maximum=MAX_STORY_ROUTE_STATE_CHARS,
+    )
+    if error:
+        return None, error
+
+    raw_transformations = value.get("transformations")
+    if (
+        not isinstance(raw_transformations, list)
+        or not MIN_STORY_ROUTE_TRANSFORMATIONS
+        <= len(raw_transformations)
+        <= MAX_STORY_ROUTE_TRANSFORMATIONS
+    ):
+        return None, "story_route.transformations must contain 3-6 ordered transformations"
+
+    transformations: list[dict[str, str]] = []
+    route_text = [str(carrier), str(entry_state)]
+    for index, item in enumerate(raw_transformations):
+        if not isinstance(item, dict) or set(item) != {"observable_change", "question_or_consequence"}:
+            return None, (
+                "each story_route transformation requires exactly observable_change and question_or_consequence"
+            )
+        observable_change, error = _bounded_story_route_text(
+            item.get("observable_change"),
+            field=f"transformations[{index}].observable_change",
+            minimum=MIN_STORY_ROUTE_STEP_CHARS,
+            maximum=MAX_STORY_ROUTE_STEP_CHARS,
+        )
+        if error:
+            return None, error
+        question_or_consequence, error = _bounded_story_route_text(
+            item.get("question_or_consequence"),
+            field=f"transformations[{index}].question_or_consequence",
+            minimum=MIN_STORY_ROUTE_STEP_CHARS,
+            maximum=MAX_STORY_ROUTE_STEP_CHARS,
+        )
+        if error:
+            return None, error
+        transformations.append(
+            {
+                "observable_change": str(observable_change),
+                "question_or_consequence": str(question_or_consequence),
+            }
+        )
+        route_text.extend([str(observable_change), str(question_or_consequence)])
+    route_text.append(str(exit_state))
+    if sum(len(item) for item in route_text) > MAX_STORY_ROUTE_TOTAL_CHARS:
+        return None, f"story_route text must total no more than {MAX_STORY_ROUTE_TOTAL_CHARS} characters"
+
+    combined_text = "\n".join(route_text)
+    if re.search(r"\b(?:CLM|SRC)-\d{4}\b", combined_text, flags=re.IGNORECASE):
+        return None, "story_route must not contain claim or source ids"
+    route_words = re.findall(r"[\wÀ-ỹ]+", combined_text.casefold(), flags=re.UNICODE)
+    route_windows = {
+        tuple(route_words[index : index + STORY_ROUTE_COPY_WINDOW_WORDS])
+        for index in range(max(0, len(route_words) - STORY_ROUTE_COPY_WINDOW_WORDS + 1))
+    }
+    for claim in evidence.get("claims", []):
+        statement = claim.get("statement") if isinstance(claim, dict) else None
+        if not isinstance(statement, str):
+            continue
+        claim_words = re.findall(r"[\wÀ-ỹ]+", statement.casefold(), flags=re.UNICODE)
+        for index in range(max(0, len(claim_words) - STORY_ROUTE_COPY_WINDOW_WORDS + 1)):
+            if tuple(claim_words[index : index + STORY_ROUTE_COPY_WINDOW_WORDS]) in route_windows:
+                return None, "story_route copies a 10-word window from claim prose"
+
+    return {
+        "carrier": carrier,
+        "entry_observable_state": entry_state,
+        "transformations": transformations,
+        "exit_observable_state": exit_state,
+    }, None
 
 
 def validate_evidence_trace(product_dir: Path, task_id: str) -> list[str]:
@@ -156,10 +292,16 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
     if not trace_path.is_file():
         return [f"task {task_id} must call resolve_claims before submission"]
 
-    route_first = (
+    interface_version = access.get("interface_version")
+    route_intent_first = (
         work.get("operation") == "draft_section"
-        and access.get("interface_version") == ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION
+        and interface_version == ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION
     )
+    story_route_first = (
+        work.get("operation") == "draft_section"
+        and interface_version == STORY_ROUTE_EVIDENCE_INTERFACE_VERSION
+    )
+    authored_route_first = route_intent_first or story_route_first
     for line in trace_path.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
@@ -171,7 +313,7 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
         resolved_ids = response.get("resolved_claim_ids") if isinstance(response, dict) else None
         resolved_scope_matches = (
             resolved_ids == _route_first_presentation_order(task_id, expected_ids)
-            if route_first
+            if authored_route_first
             else resolved_ids == expected_ids
         )
         whole_scope_resolution = (
@@ -182,16 +324,11 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
         )
         if not whole_scope_resolution:
             continue
-        if route_first:
+        if authored_route_first:
             arguments = record.get("arguments")
-            if not isinstance(arguments, dict) or set(arguments) != {"route_intent"}:
+            expected_argument = "story_route" if story_route_first else "route_intent"
+            if not isinstance(arguments, dict) or set(arguments) != {expected_argument}:
                 continue
-            intent = arguments.get("route_intent")
-            if _route_intent_error(intent, evidence) is not None:
-                continue
-            assert isinstance(intent, str)
-            normalized_intent = intent.strip()
-            attestation = response.get("route_intent_attestation")
             composition = response.get("composition_contract")
             claim_records = response.get("claim_records")
             if (
@@ -199,20 +336,46 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
                 or not isinstance(composition, dict)
                 or composition.get("sequence_authority") != "none"
                 or composition.get("presentation_order") != "deterministic_task_hash_with_no_story_authority"
-                or not isinstance(attestation, dict)
-                or attestation.get("status") != "recorded_before_claim_resolution"
-                or attestation.get("sha256") != hashlib.sha256(normalized_intent.encode("utf-8")).hexdigest()
-                or attestation.get("characters") != len(normalized_intent)
-                or attestation.get("authority") != "creative_route_only_not_evidence"
                 or not isinstance(claim_records, dict)
                 or set(claim_records) != set(expected_ids)
                 or "claims" in response
             ):
                 continue
+            if route_intent_first:
+                intent = arguments.get("route_intent")
+                if _route_intent_error(intent, evidence) is not None:
+                    continue
+                assert isinstance(intent, str)
+                normalized_intent = intent.strip()
+                attestation = response.get("route_intent_attestation")
+                if (
+                    not isinstance(attestation, dict)
+                    or attestation.get("status") != "recorded_before_claim_resolution"
+                    or attestation.get("sha256") != hashlib.sha256(normalized_intent.encode("utf-8")).hexdigest()
+                    or attestation.get("characters") != len(normalized_intent)
+                    or attestation.get("authority") != "creative_route_only_not_evidence"
+                ):
+                    continue
+            else:
+                story_route, route_error = _normalized_story_route(arguments.get("story_route"), evidence)
+                if route_error is not None or story_route is None:
+                    continue
+                attestation = response.get("story_route_attestation")
+                if (
+                    not isinstance(attestation, dict)
+                    or attestation.get("schema_version") != 1
+                    or attestation.get("status") != "recorded_before_claim_resolution"
+                    or attestation.get("canonical_sha256") != _json_hash(story_route)
+                    or attestation.get("transformation_count") != len(story_route["transformations"])
+                    or attestation.get("authority") != "creative_route_only_not_evidence"
+                ):
+                    continue
             return []
         return []
-    if route_first:
+    if route_intent_first:
         return [f"task {task_id} must resolve every scoped claim with a valid pre-claim route_intent"]
+    if story_route_first:
+        return [f"task {task_id} must resolve every scoped claim with a valid pre-claim story_route"]
     return [f"task {task_id} must successfully resolve every scoped claim before submission"]
 
 

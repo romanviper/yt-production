@@ -31,6 +31,25 @@ ROUTE_INTENT = (
     "Let each transformation produce a live question whose answer changes the listener's model, "
     "then carry that change into a consequence that makes the assigned exit state feel earned rather than announced."
 )
+STORY_ROUTE = {
+    "carrier": "a marked clay object",
+    "entry_observable_state": "Wet clay sits unmarked in one pair of hands.",
+    "transformations": [
+        {
+            "observable_change": "Marks cross the wet surface.",
+            "question_or_consequence": "The object now preserves a visible difference.",
+        },
+        {
+            "observable_change": "The clay hardens and changes hands.",
+            "question_or_consequence": "Another person can inspect marks made earlier.",
+        },
+        {
+            "observable_change": "A reader uses the marks to choose an action.",
+            "question_or_consequence": "The object changes what happens elsewhere.",
+        },
+    ],
+    "exit_observable_state": "The marked object now carries a recoverable instruction between people.",
+}
 
 
 def valid_v3_pass_review(section: str) -> str:
@@ -86,7 +105,7 @@ def write_ready_task_admin(task_root: Path, headline: str) -> None:
 
 
 class WriterLifecycleRegression(unittest.TestCase):
-    def test_route_first_trace_round_trip_uses_explicit_presentation_order_for_multiple_claims(self) -> None:
+    def test_v2_route_intent_packet_remains_valid_after_v3_rollout(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = make_direct_authorship_fixture(Path(temp))
             outline_path = product / "02_outline" / "outline.json"
@@ -97,6 +116,10 @@ class WriterLifecycleRegression(unittest.TestCase):
             materialize(product)
 
             work = create_task(product, "draft_section", "P01", None, False)
+            packet_path = product / "tasks" / work["id"] / "packet.json"
+            packet = json.loads(packet_path.read_text(encoding="utf-8"))
+            packet["evidence_access"]["interface_version"] = 2
+            write_json(packet_path, packet)
             broker = DraftEvidenceBroker(product, work["id"])
             resolved = broker.call("resolve_claims", {"route_intent": ROUTE_INTENT})
             self.assertEqual(2, len(resolved["resolved_claim_ids"]))
@@ -144,32 +167,27 @@ class WriterLifecycleRegression(unittest.TestCase):
             broker = DraftEvidenceBroker(product, task_id)
             broker.call("scope")
             self.assertTrue(validate_required_evidence_resolution(product, task_id))
-            with self.assertRaisesRegex(EvidenceAccessError, "requires exactly route_intent"):
+            with self.assertRaisesRegex(EvidenceAccessError, "requires exactly story_route"):
                 broker.call("resolve_claims")
             with self.assertRaisesRegex(EvidenceAccessError, "before claim/search access"):
                 broker.call("claims")
             with self.assertRaisesRegex(EvidenceAccessError, "before claim/search access"):
                 broker.call("search", {"query": "approved"})
             with self.assertRaisesRegex(EvidenceAccessError, "must not contain claim or source ids"):
+                route_with_id = json.loads(json.dumps(STORY_ROUTE))
+                route_with_id["carrier"] = "CLM-0001 marked clay object"
                 broker.call(
                     "resolve_claims",
-                    {
-                        "route_intent": (
-                            "The section follows a changing historical problem until a new question becomes unavoidable, "
-                            "then lets the consequence redirect what the listener expects to find. "
-                            "The route remains provisional and will be corrected by CLM-0001 after this commitment is logged."
-                        )
-                    },
+                    {"story_route": route_with_id},
                 )
-            route_intent = (
-                "The section begins with a bounded condition that cannot remain stable, then follows the visible change "
-                "that makes the original understanding insufficient. Each discovery should create the next live question, "
-                "and the final consequence should explain why the listener must leave with a different model of the process."
-            )
-            resolved = broker.call("resolve_claims", {"route_intent": route_intent})
+            with self.assertRaisesRegex(EvidenceAccessError, "3-6 ordered transformations"):
+                short_route = json.loads(json.dumps(STORY_ROUTE))
+                short_route["transformations"] = short_route["transformations"][:2]
+                broker.call("resolve_claims", {"story_route": short_route})
+            resolved = broker.call("resolve_claims", {"story_route": STORY_ROUTE})
             self.assertEqual([], validate_evidence_trace(product, task_id))
             self.assertEqual([], validate_required_evidence_resolution(product, task_id))
-            self.assertEqual(2, broker.packet["evidence_access"]["interface_version"])
+            self.assertEqual(3, broker.packet["evidence_access"]["interface_version"])
             self.assertEqual("none", resolved["composition_contract"]["sequence_authority"])
             self.assertEqual(
                 "deterministic_task_hash_with_no_story_authority",
@@ -177,8 +195,9 @@ class WriterLifecycleRegression(unittest.TestCase):
             )
             self.assertEqual(
                 "recorded_before_claim_resolution",
-                resolved["route_intent_attestation"]["status"],
+                resolved["story_route_attestation"]["status"],
             )
+            self.assertEqual(3, resolved["story_route_attestation"]["transformation_count"])
             self.assertIsInstance(resolved["claim_records"], dict)
             self.assertIsInstance(resolved["source_records"], dict)
             self.assertEqual(resolved["resolved_claim_ids"], list(resolved["claim_records"]))
@@ -197,7 +216,7 @@ class WriterLifecycleRegression(unittest.TestCase):
                 for item in trace_records
                 if item.get("capability") == "resolve_claims" and item.get("error") is None
             )
-            successful_resolution["arguments"]["route_intent"] = "too short"
+            successful_resolution["arguments"]["story_route"]["transformations"] = STORY_ROUTE["transformations"][:2]
             trace_path.write_text(
                 "\n".join(json.dumps(item, ensure_ascii=False) for item in trace_records) + "\n",
                 encoding="utf-8",
@@ -377,7 +396,7 @@ class WriterLifecycleRegression(unittest.TestCase):
 
             draft_work = create_task(product, "draft_section", "P01", None, False)
             draft_broker = DraftEvidenceBroker(product, draft_work["id"])
-            draft_broker.call("resolve_claims", {"route_intent": ROUTE_INTENT})
+            draft_broker.call("resolve_claims", {"story_route": STORY_ROUTE})
             (root / "draft.md").write_text("# P01\n\nA supported routed draft.\n", encoding="utf-8")
             (root / "handoff.md").write_text("The listener reaches State 1.\n", encoding="utf-8")
             write_ready_task_admin(product / "tasks" / draft_work["id"], "P01 draft is ready for review.")
