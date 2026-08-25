@@ -1,6 +1,0 @@
-{
-  "schema_version": "story-quality-changes/1",
-  "cycle_id": "C000",
-  "mutations": [],
-  "note": "Cycle forensic: khong co hypothesis-bearing mutation cua system/product/candidate. Toan bo file ghi trong cycle nay la run-ledger theo RUN-ARTIFACT-CONTRACT va duoc loai khoi changes.json de tranh self-hash."
-}

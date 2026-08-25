@@ -16,6 +16,8 @@ Hệ thống dùng nguyên tắc **Hard boundaries, Soft logic**:
 
 Machine-readable profiles nằm ở `system/harness.json`. Phân loại và lý do thiết kế nằm ở [docs/HARNESS.md](docs/HARNESS.md).
 
+Quy trình canonical để sản xuất section nằm ở [system/workflows/section-production-harness.md](system/workflows/section-production-harness.md), với quality gate tại [system/standards/section-quality-gate.md](system/standards/section-quality-gate.md). Agent không dùng branch lịch sử hay artifact thử nghiệm làm production input.
+
 ## Kiến trúc câu chuyện
 
 Mọi script có ba act rõ ràng ở cấp toàn phim:
