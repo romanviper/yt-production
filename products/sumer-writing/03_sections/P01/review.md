@@ -1,110 +1,87 @@
-# Review — P01
-
-Verdict: changes_requested
-
+# Outcome Evaluation — P01
+Verdict: pass
 ## Outcome judgment
-
-Draft đạt exit state về một formation ecology, phá được shortcut “một phát minh đơn độc” và “token → tablet” như genealogy tất định. Nó cũng giữ đúng boundary với P02: section chỉ đặt câu hỏi về điều khiến hệ thống dấu mới khác biệt, chưa giải thích usefulness của structured signs/layout hay writing threshold thay cho section kế tiếp.
+Draft đạt cả hai outcome bắt buộc trong một lần nghe. Khán giả có thể trả lời vì sao dấu bền trên đất sét trở nên hữu ích, đồng thời kể lại con đường lịch sử-vật chất dẫn đến câu trả lời ấy. Exit state cũng đạt: formation hiện ra như một ecology chồng lấn của thực hành số, token, bulla, dấu trên bề mặt, bảng số, con dấu và áp lực thiết chế; hành chính được giữ là pressure lớn chứ không bị biến thành monocause.
 
 ## Mission answerability
-
-**Sau khi nghe section, khán giả có thể tự trả lời mission không? — Có.** Draft cho người nghe một câu trả lời rõ: record bền và có thể kiểm tra trở nên đáng giá khi áp lực xử lý lượng ở quy mô thiết chế gặp các vật mang tin và bề mặt đất sét có thể giữ thông tin cho công việc tiếp tục.
+Có. Draft trả lời mission bằng một quan hệ dễ nhớ nhưng vẫn có cơ chế: độ bền giữ thông tin hiện diện, bề mặt làm lượng có thể tiếp cận và tiếp tục xử lý, còn quy mô tổ chức làm năng lực đó trở nên đáng đầu tư. Câu trả lời không chỉ xuất hiện ở cuối; nghịch lý inside/outside của bulla đã chuẩn bị trực tiếp cho payoff này từ phần mở.
 
 ## Historical progression
+Có. Khán giả có thể retell đường đi: token cho lượng một hình thức vật chất; bulla gom và niêm phong nhưng che khuất nội dung; dấu ngoài vỏ đưa thông tin ra bề mặt; bảng số để chính bề mặt mang bản ghi; các thiết bị ấy cùng tồn tại trong một ecology dưới áp lực thiết chế. Draft chủ động gọi đây là logic vật chất, không phải niên biểu thay thế tuyến tính, và dùng Tushan để khóa lại giới hạn đó. Phần cuối chuyển từ progression sang mô hình feedback có điều kiện mà không nâng co-occurrence thành bằng chứng nhân quả một chiều.
 
-**Khán giả có thể kể lại historical path dẫn tới câu trả lời đó không? — Có.** Đường kể có thể nhớ và kể lại: token mang lượng → bulla gom và niêm phong → dấu số xuất hiện trên bề mặt → bảng số biến bề mặt thành nơi record tồn tại → nhiều thực hành tiếp tục chồng lấn → quy mô hành chính tạo pressure nhưng không phải monocause.
-
-## Issues
-
-### 1. Bulla bị mô tả như hai bản biểu diễn chắc chắn của cùng một lượng
-
-- **Vị trí quan sát được:** đoạn bắt đầu “Đường đi ấy đổi hướng ngay trên lớp vỏ”, câu “Bulla lúc đó mang hai cách giữ cùng một lượng: các vật nằm bên trong và dấu hiện ra trên bề mặt.”
-- **Failure:** câu khẳng định quan hệ tương đương giữa nội dung bên trong và dấu ngoài bề mặt. Bounded source detail từ `SRC-0011`, locator pp. 6–9, nêu rằng dấu ngoài có thể được tạo bằng token nhưng token được ấn không nhất thiết là token nằm trong bulla; quan hệ contents-to-surface vì vậy chưa được phép chắc hóa.
-- **Effect:** người nghe có thể tin rằng bằng chứng đã xác lập phép đối chiếu một-một giữa hai lớp thông tin, làm yếu trust và vô tình kéo lập luận gần hơn tới direct token→tablet genealogy mà section đang chủ động bác bỏ.
-- **Responsible layer:** `evidence`.
-- **Smallest valid revision scope:** chỉ câu khẳng định tương đương này và, nếu cần để giữ mạch nghe, câu liền kề; không cần đổi cấu trúc section.
-- **Acceptance test:** passage không còn khẳng định dấu ngoài và token bên trong giữ đúng cùng một lượng khi chưa có support; nó vẫn cho người nghe hiểu được việc thông tin số đi ra bề mặt, đồng thời giữ nguyên guardrail chống genealogy tuyến tính.
-
-## Routing
-
-Route tới `evidence`. Chỉ sửa câu khẳng định tương đương contents-to-surface và tối đa câu liền kề; không mở lại cấu trúc section hoặc truth ceiling. Sau sửa, review lại đúng acceptance test trên.
-
-## Evidence and continuity
-
-- `resolve_claims` thành công cho `CLM-0011`–`CLM-0018`; truth ceiling không đổi.
-- Các chi tiết Uruk khoảng 200 hectare / khoảng 40.000 người, dấu token trên bulla tương ứng với dấu số sớm, và sự đồng tồn tại ở Tushan đã được kiểm tra trong approved locators rồi ghi qua evidence broker.
-- Các qualification về token đa chức năng, corpus chọn lọc, transaction labels và feedback model đều được draft giữ ở mức phù hợp.
-
+## Production gate
 <!-- production-gate:start -->
 {
   "schema_version": 1,
-  "verdict": "changes_requested",
   "hard_gates": {
     "evidence_integrity": {
-      "status": "fail",
-      "basis": "Một câu chắc hóa contents-to-surface equivalence của bulla dù approved source detail nói token tạo dấu ngoài không nhất thiết là token nằm bên trong. Các claim và qualification còn lại được support và giữ đúng mức."
+      "status": "pass",
+      "basis": "Material claims remain supported and draft-specific qualifications are consistently preserved."
     },
     "mission_and_exit": {
       "status": "pass",
-      "basis": "Người nghe có thể trả lời vì sao durable, inspectable records trở nên đáng giá và rời section với formation ecology cùng administrative pressure không phải monocause."
+      "basis": "The mission is directly answerable and the required ecology exit is achieved."
     },
     "adjacent_section_boundary": {
       "status": "pass",
-      "basis": "P01 hoàn tất formation pressure/ecology rồi chuyển bằng câu hỏi; không chiếm phần giải thích structured signs, language recovery hay writing threshold của P02."
+      "basis": "P01 completes formation pressure while preserving sign-system usefulness for P02."
     },
     "one_hearing_narration": {
       "status": "pass",
-      "basis": "Bulla làm vật dẫn xuyên suốt, chuỗi biến đổi vật chất rõ và phần chốt ba vế giúp mission answer cùng historical path có thể kể lại sau một lần nghe."
+      "basis": "The bulla-to-surface progression is intelligible and retellable after one hearing."
     }
   },
   "dimensions": {
     "hook_and_audience_promise": {
       "score": 9,
       "evidence_scope": "full",
-      "basis": "Bulla tạo ngay một câu hỏi vật chất cụ thể và hứa giải thích vì sao record vừa bền vừa dùng được trở nên cần thiết."
+      "basis": "The bulla paradox gives the listener an immediate concrete information problem."
     },
     "historical_progression": {
       "score": 9,
       "evidence_scope": "full",
-      "basis": "Path từ token/bulla qua dấu bề mặt và bảng số tới ecology cùng institutional pressure rõ, có thể retell và không bị kể như niên biểu tất định."
+      "basis": "Each material operation advances a clear path without asserting linear replacement."
     },
     "causal_clarity": {
-      "score": 8,
+      "score": 9,
       "evidence_scope": "full",
-      "basis": "Draft phân biệt pressure, compatibility và feedback với monocause; chỉ quan hệ giữa nội dung bulla và dấu ngoài bị diễn đạt chắc hơn evidence."
+      "basis": "Scale, accessible surfaces, durability, and institutional pressure remain distinctly related."
     },
     "concrete_specificity": {
-      "score": 8,
+      "score": 9,
       "evidence_scope": "full",
-      "basis": "Vật thể, động tác và số liệu Uruk làm lập luận cụ thể; một chi tiết về cùng một lượng cần qualification để specificity không vượt support."
+      "basis": "Tokens, envelopes, impressions, tablets, and physical actions make the argument tangible."
     },
     "narrative_momentum_and_stakes": {
       "score": 8,
       "evidence_scope": "full",
-      "basis": "Mạch từ vật nhỏ tới quy mô thiết chế tăng stakes đều đặn và giữ câu hỏi điều tra hoạt động tới phần payoff."
+      "basis": "The expanding handling problem sustains momentum and gives record keeping practical stakes."
     },
     "supported_human_work_orientation": {
       "score": 8,
-      "evidence_scope": "limited",
-      "basis": "Evidence không cung cấp cá nhân hay scene cụ thể, nhưng draft vẫn neo hệ thống vào các thao tác đếm, chuyển giao, gom, niêm phong, đánh dấu và xử lý hồ sơ."
+      "evidence_scope": "full",
+      "basis": "Counting, transfer, sealing, marking, and later processing keep work consequences visible."
     },
     "explanatory_economy": {
       "score": 8,
       "evidence_scope": "full",
-      "basis": "Các qualification được đặt gần claim cần giới hạn và phần lớn repetition có chức năng củng cố progression cùng mission answer."
+      "basis": "Repeated ideas return with added function rather than becoming a research inventory."
     },
     "spoken_rhythm_and_clarity": {
-      "score": 8,
+      "score": 9,
       "evidence_scope": "full",
-      "basis": "Câu có nhịp biến đổi tốt, thuật ngữ được giải thích bằng thao tác và các đoạn phân tích vẫn intelligible khi nghe."
+      "basis": "Sentence variation and recurring action verbs remain clear in spoken Vietnamese."
     },
     "ending_payoff_and_transition": {
       "score": 9,
       "evidence_scope": "full",
-      "basis": "Ending trả lời trực tiếp mission bằng ba vế dễ nhớ rồi mở đúng câu hỏi mà P02 phải giải quyết."
+      "basis": "The compact answer lands cleanly and opens the exact next-section question."
     }
   }
 }
 <!-- production-gate:end -->
+## Issues
+Không có issue material cần revision. Các chi tiết dễ overreach đều được giữ trong qualification của evidence ceiling: token không thành universal code, chuỗi vật mang tin không thành genealogy tất định, loại giao dịch không bị gọi quá mức, và feedback không thành phán quyết nhân quả.
 
-Derived verdict: `changes_requested` vì `evidence_integrity` fail; không có gate blocked và không có dimension dưới 8.
+## Routing
+Không cần route revision. Kết quả `pass` chỉ làm P01 đủ điều kiện để người dùng xem xét phê duyệt; nó không tự động approve section và không mở operation tiếp theo.

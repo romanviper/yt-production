@@ -1,0 +1,104 @@
+{
+  "schema_version": 4,
+  "compiler": "scripts/context_packet.py",
+  "context_sha256": "36386b663f328acc839cd1c64ef008808ca4a1e568c9f0ef6b02f946ed93b03c",
+  "authority": "product_agent",
+  "task_id": "T0036-review-section-P01",
+  "product": "sumer-writing",
+  "operation": "review_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "created_at": "2026-08-25T04:07:35.144130+00:00",
+  "context_profile": "evaluation",
+  "max_context_tokens": 14000,
+  "estimated_context_tokens": 6433,
+  "prompt_instruction_tokens": 2594,
+  "input_tokens": 3431,
+  "boundary_enforcement": [
+    "authority_and_write_scope",
+    "ai_task_state_or_human_amendment_provenance",
+    "input_freshness_and_packet_integrity",
+    "evidence_provenance_and_narration_ceiling",
+    "context_and_production_unit_hard_caps"
+  ],
+  "evaluation_gate": "human_review",
+  "instruction_files": [
+    "system/core/creative-boundaries.md",
+    "system/standards/channel-constitution.md",
+    "system/standards/outcome-evaluation.md",
+    "system/standards/section-quality-gate.md",
+    "system/operations/review-section.md"
+  ],
+  "inputs": [
+    {
+      "path": "02_outline/outline.json",
+      "sha256": "d707db0c172a9db579593a136791d2b1e629892315e31bedfa0d795b8c92da9d",
+      "bytes": 25387
+    },
+    {
+      "path": "03_sections/P01/section.json",
+      "sha256": "6dbdbb5bfeba33faae42c173dfb3ebec0f67b15949acd1e5b1f4bc5a87b055bf",
+      "bytes": 3156
+    },
+    {
+      "path": "03_sections/P01/narration-pack.json",
+      "sha256": "616fdb1ae38d719c01c647b31b9b09e36f20b054dd6d39d75421e5df8ab83708",
+      "bytes": 12338
+    },
+    {
+      "path": "03_sections/P01/draft.md",
+      "sha256": "cfd930f59f3fc13473f943b532b292c4316a942183776f9379d4982a2a556ce1",
+      "bytes": 6989
+    },
+    {
+      "path": "03_sections/P01/handoff.md",
+      "sha256": "836d755d3315efafdf6b354d36575d65cdba6a05f0164c7e2e276ff156eb7993",
+      "bytes": 1929
+    }
+  ],
+  "operation_outputs": [
+    "03_sections/P01/review.md"
+  ],
+  "optional_operation_outputs": [],
+  "output_baselines": [
+    {
+      "path": "03_sections/P01/review.md",
+      "sha256": "52ca1a0d8e0aaa0d377ee59bfea349922365141c59a96ff21afcd5f03e213ee3",
+      "required": true
+    }
+  ],
+  "allowed_write_paths": [
+    "03_sections/P01/review.md",
+    "tasks/T0036-review-section-P01/report.md",
+    "tasks/T0036-review-section-P01/operator-brief.json"
+  ],
+  "report_path": "tasks/T0036-review-section-P01/report.md",
+  "operator_brief_path": "tasks/T0036-review-section-P01/operator-brief.json",
+  "validation": [
+    "python scripts/validate.py products/sumer-writing",
+    "python scripts/task.py verify products/sumer-writing T0036-review-section-P01",
+    "python scripts/check_scope.py products/sumer-writing",
+    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0036-review-section-P01/operator-brief.json"
+  ],
+  "review_contract_version": 3,
+  "evidence_access": {
+    "kind": "bounded_claim_sources",
+    "adapter": "scripts/draft_evidence.py",
+    "interface_version": 1,
+    "capabilities": [
+      "scope",
+      "resolve_claims",
+      "claims",
+      "sources",
+      "source",
+      "search",
+      "record"
+    ],
+    "trace_path": "tasks/T0036-review-section-P01/evidence-trace.jsonl",
+    "required_before_submit": [
+      "resolve_claims"
+    ]
+  }
+}

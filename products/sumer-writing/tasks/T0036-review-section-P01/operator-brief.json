@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "P01 passes formal section review",
+  "summary": "One hearing supports both mission answerability and a retellable historical progression; every hard gate passes and all nine scores are at least 8.",
+  "material_points": [
+    "The bulla-to-surface path makes the mission answer concrete and memorable.",
+    "Evidence qualifications and the boundary into P02 are preserved."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Approve section P01?",
+    "recommendation": "approve",
+    "options": [
+      {
+        "id": "approve",
+        "label": "Approve P01",
+        "effect": "Accept the reviewed section and permit the production workflow to advance."
+      },
+      {
+        "id": "request_changes",
+        "label": "Request changes",
+        "effect": "Return P01 for a user-specified revision before approval."
+      }
+    ]
+  }
+}
