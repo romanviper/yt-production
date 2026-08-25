@@ -21,6 +21,7 @@ from scripts.approval import (
     start_new_cycle,
 )
 from scripts.context_packet import compile_packet
+from scripts.draft_evidence import DraftEvidenceBroker
 from scripts.consolidate_research import consolidate, verify_consolidation
 from scripts.governance import classify_paths, commit_scope_errors, product_task_violations
 from scripts.impact import calculate_impact
@@ -39,7 +40,7 @@ from scripts.outline_runtime import (
     run_dsh,
     verify_composed_dsh_config,
 )
-from scripts.outcome_eval_contract import validate_outcome_review
+from scripts.outcome_eval_contract import GATE_END, GATE_START, HARD_GATES, STORY_DIMENSIONS, validate_outcome_review
 from scripts.outline_contract import validate_outline_contract
 from scripts.outline_evidence_pack import verify_outline_evidence_pack
 from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION, validate_packet_contract
@@ -234,12 +235,42 @@ def valid_operator_brief() -> dict:
 
 
 def valid_outcome_review(verdict: str = "pass") -> str:
+    hard = {
+        name: {
+            "status": "pass",
+            "basis": "The submitted draft provides a concrete observable basis for this gate judgment.",
+        }
+        for name in HARD_GATES
+    }
+    dimensions = {
+        name: {
+            "score": 8,
+            "evidence_scope": "limited" if name == "supported_human_work_orientation" else "full",
+            "basis": "The draft uses the available evidence effectively without inventing unsupported narrative detail.",
+        }
+        for name in STORY_DIMENSIONS
+    }
+    if verdict == "changes_requested":
+        dimensions["causal_clarity"]["score"] = 7
+    elif verdict == "blocked":
+        hard["evidence_integrity"]["status"] = "blocked"
+    gate = json.dumps(
+        {"schema_version": 1, "hard_gates": hard, "dimensions": dimensions},
+        ensure_ascii=False,
+        indent=2,
+    )
     return (
         "# Outcome Evaluation — P01\n\n"
         f"Verdict: {verdict}\n\n"
         "## Outcome judgment\n\n"
         "The section advances its assigned act, creates a visible change in understanding and remains clear when spoken aloud. "
         "Its causal relation is understandable without forcing the listener through the source order.\n\n"
+        "## Mission answerability\n\n"
+        "Yes. A listener can answer the assigned mission in their own words after one attentive hearing.\n\n"
+        "## Historical progression\n\n"
+        "Yes. A listener can retell the historical progression that leads to the section answer.\n\n"
+        "## Production gate\n\n"
+        f"{GATE_START}\n{gate}\n{GATE_END}\n\n"
         "## Issues\n\n"
         "No material issue remains. The evidence ceiling, semantic economy and product voice are intact in the current draft.\n\n"
         "## Routing\n\n"
@@ -884,6 +915,7 @@ class ModularProductionTests(unittest.TestCase):
                 encoding="utf-8",
             )
             write_json(product / "tasks" / work["id"] / "operator-brief.json", valid_operator_brief())
+            DraftEvidenceBroker(product, work["id"]).call("resolve_claims")
             self.assertEqual([], submit_task(product, work["id"]))
 
     def test_production_unit_hard_cap_remains_enforced(self) -> None:

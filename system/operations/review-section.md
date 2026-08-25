@@ -11,7 +11,11 @@ Use the Outcome Evaluation Standard. Judge outcome first. The review must explic
 
 A draft that states correct conclusions but does not produce a retellable progression may be failed. Do not require any particular carrier, scene, object, reveal order, chronology, sequence or storytelling method.
 
+Apply the Section Production Quality Gate. Emit its machine-readable block exactly once. A `pass` is valid only when all four hard gates pass and all nine evidence-adjusted dimensions score at least 8/10.
+
 Also judge exit state, causal clarity, continuity and evidence integrity. Do not penalize a valid result because the writer chose a route different from anything upstream anticipated.
+
+The packet contains a compact, hash-bound current/next-section boundary projection. Use it only to test whether this section completes its own job without consuming the next section's job. When a factual question cannot be resolved from the packet, use the bounded evidence broker; do not scan the repository.
 
 For every material issue, record:
 

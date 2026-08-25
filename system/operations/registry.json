@@ -156,26 +156,33 @@
         "interface_version": 1,
         "capabilities": [
           "scope",
+          "resolve_claims",
           "claims",
           "sources",
           "source",
           "search",
           "record"
+        ],
+        "required_before_submit": [
+          "resolve_claims"
         ]
       },
       "context_profile": "creative_draft"
     },
     "review_section": {
       "target_kind": "section",
+      "review_contract_version": 2,
       "include_dependency_handoffs": true,
       "max_context_tokens": 14000,
       "instruction_files": [
         "system/core/creative-boundaries.md",
         "system/standards/channel-constitution.md",
         "system/standards/outcome-evaluation.md",
+        "system/standards/section-quality-gate.md",
         "system/operations/review-section.md"
       ],
       "required_inputs": [
+        "02_outline/outline.json",
         "02_outline/story-bible.md",
         "02_outline/voice-profile.md",
         "03_sections/{section}/section.json",
@@ -189,6 +196,23 @@
       "outputs": [
         "03_sections/{section}/review.md"
       ],
+      "evidence_access": {
+        "kind": "bounded_claim_sources",
+        "adapter": "scripts/draft_evidence.py",
+        "interface_version": 1,
+        "capabilities": [
+          "scope",
+          "resolve_claims",
+          "claims",
+          "sources",
+          "source",
+          "search",
+          "record"
+        ],
+        "required_before_submit": [
+          "resolve_claims"
+        ]
+      },
       "context_profile": "evaluation"
     },
     "revise_section": {
@@ -224,6 +248,7 @@
         "interface_version": 1,
         "capabilities": [
           "scope",
+          "resolve_claims",
           "claims",
           "sources",
           "source",

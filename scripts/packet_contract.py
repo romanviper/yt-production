@@ -131,8 +131,8 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
 
     evidence_access = packet.get("evidence_access")
     if evidence_access is not None:
-        if packet.get("operation") not in {"draft_section", "revise_section"}:
-            errors.append("packet.evidence_access is allowed only for draft_section or revise_section")
+        if packet.get("operation") not in {"draft_section", "review_section", "revise_section"}:
+            errors.append("packet.evidence_access is allowed only for draft_section, review_section or revise_section")
         if not isinstance(evidence_access, dict):
             errors.append("packet.evidence_access must be an object")
         else:
@@ -147,12 +147,24 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
                 isinstance(item, str) and item for item in capabilities
             ):
                 errors.append("packet.evidence_access.capabilities must be a non-empty list of strings")
+            requirements = evidence_access.get("required_before_submit", [])
+            if not isinstance(requirements, list) or not all(
+                isinstance(item, str) and item in (capabilities or []) for item in requirements
+            ):
+                errors.append("packet.evidence_access.required_before_submit must name declared capabilities")
             expected_trace = f"tasks/{packet.get('task_id')}/evidence-trace.jsonl"
             if evidence_access.get("trace_path") != expected_trace:
                 errors.append("packet.evidence_access.trace_path must be the task evidence trace")
             allowed = packet.get("allowed_write_paths", [])
             if isinstance(allowed, list) and expected_trace in allowed:
                 errors.append("evidence trace must stay outside model write scope")
+
+    review_contract_version = packet.get("review_contract_version")
+    if review_contract_version is not None:
+        if packet.get("operation") != "review_section":
+            errors.append("packet.review_contract_version is allowed only for review_section")
+        if not isinstance(review_contract_version, int) or isinstance(review_contract_version, bool) or review_contract_version < 1:
+            errors.append("packet.review_contract_version must be a positive integer")
 
     inputs = packet.get("inputs")
     if not isinstance(inputs, list):

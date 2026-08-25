@@ -4,6 +4,8 @@
 
 Resolve only the user-approved change request.
 
+This task is the section's single diagnosed revision pass. Do not open another polish loop or broaden the issue set.
+
 Preserve successful creative choices. Use the smallest change that passes the stated acceptance test, unless the approved request explicitly routes the issue back from local design and permits a full section rewrite.
 
 The evidence ceiling, act role, entry/exit state and continuity remain fixed. If the requested fix actually belongs to product architecture or missing evidence, report that blocker instead of compensating with prose.

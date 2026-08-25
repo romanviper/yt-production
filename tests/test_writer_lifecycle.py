@@ -6,9 +6,19 @@ import unittest
 from pathlib import Path
 
 from scripts.draft_evidence import DraftEvidenceBroker
-from scripts.draft_lifecycle_contract import validate_canonical_draft_lifecycle, validate_evidence_trace
+from scripts.draft_lifecycle_contract import (
+    validate_canonical_draft_lifecycle,
+    validate_evidence_trace,
+    validate_required_evidence_resolution,
+)
 from scripts.materialize_sections import materialize
-from scripts.outcome_eval_contract import validate_outcome_review
+from scripts.outcome_eval_contract import (
+    GATE_END,
+    GATE_START,
+    HARD_GATES,
+    STORY_DIMENSIONS,
+    validate_outcome_review,
+)
 from scripts.task import create_task, submit_task
 from scripts.validate import validate_product
 from test_material_aware_handoff import make_direct_authorship_fixture, write_json
@@ -42,10 +52,16 @@ class WriterLifecycleRegression(unittest.TestCase):
             state = json.loads(state_path.read_text(encoding="utf-8"))
             self.assertEqual([], validate_canonical_draft_lifecycle(product, "P01", state))
 
-            # Retrieval is optional; once used, its trace must be reconstructable.
+            # Whole-scope claim resolution is mandatory and audit-bound; deeper retrieval remains optional.
             broker = DraftEvidenceBroker(product, task_id)
             broker.call("scope")
+            self.assertTrue(validate_required_evidence_resolution(product, task_id))
+            broker.call("resolve_claims")
             self.assertEqual([], validate_evidence_trace(product, task_id))
+            self.assertEqual([], validate_required_evidence_resolution(product, task_id))
+            resolved = broker.call("resolve_claims")
+            self.assertEqual(len(resolved["sources"]), len({item["id"] for item in resolved["sources"]}))
+            self.assertLessEqual(resolved["telemetry"]["estimated_response_tokens"], 6000)
 
             task_dir = product / "tasks" / task_id
             (task_dir / "report.md").write_text("Draft completed inside the routed task scope.\n", encoding="utf-8")
@@ -97,6 +113,24 @@ class WriterLifecycleRegression(unittest.TestCase):
         self.assertTrue(any("Mission answerability" in item for item in errors))
         self.assertTrue(any("Historical progression" in item for item in errors))
 
+        gate = {
+            "schema_version": 1,
+            "hard_gates": {
+                name: {
+                    "status": "pass",
+                    "basis": "The submitted draft provides a specific observable basis for this hard gate.",
+                }
+                for name in HARD_GATES
+            },
+            "dimensions": {
+                name: {
+                    "score": 8,
+                    "evidence_scope": "limited" if name == "supported_human_work_orientation" else "full",
+                    "basis": "The draft uses the available supported material effectively without inventing narrative detail.",
+                }
+                for name in STORY_DIMENSIONS
+            },
+        }
         outcome_review = (
             "# Outcome Evaluation — P01\n\n"
             "Verdict: pass\n\n"
@@ -106,12 +140,33 @@ class WriterLifecycleRegression(unittest.TestCase):
             "Yes. After hearing the section, the listener can state the answer to the section mission in their own words and distinguish it from adjacent questions.\n\n"
             "## Historical progression\n\n"
             "Yes. The listener can retell the historical path that produced the answer rather than recalling only a list of conclusions.\n\n"
+            "## Production gate\n\n"
+            f"{GATE_START}\n{json.dumps(gate, ensure_ascii=False, indent=2)}\n{GATE_END}\n\n"
             "## Issues\n\n"
             "No material outcome, continuity or evidence issue remains in this fixture.\n\n"
             "## Routing\n\n"
             "Pass to human review; no prose, architecture or evidence intervention is required.\n"
         )
-        self.assertEqual([], validate_outcome_review(outcome_review, require_mission_outcomes=True))
+        self.assertEqual(
+            [],
+            validate_outcome_review(
+                outcome_review,
+                require_mission_outcomes=True,
+                require_production_gate=True,
+            ),
+        )
+
+        gate["dimensions"]["causal_clarity"]["score"] = 7
+        false_pass = outcome_review.replace(
+            json.dumps(json.loads(outcome_review.split(GATE_START, 1)[1].split(GATE_END, 1)[0]), ensure_ascii=False, indent=2),
+            json.dumps(gate, ensure_ascii=False, indent=2),
+        )
+        errors = validate_outcome_review(
+            false_pass,
+            require_mission_outcomes=True,
+            require_production_gate=True,
+        )
+        self.assertTrue(any("derived verdict is 'changes_requested'" in item for item in errors))
 
 
 if __name__ == "__main__":

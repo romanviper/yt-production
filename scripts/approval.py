@@ -318,7 +318,18 @@ def approve_section(product_dir: Path, section: str) -> None:
         raise ValueError(f"Section {section} requires a completed outcome review before human approval.")
     review_path = root / "review.md"
     review_text = review_path.read_text(encoding="utf-8")
-    review_errors = validate_outcome_review(review_text)
+    review_provenance = state.get("review_provenance")
+    review_contract_version = (
+        int(review_provenance.get("contract_version", 1))
+        if isinstance(review_provenance, dict)
+        else 1
+    )
+    strict_review = review_contract_version >= 2
+    review_errors = validate_outcome_review(
+        review_text,
+        require_mission_outcomes=strict_review,
+        require_production_gate=strict_review,
+    )
     if review_errors:
         raise ValueError("Section outcome review is invalid: " + "; ".join(review_errors))
     if review_verdict(review_text) != "pass":

@@ -20,7 +20,10 @@ except ModuleNotFoundError:  # Direct execution from scripts/
 MAX_QUERY_CHARS = 300
 MAX_RESULTS = 30
 MAX_RECORDED_DETAIL_CHARS = 6000
-ALLOWED_OPERATIONS = {"draft_section", "revise_section"}
+MAX_RESOLVED_CLAIMS = 40
+MAX_RESOLVED_SOURCES = 60
+MAX_RESOLVE_RESPONSE_TOKENS = 6000
+ALLOWED_OPERATIONS = {"draft_section", "review_section", "revise_section"}
 
 
 class EvidenceAccessError(ValueError):
@@ -84,7 +87,7 @@ class DraftEvidenceBroker:
         if self.work.get("operation") != self.packet.get("operation"):
             raise EvidenceAccessError("work-order and packet operation differ")
         if self.work.get("operation") not in ALLOWED_OPERATIONS:
-            raise EvidenceAccessError("bounded writer evidence access is limited to draft_section/revise_section")
+            raise EvidenceAccessError("bounded section evidence access is limited to draft/review/revise operations")
         if self.work.get("target") != self.packet.get("target"):
             raise EvidenceAccessError("work-order and packet target differ")
         access = self.packet.get("evidence_access")
@@ -215,6 +218,7 @@ class DraftEvidenceBroker:
         arguments = arguments or {}
         handlers = {
             "scope": self.scope,
+            "resolve_claims": self.resolve_claims,
             "claims": self.claims,
             "sources": self.sources,
             "source": self.source,
@@ -241,9 +245,74 @@ class DraftEvidenceBroker:
             "source_ids": self.allowed_source_ids,
             "rule": (
                 "You may increase source-level factual resolution inside this graph. "
-                "A new claim, causal conclusion, thesis, contradiction or generalization requires research/evidence authority."
+                "A new claim, causal conclusion, thesis, contradiction or generalization requires research/evidence authority. "
+                "Call resolve_claims before submission when the task packet requires it."
             ),
         }
+
+    def resolve_claims(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        """Resolve the whole scoped claim graph once, compactly and auditably."""
+
+        if arguments:
+            raise EvidenceAccessError("resolve_claims takes no arguments")
+        if len(self.allowed_claim_ids) > MAX_RESOLVED_CLAIMS:
+            raise EvidenceAccessError(
+                f"resolve_claims scope has {len(self.allowed_claim_ids)} claims; cap is {MAX_RESOLVED_CLAIMS}"
+            )
+        if len(self.allowed_source_ids) > MAX_RESOLVED_SOURCES:
+            raise EvidenceAccessError(
+                f"resolve_claims scope has {len(self.allowed_source_ids)} sources; cap is {MAX_RESOLVED_SOURCES}"
+            )
+        resolved: list[dict[str, Any]] = []
+        claim_fields = [
+            "id",
+            "statement",
+            "type",
+            "status",
+            "confidence",
+            "qualifications",
+            "counterevidence",
+            "limitations",
+        ]
+        for claim_id in self.allowed_claim_ids:
+            claim = self.claims_by_id[claim_id]
+            record = {field: claim.get(field) for field in claim_fields if claim.get(field) is not None}
+            record["source_ids"] = [
+                source_id for source_id in claim.get("sources", []) if source_id in self.allowed_source_ids
+            ]
+            resolved.append(record)
+        source_fields = ["id", "title", "type", "status", "locators", "limitations"]
+        sources = [
+            {
+                field: self.sources_by_id[source_id].get(field)
+                for field in source_fields
+                if self.sources_by_id[source_id].get(field) is not None
+            }
+            for source_id in self.allowed_source_ids
+        ]
+        response = {
+            "section": self.section,
+            "resolved_claim_ids": list(self.allowed_claim_ids),
+            "claims": resolved,
+            "sources": sources,
+            "truth_ceiling_unchanged": True,
+            "rule": "Use only these resolved claims and their reviewed support; route new meaning to evidence authority.",
+        }
+        encoded_bytes = len(json.dumps(response, ensure_ascii=False, separators=(",", ":")).encode("utf-8"))
+        serialization_margin_tokens = 64
+        estimated_tokens = (encoded_bytes + 3) // 4 + serialization_margin_tokens
+        if estimated_tokens > MAX_RESOLVE_RESPONSE_TOKENS:
+            raise EvidenceAccessError(
+                f"resolve_claims response estimate is {estimated_tokens} tokens; cap is {MAX_RESOLVE_RESPONSE_TOKENS}"
+            )
+        response["telemetry"] = {
+            "claim_count": len(resolved),
+            "source_count": len(sources),
+            "estimated_response_tokens": estimated_tokens,
+            "max_response_tokens": MAX_RESOLVE_RESPONSE_TOKENS,
+            "serialization_margin_tokens": serialization_margin_tokens,
+        }
+        return response
 
     def claims(self, arguments: dict[str, Any]) -> dict[str, Any]:
         ids = arguments.get("ids", self.allowed_claim_ids)
@@ -340,6 +409,7 @@ def main() -> int:
     parser.add_argument("task_id")
     sub = parser.add_subparsers(dest="capability", required=True)
     sub.add_parser("scope")
+    sub.add_parser("resolve_claims")
 
     claims = sub.add_parser("claims")
     claims.add_argument("--id", dest="ids", action="append")

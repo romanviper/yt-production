@@ -13,7 +13,11 @@ try:
     from scripts.common import load_registry, narration_text, product_relative, read_json, sha256, word_count, write_json
     from scripts.consolidate_research import ensure_consolidated
     from scripts.context_packet import compile_packet
-    from scripts.draft_lifecycle_contract import record_submitted_prose, validate_evidence_trace
+    from scripts.draft_lifecycle_contract import (
+        record_submitted_prose,
+        validate_evidence_trace,
+        validate_required_evidence_resolution,
+    )
     from scripts.lifecycle import (
         apply_research_submission,
         apply_section_submission,
@@ -35,7 +39,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from common import load_registry, narration_text, product_relative, read_json, sha256, word_count, write_json
     from consolidate_research import ensure_consolidated
     from context_packet import compile_packet
-    from draft_lifecycle_contract import record_submitted_prose, validate_evidence_trace
+    from draft_lifecycle_contract import record_submitted_prose, validate_evidence_trace, validate_required_evidence_resolution
     from lifecycle import (
         apply_research_submission,
         apply_section_submission,
@@ -71,6 +75,13 @@ def active_path(product_dir: Path) -> Path:
     return product_dir / "tasks" / "ACTIVE.json"
 
 
+def revision_passes_used_in_current_cycle(section_state: dict) -> int:
+    usage = section_state.get("revision_pass")
+    if not isinstance(usage, dict) or usage.get("cycle_id") != section_state.get("cycle_id"):
+        return 0
+    return int(usage.get("count", 0))
+
+
 def create_task(
     product_dir: Path,
     operation: str,
@@ -81,6 +92,13 @@ def create_task(
 ) -> dict:
     product_dir = product_dir.resolve()
     heal_active_pointer(product_dir)
+
+    if operation == "revise_section" and section:
+        section_state = read_json(product_dir / "03_sections" / section / "section.json")
+        if revision_passes_used_in_current_cycle(section_state) >= 1:
+            raise ValueError(
+                f"Section {section} already used its one diagnosed revision pass; route a blocker or start a new production cycle."
+            )
 
     if operation == "research_synthesis":
         ensure_consolidated(product_dir)
@@ -134,6 +152,8 @@ def create_task(
     }
     if "evidence_access" in packet:
         work_order["evidence_access"] = packet["evidence_access"]
+    if "review_contract_version" in packet:
+        work_order["review_contract_version"] = packet["review_contract_version"]
     if "execution_runtime" in packet:
         work_order["execution_runtime"] = packet["execution_runtime"]
         work_order["runtime_owned_paths"] = packet.get("runtime_owned_paths", [])
@@ -182,6 +202,8 @@ def verify_task(product_dir: Path, task_id: str, *, state_override: str | None =
         errors.append("work-order optional outputs differ from packet")
     if work.get("evidence_access") != packet.get("evidence_access"):
         errors.append("work-order evidence access differs from packet")
+    if work.get("review_contract_version") != packet.get("review_contract_version"):
+        errors.append("work-order review contract version differs from packet")
     if work.get("authority") != "product_agent" or work.get("authority") != packet.get("authority"):
         errors.append("invalid or mismatched product task authority")
     expected_manifest = f"tasks/{task_id}/packet.json"
@@ -231,8 +253,10 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     packet = read_json(task_dir / "packet.json")
     errors = task_submit_errors(work.get("state"))
     errors.extend(verify_task(product_dir, task_id))
-    if work.get("operation") in {"draft_section", "revise_section"}:
+    if work.get("operation") in {"draft_section", "review_section", "revise_section"}:
         errors.extend(validate_evidence_trace(product_dir, task_id))
+    if work.get("operation") in {"draft_section", "review_section", "revise_section"}:
+        errors.extend(validate_required_evidence_resolution(product_dir, task_id))
     if errors:
         return errors
     changed_outputs = 0
@@ -266,6 +290,17 @@ def submit_task(product_dir: Path, task_id: str) -> list[str]:
     write_json(work_path, work)
     apply_research_submission(product_dir, work["operation"], work.get("target", {}).get("unit"))
     apply_section_submission(product_dir, work["operation"], work.get("target", {}).get("section"))
+    if work.get("operation") == "review_section":
+        section = str(work.get("target", {}).get("section") or "")
+        state_path = product_dir / "03_sections" / section / "section.json"
+        state = read_json(state_path)
+        review_path = product_dir / "03_sections" / section / "review.md"
+        state["review_provenance"] = {
+            "task_id": task_id,
+            "contract_version": int(work.get("review_contract_version", 1)),
+            "review_sha256": sha256(review_path),
+        }
+        write_json(state_path, state)
     if work.get("operation") in {"draft_section", "revise_section"}:
         record_submitted_prose(product_dir, task_id)
     clear_active_pointer(product_dir, task_id, reason="task submitted; routing returned to idle")
@@ -434,7 +469,14 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
         elif operation == "review_section":
             section = target["section"]
             review = product_dir / "03_sections" / section / "review.md"
-            errors.extend(validate_outcome_review(review.read_text(encoding="utf-8")))
+            strict_review = int(work.get("review_contract_version", 1)) >= 2
+            errors.extend(
+                validate_outcome_review(
+                    review.read_text(encoding="utf-8"),
+                    require_mission_outcomes=strict_review,
+                    require_production_gate=strict_review,
+                )
+            )
         elif operation == "integration_review":
             review = product_dir / "04_integration" / "review.md"
             change_map = read_json(product_dir / "04_integration" / "change-map.json")

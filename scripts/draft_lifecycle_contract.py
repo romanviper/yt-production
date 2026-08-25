@@ -81,6 +81,59 @@ def validate_evidence_trace(product_dir: Path, task_id: str) -> list[str]:
     return errors
 
 
+def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> list[str]:
+    """Require an audited whole-scope claim resolution only when the packet declares it."""
+
+    product_dir = product_dir.resolve()
+    task_dir = product_dir / "tasks" / task_id
+    try:
+        packet = read_json(task_dir / "packet.json")
+        work = read_json(task_dir / "work-order.json")
+    except (FileNotFoundError, ValueError, json.JSONDecodeError) as exc:
+        return [f"cannot validate required evidence resolution for {task_id}: {exc}"]
+    access = packet.get("evidence_access")
+    requirements = access.get("required_before_submit", []) if isinstance(access, dict) else []
+    if "resolve_claims" not in requirements:
+        return []
+
+    section = str(work.get("target", {}).get("section") or "")
+    narration_path = product_dir / "03_sections" / section / "narration-pack.json"
+    trace_path = product_dir / str(access.get("trace_path") or "")
+    if not narration_path.is_file():
+        return [f"task {task_id} cannot resolve claims without narration pack"]
+    narration = read_json(narration_path)
+    if narration.get("schema_version") == 4:
+        scope = narration.get("retrieval_scope", {})
+        expected = scope.get("claim_ids", []) if isinstance(scope, dict) else []
+    else:
+        expected = [
+            item.get("id")
+            for field in ["core_claims", "optional_claims"]
+            for item in narration.get(field, [])
+            if isinstance(item, dict) and item.get("id")
+        ]
+    expected_ids = list(dict.fromkeys(expected))
+    if not trace_path.is_file():
+        return [f"task {task_id} must call resolve_claims before submission"]
+
+    for line in trace_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        try:
+            record = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        response = record.get("response")
+        if (
+            record.get("capability") == "resolve_claims"
+            and record.get("error") is None
+            and isinstance(response, dict)
+            and response.get("resolved_claim_ids") == expected_ids
+        ):
+            return []
+    return [f"task {task_id} must successfully resolve every scoped claim before submission"]
+
+
 def _task_scope_errors(product_dir: Path, task_id: str, section: str, *, live: bool) -> list[str]:
     task_dir = product_dir / "tasks" / task_id
     try:
@@ -104,6 +157,8 @@ def _task_scope_errors(product_dir: Path, task_id: str, section: str, *, live: b
     if work.get("allowed_write_paths") != packet.get("allowed_write_paths"):
         errors.append(f"task {task_id} work-order scope differs from packet")
     errors.extend(validate_evidence_trace(product_dir, task_id))
+    if not live:
+        errors.extend(validate_required_evidence_resolution(product_dir, task_id))
     return errors
 
 
@@ -168,6 +223,15 @@ def record_submitted_prose(product_dir: Path, task_id: str) -> None:
         "draft_sha256": sha256(draft),
         "handoff_sha256": sha256(handoff),
     }
+    if operation == "revise_section":
+        cycle_id = state.get("cycle_id")
+        prior = state.get("revision_pass")
+        prior_count = (
+            int(prior.get("count", 0))
+            if isinstance(prior, dict) and prior.get("cycle_id") == cycle_id
+            else 0
+        )
+        state["revision_pass"] = {"cycle_id": cycle_id, "count": prior_count + 1}
     write_json(state_path, state)
 
 

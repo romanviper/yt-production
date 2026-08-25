@@ -285,6 +285,34 @@ def _canonical_writer_projection(relative: str, path: Path, section: str) -> str
     return None
 
 
+def _review_boundary_projection(path: Path, section: str) -> str:
+    """Project only current/next outline boundaries while binding the review to the full approved outline hash."""
+
+    outline = read_json_local(path)
+    ordered = sorted(
+        [item for item in outline.get("sections", []) if isinstance(item, dict)],
+        key=lambda item: item.get("order", 0),
+    )
+    matches = [index for index, item in enumerate(ordered) if item.get("id") == section]
+    if len(matches) != 1:
+        raise ValueError(f"Approved outline must contain section {section} exactly once for review boundary projection.")
+    index = matches[0]
+
+    def boundary(item: dict[str, Any] | None) -> dict[str, Any] | None:
+        if item is None:
+            return None
+        fields = ["id", "title", "narrative_job", "entry_state", "exit_state", "transition", "non_goal"]
+        return {field: item.get(field) for field in fields if item.get(field) is not None}
+
+    projection = {
+        "projection_kind": "review_current_next_boundary",
+        "outline_sha256": sha256(path),
+        "current": boundary(ordered[index]),
+        "next": boundary(ordered[index + 1] if index + 1 < len(ordered) else None),
+    }
+    return json.dumps(projection, ensure_ascii=False, indent=2)
+
+
 def compile_packet(
     product_dir: Path,
     operation: str,
@@ -352,6 +380,8 @@ def compile_packet(
         input_records.append({"path": relative, "sha256": sha256(path), "bytes": path.stat().st_size})
         if runtime == "legacy":
             projected = _canonical_writer_projection(relative, path, str(section)) if direct_writer and section else None
+            if operation == "review_section" and relative == "02_outline/outline.json" and section:
+                projected = _review_boundary_projection(path, str(section))
             content = projected if projected is not None else path.read_text(encoding="utf-8")
             block = [f"# BEGIN INPUT: {relative}", content.rstrip(), f"# END INPUT: {relative}", ""]
             blocks.extend(block)
@@ -382,8 +412,8 @@ def compile_packet(
     evidence_access = spec.get("evidence_access")
     evidence_packet: dict[str, Any] | None = None
     if evidence_access is not None:
-        if operation not in {"draft_section", "revise_section"}:
-            raise ValueError("Bounded writer evidence access is allowed only for draft/revise operations.")
+        if operation not in {"draft_section", "review_section", "revise_section"}:
+            raise ValueError("Bounded section evidence access is allowed only for draft/review/revise operations.")
         evidence_packet = {
             "kind": evidence_access["kind"],
             "adapter": evidence_access["adapter"],
@@ -391,6 +421,8 @@ def compile_packet(
             "capabilities": list(evidence_access["capabilities"]),
             "trace_path": f"tasks/{task_id}/evidence-trace.jsonl",
         }
+        if evidence_access.get("required_before_submit"):
+            evidence_packet["required_before_submit"] = list(evidence_access["required_before_submit"])
 
     model_write_paths = outputs + optional_outputs + [report_path, operator_brief_path]
     allowed = model_write_paths
@@ -445,6 +477,15 @@ def compile_packet(
                     "",
                 ]
             )
+            if evidence_packet.get("required_before_submit"):
+                header.extend(
+                    [
+                        "Submission requirement: call "
+                        + ", ".join(f"`{item}`" for item in evidence_packet["required_before_submit"])
+                        + " successfully before submitting this task.",
+                        "",
+                    ]
+                )
         else:
             header.extend(["Only the material inside this packet is task context. Do not scan the repository.", ""])
 
@@ -486,6 +527,8 @@ def compile_packet(
             f"python scripts/operator_brief.py validate products/{product_dir.name}/{operator_brief_path}",
         ],
     }
+    if spec.get("review_contract_version") is not None:
+        packet["review_contract_version"] = int(spec["review_contract_version"])
     if evidence_packet is not None:
         packet["evidence_access"] = evidence_packet
     if runtime == "dsh":

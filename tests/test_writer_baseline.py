@@ -54,15 +54,20 @@ class WriterBaselineTests(unittest.TestCase):
                 ],
                 packet["instruction_files"],
             )
+            input_paths = [item["path"] for item in packet["inputs"]]
             self.assertEqual(
                 [
                     "03_sections/P01/section.json",
                     "03_sections/P01/narration-pack.json",
                     "03_sections/P01/continuity-in.md",
                 ],
-                [item["path"] for item in packet["inputs"]],
+                input_paths[:3],
             )
+            self.assertTrue(set(input_paths[3:]).issubset({"03_sections/P01/draft-rework-request.md"}))
             self.assertIn("evidence_access", packet)
+            self.assertEqual(["resolve_claims"], packet["evidence_access"]["required_before_submit"])
+            self.assertIn("answer the section mission in their own words", context)
+            self.assertIn("retell the historical path", context)
 
             # The writer sees a plain mission projection plus control states, not upstream architecture prose.
             self.assertIn('"mission"', context)
@@ -95,6 +100,9 @@ class WriterBaselineTests(unittest.TestCase):
                 "BENCHMARK_IMITATION_SENTINEL",
                 "system/standards/channel-constitution.md",
                 "system/standards/outcome-evaluation.md",
+                "system/standards/section-quality-gate.md",
+                "supported_human_work_orientation",
+                "production-gate:start",
                 "02_outline/voice-profile.md",
                 "02_outline/story-bible.md",
                 "03_sections/P01/brief.md",
@@ -110,6 +118,57 @@ class WriterBaselineTests(unittest.TestCase):
             ]
             for value in excluded:
                 self.assertNotIn(value, context)
+
+    def test_review_gets_hash_bound_current_next_projection_and_bounded_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            materialize(product)
+            outline_path = product / "02_outline" / "outline.json"
+            outline = json.loads(outline_path.read_text(encoding="utf-8"))
+            outline["projection_forbidden_sentinel"] = "FULL_OUTLINE_REVIEW_SENTINEL"
+            write_json(outline_path, outline)
+
+            root = product / "03_sections" / "P01"
+            section_path = root / "section.json"
+            section_state = json.loads(section_path.read_text(encoding="utf-8"))
+            section_state["outline_sha256"] = sha256(outline_path)
+            section_state["status"] = "ready_for_review"
+            write_json(section_path, section_state)
+
+            evidence_path = root / "evidence-pack.json"
+            evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+            evidence["outline_sha256"] = sha256(outline_path)
+            write_json(evidence_path, evidence)
+            narration_path = root / "narration-pack.json"
+            narration = json.loads(narration_path.read_text(encoding="utf-8"))
+            narration["outline_sha256"] = sha256(outline_path)
+            narration["evidence_pack_sha256"] = sha256(evidence_path)
+            write_json(narration_path, narration)
+            (root / "draft.md").write_text("# P01\n\nA supported historical progression for review.\n", encoding="utf-8")
+
+            packet, context = compile_packet(
+                product,
+                "review_section",
+                "T9999-review-section-P01",
+                section="P01",
+            )
+
+            self.assertIn("system/standards/section-quality-gate.md", packet["instruction_files"])
+            self.assertEqual(2, packet["review_contract_version"])
+            self.assertIn("evidence_access", packet)
+            self.assertEqual(["resolve_claims"], packet["evidence_access"]["required_before_submit"])
+            self.assertIn('"projection_kind": "review_current_next_boundary"', context)
+            self.assertIn(f'"outline_sha256": "{sha256(outline_path)}"', context)
+            self.assertIn('"id": "P01"', context)
+            ordered = sorted(outline["sections"], key=lambda item: item["order"])
+            current_index = next(index for index, item in enumerate(ordered) if item["id"] == "P01")
+            if current_index + 1 < len(ordered):
+                self.assertIn(f'"id": "{ordered[current_index + 1]["id"]}"', context)
+            else:
+                self.assertIn('"next": null', context)
+            self.assertNotIn("FULL_OUTLINE_REVIEW_SENTINEL", context)
+            outline_record = next(item for item in packet["inputs"] if item["path"] == "02_outline/outline.json")
+            self.assertEqual(sha256(outline_path), outline_record["sha256"])
 
     def test_current_sumer_c003_p01_smoke_compiles_to_minimal_writer_packet(self) -> None:
         """Use current Sumer artifacts while refreshing only stale derived hashes in a temporary copy."""
@@ -162,14 +221,16 @@ class WriterBaselineTests(unittest.TestCase):
                 ],
                 packet["instruction_files"],
             )
+            input_paths = [item["path"] for item in packet["inputs"]]
             self.assertEqual(
                 [
                     "03_sections/P01/section.json",
                     "03_sections/P01/narration-pack.json",
                     "03_sections/P01/continuity-in.md",
                 ],
-                [item["path"] for item in packet["inputs"]],
+                input_paths[:3],
             )
+            self.assertTrue(set(input_paths[3:]).issubset({"03_sections/P01/draft-rework-request.md"}))
             self.assertIn("evidence_access", packet)
             self.assertIn('"mission"', context)
             self.assertIn("CLM-0011", context)
