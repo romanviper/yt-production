@@ -2,8 +2,8 @@
 
 Requested by: user
 
-Requested at: 2026-08-20T15:18:37.433532+00:00
+Requested at: 2026-08-25T02:52:14.641201+00:00
 
 ## Request
 
-Bản draft vừa submit chưa đạt yêu cầu. Viết lại toàn bộ P01 từ cùng mission, evidence ceiling và writer contract đã được phê duyệt; không tái sử dụng prose của bản draft bị từ chối.
+Production cycle mới theo uỷ quyền hiện tại của người dùng. Viết sạch, không dùng draft cũ. Mở bằng nghịch lý vật thể của bulla: token ở trong nhưng thông tin phải hiện ra ngoài; sau đó mở rộng tới quy mô Uruk. Tổ chức phần kể quanh các thao tác vật chất có bằng chứng: token rời, đặt vào bulla, niêm phong hoặc đánh dấu bề mặt, dấu số trên bảng; nói rõ đây là logic vật chất chồng lấn chứ không phải niên biểu thay thế tuyến tính. Chỉ giữ hai guardrail: continuity chắc nhất nằm ở số; hành chính là áp lực lớn nhưng không phải nguyên nhân duy nhất. Giảm tối đa diễn ngôn phương pháp và phủ định lặp; dùng tiếng Việt nói tự nhiên, tạo một payoff nhân-quả ngắn dễ nhớ rồi chuyển đúng câu hỏi sang P02. Không bịa nhân vật, cảnh, động cơ, lời thoại hay chi tiết ngoài evidence ceiling.

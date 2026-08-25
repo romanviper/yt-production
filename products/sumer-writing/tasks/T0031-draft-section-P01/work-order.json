@@ -8,7 +8,7 @@
     "section": "P01",
     "unit": null
   },
-  "state": "ready",
+  "state": "cancelled",
   "created_at": "2026-08-20T15:18:37.503620+00:00",
   "context_packet": "tasks/T0031-draft-section-P01/context.md",
   "packet_manifest": "tasks/T0031-draft-section-P01/packet.json",
@@ -38,5 +38,7 @@
       "record"
     ],
     "trace_path": "tasks/T0031-draft-section-P01/evidence-trace.jsonl"
-  }
+  },
+  "updated_at": "2026-08-25T02:27:37.980410+00:00",
+  "cancel_reason": "human rework: draft_section: Viết lại toàn bộ P01 bằng reusable harness mới; giữ nguyên mission, entry/exit state và truth ceiling; không tái sử dụng prose bị từ chối; bảo toàn reveal của P02 về usefulness trước continuous speech; tối ưu cho một lần nghe và chỉ dùng chi tiết đã resolve qua evidence broker."
 }

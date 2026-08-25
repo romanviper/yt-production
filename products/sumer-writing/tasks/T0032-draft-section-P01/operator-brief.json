@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "status": "in_progress",
+  "headline": "P01 qua cổng bằng chứng nhưng chưa qua cổng kể chuyện; cycle này phải dừng thay vì submit.",
+  "material_points": [
+    "Bản kể 1.183 từ nay có bốn bước dễ thuật lại: quy mô Uruk, token trong bulla, dấu số trên bề mặt và bảng đất sét, rồi parallel ecology dưới áp lực tổ chức.",
+    "Bulla được định nghĩa ở lần đầu; bảy chi tiết vật chất đã record được dùng, gồm dấu con lăn, vết dây, token ấn ngoài bulla, chênh lệch token-cừu và coexistence tại Tushan.",
+    "Đã bỏ các khẳng định không được hỗ trợ về thất bại của trí nhớ/lời nói và gộp các caveat để tránh report-mode repetition.",
+    "Mission payoff chỉ xuất hiện một lần; phần giải thích cách hệ thống dấu mới trở nên khác biệt vẫn được giữ cho P02.",
+    "Tái kiểm độc lập chấm trung bình khoảng 7,7/10 và yêu cầu kiến trúc lại hook, nhịp caveat và payoff; mọi hard gate bằng chứng/ranh giới đều pass."
+  ],
+  "decision": {
+    "required": false,
+    "question": "",
+    "recommendation": "",
+    "options": []
+  },
+  "next_step": "Không submit bản này. Mở một production cycle mới được người dùng ủy quyền, viết sạch từ packet với hook bulla và chỉ một draft trước review độc lập."
+}
