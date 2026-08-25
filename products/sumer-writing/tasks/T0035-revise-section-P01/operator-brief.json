@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "P01 đã sửa đúng certainty về bulla và sẵn sàng để review lại.",
+  "material_points": [
+    "Câu mới không còn đồng nhất dấu ngoài với đúng lượng token bên trong; mạch thông tin số đi ra bề mặt vẫn được giữ.",
+    "Chỉ một câu trong draft.md thay đổi; hook, cấu trúc, payoff, ranh giới P02, truth ceiling và handoff đều giữ nguyên.",
+    "Bản thảo hiện có 1.148 từ, nằm trong khung 1.050–1.550."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Có chuyển bản sửa P01 sang fresh review cuối không?",
+    "recommendation": "Có; thay đổi đúng một câu và ba kiểm tra preflight đều pass.",
+    "options": [
+      {
+        "label": "Review lại",
+        "effect": "Chạy fresh review rồi dừng ở cổng người dùng."
+      },
+      {
+        "label": "Yêu cầu sửa",
+        "effect": "Không review và giữ checkpoint mở."
+      }
+    ]
+  },
+  "next_step": ""
+}
