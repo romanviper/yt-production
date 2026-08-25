@@ -1,17 +1,16 @@
-# Continuity Handoff — P01
+# Handoff — P01
 
-Cycle: `C003`
+## Exit state established
 
-## Exit state delivered
-
-Khán giả rời P01 với hình dung rằng chữ viết không xuất hiện như một ý tưởng đột ngột. Trước proto-cuneiform đã có một hệ sinh thái vật chất gồm token, bulla, dấu niêm, bảng số, nhiều hệ đo và kho hình ảnh từ con dấu/vật mang hình ảnh. Tính liên tục chắc nhất nằm ở thực hành số; đường token → từng dấu viết không tuyến tính.
-
-Quy mô quản lý là một áp lực lớn vì bảng đất sét có thể giữ số lượng, đối tượng và người/chức vụ trong một bố cục bền, có thể xem lại và khó sửa mà không để dấu. Tuy vậy, hồ sơ sớm cho thấy bối cảnh kế toán chắc hơn loại giao dịch; không đồng nhất mua bán, thuế, cống nạp, phân phối lại, điều phối lao động, nghĩa vụ hay sở hữu. Không khẳng định hành chính là nguyên nhân duy nhất hoặc suy ra một chiều nhân quả giữa thiết chế và hệ thống ghi chép.
+Khán giả đã rời ý niệm “chữ viết xuất hiện đột ngột” để hiểu formation như một ecology: thực hành số là đường liên tục vật chất mạnh nhất; token, bullae, bảng số, dấu lăn, hình tượng và lề lối thể chế cùng tồn tại và đóng góp khác nhau. Quy mô hành chính tạo áp lực lớn, nhưng tư liệu không cho phép xem đó là nguyên nhân duy nhất.
 
 ## Carry into P02
 
-Nhu cầu lưu và kiểm soát thông tin đã tồn tại, cùng nhiều thực hành ghi số và niêm dấu. P02 có thể bắt đầu từ câu hỏi chuyển tiếp: hệ thống dấu mới khác những thiết bị ghi nhớ trước đó ở đâu, và chính khác biệt nào làm nó hữu ích hơn?
+- P01 đã thiết lập nhu cầu và các thực hành lưu thông tin có trước hệ thống dấu mới.
+- Không mặc định chuỗi tuyến tính `token → tablet → writing`.
+- Không đồng nhất ngữ cảnh kế toán với mua bán, thuế, cống phẩm, phân phối lại, điều phối lao động, nghĩa vụ hay quyền sở hữu khi thiếu bằng chứng riêng.
+- Mô hình thể chế–bản ghi là vòng phản hồi khả dĩ, không phải phán quyết nhân quả một chiều.
 
-## Evidence boundary retained
+## Transition
 
-Không thêm người, cảnh, lời thoại hoặc cơ chế nhân quả. Qualification về tính đa chức năng của token, sự không tuyến tính, giới hạn đọc loại giao dịch và sức ép hành chính đã được giữ gọn trong P01.
+Nếu nhu cầu và các thực hành ghi nhận đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.

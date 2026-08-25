@@ -1,0 +1,102 @@
+{
+  "schema_version": 5,
+  "compiler": "scripts/context_packet.py",
+  "context_sha256": "02ada81eccf6a0e8a41b867cdef967732392a71d8707694dd9165cd3212f1112",
+  "authority": "product_agent",
+  "task_id": "T0040-draft-section-P01",
+  "product": "sumer-writing",
+  "operation": "draft_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "created_at": "2026-08-25T09:24:42.220891+00:00",
+  "context_profile": "creative_draft",
+  "max_context_tokens": 11000,
+  "estimated_context_tokens": 2118,
+  "prompt_instruction_tokens": 846,
+  "input_tokens": 854,
+  "boundary_enforcement": [
+    "authority_and_write_scope",
+    "ai_task_state_or_human_amendment_provenance",
+    "input_freshness_and_packet_integrity",
+    "evidence_provenance_and_narration_ceiling",
+    "context_and_production_unit_hard_caps"
+  ],
+  "evaluation_gate": "review_section_or_human_amendment",
+  "instruction_files": [
+    "system/core/creative-boundaries.md",
+    "system/operations/draft-section.md"
+  ],
+  "inputs": [
+    {
+      "path": "03_sections/P01/section.json",
+      "sha256": "f3b8e7cf542e713b18d68b83ea9e0081a8876248a3cb080fb514a5a36b4fd2b8",
+      "bytes": 3307
+    },
+    {
+      "path": "03_sections/P01/narration-pack.json",
+      "sha256": "616fdb1ae38d719c01c647b31b9b09e36f20b054dd6d39d75421e5df8ab83708",
+      "bytes": 12338
+    },
+    {
+      "path": "03_sections/P01/continuity-in.md",
+      "sha256": "24750f9112b057a0da59e347d048cea664ad7e8771ac357dad165738c99937f0",
+      "bytes": 236
+    },
+    {
+      "path": "03_sections/P01/draft-rework-request.md",
+      "sha256": "f391283e6c9bf750cb2babc339e7dd88a3ef066e68888c40da220beb1478d0b8",
+      "bytes": 1315
+    }
+  ],
+  "operation_outputs": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md"
+  ],
+  "optional_operation_outputs": [],
+  "output_baselines": [
+    {
+      "path": "03_sections/P01/draft.md",
+      "sha256": "27d6ca8bb459f3347fb0f9f56a4221ed3dcdd2a8e1b4ea4acdf861c77f829a84",
+      "required": true
+    },
+    {
+      "path": "03_sections/P01/handoff.md",
+      "sha256": "9534eb2391428c3609b3b50bd442d02347bff501c7d35aab4ec17082d2c2f8f6",
+      "required": true
+    }
+  ],
+  "allowed_write_paths": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md",
+    "tasks/T0040-draft-section-P01/report.md",
+    "tasks/T0040-draft-section-P01/operator-brief.json"
+  ],
+  "report_path": "tasks/T0040-draft-section-P01/report.md",
+  "operator_brief_path": "tasks/T0040-draft-section-P01/operator-brief.json",
+  "validation": [
+    "python scripts/validate.py products/sumer-writing",
+    "python scripts/task.py verify products/sumer-writing T0040-draft-section-P01",
+    "python scripts/check_scope.py products/sumer-writing",
+    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0040-draft-section-P01/operator-brief.json"
+  ],
+  "evidence_access": {
+    "kind": "bounded_claim_sources",
+    "adapter": "scripts/draft_evidence.py",
+    "interface_version": 1,
+    "capabilities": [
+      "scope",
+      "resolve_claims",
+      "claims",
+      "sources",
+      "source",
+      "search",
+      "record"
+    ],
+    "trace_path": "tasks/T0040-draft-section-P01/evidence-trace.jsonl",
+    "required_before_submit": [
+      "resolve_claims"
+    ]
+  }
+}

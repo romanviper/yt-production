@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "task_id": "T0040-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "Fresh P01 hoàn tất: một lịch sử liên tục của đếm, niêm phong, bản ghi bền và áp lực thể chế.",
+  "material_points": [
+    "Spine đi từ thực hành tiền văn tự đến nhu cầu hành chính, không dùng mô hình phát minh đột ngột.",
+    "Bản thảo giữ đủ giới hạn về token, nhân quả hành chính và ý nghĩa giao dịch.",
+    "Một draft, một read-aloud polish; 1.346 từ; boundary P01→P02 nguyên vẹn."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Fresh P01 đã đạt mission và historical movement để được duyệt chưa?",
+    "recommendation": "Duyệt nếu một lượt nghe làm rõ bài toán, ecology và vai trò có giới hạn của hành chính.",
+    "options": [
+      {
+        "label": "approve",
+        "effect": "Chấp nhận P01 và dừng tại checkpoint human approval."
+      },
+      {
+        "label": "request_changes",
+        "effect": "Trả P01 về rework có mục tiêu trong mission và truth ceiling hiện tại."
+      }
+    ]
+  }
+}

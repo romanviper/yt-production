@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "T0039-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "P01 mới sẵn sàng cho human review",
+  "summary": "Narration 1.442 từ đi từ bài toán giữ phép đếm tới ecology ghi chép và áp lực thể chế.",
+  "material_points": [
+    "Numerical practices dẫn tuyến kể qua token, bulla và bảng ghi số.",
+    "Seals, iconography, tablets và institutional practice cùng tạo một ecology phi tuyến.",
+    "Hành chính là áp lực lớn, không phải nguyên nhân duy nhất; đoạn kết mở đúng P02."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Bạn duyệt P01 hay yêu cầu chỉnh sửa có giới hạn?",
+    "recommendation": "Đọc như narration; duyệt nếu chuyển động và qualification đúng ý.",
+    "options": [
+      {
+        "label": "Duyệt P01",
+        "effect": "Khóa checkpoint P01."
+      },
+      {
+        "label": "Yêu cầu chỉnh sửa",
+        "effect": "Giữ P01 mở cho rework."
+      }
+    ]
+  },
+  "warnings": []
+}
