@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "task_id": "T0045-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "P01 craft-only đã sẵn sàng review.",
+  "material_points": [
+    "Mở ngay trong một vật đất sét kín; ý nghĩa chỉ xuất hiện sau khi vấn đề vật chất đã được trải nghiệm.",
+    "Route có đúng ba biến đổi: dấu số bên ngoài, cụm dấu số–phân loại–niêm, rồi mặt bảng phẳng.",
+    "Draft 1.404 từ; 8 claim đã resolve; một polish; không đọc prose cũ."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Mạch kể vật chất này đã đủ tự nhiên và điện ảnh chưa?",
+    "recommendation": "Đọc draft và phản hồi nơi dòng trải nghiệm rơi trở lại giải thích.",
+    "options": [
+      {
+        "label": "Approve",
+        "effect": "Chấp nhận P01 tại checkpoint hiện tại."
+      },
+      {
+        "label": "Request changes",
+        "effect": "Giữ checkpoint cho một vòng phản hồi ngắn."
+      }
+    ]
+  }
+}
