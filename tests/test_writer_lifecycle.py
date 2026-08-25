@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from scripts.approval import approve_section
-from scripts.draft_evidence import DraftEvidenceBroker
+from scripts.draft_evidence import DraftEvidenceBroker, EvidenceAccessError
 from scripts.draft_lifecycle_contract import (
     validate_canonical_draft_lifecycle,
     validate_evidence_trace,
@@ -24,6 +24,13 @@ from scripts.outcome_eval_contract import (
 from scripts.task import create_task, submit_task
 from scripts.validate import validate_product
 from test_material_aware_handoff import make_direct_authorship_fixture, write_json
+
+
+ROUTE_INTENT = (
+    "Follow one unstable historical condition as it changes what can be seen and understood. "
+    "Let each transformation produce a live question whose answer changes the listener's model, "
+    "then carry that change into a consequence that makes the assigned exit state feel earned rather than announced."
+)
 
 
 def valid_v3_pass_review(section: str) -> str:
@@ -110,12 +117,67 @@ class WriterLifecycleRegression(unittest.TestCase):
             broker = DraftEvidenceBroker(product, task_id)
             broker.call("scope")
             self.assertTrue(validate_required_evidence_resolution(product, task_id))
-            broker.call("resolve_claims")
+            with self.assertRaisesRegex(EvidenceAccessError, "requires exactly route_intent"):
+                broker.call("resolve_claims")
+            with self.assertRaisesRegex(EvidenceAccessError, "before claim/search access"):
+                broker.call("claims")
+            with self.assertRaisesRegex(EvidenceAccessError, "before claim/search access"):
+                broker.call("search", {"query": "approved"})
+            with self.assertRaisesRegex(EvidenceAccessError, "must not contain claim or source ids"):
+                broker.call(
+                    "resolve_claims",
+                    {
+                        "route_intent": (
+                            "The section follows a changing historical problem until a new question becomes unavoidable, "
+                            "then lets the consequence redirect what the listener expects to find. "
+                            "The route remains provisional and will be corrected by CLM-0001 after this commitment is logged."
+                        )
+                    },
+                )
+            route_intent = (
+                "The section begins with a bounded condition that cannot remain stable, then follows the visible change "
+                "that makes the original understanding insufficient. Each discovery should create the next live question, "
+                "and the final consequence should explain why the listener must leave with a different model of the process."
+            )
+            resolved = broker.call("resolve_claims", {"route_intent": route_intent})
             self.assertEqual([], validate_evidence_trace(product, task_id))
             self.assertEqual([], validate_required_evidence_resolution(product, task_id))
-            resolved = broker.call("resolve_claims")
-            self.assertEqual(len(resolved["sources"]), len({item["id"] for item in resolved["sources"]}))
+            self.assertEqual(2, broker.packet["evidence_access"]["interface_version"])
+            self.assertEqual("none", resolved["composition_contract"]["sequence_authority"])
+            self.assertEqual(
+                "deterministic_task_hash_with_no_story_authority",
+                resolved["composition_contract"]["presentation_order"],
+            )
+            self.assertEqual(
+                "recorded_before_claim_resolution",
+                resolved["route_intent_attestation"]["status"],
+            )
+            self.assertIsInstance(resolved["claim_records"], dict)
+            self.assertIsInstance(resolved["source_records"], dict)
+            self.assertEqual(resolved["resolved_claim_ids"], list(resolved["claim_records"]))
+            self.assertEqual(set(broker.allowed_claim_ids), set(resolved["resolved_claim_ids"]))
+            self.assertNotIn("claims", resolved)
+            self.assertNotIn("sources", resolved)
+            self.assertEqual(len(resolved["source_records"]), len(set(resolved["source_records"])))
             self.assertLessEqual(resolved["telemetry"]["estimated_response_tokens"], 6000)
+
+            # Submission reconstructs the atomic pre-claim commitment instead of trusting a success flag.
+            trace_path = product / "tasks" / task_id / "evidence-trace.jsonl"
+            original_trace = trace_path.read_text(encoding="utf-8")
+            trace_records = [json.loads(line) for line in original_trace.splitlines()]
+            successful_resolution = next(
+                item
+                for item in trace_records
+                if item.get("capability") == "resolve_claims" and item.get("error") is None
+            )
+            successful_resolution["arguments"]["route_intent"] = "too short"
+            trace_path.write_text(
+                "\n".join(json.dumps(item, ensure_ascii=False) for item in trace_records) + "\n",
+                encoding="utf-8",
+            )
+            self.assertTrue(validate_required_evidence_resolution(product, task_id))
+            trace_path.write_text(original_trace, encoding="utf-8")
+            self.assertEqual([], validate_required_evidence_resolution(product, task_id))
 
             task_dir = product / "tasks" / task_id
             (task_dir / "report.md").write_text("Draft completed inside the routed task scope.\n", encoding="utf-8")
@@ -288,7 +350,7 @@ class WriterLifecycleRegression(unittest.TestCase):
 
             draft_work = create_task(product, "draft_section", "P01", None, False)
             draft_broker = DraftEvidenceBroker(product, draft_work["id"])
-            draft_broker.call("resolve_claims")
+            draft_broker.call("resolve_claims", {"route_intent": ROUTE_INTENT})
             (root / "draft.md").write_text("# P01\n\nA supported routed draft.\n", encoding="utf-8")
             (root / "handoff.md").write_text("The listener reaches State 1.\n", encoding="utf-8")
             write_ready_task_admin(product / "tasks" / draft_work["id"], "P01 draft is ready for review.")

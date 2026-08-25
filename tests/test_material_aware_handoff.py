@@ -20,6 +20,11 @@ from scripts.task import create_task, validate_output_contract
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PRODUCT = REPO_ROOT / "products" / "sumer-writing"
+ROUTE_INTENT = (
+    "Follow one unstable historical condition as it changes what can be seen and understood. "
+    "Let each transformation produce a live question whose answer changes the listener's model, "
+    "then carry that change into a consequence that makes the assigned exit state feel earned rather than announced."
+)
 
 
 def write_json(path: Path, value: dict) -> None:
@@ -226,6 +231,7 @@ class AuthorshipBoundaryRegression(unittest.TestCase):
             scope = broker.call("scope")
             self.assertEqual(["CLM-0001"], scope["claim_ids"])
             self.assertEqual(["SRC-0001"], scope["source_ids"])
+            broker.call("resolve_claims", {"route_intent": ROUTE_INTENT})
 
             allowed = broker.call("source", {"id": "SRC-0001"})
             self.assertEqual("SRC-0001", allowed["source"]["id"])

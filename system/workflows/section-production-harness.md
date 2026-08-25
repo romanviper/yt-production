@@ -15,7 +15,7 @@ Never let one agent write, score and explain its own improvement. FoC or another
 ## Canonical sequence
 
 1. Route `draft_section` with `scripts/task.py create`, or use `scripts/rework.py` for a requested rerun.
-2. Writer calls `resolve_claims`, retrieves only useful source detail, writes the declared outputs, runs packet validations and submits.
+2. Writer privately chooses a provisional story route from the mission and state change before opening claim prose, then passes it as `route_intent` to `resolve_claims`. The broker records the intent and returns the unordered constraint/support ledger in one call; claim/search access stays closed until that call succeeds. Writer retrieves only useful source detail, writes the declared outputs, runs packet validations and submits. `route_intent` is only audit-traced private scratch: do not add a route artifact, beat approval gate or extra agent for it.
 3. Route `review_section` to a fresh reviewer. Reviewer calls `resolve_claims`, emits the production-gate block and submits.
 4. If every hard gate passes and every evidence-adjusted dimension is at least 8, stop at human approval.
 5. If the verdict is `changes_requested`, route the smallest approved change through one `revise_section` task, then run one fresh review. A second revision is a blocker or a new user-authorized production cycle.

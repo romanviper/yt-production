@@ -915,7 +915,16 @@ class ModularProductionTests(unittest.TestCase):
                 encoding="utf-8",
             )
             write_json(product / "tasks" / work["id"] / "operator-brief.json", valid_operator_brief())
-            DraftEvidenceBroker(product, work["id"]).call("resolve_claims")
+            DraftEvidenceBroker(product, work["id"]).call(
+                "resolve_claims",
+                {
+                    "route_intent": (
+                        "Follow one unstable historical condition as it changes what can be seen and understood. "
+                        "Let each transformation produce a live question whose answer changes the listener's model, "
+                        "then carry that change into a consequence that makes the assigned exit state feel earned rather than announced."
+                    )
+                },
+            )
             self.assertEqual([], submit_task(product, work["id"]))
 
     def test_production_unit_hard_cap_remains_enforced(self) -> None:
@@ -1278,7 +1287,16 @@ class ModularProductionTests(unittest.TestCase):
             make_approved_story_plan(product, "P06")
             root = product / "03_sections" / "P06"
             draft_work = create_task(product, "draft_section", "P06", None, False)
-            DraftEvidenceBroker(product, draft_work["id"]).call("resolve_claims")
+            DraftEvidenceBroker(product, draft_work["id"]).call(
+                "resolve_claims",
+                {
+                    "route_intent": (
+                        "Follow one unstable historical condition as it changes what can be seen and understood. "
+                        "Let each transformation produce a live question whose answer changes the listener's model, "
+                        "then carry that change into a consequence that makes the assigned exit state feel earned rather than announced."
+                    )
+                },
+            )
             (root / "draft.md").write_text("Draft P06.", encoding="utf-8")
             (root / "handoff.md").write_text("Exit state P06.", encoding="utf-8")
             (product / "tasks" / draft_work["id"] / "report.md").write_text("Draft ready.\n", encoding="utf-8")

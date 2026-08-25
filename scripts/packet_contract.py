@@ -661,8 +661,11 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
                 errors.append("packet.evidence_access.kind must be bounded_claim_sources")
             if evidence_access.get("adapter") != "scripts/draft_evidence.py":
                 errors.append("packet.evidence_access.adapter must be scripts/draft_evidence.py")
-            if evidence_access.get("interface_version") != 1:
-                errors.append("packet.evidence_access.interface_version must be 1")
+            interface_version = evidence_access.get("interface_version")
+            if interface_version not in {1, 2}:
+                errors.append("packet.evidence_access.interface_version must be 1 or 2")
+            if interface_version == 2 and packet.get("operation") != "draft_section":
+                errors.append("packet.evidence_access.interface_version 2 is allowed only for draft_section")
             capabilities = evidence_access.get("capabilities")
             if not isinstance(capabilities, list) or not capabilities or not all(
                 isinstance(item, str) and item for item in capabilities
@@ -673,6 +676,8 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
                 isinstance(item, str) and item in (capabilities or []) for item in requirements
             ):
                 errors.append("packet.evidence_access.required_before_submit must name declared capabilities")
+            if interface_version == 2 and requirements != ["resolve_claims"]:
+                errors.append("route-first evidence interface must require exactly resolve_claims before submit")
             expected_trace = f"tasks/{packet.get('task_id')}/evidence-trace.jsonl"
             if evidence_access.get("trace_path") != expected_trace:
                 errors.append("packet.evidence_access.trace_path must be the task evidence trace")

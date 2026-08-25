@@ -23,12 +23,19 @@ from scripts.task import create_task, submit_task, verify_task
 from test_material_aware_handoff import SOURCE_PRODUCT, make_direct_authorship_fixture, write_json
 
 
+ROUTE_INTENT = (
+    "Follow one unstable historical condition as it changes what can be seen and understood. "
+    "Let each transformation produce a live question whose answer changes the listener's model, "
+    "then carry that change into a consequence that makes the assigned exit state feel earned rather than announced."
+)
+
+
 def submit_fixture_prose(product: Path, details: list[str], draft_body: str = "A supported historical progression.") -> str:
     root = product / "03_sections" / "P01"
     work = create_task(product, "draft_section", "P01", None, False)
     task_id = work["id"]
     broker = DraftEvidenceBroker(product, task_id)
-    broker.call("resolve_claims")
+    broker.call("resolve_claims", {"route_intent": ROUTE_INTENT})
     for index, detail in enumerate(details):
         broker.call(
             "record",
@@ -118,9 +125,14 @@ class WriterBaselineTests(unittest.TestCase):
             )
             self.assertTrue(set(input_paths[3:]).issubset({"03_sections/P01/draft-rework-request.md"}))
             self.assertIn("evidence_access", packet)
+            self.assertEqual(2, packet["evidence_access"]["interface_version"])
             self.assertEqual(["resolve_claims"], packet["evidence_access"]["required_before_submit"])
             self.assertIn("answer the section mission in their own words", context)
             self.assertIn("retell the historical path", context)
+            self.assertIn("Do not build the section by arranging claim records", context)
+            self.assertIn("private scratch recorded in the audit trace", context)
+            self.assertIn("not a deliverable, approval gate or beat sheet", context)
+            self.assertIn("Storage order, claim IDs and one-paragraph-per-claim coverage have no narrative authority", context)
 
             # The writer sees a plain mission projection plus control states, not upstream architecture prose.
             self.assertIn('"mission"', context)

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -19,11 +20,40 @@ SUBMITTED_TASK_STATES = {"ready_for_review", "closed"}
 PROSE_OPERATIONS = {"draft_section", "revise_section"}
 BOUND_PROSE_PROVENANCE_SCHEMA = 2
 BOUND_PACKET_SCHEMA = 5
+ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION = 2
+MIN_ROUTE_INTENT_CHARS = 200
+MAX_ROUTE_INTENT_CHARS = 2000
+ROUTE_INTENT_COPY_WINDOW_WORDS = 10
 
 
 def _json_hash(value: Any) -> str:
     text = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _route_intent_error(value: Any, evidence: dict[str, Any]) -> str | None:
+    if not isinstance(value, str):
+        return "route_intent must be text"
+    intent = value.strip()
+    if not MIN_ROUTE_INTENT_CHARS <= len(intent) <= MAX_ROUTE_INTENT_CHARS:
+        return f"route_intent must be {MIN_ROUTE_INTENT_CHARS}-{MAX_ROUTE_INTENT_CHARS} characters"
+    if re.search(r"\b(?:CLM|SRC)-\d{4}\b", intent, flags=re.IGNORECASE):
+        return "route_intent must not contain claim or source ids"
+
+    intent_words = re.findall(r"[\wÀ-ỹ]+", intent.casefold(), flags=re.UNICODE)
+    intent_windows = {
+        tuple(intent_words[index : index + ROUTE_INTENT_COPY_WINDOW_WORDS])
+        for index in range(max(0, len(intent_words) - ROUTE_INTENT_COPY_WINDOW_WORDS + 1))
+    }
+    for claim in evidence.get("claims", []):
+        statement = claim.get("statement") if isinstance(claim, dict) else None
+        if not isinstance(statement, str):
+            continue
+        words = re.findall(r"[\wÀ-ỹ]+", statement.casefold(), flags=re.UNICODE)
+        for index in range(max(0, len(words) - ROUTE_INTENT_COPY_WINDOW_WORDS + 1)):
+            if tuple(words[index : index + ROUTE_INTENT_COPY_WINDOW_WORDS]) in intent_windows:
+                return "route_intent copies claim prose"
+    return None
 
 
 def validate_evidence_trace(product_dir: Path, task_id: str) -> list[str]:
@@ -99,10 +129,12 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
 
     section = str(work.get("target", {}).get("section") or "")
     narration_path = product_dir / "03_sections" / section / "narration-pack.json"
+    evidence_path = product_dir / "03_sections" / section / "evidence-pack.json"
     trace_path = product_dir / str(access.get("trace_path") or "")
     if not narration_path.is_file():
         return [f"task {task_id} cannot resolve claims without narration pack"]
     narration = read_json(narration_path)
+    evidence = read_json(evidence_path) if evidence_path.is_file() else {"claims": []}
     if narration.get("schema_version") == 4:
         scope = narration.get("retrieval_scope", {})
         expected = scope.get("claim_ids", []) if isinstance(scope, dict) else []
@@ -117,6 +149,10 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
     if not trace_path.is_file():
         return [f"task {task_id} must call resolve_claims before submission"]
 
+    route_first = (
+        work.get("operation") == "draft_section"
+        and access.get("interface_version") == ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION
+    )
     for line in trace_path.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
@@ -125,13 +161,52 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
         except json.JSONDecodeError:
             continue
         response = record.get("response")
-        if (
+        resolved_ids = response.get("resolved_claim_ids") if isinstance(response, dict) else None
+        resolved_scope_matches = (
+            isinstance(resolved_ids, list) and set(resolved_ids) == set(expected_ids)
+            if route_first
+            else resolved_ids == expected_ids
+        )
+        whole_scope_resolution = (
             record.get("capability") == "resolve_claims"
             and record.get("error") is None
             and isinstance(response, dict)
-            and response.get("resolved_claim_ids") == expected_ids
-        ):
+            and resolved_scope_matches
+        )
+        if not whole_scope_resolution:
+            continue
+        if route_first:
+            arguments = record.get("arguments")
+            if not isinstance(arguments, dict) or set(arguments) != {"route_intent"}:
+                continue
+            intent = arguments.get("route_intent")
+            if _route_intent_error(intent, evidence) is not None:
+                continue
+            assert isinstance(intent, str)
+            normalized_intent = intent.strip()
+            attestation = response.get("route_intent_attestation")
+            composition = response.get("composition_contract")
+            claim_records = response.get("claim_records")
+            if (
+                record.get("response_sha256") != _json_hash(response)
+                or not isinstance(composition, dict)
+                or composition.get("sequence_authority") != "none"
+                or composition.get("presentation_order") != "deterministic_task_hash_with_no_story_authority"
+                or not isinstance(attestation, dict)
+                or attestation.get("status") != "recorded_before_claim_resolution"
+                or attestation.get("sha256") != hashlib.sha256(normalized_intent.encode("utf-8")).hexdigest()
+                or attestation.get("characters") != len(normalized_intent)
+                or attestation.get("authority") != "creative_route_only_not_evidence"
+                or not isinstance(claim_records, dict)
+                or set(claim_records) != set(expected_ids)
+                or list(claim_records) != resolved_ids
+                or "claims" in response
+            ):
+                continue
             return []
+        return []
+    if route_first:
+        return [f"task {task_id} must resolve every scoped claim with a valid pre-claim route_intent"]
     return [f"task {task_id} must successfully resolve every scoped claim before submission"]
 
 

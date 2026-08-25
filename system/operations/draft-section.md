@@ -1,12 +1,16 @@
 # Operation — Draft Section
 
-## Responsibility
+## Assignment
 
-Answer the approved section mission with a self-authored section.
+Answer the approved mission with a self-authored section. Mission and entry/exit states define the destination; the writer owns route, order, factual subset, POV and wording.
 
-The outline defines the destination. `section.json` defines the section objective and entry/exit state. The writer decides the route, structure, order, factual subset, POV, exposition and wording.
+## Route-first composition
 
-Claims and approved sources limit what the section may assert; they are not a content checklist and do not prescribe a narrative route.
+Do not build the section by arranging claim records. Before reading claim prose, privately form an authored historical movement from changing conditions, live questions and consequences. Pass that provisional 200–2,000-character route with `resolve_claims --route-intent "..."`, without claim/source IDs or copied claim prose. It is private scratch recorded in the audit trace, not a deliverable, approval gate or beat sheet.
+
+Treat the returned `claim_records` map as an unordered ledger that constrains, supports and corrects the route. Select only what the telling needs; change the route when support fails. Storage order, claim IDs and one-paragraph-per-claim coverage have no narrative authority.
+
+Let supported action, object, place and process carry meaning. Explain only connections or needed caveats they cannot. Never bolt imagery onto an argument.
 
 ## Listener outcome
 
@@ -15,14 +19,12 @@ Write for one attentive hearing. When the section ends, a listener must be able 
 1. answer the section mission in their own words; and
 2. retell the historical path that made that answer true.
 
-This is an outcome, not a prescribed structure. Choose the route yourself. Do not write to an evaluator, mention a scoring system or imitate a benchmark.
-
 ## Boundaries and evidence
 
-Stay inside the current truth ceiling and continuity scope. Do not invent unsupported people, scenes, thoughts, dialogue, details or causal certainty.
+Stay inside the truth ceiling and continuity scope. Do not invent unsupported people, scenes, thoughts, dialogue, details or causal certainty. Draft submission requires whole-scope `resolve_claims`; claim/search access remains closed until its route commitment succeeds.
 
-Before relying on any claim prose, call the packet's `resolve_claims` capability. Direct draft submission is blocked until every scoped claim has been resolved through the broker. Use the other bounded evidence capabilities only when additional factual resolution is needed. Retrieved source-supported detail may sharpen the draft, but it must remain inside the approved claim/source graph and keep provenance/auditability.
+Before `route_intent`, use `scope`, `sources`, `source` or `record` only to gather observable material when the mission packet is too thin; none orders or authorizes the story.
 
-**Increase evidence resolution; do not silently expand the truth ceiling.** New claims, causal conclusions, contradictions, theses or generalizations must return to research authority.
+Increase source-level resolution only inside the approved graph. New claims, causal conclusions, contradictions, theses or generalizations return to evidence authority.
 
 Do not scan the repo. Do not self-approve.
