@@ -1,0 +1,9 @@
+# Change Request — P01
+
+Requested by: user
+
+Requested at: 2026-08-25T03:25:57.940538+00:00
+
+## Request
+
+Áp dụng đúng formal review T0034: chỉ sửa câu 'Bulla lúc đó mang hai cách giữ cùng một lượng' và tối đa câu liền kề để bỏ certainty rằng dấu ngoài tương đương chính xác contents bên trong. Vẫn giữ mạch thông tin số đi ra bề mặt, không đổi cấu trúc, hook, payoff, ranh giới P02 hay truth ceiling. Acceptance: không còn contents-to-surface equivalence unsupported.

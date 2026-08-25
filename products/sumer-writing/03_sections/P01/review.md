@@ -1,15 +1,20 @@
 # Review — P01
 
-Verdict: `changes_requested`
+Verdict: changes_requested
 
 ## Outcome judgment
 
-1. **Sau khi nghe section, khán giả có thể tự trả lời mission không? — Có.** Draft cho người nghe một câu trả lời rõ: record bền và có thể kiểm tra trở nên đáng giá khi áp lực xử lý lượng ở quy mô thiết chế gặp các vật mang tin và bề mặt đất sét có thể giữ thông tin cho công việc tiếp tục.
-2. **Khán giả có thể kể lại historical path dẫn tới câu trả lời đó không? — Có.** Đường kể có thể nhớ và kể lại: token mang lượng → bulla gom và niêm phong → dấu số xuất hiện trên bề mặt → bảng số biến bề mặt thành nơi record tồn tại → nhiều thực hành tiếp tục chồng lấn → quy mô hành chính tạo pressure nhưng không phải monocause.
-
 Draft đạt exit state về một formation ecology, phá được shortcut “một phát minh đơn độc” và “token → tablet” như genealogy tất định. Nó cũng giữ đúng boundary với P02: section chỉ đặt câu hỏi về điều khiến hệ thống dấu mới khác biệt, chưa giải thích usefulness của structured signs/layout hay writing threshold thay cho section kế tiếp.
 
-## Material issue
+## Mission answerability
+
+**Sau khi nghe section, khán giả có thể tự trả lời mission không? — Có.** Draft cho người nghe một câu trả lời rõ: record bền và có thể kiểm tra trở nên đáng giá khi áp lực xử lý lượng ở quy mô thiết chế gặp các vật mang tin và bề mặt đất sét có thể giữ thông tin cho công việc tiếp tục.
+
+## Historical progression
+
+**Khán giả có thể kể lại historical path dẫn tới câu trả lời đó không? — Có.** Đường kể có thể nhớ và kể lại: token mang lượng → bulla gom và niêm phong → dấu số xuất hiện trên bề mặt → bảng số biến bề mặt thành nơi record tồn tại → nhiều thực hành tiếp tục chồng lấn → quy mô hành chính tạo pressure nhưng không phải monocause.
+
+## Issues
 
 ### 1. Bulla bị mô tả như hai bản biểu diễn chắc chắn của cùng một lượng
 
@@ -19,6 +24,10 @@ Draft đạt exit state về một formation ecology, phá được shortcut “
 - **Responsible layer:** `evidence`.
 - **Smallest valid revision scope:** chỉ câu khẳng định tương đương này và, nếu cần để giữ mạch nghe, câu liền kề; không cần đổi cấu trúc section.
 - **Acceptance test:** passage không còn khẳng định dấu ngoài và token bên trong giữ đúng cùng một lượng khi chưa có support; nó vẫn cho người nghe hiểu được việc thông tin số đi ra bề mặt, đồng thời giữ nguyên guardrail chống genealogy tuyến tính.
+
+## Routing
+
+Route tới `evidence`. Chỉ sửa câu khẳng định tương đương contents-to-surface và tối đa câu liền kề; không mở lại cấu trúc section hoặc truth ceiling. Sau sửa, review lại đúng acceptance test trên.
 
 ## Evidence and continuity
 

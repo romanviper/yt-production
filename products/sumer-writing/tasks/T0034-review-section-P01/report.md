@@ -30,6 +30,7 @@ Hai required outcome questions đều đạt: audience có thể trả lời mis
 ## Validation
 
 - Task verification: pass (`Task packet is fresh and within budget`).
-- Product validation: chưa chạy được trong sub-agent vì policy từ chối validator product-wide vượt packet-scoped boundary; root sẽ xác minh.
-- Scope validation: chờ chạy packet-safe `scripts/check_scope.py`; nếu execution policy tiếp tục chặn, root sẽ xác minh.
+- Product validation: pass, do operator xác minh.
+- Scope validation: pass trên baseline sạch trước submit, do operator xác minh.
+- Review output contract: pass sau khi chuẩn hóa exact verdict và required headings.
 - Submit/approve/commit: không thực hiện theo yêu cầu.
