@@ -86,6 +86,33 @@ def write_ready_task_admin(task_root: Path, headline: str) -> None:
 
 
 class WriterLifecycleRegression(unittest.TestCase):
+    def test_route_first_trace_round_trip_uses_explicit_presentation_order_for_multiple_claims(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            outline_path = product / "02_outline" / "outline.json"
+            outline = json.loads(outline_path.read_text(encoding="utf-8"))
+            p01 = next(item for item in outline["sections"] if item["id"] == "P01")
+            p01["claim_ids"] = ["CLM-0001", "CLM-0002"]
+            write_json(outline_path, outline)
+            materialize(product)
+
+            work = create_task(product, "draft_section", "P01", None, False)
+            broker = DraftEvidenceBroker(product, work["id"])
+            resolved = broker.call("resolve_claims", {"route_intent": ROUTE_INTENT})
+            self.assertEqual(2, len(resolved["resolved_claim_ids"]))
+
+            trace_path = product / "tasks" / work["id"] / "evidence-trace.jsonl"
+            trace = json.loads(trace_path.read_text(encoding="utf-8").splitlines()[-1])
+            persisted = trace["response"]
+            self.assertNotEqual(
+                persisted["resolved_claim_ids"],
+                list(persisted["claim_records"]),
+            )
+
+            later_claims = broker.call("claims")
+            self.assertEqual({"CLM-0001", "CLM-0002"}, set(later_claims["claim_records"]))
+            self.assertEqual([], validate_required_evidence_resolution(product, work["id"]))
+
     def test_canonical_draft_requires_official_task_and_binds_submission_provenance(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = make_direct_authorship_fixture(Path(temp))

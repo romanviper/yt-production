@@ -31,6 +31,13 @@ def _json_hash(value: Any) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def _route_first_presentation_order(task_id: str, ids: list[str]) -> list[str]:
+    return sorted(
+        ids,
+        key=lambda item: hashlib.sha256(f"{task_id}\0{item}".encode("utf-8")).hexdigest(),
+    )
+
+
 def _route_intent_error(value: Any, evidence: dict[str, Any]) -> str | None:
     if not isinstance(value, str):
         return "route_intent must be text"
@@ -163,7 +170,7 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
         response = record.get("response")
         resolved_ids = response.get("resolved_claim_ids") if isinstance(response, dict) else None
         resolved_scope_matches = (
-            isinstance(resolved_ids, list) and set(resolved_ids) == set(expected_ids)
+            resolved_ids == _route_first_presentation_order(task_id, expected_ids)
             if route_first
             else resolved_ids == expected_ids
         )
@@ -199,7 +206,6 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
                 or attestation.get("authority") != "creative_route_only_not_evidence"
                 or not isinstance(claim_records, dict)
                 or set(claim_records) != set(expected_ids)
-                or list(claim_records) != resolved_ids
                 or "claims" in response
             ):
                 continue

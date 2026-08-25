@@ -739,11 +739,10 @@ class DraftEvidenceBroker:
                 and record.get("truth_ceiling_unchanged") is True
                 and set(arguments) == {"route_intent"}
                 and isinstance(response.get("resolved_claim_ids"), list)
-                and set(response["resolved_claim_ids"]) == set(self.allowed_claim_ids)
+                and response["resolved_claim_ids"] == self._order_neutral_ids(self.allowed_claim_ids)
                 and response.get("truth_ceiling_unchanged") is True
                 and isinstance(response.get("claim_records"), dict)
                 and set(response["claim_records"]) == set(self.allowed_claim_ids)
-                and list(response["claim_records"]) == response["resolved_claim_ids"]
                 and "claims" not in response
                 and isinstance(attestation, dict)
                 and attestation.get("status") == "recorded_before_claim_resolution"
