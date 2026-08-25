@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "task_id": "T0037-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "P01 has been rewritten from scratch as a natural, evidence-bounded account of the information problem that preceded writing.",
+  "material_points": [
+    "The draft is 1,441 words, within the required range.",
+    "All eight scoped claims were resolved through the bounded evidence adapter before drafting.",
+    "The section moves from numerical continuity and recording devices to institutional pressure while preserving uncertainty about linear causation and transaction type; one short read-aloud polish was completed."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Approve this new P01 draft, or request a bounded revision?",
+    "recommendation": "Approve the new P01 draft for the current checkpoint.",
+    "options": [
+      {
+        "label": "Approve P01",
+        "effect": "Accept this section and allow the production router to proceed only when the owner explicitly continues."
+      },
+      {
+        "label": "Request a bounded revision",
+        "effect": "Keep the section at the current checkpoint and route only the requested P01 changes."
+      }
+    ]
+  }
+}
