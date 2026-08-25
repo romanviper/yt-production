@@ -8,7 +8,7 @@
     "section": "P01",
     "unit": null
   },
-  "state": "ready",
+  "state": "ready_for_review",
   "created_at": "2026-08-25T02:52:14.681233+00:00",
   "context_packet": "tasks/T0033-draft-section-P01/context.md",
   "packet_manifest": "tasks/T0033-draft-section-P01/packet.json",
@@ -42,5 +42,7 @@
     "required_before_submit": [
       "resolve_claims"
     ]
-  }
+  },
+  "submitted_at": "2026-08-25T03:12:26.225117+00:00",
+  "updated_at": "2026-08-25T03:12:26.225117+00:00"
 }

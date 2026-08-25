@@ -2,25 +2,25 @@
 
 ## Trạng thái sau phần
 
-Khán giả rời P01 với một đường kể vật chất có thể thuật lại: quy mô Uruk tạo áp lực hồ sơ; token được đặt trong bulla; dấu xuất hiện trên bề mặt rồi trên bảng số; các vật này không thay thế nhau theo một chiếc thang thẳng mà tạo thành một hệ sinh thái ghi nhận quanh nhu cầu tổ chức. Hành chính là áp lực lớn, không phải nguyên nhân duy nhất.
+Khán giả rời P01 với một hình ảnh trung tâm: bulla giữ token bên trong nhưng khiến lượng biến khỏi tầm mắt, còn dấu trên bề mặt đưa lượng trở lại nơi có thể tiếp cận. Ở quy mô Uruk, khả năng giữ thông tin bền và tiếp tục xử lý nó gặp áp lực của hoạt động thiết chế.
 
-## Bốn chuyển động cần giữ
+## Đường kể phải giữ
 
-1. Uruk được ước tính khoảng 200 hecta và hơn 40.000 cư dân, đặt ra quy mô của bài toán tổ chức.
-2. Một số token đơn giản giai đoạn muộn phục vụ số/kế toán và được bao trong bulla; bulla được định nghĩa ngay lần đầu là quả cầu hoặc lớp bọc đất sét chứa token, có bề mặt mang vết dây và dấu con lăn.
-3. Một số token được ấn lên ngoài bulla, tương ứng với dấu số sớm; bảng ghi số tiếp tục mạch vật chất này ở quy mô tài liệu nhỏ và lớn hơn.
-4. Sai lệch tần suất token-cừu và việc token tồn tại cùng tài liệu viết tại Tushan chặn mô hình thay thế tuyến tính; phần kết đưa hệ sinh thái ấy trở lại áp lực hành chính và giá trị của hồ sơ bền.
+1. Nghịch lý inside/outside của bulla đặt ra bài toán trước chữ viết.
+2. Token → bulla → dấu ngoài vỏ → bảng số là logic thao tác vật chất, không phải niên biểu thay thế tuyến tính.
+3. Continuity chắc nhất nằm ở thực hành số; token, bulla, con dấu, hình ảnh, bảng số và thiết chế tạo một ecology chồng lấn.
+4. Hành chính là áp lực lớn nhưng không phải nguyên nhân duy nhất; feedback giữa hồ sơ và năng lực thiết chế chỉ là mô hình có điều kiện.
+5. Payoff cần nhớ: quy mô tạo nhu cầu, bề mặt làm lượng nhìn thấy, độ bền giúp công việc tiếp tục.
 
 ## Continuity sang P02
 
-P01 chỉ xác lập áp lực, continuity của thực hành số, parallel ecology và giá trị của hồ sơ bền. Nó không giải thích cách cấu trúc dấu hay bố cục biểu đạt các quan hệ hành chính. Câu cuối để ngỏ chính xác câu hỏi về điều khiến hệ thống dấu mới khác biệt, bảo toàn reveal riêng của P02 về usefulness trước continuous speech.
+P01 dừng ở pressure, material recording practices và giá trị của hồ sơ bền. Nó không giải thích cách cấu trúc dấu hay bố cục vận hành, cũng không giải quyết ngưỡng biểu đạt ngôn ngữ. P02 giữ toàn bộ reveal về điều khiến hệ thống dấu mới thực sự khác biệt và hữu ích.
 
-## Ranh giới bằng chứng
+## Evidence boundary
 
-- Không khẳng định lời nói, trí nhớ hay hiểu biết chung đã thất bại.
-- Không kể token → bulla → tablet như một tuyến tiến hóa duy nhất.
-- Không đồng nhất kế toán với thị trường, thuế, cống nạp hoặc phân phối.
-- Không suy từ corpus chủ yếu hành chính sang nguyên nhân hành chính duy nhất.
-- Không biến feedback model giữa tổ chức và hồ sơ thành nhân quả một chiều đã được chứng minh.
+- Không biến toàn bộ token thành một mã kế toán thống nhất.
+- Không kể token → tablet → writing như một tuyến tiến hóa duy nhất.
+- Không đồng nhất accounting với market, tax, tribute hay redistribution.
+- Không biến co-occurrence hoặc feedback thành nhân quả một chiều đã được chứng minh.
 
-Claims sử dụng: CLM-0011 đến CLM-0018.
+Claims sử dụng: CLM-0011–CLM-0018.

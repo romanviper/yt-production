@@ -1,13 +1,26 @@
 {
   "schema_version": 1,
-  "status": "in_progress",
-  "headline": "",
-  "material_points": [],
+  "status": "ready_for_review",
+  "headline": "P01 đã pass hai pre-gate và sẵn sàng cho review độc lập.",
+  "material_points": [
+    "Hook bulla mở ra áp lực hồ sơ ở quy mô Uruk.",
+    "Progression bám thao tác vật chất chồng lấn, không kể timeline tuyến tính.",
+    "Tám claim đã resolve; payoff và ranh giới P02 đều đạt."
+  ],
   "decision": {
-    "required": false,
-    "question": "",
-    "recommendation": "",
-    "options": []
+    "required": true,
+    "question": "Có chuyển P01 sang review-section chính thức không?",
+    "recommendation": "Có; hai pre-gate độc lập đều pass.",
+    "options": [
+      {
+        "label": "Tiếp tục review",
+        "effect": "Chạy review độc lập rồi dừng ở cổng người dùng."
+      },
+      {
+        "label": "Yêu cầu thay đổi",
+        "effect": "Mở lại prose theo chỉ dẫn mới."
+      }
+    ]
   },
   "next_step": ""
 }

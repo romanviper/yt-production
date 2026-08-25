@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_review",
+  "headline": "P01 cần sửa một claim evidence trước human approval.",
+  "material_points": [
+    "Verdict changes_requested: ba gate outcome, boundary và one-hearing pass; chín dimension đạt 8–9.",
+    "Evidence integrity fail: draft nói dấu ngoài và token trong bulla giữ cùng lượng; nguồn duyệt nói token tạo dấu ngoài không nhất thiết nằm trong envelope."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Yêu cầu rework cục bộ hay giữ P01?",
+    "recommendation": "Rework cục bộ rồi review lại.",
+    "options": [
+      {
+        "label": "Sửa cục bộ",
+        "effect": "Chỉ sửa certainty contents–surface rồi review lại."
+      },
+      {
+        "label": "Tạm giữ section",
+        "effect": "Không rework; P01 chưa đủ điều kiện duyệt."
+      }
+    ]
+  },
+  "next_step": ""
+}

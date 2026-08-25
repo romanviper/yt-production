@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "id": "T0034-review-section-P01",
+  "product": "sumer-writing",
+  "operation": "review_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "state": "ready",
+  "created_at": "2026-08-25T03:12:33.932269+00:00",
+  "context_packet": "tasks/T0034-review-section-P01/context.md",
+  "packet_manifest": "tasks/T0034-review-section-P01/packet.json",
+  "allowed_write_paths": [
+    "03_sections/P01/review.md",
+    "tasks/T0034-review-section-P01/report.md",
+    "tasks/T0034-review-section-P01/operator-brief.json"
+  ],
+  "outputs": [
+    "03_sections/P01/review.md"
+  ],
+  "optional_outputs": [],
+  "report_path": "tasks/T0034-review-section-P01/report.md",
+  "operator_brief_path": "tasks/T0034-review-section-P01/operator-brief.json",
+  "evidence_access": {
+    "kind": "bounded_claim_sources",
+    "adapter": "scripts/draft_evidence.py",
+    "interface_version": 1,
+    "capabilities": [
+      "scope",
+      "resolve_claims",
+      "claims",
+      "sources",
+      "source",
+      "search",
+      "record"
+    ],
+    "trace_path": "tasks/T0034-review-section-P01/evidence-trace.jsonl",
+    "required_before_submit": [
+      "resolve_claims"
+    ]
+  },
+  "review_contract_version": 2
+}

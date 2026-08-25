@@ -1,0 +1,114 @@
+{
+  "schema_version": 4,
+  "compiler": "scripts/context_packet.py",
+  "context_sha256": "5a9f0382a8017c9a4fc85379f0deee3f94a9f7c8b2913c43e66df654ba108314",
+  "authority": "product_agent",
+  "task_id": "T0034-review-section-P01",
+  "product": "sumer-writing",
+  "operation": "review_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "created_at": "2026-08-25T03:12:33.926766+00:00",
+  "context_profile": "evaluation",
+  "max_context_tokens": 14000,
+  "estimated_context_tokens": 13986,
+  "prompt_instruction_tokens": 2579,
+  "input_tokens": 10998,
+  "boundary_enforcement": [
+    "authority_and_write_scope",
+    "ai_task_state_or_human_amendment_provenance",
+    "input_freshness_and_packet_integrity",
+    "evidence_provenance_and_narration_ceiling",
+    "context_and_production_unit_hard_caps"
+  ],
+  "evaluation_gate": "human_review",
+  "instruction_files": [
+    "system/core/creative-boundaries.md",
+    "system/standards/channel-constitution.md",
+    "system/standards/outcome-evaluation.md",
+    "system/standards/section-quality-gate.md",
+    "system/operations/review-section.md"
+  ],
+  "inputs": [
+    {
+      "path": "02_outline/outline.json",
+      "sha256": "d707db0c172a9db579593a136791d2b1e629892315e31bedfa0d795b8c92da9d",
+      "bytes": 25387
+    },
+    {
+      "path": "02_outline/story-bible.md",
+      "sha256": "000ecc539a455c6f5989ec03ab1eeadddb7354e134095e2efb0efee0d7394bc8",
+      "bytes": 8332
+    },
+    {
+      "path": "02_outline/voice-profile.md",
+      "sha256": "62d7073b272f8e385b86fcc611546f7710da79e51d0a607f10525b1eb117fcc6",
+      "bytes": 2391
+    },
+    {
+      "path": "03_sections/P01/section.json",
+      "sha256": "731897e90d2b8808f97692c5909820b19cb9254e8f310e4e331c66d219bcfa68",
+      "bytes": 2892
+    },
+    {
+      "path": "03_sections/P01/brief.md",
+      "sha256": "95e3739f6707521143b26085330ac1097d0416dba59b0418c3466f9a44e8888b",
+      "bytes": 1631
+    },
+    {
+      "path": "03_sections/P01/narration-pack.json",
+      "sha256": "616fdb1ae38d719c01c647b31b9b09e36f20b054dd6d39d75421e5df8ab83708",
+      "bytes": 12338
+    },
+    {
+      "path": "03_sections/P01/draft.md",
+      "sha256": "a5611ee14f167c193a9faba73ac79711626ef816a333e79a6cb1463e2de6a292",
+      "bytes": 6892
+    }
+  ],
+  "operation_outputs": [
+    "03_sections/P01/review.md"
+  ],
+  "optional_operation_outputs": [],
+  "output_baselines": [
+    {
+      "path": "03_sections/P01/review.md",
+      "sha256": null,
+      "required": true
+    }
+  ],
+  "allowed_write_paths": [
+    "03_sections/P01/review.md",
+    "tasks/T0034-review-section-P01/report.md",
+    "tasks/T0034-review-section-P01/operator-brief.json"
+  ],
+  "report_path": "tasks/T0034-review-section-P01/report.md",
+  "operator_brief_path": "tasks/T0034-review-section-P01/operator-brief.json",
+  "validation": [
+    "python scripts/validate.py products/sumer-writing",
+    "python scripts/task.py verify products/sumer-writing T0034-review-section-P01",
+    "python scripts/check_scope.py products/sumer-writing",
+    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0034-review-section-P01/operator-brief.json"
+  ],
+  "review_contract_version": 2,
+  "evidence_access": {
+    "kind": "bounded_claim_sources",
+    "adapter": "scripts/draft_evidence.py",
+    "interface_version": 1,
+    "capabilities": [
+      "scope",
+      "resolve_claims",
+      "claims",
+      "sources",
+      "source",
+      "search",
+      "record"
+    ],
+    "trace_path": "tasks/T0034-review-section-P01/evidence-trace.jsonl",
+    "required_before_submit": [
+      "resolve_claims"
+    ]
+  }
+}
