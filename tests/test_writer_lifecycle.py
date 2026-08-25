@@ -5,6 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from scripts.approval import approve_section
 from scripts.draft_evidence import DraftEvidenceBroker
 from scripts.draft_lifecycle_contract import (
     validate_canonical_draft_lifecycle,
@@ -17,11 +18,64 @@ from scripts.outcome_eval_contract import (
     GATE_START,
     HARD_GATES,
     STORY_DIMENSIONS,
+    outcome_review_template,
     validate_outcome_review,
 )
 from scripts.task import create_task, submit_task
 from scripts.validate import validate_product
 from test_material_aware_handoff import make_direct_authorship_fixture, write_json
+
+
+def valid_v3_pass_review(section: str) -> str:
+    gate = {
+        "schema_version": 1,
+        "hard_gates": {
+            name: {
+                "status": "pass",
+                "basis": "The submitted draft provides a specific observable basis for this gate.",
+            }
+            for name in HARD_GATES
+        },
+        "dimensions": {
+            name: {
+                "score": 8,
+                "evidence_scope": "limited" if name == "supported_human_work_orientation" else "full",
+                "basis": "The draft uses available evidence effectively without inventing unsupported detail.",
+            }
+            for name in STORY_DIMENSIONS
+        },
+    }
+    return (
+        f"# Outcome Evaluation — {section}\n\n"
+        "Verdict: pass\n\n"
+        "## Outcome judgment\n\nThe listener reaches the assigned answer without evidence overreach.\n\n"
+        "## Mission answerability\n\nYes. The listener can state the mission answer in their own words.\n\n"
+        "## Historical progression\n\nYes. The listener can retell the historical path to that answer.\n\n"
+        "## Production gate\n\n"
+        f"{GATE_START}\n{json.dumps(gate, ensure_ascii=False, indent=2)}\n{GATE_END}\n\n"
+        "## Issues\n\nNo material issue remains in this fixture.\n\n"
+        "## Routing\n\nPass to human review; no intervention is required.\n"
+    )
+
+
+def write_ready_task_admin(task_root: Path, headline: str) -> None:
+    (task_root / "report.md").write_text(headline + "\n", encoding="utf-8")
+    write_json(
+        task_root / "operator-brief.json",
+        {
+            "schema_version": 1,
+            "status": "ready_for_review",
+            "headline": headline,
+            "material_points": ["The task stayed within its routed contract."],
+            "decision": {
+                "required": True,
+                "question": "Continue with human review?",
+                "recommendation": "Inspect the routed result before approval.",
+                "options": [{"label": "Review", "effect": "Inspect the completed task output."}],
+            },
+            "next_step": "",
+        },
+    )
 
 
 class WriterLifecycleRegression(unittest.TestCase):
@@ -167,6 +221,97 @@ class WriterLifecycleRegression(unittest.TestCase):
             require_production_gate=True,
         )
         self.assertTrue(any("derived verdict is 'changes_requested'" in item for item in errors))
+
+    def test_review_contract_v3_enforces_exact_document_grammar_without_changing_v2(self) -> None:
+        canonical = outcome_review_template("P01")
+        strict = {
+            "require_mission_outcomes": True,
+            "require_production_gate": True,
+        }
+        self.assertEqual(
+            [],
+            validate_outcome_review(
+                canonical,
+                **strict,
+                contract_version=3,
+                section="P01",
+            ),
+        )
+
+        wrong_title = canonical.replace("# Outcome Evaluation — P01", "# Review of P01", 1)
+        wrong_order = canonical.replace("## Mission answerability", "## SWAP", 1).replace(
+            "## Historical progression", "## Mission answerability", 1
+        ).replace("## SWAP", "## Historical progression", 1)
+        no_gate_heading = canonical.replace("## Production gate\n\n", "", 1)
+        duplicate_verdict = canonical.replace(
+            "Verdict: changes_requested",
+            "Verdict: changes_requested\nVerdict: pass",
+            1,
+        )
+        extra_gate_key = canonical.replace(
+            '"schema_version": 1,',
+            '"schema_version": 1,\n  "unexpected": true,',
+            1,
+        )
+        for label, invalid, expected in [
+            ("title", wrong_title, "title must be exactly"),
+            ("order", wrong_order, "exact canonical sequence"),
+            ("production heading", no_gate_heading, "exact canonical sequence"),
+            ("verdict", duplicate_verdict, "exactly one literal Verdict line"),
+            ("gate keys", extra_gate_key, "exactly schema_version"),
+        ]:
+            with self.subTest(label=label):
+                errors = validate_outcome_review(
+                    invalid,
+                    **strict,
+                    contract_version=3,
+                    section="P01",
+                )
+                self.assertTrue(any(expected in error for error in errors), errors)
+
+        v2_compatible = no_gate_heading.replace("# Outcome Evaluation — P01", "# Legacy Review", 1)
+        self.assertEqual(
+            [],
+            validate_outcome_review(
+                v2_compatible,
+                **strict,
+                contract_version=2,
+                section="P01",
+            ),
+        )
+
+    def test_v3_review_submission_is_exact_and_post_submit_tamper_blocks_approval(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            materialize(product)
+            root = product / "03_sections" / "P01"
+
+            draft_work = create_task(product, "draft_section", "P01", None, False)
+            draft_broker = DraftEvidenceBroker(product, draft_work["id"])
+            draft_broker.call("resolve_claims")
+            (root / "draft.md").write_text("# P01\n\nA supported routed draft.\n", encoding="utf-8")
+            (root / "handoff.md").write_text("The listener reaches State 1.\n", encoding="utf-8")
+            write_ready_task_admin(product / "tasks" / draft_work["id"], "P01 draft is ready for review.")
+            self.assertEqual([], submit_task(product, draft_work["id"]))
+
+            review_work = create_task(product, "review_section", "P01", None, False)
+            self.assertEqual(3, review_work["review_contract_version"])
+            review_broker = DraftEvidenceBroker(product, review_work["id"])
+            review_broker.call("resolve_claims")
+            review_text = valid_v3_pass_review("P01")
+            review_path = root / "review.md"
+            review_path.write_text(review_text, encoding="utf-8")
+            write_ready_task_admin(product / "tasks" / review_work["id"], "P01 review passes contract v3.")
+            self.assertEqual([], submit_task(product, review_work["id"]))
+
+            review_path.write_text(review_text.replace("## Issues", "## Extra\n\nInjected.\n\n## Issues"), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "differs from submitted review provenance"):
+                approve_section(product, "P01")
+
+            review_path.write_text(review_text, encoding="utf-8")
+            approve_section(product, "P01")
+            approved = json.loads((root / "section.json").read_text(encoding="utf-8"))
+            self.assertTrue(approved["human_approved"])
 
 
 if __name__ == "__main__":

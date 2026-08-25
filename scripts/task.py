@@ -469,12 +469,15 @@ def validate_output_contract(product_dir: Path, work: dict) -> list[str]:
         elif operation == "review_section":
             section = target["section"]
             review = product_dir / "03_sections" / section / "review.md"
-            strict_review = int(work.get("review_contract_version", 1)) >= 2
+            review_contract_version = int(work.get("review_contract_version", 1))
+            strict_review = review_contract_version >= 2
             errors.extend(
                 validate_outcome_review(
                     review.read_text(encoding="utf-8"),
                     require_mission_outcomes=strict_review,
                     require_production_gate=strict_review,
+                    contract_version=review_contract_version,
+                    section=section,
                 )
             )
         elif operation == "integration_review":

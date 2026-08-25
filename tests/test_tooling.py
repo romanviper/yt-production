@@ -1288,12 +1288,25 @@ class ModularProductionTests(unittest.TestCase):
                 review_packet["allowed_write_paths"],
             )
             self.assertNotIn("03_sections/P05/draft.md", review_context)
+            self.assertNotIn("recorded_evidence_projection", review_packet)
             request_changes(product, "P06", "Fix ISSUE-01 only; preserve the entry scene.")
             (root / "review.md").write_text("ISSUE-01: causal link is unsupported.", encoding="utf-8")
             revision_packet, revision_context = compile_packet(product, "revise_section", "T0002", section="P06")
             self.assertIn("Fix ISSUE-01 only", revision_context)
             self.assertNotIn("03_sections/P07", revision_context)
             self.assertIn("03_sections/P06/revision-log.md", revision_packet["allowed_write_paths"])
+            legacy_revision_inputs = [item["path"] for item in revision_packet["inputs"]]
+            for preserved_path in [
+                "02_outline/story-bible.md",
+                "02_outline/voice-profile.md",
+                "03_sections/P06/brief.md",
+                "03_sections/P06/narration-pack.json",
+                "03_sections/P06/draft.md",
+                "03_sections/P06/review.md",
+                "03_sections/P06/change-request.md",
+                "03_sections/P06/story-plan.json",
+            ]:
+                self.assertIn(preserved_path, legacy_revision_inputs)
             (root / "review.md").write_text(valid_outcome_review("pass"), encoding="utf-8")
             state = json.loads((root / "section.json").read_text(encoding="utf-8"))
             state["status"] = "review_complete"

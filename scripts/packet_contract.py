@@ -3,14 +3,36 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
 import re
 from pathlib import Path, PurePosixPath
 from typing import Any
 
 try:
     from scripts.common import sha256
+    from scripts.draft_evidence import (
+        MAX_REVIEW_RECORD_DETAIL_CHARS,
+        MAX_REVIEW_RECORD_PROJECTION_TOKENS,
+        MAX_REVIEW_RECORD_RECEIPTS,
+        MAX_REVIEW_RECORD_TOTAL_DETAIL_CHARS,
+        REVIEW_RECORD_DATA_RULE,
+        REVIEW_RECORD_PROJECTION_END,
+        REVIEW_RECORD_PROJECTION_START,
+        REVIEW_RECORD_SERIALIZATION_MARGIN_TOKENS,
+    )
 except ModuleNotFoundError:  # Direct execution from scripts/
     from common import sha256
+    from draft_evidence import (
+        MAX_REVIEW_RECORD_DETAIL_CHARS,
+        MAX_REVIEW_RECORD_PROJECTION_TOKENS,
+        MAX_REVIEW_RECORD_RECEIPTS,
+        MAX_REVIEW_RECORD_TOTAL_DETAIL_CHARS,
+        REVIEW_RECORD_DATA_RULE,
+        REVIEW_RECORD_PROJECTION_END,
+        REVIEW_RECORD_PROJECTION_START,
+        REVIEW_RECORD_SERIALIZATION_MARGIN_TOKENS,
+    )
 
 
 PACKET_SCHEMA_VERSION = 4
@@ -18,6 +40,11 @@ SUPPORTED_PACKET_SCHEMAS = {1, 2, 3, PACKET_SCHEMA_VERSION}
 INTEGRITY_PACKET_SCHEMAS = {3, PACKET_SCHEMA_VERSION}
 PACKET_COMPILER = "scripts/context_packet.py"
 SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
+
+
+def _json_hash(value: Any) -> str:
+    text = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
 def _is_relative_product_path(value: Any) -> bool:
@@ -165,6 +192,198 @@ def validate_packet_contract(packet: dict[str, Any], context_path: Path | None =
             errors.append("packet.review_contract_version is allowed only for review_section")
         if not isinstance(review_contract_version, int) or isinstance(review_contract_version, bool) or review_contract_version < 1:
             errors.append("packet.review_contract_version must be a positive integer")
+
+    receipt_projection = packet.get("recorded_evidence_projection")
+    if receipt_projection is not None:
+        if packet.get("operation") != "review_section":
+            errors.append("packet.recorded_evidence_projection is allowed only for review_section")
+        if not isinstance(receipt_projection, dict):
+            errors.append("packet.recorded_evidence_projection must be an object")
+        else:
+            if receipt_projection.get("schema_version") != 1:
+                errors.append("recorded evidence projection schema_version must be 1")
+            if receipt_projection.get("projection_kind") != "submitted_prose_record_receipts":
+                errors.append("recorded evidence projection kind is invalid")
+            source_task_id = receipt_projection.get("source_task_id")
+            safe_source_task_id = (
+                isinstance(source_task_id, str)
+                and re.fullmatch(r"T\d{4,}-[A-Za-z0-9][A-Za-z0-9-]*", source_task_id) is not None
+                and "/" not in source_task_id
+                and "\\" not in source_task_id
+            )
+            if not safe_source_task_id:
+                errors.append("recorded evidence projection source_task_id is invalid or contains traversal")
+            if receipt_projection.get("source_operation") not in {"draft_section", "revise_section"}:
+                errors.append("recorded evidence projection source operation must be submitted prose")
+            expected_source_trace = (
+                f"tasks/{source_task_id}/evidence-trace.jsonl" if safe_source_task_id else None
+            )
+            if not safe_source_task_id or receipt_projection.get("source_trace_path") != expected_source_trace:
+                errors.append("recorded evidence projection trace path must match source task")
+            for field in [
+                "source_trace_sha256",
+                "source_task_packet_sha256",
+                "narration_pack_sha256",
+                "evidence_pack_sha256",
+                "records_sha256",
+            ]:
+                digest = receipt_projection.get(field)
+                if not isinstance(digest, str) or not SHA256_PATTERN.fullmatch(digest):
+                    errors.append(f"recorded evidence projection {field} must be a SHA-256 digest")
+            if receipt_projection.get("truth_ceiling_unchanged") is not True:
+                errors.append("recorded evidence projection must preserve truth ceiling")
+
+            records = receipt_projection.get("records")
+            if not isinstance(records, list) or not records:
+                errors.append("recorded evidence projection records must be a non-empty list")
+                records = []
+            elif len(records) > MAX_REVIEW_RECORD_RECEIPTS:
+                errors.append("recorded evidence projection exceeds receipt cap")
+            seen_records: set[tuple[str, str, str, str]] = set()
+            total_detail_chars = 0
+            for index, record in enumerate(records):
+                if not isinstance(record, dict) or set(record) != {
+                    "source_id",
+                    "parent_locator",
+                    "locator",
+                    "detail",
+                    "response_sha256",
+                }:
+                    errors.append(f"recorded evidence projection record {index} has invalid shape")
+                    continue
+                source_id = record.get("source_id")
+                parent_locator = record.get("parent_locator")
+                locator = record.get("locator")
+                detail = record.get("detail")
+                if not isinstance(source_id, str) or not re.fullmatch(r"SRC-\d{4}", source_id):
+                    errors.append(f"recorded evidence projection record {index} has invalid source_id")
+                if not isinstance(parent_locator, str) or not parent_locator:
+                    errors.append(f"recorded evidence projection record {index} has invalid parent_locator")
+                if not isinstance(locator, str) or not locator or len(locator) > 1000:
+                    errors.append(f"recorded evidence projection record {index} has invalid locator")
+                if not isinstance(detail, str) or not detail or len(detail) > MAX_REVIEW_RECORD_DETAIL_CHARS:
+                    errors.append(f"recorded evidence projection record {index} has invalid detail")
+                else:
+                    total_detail_chars += len(detail)
+                response_digest = record.get("response_sha256")
+                if not isinstance(response_digest, str) or not SHA256_PATTERN.fullmatch(response_digest):
+                    errors.append(f"recorded evidence projection record {index} has invalid response_sha256")
+                if all(isinstance(item, str) for item in [source_id, parent_locator, locator, detail]):
+                    key = (source_id, parent_locator, locator, detail)
+                    if key in seen_records:
+                        errors.append("recorded evidence projection records must be deduplicated")
+                    seen_records.add(key)
+            if total_detail_chars > MAX_REVIEW_RECORD_TOTAL_DETAIL_CHARS:
+                errors.append("recorded evidence projection exceeds total detail cap")
+            if records and receipt_projection.get("records_sha256") != _json_hash(records):
+                errors.append("recorded evidence projection records hash is invalid")
+
+            telemetry = receipt_projection.get("telemetry")
+            if not isinstance(telemetry, dict):
+                errors.append("recorded evidence projection telemetry must be an object")
+            else:
+                numeric_fields = [
+                    "scanned_lines",
+                    "ignored_non_record",
+                    "dropped_malformed",
+                    "dropped_error",
+                    "dropped_mismatch",
+                    "dropped_duplicate",
+                    "dropped_cap",
+                    "eligible_receipts",
+                    "included_receipts",
+                    "estimated_projection_tokens",
+                ]
+                for field in numeric_fields:
+                    value = telemetry.get(field)
+                    if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+                        errors.append(f"recorded evidence projection telemetry {field} must be non-negative integer")
+                expected_limits = {
+                    "max_receipts": MAX_REVIEW_RECORD_RECEIPTS,
+                    "max_detail_chars": MAX_REVIEW_RECORD_DETAIL_CHARS,
+                    "max_total_detail_chars": MAX_REVIEW_RECORD_TOTAL_DETAIL_CHARS,
+                    "max_projection_tokens": MAX_REVIEW_RECORD_PROJECTION_TOKENS,
+                    "serialization_margin_tokens": REVIEW_RECORD_SERIALIZATION_MARGIN_TOKENS,
+                }
+                for field, expected in expected_limits.items():
+                    if telemetry.get(field) != expected:
+                        errors.append(f"recorded evidence projection telemetry {field} has invalid limit")
+                if telemetry.get("included_receipts") != len(records):
+                    errors.append("recorded evidence projection telemetry count differs from records")
+                if telemetry.get("eligible_receipts") != len(records):
+                    errors.append("recorded evidence projection must not subset valid receipts")
+                if telemetry.get("dropped_cap") != 0:
+                    errors.append("recorded evidence projection must fail instead of dropping valid receipts at caps")
+                estimated = telemetry.get("estimated_projection_tokens")
+                if isinstance(estimated, int) and estimated > MAX_REVIEW_RECORD_PROJECTION_TOKENS:
+                    errors.append("recorded evidence projection exceeds token cap")
+
+    if context_path is not None and context_path.is_file():
+        context_text = context_path.read_text(encoding="utf-8")
+        start_count = context_text.count(REVIEW_RECORD_PROJECTION_START)
+        end_count = context_text.count(REVIEW_RECORD_PROJECTION_END)
+        if receipt_projection is None:
+            if start_count or end_count or REVIEW_RECORD_DATA_RULE in context_text:
+                errors.append("context contains an undeclared recorded evidence projection")
+        elif start_count != 1 or end_count != 1:
+            errors.append("context must contain exactly one declared recorded evidence projection")
+        else:
+            start = context_text.index(REVIEW_RECORD_PROJECTION_START) + len(REVIEW_RECORD_PROJECTION_START)
+            end = context_text.index(REVIEW_RECORD_PROJECTION_END)
+            rule_prefix = context_text[: context_text.index(REVIEW_RECORD_PROJECTION_START)]
+            if rule_prefix.splitlines().count(REVIEW_RECORD_DATA_RULE) != 1:
+                errors.append("context recorded evidence projection is missing its immutable data-handling rule")
+            try:
+                context_projection = json.loads(context_text[start:end].strip())
+            except json.JSONDecodeError:
+                errors.append("context recorded evidence projection is invalid JSON")
+            else:
+                if _json_hash(context_projection) != _json_hash(receipt_projection):
+                    errors.append("packet recorded evidence projection differs from compiled context")
+            task_dir = context_path.parent
+            if (
+                isinstance(receipt_projection, dict)
+                and task_dir.name == packet.get("task_id")
+                and task_dir.parent.name == "tasks"
+            ):
+                product_dir = task_dir.parents[1]
+                section = packet.get("target", {}).get("section") if isinstance(packet.get("target"), dict) else None
+                source_task_id = receipt_projection.get("source_task_id")
+                safe_source_task_id = (
+                    isinstance(source_task_id, str)
+                    and re.fullmatch(r"T\d{4,}-[A-Za-z0-9][A-Za-z0-9-]*", source_task_id) is not None
+                    and "/" not in source_task_id
+                    and "\\" not in source_task_id
+                )
+                expected_source_trace = (
+                    f"tasks/{source_task_id}/evidence-trace.jsonl" if safe_source_task_id else None
+                )
+                safe_source_trace = receipt_projection.get("source_trace_path") == expected_source_trace
+                bound_paths = [
+                    (
+                        product_dir / str(receipt_projection.get("source_trace_path") or ""),
+                        receipt_projection.get("source_trace_sha256"),
+                        "source trace",
+                    ),
+                    (
+                        product_dir / "tasks" / str(source_task_id or "") / "packet.json",
+                        receipt_projection.get("source_task_packet_sha256"),
+                        "source task packet",
+                    ),
+                    (
+                        product_dir / "03_sections" / str(section or "") / "narration-pack.json",
+                        receipt_projection.get("narration_pack_sha256"),
+                        "narration pack",
+                    ),
+                    (
+                        product_dir / "03_sections" / str(section or "") / "evidence-pack.json",
+                        receipt_projection.get("evidence_pack_sha256"),
+                        "evidence pack",
+                    ),
+                ] if safe_source_task_id and safe_source_trace else []
+                for bound_path, expected_digest, label in bound_paths:
+                    if not bound_path.is_file() or sha256(bound_path) != expected_digest:
+                        errors.append(f"recorded evidence projection is stale relative to {label}")
 
     inputs = packet.get("inputs")
     if not isinstance(inputs, list):

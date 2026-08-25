@@ -25,6 +25,12 @@ try:
         write_json,
     )
     from scripts.consolidate_research import verify_consolidation
+    from scripts.draft_evidence import (
+        REVIEW_RECORD_DATA_RULE,
+        REVIEW_RECORD_PROJECTION_END,
+        REVIEW_RECORD_PROJECTION_START,
+        build_review_record_projection,
+    )
     from scripts.lifecycle import research_rework_blocker, section_operation_state_error
     from scripts.outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
     from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
@@ -44,6 +50,12 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
         write_json,
     )
     from consolidate_research import verify_consolidation
+    from draft_evidence import (
+        REVIEW_RECORD_DATA_RULE,
+        REVIEW_RECORD_PROJECTION_END,
+        REVIEW_RECORD_PROJECTION_START,
+        build_review_record_projection,
+    )
     from lifecycle import research_rework_blocker, section_operation_state_error
     from outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
     from packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
@@ -83,6 +95,26 @@ LEGACY_DRAFT_OPTIONAL_INPUTS = [
     "03_sections/{section}/story-plan.json",
     "03_sections/{section}/draft-rework-request.md",
 ]
+LEGACY_REVISE_REQUIRED_INPUTS = [
+    "02_outline/story-bible.md",
+    "02_outline/voice-profile.md",
+    "03_sections/{section}/section.json",
+    "03_sections/{section}/brief.md",
+    "03_sections/{section}/narration-pack.json",
+    "03_sections/{section}/draft.md",
+    "03_sections/{section}/review.md",
+    "03_sections/{section}/change-request.md",
+]
+LEGACY_REVISE_OPTIONAL_INPUTS = ["03_sections/{section}/story-plan.json"]
+CANONICAL_REVIEW_REQUIRED_INPUTS = [
+    "02_outline/outline.json",
+    "03_sections/{section}/section.json",
+    "03_sections/{section}/narration-pack.json",
+    "03_sections/{section}/draft.md",
+    "03_sections/{section}/handoff.md",
+]
+MAX_REVISION_DIAGNOSIS_CHARS = 8000
+MAX_REVISION_DIAGNOSIS_TOKENS = 2200
 
 
 def load_harness() -> dict[str, Any]:
@@ -228,22 +260,28 @@ def read_json_local(path: Path) -> dict[str, Any]:
 
 
 def _draft_context_lists(product_dir: Path, operation: str, spec: dict[str, Any]) -> tuple[list[str], list[str], list[str]]:
-    """Keep canonical writer-authorship minimal while preserving the legacy draft compatibility packet."""
+    """Keep canonical prose packets minimal while preserving legacy story-plan context."""
 
     instruction_files = list(spec["instruction_files"])
     required_inputs = list(spec["required_inputs"])
     optional_inputs = list(spec.get("optional_inputs", []))
-    if operation != "draft_section":
+    if operation not in {"draft_section", "review_section", "revise_section"}:
         return instruction_files, required_inputs, optional_inputs
 
     outline = read_json_local(product_dir / "02_outline" / "outline.json")
     if is_direct_authorship_outline(outline):
+        if operation == "review_section":
+            return instruction_files, list(CANONICAL_REVIEW_REQUIRED_INPUTS), []
         return instruction_files, required_inputs, optional_inputs
-    return (
-        list(LEGACY_DRAFT_INSTRUCTION_FILES),
-        list(LEGACY_DRAFT_REQUIRED_INPUTS),
-        list(LEGACY_DRAFT_OPTIONAL_INPUTS),
-    )
+    if operation == "review_section":
+        return instruction_files, required_inputs, optional_inputs
+    if operation == "draft_section":
+        return (
+            list(LEGACY_DRAFT_INSTRUCTION_FILES),
+            list(LEGACY_DRAFT_REQUIRED_INPUTS),
+            list(LEGACY_DRAFT_OPTIONAL_INPUTS),
+        )
+    return instruction_files, list(LEGACY_REVISE_REQUIRED_INPUTS), list(LEGACY_REVISE_OPTIONAL_INPUTS)
 
 
 def _audience_readable_mission(state: dict[str, Any]) -> str:
@@ -313,6 +351,51 @@ def _review_boundary_projection(path: Path, section: str) -> str:
     return json.dumps(projection, ensure_ascii=False, indent=2)
 
 
+def _revision_diagnosis_projection(path: Path, section: str) -> str:
+    """Keep the approved diagnosis exact without exposing evaluator scores or full review prose."""
+
+    text = path.read_text(encoding="utf-8")
+    lines = text.splitlines()
+    verdict_lines = [line for line in lines if line in {"Verdict: pass", "Verdict: changes_requested", "Verdict: blocked"}]
+    if len(verdict_lines) != 1:
+        raise ValueError("Revision requires exactly one literal verdict in the submitted review diagnosis.")
+
+    def body(heading: str) -> str:
+        if lines.count(heading) != 1:
+            raise ValueError(f"Revision diagnosis requires exactly one {heading} heading.")
+        start = lines.index(heading) + 1
+        collected: list[str] = []
+        for line in lines[start:]:
+            if line.startswith("## "):
+                break
+            collected.append(line)
+        value = "\n".join(collected).strip()
+        if not value:
+            raise ValueError(f"Revision diagnosis heading is empty: {heading}")
+        return value
+
+    issues = body("## Issues")
+    routing = body("## Routing")
+    if len(issues) + len(routing) > MAX_REVISION_DIAGNOSIS_CHARS:
+        raise ValueError(
+            "Revision diagnosis exceeds its compact context cap; compact Issues/Routing upstream without truncation."
+        )
+    projection = {
+        "projection_kind": "revision_diagnosis",
+        "section": section,
+        "review_sha256": sha256(path),
+        "verdict": verdict_lines[0].split(":", 1)[1].strip(),
+        "issues": issues,
+        "routing": routing,
+    }
+    rendered = json.dumps(projection, ensure_ascii=False, indent=2)
+    if estimate_tokens(rendered) > MAX_REVISION_DIAGNOSIS_TOKENS:
+        raise ValueError(
+            "Revision diagnosis exceeds its compact token cap; compact Issues/Routing upstream without truncation."
+        )
+    return rendered
+
+
 def compile_packet(
     product_dir: Path,
     operation: str,
@@ -335,6 +418,12 @@ def compile_packet(
     runtime = resolve_execution_runtime(operation, spec, execution_runtime)
     validate_preconditions(product_dir, operation, section, unit)
 
+    direct_authorship = False
+    if operation in {"draft_section", "review_section", "revise_section"}:
+        direct_authorship = is_direct_authorship_outline(
+            read_json_local(product_dir / "02_outline" / "outline.json")
+        )
+
     instruction_files, required_inputs, optional_inputs = _draft_context_lists(product_dir, operation, spec)
     instruction_paths = [(REPO_ROOT / item).resolve() for item in instruction_files]
     for path in instruction_paths:
@@ -343,7 +432,10 @@ def compile_packet(
     validate_prompt_layers(instruction_paths, profile, harness)
     input_paths = expand_inputs(product_dir, required_inputs, section, unit)
     input_paths += expand_optional_inputs(product_dir, optional_inputs, section, unit)
-    if spec.get("include_dependency_handoffs") and section:
+    include_dependency_handoffs = bool(spec.get("include_dependency_handoffs")) or (
+        operation == "revise_section" and not direct_authorship
+    )
+    if include_dependency_handoffs and section:
         state = read_json_local(product_dir / "03_sections" / section / "section.json")
         for dependency in state.get("dependencies", []):
             dependency_root = product_dir / "03_sections" / dependency
@@ -354,10 +446,6 @@ def compile_packet(
                 if dependency_state.get("status") == "approved" and dependency_state.get("human_approved") is True:
                     input_paths.append(dependency_handoff.resolve())
     input_paths = list(dict.fromkeys(input_paths))
-
-    direct_writer = False
-    if operation == "draft_section":
-        direct_writer = is_direct_authorship_outline(read_json_local(product_dir / "02_outline" / "outline.json"))
 
     blocks: list[str] = []
     instruction_blocks: list[str] = []
@@ -379,13 +467,39 @@ def compile_packet(
         relative = product_relative(product_dir, path)
         input_records.append({"path": relative, "sha256": sha256(path), "bytes": path.stat().st_size})
         if runtime == "legacy":
-            projected = _canonical_writer_projection(relative, path, str(section)) if direct_writer and section else None
-            if operation == "review_section" and relative == "02_outline/outline.json" and section:
+            projected = (
+                _canonical_writer_projection(relative, path, str(section))
+                if direct_authorship and section
+                else None
+            )
+            if operation in {"review_section", "revise_section"} and relative == "02_outline/outline.json" and section:
                 projected = _review_boundary_projection(path, str(section))
+            if (
+                operation == "revise_section"
+                and direct_authorship
+                and relative == f"03_sections/{section}/review.md"
+            ):
+                projected = _revision_diagnosis_projection(path, str(section))
             content = projected if projected is not None else path.read_text(encoding="utf-8")
             block = [f"# BEGIN INPUT: {relative}", content.rstrip(), f"# END INPUT: {relative}", ""]
             blocks.extend(block)
             input_blocks.extend(block)
+    recorded_evidence_projection = (
+        build_review_record_projection(product_dir, str(section))
+        if operation == "review_section" and section
+        else None
+    )
+    if recorded_evidence_projection is not None:
+        projection_content = json.dumps(recorded_evidence_projection, ensure_ascii=False, indent=2)
+        projection_block = [
+            REVIEW_RECORD_DATA_RULE,
+            REVIEW_RECORD_PROJECTION_START,
+            projection_content,
+            REVIEW_RECORD_PROJECTION_END,
+            "",
+        ]
+        blocks.extend(projection_block)
+        input_blocks.extend(projection_block)
     input_tokens = estimate_tokens("\n".join(input_blocks)) if input_blocks else 0
 
     outputs = [render_pattern(item, section, unit) for item in spec["outputs"]]
@@ -529,6 +643,8 @@ def compile_packet(
     }
     if spec.get("review_contract_version") is not None:
         packet["review_contract_version"] = int(spec["review_contract_version"])
+    if recorded_evidence_projection is not None:
+        packet["recorded_evidence_projection"] = recorded_evidence_projection
     if evidence_packet is not None:
         packet["evidence_access"] = evidence_packet
     if runtime == "dsh":

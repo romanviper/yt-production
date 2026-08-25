@@ -6,8 +6,8 @@ Use this workflow for a new section draft or a bounded section rework. Product a
 
 1. **Operator** starts from current `main`, records the base SHA, routes tasks and runs validations. The operator does not approve a section.
 2. **Writer** receives only the active draft packet and bounded evidence broker. It cannot read prior drafts, reviewer scoring, competitor prose or the repository at large.
-3. **Reviewer** is a fresh agent. It receives the review packet, the compact current/next-section boundary projection and bounded evidence access. It evaluates but never rewrites.
-4. **Reviser** is a fresh agent used only after a diagnosed `changes_requested` result. It sees the routed change request and performs one bounded pass.
+3. **Reviewer** is a fresh agent. It receives the review packet, the compact current/next-section boundary projection, a bounded projection of valid source-detail receipts recorded by the submitted prose task, and bounded evidence access. It evaluates but never rewrites. Receipt projection saves duplicate source opening but does not widen the narration truth ceiling.
+4. **Reviser** is a fresh agent used only after a diagnosed `changes_requested` result. It sees the routed change request, current prose, compact mission/boundary control and narration truth ceiling, then performs one bounded pass.
 5. **User** is the only section approval authority.
 
 Never let one agent write, score and explain its own improvement. FoC or another benchmark belongs only in a separate blind calibration panel, never in writer, reviewer or reviser context.

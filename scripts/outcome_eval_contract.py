@@ -14,6 +14,14 @@ except ModuleNotFoundError:
 VERDICTS = {"pass", "changes_requested", "blocked"}
 BASE_HEADINGS = ["## Outcome judgment", "## Issues", "## Routing"]
 MISSION_OUTCOME_HEADINGS = ["## Mission answerability", "## Historical progression"]
+V3_H2_SEQUENCE = [
+    "## Outcome judgment",
+    "## Mission answerability",
+    "## Historical progression",
+    "## Production gate",
+    "## Issues",
+    "## Routing",
+]
 GATE_START = "<!-- production-gate:start -->"
 GATE_END = "<!-- production-gate:end -->"
 HARD_GATES = [
@@ -57,6 +65,52 @@ def _heading_body(text: str, heading: str) -> str:
             break
         body.append(line)
     return "\n".join(body).strip()
+
+
+def _v3_structure_errors(text: str, section: str | None) -> list[str]:
+    """Enforce the literal evaluator document grammar without changing v1/v2 behavior."""
+
+    errors: list[str] = []
+    lines = text.splitlines()
+    h1_rows = [(index, line) for index, line in enumerate(lines) if line.startswith("# ")]
+    expected_title = f"# Outcome Evaluation — {section}" if isinstance(section, str) and section else None
+    if len(h1_rows) != 1:
+        errors.append("outcome review v3 requires exactly one H1 title")
+    elif expected_title is not None and h1_rows[0][1] != expected_title:
+        errors.append(f"outcome review v3 title must be exactly: {expected_title}")
+    elif expected_title is None and not h1_rows[0][1].startswith("# Outcome Evaluation — P"):
+        errors.append("outcome review v3 title must identify the target section")
+    nonempty_rows = [index for index, line in enumerate(lines) if line.strip()]
+    if h1_rows and nonempty_rows and h1_rows[0][0] != nonempty_rows[0]:
+        errors.append("outcome review v3 H1 title must be the first non-empty line")
+
+    literal_verdicts = {f"Verdict: {value}" for value in VERDICTS}
+    verdict_rows = [(index, line) for index, line in enumerate(lines) if line in literal_verdicts]
+    if len(verdict_rows) != 1:
+        errors.append("outcome review v3 requires exactly one literal Verdict line")
+
+    h2_rows = [(index, line) for index, line in enumerate(lines) if line.startswith("## ")]
+    h2_lines = [line for _, line in h2_rows]
+    if h2_lines != V3_H2_SEQUENCE:
+        errors.append("outcome review v3 H2 headings must match the exact canonical sequence")
+    if verdict_rows and h1_rows and h2_rows:
+        verdict_index = verdict_rows[0][0]
+        if not h1_rows[0][0] < verdict_index < h2_rows[0][0]:
+            errors.append("outcome review v3 Verdict line must appear between the H1 and first H2")
+
+    if lines.count(GATE_START) != 1 or lines.count(GATE_END) != 1:
+        errors.append("outcome review v3 requires each production gate marker as exactly one literal line")
+    elif h2_lines == V3_H2_SEQUENCE:
+        production_index = lines.index("## Production gate")
+        issues_index = lines.index("## Issues")
+        marker_start = next((index for index, line in enumerate(lines) if GATE_START in line), -1)
+        marker_end = next((index for index, line in enumerate(lines) if GATE_END in line), -1)
+        if not production_index < marker_start < marker_end < issues_index:
+            errors.append("outcome review v3 production gate markers must be inside the Production gate section")
+    gate, _ = production_gate_data(text)
+    if isinstance(gate, dict) and set(gate) != {"schema_version", "hard_gates", "dimensions"}:
+        errors.append("outcome review v3 production gate must contain exactly schema_version, hard_gates and dimensions")
+    return errors
 
 
 def production_gate_data(text: str) -> tuple[dict | None, list[str]]:
@@ -119,6 +173,8 @@ def validate_outcome_review(
     *,
     require_mission_outcomes: bool = False,
     require_production_gate: bool = False,
+    contract_version: int = 1,
+    section: str | None = None,
 ) -> list[str]:
     """Validate review structure; canonical review tasks require the mission outcome pair."""
 
@@ -154,6 +210,8 @@ def validate_outcome_review(
                 errors.append(
                     f"outcome review verdict {verdict!r} contradicts production gate; derived verdict is {derived!r}"
                 )
+    if contract_version >= 3:
+        errors.extend(_v3_structure_errors(text, section))
     return errors
 
 

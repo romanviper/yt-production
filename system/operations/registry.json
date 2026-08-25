@@ -171,7 +171,7 @@
     },
     "review_section": {
       "target_kind": "section",
-      "review_contract_version": 2,
+      "review_contract_version": 3,
       "include_dependency_handoffs": true,
       "max_context_tokens": 14000,
       "instruction_files": [
@@ -188,7 +188,8 @@
         "03_sections/{section}/section.json",
         "03_sections/{section}/brief.md",
         "03_sections/{section}/narration-pack.json",
-        "03_sections/{section}/draft.md"
+        "03_sections/{section}/draft.md",
+        "03_sections/{section}/handoff.md"
       ],
       "optional_inputs": [
         "03_sections/{section}/story-plan.json"
@@ -217,7 +218,6 @@
     },
     "revise_section": {
       "target_kind": "section",
-      "include_dependency_handoffs": true,
       "max_context_tokens": 12000,
       "instruction_files": [
         "system/core/creative-boundaries.md",
@@ -225,18 +225,15 @@
         "system/operations/revise-section.md"
       ],
       "required_inputs": [
-        "02_outline/story-bible.md",
-        "02_outline/voice-profile.md",
+        "02_outline/outline.json",
         "03_sections/{section}/section.json",
-        "03_sections/{section}/brief.md",
         "03_sections/{section}/narration-pack.json",
         "03_sections/{section}/draft.md",
+        "03_sections/{section}/handoff.md",
         "03_sections/{section}/review.md",
         "03_sections/{section}/change-request.md"
       ],
-      "optional_inputs": [
-        "03_sections/{section}/story-plan.json"
-      ],
+      "optional_inputs": [],
       "outputs": [
         "03_sections/{section}/draft.md",
         "03_sections/{section}/handoff.md",
