@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "task_id": "T0047-draft-section-P01",
+  "product": "sumer-writing",
+  "operation": "draft_section",
+  "target": {
+    "section": "P01"
+  },
+  "status": "ready_for_review",
+  "headline": "P01 sẵn sàng duyệt.",
+  "summary": "Fresh P01 đi từ đếm đến dấu bền trên đất sét; formation là ecology song song, hành chính là áp lực lớn nhưng không độc nhất.",
+  "material_points": [
+    "Bản kể dài 1.379 từ.",
+    "Đủ tám claim; ceiling không đổi.",
+    "Đã polish đọc thành tiếng một lượt."
+  ],
+  "outputs": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md"
+  ],
+  "word_count": 1379,
+  "evidence": {
+    "resolve_claims": "passed",
+    "resolved_claims": 8,
+    "truth_ceiling_unchanged": true
+  },
+  "validation": {
+    "status": "passed",
+    "packet_fresh": true,
+    "within_budget": true,
+    "word_count_in_range": true
+  },
+  "decision": {
+    "required": true,
+    "question": "Duyệt P01 hay yêu cầu rework?",
+    "recommendation": "Duyệt để tới checkpoint kế tiếp.",
+    "options": [
+      {
+        "label": "Duyệt P01",
+        "effect": "Chấp nhận bản section hiện tại."
+      },
+      {
+        "label": "Yêu cầu rework",
+        "effect": "Giữ P01 và nêu sửa đổi."
+      }
+    ]
+  }
+}

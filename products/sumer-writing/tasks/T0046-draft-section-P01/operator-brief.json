@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "status": "in_progress",
+  "headline": "",
+  "material_points": [],
+  "decision": {
+    "required": false,
+    "question": "",
+    "recommendation": "",
+    "options": []
+  },
+  "next_step": ""
+}
