@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "T0041-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "P01 mới dùng một POV vật chất liên tục và đã sẵn sàng review.",
+  "material_points": [
+    "Một lượng vắng mặt đi xuyên suốt các giới hạn của token, bulla, dấu số và tablet.",
+    "Formation vẫn là hệ phi tuyến của numerical practices, seals, bullae, tablets và institutional demand.",
+    "Administration là sức ép lớn, không phải nguyên nhân duy nhất; draft 1.425 từ đã polish một lần."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Phê duyệt P01 hay yêu cầu rework?",
+    "recommendation": "approve",
+    "options": [
+      {
+        "id": "approve",
+        "label": "Approve P01",
+        "effect": "Khóa P01 và cho phép định tuyến operation kế tiếp."
+      },
+      {
+        "id": "rework",
+        "label": "Request rework",
+        "effect": "Giữ checkpoint mở cho feedback cụ thể."
+      }
+    ]
+  }
+}

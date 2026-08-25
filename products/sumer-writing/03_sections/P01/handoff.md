@@ -1,16 +1,21 @@
 # Handoff — P01
 
-## Exit state established
+- Cycle: `C003`
+- Task: `T0041-draft-section-P01`
+- Status: ready for human review
+- Draft length: 1,425 whitespace-delimited words, within the approved 1,050–1,550 range
 
-Khán giả đã rời ý niệm “chữ viết xuất hiện đột ngột” để hiểu formation như một ecology: thực hành số là đường liên tục vật chất mạnh nhất; token, bullae, bảng số, dấu lăn, hình tượng và lề lối thể chế cùng tồn tại và đóng góp khác nhau. Quy mô hành chính tạo áp lực lớn, nhưng tư liệu không cho phép xem đó là nguyên nhân duy nhất.
+## Section movement
 
-## Carry into P02
+- Entry resolved: the section replaces the sudden-invention picture with a material problem — how an absent quantity can remain available after the counted goods are no longer present.
+- Continuous carrier: one quantity moves through the constraints of late simple tokens in bullae, numerical marks on tablets, seals and institutional record practices.
+- Exit reached: formation is presented as a parallel ecology of numerical practices, seals, bullae, tablets and institutional demand; administration is a major pressure, not a sole cause.
+- Boundary held: the section stops before explaining what made the new sign system categorically different. That question is handed to P02.
 
-- P01 đã thiết lập nhu cầu và các thực hành lưu thông tin có trước hệ thống dấu mới.
-- Không mặc định chuỗi tuyến tính `token → tablet → writing`.
-- Không đồng nhất ngữ cảnh kế toán với mua bán, thuế, cống phẩm, phân phối lại, điều phối lao động, nghĩa vụ hay quyền sở hữu khi thiếu bằng chứng riêng.
-- Mô hình thể chế–bản ghi là vòng phản hồi khả dĩ, không phải phán quyết nhân quả một chiều.
+## Evidence boundary
 
-## Transition
+Resolved and used within their qualifications: `CLM-0011` through `CLM-0018`. The draft does not assert a linear token-to-writing sequence, does not collapse tax, tribute, redistribution, labor coordination, obligation or ownership into one mechanism, and does not infer a one-way causal direction from institutional growth and record systems.
 
-Nếu nhu cầu và các thực hành ghi nhận đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.
+## Forward transition
+
+Nhu cầu giữ thông tin và các thực hành ghi nhận đã tồn tại. P02 có thể bắt đầu từ câu hỏi còn mở trên bề mặt tablet: hệ dấu mới làm được gì mà số, seal hay bulla riêng lẻ chưa làm được?
