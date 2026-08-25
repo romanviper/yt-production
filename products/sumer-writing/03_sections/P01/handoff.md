@@ -1,9 +1,17 @@
-# Handoff — P01
+# Continuity Handoff — P01
 
-P01 thay hình ảnh “chữ viết xuất hiện đột ngột” bằng một lịch sử hình thành có nhiều thành phần song song: thực hành số, token đa chức năng, một số token muộn trong bulla dùng cho kế toán, con dấu, hình ảnh, bảng số và nhu cầu của các thiết chế.
+Cycle: `C003`
 
-Điểm chắc nhất là tính liên tục vật chất của các hệ thống số; không khẳng định một chuỗi token → tablet → writing tuyến tính, cũng không gán mọi văn bản kế toán cho thị trường, thuế, cống nạp hay phân phối lại khi bằng chứng chưa phân biệt được.
+## Exit state delivered
 
-Trạng thái ra: khán giả hiểu sức ép hành chính là lớn nhưng không phải nguyên nhân duy nhất; mối quan hệ giữa tăng trưởng thiết chế và ghi chép được giữ ở mức tương thích/vòng phản hồi khả dĩ, không phải kết luận nhân quả một chiều.
+Khán giả rời P01 với hình dung rằng chữ viết không xuất hiện như một ý tưởng đột ngột. Trước proto-cuneiform đã có một hệ sinh thái vật chất gồm token, bulla, dấu niêm, bảng số, nhiều hệ đo và kho hình ảnh từ con dấu/vật mang hình ảnh. Tính liên tục chắc nhất nằm ở thực hành số; đường token → từng dấu viết không tuyến tính.
 
-Móc chuyển tiếp: nhu cầu và các thực hành ghi nhận đã tồn tại; P02 có thể hỏi điều gì khiến hệ thống dấu mới khác biệt về năng lực và hữu ích hơn.
+Quy mô quản lý là một áp lực lớn vì bảng đất sét có thể giữ số lượng, đối tượng và người/chức vụ trong một bố cục bền, có thể xem lại và khó sửa mà không để dấu. Tuy vậy, hồ sơ sớm cho thấy bối cảnh kế toán chắc hơn loại giao dịch; không đồng nhất mua bán, thuế, cống nạp, phân phối lại, điều phối lao động, nghĩa vụ hay sở hữu. Không khẳng định hành chính là nguyên nhân duy nhất hoặc suy ra một chiều nhân quả giữa thiết chế và hệ thống ghi chép.
+
+## Carry into P02
+
+Nhu cầu lưu và kiểm soát thông tin đã tồn tại, cùng nhiều thực hành ghi số và niêm dấu. P02 có thể bắt đầu từ câu hỏi chuyển tiếp: hệ thống dấu mới khác những thiết bị ghi nhớ trước đó ở đâu, và chính khác biệt nào làm nó hữu ích hơn?
+
+## Evidence boundary retained
+
+Không thêm người, cảnh, lời thoại hoặc cơ chế nhân quả. Qualification về tính đa chức năng của token, sự không tuyến tính, giới hạn đọc loại giao dịch và sức ép hành chính đã được giữ gọn trong P01.

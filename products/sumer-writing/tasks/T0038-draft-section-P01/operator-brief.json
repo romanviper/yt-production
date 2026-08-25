@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "task_id": "T0038-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "P01 mới đã sẵn sàng để người dùng review",
+  "material_points": [
+    "Bản mới đi bằng chuỗi vật thể và thao tác: bulla, token, dấu niêm, dấu số, bảng đất sét và bố cục ghi chép.",
+    "Qualification được gom gọn; không thêm người, cảnh, lời thoại hoặc nhân quả ngoài evidence ceiling.",
+    "Narration dài 1.413 từ, nằm trong target 1.050–1.550 từ; packet verification đã pass."
+  ],
+  "outputs": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md"
+  ],
+  "decision": {
+    "required": true,
+    "question": "Bạn có approve bản P01 mới này hay muốn yêu cầu chỉnh sửa?",
+    "recommendation": "Review narration mới tại checkpoint P01; approve nếu route vật thể–thao tác đã đáp ứng feedback, nếu chưa hãy gửi feedback cụ thể.",
+    "options": [
+      {
+        "label": "Approve P01",
+        "effect": "Chấp nhận bản section hiện tại tại checkpoint P01."
+      },
+      {
+        "label": "Request changes",
+        "effect": "Giữ P01 ở checkpoint và gửi feedback cho một vòng chỉnh sửa được ủy quyền."
+      }
+    ]
+  },
+  "next_step": null
+}
