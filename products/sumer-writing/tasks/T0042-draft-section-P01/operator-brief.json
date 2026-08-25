@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "task_id": "T0042-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "P01 đã được viết mới theo route show-first và sẵn sàng cho human review.",
+  "material_points": [
+    "Draft đi từ vật thể, thao tác và hậu quả vật chất; phần tell chỉ giữ qualification cần thiết và ranh giới mission/exit.",
+    "Cả 8/8 claim đã được resolve; truth ceiling không đổi và administration được giữ là formation pressure lớn, không phải nguyên nhân duy nhất.",
+    "Draft dài 1.418 từ, trong cap 1.050–1.550, và đã qua đúng một read-aloud polish ngắn."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Phê duyệt P01 hay yêu cầu rework?",
+    "recommendation": "Phê duyệt nếu route show-first và các qualification evidence đã đạt yêu cầu.",
+    "options": [
+      {
+        "label": "Approve",
+        "effect": "Chấp nhận P01 tại checkpoint hiện tại."
+      },
+      {
+        "label": "Request rework",
+        "effect": "Gửi feedback cụ thể để route lại một bounded rework."
+      }
+    ]
+  }
+}
