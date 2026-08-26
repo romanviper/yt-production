@@ -120,12 +120,18 @@ class WriterBaselineTests(unittest.TestCase):
             self.assertIn("evidence_access", packet)
             self.assertEqual(4, packet["evidence_access"]["interface_version"])
             self.assertEqual(["resolve_claims"], packet["evidence_access"]["required_before_submit"])
-            self.assertIn("answer the mission in their own words", context)
-            self.assertIn("retell the historical path", context)
-            self.assertIn("historical narrative with the imaginative continuity of a novel", context)
-            self.assertIn("not a lecture, textbook chapter or claim summary", context)
-            self.assertIn("clearly signaled representative reconstruction", context)
-            self.assertIn("never asks for, records or validates the writer's creative route", context)
+            self.assertEqual(
+                ["scope", "resolve_claims", "source", "search", "record"],
+                packet["evidence_access"]["capabilities"],
+            )
+            self.assertIn("strong spoken historical nonfiction", context)
+            self.assertIn("write to the audience rather than to an evaluator", context)
+            self.assertIn("smallest evidence-safe subset", context)
+            self.assertIn("omission is expected", context)
+            self.assertIn("Do not force a scene", context)
+            self.assertNotIn("answer the mission in their own words", context)
+            self.assertNotIn("retell the historical path", context)
+            self.assertNotIn("clearly signaled representative reconstruction", context)
             self.assertNotIn("story_route", context)
             self.assertNotIn("3–6 ordered", context)
 
@@ -133,11 +139,13 @@ class WriterBaselineTests(unittest.TestCase):
             self.assertIn('"mission"', context)
             self.assertIn('"entry_state"', context)
             self.assertIn('"exit_state"', context)
+            self.assertNotIn('"transition"', context)
             self.assertNotIn('"narrative_job"', context)
             self.assertNotIn('"macro_movements"', context)
 
-            # Truth ceiling is visible as IDs; claim/source prose stays behind bounded retrieval.
-            self.assertIn("CLM-0001", context)
+            # The packet exposes a retrieval mode, not ledger identifiers or claim/source prose.
+            self.assertIn("compact_writer_brief_v1", context)
+            self.assertNotIn("CLM-0001", context)
             for value in [
                 "permitted_claims",
                 "qualifications",
@@ -541,10 +549,23 @@ class WriterBaselineTests(unittest.TestCase):
             self.assertTrue(set(input_paths[3:]).issubset({"03_sections/P01/draft-rework-request.md"}))
             self.assertIn("evidence_access", packet)
             self.assertIn('"mission"', context)
-            self.assertIn("CLM-0011", context)
+            self.assertIn("compact_writer_brief_v1", context)
+            self.assertNotIn("CLM-0011", context)
             self.assertNotIn('"narrative_job"', context)
             self.assertNotIn("permitted_claims", context)
             self.assertNotIn("source_refs", context)
+
+            work = create_task(product, "draft_section", "P01", None, False)
+            resolved = DraftEvidenceBroker(product, work["id"]).call("resolve_claims")
+            brief = resolved["writer_brief"]
+            self.assertEqual(5, len(brief["materials"]))
+            self.assertEqual(3, len(brief["redlines"]))
+            serialized = json.dumps(resolved, ensure_ascii=False)
+            self.assertNotIn("CLM-", serialized)
+            self.assertNotIn("SRC-", serialized)
+            self.assertNotIn("claim_records", serialized)
+            self.assertNotIn("source_records", serialized)
+            self.assertLess((len(serialized.encode("utf-8")) + 3) // 4, 1200)
 
             forbidden = [
                 "02_outline/voice-profile.md",

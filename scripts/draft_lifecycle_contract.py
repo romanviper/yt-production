@@ -11,8 +11,10 @@ from typing import Any
 
 try:
     from scripts.common import read_json, sha256, write_json
+    from scripts.draft_evidence import build_narrative_writer_brief
 except ModuleNotFoundError:
     from common import read_json, sha256, write_json
+    from draft_evidence import build_narrative_writer_brief
 
 
 LIVE_TASK_STATES = {"ready", "in_progress"}
@@ -282,6 +284,7 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
     if narration.get("schema_version") == 4:
         scope = narration.get("retrieval_scope", {})
         expected = scope.get("claim_ids", []) if isinstance(scope, dict) else []
+        expected_sources = scope.get("source_ids", []) if isinstance(scope, dict) else []
     else:
         expected = [
             item.get("id")
@@ -289,7 +292,9 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
             for item in narration.get(field, [])
             if isinstance(item, dict) and item.get("id")
         ]
+        expected_sources = []
     expected_ids = list(dict.fromkeys(expected))
+    expected_source_ids = list(dict.fromkeys(expected_sources))
     if not trace_path.is_file():
         return [f"task {task_id} must call resolve_claims before submission"]
 
@@ -307,7 +312,8 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
         and interface_version == NARRATIVE_EVIDENCE_INTERFACE_VERSION
     )
     authored_route_first = route_intent_first or story_route_first
-    unordered_ledger = authored_route_first or narrative_evidence
+    unordered_ledger = authored_route_first
+    expected_writer_brief = build_narrative_writer_brief(evidence, expected_ids)
     for line in trace_path.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
@@ -316,6 +322,51 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
         except json.JSONDecodeError:
             continue
         response = record.get("response")
+        if narrative_evidence:
+            if (
+                record.get("capability") == "resolve_claims"
+                and record.get("error") is None
+                and record.get("arguments") == {}
+                and isinstance(response, dict)
+                and set(response)
+                == {"section", "writer_brief", "truth_ceiling_unchanged", "rule"}
+                and response.get("section") == section
+                and response.get("writer_brief") == expected_writer_brief
+                and response.get("truth_ceiling_unchanged") is True
+                and record.get("response_sha256") == _json_hash(response)
+            ):
+                return []
+            # Preserve exact provenance for already-submitted interface-v4 prose. New/live
+            # tasks may validate only through the compact writer-brief response above.
+            resolved_ids = response.get("resolved_claim_ids") if isinstance(response, dict) else None
+            composition = response.get("composition_contract") if isinstance(response, dict) else None
+            claim_records = response.get("claim_records") if isinstance(response, dict) else None
+            source_records = response.get("source_records") if isinstance(response, dict) else None
+            if (
+                work.get("state") in SUBMITTED_TASK_STATES
+                and record.get("capability") == "resolve_claims"
+                and record.get("error") is None
+                and record.get("arguments") == {}
+                and isinstance(response, dict)
+                and resolved_ids == _order_neutral_ids(task_id, expected_ids)
+                and isinstance(composition, dict)
+                and composition.get("sequence_authority") == "none"
+                and composition.get("presentation_order")
+                == "deterministic_task_hash_with_no_story_authority"
+                and composition.get("creative_plan_required") == "none"
+                and isinstance(claim_records, dict)
+                and set(claim_records) == set(expected_ids)
+                and isinstance(source_records, dict)
+                and set(source_records) == set(expected_source_ids)
+                and response.get("truth_ceiling_unchanged") is True
+                and "claims" not in response
+                and "sources" not in response
+                and "route_intent_attestation" not in response
+                and "story_route_attestation" not in response
+                and record.get("response_sha256") == _json_hash(response)
+            ):
+                return []
+            continue
         resolved_ids = response.get("resolved_claim_ids") if isinstance(response, dict) else None
         resolved_scope_matches = (
             resolved_ids == _order_neutral_ids(task_id, expected_ids)
@@ -332,11 +383,7 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
             continue
         if unordered_ledger:
             arguments = record.get("arguments")
-            expected_arguments = (
-                set()
-                if narrative_evidence
-                else {"story_route" if story_route_first else "route_intent"}
-            )
+            expected_arguments = {"story_route" if story_route_first else "route_intent"}
             if not isinstance(arguments, dict) or set(arguments) != expected_arguments:
                 continue
             composition = response.get("composition_contract")
@@ -351,14 +398,7 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
                 or "claims" in response
             ):
                 continue
-            if narrative_evidence:
-                if (
-                    composition.get("creative_plan_required") != "none"
-                    or "route_intent_attestation" in response
-                    or "story_route_attestation" in response
-                ):
-                    continue
-            elif route_intent_first:
+            if route_intent_first:
                 intent = arguments.get("route_intent")
                 if _route_intent_error(intent, evidence) is not None:
                     continue

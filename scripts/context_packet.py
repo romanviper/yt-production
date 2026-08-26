@@ -296,8 +296,8 @@ def _audience_readable_mission(state: dict[str, Any]) -> str:
     return mission.strip()
 
 
-def _canonical_writer_projection(relative: str, path: Path, section: str) -> str | None:
-    """Expose only mission/control state and truth-ceiling IDs to canonical writers."""
+def _canonical_writer_projection(relative: str, path: Path, section: str, operation: str) -> str | None:
+    """Expose only mission/control state and the bounded retrieval mode to writers."""
 
     section_rel = f"03_sections/{section}/section.json"
     narration_rel = f"03_sections/{section}/narration-pack.json"
@@ -309,18 +309,29 @@ def _canonical_writer_projection(relative: str, path: Path, section: str) -> str
             "mission": _audience_readable_mission(state),
             "entry_state": state.get("entry_state"),
             "exit_state": state.get("exit_state"),
-            "transition": state.get("transition"),
             "target_words": state.get("target_words"),
         }
+        if operation != "draft_section":
+            projection["transition"] = state.get("transition")
         return json.dumps(projection, ensure_ascii=False, indent=2)
     if relative == narration_rel:
         pack = read_json_local(path)
-        scope = pack.get("retrieval_scope", {})
-        claim_ids = scope.get("claim_ids", []) if isinstance(scope, dict) else []
+        if operation != "draft_section":
+            scope = pack.get("retrieval_scope", {})
+            claim_ids = scope.get("claim_ids", []) if isinstance(scope, dict) else []
+            return json.dumps(
+                {
+                    "section": pack.get("section"),
+                    "cycle_id": pack.get("cycle_id"),
+                    "truth_ceiling": {"claim_ids": claim_ids},
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
         projection = {
             "section": pack.get("section"),
             "cycle_id": pack.get("cycle_id"),
-            "truth_ceiling": {"claim_ids": claim_ids},
+            "evidence": {"mode": "compact_writer_brief_v1", "access": "bounded_on_demand"},
         }
         return json.dumps(projection, ensure_ascii=False, indent=2)
     return None
@@ -471,7 +482,7 @@ def compile_packet(
         input_records.append({"path": relative, "sha256": sha256(path), "bytes": path.stat().st_size})
         if runtime == "legacy":
             projected = (
-                _canonical_writer_projection(relative, path, str(section))
+                _canonical_writer_projection(relative, path, str(section), operation)
                 if direct_authorship and section
                 else None
             )

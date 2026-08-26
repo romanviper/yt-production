@@ -33,6 +33,8 @@ LEGACY_EVIDENCE_INTERFACE_VERSION = 1
 ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION = 2
 STORY_ROUTE_EVIDENCE_INTERFACE_VERSION = 3
 NARRATIVE_EVIDENCE_INTERFACE_VERSION = 4
+NARRATIVE_WRITER_BRIEF_SCHEMA_VERSION = 1
+GENERIC_NARRATIVE_IMPLICATION = "Use only with the stated confidence and boundary."
 MIN_ROUTE_INTENT_CHARS = 200
 MAX_ROUTE_INTENT_CHARS = 2000
 ROUTE_INTENT_COPY_WINDOW_WORDS = 10
@@ -71,6 +73,70 @@ class EvidenceAccessError(ValueError):
 def _json_hash(value: Any) -> str:
     text = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _first_writer_text(value: Any) -> str | None:
+    values = value if isinstance(value, list) else [value]
+    for item in values:
+        if not isinstance(item, str):
+            continue
+        normalized = item.strip()
+        if normalized and not normalized.casefold().startswith("none"):
+            return normalized
+    return None
+
+
+def build_narrative_writer_brief(evidence: dict[str, Any], claim_ids: list[str]) -> dict[str, Any]:
+    """Project a whole scoped ledger into a small creative palette without ledger metadata."""
+
+    claims_by_id = {
+        item.get("id"): item
+        for item in evidence.get("claims", [])
+        if isinstance(item, dict) and isinstance(item.get("id"), str)
+    }
+    materials: list[dict[str, str]] = []
+    redlines: list[dict[str, str]] = []
+    for claim_id in claim_ids:
+        claim = claims_by_id.get(claim_id)
+        if not isinstance(claim, dict):
+            continue
+        statement = _first_writer_text(claim.get("statement"))
+        if statement is None:
+            continue
+        boundary = _first_writer_text(claim.get("counterevidence"))
+        if boundary is None:
+            boundary = _first_writer_text(claim.get("qualifications"))
+        if boundary is None:
+            boundary = _first_writer_text(claim.get("limitations"))
+        implication = _first_writer_text(claim.get("narrative_implication"))
+
+        if implication is not None and implication.casefold() != GENERIC_NARRATIVE_IMPLICATION.casefold():
+            item = {"constraint": implication, "applies_to": statement}
+            if boundary is not None:
+                item["boundary"] = boundary
+            redlines.append(item)
+            continue
+
+        item = {"material": statement}
+        confidence = _first_writer_text(claim.get("confidence"))
+        if confidence is not None and confidence.casefold() != "high":
+            item["confidence"] = confidence
+        if boundary is not None:
+            item["boundary"] = boundary
+        materials.append(item)
+
+    return {
+        "schema_version": NARRATIVE_WRITER_BRIEF_SCHEMA_VERSION,
+        "materials": materials,
+        "redlines": redlines,
+        "selection_rule": (
+            "Choose only the few items needed for this passage; omission is expected. "
+            "Do not mirror this list's order."
+        ),
+        "prose_rule": (
+            "Absorb boundaries into ordinary narration. Never expose this brief, its categories or evidence handling."
+        ),
+    }
 
 
 def _bounded_int(value: Any, *, default: int, minimum: int, maximum: int, field: str) -> int:
@@ -663,6 +729,15 @@ class DraftEvidenceBroker:
     def scope(self, arguments: dict[str, Any]) -> dict[str, Any]:
         if arguments:
             raise EvidenceAccessError("scope takes no arguments")
+        if self.evidence_interface_version == NARRATIVE_EVIDENCE_INTERFACE_VERSION:
+            return {
+                "section": self.section,
+                "brief_mode": "compact_writer_brief_v1",
+                "rule": (
+                    "Call resolve_claims for the compact writer brief. The audited scope is a factual boundary, "
+                    "not a writing plan or coverage target."
+                ),
+            }
         response = {
             "section": self.section,
             "claim_ids": self.allowed_claim_ids,
@@ -676,7 +751,6 @@ class DraftEvidenceBroker:
         if self.evidence_interface_version in {
             ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
             STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
-            NARRATIVE_EVIDENCE_INTERFACE_VERSION,
         }:
             response["composition_contract"] = self._composition_contract()
         return response
@@ -1041,10 +1115,19 @@ class DraftEvidenceBroker:
             }
             for source_id in self.allowed_source_ids
         ]
-        if self.evidence_interface_version in {
+        if self.evidence_interface_version == NARRATIVE_EVIDENCE_INTERFACE_VERSION:
+            response = {
+                "section": self.section,
+                "writer_brief": build_narrative_writer_brief(self.evidence, self.allowed_claim_ids),
+                "truth_ceiling_unchanged": True,
+                "rule": (
+                    "Use no factual meaning beyond this brief and bounded on-demand retrieval. "
+                    "Select for the passage; do not cover the ledger."
+                ),
+            }
+        elif self.evidence_interface_version in {
             ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
             STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
-            NARRATIVE_EVIDENCE_INTERFACE_VERSION,
         }:
             claims_by_id = {record["id"]: record for record in resolved}
             sources_by_id = {record["id"]: record for record in sources}
@@ -1098,13 +1181,14 @@ class DraftEvidenceBroker:
             raise EvidenceAccessError(
                 f"resolve_claims response estimate is {estimated_tokens} tokens; cap is {MAX_RESOLVE_RESPONSE_TOKENS}"
             )
-        response["telemetry"] = {
-            "claim_count": len(resolved),
-            "source_count": len(sources),
-            "estimated_response_tokens": estimated_tokens,
-            "max_response_tokens": MAX_RESOLVE_RESPONSE_TOKENS,
-            "serialization_margin_tokens": serialization_margin_tokens,
-        }
+        if self.evidence_interface_version != NARRATIVE_EVIDENCE_INTERFACE_VERSION:
+            response["telemetry"] = {
+                "claim_count": len(resolved),
+                "source_count": len(sources),
+                "estimated_response_tokens": estimated_tokens,
+                "max_response_tokens": MAX_RESOLVE_RESPONSE_TOKENS,
+                "serialization_margin_tokens": serialization_margin_tokens,
+            }
         return response
 
     def claims(self, arguments: dict[str, Any]) -> dict[str, Any]:

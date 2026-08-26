@@ -222,9 +222,11 @@ class AuthorshipBoundaryRegression(unittest.TestCase):
             broker = DraftEvidenceBroker(product, work["id"])
 
             scope = broker.call("scope")
-            self.assertEqual(["CLM-0001"], scope["claim_ids"])
-            self.assertEqual(["SRC-0001"], scope["source_ids"])
-            broker.call("resolve_claims")
+            self.assertEqual("compact_writer_brief_v1", scope["brief_mode"])
+            self.assertNotIn("claim_ids", scope)
+            self.assertNotIn("source_ids", scope)
+            resolved = broker.call("resolve_claims")
+            self.assertEqual("Approved fact for P01.", resolved["writer_brief"]["materials"][0]["material"])
 
             allowed = broker.call("source", {"id": "SRC-0001"})
             self.assertEqual("SRC-0001", allowed["source"]["id"])

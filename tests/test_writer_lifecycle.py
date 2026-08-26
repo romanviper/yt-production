@@ -185,10 +185,11 @@ class WriterLifecycleRegression(unittest.TestCase):
 
             # Whole-scope claim resolution is mandatory and audit-bound; deeper retrieval remains optional.
             broker = DraftEvidenceBroker(product, task_id)
-            broker.call("scope")
+            scope = broker.call("scope")
             self.assertTrue(validate_required_evidence_resolution(product, task_id))
-            early_claims = broker.call("claims")
-            self.assertEqual(set(broker.allowed_claim_ids), set(early_claims["claim_records"]))
+            self.assertEqual("compact_writer_brief_v1", scope["brief_mode"])
+            self.assertNotIn("claims", broker.packet["evidence_access"]["capabilities"])
+            self.assertNotIn("sources", broker.packet["evidence_access"]["capabilities"])
             broker.call("search", {"query": "approved"})
             with self.assertRaisesRegex(EvidenceAccessError, "takes no arguments"):
                 broker.call("resolve_claims", {"story_route": STORY_ROUTE})
@@ -196,22 +197,25 @@ class WriterLifecycleRegression(unittest.TestCase):
             self.assertEqual([], validate_evidence_trace(product, task_id))
             self.assertEqual([], validate_required_evidence_resolution(product, task_id))
             self.assertEqual(4, broker.packet["evidence_access"]["interface_version"])
-            self.assertEqual("none", resolved["composition_contract"]["sequence_authority"])
+            self.assertEqual(1, resolved["writer_brief"]["schema_version"])
+            self.assertEqual(1, len(resolved["writer_brief"]["materials"]))
+            self.assertEqual([], resolved["writer_brief"]["redlines"])
             self.assertEqual(
-                "deterministic_task_hash_with_no_story_authority",
-                resolved["composition_contract"]["presentation_order"],
+                "Approved fact for P01.",
+                resolved["writer_brief"]["materials"][0]["material"],
             )
-            self.assertEqual("none", resolved["composition_contract"]["creative_plan_required"])
+            self.assertIn("omission is expected", resolved["writer_brief"]["selection_rule"])
             self.assertNotIn("route_intent_attestation", resolved)
             self.assertNotIn("story_route_attestation", resolved)
-            self.assertIsInstance(resolved["claim_records"], dict)
-            self.assertIsInstance(resolved["source_records"], dict)
-            self.assertEqual(resolved["resolved_claim_ids"], list(resolved["claim_records"]))
-            self.assertEqual(set(broker.allowed_claim_ids), set(resolved["resolved_claim_ids"]))
+            self.assertNotIn("composition_contract", resolved)
+            self.assertNotIn("resolved_claim_ids", resolved)
+            self.assertNotIn("claim_records", resolved)
+            self.assertNotIn("source_records", resolved)
             self.assertNotIn("claims", resolved)
             self.assertNotIn("sources", resolved)
-            self.assertEqual(len(resolved["source_records"]), len(set(resolved["source_records"])))
-            self.assertLessEqual(resolved["telemetry"]["estimated_response_tokens"], 6000)
+            self.assertNotIn("telemetry", resolved)
+            serialized = json.dumps(resolved, ensure_ascii=False).encode("utf-8")
+            self.assertLess((len(serialized) + 3) // 4, 600)
 
             # Submission requires a complete truth resolution and rejects a hidden creative-plan argument.
             trace_path = product / "tasks" / task_id / "evidence-trace.jsonl"

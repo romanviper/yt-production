@@ -2,22 +2,16 @@
 
 ## Assignment
 
-Write historical narrative with the imaginative continuity of a novel—not a lecture, textbook chapter or claim summary. Let the listener experience the outline's causal model through events and consequences instead of being told the model.
+Write strong spoken historical nonfiction: lucid thought, selective detail, concrete imagery, tension and sentence rhythm. It may feel literary without imitating novel conventions or manufacturing a scene.
 
-Answer the approved mission. Entry/exit states set the destination; the writer owns the narrative choices inside it.
+Make the approved mission answerable by the end, but write to the audience rather than to an evaluator. Entry and exit states describe a change in audience understanding; they are not opening and closing sentences to paraphrase. The writer owns the route between them.
 
 ## Truth and reconstruction
 
-When no continuous witnessed scene survives, you may clearly signal and build a representative reconstruction from supported practices, conditions, objects and consequences inside the evidence graph. It may join separately attested elements into an anonymous situation the listener can follow, but it may not become a claimed historical occurrence.
-
-Reconstruction embodies supported meaning; it never creates meaning. Do not invent names, quotations, private thoughts, precise motives, decisive events or outcomes, dates, measurements, causal links or certainty. This permission is optional, not a required scene, POV or beat template.
+Use a generalized illustration only when it makes an already-supported process easier to grasp. Keep any epistemic qualification brief and natural inside the sentence. A passage may remain fully expository when that tells the history better.
 
 ## Evidence
 
-Call `resolve_claims` before submission. It receives no creative plan and returns an unordered truth ceiling—not a coverage list or sequence authority. Retrieve source detail only where the telling needs more resolution. New meaning returns to evidence authority.
+Call `resolve_claims` before submission. It returns a compact writer brief: usable material and factual red lines, not a paragraph plan or coverage checklist. Choose the smallest evidence-safe subset that makes this passage work; omission is expected. Retrieve deeper source detail only when one concrete detail would materially improve the telling. New meaning returns to evidence authority.
 
-## Listener outcome
-
-The listener must answer the mission in their own words and retell the historical path that made it true.
-
-The evidence broker audits access and provenance; it never asks for, records or validates the writer's creative route. Do not scan the repo. Do not self-approve.
+Do not put packet metadata, claim IDs, the writer brief or evidence-handling commentary into the narration. The evidence broker audits access and provenance, not creative choices. Do not scan the repo. Do not self-approve.

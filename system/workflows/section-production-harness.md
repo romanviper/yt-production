@@ -17,7 +17,7 @@ Never pass the named audience source profile, target-viewer trace or target-view
 ## Canonical sequence
 
 1. Route `draft_section` with `scripts/task.py create`, or use `scripts/rework.py` for a requested rerun.
-2. Writer resolves the whole bounded truth scope, then writes the section as historical narrative with the imaginative continuity of a novel rather than a lecture or claim summary. The returned records are an unordered ceiling, not a coverage list or sequence authority. Where useful, the writer may build a clearly signaled representative reconstruction from supported conditions, practices, materials and consequences, but it may add no factual or causal meaning. The evidence broker never asks for, records or validates a creative route. Writer retrieves only useful source detail, writes the declared outputs, runs packet validations and submits.
+2. Writer resolves the bounded truth scope once through `resolve_claims` and receives a compact writer brief. The full ledger remains behind the evidence broker for audit and optional lookup. The brief is a palette plus factual red lines, not a coverage list: the writer selects only what the passage needs and may use exposition, imagery, comparison or a supported generalized illustration without being forced into a scene. The evidence broker never asks for, records or validates a creative route. Writer retrieves only details that materially improve the telling, writes the declared outputs, runs packet validations and submits.
 3. Run a clean `draft_cold_read` with the anonymous target viewer. Stop before formal review when continuation is `no` or `uncertain`, the curiosity chain has a material break, spoken naturalness fails, trust weakens, or material resistance remains. Do not auto-loop a writer from this result.
 4. Route `review_section` to a fresh reviewer only after the cold read passes. Reviewer calls `resolve_claims`, emits the production-gate block and submits; it receives neither the named source profile nor viewer reasoning.
 5. If every hard gate passes and every evidence-adjusted dimension is at least 8, stop at human approval.
@@ -27,7 +27,7 @@ At revision routing, packet schema v5 captures one immutable draft-to-revision r
 
 ## Cost and stop policy
 
-The default budget is one draft, one review and at most one revision plus its review. Do not generate parallel drafts by default. Retrieve once at whole-claim scope, then open only sources that can materially improve the telling. Stop immediately for stale packets, evidence outside the truth ceiling, outline/boundary defects, unsupported human detail or changed paths outside the packet allowlist.
+The default budget is one draft, one review and at most one revision plus its review. Do not generate parallel drafts by default. Resolve once for the compact brief, then open only evidence that can materially improve the telling. Stop immediately for stale packets, evidence outside the truth ceiling, outline/boundary defects, unsupported human detail or changed paths outside the packet allowlist.
 
 For each task, retain task/packet hashes, evidence trace, model family when known, input/output usage when available, validation result and stop reason. Record `unknown` rather than inventing telemetry.
 

@@ -157,8 +157,6 @@
         "capabilities": [
           "scope",
           "resolve_claims",
-          "claims",
-          "sources",
           "source",
           "search",
           "record"
