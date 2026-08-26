@@ -17,12 +17,13 @@ Evidence-adjusted dimensions (integer 1–10):
 - `historical_progression`
 - `causal_clarity`
 - `concrete_specificity`
+- `cinematic_experience_and_focal_control`
 - `narrative_momentum_and_stakes`
 - `supported_human_work_orientation`
 - `explanatory_economy`
 - `spoken_rhythm_and_clarity`
 - `ending_payoff_and_transition`
 
-Record `score`, `evidence_scope: full|limited` and `basis`. Score supported opportunity, not volume. A signaled reconstruction may embody supported meaning but cannot add it or pose as witnessed fact. Otherwise evidence integrity fails. Human/work orientation may score highly without a person or scene.
+Record `score`, `evidence_scope: full|limited` and `basis`. `cinematic_experience_and_focal_control` requires retained change: each cut keeps a physical/causal anchor and widens knowledge only at a real boundary. Reconstruction cannot add unsupported meaning or pose as witnessed fact. Human/work orientation needs no person or scene.
 
 Derived verdict: `blocked` for any blocked gate; else `changes_requested` for any failed gate or score below 8; else `pass`. Diagnose the smallest issue set. Do not prescribe benchmark surface style.

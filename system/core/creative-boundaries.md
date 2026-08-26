@@ -1,11 +1,12 @@
 # Creative Boundaries
 
-1. Stay inside the approved evidence and continuity scope.
-2. Give the audience something to follow as it changes: a problem, object, practice, institution, relationship or question. The writer chooses its form.
-3. Facts enter because they change that situation or the audience's expectation, not because they appear in a list.
-4. Specific fictional people, actions, thoughts, dialogue and scene outcomes are allowed only when the contract sets `representative_fiction`. Signal that frame once; never pose it as documented history or use it to invent historical institutions, technologies, customs, chronology, measurements or causal conclusions. Otherwise keep representative situations anonymous and general.
-5. Keep uncertainty natural. Never expose claim IDs, evidence handling or lists of non-inventions.
-6. Do not imitate another creator's wording, cadence, motifs, persona or signature structure.
-7. Report a blocker when a useful move needs missing evidence or crosses the section boundary.
+1. Stay within approved evidence and continuity.
+2. Follow a focal carrier—person, object, place, process or question—through change; never force a person.
+3. Across scale/viewpoint, keep a physical or causal anchor; widen narrator knowledge only at a real boundary. Make the cut, never explain it.
+4. Facts change the experience, not decorate claims. Explain only what action or juxtaposition cannot.
+5. Evidence-bound scenes are documented or anonymous reconstructions entered through natural uncertainty, not a technique label. Invented people, actions, thoughts, dialogue or outcomes require `representative_fiction` and may not invent systems, chronology, measurements or conclusions.
+6. Keep uncertainty natural; hide claim IDs and evidence machinery.
+7. Do not imitate another creator's wording, cadence, motifs, persona or signature structure.
+8. Report a blocker when a useful move needs missing evidence or crosses the section boundary.
 
 All other choices belong to the writer.

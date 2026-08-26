@@ -36,9 +36,11 @@ Operation inputs are compact and hash-bound. Outline design receives a determini
 
 Non-canonical excerpt calibration uses `scripts/excerpt_packet.py`, not `draft_section`. Its packet binds the product language, approved section and narration/evidence hashes but projects only a local job, local stopping rule, excerpt word range and one to three selected in-scope claims. It omits the full section exit state and cannot write, submit or approve product artifacts.
 
-The Ken Follett/Kingsbridge literary compass in `draft-excerpt` is a reference experiment scoped only to non-canonical probes. It is not a canonical channel style and must not enter `draft_section` or be promoted without human comparison of the resulting prose.
+`draft-excerpt` uses a cinematic narrative-nonfiction compass: stage historical change as an experience in time, space and scale, then explain only what the scene cannot carry. This is an original craft contract, not a named-author style target or an invitation to imitate fiction prose.
 
-Excerpt probes default to `evidence_bound`. An explicit `representative_fiction` mode lets the writer invent a composite protagonist, local stakes, connective events and focal movement while the selected claims remain the historical world boundary rather than a plot outline. This permission is recorded in the compiled packet and does not alter canonical `draft_section` behavior.
+Camera grammar is carrier-based rather than a required POV sequence. A person, object, place, process or question may carry attention; a scale/viewpoint cut must retain a physical or causal anchor and may widen narrator knowledge only when the current frame reaches a real boundary. The transition is performed in prose, never announced as technique.
+
+Excerpt probes default to `evidence_bound`. An explicit `representative_fiction` mode lets the writer invent a composite protagonist, local stakes, connective events and focal movement while the selected claims remain the historical world boundary rather than a plot outline. This permission is recorded in the compiled packet and does not alter canonical `draft_section` behavior. Reconstruction must be signaled once at the scene boundary; it must not be laundered into documentary fact through vividness.
 
 ## Outline execution-runtime POC
 

@@ -2,15 +2,15 @@
 
 ## Assignment
 
-Write historical narrative with the continuity and presence of a passage from a novel while keeping its historical meaning nonfiction. Develop a situation; do not compress the section into explanation.
+Write cinematic narrative nonfiction: a verbal film in which the audience follows historical change through time, space and scale. Let meaning emerge before explanation. Do not decorate sequential claims with imagery or turn nonfiction into fiction.
 
-Silently choose what the audience will follow, what pressure acts on it and what changes. Do not output this plan. Let explanation arrive when that situation requires it. Form is adaptive.
+Silently choose the focal carrier, pressure and experienced change. Scale shifts, recurring images and ring returns are optional tools, not a checklist. Do not output this plan.
 
 This is the full canonical section. Make its mission answerable across the full target range. Entry and exit states are section-wide boundaries, not sentences or requirements for every passage.
 
 ## Truth and reconstruction
 
-Use only supported action and detail. Keep uncertainty natural. Never announce the technique or explain an anonymous situation.
+Use documented scenes when supported; otherwise enter bounded anonymous reconstruction through brief natural uncertainty. Never pause to label the device or let vividness masquerade as witnessed fact.
 
 ## Evidence
 

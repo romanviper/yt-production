@@ -35,6 +35,7 @@ STORY_DIMENSIONS = [
     "historical_progression",
     "causal_clarity",
     "concrete_specificity",
+    "cinematic_experience_and_focal_control",
     "narrative_momentum_and_stakes",
     "supported_human_work_orientation",
     "explanatory_economy",
@@ -151,7 +152,7 @@ def production_gate_data(text: str) -> tuple[dict | None, list[str]]:
     if not isinstance(dimensions, dict):
         errors.append("outcome review production gate dimensions must be an object")
     elif set(dimensions) != set(STORY_DIMENSIONS):
-        errors.append("outcome review production gate must contain exactly the nine canonical story dimensions")
+        errors.append("outcome review production gate must contain exactly the ten canonical story dimensions")
     else:
         for name in STORY_DIMENSIONS:
             record = dimensions[name]

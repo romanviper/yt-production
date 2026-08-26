@@ -78,7 +78,13 @@ class TargetViewerProtocolTests(unittest.TestCase):
         for required in [
             '"strongest_next_question"',
             '"mental_scene"',
+            '"experienced_change"',
+            '"focal_orientation"',
+            '"narration_mode"',
             '"listening_state"',
+            '"retained_image"',
+            '"historical_change_retold"',
+            '"first_lecture_break_chunk"',
             '"spoken_naturalness"',
             '"curiosity_chain"',
             "no score alone determines the verdict",

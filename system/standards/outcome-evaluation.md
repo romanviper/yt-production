@@ -6,17 +6,15 @@ Judge the draft by **outcome → diagnosis**, never method compliance.
 
 First evaluate:
 
-- whether the listener can answer the section mission after hearing the section;
-- whether the listener can retell the historical path that led to that answer;
-- section exit state and meaningful listener progression;
-- authored narration rather than research recital;
-- causal clarity;
-- continuity;
+- mission answer, retellable historical path and meaningful exit progression;
+- authored narration and a mental experience of change, not research recital;
+- focal orientation across anchored, earned shifts;
+- causal clarity and continuity;
 - evidence integrity: no fabricated documentary fact, false certainty, truth-ceiling expansion or hidden qualification/contradiction.
 
-A factually correct draft may still fail if it delivers conclusions as a list or essay without leaving the listener with a retellable progression to the mission answer.
+A factually correct draft may still fail if it delivers conclusions as a list or essay without a retellable progression. A nominal scene fails when imagery only decorates explanation.
 
-A draft may pass through many routes. Do not fail it for lacking a carrier, scene, object, before/after, raw clue, process sequence, chronology-first order or recount-before-interpret structure.
+Do not require a particular route: carrier, scene, object, before/after, clue, process, chronological order or recount-before-interpret.
 
 A signaled representative reconstruction passes only when it adds no unsupported factual or causal meaning and cannot be mistaken for documented history.
 
@@ -37,6 +35,7 @@ Only after an outcome problem is observed, diagnose the responsible layer. Any s
 
 - `document mode`: accurate conclusions without a retellable historical progression;
 - disguised lecture: a nominal scene carrying sequential explanations;
+- illustrated argument or focal break: imagery decorates claims, a cut drops its anchor, or narrator knowledge changes without an earned boundary;
 - false documentary scene: unsupported reconstruction posed as witnessed fact;
 - causal blur;
 - continuity failure;

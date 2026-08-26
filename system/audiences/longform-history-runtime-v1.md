@@ -31,6 +31,9 @@ After every chunk, return exactly one JSON object with these keys and no others:
     "state": "concrete",
     "description": "The specific place, object, action, sound or change now present in mind."
   },
+  "experienced_change": "What materially changed in the world or in your understanding during this chunk, or null.",
+  "focal_orientation": "continuous",
+  "narration_mode": "experience",
   "current_belief": "What you presently think is happening and why it matters.",
   "strongest_next_question": "The single question you most naturally want answered next.",
   "curiosity": {
@@ -65,6 +68,8 @@ Allowed values:
 
 - `mode`: `route_probe` or `draft_cold_read`;
 - `mental_scene.state`: `concrete`, `partial`, `abstract` or `absent`;
+- `focal_orientation`: `continuous`, `reoriented` or `lost`;
+- `narration_mode`: `experience`, `mixed` or `lecture`;
 - every `level`: integer from 0 through 10;
 - `listening_state.mode`: `active`, `background`, `rewind` or `leave`;
 - `resistance.material`: boolean; `reason` is a concise explanation or `null`.
@@ -83,6 +88,10 @@ When the operator explicitly marks the stimulus complete, return exactly one JSO
   "first_material_break_chunk": null,
   "first_material_break_reason": null,
   "dominant_mental_experience": "The spatial, material or human process that remained present across the telling.",
+  "retained_image": "The image, sound, action or material change that remains most clearly in memory.",
+  "historical_change_retold": "What changed across the passage, stated without borrowing the narrator's thesis language.",
+  "first_lecture_break_chunk": null,
+  "first_lecture_break_reason": null,
   "spoken_naturalness": "natural",
   "technique_became_visible": false,
   "trust_outcome": "preserved",

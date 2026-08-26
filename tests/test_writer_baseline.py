@@ -124,9 +124,13 @@ class WriterBaselineTests(unittest.TestCase):
                 ["scope", "resolve_claims", "source", "search", "record"],
                 packet["evidence_access"]["capabilities"],
             )
-            self.assertIn("continuity and presence of a passage from a novel", context)
-            self.assertIn("Silently choose what the audience will follow", context)
-            self.assertIn("Give the audience something to follow as it changes", context)
+            self.assertIn("Write cinematic narrative nonfiction", context)
+            self.assertIn("Silently choose the focal carrier", context)
+            self.assertIn("Follow a focal carrier", context)
+            self.assertIn("physical or causal anchor", context)
+            self.assertIn("Make the cut, never explain it", context)
+            self.assertIn("not a technique label", context)
+            self.assertNotIn("passage from a novel", context)
             self.assertIn("do not compress the entire brief", context)
             self.assertNotIn("strong spoken historical nonfiction", context)
             self.assertNotIn("Do not force a scene", context)

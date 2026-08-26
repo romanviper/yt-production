@@ -38,14 +38,14 @@ Run this after a submitted draft and before formal `review_section` routing.
 1. Start a new clean viewer; do not reuse a `route_probe` viewer.
 2. Supply the draft narration in original order, one coherent listening chunk at a time, without headings or metadata that the eventual listener would not hear.
 3. Collect one per-chunk result after each stimulus, then send the completion signal and collect the final result.
-4. If `continue` is `no` or `uncertain`, the curiosity chain has a material break, spoken naturalness is mixed or mechanical, trust is weakened or broken, or unresolved material resistance remains, stop before formal review.
+4. If `continue` is `no` or `uncertain`, the curiosity chain has a material break, focal orientation is lost, the listener cannot name an experienced change, narration becomes lecture, spoken naturalness is mixed or mechanical, trust is weakened or broken, or unresolved material resistance remains, stop before formal review.
 5. A pass permits the operator to route the canonical formal review; it does not approve the section.
 
 The viewer evaluates and diagnoses only. It never rewrites, prescribes replacement language, performs formal evidence review or grants approval. Do not pass the named source profile, viewer trace or viewer reasoning into writer, reviewer or reviser packets.
 
 ## Decision rule
 
-Do not impose a fixed numeric score threshold or optimize for constant intensity. Decide from the whole continuation chain: whether observable developments partially pay live questions, whether a coherent mental world survives, whether immersion and trust persist, and whether the narration sounds natural when heard once. Calm, patient attention may pass; an energetic but broken chain may fail.
+Do not impose a fixed numeric score threshold or optimize for constant intensity. Decide from the whole continuation chain: whether observable developments partially pay live questions, whether a coherent mental world survives, whether the listener experiences change rather than receives illustrated claims, whether focal orientation survives shifts in scale, and whether immersion, trust and natural speech persist. Calm, patient attention may pass; an energetic but broken chain may fail.
 
 ## Contamination and holdouts
 
