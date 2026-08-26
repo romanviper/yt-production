@@ -107,6 +107,12 @@ def compile_excerpt_packet(
     ):
         raise ValueError(f"claim_ids must contain 1-{MAX_EXCERPT_CLAIMS} unique CLM-#### ids")
 
+    product_path = product_dir / "product.json"
+    product = read_json(product_path)
+    output_language = _bounded_text(
+        product.get("language"), field="product.language", minimum=2, maximum=20
+    )
+
     root = product_dir / "03_sections" / section
     section_path = root / "section.json"
     narration_path = root / "narration-pack.json"
@@ -156,6 +162,7 @@ def compile_excerpt_packet(
         "canonical_output": False,
         "section": section,
         "section_title": state.get("title"),
+        "output_language": output_language,
         "position": position,
         "whole_section_target_words": section_words,
         "excerpt_target_words": excerpt_words,
@@ -221,6 +228,7 @@ def compile_excerpt_packet(
         "operation": "draft_excerpt",
         "canonical_output": False,
         "section": section,
+        "output_language": output_language,
         "position": position,
         "target_words": excerpt_words,
         "local_job": local_job,
@@ -229,6 +237,7 @@ def compile_excerpt_packet(
         "selected_claim_ids": list(claim_ids),
         "selected_scope_sha256": _json_hash({"claim_ids": sorted(claim_ids)}),
         "input_hashes": {
+            "product.json": sha256(product_path),
             f"03_sections/{section}/section.json": sha256(section_path),
             f"03_sections/{section}/narration-pack.json": sha256(narration_path),
             f"03_sections/{section}/evidence-pack.json": sha256(evidence_path),

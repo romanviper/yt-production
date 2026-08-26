@@ -35,10 +35,12 @@ class WriterExcerptPacketTests(unittest.TestCase):
 
             self.assertEqual("draft_excerpt", packet["operation"])
             self.assertFalse(packet["canonical_output"])
+            self.assertEqual("vi", packet["output_language"])
             self.assertEqual({"min": 300, "max": 400}, packet["target_words"])
             self.assertEqual(["CLM-0001"], packet["selected_claim_ids"])
             self.assertIn('"whole_section_target_words": {\n    "min": 500,\n    "max": 800', context)
             self.assertIn('"excerpt_target_words": {\n    "min": 300,\n    "max": 400', context)
+            self.assertIn('"output_language": "vi"', context)
             self.assertIn("one contiguous slice of the longer section", context)
             self.assertIn("not a compressed target for the whole section", context)
             self.assertIn("visual staging and focal control", context)
