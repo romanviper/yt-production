@@ -36,6 +36,8 @@ Operation inputs are compact and hash-bound. Outline design receives a determini
 
 Non-canonical excerpt calibration uses `scripts/excerpt_packet.py`, not `draft_section`. Its packet binds the approved section and narration/evidence hashes but projects only a local job, local stopping rule, excerpt word range and one to three selected in-scope claims. It omits the full section exit state and cannot write, submit or approve product artifacts.
 
+The Ken Follett/Kingsbridge literary compass in `draft-excerpt` is a reference experiment scoped only to non-canonical probes. It is not a canonical channel style and must not enter `draft_section` or be promoted without human comparison of the resulting prose.
+
 ## Outline execution-runtime POC
 
 `outline` may be compiled explicitly with `--runtime dsh`. This changes only the execution path:
