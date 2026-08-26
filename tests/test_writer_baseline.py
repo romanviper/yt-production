@@ -124,11 +124,12 @@ class WriterBaselineTests(unittest.TestCase):
                 ["scope", "resolve_claims", "source", "search", "record"],
                 packet["evidence_access"]["capabilities"],
             )
-            self.assertIn("strong spoken historical nonfiction", context)
-            self.assertIn("write to the audience rather than to an evaluator", context)
-            self.assertIn("smallest evidence-safe subset", context)
-            self.assertIn("omission is expected", context)
-            self.assertIn("Do not force a scene", context)
+            self.assertIn("continuity and presence of a passage from a novel", context)
+            self.assertIn("Silently choose what the audience will follow", context)
+            self.assertIn("Give the audience something to follow as it changes", context)
+            self.assertIn("do not compress the entire brief", context)
+            self.assertNotIn("strong spoken historical nonfiction", context)
+            self.assertNotIn("Do not force a scene", context)
             self.assertNotIn("answer the mission in their own words", context)
             self.assertNotIn("retell the historical path", context)
             self.assertNotIn("clearly signaled representative reconstruction", context)

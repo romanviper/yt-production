@@ -23,9 +23,9 @@ The harness controls what must never happen and what outcome must be reviewed. I
 
 ## Prompt composition
 
-Creative prompts may contain only:
+Canonical creative prompts may contain only:
 
-1. four short content boundaries;
+1. short content boundaries and positive authorship ground;
 2. Channel Constitution;
 3. one short operation objective;
 4. product/local material needed for the current decision.
@@ -33,6 +33,8 @@ Creative prompts may contain only:
 `system/harness.json` blocks hard-policy and eval-only files from leaking into writer prompts and limits instruction tokens independently from total context tokens. Operator-interface is validated outside the creative context.
 
 Operation inputs are compact and hash-bound. Outline design receives a deterministic claim catalog instead of the full claim ledger; drafting receives the approved narration pack instead of the full section evidence archive. Detailed provenance remains authoritative outside the creative prompt.
+
+Non-canonical excerpt calibration uses `scripts/excerpt_packet.py`, not `draft_section`. Its packet binds the approved section and narration/evidence hashes but projects only a local job, local stopping rule, excerpt word range and one to three selected in-scope claims. It omits the full section exit state and cannot write, submit or approve product artifacts.
 
 ## Outline execution-runtime POC
 
@@ -62,6 +64,7 @@ This document explains the layout; it is not another policy source.
 | Content safety and evidence ceiling | `system/core/creative-boundaries.md` |
 | Three-act identity, voice and channel values | `system/standards/channel-constitution.md` |
 | One operation's reasoning problem | its file in `system/operations/` |
+| Non-canonical excerpt compilation | `scripts/excerpt_packet.py` plus `system/operations/draft-excerpt.md` |
 | Outcome criteria and failure routing | `system/standards/outcome-evaluation.md` |
 | Machine routing, inputs and outputs | `system/operations/registry.json` |
 | Optional outline runtime boundary and audit trace | `scripts/outline_runtime.py` plus the task packet |

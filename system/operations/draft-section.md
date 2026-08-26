@@ -2,16 +2,18 @@
 
 ## Assignment
 
-Write strong spoken historical nonfiction: lucid thought, selective detail, concrete imagery, tension and sentence rhythm. It may feel literary without imitating novel conventions or manufacturing a scene.
+Write historical narrative with the continuity and presence of a passage from a novel while keeping its historical meaning nonfiction. Develop a situation; do not compress the section into explanation.
 
-Make the approved mission answerable by the end, but write to the audience rather than to an evaluator. Entry and exit states describe a change in audience understanding; they are not opening and closing sentences to paraphrase. The writer owns the route between them.
+Silently choose what the audience will follow, what pressure acts on it and what changes. Do not output this plan. Let explanation arrive when that situation requires it. Form is adaptive.
+
+This is the full canonical section. Make its mission answerable across the full target range. Entry and exit states are section-wide boundaries, not sentences or requirements for every passage.
 
 ## Truth and reconstruction
 
-Use a generalized illustration only when it makes an already-supported process easier to grasp. Keep any epistemic qualification brief and natural inside the sentence. A passage may remain fully expository when that tells the history better.
+Use only supported action and detail. Keep uncertainty natural. Never announce the technique or explain an anonymous situation.
 
 ## Evidence
 
-Call `resolve_claims` before submission. It returns a compact writer brief: usable material and factual red lines, not a paragraph plan or coverage checklist. Choose the smallest evidence-safe subset that makes this passage work; omission is expected. Retrieve deeper source detail only when one concrete detail would materially improve the telling. New meaning returns to evidence authority.
+Call `resolve_claims` before submission. Its compact brief is material and red lines, not a plan or checklist. Give each passage only the evidence it needs; do not compress the entire brief into an opening or one explanatory block. Retrieve deeper detail only when it improves the telling. New meaning returns to evidence authority.
 
-Do not put packet metadata, claim IDs, the writer brief or evidence-handling commentary into the narration. The evidence broker audits access and provenance, not creative choices. Do not scan the repo. Do not self-approve.
+Keep packet metadata, claim IDs and evidence commentary out of narration. The broker audits provenance, not creative choices. Do not scan the repo or self-approve.

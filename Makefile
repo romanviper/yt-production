@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: help new task replay replay-continue run show brief check research-units sections impact human-outline human-section assemble test
+.PHONY: help new task excerpt replay replay-continue run show brief check research-units sections impact human-outline human-section assemble test
 
 help:
 	@$(PYTHON) scripts/help.py
@@ -13,6 +13,14 @@ task:
 	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)
 	@test -n "$(OPERATION)" || (echo "Thiếu OPERATION=<name>" && exit 1)
 	@$(PYTHON) scripts/task.py create "products/$(PRODUCT)" "$(OPERATION)" $(if $(SECTION),--section "$(SECTION)") $(if $(UNIT),--unit "$(UNIT)") $(if $(RUNTIME),--runtime "$(RUNTIME)")
+
+excerpt:
+	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)
+	@test -n "$(SECTION)" || (echo "Thiếu SECTION=P##" && exit 1)
+	@test -n "$(LOCAL_JOB)" || (echo "Thiếu LOCAL_JOB=..." && exit 1)
+	@test -n "$(STOP)" || (echo "Thiếu STOP=..." && exit 1)
+	@test -n "$(CLAIMS)" || (echo "Thiếu CLAIMS='CLM-0001 ...'" && exit 1)
+	@$(PYTHON) scripts/excerpt_packet.py "products/$(PRODUCT)" "$(SECTION)" --position "$(or $(POSITION),opening)" --min-words "$(or $(MIN_WORDS),300)" --max-words "$(or $(MAX_WORDS),400)" --local-job "$(LOCAL_JOB)" --completion-rule "$(STOP)" $(foreach claim,$(CLAIMS),--claim "$(claim)")
 
 replay:
 	@test -n "$(PRODUCT)" || (echo "Thiếu PRODUCT=<slug>" && exit 1)

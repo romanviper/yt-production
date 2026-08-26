@@ -17,7 +17,7 @@ Never pass the named audience source profile, target-viewer trace or target-view
 ## Canonical sequence
 
 1. Route `draft_section` with `scripts/task.py create`, or use `scripts/rework.py` for a requested rerun.
-2. Writer resolves the bounded truth scope once through `resolve_claims` and receives a compact writer brief. The full ledger remains behind the evidence broker for audit and optional lookup. The brief is a palette plus factual red lines, not a coverage list: the writer selects only what the passage needs and may use exposition, imagery, comparison or a supported generalized illustration without being forced into a scene. The evidence broker never asks for, records or validates a creative route. Writer retrieves only details that materially improve the telling, writes the declared outputs, runs packet validations and submits.
+2. Writer resolves the bounded truth scope once through `resolve_claims` and receives a compact writer brief. The full ledger remains behind the evidence broker for audit and optional lookup. Before prose, the writer privately chooses a carrier, pressure and change; that choice is neither returned nor audited. The writer develops one situation across the section and distributes evidence only where it changes that situation, rather than compressing the brief into an explanatory inventory. The evidence broker never asks for, records or validates a creative route. Writer retrieves only details that materially improve the telling, writes the declared outputs, runs packet validations and submits.
 3. Run a clean `draft_cold_read` with the anonymous target viewer. Stop before formal review when continuation is `no` or `uncertain`, the curiosity chain has a material break, spoken naturalness fails, trust weakens, or material resistance remains. Do not auto-loop a writer from this result.
 4. Route `review_section` to a fresh reviewer only after the cold read passes. Reviewer calls `resolve_claims`, emits the production-gate block and submits; it receives neither the named source profile nor viewer reasoning.
 5. If every hard gate passes and every evidence-adjusted dimension is at least 8, stop at human approval.
@@ -34,3 +34,7 @@ For each task, retain task/packet hashes, evidence trace, model family when know
 ## Promotion labels
 
 A passing P01 is `section_calibrated` only after independent evidence, boundary and blind benchmark checks. P01 alone does not prove a reusable harness. Promote the harness only after fresh holdout runs across multiple section types and products at the same model/budget tier, reporting median quality, lower-tail quality, hard-gate failure rate and tokens per passing script.
+
+## Non-canonical excerpt calibration
+
+Use `scripts/excerpt_packet.py` when the requested sample is only a slice of a section. The operator must provide an excerpt position, a local narrative job, a local completion rule and one to three in-scope claims. The compiler exposes neither the full section exit state nor unselected claims and labels the run `canonical_output: false`. A 300–400 word probe from a 1,400-word section must stop at its local boundary; it must not answer or summarize the whole section. Probe prose never enters product files or the section lifecycle.
