@@ -18,8 +18,9 @@ except ModuleNotFoundError:  # Direct execution from scripts/
     from draft_evidence import build_narrative_writer_brief
 
 
-EXCERPT_PACKET_SCHEMA_VERSION = 1
+EXCERPT_PACKET_SCHEMA_VERSION = 2
 EXCERPT_POSITIONS = {"opening", "middle", "ending"}
+EXCERPT_NARRATIVE_MODES = {"evidence_bound", "representative_fiction"}
 MIN_EXCERPT_WORDS = 100
 MAX_EXCERPT_WORDS = 800
 MAX_EXCERPT_CLAIMS = 3
@@ -71,6 +72,7 @@ def compile_excerpt_packet(
     completion_rule: str,
     claim_ids: list[str],
     completes_section: bool = False,
+    narrative_mode: str = "evidence_bound",
 ) -> tuple[dict[str, Any], str]:
     """Return a machine packet and the exact packet-only context shown to the writer."""
 
@@ -79,6 +81,10 @@ def compile_excerpt_packet(
         raise ValueError("section must match P##")
     if position not in EXCERPT_POSITIONS:
         raise ValueError("position must be opening, middle or ending")
+    if narrative_mode not in EXCERPT_NARRATIVE_MODES:
+        raise ValueError(
+            "narrative_mode must be evidence_bound or representative_fiction"
+        )
     if not isinstance(completes_section, bool):
         raise ValueError("completes_section must be boolean")
 
@@ -164,6 +170,7 @@ def compile_excerpt_packet(
         "section_title": state.get("title"),
         "output_language": output_language,
         "position": position,
+        "narrative_mode": narrative_mode,
         "whole_section_target_words": section_words,
         "excerpt_target_words": excerpt_words,
         "local_job": local_job,
@@ -230,6 +237,7 @@ def compile_excerpt_packet(
         "section": section,
         "output_language": output_language,
         "position": position,
+        "narrative_mode": narrative_mode,
         "target_words": excerpt_words,
         "local_job": local_job,
         "completion_rule": completion_rule,
@@ -255,6 +263,11 @@ def main() -> None:
     parser.add_argument("product_dir", type=Path)
     parser.add_argument("section")
     parser.add_argument("--position", choices=sorted(EXCERPT_POSITIONS), required=True)
+    parser.add_argument(
+        "--narrative-mode",
+        choices=sorted(EXCERPT_NARRATIVE_MODES),
+        default="evidence_bound",
+    )
     parser.add_argument("--min-words", type=int, required=True)
     parser.add_argument("--max-words", type=int, required=True)
     parser.add_argument("--local-job", required=True)
@@ -273,6 +286,7 @@ def main() -> None:
         completion_rule=args.completion_rule,
         claim_ids=args.claim_ids,
         completes_section=args.completes_section,
+        narrative_mode=args.narrative_mode,
     )
     if args.as_json:
         print(json.dumps({"packet": packet, "context": context}, ensure_ascii=False, indent=2))

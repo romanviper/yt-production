@@ -38,6 +38,8 @@ Non-canonical excerpt calibration uses `scripts/excerpt_packet.py`, not `draft_s
 
 The Ken Follett/Kingsbridge literary compass in `draft-excerpt` is a reference experiment scoped only to non-canonical probes. It is not a canonical channel style and must not enter `draft_section` or be promoted without human comparison of the resulting prose.
 
+Excerpt probes default to `evidence_bound`. An explicit `representative_fiction` mode lets the writer invent a composite protagonist, local stakes, connective events and focal movement while the selected claims remain the historical world boundary rather than a plot outline. This permission is recorded in the compiled packet and does not alter canonical `draft_section` behavior.
+
 ## Outline execution-runtime POC
 
 `outline` may be compiled explicitly with `--runtime dsh`. This changes only the execution path:

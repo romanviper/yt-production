@@ -36,6 +36,7 @@ class WriterExcerptPacketTests(unittest.TestCase):
             self.assertEqual("draft_excerpt", packet["operation"])
             self.assertFalse(packet["canonical_output"])
             self.assertEqual("vi", packet["output_language"])
+            self.assertEqual("evidence_bound", packet["narrative_mode"])
             self.assertEqual({"min": 300, "max": 400}, packet["target_words"])
             self.assertEqual(["CLM-0001"], packet["selected_claim_ids"])
             self.assertIn('"whole_section_target_words": {\n    "min": 500,\n    "max": 800', context)
@@ -66,9 +67,14 @@ class WriterExcerptPacketTests(unittest.TestCase):
                 "Stop when durable recording becomes desirable; do not introduce the later token-seal-tablet ecology."
             ),
             claim_ids=["CLM-0014"],
+            narrative_mode="representative_fiction",
         )
 
         self.assertEqual(["CLM-0014"], packet["selected_claim_ids"])
+        self.assertEqual("representative_fiction", packet["narrative_mode"])
+        self.assertIn('"narrative_mode": "representative_fiction"', context)
+        self.assertIn("Specific fictional people", context)
+        self.assertIn("does not need to supply the protagonist", context)
         self.assertIn("Administrative scale is a major formation pressure", context)
         self.assertNotIn("Numerical systems provide", context)
         self.assertNotIn("Neolithic clay objects", context)
@@ -104,6 +110,17 @@ class WriterExcerptPacketTests(unittest.TestCase):
                     local_job=LOCAL_JOB,
                     completion_rule=STOP_RULE,
                     claim_ids=["CLM-0001"],
+                )
+            with self.assertRaisesRegex(ValueError, "narrative_mode"):
+                compile_excerpt_packet(
+                    product,
+                    "P01",
+                    position="opening",
+                    target_words={"min": 300, "max": 400},
+                    local_job=LOCAL_JOB,
+                    completion_rule=STOP_RULE,
+                    claim_ids=["CLM-0001"],
+                    narrative_mode="unbounded_fiction",
                 )
 
 
