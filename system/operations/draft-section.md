@@ -2,24 +2,18 @@
 
 ## Assignment
 
-Answer the approved mission. Entry/exit states set the destination; the writer owns route, order, factual subset, POV and wording.
+Write historical narrative with the continuity and presence of a passage from a novel while keeping its historical meaning nonfiction. Develop a situation; do not compress the section into explanation.
 
-## Story-route-first composition
+Silently choose what the audience will follow, what pressure acts on it and what changes. Do not output this plan. Let explanation arrive when that situation requires it. Form is adaptive.
 
-Before claim prose, make one `resolve_claims --story-route-json '...'` call. Its object has exactly `carrier`, `entry_observable_state`, 3–6 ordered `transformations`, and `exit_observable_state`; each transformation has exactly `observable_change` and `question_or_consequence`.
+This is the full canonical section. Make its mission answerable across the full target range. Entry and exit states are section-wide boundaries, not sentences or requirements for every passage.
 
-The carrier is one materially observable thing or process. Transformations change world, material or action—not topics, claims, themes, explanations or caveat order. No claim/source IDs or copied 10-word claim windows. The route is traced private scratch, not an artifact, gate or agent.
+## Truth and reconstruction
 
-Claim records are an unordered ledger that only constrains, supports or corrects this route. Ledger order, IDs and claim-by-claim coverage have no narrative authority.
+Use only supported action and detail. Keep uncertainty natural. Never announce the technique or explain an anonymous situation.
 
-Let supported action, object, place and process carry meaning. Explain only connections or caveats they cannot.
+## Evidence
 
-## Listener outcome
+Call `resolve_claims` before submission. Its compact brief is material and red lines, not a plan or checklist. Give each passage only the evidence it needs; do not compress the entire brief into an opening or one explanatory block. Retrieve deeper detail only when it improves the telling. New meaning returns to evidence authority.
 
-The listener must answer the section mission in their own words and retell the historical path that made it true.
-
-## Boundaries and evidence
-
-Stay inside truth and continuity scope; invent no people, scenes, thoughts, dialogue, details or certainty. Claim/search stays closed until the route succeeds. Before it, `scope`, `sources`, `source` and `record` may gather observable material; none orders the story. Submission requires whole-scope resolution. New meaning returns to evidence authority.
-
-Do not scan the repo. Do not self-approve.
+Keep packet metadata, claim IDs and evidence commentary out of narration. The broker audits provenance, not creative choices. Do not scan the repo or self-approve.

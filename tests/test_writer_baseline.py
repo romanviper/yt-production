@@ -23,33 +23,12 @@ from scripts.task import create_task, submit_task, verify_task
 from test_material_aware_handoff import SOURCE_PRODUCT, make_direct_authorship_fixture, write_json
 
 
-STORY_ROUTE = {
-    "carrier": "a measured clay object",
-    "entry_observable_state": "The object begins as an unmarked piece of clay in one pair of hands.",
-    "transformations": [
-        {
-            "observable_change": "Marks appear across the wet surface.",
-            "question_or_consequence": "The marks make the object carry something beyond its shape.",
-        },
-        {
-            "observable_change": "The clay hardens and leaves the original hands.",
-            "question_or_consequence": "What can another person recover from the fixed marks?",
-        },
-        {
-            "observable_change": "A later reader turns the marked object into an instruction.",
-            "question_or_consequence": "The object now changes an action at a different time and place.",
-        },
-    ],
-    "exit_observable_state": "The same clay object now carries a recoverable instruction between people.",
-}
-
-
 def submit_fixture_prose(product: Path, details: list[str], draft_body: str = "A supported historical progression.") -> str:
     root = product / "03_sections" / "P01"
     work = create_task(product, "draft_section", "P01", None, False)
     task_id = work["id"]
     broker = DraftEvidenceBroker(product, task_id)
-    broker.call("resolve_claims", {"story_route": STORY_ROUTE})
+    broker.call("resolve_claims")
     for index, detail in enumerate(details):
         broker.call(
             "record",
@@ -139,24 +118,35 @@ class WriterBaselineTests(unittest.TestCase):
             )
             self.assertTrue(set(input_paths[3:]).issubset({"03_sections/P01/draft-rework-request.md"}))
             self.assertIn("evidence_access", packet)
-            self.assertEqual(3, packet["evidence_access"]["interface_version"])
+            self.assertEqual(4, packet["evidence_access"]["interface_version"])
             self.assertEqual(["resolve_claims"], packet["evidence_access"]["required_before_submit"])
-            self.assertIn("answer the section mission in their own words", context)
-            self.assertIn("retell the historical path", context)
-            self.assertIn("Before claim prose", context)
-            self.assertIn("one materially observable thing or process", context)
-            self.assertIn("not an artifact, gate or agent", context)
-            self.assertIn("Ledger order, IDs and claim-by-claim coverage have no narrative authority", context)
+            self.assertEqual(
+                ["scope", "resolve_claims", "source", "search", "record"],
+                packet["evidence_access"]["capabilities"],
+            )
+            self.assertIn("continuity and presence of a passage from a novel", context)
+            self.assertIn("Silently choose what the audience will follow", context)
+            self.assertIn("Give the audience something to follow as it changes", context)
+            self.assertIn("do not compress the entire brief", context)
+            self.assertNotIn("strong spoken historical nonfiction", context)
+            self.assertNotIn("Do not force a scene", context)
+            self.assertNotIn("answer the mission in their own words", context)
+            self.assertNotIn("retell the historical path", context)
+            self.assertNotIn("clearly signaled representative reconstruction", context)
+            self.assertNotIn("story_route", context)
+            self.assertNotIn("3–6 ordered", context)
 
             # The writer sees a plain mission projection plus control states, not upstream architecture prose.
             self.assertIn('"mission"', context)
             self.assertIn('"entry_state"', context)
             self.assertIn('"exit_state"', context)
+            self.assertNotIn('"transition"', context)
             self.assertNotIn('"narrative_job"', context)
             self.assertNotIn('"macro_movements"', context)
 
-            # Truth ceiling is visible as IDs; claim/source prose stays behind bounded retrieval.
-            self.assertIn("CLM-0001", context)
+            # The packet exposes a retrieval mode, not ledger identifiers or claim/source prose.
+            self.assertIn("compact_writer_brief_v1", context)
+            self.assertNotIn("CLM-0001", context)
             for value in [
                 "permitted_claims",
                 "qualifications",
@@ -560,10 +550,23 @@ class WriterBaselineTests(unittest.TestCase):
             self.assertTrue(set(input_paths[3:]).issubset({"03_sections/P01/draft-rework-request.md"}))
             self.assertIn("evidence_access", packet)
             self.assertIn('"mission"', context)
-            self.assertIn("CLM-0011", context)
+            self.assertIn("compact_writer_brief_v1", context)
+            self.assertNotIn("CLM-0011", context)
             self.assertNotIn('"narrative_job"', context)
             self.assertNotIn("permitted_claims", context)
             self.assertNotIn("source_refs", context)
+
+            work = create_task(product, "draft_section", "P01", None, False)
+            resolved = DraftEvidenceBroker(product, work["id"]).call("resolve_claims")
+            brief = resolved["writer_brief"]
+            self.assertEqual(5, len(brief["materials"]))
+            self.assertEqual(3, len(brief["redlines"]))
+            serialized = json.dumps(resolved, ensure_ascii=False)
+            self.assertNotIn("CLM-", serialized)
+            self.assertNotIn("SRC-", serialized)
+            self.assertNotIn("claim_records", serialized)
+            self.assertNotIn("source_records", serialized)
+            self.assertLess((len(serialized.encode("utf-8")) + 3) // 4, 1200)
 
             forbidden = [
                 "02_outline/voice-profile.md",

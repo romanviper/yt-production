@@ -17,7 +17,7 @@ Never pass the named audience source profile, target-viewer trace or target-view
 ## Canonical sequence
 
 1. Route `draft_section` with `scripts/task.py create`, or use `scripts/rework.py` for a requested rerun.
-2. Writer privately commits one short structured `story_route` from the mission and state change before opening claim prose: one materially observable carrier, observable entry/exit states, and 3–6 ordered transformations pairing an `observable_change` with its `question_or_consequence`. Transformations are changes in world, material or action—not topics, claims, themes, explanations or caveat order. The writer passes that object to `resolve_claims`; the broker attests its canonical hash and returns the unordered constraint/support ledger in one atomic call. Claim/search access stays closed until that call succeeds. Claims only constrain, support or correct the route. Writer retrieves only useful source detail, writes the declared outputs, runs packet validations and submits. The route is audit-traced private scratch: do not add an artifact, approval gate or extra agent for it.
+2. Writer resolves the bounded truth scope once through `resolve_claims` and receives a compact writer brief. The full ledger remains behind the evidence broker for audit and optional lookup. Before prose, the writer privately chooses a carrier, pressure and change; that choice is neither returned nor audited. The writer develops one situation across the section and distributes evidence only where it changes that situation, rather than compressing the brief into an explanatory inventory. The evidence broker never asks for, records or validates a creative route. Writer retrieves only details that materially improve the telling, writes the declared outputs, runs packet validations and submits.
 3. Run a clean `draft_cold_read` with the anonymous target viewer. Stop before formal review when continuation is `no` or `uncertain`, the curiosity chain has a material break, spoken naturalness fails, trust weakens, or material resistance remains. Do not auto-loop a writer from this result.
 4. Route `review_section` to a fresh reviewer only after the cold read passes. Reviewer calls `resolve_claims`, emits the production-gate block and submits; it receives neither the named source profile nor viewer reasoning.
 5. If every hard gate passes and every evidence-adjusted dimension is at least 8, stop at human approval.
@@ -27,10 +27,14 @@ At revision routing, packet schema v5 captures one immutable draft-to-revision r
 
 ## Cost and stop policy
 
-The default budget is one draft, one review and at most one revision plus its review. Do not generate parallel drafts by default. Retrieve once at whole-claim scope, then open only sources that can materially improve the telling. Stop immediately for stale packets, evidence outside the truth ceiling, outline/boundary defects, unsupported human detail or changed paths outside the packet allowlist.
+The default budget is one draft, one review and at most one revision plus its review. Do not generate parallel drafts by default. Resolve once for the compact brief, then open only evidence that can materially improve the telling. Stop immediately for stale packets, evidence outside the truth ceiling, outline/boundary defects, unsupported human detail or changed paths outside the packet allowlist.
 
 For each task, retain task/packet hashes, evidence trace, model family when known, input/output usage when available, validation result and stop reason. Record `unknown` rather than inventing telemetry.
 
 ## Promotion labels
 
 A passing P01 is `section_calibrated` only after independent evidence, boundary and blind benchmark checks. P01 alone does not prove a reusable harness. Promote the harness only after fresh holdout runs across multiple section types and products at the same model/budget tier, reporting median quality, lower-tail quality, hard-gate failure rate and tokens per passing script.
+
+## Non-canonical excerpt calibration
+
+Use `scripts/excerpt_packet.py` when the requested sample is only a slice of a section. The operator must provide an excerpt position, a local narrative job, a local completion rule and one to three in-scope claims. The compiler exposes neither the full section exit state nor unselected claims and labels the run `canonical_output: false`. A 300–400 word probe from a 1,400-word section must stop at its local boundary; it must not answer or summarize the whole section. Probe prose never enters product files or the section lifecycle.

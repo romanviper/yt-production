@@ -1,7 +1,7 @@
 {
   "schema_version": 5,
   "compiler": "scripts/context_packet.py",
-  "context_sha256": "d990a497053dfe41a723dda8ad207586f7b14e5486bf5e38847f4b0243b93ffc",
+  "context_sha256": "5a30888b3e828ff42c0aa0c1ad29acf33b0db96ee622ef08317c9d4a7d0a6fa6",
   "authority": "product_agent",
   "task_id": "T0048-draft-section-P01",
   "product": "sumer-writing",
@@ -10,12 +10,12 @@
     "section": "P01",
     "unit": null
   },
-  "created_at": "2026-08-25T15:28:17.012161+00:00",
+  "created_at": "2026-08-26T04:18:35.285330+00:00",
   "context_profile": "creative_draft",
   "max_context_tokens": 11000,
-  "estimated_context_tokens": 1981,
-  "prompt_instruction_tokens": 835,
-  "input_tokens": 728,
+  "estimated_context_tokens": 2041,
+  "prompt_instruction_tokens": 961,
+  "input_tokens": 662,
   "boundary_enforcement": [
     "authority_and_write_scope",
     "ai_task_state_or_human_amendment_provenance",
@@ -32,22 +32,22 @@
     {
       "path": "03_sections/P01/section.json",
       "sha256": "d3afdbe2739b45768f5cb8fc50dc26c948f9f5e3a455eabcc0a3fae6f4b958c7",
-      "bytes": 3307
+      "bytes": 3249
     },
     {
       "path": "03_sections/P01/narration-pack.json",
       "sha256": "616fdb1ae38d719c01c647b31b9b09e36f20b054dd6d39d75421e5df8ab83708",
-      "bytes": 12338
+      "bytes": 12067
     },
     {
       "path": "03_sections/P01/continuity-in.md",
       "sha256": "24750f9112b057a0da59e347d048cea664ad7e8771ac357dad165738c99937f0",
-      "bytes": 236
+      "bytes": 223
     },
     {
       "path": "03_sections/P01/draft-rework-request.md",
-      "sha256": "d1aab6aaaeb02f0fc1b6f6457a7827afa76ecbf407f44fbc01ac63e757dc0c3e",
-      "bytes": 849
+      "sha256": "c5a89bb1f1d1988ff2ecc79158277aca7487b7c4c45d8f18655f707637282cd4",
+      "bytes": 489
     }
   ],
   "operation_outputs": [
@@ -84,7 +84,7 @@
   "evidence_access": {
     "kind": "bounded_claim_sources",
     "adapter": "scripts/draft_evidence.py",
-    "interface_version": 3,
+    "interface_version": 4,
     "capabilities": [
       "scope",
       "resolve_claims",

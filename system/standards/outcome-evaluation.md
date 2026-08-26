@@ -12,11 +12,13 @@ First evaluate:
 - authored narration rather than research recital;
 - causal clarity;
 - continuity;
-- evidence integrity: no invention, false certainty, truth-ceiling expansion or hidden qualification/contradiction.
+- evidence integrity: no fabricated documentary fact, false certainty, truth-ceiling expansion or hidden qualification/contradiction.
 
 A factually correct draft may still fail if it delivers conclusions as a list or essay without leaving the listener with a retellable progression to the mission answer.
 
 A draft may pass through many routes. Do not fail it for lacking a carrier, scene, object, before/after, raw clue, process sequence, chronology-first order or recount-before-interpret structure.
+
+A signaled representative reconstruction passes only when it adds no unsupported factual or causal meaning and cannot be mistaken for documented history.
 
 ## Required outcome questions
 
@@ -34,6 +36,8 @@ Only after an outcome problem is observed, diagnose the responsible layer. Any s
 ## Common failures
 
 - `document mode`: accurate conclusions without a retellable historical progression;
+- disguised lecture: a nominal scene carrying sequential explanations;
+- false documentary scene: unsupported reconstruction posed as witnessed fact;
 - causal blur;
 - continuity failure;
 - evidence overreach.

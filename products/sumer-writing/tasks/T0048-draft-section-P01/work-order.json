@@ -9,7 +9,7 @@
     "unit": null
   },
   "state": "ready_for_review",
-  "created_at": "2026-08-25T15:28:17.022172+00:00",
+  "created_at": "2026-08-26T04:18:35.287295+00:00",
   "context_packet": "tasks/T0048-draft-section-P01/context.md",
   "packet_manifest": "tasks/T0048-draft-section-P01/packet.json",
   "allowed_write_paths": [
@@ -28,7 +28,7 @@
   "evidence_access": {
     "kind": "bounded_claim_sources",
     "adapter": "scripts/draft_evidence.py",
-    "interface_version": 3,
+    "interface_version": 4,
     "capabilities": [
       "scope",
       "resolve_claims",
@@ -43,6 +43,6 @@
       "resolve_claims"
     ]
   },
-  "submitted_at": "2026-08-25T15:38:48.427090+00:00",
-  "updated_at": "2026-08-25T15:38:48.427090+00:00"
+  "updated_at": "2026-08-26T04:25:17.908216+00:00",
+  "submitted_at": "2026-08-26T04:25:17.908216+00:00"
 }

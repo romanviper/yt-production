@@ -9,6 +9,7 @@ make task PRODUCT=<slug> OPERATION=research_workstream UNIT=WS01
 make task PRODUCT=<slug> OPERATION=outline RUNTIME=dsh
 make run PRODUCT=<slug> TASK=<task-id>
 make task PRODUCT=<slug> OPERATION=draft_section SECTION=P04
+make excerpt PRODUCT=<slug> SECTION=P04 POSITION=opening MIN_WORDS=300 MAX_WORDS=400 CLAIMS="CLM-0001" LOCAL_JOB="..." STOP="..."
 make task PRODUCT=<slug> OPERATION=review_section SECTION=P04
 make show PRODUCT=<slug>
 make brief PRODUCT=<slug> TASK=<task-id>
@@ -23,6 +24,7 @@ make test
 Current section lifecycle:
 approve outline -> materialize sections -> draft_section -> review_section
 Story-plan/design_section is legacy compatibility only.
+Excerpt probes are read-only calibration packets outside this lifecycle.
 
 Bounded writer evidence access:
 python scripts/draft_evidence.py products/<slug> <task-id> scope

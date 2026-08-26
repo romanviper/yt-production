@@ -29,7 +29,7 @@ This is an experimental material-curiosity probe, not a production operation.
 4. The next stimulus must partially pay the prior question with observable material, or plainly disclose that the evidence cannot answer it, and then open a natural next question through change or consequence.
 5. Continue only while the trace yields useful diagnostic information; stop instead of padding a dead chain.
 
-The trace never enters a writer packet, is never copied into a rework request and does not replace or pre-author the writer-private `story_route`. It may tell the operator whether the evidence territory can sustain a listener-led chain; the fresh writer still owns route, order, POV and wording inside the canonical task.
+The trace never enters a writer packet, is never copied into a rework request and does not replace or pre-author the writer's narrative choices. It may tell the operator whether the evidence territory can sustain a listener-led chain; the fresh writer still owns route, order, POV and wording inside the canonical task.
 
 ## Mode: `draft_cold_read`
 

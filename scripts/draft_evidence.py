@@ -32,6 +32,9 @@ REVIEW_RECORD_SERIALIZATION_MARGIN_TOKENS = 96
 LEGACY_EVIDENCE_INTERFACE_VERSION = 1
 ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION = 2
 STORY_ROUTE_EVIDENCE_INTERFACE_VERSION = 3
+NARRATIVE_EVIDENCE_INTERFACE_VERSION = 4
+NARRATIVE_WRITER_BRIEF_SCHEMA_VERSION = 1
+GENERIC_NARRATIVE_IMPLICATION = "Use only with the stated confidence and boundary."
 MIN_ROUTE_INTENT_CHARS = 200
 MAX_ROUTE_INTENT_CHARS = 2000
 ROUTE_INTENT_COPY_WINDOW_WORDS = 10
@@ -70,6 +73,70 @@ class EvidenceAccessError(ValueError):
 def _json_hash(value: Any) -> str:
     text = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _first_writer_text(value: Any) -> str | None:
+    values = value if isinstance(value, list) else [value]
+    for item in values:
+        if not isinstance(item, str):
+            continue
+        normalized = item.strip()
+        if normalized and not normalized.casefold().startswith("none"):
+            return normalized
+    return None
+
+
+def build_narrative_writer_brief(evidence: dict[str, Any], claim_ids: list[str]) -> dict[str, Any]:
+    """Project a whole scoped ledger into a small creative palette without ledger metadata."""
+
+    claims_by_id = {
+        item.get("id"): item
+        for item in evidence.get("claims", [])
+        if isinstance(item, dict) and isinstance(item.get("id"), str)
+    }
+    materials: list[dict[str, str]] = []
+    redlines: list[dict[str, str]] = []
+    for claim_id in claim_ids:
+        claim = claims_by_id.get(claim_id)
+        if not isinstance(claim, dict):
+            continue
+        statement = _first_writer_text(claim.get("statement"))
+        if statement is None:
+            continue
+        boundary = _first_writer_text(claim.get("counterevidence"))
+        if boundary is None:
+            boundary = _first_writer_text(claim.get("qualifications"))
+        if boundary is None:
+            boundary = _first_writer_text(claim.get("limitations"))
+        implication = _first_writer_text(claim.get("narrative_implication"))
+
+        if implication is not None and implication.casefold() != GENERIC_NARRATIVE_IMPLICATION.casefold():
+            item = {"constraint": implication, "applies_to": statement}
+            if boundary is not None:
+                item["boundary"] = boundary
+            redlines.append(item)
+            continue
+
+        item = {"material": statement}
+        confidence = _first_writer_text(claim.get("confidence"))
+        if confidence is not None and confidence.casefold() != "high":
+            item["confidence"] = confidence
+        if boundary is not None:
+            item["boundary"] = boundary
+        materials.append(item)
+
+    return {
+        "schema_version": NARRATIVE_WRITER_BRIEF_SCHEMA_VERSION,
+        "materials": materials,
+        "redlines": redlines,
+        "selection_rule": (
+            "Choose only the few items needed for this passage; omission is expected. "
+            "Do not mirror this list's order."
+        ),
+        "prose_rule": (
+            "Absorb boundaries into ordinary narration. Never expose this brief, its categories or evidence handling."
+        ),
+    }
 
 
 def _bounded_int(value: Any, *, default: int, minimum: int, maximum: int, field: str) -> int:
@@ -514,6 +581,7 @@ class DraftEvidenceBroker:
             LEGACY_EVIDENCE_INTERFACE_VERSION,
             ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
             STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
+            NARRATIVE_EVIDENCE_INTERFACE_VERSION,
         }:
             raise EvidenceAccessError("task packet evidence access interface is unsupported")
         self.evidence_interface_version = int(interface_version)
@@ -661,6 +729,15 @@ class DraftEvidenceBroker:
     def scope(self, arguments: dict[str, Any]) -> dict[str, Any]:
         if arguments:
             raise EvidenceAccessError("scope takes no arguments")
+        if self.evidence_interface_version == NARRATIVE_EVIDENCE_INTERFACE_VERSION:
+            return {
+                "section": self.section,
+                "brief_mode": "compact_writer_brief_v1",
+                "rule": (
+                    "Call resolve_claims for the compact writer brief. The audited scope is a factual boundary, "
+                    "not a writing plan or coverage target."
+                ),
+            }
         response = {
             "section": self.section,
             "claim_ids": self.allowed_claim_ids,
@@ -679,9 +756,28 @@ class DraftEvidenceBroker:
         return response
 
     def _composition_contract(self) -> dict[str, str]:
+        if self.evidence_interface_version == NARRATIVE_EVIDENCE_INTERFACE_VERSION:
+            return self._narrative_composition_contract()
         if self.evidence_interface_version == STORY_ROUTE_EVIDENCE_INTERFACE_VERSION:
             return self._story_route_composition_contract()
         return self._route_first_composition_contract()
+
+    @staticmethod
+    def _narrative_composition_contract() -> dict[str, str]:
+        return {
+            "evidence_role": "truth_boundary_support_and_correction",
+            "sequence_authority": "none",
+            "presentation_order": "deterministic_task_hash_with_no_story_authority",
+            "creative_plan_required": "none",
+            "reconstruction_rule": (
+                "A clearly signaled representative reconstruction may combine supported conditions, practices, "
+                "materials and consequences, but it may add no factual or causal meaning."
+            ),
+            "anti_template_rule": (
+                "Claim ids, object-key order and ledger order prescribe no paragraph order, beat count, "
+                "required coverage or creative route."
+            ),
+        }
 
     @staticmethod
     def _route_first_composition_contract() -> dict[str, str]:
@@ -947,7 +1043,7 @@ class DraftEvidenceBroker:
                 return True
         return False
 
-    def _require_route_first_resolution(self) -> None:
+    def _require_legacy_route_resolution(self) -> None:
         if self.work.get("operation") != "draft_section":
             return
         if (
@@ -983,7 +1079,7 @@ class DraftEvidenceBroker:
                 raise EvidenceAccessError("story-route claim scope has already been resolved; use claims for later lookup")
             story_route = self._validated_story_route(arguments.get("story_route"))
         elif arguments:
-            raise EvidenceAccessError("resolve_claims takes no arguments on the legacy evidence interface")
+            raise EvidenceAccessError("resolve_claims takes no arguments on this evidence interface")
         if len(self.allowed_claim_ids) > MAX_RESOLVED_CLAIMS:
             raise EvidenceAccessError(
                 f"resolve_claims scope has {len(self.allowed_claim_ids)} claims; cap is {MAX_RESOLVED_CLAIMS}"
@@ -1019,7 +1115,17 @@ class DraftEvidenceBroker:
             }
             for source_id in self.allowed_source_ids
         ]
-        if self.evidence_interface_version in {
+        if self.evidence_interface_version == NARRATIVE_EVIDENCE_INTERFACE_VERSION:
+            response = {
+                "section": self.section,
+                "writer_brief": build_narrative_writer_brief(self.evidence, self.allowed_claim_ids),
+                "truth_ceiling_unchanged": True,
+                "rule": (
+                    "Use no factual meaning beyond this brief and bounded on-demand retrieval. "
+                    "Select for the passage; do not cover the ledger."
+                ),
+            }
+        elif self.evidence_interface_version in {
             ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
             STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
         }:
@@ -1050,7 +1156,7 @@ class DraftEvidenceBroker:
                     "characters": len(route_intent),
                     "authority": "creative_route_only_not_evidence",
                 }
-            else:
+            elif self.evidence_interface_version == STORY_ROUTE_EVIDENCE_INTERFACE_VERSION:
                 assert story_route is not None
                 response["story_route_attestation"] = {
                     "schema_version": 1,
@@ -1075,17 +1181,18 @@ class DraftEvidenceBroker:
             raise EvidenceAccessError(
                 f"resolve_claims response estimate is {estimated_tokens} tokens; cap is {MAX_RESOLVE_RESPONSE_TOKENS}"
             )
-        response["telemetry"] = {
-            "claim_count": len(resolved),
-            "source_count": len(sources),
-            "estimated_response_tokens": estimated_tokens,
-            "max_response_tokens": MAX_RESOLVE_RESPONSE_TOKENS,
-            "serialization_margin_tokens": serialization_margin_tokens,
-        }
+        if self.evidence_interface_version != NARRATIVE_EVIDENCE_INTERFACE_VERSION:
+            response["telemetry"] = {
+                "claim_count": len(resolved),
+                "source_count": len(sources),
+                "estimated_response_tokens": estimated_tokens,
+                "max_response_tokens": MAX_RESOLVE_RESPONSE_TOKENS,
+                "serialization_margin_tokens": serialization_margin_tokens,
+            }
         return response
 
     def claims(self, arguments: dict[str, Any]) -> dict[str, Any]:
-        self._require_route_first_resolution()
+        self._require_legacy_route_resolution()
         ids = arguments.get("ids", self.allowed_claim_ids)
         if set(arguments) - {"ids"}:
             raise EvidenceAccessError("claims accepts only ids")
@@ -1098,6 +1205,7 @@ class DraftEvidenceBroker:
         if self.evidence_interface_version in {
             ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
             STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
+            NARRATIVE_EVIDENCE_INTERFACE_VERSION,
         }:
             records_by_id = {record["id"]: record for record in records}
             return {
@@ -1115,6 +1223,7 @@ class DraftEvidenceBroker:
         if self.evidence_interface_version in {
             ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
             STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
+            NARRATIVE_EVIDENCE_INTERFACE_VERSION,
         }:
             return {
                 "source_records": {
@@ -1144,7 +1253,7 @@ class DraftEvidenceBroker:
         }
 
     def search(self, arguments: dict[str, Any]) -> dict[str, Any]:
-        self._require_route_first_resolution()
+        self._require_legacy_route_resolution()
         if set(arguments) - {"query", "limit"}:
             raise EvidenceAccessError("search accepts only query and limit")
         query = arguments.get("query")

@@ -65,8 +65,8 @@ class TargetViewerProtocolTests(unittest.TestCase):
         self.assertIn("Send exactly one new chunk per turn", self.protocol)
         self.assertIn("## Mode: `route_probe`", self.protocol)
         self.assertIn("## Mode: `draft_cold_read`", self.protocol)
-        self.assertIn("does not replace or pre-author the writer-private `story_route`", self.protocol)
-        writer_index = self.harness.index("Writer privately commits")
+        self.assertIn("does not replace or pre-author the writer's narrative choices", self.protocol)
+        writer_index = self.harness.index("Writer resolves")
         cold_read_index = self.harness.index("Run a clean `draft_cold_read`")
         formal_review_index = self.harness.index("Route `review_section`")
         self.assertLess(writer_index, cold_read_index)
@@ -74,7 +74,7 @@ class TargetViewerProtocolTests(unittest.TestCase):
         self.assertIn("continuation is `no` or `uncertain`", self.harness)
         self.assertIn("Do not auto-loop a writer", self.harness)
 
-    def test_runtime_contract_and_writer_private_route_invariant_remain_explicit(self) -> None:
+    def test_runtime_contract_and_writer_authorship_invariant_remain_explicit(self) -> None:
         for required in [
             '"strongest_next_question"',
             '"mental_scene"',
@@ -87,7 +87,7 @@ class TargetViewerProtocolTests(unittest.TestCase):
             with self.subTest(required=required):
                 self.assertIn(required, self.runtime)
         self.assertIn(
-            "The route is audit-traced private scratch: do not add an artifact, approval gate or extra agent for it.",
+            "The evidence broker never asks for, records or validates a creative route.",
             self.harness,
         )
 

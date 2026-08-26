@@ -1,7 +1,9 @@
 # Handoff — P01
 
-Đây là checkpoint prose test 1.025 từ, chưa phải full P01 và chưa đạt exit state của section.
-
-Opening 125 từ mới giữ riêng bulla vỡ và các bulla nguyên khác. Nó đi từ khe vỡ thấy những viên nhỏ sang các động tác tạo dấu trên đất sét ướt, rồi để phần prose cũ tự mở khó khăn kiểm tra lớp vỏ kín. Không có protagonist giả định hoặc thesis đặt trước cảnh.
-
-Cold viewer tự hỏi liệu dấu ngoài có cho biết chính xác số viên bên trong hay không, nhưng gọi bản đầu là phân tích hiện vật và bị rơi ở câu narrator tổng kết trừu tượng. Evidence check đồng thời phát hiện câu đó nhập các hiện vật khác nhau và làm mất lượng từ. Cả hai lỗi đã được xử lý trong một correction duy nhất bằng cách bỏ câu tổng kết và khôi phục “thường/một số”. Không chạy audit lần hai. Phần Uruk phía cuối giữ nguyên. Cần human review riêng opening trước khi viết tiếp.
+- Entry: chữ viết được hình dung như một phát minh xuất hiện đột ngột.
+- Route: một việc cần được nhớ sau khi người tham gia rời đi → vật đếm và bọc đất sét giữ số lượng/xác nhận → mặt bảng cho phép gắn và gom nhiều mục → quy mô quản lý làm bản ghi bền có giá trị → nhiều thực hành cùng hội tụ, không có đường tiến hóa hay nguyên nhân duy nhất.
+- Exit: khán giả có thể giải thích rằng dấu bền hữu ích vì đưa một phần thông tin ra ngoài trí nhớ con người, khiến nó có thể được giữ, chuyển và kiểm tra trong công việc ngày càng lớn.
+- Payoff: hành chính là sức ép lớn nhưng không đủ để giải thích mọi thứ; số, vật đếm, dấu niêm, hình ảnh và bảng đất sét tạo thành một quá trình song song, có phản hồi hai chiều với sự lớn lên của các tổ chức.
+- Reconstruction: phần mở đầu là cảnh đại diện được báo trước, chỉ nối các vật, cách làm và hệ quả đã được chứng thực; không được trình bày như một sự kiện lịch sử cụ thể.
+- Evidence ceiling used: `CLM-0011`–`CLM-0018`; source detail resolved from `SRC-0001` and `SRC-0011` through the task evidence broker.
+- Transition: từ lý do cần bản ghi bền sang điều làm hệ thống dấu mới khác những cách ghi nhận có trước.

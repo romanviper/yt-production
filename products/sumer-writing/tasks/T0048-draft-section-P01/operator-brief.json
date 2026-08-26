@@ -1,24 +1,24 @@
 {
   "schema_version": 1,
   "status": "ready_for_review",
-  "headline": "Prose test P01 612 từ đã sẵn sàng review.",
+  "headline": "P01 mới đã sẵn sàng để duyệt.",
   "material_points": [
-    "Mở bằng clay envelope vỡ; dừng khi ChM III-937A xuất hiện.",
-    "Hai cold listeners nhớ được chuỗi vật thể và muốn nghe tiếp.",
-    "Rủi ro: listener vẫn suy đoán tablet phát triển trực tiếp từ bulla."
+    "1.396 từ; đúng giới hạn.",
+    "Luồng kể: người rời đi → trí nhớ thiếu điểm kiểm tra → dấu đất sét giữ thông tin.",
+    "Hành chính là sức ép lớn, không phải nguyên nhân duy nhất."
   ],
   "decision": {
     "required": true,
-    "question": "Đoạn này đã đủ sức sống để mở rộng tiếp chưa?",
-    "recommendation": "Review đoạn hiện tại trước khi writer giải nghĩa năm dấu số.",
+    "question": "Duyệt P01 mới làm bản canonical?",
+    "recommendation": "Duyệt nếu nhịp kể đã đúng hướng.",
     "options": [
       {
-        "label": "Mở rộng tiếp",
-        "effect": "Tiếp tục từ câu hỏi về năm dấu số."
+        "label": "Duyệt",
+        "effect": "Chuyển P01 sang review."
       },
       {
-        "label": "Sửa đoạn test",
-        "effect": "Chỉ chỉnh đoạn hiện tại rồi review lại."
+        "label": "Yêu cầu viết lại",
+        "effect": "Mở rework theo nhận xét mới."
       }
     ]
   },
