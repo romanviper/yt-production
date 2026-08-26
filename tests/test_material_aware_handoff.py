@@ -20,27 +20,6 @@ from scripts.task import create_task, validate_output_contract
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PRODUCT = REPO_ROOT / "products" / "sumer-writing"
-STORY_ROUTE = {
-    "carrier": "a measured clay object",
-    "entry_observable_state": "The object begins as an unmarked piece of clay in one pair of hands.",
-    "transformations": [
-        {
-            "observable_change": "Marks appear across the wet surface.",
-            "question_or_consequence": "The marks make the object carry something beyond its shape.",
-        },
-        {
-            "observable_change": "The clay hardens and leaves the original hands.",
-            "question_or_consequence": "What can another person recover from the fixed marks?",
-        },
-        {
-            "observable_change": "A later reader turns the marked object into an instruction.",
-            "question_or_consequence": "The object now changes an action at a different time and place.",
-        },
-    ],
-    "exit_observable_state": "The same clay object now carries a recoverable instruction between people.",
-}
-
-
 def write_json(path: Path, value: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -245,7 +224,7 @@ class AuthorshipBoundaryRegression(unittest.TestCase):
             scope = broker.call("scope")
             self.assertEqual(["CLM-0001"], scope["claim_ids"])
             self.assertEqual(["SRC-0001"], scope["source_ids"])
-            broker.call("resolve_claims", {"story_route": STORY_ROUTE})
+            broker.call("resolve_claims")
 
             allowed = broker.call("source", {"id": "SRC-0001"})
             self.assertEqual("SRC-0001", allowed["source"]["id"])

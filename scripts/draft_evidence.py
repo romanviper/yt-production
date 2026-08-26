@@ -32,6 +32,7 @@ REVIEW_RECORD_SERIALIZATION_MARGIN_TOKENS = 96
 LEGACY_EVIDENCE_INTERFACE_VERSION = 1
 ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION = 2
 STORY_ROUTE_EVIDENCE_INTERFACE_VERSION = 3
+NARRATIVE_EVIDENCE_INTERFACE_VERSION = 4
 MIN_ROUTE_INTENT_CHARS = 200
 MAX_ROUTE_INTENT_CHARS = 2000
 ROUTE_INTENT_COPY_WINDOW_WORDS = 10
@@ -514,6 +515,7 @@ class DraftEvidenceBroker:
             LEGACY_EVIDENCE_INTERFACE_VERSION,
             ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
             STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
+            NARRATIVE_EVIDENCE_INTERFACE_VERSION,
         }:
             raise EvidenceAccessError("task packet evidence access interface is unsupported")
         self.evidence_interface_version = int(interface_version)
@@ -674,14 +676,34 @@ class DraftEvidenceBroker:
         if self.evidence_interface_version in {
             ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
             STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
+            NARRATIVE_EVIDENCE_INTERFACE_VERSION,
         }:
             response["composition_contract"] = self._composition_contract()
         return response
 
     def _composition_contract(self) -> dict[str, str]:
+        if self.evidence_interface_version == NARRATIVE_EVIDENCE_INTERFACE_VERSION:
+            return self._narrative_composition_contract()
         if self.evidence_interface_version == STORY_ROUTE_EVIDENCE_INTERFACE_VERSION:
             return self._story_route_composition_contract()
         return self._route_first_composition_contract()
+
+    @staticmethod
+    def _narrative_composition_contract() -> dict[str, str]:
+        return {
+            "evidence_role": "truth_boundary_support_and_correction",
+            "sequence_authority": "none",
+            "presentation_order": "deterministic_task_hash_with_no_story_authority",
+            "creative_plan_required": "none",
+            "reconstruction_rule": (
+                "A clearly signaled representative reconstruction may combine supported conditions, practices, "
+                "materials and consequences, but it may add no factual or causal meaning."
+            ),
+            "anti_template_rule": (
+                "Claim ids, object-key order and ledger order prescribe no paragraph order, beat count, "
+                "required coverage or creative route."
+            ),
+        }
 
     @staticmethod
     def _route_first_composition_contract() -> dict[str, str]:
@@ -947,7 +969,7 @@ class DraftEvidenceBroker:
                 return True
         return False
 
-    def _require_route_first_resolution(self) -> None:
+    def _require_legacy_route_resolution(self) -> None:
         if self.work.get("operation") != "draft_section":
             return
         if (
@@ -983,7 +1005,7 @@ class DraftEvidenceBroker:
                 raise EvidenceAccessError("story-route claim scope has already been resolved; use claims for later lookup")
             story_route = self._validated_story_route(arguments.get("story_route"))
         elif arguments:
-            raise EvidenceAccessError("resolve_claims takes no arguments on the legacy evidence interface")
+            raise EvidenceAccessError("resolve_claims takes no arguments on this evidence interface")
         if len(self.allowed_claim_ids) > MAX_RESOLVED_CLAIMS:
             raise EvidenceAccessError(
                 f"resolve_claims scope has {len(self.allowed_claim_ids)} claims; cap is {MAX_RESOLVED_CLAIMS}"
@@ -1022,6 +1044,7 @@ class DraftEvidenceBroker:
         if self.evidence_interface_version in {
             ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
             STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
+            NARRATIVE_EVIDENCE_INTERFACE_VERSION,
         }:
             claims_by_id = {record["id"]: record for record in resolved}
             sources_by_id = {record["id"]: record for record in sources}
@@ -1050,7 +1073,7 @@ class DraftEvidenceBroker:
                     "characters": len(route_intent),
                     "authority": "creative_route_only_not_evidence",
                 }
-            else:
+            elif self.evidence_interface_version == STORY_ROUTE_EVIDENCE_INTERFACE_VERSION:
                 assert story_route is not None
                 response["story_route_attestation"] = {
                     "schema_version": 1,
@@ -1085,7 +1108,7 @@ class DraftEvidenceBroker:
         return response
 
     def claims(self, arguments: dict[str, Any]) -> dict[str, Any]:
-        self._require_route_first_resolution()
+        self._require_legacy_route_resolution()
         ids = arguments.get("ids", self.allowed_claim_ids)
         if set(arguments) - {"ids"}:
             raise EvidenceAccessError("claims accepts only ids")
@@ -1098,6 +1121,7 @@ class DraftEvidenceBroker:
         if self.evidence_interface_version in {
             ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
             STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
+            NARRATIVE_EVIDENCE_INTERFACE_VERSION,
         }:
             records_by_id = {record["id"]: record for record in records}
             return {
@@ -1115,6 +1139,7 @@ class DraftEvidenceBroker:
         if self.evidence_interface_version in {
             ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
             STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
+            NARRATIVE_EVIDENCE_INTERFACE_VERSION,
         }:
             return {
                 "source_records": {
@@ -1144,7 +1169,7 @@ class DraftEvidenceBroker:
         }
 
     def search(self, arguments: dict[str, Any]) -> dict[str, Any]:
-        self._require_route_first_resolution()
+        self._require_legacy_route_resolution()
         if set(arguments) - {"query", "limit"}:
             raise EvidenceAccessError("search accepts only query and limit")
         query = arguments.get("query")

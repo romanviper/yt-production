@@ -23,33 +23,12 @@ from scripts.task import create_task, submit_task, verify_task
 from test_material_aware_handoff import SOURCE_PRODUCT, make_direct_authorship_fixture, write_json
 
 
-STORY_ROUTE = {
-    "carrier": "a measured clay object",
-    "entry_observable_state": "The object begins as an unmarked piece of clay in one pair of hands.",
-    "transformations": [
-        {
-            "observable_change": "Marks appear across the wet surface.",
-            "question_or_consequence": "The marks make the object carry something beyond its shape.",
-        },
-        {
-            "observable_change": "The clay hardens and leaves the original hands.",
-            "question_or_consequence": "What can another person recover from the fixed marks?",
-        },
-        {
-            "observable_change": "A later reader turns the marked object into an instruction.",
-            "question_or_consequence": "The object now changes an action at a different time and place.",
-        },
-    ],
-    "exit_observable_state": "The same clay object now carries a recoverable instruction between people.",
-}
-
-
 def submit_fixture_prose(product: Path, details: list[str], draft_body: str = "A supported historical progression.") -> str:
     root = product / "03_sections" / "P01"
     work = create_task(product, "draft_section", "P01", None, False)
     task_id = work["id"]
     broker = DraftEvidenceBroker(product, task_id)
-    broker.call("resolve_claims", {"story_route": STORY_ROUTE})
+    broker.call("resolve_claims")
     for index, detail in enumerate(details):
         broker.call(
             "record",
@@ -139,14 +118,16 @@ class WriterBaselineTests(unittest.TestCase):
             )
             self.assertTrue(set(input_paths[3:]).issubset({"03_sections/P01/draft-rework-request.md"}))
             self.assertIn("evidence_access", packet)
-            self.assertEqual(3, packet["evidence_access"]["interface_version"])
+            self.assertEqual(4, packet["evidence_access"]["interface_version"])
             self.assertEqual(["resolve_claims"], packet["evidence_access"]["required_before_submit"])
-            self.assertIn("answer the section mission in their own words", context)
+            self.assertIn("answer the mission in their own words", context)
             self.assertIn("retell the historical path", context)
-            self.assertIn("Before claim prose", context)
-            self.assertIn("one materially observable thing or process", context)
-            self.assertIn("not an artifact, gate or agent", context)
-            self.assertIn("Ledger order, IDs and claim-by-claim coverage have no narrative authority", context)
+            self.assertIn("historical narrative with the imaginative continuity of a novel", context)
+            self.assertIn("not a lecture, textbook chapter or claim summary", context)
+            self.assertIn("clearly signaled representative reconstruction", context)
+            self.assertIn("never asks for, records or validates the writer's creative route", context)
+            self.assertNotIn("story_route", context)
+            self.assertNotIn("3–6 ordered", context)
 
             # The writer sees a plain mission projection plus control states, not upstream architecture prose.
             self.assertIn('"mission"', context)

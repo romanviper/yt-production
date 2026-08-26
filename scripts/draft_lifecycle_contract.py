@@ -22,6 +22,7 @@ BOUND_PROSE_PROVENANCE_SCHEMA = 2
 BOUND_PACKET_SCHEMA = 5
 ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION = 2
 STORY_ROUTE_EVIDENCE_INTERFACE_VERSION = 3
+NARRATIVE_EVIDENCE_INTERFACE_VERSION = 4
 MIN_ROUTE_INTENT_CHARS = 200
 MAX_ROUTE_INTENT_CHARS = 2000
 ROUTE_INTENT_COPY_WINDOW_WORDS = 10
@@ -42,7 +43,7 @@ def _json_hash(value: Any) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def _route_first_presentation_order(task_id: str, ids: list[str]) -> list[str]:
+def _order_neutral_ids(task_id: str, ids: list[str]) -> list[str]:
     return sorted(
         ids,
         key=lambda item: hashlib.sha256(f"{task_id}\0{item}".encode("utf-8")).hexdigest(),
@@ -301,7 +302,12 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
         work.get("operation") == "draft_section"
         and interface_version == STORY_ROUTE_EVIDENCE_INTERFACE_VERSION
     )
+    narrative_evidence = (
+        work.get("operation") == "draft_section"
+        and interface_version == NARRATIVE_EVIDENCE_INTERFACE_VERSION
+    )
     authored_route_first = route_intent_first or story_route_first
+    unordered_ledger = authored_route_first or narrative_evidence
     for line in trace_path.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
@@ -312,8 +318,8 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
         response = record.get("response")
         resolved_ids = response.get("resolved_claim_ids") if isinstance(response, dict) else None
         resolved_scope_matches = (
-            resolved_ids == _route_first_presentation_order(task_id, expected_ids)
-            if authored_route_first
+            resolved_ids == _order_neutral_ids(task_id, expected_ids)
+            if unordered_ledger
             else resolved_ids == expected_ids
         )
         whole_scope_resolution = (
@@ -324,10 +330,14 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
         )
         if not whole_scope_resolution:
             continue
-        if authored_route_first:
+        if unordered_ledger:
             arguments = record.get("arguments")
-            expected_argument = "story_route" if story_route_first else "route_intent"
-            if not isinstance(arguments, dict) or set(arguments) != {expected_argument}:
+            expected_arguments = (
+                set()
+                if narrative_evidence
+                else {"story_route" if story_route_first else "route_intent"}
+            )
+            if not isinstance(arguments, dict) or set(arguments) != expected_arguments:
                 continue
             composition = response.get("composition_contract")
             claim_records = response.get("claim_records")
@@ -341,7 +351,14 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
                 or "claims" in response
             ):
                 continue
-            if route_intent_first:
+            if narrative_evidence:
+                if (
+                    composition.get("creative_plan_required") != "none"
+                    or "route_intent_attestation" in response
+                    or "story_route_attestation" in response
+                ):
+                    continue
+            elif route_intent_first:
                 intent = arguments.get("route_intent")
                 if _route_intent_error(intent, evidence) is not None:
                     continue

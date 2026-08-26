@@ -105,7 +105,7 @@ def write_ready_task_admin(task_root: Path, headline: str) -> None:
 
 
 class WriterLifecycleRegression(unittest.TestCase):
-    def test_v2_route_intent_packet_remains_valid_after_v3_rollout(self) -> None:
+    def test_v2_route_intent_packet_remains_valid_after_v4_rollout(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             product = make_direct_authorship_fixture(Path(temp))
             outline_path = product / "02_outline" / "outline.json"
@@ -134,6 +134,26 @@ class WriterLifecycleRegression(unittest.TestCase):
 
             later_claims = broker.call("claims")
             self.assertEqual({"CLM-0001", "CLM-0002"}, set(later_claims["claim_records"]))
+            self.assertEqual([], validate_required_evidence_resolution(product, work["id"]))
+
+    def test_v3_story_route_packet_remains_valid_after_v4_rollout(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            materialize(product)
+            work = create_task(product, "draft_section", "P01", None, False)
+            packet_path = product / "tasks" / work["id"] / "packet.json"
+            packet = json.loads(packet_path.read_text(encoding="utf-8"))
+            packet["evidence_access"]["interface_version"] = 3
+            write_json(packet_path, packet)
+
+            broker = DraftEvidenceBroker(product, work["id"])
+            with self.assertRaisesRegex(EvidenceAccessError, "before claim/search access"):
+                broker.call("claims")
+            resolved = broker.call("resolve_claims", {"story_route": STORY_ROUTE})
+            self.assertEqual(
+                "recorded_before_claim_resolution",
+                resolved["story_route_attestation"]["status"],
+            )
             self.assertEqual([], validate_required_evidence_resolution(product, work["id"]))
 
     def test_canonical_draft_requires_official_task_and_binds_submission_provenance(self) -> None:
@@ -167,37 +187,23 @@ class WriterLifecycleRegression(unittest.TestCase):
             broker = DraftEvidenceBroker(product, task_id)
             broker.call("scope")
             self.assertTrue(validate_required_evidence_resolution(product, task_id))
-            with self.assertRaisesRegex(EvidenceAccessError, "requires exactly story_route"):
-                broker.call("resolve_claims")
-            with self.assertRaisesRegex(EvidenceAccessError, "before claim/search access"):
-                broker.call("claims")
-            with self.assertRaisesRegex(EvidenceAccessError, "before claim/search access"):
-                broker.call("search", {"query": "approved"})
-            with self.assertRaisesRegex(EvidenceAccessError, "must not contain claim or source ids"):
-                route_with_id = json.loads(json.dumps(STORY_ROUTE))
-                route_with_id["carrier"] = "CLM-0001 marked clay object"
-                broker.call(
-                    "resolve_claims",
-                    {"story_route": route_with_id},
-                )
-            with self.assertRaisesRegex(EvidenceAccessError, "3-6 ordered transformations"):
-                short_route = json.loads(json.dumps(STORY_ROUTE))
-                short_route["transformations"] = short_route["transformations"][:2]
-                broker.call("resolve_claims", {"story_route": short_route})
-            resolved = broker.call("resolve_claims", {"story_route": STORY_ROUTE})
+            early_claims = broker.call("claims")
+            self.assertEqual(set(broker.allowed_claim_ids), set(early_claims["claim_records"]))
+            broker.call("search", {"query": "approved"})
+            with self.assertRaisesRegex(EvidenceAccessError, "takes no arguments"):
+                broker.call("resolve_claims", {"story_route": STORY_ROUTE})
+            resolved = broker.call("resolve_claims")
             self.assertEqual([], validate_evidence_trace(product, task_id))
             self.assertEqual([], validate_required_evidence_resolution(product, task_id))
-            self.assertEqual(3, broker.packet["evidence_access"]["interface_version"])
+            self.assertEqual(4, broker.packet["evidence_access"]["interface_version"])
             self.assertEqual("none", resolved["composition_contract"]["sequence_authority"])
             self.assertEqual(
                 "deterministic_task_hash_with_no_story_authority",
                 resolved["composition_contract"]["presentation_order"],
             )
-            self.assertEqual(
-                "recorded_before_claim_resolution",
-                resolved["story_route_attestation"]["status"],
-            )
-            self.assertEqual(3, resolved["story_route_attestation"]["transformation_count"])
+            self.assertEqual("none", resolved["composition_contract"]["creative_plan_required"])
+            self.assertNotIn("route_intent_attestation", resolved)
+            self.assertNotIn("story_route_attestation", resolved)
             self.assertIsInstance(resolved["claim_records"], dict)
             self.assertIsInstance(resolved["source_records"], dict)
             self.assertEqual(resolved["resolved_claim_ids"], list(resolved["claim_records"]))
@@ -207,7 +213,7 @@ class WriterLifecycleRegression(unittest.TestCase):
             self.assertEqual(len(resolved["source_records"]), len(set(resolved["source_records"])))
             self.assertLessEqual(resolved["telemetry"]["estimated_response_tokens"], 6000)
 
-            # Submission reconstructs the atomic pre-claim commitment instead of trusting a success flag.
+            # Submission requires a complete truth resolution and rejects a hidden creative-plan argument.
             trace_path = product / "tasks" / task_id / "evidence-trace.jsonl"
             original_trace = trace_path.read_text(encoding="utf-8")
             trace_records = [json.loads(line) for line in original_trace.splitlines()]
@@ -216,7 +222,7 @@ class WriterLifecycleRegression(unittest.TestCase):
                 for item in trace_records
                 if item.get("capability") == "resolve_claims" and item.get("error") is None
             )
-            successful_resolution["arguments"]["story_route"]["transformations"] = STORY_ROUTE["transformations"][:2]
+            successful_resolution["arguments"] = {"creative_route": "must not be audited by the evidence broker"}
             trace_path.write_text(
                 "\n".join(json.dumps(item, ensure_ascii=False) for item in trace_records) + "\n",
                 encoding="utf-8",
@@ -396,7 +402,7 @@ class WriterLifecycleRegression(unittest.TestCase):
 
             draft_work = create_task(product, "draft_section", "P01", None, False)
             draft_broker = DraftEvidenceBroker(product, draft_work["id"])
-            draft_broker.call("resolve_claims", {"story_route": STORY_ROUTE})
+            draft_broker.call("resolve_claims")
             (root / "draft.md").write_text("# P01\n\nA supported routed draft.\n", encoding="utf-8")
             (root / "handoff.md").write_text("The listener reaches State 1.\n", encoding="utf-8")
             write_ready_task_admin(product / "tasks" / draft_work["id"], "P01 draft is ready for review.")

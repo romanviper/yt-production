@@ -153,7 +153,7 @@
       "evidence_access": {
         "kind": "bounded_claim_sources",
         "adapter": "scripts/draft_evidence.py",
-        "interface_version": 3,
+        "interface_version": 4,
         "capabilities": [
           "scope",
           "resolve_claims",
@@ -175,7 +175,6 @@
       "include_dependency_handoffs": true,
       "max_context_tokens": 14000,
       "instruction_files": [
-        "system/core/creative-boundaries.md",
         "system/standards/channel-constitution.md",
         "system/standards/outcome-evaluation.md",
         "system/standards/section-quality-gate.md",
