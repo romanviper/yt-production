@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "id": "T0054-draft-section-P01",
+  "product": "sumer-writing",
+  "operation": "draft_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "state": "cancelled",
+  "created_at": "2026-08-26T13:08:04.423996+00:00",
+  "context_packet": "tasks/T0054-draft-section-P01/context.md",
+  "packet_manifest": "tasks/T0054-draft-section-P01/packet.json",
+  "allowed_write_paths": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md",
+    "tasks/T0054-draft-section-P01/report.md",
+    "tasks/T0054-draft-section-P01/operator-brief.json"
+  ],
+  "outputs": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md"
+  ],
+  "optional_outputs": [],
+  "report_path": "tasks/T0054-draft-section-P01/report.md",
+  "operator_brief_path": "tasks/T0054-draft-section-P01/operator-brief.json",
+  "evidence_access": {
+    "kind": "bounded_claim_sources",
+    "adapter": "scripts/draft_evidence.py",
+    "interface_version": 4,
+    "capabilities": [
+      "scope",
+      "resolve_claims",
+      "source",
+      "search",
+      "record"
+    ],
+    "trace_path": "tasks/T0054-draft-section-P01/evidence-trace.jsonl",
+    "required_before_submit": [
+      "resolve_claims"
+    ]
+  },
+  "updated_at": "2026-08-26T13:09:02.226458+00:00",
+  "cancel_reason": "human rework: draft_section: Correction to the superseded full-section request. Produce only the first narrative idea-unit of P01, not the whole section. Remove the previous 300-400 word cap and do not replace it with another hard word target; end when this one arc is complete. Scope is only: establish the historical starting point and normal activity, immerse the viewer in one transfer through purposeful camera movement, reveal how information fragments across hands and viewpoints, make the material consequence clear, and arrive at the need for a durable checkable mark. Stop before explaining tokens, bullae, tablets, writing, scale multiplication, scribes, bureaucracy, or the wider formation ecology. Preserve the successful distributed-information conflict and avoid turning the keeper into an inventor. Use an omniscient establishing view only to locate place and activity; move into third-person-limited experience tied to the keeper and his blind spots; add a brief embodied viewer or first-person-plural viewpoint only where it improves spatial immersion. Camera changes must be motivated by what can or cannot be known. Add only historical specificity authorized by the evidence broker. Prefer natural spoken Vietnamese and concrete action over abstract explanation, symmetrical rhetoric, or thesis-signalling metaphors. Stop at human review after this expanded opening unit."
+}

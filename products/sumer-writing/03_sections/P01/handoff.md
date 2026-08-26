@@ -1,9 +1,11 @@
-# Handoff — P01
+# Handoff — P01 opening-unit focal-carrier checkpoint
 
-- Entry: chữ viết được hình dung như một phát minh xuất hiện đột ngột.
-- Route: một việc cần được nhớ sau khi người tham gia rời đi → vật đếm và bọc đất sét giữ số lượng/xác nhận → mặt bảng cho phép gắn và gom nhiều mục → quy mô quản lý làm bản ghi bền có giá trị → nhiều thực hành cùng hội tụ, không có đường tiến hóa hay nguyên nhân duy nhất.
-- Exit: khán giả có thể giải thích rằng dấu bền hữu ích vì đưa một phần thông tin ra ngoài trí nhớ con người, khiến nó có thể được giữ, chuyển và kiểm tra trong công việc ngày càng lớn.
-- Payoff: hành chính là sức ép lớn nhưng không đủ để giải thích mọi thứ; số, vật đếm, dấu niêm, hình ảnh và bảng đất sét tạo thành một quá trình song song, có phản hồi hai chiều với sự lớn lên của các tổ chức.
-- Reconstruction: phần mở đầu là cảnh đại diện được báo trước, chỉ nối các vật, cách làm và hệ quả đã được chứng thực; không được trình bày như một sự kiện lịch sử cụ thể.
-- Evidence ceiling used: `CLM-0011`–`CLM-0018`; source detail resolved from `SRC-0001` and `SRC-0011` through the task evidence broker.
-- Transition: từ lý do cần bản ghi bền sang điều làm hệ thống dấu mới khác những cách ghi nhận có trước.
+Checkpoint này lưu nguyên văn probe đã nhận đánh giá mạnh nhất ở vòng phản hồi gần nhất. Đây chưa phải full P01 và chưa được human approve.
+
+- Camera toàn tri chỉ dựng Uruk, Eanna và dòng vật chất đi qua khu vực công cộng.
+- Focal carrier là một lần bàn giao; camera thu hẹp tự nhiên theo các đoạn đường mà từng người có thể quan sát.
+- Hai luồng hàng chồng lên nhau làm thông tin bị phân mảnh mà không cần một nhân vật nói dối hay phạm lỗi rõ ràng.
+- Payoff vật chất là nhu cầu chốt số lượng bằng một dấu còn kiểm tra được sau khi mọi người rời sân.
+- Dừng trước token, bulla, tablet, writing và formation ecology.
+
+Ba điểm reviewer lưu ý nhưng cố ý chưa sửa trong checkpoint: mức chắc chắn của câu “Mỗi ngày… phải đi qua Eanna”, sự lặp lại của ý distributed knowledge, và việc các giỏ giống nhau đang gánh nhiều quan hệ nhân quả.

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "task_id": "T0053-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "P01 micro-probe mới: một lần chuyển hàng không thể kiểm lại.",
+  "material_points": [
+    "Probe dài 390 từ, chưa phải full section.",
+    "Mỗi người chỉ thấy một phần của lần bàn giao; không ai nói dối.",
+    "Cảnh dừng trước token, bulla, tablet và writing."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Cảnh đã đủ mạch lạc và tự nhiên chưa?",
+    "recommendation": "Đánh dấu chỗ camera bị đứt hoặc giọng giải thích quay lại.",
+    "options": [
+      {
+        "label": "Chấp nhận",
+        "effect": "Mở sang beat kế tiếp."
+      },
+      {
+        "label": "Viết lại",
+        "effect": "Sửa tiếp đúng cảnh này."
+      }
+    ]
+  }
+}

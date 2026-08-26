@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "task_id": "T0056-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "Opening-unit P01 đã được nới tới khi hoàn tất arc, không mở thành full section.",
+  "material_points": [
+    "Setup mới định vị Uruk, thời kỳ, quy mô và trạng thái bình thường trước sự cố.",
+    "Camera bám ngôi ba hạn tri ở người coi kho; không dùng camera nhập vai.",
+    "Cảnh dừng ở nhu cầu về một dấu kiểm lại được, trước token và writing."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Setup và camera hạn tri đã giải quyết cảm giác lấn cấn chưa?",
+    "recommendation": "Đánh dấu điểm camera biết quá nhiều hoặc hành động bàn giao còn khó hình dung.",
+    "options": [
+      {
+        "label": "Giữ hướng này",
+        "effect": "Tiếp tục sang idea-unit kế tiếp."
+      },
+      {
+        "label": "Sửa cùng unit",
+        "effect": "Chạy thêm một vòng trên đúng cảnh mở đầu."
+      }
+    ]
+  }
+}

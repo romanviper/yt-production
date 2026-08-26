@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "task_id": "T0057-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "Đã lưu probe P01 được đánh giá mạnh nhất thành checkpoint canonical.",
+  "material_points": [
+    "Giữ nguyên bản focal-carrier đã được review; không polish hoặc viết lại âm thầm.",
+    "Checkpoint chỉ là opening idea-unit và dừng ở nhu cầu về một dấu kiểm tra được.",
+    "P01 vẫn chờ human review; chưa được đánh dấu approved."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Ở phiên tiếp theo, giữ nguyên checkpoint này hay sửa ba caveat nhỏ đã ghi trong handoff?",
+    "recommendation": "Dùng checkpoint làm baseline và chỉ chạy một micro-loop cho từng caveat.",
+    "options": [
+      {
+        "label": "Giữ baseline",
+        "effect": "Viết tiếp idea-unit kế tiếp từ checkpoint này."
+      },
+      {
+        "label": "Micro-polish",
+        "effect": "Sửa riêng các caveat đã ghi, không thay kiến trúc kể chuyện."
+      }
+    ]
+  }
+}
