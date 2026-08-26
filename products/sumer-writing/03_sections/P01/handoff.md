@@ -1,5 +1,9 @@
 # Handoff — P01
 
-P01 kết thúc với một trạng thái quan sát được: kết quả đếm và chuyển giao đã được tách khỏi khoảnh khắc ban đầu, mang trên bề mặt đất sét để có thể lưu, chuyển và đối chiếu. Khán giả đã đi qua ecology gồm thực hành số, token, bullae, con dấu, bản ghi số và nhu cầu thiết chế; hành chính được giữ đúng vai trò là áp lực lớn nhưng không phải nguyên nhân duy nhất.
-
-Áp lực sang phần kế tiếp: khi nhu cầu ghi và các thực hành lưu dấu đều đã tồn tại, điều gì khiến hệ thống dấu mới khác biệt và hữu ích hơn những cách giữ thông tin trước đó?
+- Entry: chữ viết được hình dung như một phát minh xuất hiện đột ngột.
+- Route: một việc cần được nhớ sau khi người tham gia rời đi → vật đếm và bọc đất sét giữ số lượng/xác nhận → mặt bảng cho phép gắn và gom nhiều mục → quy mô quản lý làm bản ghi bền có giá trị → nhiều thực hành cùng hội tụ, không có đường tiến hóa hay nguyên nhân duy nhất.
+- Exit: khán giả có thể giải thích rằng dấu bền hữu ích vì đưa một phần thông tin ra ngoài trí nhớ con người, khiến nó có thể được giữ, chuyển và kiểm tra trong công việc ngày càng lớn.
+- Payoff: hành chính là sức ép lớn nhưng không đủ để giải thích mọi thứ; số, vật đếm, dấu niêm, hình ảnh và bảng đất sét tạo thành một quá trình song song, có phản hồi hai chiều với sự lớn lên của các tổ chức.
+- Reconstruction: phần mở đầu là cảnh đại diện được báo trước, chỉ nối các vật, cách làm và hệ quả đã được chứng thực; không được trình bày như một sự kiện lịch sử cụ thể.
+- Evidence ceiling used: `CLM-0011`–`CLM-0018`; source detail resolved from `SRC-0001` and `SRC-0011` through the task evidence broker.
+- Transition: từ lý do cần bản ghi bền sang điều làm hệ thống dấu mới khác những cách ghi nhận có trước.
