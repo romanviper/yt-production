@@ -544,6 +544,27 @@ class WriterBaselineTests(unittest.TestCase):
             narration["evidence_pack_sha256"] = sha256(evidence_path)
             write_json(narration_path, narration)
 
+            materials_path = root / "materials.json"
+            write_json(
+                materials_path,
+                {
+                    "schema_version": 1,
+                    "materials": [
+                        {
+                            "id": "P01-MAT-0001",
+                            "kind": "object",
+                            "label": "Clay accounting token",
+                            "claim_ids": ["CLM-0011"],
+                            "source_refs": [{"source_id": "SRC-0001", "locators": ["p. 42"]}],
+                            "source_relation": "contemporary_material",
+                            "actor": "Uruk administrative accountant",
+                            "object_or_trace": "Geometric clay token",
+                            "documented_action": "Impression on clay surface",
+                        }
+                    ],
+                },
+            )
+
             packet, context = compile_packet(
                 product,
                 "draft_section",

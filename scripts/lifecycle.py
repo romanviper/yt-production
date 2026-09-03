@@ -24,6 +24,7 @@ TASK_STATES = TASK_LIVE_STATES | TASK_SUBMITTED_STATES | TASK_TERMINAL_STATES
 SECTION_OPERATION_ENTRY_STATES = {
     "design_section": {"needs_story_plan", "story_plan_changes_requested"},
     "draft_section": {"ready_for_draft"},
+    "evidence_resolution": {"needs_evidence_resolution", "ready_for_draft"},
     "review_section": {"ready_for_review"},
     "revise_section": {"changes_requested"},
 }
@@ -31,6 +32,7 @@ SECTION_OPERATION_ENTRY_STATES = {
 SECTION_OPERATION_SUBMISSION_STATES = {
     "design_section": "story_plan_review",
     "draft_section": "ready_for_review",
+    "evidence_resolution": "ready_for_draft",
     "review_section": "review_complete",
     "revise_section": "ready_for_review",
 }
@@ -38,6 +40,7 @@ SECTION_OPERATION_SUBMISSION_STATES = {
 SECTION_OPERATION_REWORK_STATES = {
     "design_section": "story_plan_changes_requested",
     "draft_section": "ready_for_draft",
+    "evidence_resolution": "needs_evidence_resolution",
     "review_section": "ready_for_review",
     "revise_section": "changes_requested",
 }

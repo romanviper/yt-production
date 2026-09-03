@@ -1486,6 +1486,117 @@ class DraftEvidenceBroker:
         }
 
 
+def preflight_section_materials(product_dir: Path, section: str) -> dict[str, Any]:
+    """Operator/lifecycle function to examine bounded section territory for material readiness."""
+    product_dir = product_dir.resolve()
+    section_dir = product_dir / "03_sections" / section
+    if not section_dir.is_dir():
+        return {"section": section, "status": "blocked", "reason": f"section directory does not exist: {section}"}
+
+    evidence_pack_path = section_dir / "evidence-pack.json"
+    narration_pack_path = section_dir / "narration-pack.json"
+
+    allowed_source_ids: set[str] = set()
+    allowed_claim_ids: set[str] = set()
+
+    if narration_pack_path.is_file():
+        try:
+            npack = read_json(narration_pack_path)
+            if npack.get("schema_version") == 4:
+                scope = npack.get("retrieval_scope", {})
+                allowed_claim_ids.update(scope.get("claim_ids", []))
+                allowed_source_ids.update(scope.get("source_ids", []))
+            else:
+                for f in ["core_claims", "optional_claims"]:
+                    for item in npack.get(f, []):
+                        if isinstance(item, dict) and item.get("id"):
+                            allowed_claim_ids.add(item["id"])
+                for item in npack.get("source_refs", []):
+                    if isinstance(item, dict) and item.get("id"):
+                        allowed_source_ids.add(item["id"])
+        except Exception:
+            pass
+
+    if evidence_pack_path.is_file():
+        try:
+            epack = read_json(evidence_pack_path)
+            for item in epack.get("claims", []):
+                if isinstance(item, dict) and item.get("id"):
+                    allowed_claim_ids.add(item["id"])
+            for item in epack.get("sources", []):
+                if isinstance(item, dict) and item.get("id"):
+                    allowed_source_ids.add(item["id"])
+        except Exception:
+            pass
+
+    if not allowed_source_ids or not allowed_claim_ids:
+        return {"section": section, "status": "blocked", "reason": "section has no approved claims or sources"}
+
+    seen_ids: set[str] = set()
+    raw_materials: list[dict[str, Any]] = []
+
+    sec_mat_path = section_dir / "materials.json"
+    if sec_mat_path.is_file():
+        try:
+            s_data = read_json(sec_mat_path)
+            items = s_data.get("materials", []) if isinstance(s_data, dict) else s_data
+            if isinstance(items, list):
+                raw_materials.extend(item for item in items if isinstance(item, dict) and item.get("id"))
+        except Exception:
+            pass
+
+    global_mat_path = product_dir / "01_research" / "material-ledger.json"
+    if global_mat_path.is_file():
+        try:
+            g_data = read_json(global_mat_path)
+            items = g_data.get("materials", []) if isinstance(g_data, dict) else g_data
+            if isinstance(items, list):
+                raw_materials.extend(item for item in items if isinstance(item, dict) and item.get("id"))
+        except Exception:
+            pass
+
+    usable_ids: set[str] = set()
+    for mat in raw_materials:
+        mid = str(mat["id"])
+        if mid in seen_ids:
+            continue
+        seen_ids.add(mid)
+
+        mat_claims = {c for c in mat.get("claim_ids", []) if isinstance(c, str)}
+        if mat_claims and not mat_claims.intersection(allowed_claim_ids):
+            continue
+
+        refs = [
+            r for r in mat.get("source_refs", [])
+            if isinstance(r, dict) and r.get("source_id") in allowed_source_ids
+        ]
+        if not refs:
+            continue
+
+        has_concrete = any(
+            mat.get(field)
+            for field in [
+                "actor",
+                "object_or_trace",
+                "documented_action",
+                "explicit_sequence",
+                "measurement",
+                "physical_description",
+                "details",
+            ]
+        )
+        if has_concrete:
+            usable_ids.add(mid)
+
+    ids = sorted(usable_ids)
+    return {
+        "section": section,
+        "status": "material_ready" if ids else "needs_evidence_resolution",
+        "material_count": len(ids),
+        "material_ids": ids,
+    }
+
+
 def build_revision_receipt_lineage_anchor(
     product_dir: Path,
     section: str,

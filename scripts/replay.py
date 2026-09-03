@@ -11,13 +11,17 @@ from typing import Any
 
 try:
     from scripts.common import read_json, write_json
+    from scripts.draft_evidence import preflight_section_materials
     from scripts.materialize_sections import archive_previous_cycle, materialize
     from scripts.rework import rework
+    from scripts.story_plan_contract import is_direct_authorship_outline
     from scripts.task import create_task
 except ModuleNotFoundError:  # Direct execution: python scripts/replay.py
     from common import read_json, write_json
+    from draft_evidence import preflight_section_materials
     from materialize_sections import archive_previous_cycle, materialize
     from rework import rework
+    from story_plan_contract import is_direct_authorship_outline
     from task import create_task
 
 
@@ -225,12 +229,29 @@ def continue_replay(product_dir: Path) -> dict[str, Any]:
         return _write_state(product_dir, state)
 
     next_step = steps[next_index]
+    section = state.get("section")
     if current_step == "outline":
         archived = _archive_if_needed(product_dir)
         created = [str(path.relative_to(product_dir)) for path in materialize(product_dir)]
         _record_event(state, "sections_materialized", archived=archived, created=created)
+        outline_path = product_dir / "02_outline" / "outline.json"
+        if outline_path.is_file():
+            outline = read_json(outline_path)
+            if next_step == "draft_section" and section and is_direct_authorship_outline(outline):
+                preflight = preflight_section_materials(product_dir, str(section))
+                if preflight.get("status") == "needs_evidence_resolution":
+                    steps.insert(next_index, "evidence_resolution")
+                    state["steps"] = steps
+                    next_step = "evidence_resolution"
+                elif preflight.get("status") == "blocked":
+                    state["blocked_on"] = "material_preflight_blocked"
+                    return _write_state(product_dir, state)
 
-    section = state.get("section")
+    if current_step == "evidence_resolution" and section:
+        preflight = preflight_section_materials(product_dir, str(section))
+        if preflight.get("status") != "material_ready":
+            state["blocked_on"] = "evidence_resolution_insufficient"
+            return _write_state(product_dir, state)
     work = _route_step(
         product_dir,
         next_step,

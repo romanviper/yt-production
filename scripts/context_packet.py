@@ -31,6 +31,7 @@ try:
         REVIEW_RECORD_PROJECTION_START,
         build_review_record_projection,
         build_revision_receipt_lineage_anchor,
+        preflight_section_materials,
     )
     from scripts.lifecycle import research_rework_blocker, section_operation_state_error
     from scripts.outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
@@ -57,6 +58,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.p
         REVIEW_RECORD_PROJECTION_START,
         build_review_record_projection,
         build_revision_receipt_lineage_anchor,
+        preflight_section_materials,
     )
     from lifecycle import research_rework_blocker, section_operation_state_error
     from outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
@@ -215,14 +217,20 @@ def validate_preconditions(product_dir: Path, operation: str, section: str | Non
         pack_errors = verify_outline_evidence_pack(product_dir)
         if pack_errors:
             raise ValueError("Outline evidence pack is not ready: " + "; ".join(pack_errors))
-    if operation in {"design_section", "draft_section", "review_section", "revise_section"}:
+    if operation in {"design_section", "draft_section", "review_section", "revise_section", "evidence_resolution"}:
         outline = read_json_local(product_dir / "02_outline" / "outline.json")
         if outline.get("status") != "approved":
             raise ValueError("Outline must be human-approved first.")
+        if not section:
+            raise ValueError(f"{operation} requires --section.")
         state = read_json_local(product_dir / "03_sections" / str(section) / "section.json")
         state_error = section_operation_state_error(operation, state.get("status"), section)
         if state_error:
             raise ValueError(state_error)
+    if operation == "evidence_resolution":
+        root = product_dir / "03_sections" / str(section)
+        if not (root / "evidence-pack.json").is_file():
+            raise ValueError(f"Section {section} is missing evidence-pack.json.")
     if operation in {"draft_section", "review_section", "revise_section"}:
         narration_errors = verify_narration_pack(product_dir, str(section))
         if narration_errors:
