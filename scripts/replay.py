@@ -77,6 +77,7 @@ def _route_step(
     *,
     section: str | None,
     request: str,
+    writer_outcome: str | None,
     first: bool,
     execution_runtime: str | None,
 ) -> dict[str, Any]:
@@ -87,6 +88,7 @@ def _route_step(
             section=section if step != "outline" else None,
             unit=None,
             request=request,
+            writer_outcome=writer_outcome if step == "draft_section" else None,
             execution_runtime=execution_runtime if step == "outline" else None,
         )
     return create_task(
@@ -106,6 +108,7 @@ def start_replay(
     through: str,
     section: str | None,
     request: str,
+    writer_outcome: str | None = None,
     execution_runtime: str | None = None,
 ) -> dict[str, Any]:
     product_dir = product_dir.resolve()
@@ -113,6 +116,8 @@ def start_replay(
         raise ValueError("Replay request cannot be empty.")
     steps = _step_range(start, through)
     _require_section(steps, section)
+    if start == "draft_section" and (not isinstance(writer_outcome, str) or not writer_outcome.strip()):
+        raise ValueError("Replay starting at draft_section requires --writer-outcome.")
     if start == "outline":
         outline = read_json(product_dir / "02_outline" / "outline.json")
         if outline.get("status") != "approved":
@@ -130,6 +135,7 @@ def start_replay(
         steps[0],
         section=section,
         request=request,
+        writer_outcome=writer_outcome,
         first=True,
         execution_runtime=execution_runtime,
     )
@@ -141,6 +147,7 @@ def start_replay(
         "created_at": _now(),
         "updated_at": _now(),
         "request": request.strip(),
+        "writer_outcome": writer_outcome.strip() if isinstance(writer_outcome, str) else None,
         "section": section,
         "steps": steps,
         "current_index": 0,
@@ -159,6 +166,7 @@ def start_replay(
             "requested_by": "user",
             "requested_at": state["created_at"],
             "request": state["request"],
+            "writer_outcome": state["writer_outcome"],
             "section": section,
             "steps": steps,
             "initial_task": work["id"],
@@ -228,6 +236,7 @@ def continue_replay(product_dir: Path) -> dict[str, Any]:
         next_step,
         section=str(section) if section else None,
         request=str(state["request"]),
+        writer_outcome=state.get("writer_outcome"),
         first=False,
         execution_runtime=state.get("execution_runtime"),
     )
@@ -264,6 +273,7 @@ def main() -> int:
     start.add_argument("--through", choices=REPLAY_STEPS, required=True)
     start.add_argument("--section")
     start.add_argument("--request", required=True)
+    start.add_argument("--writer-outcome")
     start.add_argument("--runtime", choices=["legacy", "dsh"])
 
     cont = sub.add_parser("continue")

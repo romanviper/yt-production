@@ -27,12 +27,20 @@ ID local được namespace để các workstream có thể chạy độc lập.
 
 `materials.json` có thể tồn tại khi một primary object/case/process có concrete detail dễ mất hoặc provenance/limitation phức tạp. Nó là **evidence-preservation artifact**, không phải story plan.
 
-Nếu dùng, mỗi record nên giữ tối thiểu:
+Nếu dùng, mỗi record nên giữ các trường sự thật khi source trực tiếp support:
 
 - `id`, `kind`, `label`;
 - `claim_ids` liên quan;
 - `source_refs` với locator hẹp;
-- concrete source-supported detail dưới `details` hoặc các field factual tương đương;
+- `actor` hoặc acting system khi được support trực tiếp;
+- `object_or_trace`: vật thể, di tích hoặc dấu vết;
+- `documented_action`: hành động được ghi lại trong tư liệu;
+- `explicit_sequence`: trình tự các bước hoặc biến cố được source nêu rõ;
+- `time`, `place`, `physical_description`, `measurement`, `spatial_relation`;
+- `unresolved_question`: câu hỏi lịch sử còn bỏ ngỏ mà tư liệu phản ánh;
+- `later_evidence`: bằng chứng/phát hiện về sau làm thay đổi cách hiểu;
+- `source_relation`: `contemporary_material`, `contemporary_interested_account`, `later_copy`, `retrospective_literature`, `cultural_tradition`, `modern_hypothesis`;
+- concrete source-supported detail dưới `details` (để tương thích ngược);
 - `limitations` và, khi hữu ích, `representativeness`.
 
 Legacy material fields như `what_audience_follows`, `sequence` hoặc `narratable_reconstruction` vẫn có thể được đọc để không phá artifact cũ, nhưng output mới **không được bắt buộc** tạo chúng và downstream không được coi chúng là creative authority.

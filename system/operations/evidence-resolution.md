@@ -1,0 +1,51 @@
+# Operation — Evidence Resolution
+
+## Responsibility
+
+Recover and preserve high-resolution, source-level material affordances for a bounded section from already approved sources, without widening the section's truth ceiling or pre-authoring narrative routes.
+
+When a section's evidence territory contains only abstract claims and propositions, `evidence_resolution` inspects the approved source records and locators to extract concrete historical particulars that allow a writer to author a nonfiction story:
+- actual objects, artefacts, tablets, inscriptions, or physical traces;
+- documented actions and actors/systems directly supported by the source;
+- explicit source sequences (e.g. administrative steps, excavation strata, or inscription order);
+- physical descriptions, measurements, and spatial/topographical relations;
+- unresolved questions visible in surviving evidence;
+- subsequent discoveries or later evidence that changed historical interpretation;
+- source genre and temporal distance (`contemporary_material`, `contemporary_interested_account`, `later_copy`, `retrospective_literature`, `cultural_tradition`, `modern_hypothesis`).
+
+`evidence_resolution` owns evidence preservation resolution, **not** story design:
+- It does **not** author a story plan, scene, camera angle, opening, or climax.
+- It does **not** assign narrative roles or narratability scores.
+- It does **not** introduce new claims, new causal conclusions, or synthetic generalizations outside approved research authority.
+- If the approved sources cannot support a nonfiction movement, it must stop and report a blocker for owner decision rather than manufacturing historical incidents or inventing details.
+
+## Required inputs
+
+- `02_outline/outline.json`
+- `03_sections/{section}/section.json`
+- `03_sections/{section}/brief.md`
+- `03_sections/{section}/evidence-pack.json`
+- `01_research/source-index.json`
+- `01_research/claim-ledger.json`
+
+## Optional inputs
+
+- `01_research/material-ledger.json`
+- `03_sections/{section}/evidence-resolution-request.md`
+
+## Required outputs
+
+- `03_sections/{section}/materials.json`
+
+## Contract rules
+
+1. Every material record must specify:
+   - `id`: namespaced identifier (e.g. `{section}-MAT-###` or global `MAT-####`);
+   - `kind`: `object`, `actor`, `place`, `process`, `record`, or `trace`;
+   - `label`: neutral descriptive label;
+   - `claim_ids`: subset of approved section claims;
+   - `source_refs`: source IDs from the section evidence pack with narrow, specific locators;
+   - `limitations`: explicit boundaries on what the evidence does and does not prove;
+   - `source_relation`: classification of source proximity to the narrated reality.
+2. Concrete factual affordances (`actor`, `object_or_trace`, `documented_action`, `explicit_sequence`, `time`, `place`, `physical_description`, `measurement`, `spatial_relation`, `unresolved_question`, `later_evidence`) must be populated only when directly attested in approved sources.
+3. Output materials must be consolidated into the section territory and available to the writer via the bounded evidence broker.

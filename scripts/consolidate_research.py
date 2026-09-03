@@ -21,6 +21,14 @@ MANIFEST_PATH = Path("01_research/consolidation.json")
 SOURCE_INDEX_PATH = Path("01_research/source-index.json")
 CLAIM_LEDGER_PATH = Path("01_research/claim-ledger.json")
 MATERIAL_LEDGER_PATH = Path("01_research/material-ledger.json")
+VALID_SOURCE_RELATIONS = {
+    "contemporary_material",
+    "contemporary_interested_account",
+    "later_copy",
+    "retrospective_literature",
+    "cultural_tradition",
+    "modern_hypothesis",
+}
 
 
 def _list(value: Any) -> list[Any]:
@@ -105,6 +113,9 @@ def validate_global_ledgers(product_dir: Path) -> list[str]:
         source_ids.add(source_id)
         if not item.get("provenance"):
             errors.append(f"global source {source_id or '?'} missing workstream provenance")
+        relation = item.get("source_relation")
+        if relation is not None and relation not in VALID_SOURCE_RELATIONS:
+            errors.append(f"global source {source_id or '?'} invalid source_relation: {relation}")
 
     claim_ids: set[str] = set()
     for item in claims_doc.get("claims", []):
@@ -167,6 +178,15 @@ def validate_global_ledgers(product_dir: Path) -> list[str]:
             or not all(isinstance(value, str) and value.strip() for value in limitations)
         ):
             errors.append(f"global material {material_id or '?'} limitations must be a list of strings")
+        seq = item.get("explicit_sequence")
+        if seq is not None and (
+            not isinstance(seq, list)
+            or not all(isinstance(step, str) and step.strip() for step in seq)
+        ):
+            errors.append(f"global material {material_id or '?'} explicit_sequence must be a list of strings")
+        relation = item.get("source_relation")
+        if relation is not None and relation not in VALID_SOURCE_RELATIONS:
+            errors.append(f"global material {material_id or '?'} invalid source_relation: {relation}")
     return errors
 
 

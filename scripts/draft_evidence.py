@@ -33,6 +33,7 @@ LEGACY_EVIDENCE_INTERFACE_VERSION = 1
 ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION = 2
 STORY_ROUTE_EVIDENCE_INTERFACE_VERSION = 3
 NARRATIVE_EVIDENCE_INTERFACE_VERSION = 4
+WRITER_DIRECTED_EVIDENCE_INTERFACE_VERSION = 5
 NARRATIVE_WRITER_BRIEF_SCHEMA_VERSION = 1
 GENERIC_NARRATIVE_IMPLICATION = "Use only with the stated confidence and boundary."
 MIN_ROUTE_INTENT_CHARS = 200
@@ -73,6 +74,35 @@ class EvidenceAccessError(ValueError):
 def _json_hash(value: Any) -> str:
     text = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def build_writer_scope_attestation(
+    section: str,
+    claim_ids: list[str],
+    source_ids: list[str],
+) -> dict[str, Any]:
+    """Bind the available truth ceiling without projecting its contents or order."""
+
+    canonical_scope = {
+        "section": section,
+        "claim_ids": sorted(set(claim_ids)),
+        "source_ids": sorted(set(source_ids)),
+    }
+    return {
+        "section": section,
+        "scope_attestation": {
+            "schema_version": 1,
+            "status": "bounded_scope_loaded",
+            "claim_count": len(canonical_scope["claim_ids"]),
+            "source_count": len(canonical_scope["source_ids"]),
+            "scope_sha256": _json_hash(canonical_scope),
+        },
+        "truth_ceiling_unchanged": True,
+        "rule": (
+            "Use search/source to learn what the historical material gives a story to follow, then choose or refine the telling. "
+            "This attestation proves boundary availability; it prescribes no coverage, order or narrative route."
+        ),
+    }
 
 
 def _first_writer_text(value: Any) -> str | None:
@@ -546,6 +576,8 @@ class DraftEvidenceBroker:
         self.evidence = read_json(self.evidence_path)
         self.material_ledger_path = self.product_dir / "01_research" / "material-ledger.json"
         self.material_ledger = read_json(self.material_ledger_path) if self.material_ledger_path.is_file() else None
+        self.section_materials_path = self.root / "materials.json"
+        self.section_materials = read_json(self.section_materials_path) if self.section_materials_path.is_file() else None
 
         self._validate_fresh_handoff()
         self.allowed_claim_ids, self.allowed_source_ids = self._scope_from_narration()
@@ -582,9 +614,14 @@ class DraftEvidenceBroker:
             ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION,
             STORY_ROUTE_EVIDENCE_INTERFACE_VERSION,
             NARRATIVE_EVIDENCE_INTERFACE_VERSION,
+            WRITER_DIRECTED_EVIDENCE_INTERFACE_VERSION,
         }:
             raise EvidenceAccessError("task packet evidence access interface is unsupported")
         self.evidence_interface_version = int(interface_version)
+        capabilities = access.get("capabilities")
+        if not isinstance(capabilities, list) or not all(isinstance(item, str) and item for item in capabilities):
+            raise EvidenceAccessError("task packet evidence capabilities are invalid")
+        self.allowed_capabilities = set(capabilities)
         expected_trace = f"tasks/{self.task_id}/evidence-trace.jsonl"
         if access.get("trace_path") != expected_trace:
             raise EvidenceAccessError("task packet evidence trace path is invalid")
@@ -649,14 +686,30 @@ class DraftEvidenceBroker:
         if extra:
             raise EvidenceAccessError("retrieval source scope exceeds approved claim graph: " + ", ".join(extra))
 
+    def _all_materials(self) -> list[dict[str, Any]]:
+        seen_ids: set[str] = set()
+        materials: list[dict[str, Any]] = []
+        if isinstance(self.section_materials, dict):
+            for item in self.section_materials.get("materials", []):
+                if isinstance(item, dict) and item.get("id"):
+                    seen_ids.add(item["id"])
+                    materials.append(item)
+        if isinstance(self.material_ledger, dict):
+            for item in self.material_ledger.get("materials", []):
+                if isinstance(item, dict) and item.get("id") and item["id"] not in seen_ids:
+                    seen_ids.add(item["id"])
+                    materials.append(item)
+        return materials
+
     def _preserved_details(self, source_id: str) -> list[dict[str, Any]]:
         """Expose only route-neutral optional detail; legacy story fields stay hidden."""
 
-        if not isinstance(self.material_ledger, dict):
+        materials = self._all_materials()
+        if not materials:
             return []
         results = []
         allowed_claims = set(self.allowed_claim_ids)
-        for material in self.material_ledger.get("materials", []):
+        for material in materials:
             if not isinstance(material, dict):
                 continue
             linked_claims = {item for item in material.get("claim_ids", []) if isinstance(item, str)}
@@ -670,20 +723,63 @@ class DraftEvidenceBroker:
             if not matching_refs:
                 continue
             details = material.get("details")
-            if details in (None, "", []):
-                continue
-            results.append(
-                {
-                    "material_id": material.get("id"),
-                    "label": material.get("label"),
-                    "kind": material.get("kind"),
-                    "locators": [loc for ref in matching_refs for loc in ref.get("locators", [])],
-                    "details": details,
-                    "limitations": material.get("limitations", []),
-                    "authority": "optional_evidence_preservation_only",
-                }
-            )
+            entry: dict[str, Any] = {
+                "material_id": material.get("id"),
+                "label": material.get("label"),
+                "kind": material.get("kind"),
+                "locators": [loc for ref in matching_refs for loc in ref.get("locators", [])],
+                "limitations": material.get("limitations", []),
+                "authority": "optional_evidence_preservation_only",
+            }
+            if details not in (None, "", []):
+                entry["details"] = details
+            for field in [
+                "actor",
+                "object_or_trace",
+                "documented_action",
+                "explicit_sequence",
+                "time",
+                "place",
+                "physical_description",
+                "measurement",
+                "spatial_relation",
+                "unresolved_question",
+                "later_evidence",
+                "source_relation",
+                "representativeness",
+            ]:
+                if material.get(field) not in (None, "", []):
+                    entry[field] = material.get(field)
+            if len(entry) > 6 or "details" in entry:
+                results.append(entry)
         return results
+
+    def preflight_material_readiness(self, arguments: dict[str, Any] | None = None) -> dict[str, Any]:
+        """Examine bounded section territory for concrete material affordances before drafting."""
+        usable_ids: set[str] = set()
+        for source_id in self.allowed_source_ids:
+            for item in self._preserved_details(source_id):
+                has_concrete = any(
+                    item.get(field)
+                    for field in [
+                        "actor",
+                        "object_or_trace",
+                        "documented_action",
+                        "explicit_sequence",
+                        "measurement",
+                        "physical_description",
+                        "details",
+                    ]
+                )
+                if has_concrete and item.get("material_id"):
+                    usable_ids.add(str(item["material_id"]))
+        ids = sorted(usable_ids)
+        return {
+            "section": self.section,
+            "status": "material_ready" if ids else "needs_evidence_resolution",
+            "material_count": len(ids),
+            "material_ids": ids,
+        }
 
     def _append_trace(self, capability: str, arguments: dict[str, Any], response: Any, error: str | None = None) -> None:
         record = {
@@ -697,6 +793,7 @@ class DraftEvidenceBroker:
             "response_sha256": _json_hash(response) if response is not None else None,
             "evidence_pack_sha256": sha256(self.evidence_path),
             "optional_material_ledger_sha256": sha256(self.material_ledger_path) if self.material_ledger_path.is_file() else None,
+            "section_materials_sha256": sha256(self.section_materials_path) if self.section_materials_path.is_file() else None,
             "error": error,
             "truth_ceiling_unchanged": True,
         }
@@ -708,6 +805,8 @@ class DraftEvidenceBroker:
         arguments = arguments or {}
         handlers = {
             "scope": self.scope,
+            "attest_scope": self.attest_scope,
+            "material_preflight": self.preflight_material_readiness,
             "resolve_claims": self.resolve_claims,
             "claims": self.claims,
             "sources": self.sources,
@@ -718,6 +817,10 @@ class DraftEvidenceBroker:
         handler = handlers.get(capability)
         if handler is None:
             raise EvidenceAccessError(f"unknown evidence capability: {capability}")
+        if capability not in self.allowed_capabilities and capability != "material_preflight":
+            error = f"evidence capability is not declared for this task: {capability}"
+            self._append_trace(capability, arguments, None, error)
+            raise EvidenceAccessError(error)
         try:
             response = handler(arguments)
         except Exception as exc:
@@ -729,6 +832,18 @@ class DraftEvidenceBroker:
     def scope(self, arguments: dict[str, Any]) -> dict[str, Any]:
         if arguments:
             raise EvidenceAccessError("scope takes no arguments")
+        if self.evidence_interface_version == WRITER_DIRECTED_EVIDENCE_INTERFACE_VERSION:
+            return {
+                "section": self.section,
+                "mode": "writer_directed_on_demand_v1",
+                "claim_count": len(self.allowed_claim_ids),
+                "source_count": len(self.allowed_source_ids),
+                "rule": (
+                    "The approved graph is a truth boundary, not a reading list. "
+                    "Use search/source to discover story material and resolve facts before or while choosing the telling; "
+                    "returned records prescribe no coverage, order or creative route."
+                ),
+            }
         if self.evidence_interface_version == NARRATIVE_EVIDENCE_INTERFACE_VERSION:
             return {
                 "section": self.section,
@@ -754,6 +869,19 @@ class DraftEvidenceBroker:
         }:
             response["composition_contract"] = self._composition_contract()
         return response
+
+    def attest_scope(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        if self.evidence_interface_version != WRITER_DIRECTED_EVIDENCE_INTERFACE_VERSION:
+            raise EvidenceAccessError("attest_scope is available only on writer-directed evidence interface v5")
+        if self.work.get("operation") != "draft_section":
+            raise EvidenceAccessError("attest_scope is limited to draft_section")
+        if arguments:
+            raise EvidenceAccessError("attest_scope takes no arguments")
+        return build_writer_scope_attestation(
+            self.section,
+            self.allowed_claim_ids,
+            self.allowed_source_ids,
+        )
 
     def _composition_contract(self) -> dict[str, str]:
         if self.evidence_interface_version == NARRATIVE_EVIDENCE_INTERFACE_VERSION:
@@ -1060,6 +1188,12 @@ class DraftEvidenceBroker:
     def resolve_claims(self, arguments: dict[str, Any]) -> dict[str, Any]:
         """Resolve the whole scoped claim graph once, compactly and auditably."""
 
+        if self.evidence_interface_version == WRITER_DIRECTED_EVIDENCE_INTERFACE_VERSION:
+            raise EvidenceAccessError(
+                "whole-scope claim projection is disabled for writer-directed drafts; "
+                "use attest_scope and retrieve only chosen needs through search/source"
+            )
+
         route_intent: str | None = None
         story_route: dict[str, Any] | None = None
         if self.evidence_interface_version == ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION:
@@ -1267,7 +1401,26 @@ class DraftEvidenceBroker:
             haystack = json.dumps(item, ensure_ascii=False, sort_keys=True).casefold()
             score = sum(haystack.count(term) for term in terms)
             if score:
-                ranked.append((score, f"claim:{claim_id}", {"kind": "claim", "record": item}))
+                if self.evidence_interface_version == WRITER_DIRECTED_EVIDENCE_INTERFACE_VERSION:
+                    fields = [
+                        "id",
+                        "statement",
+                        "type",
+                        "status",
+                        "confidence",
+                        "qualifications",
+                        "counterevidence",
+                        "limitations",
+                    ]
+                    record = {field: item.get(field) for field in fields if item.get(field) is not None}
+                    record["source_ids"] = [
+                        source_id
+                        for source_id in item.get("sources", [])
+                        if source_id in self.allowed_source_ids
+                    ]
+                else:
+                    record = item
+                ranked.append((score, f"claim:{claim_id}", {"kind": "claim", "record": record}))
         for source_id in self.allowed_source_ids:
             item = self.sources_by_id[source_id]
             source_payload = {"source": item, "preserved_details": self._preserved_details(source_id)}
@@ -1801,6 +1954,8 @@ def main() -> int:
     parser.add_argument("task_id")
     sub = parser.add_subparsers(dest="capability", required=True)
     sub.add_parser("scope")
+    sub.add_parser("attest_scope")
+    sub.add_parser("material_preflight")
     resolve = sub.add_parser("resolve_claims")
     route_group = resolve.add_mutually_exclusive_group()
     route_group.add_argument("--route-intent")

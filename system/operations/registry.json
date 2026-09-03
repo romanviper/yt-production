@@ -130,6 +130,30 @@
       ],
       "context_profile": "creative_design"
     },
+    "evidence_resolution": {
+      "target_kind": "section",
+      "max_context_tokens": 20000,
+      "instruction_files": [
+        "system/standards/evidence.md",
+        "system/operations/evidence-resolution.md"
+      ],
+      "required_inputs": [
+        "02_outline/outline.json",
+        "03_sections/{section}/section.json",
+        "03_sections/{section}/brief.md",
+        "03_sections/{section}/evidence-pack.json",
+        "01_research/source-index.json",
+        "01_research/claim-ledger.json"
+      ],
+      "optional_inputs": [
+        "01_research/material-ledger.json",
+        "03_sections/{section}/evidence-resolution-request.md"
+      ],
+      "outputs": [
+        "03_sections/{section}/materials.json"
+      ],
+      "context_profile": "research"
+    },
     "draft_section": {
       "target_kind": "section",
       "include_dependency_handoffs": true,
@@ -153,16 +177,16 @@
       "evidence_access": {
         "kind": "bounded_claim_sources",
         "adapter": "scripts/draft_evidence.py",
-        "interface_version": 4,
+        "interface_version": 5,
         "capabilities": [
           "scope",
-          "resolve_claims",
+          "attest_scope",
           "source",
           "search",
           "record"
         ],
         "required_before_submit": [
-          "resolve_claims"
+          "attest_scope"
         ]
       },
       "context_profile": "creative_draft"

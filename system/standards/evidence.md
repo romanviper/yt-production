@@ -24,11 +24,42 @@ Source `reviewed` phải có locator và note về giới hạn. Link không đ�
 - “First”, “oldest”, “invented”, “caused” luôn cần definition và comparison scope.
 - Direct quote cần source, locator, translation attribution và rights flag.
 
+Accuracy governs assertions about the historical world; it does not require every non-evidentiary connective particular in a clearly representative reconstruction to have happened as narrated. Keep three layers legible:
+1. **Documented fact:** assertion maps to reviewed evidence and preserves qualification.
+2. **Qualified inference:** uncertainty remains visible and cannot become fact through confident prose.
+3. **Representative reconstruction:** plausible ordinary particulars may embody approved conditions, but cannot establish a new practice, institution, technology, chronology, measurement, motive, causal conclusion or unique historical outcome.
+
+## Source relation and distance
+
+Every source must be understood by its relation and temporal distance to the narrated event:
+- `contemporary_material`: physical artefact, inscription, administrative record from the time.
+- `contemporary_interested_account`: royal display, self-serving decree, official bulletin.
+- `later_copy`: scribal exercise or transmission preserved centuries after the event.
+- `retrospective_literature`: epic, legend, commemorative chronicle.
+- `cultural_tradition`: enduring folklore or subsequent oral synthesis.
+- `modern_hypothesis`: scholarly model or reconstructive theory.
+
+Later literary copy must never be presented as contemporary eyewitness testimony; royal propaganda must not masquerade as neutral report; heterogeneous legends cannot be fused into an unqualified biography; and modern hypothesis must remain qualified.
+
 ## Decision ownership
 
 Research owns truth; Outline owns architecture/evidence territory; Writer owns authorship inside that territory.
 
 Evidence compression may preserve source-level detail, but preserved detail must not become an upstream creative decision about how the story must be told.
+
+## Material affordances and evidence preservation
+
+Do not compress every source into propositions alone. When available inside scope, retain the raw material from which a story can be authored:
+- `kind` and neutral `label`;
+- linked claim and source IDs with narrow locators;
+- `actor` or acting system, `object_or_trace` when directly supported;
+- `documented_action` or `explicit_sequence`;
+- `time`, `place`, `physical_description`, `measurement` or `spatial_relation`;
+- `unresolved_question` or `later_evidence` that changes an interpretation;
+- `source_relation` and temporal distance;
+- `limitations` and `representativeness`.
+
+These fields are evidence observations. They must not assign an opening, focal carrier, reversal, climax, ending, emotional beat or narrative route. Do not introduce a narratability score.
 
 ## Writer retrieval boundary
 

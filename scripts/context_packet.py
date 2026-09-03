@@ -297,7 +297,7 @@ def _audience_readable_mission(state: dict[str, Any]) -> str:
 
 
 def _canonical_writer_projection(relative: str, path: Path, section: str, operation: str) -> str | None:
-    """Expose only mission/control state and the bounded retrieval mode to writers."""
+    """Expose only the draft objective and route-neutral bounded retrieval mode to writers."""
 
     section_rel = f"03_sections/{section}/section.json"
     narration_rel = f"03_sections/{section}/narration-pack.json"
@@ -307,11 +307,13 @@ def _canonical_writer_projection(relative: str, path: Path, section: str, operat
             "section": state.get("id"),
             "title": state.get("title"),
             "mission": _audience_readable_mission(state),
-            "entry_state": state.get("entry_state"),
-            "exit_state": state.get("exit_state"),
-            "target_words": state.get("target_words"),
         }
-        if operation != "draft_section":
+        if operation == "draft_section":
+            projection["length_forecast_words"] = state.get("target_words")
+        else:
+            projection["entry_state"] = state.get("entry_state")
+            projection["exit_state"] = state.get("exit_state")
+            projection["target_words"] = state.get("target_words")
             projection["transition"] = state.get("transition")
         return json.dumps(projection, ensure_ascii=False, indent=2)
     if relative == narration_rel:
@@ -331,7 +333,10 @@ def _canonical_writer_projection(relative: str, path: Path, section: str, operat
         projection = {
             "section": pack.get("section"),
             "cycle_id": pack.get("cycle_id"),
-            "evidence": {"mode": "compact_writer_brief_v1", "access": "bounded_on_demand"},
+            "evidence": {
+                "mode": "writer_directed_on_demand_v1",
+                "access": "search_or_open_only_when_chosen_telling_needs_it",
+            },
         }
         return json.dumps(projection, ensure_ascii=False, indent=2)
     return None
@@ -604,7 +609,8 @@ def compile_packet(
                     "Task context is this packet plus the bounded evidence capability below. Do not scan the repository.",
                     f"Evidence adapter: `python {evidence_packet['adapter']} products/{product_dir.name} {task_id} <capability>`.",
                     "Capabilities: " + ", ".join(f"`{item}`" for item in evidence_packet["capabilities"]) + ".",
-                    "Use it only to increase source-level resolution inside the approved claim/source scope.",
+                    "Use it inside the approved claim/source scope to discover story material as well as verify facts: who or what acts, what happens, where, what object or trace is present, what remains unexplained, and what later evidence changes the current understanding.",
+                    "These are optional retrieval questions, not required story ingredients or a narrative order; evidence records prescribe no creative route.",
                     "Every capability call is audit-logged. If external source reading adds detail, record it through the adapter before relying on it.",
                     "New claims, causal conclusions, contradictions or generalizations must be routed back to evidence authority.",
                     "",
