@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "task_id": "T0058-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "Hoàn thành clean probe P01 (614 từ) theo hợp đồng vận động lịch sử mới.",
+  "material_points": [
+    "Bắt đầu từ áp lực Eanna và sự đứt gãy niềm tin mặt đối mặt.",
+    "Tái hiện token rời rạc, dấu niêm phong và bulla đất sét.",
+    "Không thesis-scripting, không thuyết giảng phản bác ngộ nhận."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Duyệt probe mở đầu P01 để tiếp tục viết toàn bộ phần còn lại?",
+    "recommendation": "Phê duyệt probe mở đầu làm baseline cho P01.",
+    "options": [
+      {
+        "label": "Phê duyệt",
+        "effect": "Khóa đoạn mở đầu và viết tiếp P01."
+      },
+      {
+        "label": "Vi chỉnh",
+        "effect": "Chỉnh cục bộ nhịp điệu kể chuyện."
+      }
+    ]
+  }
+}

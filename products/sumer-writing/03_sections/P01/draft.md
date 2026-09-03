@@ -1,25 +1,13 @@
-# P01 — Opening-unit focal-carrier checkpoint
+# P01 — Trước chữ viết đã có một bài toán phải giải
 
-Vào nửa sau thiên niên kỷ thứ tư trước Công nguyên, Uruk đã trải rộng trên vùng đồng bằng phía nam Lưỡng Hà. Một ước tính cho rằng đô thị này từng chiếm khoảng hai trăm hecta, với dân số có thể lên tới bốn mươi nghìn người hoặc hơn. Giữa nó là khu công cộng Eanna, nơi những công trình đồ sộ chỉ có thể tồn tại khi con người, vật liệu và lương thực được huy động trên một quy mô chưa từng có trước đó.
+Nửa sau thiên niên kỷ thứ tư trước Công nguyên, đô thị Uruk trải rộng trên vùng đồng bằng phù sa phía nam Lưỡng Hà. Giữa những bờ kênh và những cụm dân cư mở rộng nhanh chóng, khu đền Eanna trở thành nơi tập trung một dòng chảy vật chất chưa từng có: ngũ cốc từ những cánh đồng cách xa hàng chục cây số, cừu và len từ các bầy gia súc ngoại vi, cùng hàng nghìn lao dịch nhận khẩu phần hàng ngày được đong bằng những chiếc bát đất nặn thô vát miệng.
 
-Mỗi ngày, dòng vật chất nuôi sống khu vực này phải đi qua những cánh cổng của Eanna. Lương thực từ ngoài đồng được đưa vào sân, chuyền qua tay những người khuân vác rồi xếp dọc theo tường. Từ đó, những nhóm khác lại mang từng phần đi. Một chuyến hàng có thể đã đi qua nhiều lối và nhiều bàn tay trước khi tới nơi, nhưng ở mỗi cánh cửa, người ta chỉ cần giải quyết đoạn đường ngay trước mắt.
+Trong một không gian như vậy, bài toán đầu tiên của những người quản lý không phải là ghi lại lời nói, mà là giữ cho các nghĩa vụ vật chất không bị trôi mất theo thời gian.
 
-Một buổi chiều ở một trong những sân ấy có lẽ đã bắt đầu như bao buổi chiều khác. Phần hàng chờ được nhận nằm thành một dãy bên bức tường trong cùng. Ngoài cổng, người phụ trách sân đang đợi chuyến cuối ngày tới. Nếu hai việc diễn ra lần lượt, ông có thể nhìn hàng đi vào, quay sang nhìn phần kia đi ra rồi cho đóng cửa.
+Trước khi bất kỳ chữ viết nào xuất hiện, người ta đã đếm và ghi nhớ bằng những vật thể cụ thể. Trong các gian phòng kho và lối đi của Eanna, những viên đất sét nhỏ nặn bằng tay—hình cầu, hình nón, hình đĩa, kích thước chỉ từ một đến ba centimet—được phân loại để đại diện cho từng đơn vị hàng hóa. Cùng lúc đó, các chốt cửa kho bằng gỗ và nút vải buộc trên miệng chum dầu được trát một lớp đất sét ướt, rồi lăn qua bằng con lăn ấn đá khắc chìm để chứng thực người chịu trách nhiệm. Những công cụ này hoạt động hiệu quả trong các cuộc giao dịch trực tiếp, nơi người giao và người nhận đứng đối diện nhau, có thể nhìn thấy đồ vật đổi tay và cùng đồng thuận về số lượng.
 
-Nhưng nhóm đến nhận hàng xuất hiện đúng lúc chuyến mới tới cổng.
+Nhưng khi quy mô quản trị tăng lên, sự tin cậy dựa trên mặt đối mặt bắt đầu vỡ vụn. Một chuyến hàng ngũ cốc thu từ một làng xa không thể đi kèm với trí nhớ của người gặt suốt nhiều ngày đường; một người giữ kho không thể nhớ tuần trước mình đã phát bao nhiêu khẩu phần lúa mạch nếu chỉ nhìn vào những viên token rời rạc có thể dễ dàng rơi mất hoặc bị nhặt bớt khỏi giỏ. Trí nhớ con người có giới hạn, còn các vật phẩm kiểm đếm rời rạc thì không có khả năng tự bảo vệ mình trước sự hoài nghi hay gian lận.
 
-Những người đầu tiên vừa cúi xuống nhấc các giỏ bên tường thì người bên ngoài đã gọi nhau chuyển hàng vào. Lối đi chỉ đủ rộng cho một dòng người. Vài chiếc giỏ phải được kéo khỏi chỗ cũ để mở đường; số khác được đặt tạm xuống bất cứ khoảng nền nào còn trống. Người phụ trách quay ra cổng. Ông thấy hàng mới vượt qua ngưỡng cửa, nhưng phía sau lưng, những người đến nhận cũng đang mang hàng ra theo hướng ngược lại.
+Chính áp lực đó đã thúc đẩy một bước chuyển vật chất quan trọng. Để biến việc kiểm đếm thành một cam kết không thể bị thay đổi dọc đường, những người quản lý đã gom các viên token vào trong một khối đất sét rỗng, miết kín miệng lại thành một quả cầu bulla. Trước khi đất khô, họ ấn chính các viên token ấy lên bề mặt ngoài để in lại số lượng bên trong, rồi lăn con lăn ấn tín bao quanh để niêm phong toàn bộ lớp vỏ.
 
-Trong vài phút, hai dòng chuyển động nhập vào nhau. Vai người này lướt qua vai người kia. Những chiếc giỏ giống nhau được nhấc lên, đặt xuống rồi đổi tay. Một người ở ngoài biết mình đã chuyển hết phần được giao qua cổng. Một người ở trong biết mình đã dọn sạch lối đi. Nhóm nhận hàng biết họ đã mang đi mọi thứ còn nằm ở bức tường trong cùng. Nhưng không ai đi cùng một phần hàng từ đầu đến cuối.
-
-Khi sân vắng trở lại, bức tường trong cùng đã trống. Dọc bức tường đối diện là chuyến hàng mới vừa được xếp xong. Nhìn vào hai khoảng đó, không còn cách nào biết liệu một vài chiếc giỏ đã bị đặt nhầm sang bên kia, hay mọi thứ thực sự đã tới đúng nơi. Người phụ trách cho đóng cửa.
-
-Sáng hôm sau, nhóm nhận hàng quay lại. Phần họ mang về ít hơn phần họ đến nhận.
-
-Mọi người trở về vị trí của mình để chỉ lại những gì đã xảy ra. Người làm ngoài cổng chỉ tới ngưỡng cửa. Người dọn lối chỉ sang bức tường đối diện. Người của nhóm nhận hàng chỉ vào chỗ dãy giỏ từng nằm. Mỗi lời kể đều nối được một đoạn ngắn. Giữa các đoạn ấy, một phần của lần bàn giao đã biến mất.
-
-Không ai cần phải nói dối. Hàng hóa vẫn còn đâu đó trong sân hoặc đã rời khỏi nó. Nhưng lời kể không thể xác định phần nào thuộc chuyến mới, phần nào thuộc nhóm đã tới nhận, và ai phải chịu phần thiếu.
-
-Nếu kho giao bù, chuyến hàng mới có thể hụt. Nếu kho từ chối, nhóm kia phải mang về ít hơn. Cuộc tranh cãi không thể giải quyết bằng cách hỏi lại thêm một lần nữa; những người có mặt vẫn chỉ có thể kể đúng phần mình đã nhìn thấy.
-
-Ngoài cổng, chuyến tiếp theo đang chờ. Trước khi chiếc giỏ đầu tiên lại đổi tay, hai bên cần chốt số lượng bằng một dấu vẫn có thể được kiểm tra sau khi người giao, người nhận và những người khuân vác đều đã rời sân.
+Bằng cách đó, một thiết bị lưu trữ ngoại thân đầu tiên ra đời. Người nhận hàng ở Eanna không cần phải đập vỡ quả cầu để biết bên trong có bao nhiêu đơn vị; họ chỉ cần đọc những vết lõm trên lớp vỏ đã được con dấu của người gửi khóa lại. Từ những vật thể rời rạc phụ thuộc vào sự có mặt của con người, thông tin đã được đóng băng thành một khối vật chất độc lập, có thể di chuyển qua không gian, chịu được sự chậm trễ của thời gian, và tự nó đứng ra làm bằng chứng khi những người liên quan không còn đứng cạnh nhau.
