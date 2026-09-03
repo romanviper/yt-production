@@ -13,8 +13,10 @@ from typing import Any
 
 try:
     from scripts.common import read_json, sha256
+    from scripts.material_contract import validate_material_record
 except ModuleNotFoundError:  # Direct execution from scripts/
     from common import read_json, sha256
+    from material_contract import validate_material_record
 
 
 MAX_QUERY_CHARS = 300
@@ -689,16 +691,31 @@ class DraftEvidenceBroker:
     def _all_materials(self) -> list[dict[str, Any]]:
         seen_ids: set[str] = set()
         materials: list[dict[str, Any]] = []
+        raw_items: list[dict[str, Any]] = []
         if isinstance(self.section_materials, dict):
             for item in self.section_materials.get("materials", []):
                 if isinstance(item, dict) and item.get("id"):
-                    seen_ids.add(item["id"])
-                    materials.append(item)
+                    raw_items.append(item)
         if isinstance(self.material_ledger, dict):
             for item in self.material_ledger.get("materials", []):
-                if isinstance(item, dict) and item.get("id") and item["id"] not in seen_ids:
-                    seen_ids.add(item["id"])
-                    materials.append(item)
+                if isinstance(item, dict) and item.get("id"):
+                    raw_items.append(item)
+
+        for item in raw_items:
+            mid = str(item["id"])
+            if mid in seen_ids:
+                continue
+            errors = validate_material_record(
+                item,
+                allowed_claim_ids=set(self.allowed_claim_ids),
+                allowed_source_ids=set(self.allowed_source_ids),
+                require_source_relation=False,
+                prefix="material",
+            )
+            if errors:
+                raise EvidenceAccessError(f"material record {mid} violates material contract: {'; '.join(errors)}")
+            seen_ids.add(mid)
+            materials.append(item)
         return materials
 
     def _preserved_details(self, source_id: str) -> list[dict[str, Any]]:

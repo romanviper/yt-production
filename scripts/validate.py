@@ -13,6 +13,7 @@ from pathlib import Path
 try:
     from scripts.common import read_json, sha256
     from scripts.draft_lifecycle_contract import validate_canonical_draft_lifecycle
+    from scripts.material_contract import validate_materials_file
     from scripts.outline_contract import validate_outline_contract
     from scripts.story_plan_contract import is_direct_authorship_outline, verify_narration_pack
     from scripts.task import verify_active_pointer, verify_task
@@ -20,6 +21,7 @@ try:
 except ModuleNotFoundError:
     from common import read_json, sha256
     from draft_lifecycle_contract import validate_canonical_draft_lifecycle
+    from material_contract import validate_materials_file
     from outline_contract import validate_outline_contract
     from story_plan_contract import is_direct_authorship_outline, verify_narration_pack
     from task import verify_active_pointer, verify_task
@@ -105,22 +107,14 @@ def validate_product(product_dir: Path) -> list[Issue]:
 
     material_path = product_dir / "01_research" / "material-ledger.json"
     if material_path.is_file():
-        try:
-            material_doc = read_json(material_path)
-        except (json.JSONDecodeError, ValueError, OSError) as exc:
-            issues.append(Issue("ERROR", str(material_path), f"Invalid optional material ledger: {exc}"))
-            material_doc = {}
-        for item in material_doc.get("materials", []) if isinstance(material_doc.get("materials", []), list) else []:
-            if not isinstance(item, dict):
-                issues.append(Issue("ERROR", str(material_path), "Optional material entries must be objects."))
-                continue
-            material_id = item.get("id", "?")
-            for claim_id in item.get("claim_ids", []) if isinstance(item.get("claim_ids", []), list) else []:
-                if claim_id not in claim_ids:
-                    issues.append(Issue("ERROR", f"{material_path}#{material_id}", f"Unknown claim: {claim_id}"))
-            for ref in item.get("source_refs", []) if isinstance(item.get("source_refs", []), list) else []:
-                if not isinstance(ref, dict) or ref.get("source_id") not in source_ids:
-                    issues.append(Issue("ERROR", f"{material_path}#{material_id}", "Optional material references unknown source."))
+        for error in validate_materials_file(
+            material_path,
+            allowed_claim_ids=claim_ids,
+            allowed_source_ids=source_ids,
+            require_source_relation=False,
+            prefix="global material",
+        ):
+            issues.append(Issue("ERROR", str(material_path), error))
 
     outline = safe_json(outline_path, issues)
     if outline.get("sections"):
@@ -184,6 +178,26 @@ def validate_product(product_dir: Path) -> list[Issue]:
             if state.get("status") in {"ready_for_draft", "ready_for_review", "review_complete", "approved"}:
                 for message in verify_narration_pack(product_dir, str(section_id)):
                     issues.append(Issue("ERROR", str(root / "narration-pack.json"), message))
+            section_materials_path = root / "materials.json"
+            if section_materials_path.is_file():
+                ep_path = root / "evidence-pack.json"
+                sec_claims = claim_ids
+                sec_sources = source_ids
+                if ep_path.is_file():
+                    try:
+                        ep_doc = read_json(ep_path)
+                        sec_claims = {c["id"] for c in ep_doc.get("claims", []) if isinstance(c, dict) and "id" in c}
+                        sec_sources = {s["id"] for s in ep_doc.get("sources", []) if isinstance(s, dict) and "id" in s}
+                    except Exception:
+                        pass
+                for error in validate_materials_file(
+                    section_materials_path,
+                    allowed_claim_ids=sec_claims,
+                    allowed_source_ids=sec_sources,
+                    require_source_relation=False,
+                    prefix=f"section {section_id} material",
+                ):
+                    issues.append(Issue("ERROR", str(section_materials_path), error))
 
     validated_task_ids: set[str] = set()
     active_path = product_dir / "tasks" / "ACTIVE.json"

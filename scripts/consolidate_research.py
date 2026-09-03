@@ -12,8 +12,10 @@ from typing import Any
 
 try:
     from scripts.common import product_relative, read_json, sha256, write_json
+    from scripts.material_contract import VALID_SOURCE_RELATIONS, validate_material_record
 except ModuleNotFoundError:  # Direct execution: python scripts/consolidate_research.py
     from common import product_relative, read_json, sha256, write_json
+    from material_contract import VALID_SOURCE_RELATIONS, validate_material_record
 
 
 GENERATOR = "scripts/consolidate_research.py"
@@ -21,14 +23,6 @@ MANIFEST_PATH = Path("01_research/consolidation.json")
 SOURCE_INDEX_PATH = Path("01_research/source-index.json")
 CLAIM_LEDGER_PATH = Path("01_research/claim-ledger.json")
 MATERIAL_LEDGER_PATH = Path("01_research/material-ledger.json")
-VALID_SOURCE_RELATIONS = {
-    "contemporary_material",
-    "contemporary_interested_account",
-    "later_copy",
-    "retrospective_literature",
-    "cultural_tradition",
-    "modern_hypothesis",
-}
 
 
 def _list(value: Any) -> list[Any]:
@@ -154,39 +148,15 @@ def validate_global_ledgers(product_dir: Path) -> list[str]:
         material_ids.add(material_id)
         if not item.get("provenance"):
             errors.append(f"global material {material_id or '?'} missing workstream provenance")
-        refs = item.get("source_refs", [])
-        if not isinstance(refs, list):
-            errors.append(f"global material {material_id or '?'} source_refs must be a list")
-            refs = []
-        for ref in refs:
-            if not isinstance(ref, dict) or ref.get("source_id") not in source_ids:
-                errors.append(f"global material {material_id or '?'} references unknown source")
-                continue
-            locators = ref.get("locators", [])
-            if not isinstance(locators, list) or not all(isinstance(loc, str) and loc.strip() for loc in locators):
-                errors.append(f"global material {material_id or '?'} source_ref locators must be strings")
-        linked_claims = item.get("claim_ids", [])
-        if not isinstance(linked_claims, list):
-            errors.append(f"global material {material_id or '?'} claim_ids must be a list")
-            linked_claims = []
-        for claim_id in linked_claims:
-            if claim_id not in claim_ids:
-                errors.append(f"global material {material_id or '?'} references unknown claim: {claim_id}")
-        limitations = item.get("limitations", [])
-        if limitations is not None and (
-            not isinstance(limitations, list)
-            or not all(isinstance(value, str) and value.strip() for value in limitations)
-        ):
-            errors.append(f"global material {material_id or '?'} limitations must be a list of strings")
-        seq = item.get("explicit_sequence")
-        if seq is not None and (
-            not isinstance(seq, list)
-            or not all(isinstance(step, str) and step.strip() for step in seq)
-        ):
-            errors.append(f"global material {material_id or '?'} explicit_sequence must be a list of strings")
-        relation = item.get("source_relation")
-        if relation is not None and relation not in VALID_SOURCE_RELATIONS:
-            errors.append(f"global material {material_id or '?'} invalid source_relation: {relation}")
+        errors.extend(
+            validate_material_record(
+                item,
+                allowed_claim_ids=claim_ids,
+                allowed_source_ids=source_ids,
+                require_source_relation=False,
+                prefix="global material",
+            )
+        )
     return errors
 
 
