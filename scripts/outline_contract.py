@@ -265,6 +265,22 @@ def validate_outline_contract(
                     if term in job.lower():
                         errors.append(f"outline section {section_id or '?'} narrative_job must not prescribe camera or scene grammar: {term!r}")
 
+            hist_change = section.get("historical_change") or section.get("historical_movement")
+            if hist_change is not None:
+                if (
+                    not isinstance(hist_change, dict)
+                    or not isinstance(hist_change.get("from"), str)
+                    or not isinstance(hist_change.get("to"), str)
+                    or not hist_change["from"].strip()
+                    or not hist_change["to"].strip()
+                ):
+                    errors.append(f"outline section {section_id or '?'} historical_change must be an object with non-empty 'from' and 'to' strings")
+
+            earned_meaning = section.get("earned_meaning")
+            if earned_meaning is not None:
+                if not isinstance(earned_meaning, str) or not earned_meaning.strip():
+                    errors.append(f"outline section {section_id or '?'} earned_meaning must be a non-empty string")
+
         dependencies = section.get("dependencies", [])
         if not isinstance(dependencies, list) or not all(isinstance(item, str) for item in dependencies):
             errors.append(f"outline section {section_id or '?'} dependencies must be a list")
