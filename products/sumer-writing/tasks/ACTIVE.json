@@ -1,6 +1,6 @@
 {
   "task_id": null,
   "status": "idle",
-  "updated_at": "2026-08-26T15:05:19.972689+00:00",
-  "reason": "task submitted; routing returned to idle"
+  "updated_at": "2026-09-03T16:52:37.495709+00:00",
+  "superseded_by": "HA-20260903T165237495709Z"
 }

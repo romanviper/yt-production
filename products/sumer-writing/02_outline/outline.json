@@ -3,8 +3,6 @@
   "product": "sumer-writing",
   "cycle_id": "C003",
   "status": "approved",
-  "approved_by": "user",
-  "approved_at": "2026-08-19T10:07:00+00:00",
   "section_count": 8,
   "script_architecture": {
     "writer_authorship_contract_version": 1,
@@ -24,7 +22,10 @@
         "narrative_job": "Biến câu chuyện nguồn gốc chữ viết từ một khoảnh khắc 'phát minh' thành một vấn đề lịch sử: các cộng đồng và thiết chế ngày càng phức tạp cần giữ lượng, loại, người và nghĩa vụ ổn định qua thời gian. Sau đó xác lập điều khác thường của hệ thống sớm nhất: nó đã có thể làm công việc thực tế ngay cả khi chưa tương ứng với hình dung hiện đại về một câu viết liên tục.",
         "entry_state": "Khán giả dễ hình dung chữ viết xuất hiện khi ai đó lần đầu nghĩ ra cách ghi lời nói.",
         "exit_state": "Khán giả hiểu nguồn gốc là một quá trình đồng phát triển giữa nhiều thực hành ghi đếm/xác thực và nhu cầu thể chế; early writing có giá trị vì giữ được các quan hệ có thể dùng lại, dù ranh giới 'writing' và ngôn ngữ nền vẫn chưa hoàn toàn chắc chắn.",
-        "movement_ids": ["M01", "M02"]
+        "movement_ids": [
+          "M01",
+          "M02"
+        ]
       },
       {
         "id": "A02",
@@ -34,7 +35,12 @@
         "narrative_job": "Theo dõi một hệ thống ban đầu thiên về hành chính khi nó tích lũy thêm chức năng, rồi thử xem điều gì xảy ra khi record được gắn với người chịu trách nhiệm, xác thực, lưu trữ, truy hồi và đào tạo. Act này phải vừa cho thấy năng lực mới vừa đặt giới hạn của nó: chữ viết có thể làm tổ chức nhớ, nhìn và phối hợp tốt hơn, nhưng không tự sản sinh năng lực đọc, quyền lực hay sự tuân thủ.",
         "entry_state": "Khán giả đã thấy record sớm hữu ích nhưng chưa biết vì sao một công nghệ ghi chép có thể trở thành lực lịch sử lâu dài.",
         "exit_state": "Khán giả hiểu sức mạnh của writing là sức mạnh có điều kiện: nó mở rộng khi nằm trong một network xã hội có thể chuẩn hóa, học, xác thực, lưu trữ và hành động; chính vì vậy tác động của nó luôn phân phối không đều và luôn có khoảng cách giữa văn bản với hành động.",
-        "movement_ids": ["M03", "M04", "M05", "M06"]
+        "movement_ids": [
+          "M03",
+          "M04",
+          "M05",
+          "M06"
+        ]
       },
       {
         "id": "A03",
@@ -44,7 +50,10 @@
         "narrative_job": "Đưa thesis tới giới hạn cuối của vòng đời. Truyền thống chỉ sống lâu khi cộng đồng có thể thích nghi script và competence sang ngôn ngữ, địa điểm và thiết chế mới. Khi những cộng đồng ấy co lại, vật thể có thể sống sót trong lúc năng lực đọc biến mất. Quá trình giải mã hiện đại trở thành bằng chứng cuối cùng rằng meaning không nằm sẵn trong đất sét mà phải được duy trì hoặc xây dựng lại.",
         "entry_state": "Khán giả biết writing phụ thuộc vào communities of practice nhưng chưa biết continuity ấy có thể chịu được thay đổi lớn và đứt gãy tới đâu.",
         "exit_state": "Khán giả phân biệt ba thứ: vật thể sống sót, truyền thống sống và nghĩa được hiểu. Chữ viết trở thành lực lịch sử khi năng lực sử dụng nó được tái tạo; khi chuỗi đó đứt, clay có thể còn nhưng meaning phải chờ một cộng đồng khác phục dựng.",
-        "movement_ids": ["M07", "M08"]
+        "movement_ids": [
+          "M07",
+          "M08"
+        ]
       }
     ],
     "movements": [
@@ -56,7 +65,9 @@
         "narrative_job": "Xác lập formation pressure và ecology: nhu cầu giữ thông tin hành chính/xác thực tăng trong bối cảnh thiết chế lớn hơn, nhưng evidence không cho phép một nguyên nhân duy nhất hay một genealogy tuyến tính. Movement phải khiến câu hỏi chuyển từ 'ai phát minh?' sang 'những áp lực và thực hành nào khiến durable recording trở nên hữu ích?'.",
         "entry_state": "Nguồn gốc được tưởng như một invention event đơn lẻ.",
         "exit_state": "Nguồn gốc được hiểu như một quá trình nhiều thực hành và nhiều áp lực cùng hội tụ; administration là trọng tâm nhưng không phải monocause.",
-        "section_ids": ["P01"]
+        "section_ids": [
+          "P01"
+        ]
       },
       {
         "id": "M02",
@@ -66,7 +77,9 @@
         "narrative_job": "Xác lập writing threshold và early function mà không làm khán giả sa vào định nghĩa. Movement phải cho thấy record có thể giữ cấu trúc, quantity/category/position và những quan hệ lặp lại đủ để dùng trước khi continuous speech hay underlying language có thể được phục hồi chắc chắn.",
         "entry_state": "Nếu chưa ghi được câu nói thì hệ thống dễ bị xem là chưa thực sự có tác dụng.",
         "exit_state": "Khán giả thấy usefulness đến trước sentence-likeness; từ đây câu hỏi trở thành hệ thống đó tích lũy thêm năng lực ra sao.",
-        "section_ids": ["P02"]
+        "section_ids": [
+          "P02"
+        ]
       },
       {
         "id": "M03",
@@ -76,7 +89,9 @@
         "narrative_job": "Cho thấy writing không đi theo chiếc thang accounting→literature mà tích lũy và tái kết hợp thêm các use cases: kinh tế, tôn giáo, chính trị, thư từ, luật/normative practice, lexical/scholarly work và textual memory. Movement phải làm rõ consequence của expansion: càng nhiều domain phụ thuộc vào writing, càng nhiều convention và competence phải được duy trì.",
         "entry_state": "Writing vẫn được hiểu chủ yếu như bookkeeping.",
         "exit_state": "Khán giả hiểu nó đã trở thành một repertoire nhiều chức năng, nhưng expansion này làm nảy sinh nhu cầu về hạ tầng tổ chức và người biết vận hành.",
-        "section_ids": ["P03"]
+        "section_ids": [
+          "P03"
+        ]
       },
       {
         "id": "M04",
@@ -86,7 +101,9 @@
         "narrative_job": "Thử causal feedback ở cấp institution: writing tăng capacity khi được gắn với classification, responsibility, authentication, accumulation và retrieval. Movement phải đồng thời giữ archive bias và không back-project quy mô của later systems về Uruk.",
         "entry_state": "Nhiều use cases cho thấy writing quan trọng hơn, nhưng cơ chế nó tăng institutional capacity vẫn mơ hồ.",
         "exit_state": "Khán giả thấy một cơ chế cụ thể: record không tự có agency, nhưng network quanh record có thể làm nghĩa vụ và nguồn lực trở nên nhìn thấy, truy hồi và audit được ở quy mô lớn hơn.",
-        "section_ids": ["P04"]
+        "section_ids": [
+          "P04"
+        ]
       },
       {
         "id": "M05",
@@ -96,7 +113,9 @@
         "narrative_job": "Chuyển từ institutional memory sang competence. Movement phải chứng minh continuity không nằm ở clay hay sign list một mình mà ở quá trình đào tạo, sao chép, sửa, tính toán, học lexical/genre conventions và duy trì communities of practice. Access phải được trình bày như bất đối xứng nhưng không định lượng quá evidence.",
         "entry_state": "Khán giả có thể nghĩ một archive bền thì knowledge cũng tự bền.",
         "exit_state": "Khán giả hiểu hệ thống chỉ sống khi competence được tái tạo; durability of material và continuity of practice là hai việc khác nhau.",
-        "section_ids": ["P05"]
+        "section_ids": [
+          "P05"
+        ]
       },
       {
         "id": "M06",
@@ -106,7 +125,9 @@
         "narrative_job": "Đặt giới hạn rõ nhất cho agency của writing. Movement phải tách claim-making, persistence và coordination khỏi enforcement/compliance; writing có thể giúp một instruction, law hay norm tồn tại và được truy hồi, nhưng action vẫn phụ thuộc người và authority bên ngoài text.",
         "entry_state": "Sau institutional feedback và trained competence, written authority rất dễ bị đồng nhất với effective authority.",
         "exit_state": "Khán giả có một boundary sạch: writing có thể mở rộng trí nhớ và coordination, nhưng không tự cưỡng chế thế giới.",
-        "section_ids": ["P06"]
+        "section_ids": [
+          "P06"
+        ]
       },
       {
         "id": "M07",
@@ -116,7 +137,9 @@
         "narrative_job": "Cho thấy survival là adaptation chứ không phải purity. Script có thể được sửa convention để ghi ngôn ngữ mới; Sumerian language, cuneiform script và institutional tradition có thể sống theo các timeline khác nhau; transfer đi qua specialists, curricula, copying và contact, không phải diffusion tự động.",
         "entry_state": "Continuity vẫn dễ bị hiểu là giữ nguyên một script của cùng một people/language.",
         "exit_state": "Khán giả hiểu một tradition sống được vì nó có thể được học lại và biến đổi; survival của script không đồng nghĩa survival của language hay institution.",
-        "section_ids": ["P07"]
+        "section_ids": [
+          "P07"
+        ]
       },
       {
         "id": "M08",
@@ -126,7 +149,9 @@
         "narrative_job": "Đóng lifecycle bằng contraction, competence break và recovery. Movement không được dựng một 'last reader' hay absolute final date; thay vào đó phải cho thấy living tradition co lại, material tablets còn, rồi modern decipherment phục dựng competence qua copying, multilingual comparison và repeated testing. Legacy được khóa ở recovery-mediated knowledge, không direct lineage tới writing hiện đại.",
         "entry_state": "P07 cho thấy competence có thể sống rất lâu nếu được tái tạo và thích nghi.",
         "exit_state": "Final answer: signs không tự mang power hay meaning qua thời gian. Historical force xuất hiện khi communities làm chúng repeatable, retrievable và actionable; modern reading là một lần xây lại chuỗi đó sau khi nó đã đứt.",
-        "section_ids": ["P08"]
+        "section_ids": [
+          "P08"
+        ]
       }
     ]
   },
@@ -135,114 +160,271 @@
       "id": "P01",
       "order": 1,
       "title": "Trước chữ viết đã có một bài toán phải giải",
-      "movement_ids": ["M01"],
+      "mission": "Điều gì khiến việc giữ thông tin bằng những dấu bền trên đất sét trở nên hữu ích?",
+      "movement_ids": [
+        "M01"
+      ],
       "narrative_job": "Thiết lập các pressure và information practices trước/sát thời điểm proto-cuneiform xuất hiện, đồng thời phá hai shortcut: một invention event duy nhất và token→tablet như đường tiến hóa tất định. Section phải kết thúc khi audience đã hiểu vì sao durable, inspectable records trở nên đáng giá mà chưa cần biết 'ai phát minh chữ viết'.",
       "entry_state": "Chữ viết được hình dung như một ý tưởng xuất hiện đột ngột.",
       "exit_state": "Khán giả hiểu formation là một ecology gồm numerical practices, seals/bullae/tablets và institutional demand; administration là pressure lớn nhưng không phải nguyên nhân duy nhất.",
-      "claim_ids": ["CLM-0011", "CLM-0012", "CLM-0013", "CLM-0014", "CLM-0015", "CLM-0016", "CLM-0017", "CLM-0018"],
+      "historical_change": {
+        "from": "Kế toán bằng token và ấn tín rời rạc chỉ đủ sức theo dõi các giao dịch điểm-điểm trong một cộng đồng nhỏ.",
+        "to": "Sự xuất hiện của các tập hợp ký hiệu số và dấu ấn hình thành hệ thống lưu trữ ngoại thân đầu tiên, cho phép thiết chế duy trì nghĩa vụ qua thời gian và khoảng cách."
+      },
+      "earned_meaning": "Chữ viết ban đầu không phải là một nỗ lực ghi lại lời nói, mà là một công nghệ vật chất để neo giữ các cam kết thực tế khi trí nhớ con người không còn gánh nổi.",
+      "claim_ids": [
+        "CLM-0011",
+        "CLM-0012",
+        "CLM-0013",
+        "CLM-0014",
+        "CLM-0015",
+        "CLM-0016",
+        "CLM-0017",
+        "CLM-0018"
+      ],
       "dependencies": [],
       "transition": "Nếu nhu cầu và các recording practices đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.",
-      "target_words": {"min": 1050, "max": 1550},
+      "target_words": {
+        "min": 1050,
+        "max": 1550
+      },
       "non_goal": "Không invention scene; không ethnic attribution; không universal token code; không direct token→tablet genealogy; không biến administrative pressure thành monocause."
     },
     {
       "id": "P02",
       "order": 2,
       "title": "Hữu ích trước khi thành câu",
-      "movement_ids": ["M02"],
+      "mission": "Làm thế nào một hệ thống ký hiệu chưa thể ghi lại lời nói trọn vẹn vẫn giải quyết được các nhu cầu vận hành thực tế?",
+      "movement_ids": [
+        "M02"
+      ],
       "narrative_job": "Giải thích early record có thể làm công việc có thật trước khi continuous speech hoặc underlying language được recover chắc chắn. Section phải land được usefulness trước khi mở các guardrail về writing threshold, chronology, language và world-first.",
       "entry_state": "Khán giả vẫn có thể nghĩ 'chưa thành câu' đồng nghĩa 'chưa phải công nghệ có sức nặng'.",
       "exit_state": "Khán giả hiểu structured signs/layout có thể giữ repeatable relations đủ để vận hành administration; ranh giới writing/proto-writing và language attribution vẫn phải qualified.",
-      "claim_ids": ["CLM-0001", "CLM-0002", "CLM-0003", "CLM-0004", "CLM-0005", "CLM-0006", "CLM-0007", "CLM-0008", "CLM-0009", "CLM-0019", "CLM-0020", "CLM-0021", "CLM-0022", "CLM-0023", "CLM-0024", "CLM-0025", "CLM-0034", "CLM-0042"],
-      "dependencies": ["P01"],
+      "claim_ids": [
+        "CLM-0001",
+        "CLM-0002",
+        "CLM-0003",
+        "CLM-0004",
+        "CLM-0005",
+        "CLM-0006",
+        "CLM-0007",
+        "CLM-0008",
+        "CLM-0009",
+        "CLM-0019",
+        "CLM-0020",
+        "CLM-0021",
+        "CLM-0022",
+        "CLM-0023",
+        "CLM-0024",
+        "CLM-0025",
+        "CLM-0034",
+        "CLM-0042"
+      ],
+      "dependencies": [
+        "P01"
+      ],
       "transition": "Một system đã có thể làm việc. Bây giờ câu chuyện cần theo dõi điều gì xảy ra khi writing được dùng cho ngày càng nhiều loại việc khác nhau.",
-      "target_words": {"min": 1150, "max": 1750},
+      "target_words": {
+        "min": 1150,
+        "max": 1750
+      },
       "non_goal": "Không definition-first lecture; không chắc hóa Sumerian language; không uncontested world-first; không kể proto-cuneiform như mature cuneiform hay một bước tất định hướng tới alphabet."
     },
     {
       "id": "P03",
       "order": 3,
       "title": "Khi chữ viết bắt đầu làm nhiều việc hơn",
-      "movement_ids": ["M03"],
+      "mission": "Chữ viết mở rộng từ công cụ kiểm kê hạn hẹp thành một hệ sinh thái nhiều chức năng như thế nào?",
+      "movement_ids": [
+        "M03"
+      ],
       "narrative_job": "Thiết lập functional expansion như additions và recombinations thay vì một ladder. Section phải cho audience thấy writing đi từ dominant administrative use tới một repertoire rộng hơn và giải thích vì sao expansion này thay đổi stakes của câu chuyện: writing giờ không chỉ giữ hàng hóa mà còn có thể giữ claims, categories, instructions và textual traditions.",
       "entry_state": "Writing vẫn chủ yếu được nhìn như công cụ bookkeeping.",
       "exit_state": "Khán giả hiểu writing đã trở thành một môi trường nhiều chức năng; càng nhiều domain dựa vào nó, càng quan trọng việc duy trì convention, access và competence.",
-      "claim_ids": ["CLM-0035", "CLM-0036", "CLM-0037", "CLM-0038", "CLM-0039", "CLM-0040", "CLM-0041", "CLM-0043", "CLM-0044", "CLM-0045"],
-      "dependencies": ["P02"],
+      "claim_ids": [
+        "CLM-0035",
+        "CLM-0036",
+        "CLM-0037",
+        "CLM-0038",
+        "CLM-0039",
+        "CLM-0040",
+        "CLM-0041",
+        "CLM-0043",
+        "CLM-0044",
+        "CLM-0045"
+      ],
+      "dependencies": [
+        "P02"
+      ],
       "transition": "Expansion cho biết writing được dùng ở đâu; phần tiếp theo phải trả lời nó thực sự thay đổi năng lực của một institution bằng cơ chế nào.",
-      "target_words": {"min": 1000, "max": 1450},
+      "target_words": {
+        "min": 1000,
+        "max": 1450
+      },
       "non_goal": "Không genre catalogue; không accounting→literature ladder; không biến later manuscripts thành original dispatches; không dùng translation hiện đại như primary voice chưa qua rights review."
     },
     {
       "id": "P04",
       "order": 4,
       "title": "Khi record cho một institution trí nhớ dài hơn",
-      "movement_ids": ["M04"],
+      "mission": "Việc lưu giữ và tra cứu văn bản lâu dài đã tái cấu trúc trật tự và quyền lực thể chế ra sao?",
+      "movement_ids": [
+        "M04"
+      ],
       "narrative_job": "Trình bày causal feedback ở dạng bounded test: records tăng institutional capacity khi gắn với procedure, authentication, responsible people, accumulation và retrieval. Section phải đồng thời cho thấy visibility này có bias và distributional effects.",
       "entry_state": "Khán giả biết writing có nhiều chức năng nhưng chưa thấy cơ chế biến nhiều documents thành organizational capacity.",
       "exit_state": "Khán giả hiểu record systems có thể làm labor/goods/obligations dễ phân loại, tổng hợp và audit hơn, nhưng agency và enforcement vẫn nằm ở người/authority; archives cũng không phải neutral sample của society.",
-      "claim_ids": ["CLM-0015", "CLM-0046", "CLM-0047", "CLM-0048", "CLM-0049", "CLM-0050", "CLM-0051", "CLM-0052", "CLM-0053", "CLM-0054"],
-      "dependencies": ["P03"],
+      "claim_ids": [
+        "CLM-0015",
+        "CLM-0046",
+        "CLM-0047",
+        "CLM-0048",
+        "CLM-0049",
+        "CLM-0050",
+        "CLM-0051",
+        "CLM-0052",
+        "CLM-0053",
+        "CLM-0054"
+      ],
+      "dependencies": [
+        "P03"
+      ],
       "transition": "Một archive chỉ mạnh khi có người hiểu và tái tạo conventions của nó. Vì vậy câu hỏi tiếp theo chuyển từ records sang competence.",
-      "target_words": {"min": 1350, "max": 2000},
+      "target_words": {
+        "min": 1350,
+        "max": 2000
+      },
       "non_goal": "Không back-project later institutional scale về Uruk; không coi archive là toàn xã hội; không nói tablet có agency; không equate written claim với enforcement."
     },
     {
       "id": "P05",
       "order": 5,
       "title": "Đất sét không tự truyền được cách đọc nó",
-      "movement_ids": ["M05"],
+      "mission": "Kỹ năng đọc viết và truyền thống sao chép được duy trì thế nào qua các thế hệ học viên?",
+      "movement_ids": [
+        "M05"
+      ],
       "narrative_job": "Làm rõ human infrastructure của writing: competence phải được dạy, luyện, chép, sửa và tái tạo. Section phải tách professional title, functional competence và broad literacy, đồng thời giữ access asymmetry trong evidence ceiling.",
       "entry_state": "Sau P04, audience có thể nghĩ records sống lâu thì knowledge cũng tự sống lâu.",
       "exit_state": "Khán giả hiểu continuity là labor được tái tạo qua communities of practice; material durability không đảm bảo living competence.",
-      "claim_ids": ["CLM-0026", "CLM-0027", "CLM-0028", "CLM-0029", "CLM-0030", "CLM-0031", "CLM-0032", "CLM-0033", "CLM-0036", "CLM-0039", "CLM-0044", "CLM-0045"],
-      "dependencies": ["P04"],
+      "claim_ids": [
+        "CLM-0026",
+        "CLM-0027",
+        "CLM-0028",
+        "CLM-0029",
+        "CLM-0030",
+        "CLM-0031",
+        "CLM-0032",
+        "CLM-0033",
+        "CLM-0036",
+        "CLM-0039",
+        "CLM-0044",
+        "CLM-0045"
+      ],
+      "dependencies": [
+        "P04"
+      ],
       "transition": "Nếu trained people và institutions đã có thể giữ text sống, boundary tiếp theo là liệu một written instruction có tự biến thành action hay không.",
-      "target_words": {"min": 1150, "max": 1700},
+      "target_words": {
+        "min": 1150,
+        "max": 1700
+      },
       "non_goal": "Không back-project Old Babylonian schooling về Uruk; không universal edubba; không literacy-rate estimate; không invented student interiority hay population-wide access claims."
     },
     {
       "id": "P06",
       "order": 6,
       "title": "Một mệnh lệnh được viết ra vẫn có thể thất bại",
-      "movement_ids": ["M06"],
+      "mission": "Những ranh giới thực tế nào bộc lộ khi văn bản hành chính không thể tự đảm bảo sự tuân thủ?",
+      "movement_ids": [
+        "M06"
+      ],
       "narrative_job": "Stress-test agency của writing bằng việc tách documentary persistence khỏi compliance. Section phải cho thấy written order/law/norm có thể tồn tại, được truyền và được viện dẫn trong khi implementation vẫn thất bại hoặc cần enforcement từ bên ngoài text.",
       "entry_state": "Khán giả đã thấy records + trained competence + authority như một system mạnh; written authority vì vậy dễ bị xem như effective authority.",
       "exit_state": "Khán giả hiểu writing có thể mở rộng memory, claim-making và coordination nhưng không tự tạo compliance; đây là giới hạn tích cực của thesis chứ không phải phủ định value của writing.",
-      "claim_ids": ["CLM-0037", "CLM-0040", "CLM-0043", "CLM-0049", "CLM-0052"],
-      "dependencies": ["P05"],
+      "claim_ids": [
+        "CLM-0037",
+        "CLM-0040",
+        "CLM-0043",
+        "CLM-0049",
+        "CLM-0052"
+      ],
+      "dependencies": [
+        "P05"
+      ],
       "transition": "Nếu power nằm trong community dùng writing hơn là trong marks, lifecycle chỉ có thể kéo dài khi community ấy mang competence sang những language và institution mới.",
-      "target_words": {"min": 800, "max": 1200},
+      "target_words": {
+        "min": 800,
+        "max": 1200
+      },
       "non_goal": "Không generalize một failure case thành norm; không suy đoán motive; không gọi writing powerless; không equate documentary survival với enforcement."
     },
     {
       "id": "P07",
       "order": 7,
       "title": "Muốn sống lâu, chữ hình nêm phải học cách thay đổi",
-      "movement_ids": ["M07"],
+      "mission": "Một truyền thống chữ viết thích nghi và biến đổi ra sao khi chuyển dịch qua các ngôn ngữ mới?",
+      "movement_ids": [
+        "M07"
+      ],
       "narrative_job": "Thiết lập adaptation as survival mechanism. Section phải tách script, language và institutional survival; cho thấy transmission cần specialists, curricula, copying/contact và modification of conventions, đồng thời giữ transfer là selective chứ không uniform.",
       "entry_state": "Khán giả biết competence phải được tái tạo nhưng có thể vẫn nghĩ continuity là giữ nguyên cùng một language/system.",
       "exit_state": "Khán giả hiểu cuneiform sống lâu nhờ adaptation; Sumerian có thể tồn tại như learned language sau vernacular decline, còn script tiếp tục phục vụ các languages khác.",
-      "claim_ids": ["CLM-0055", "CLM-0056", "CLM-0057", "CLM-0058", "CLM-0059", "CLM-0060", "CLM-0061", "CLM-0062"],
-      "dependencies": ["P06"],
+      "claim_ids": [
+        "CLM-0055",
+        "CLM-0056",
+        "CLM-0057",
+        "CLM-0058",
+        "CLM-0059",
+        "CLM-0060",
+        "CLM-0061",
+        "CLM-0062"
+      ],
+      "dependencies": [
+        "P06"
+      ],
       "transition": "Adaptation giải thích vì sao tradition có thể sống rất lâu. Ending bắt đầu khi chính ecosystem dạy, chép và dùng system ấy co lại.",
-      "target_words": {"min": 1000, "max": 1450},
+      "target_words": {
+        "min": 1000,
+        "max": 1450
+      },
       "non_goal": "Không civilization tour; không one-scene adoption; không uniform diffusion; không đồng nhất script survival với language survival; không direct lineage."
     },
     {
       "id": "P08",
       "order": 8,
       "title": "Khi đất sét sống lâu hơn người đọc",
-      "movement_ids": ["M08"],
+      "mission": "Điều gì xảy ra khi cộng đồng biết đọc tan rã, để lại các văn bản đất sét chờ đợi sự phục dựng hiện đại?",
+      "movement_ids": [
+        "M08"
+      ],
       "narrative_job": "Khóa lifecycle bằng contraction → competence break → modern recovery. Section phải giữ decline là multicausal và gradual, latest-known date là qualified anchor, rồi dùng decipherment để trả lời central question: material can survive without living meaning; competence can later be rebuilt from evidence.",
       "entry_state": "P07 cho thấy tradition có thể sống qua thay đổi nếu competence tiếp tục được tái tạo.",
       "exit_state": "Khán giả có final understanding: marks chỉ trở thành historical force khi communities khiến chúng có thể lặp lại, truy hồi và hành động; clay có thể vượt qua collapse của community, nhưng meaning không tự vượt qua.",
-      "claim_ids": ["CLM-0063", "CLM-0064", "CLM-0065", "CLM-0066", "CLM-0067", "CLM-0068", "CLM-0069", "CLM-0070", "CLM-0071"],
-      "dependencies": ["P07"],
+      "claim_ids": [
+        "CLM-0063",
+        "CLM-0064",
+        "CLM-0065",
+        "CLM-0066",
+        "CLM-0067",
+        "CLM-0068",
+        "CLM-0069",
+        "CLM-0070",
+        "CLM-0071"
+      ],
+      "dependencies": [
+        "P07"
+      ],
       "transition": "Kết central question; không mở thesis mới sau recovery/legacy payoff.",
-      "target_words": {"min": 1500, "max": 2500},
+      "target_words": {
+        "min": 1500,
+        "max": 2500
+      },
       "non_goal": "Không 'last reader' scene; không absolute final date; không single-hero/eureka decipherment; không direct living transmission; không Sumer→modern-writing lineage."
     }
   ],
-  "last_human_amendment": "HA-20260818T151800000000Z"
+  "last_human_amendment": "HA-20260903T165237495709Z",
+  "approved_by": "user",
+  "approved_at": "2026-09-03T16:52:37.495709+00:00"
 }

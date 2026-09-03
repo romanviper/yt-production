@@ -1,0 +1,772 @@
+{
+  "schema_version": 3,
+  "section": "P02",
+  "claims": [
+    {
+      "id": "CLM-0001",
+      "statement": "For this project, 'writing' should be treated as a graded analytical threshold: durable conventional marks that encode repeatable linguistic or lexical values count as writing, while devices that communicate quantities or meanings without demonstrable language encoding remain accounting/proto-writing; proto-cuneiform lies across this disputed boundary.",
+      "type": "contested",
+      "confidence": "medium",
+      "status": "qualified",
+      "sources": [
+        "SRC-0003",
+        "SRC-0004",
+        "SRC-0005"
+      ],
+      "counterevidence": "A strict glottographic definition excludes much earliest proto-cuneiform; broader functional definitions include it because it records words/categories and develops directly into cuneiform.",
+      "narrative_implication": "Never let one definition silently decide who invented writing or its exact birthday.",
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-CLM-001"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0002",
+      "statement": "The earliest substantial proto-cuneiform horizon is conventionally placed near the end of the Late Uruk period, approximately 3350/3300–3200 BCE (Uruk IV), followed by Uruk III/Jemdet Nasr approximately 3200–3000 BCE.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0001",
+        "SRC-0002",
+        "SRC-0008"
+      ],
+      "counterevidence": "Absolute ranges vary among chronologies, and poor excavation records prevent a precise first year; a slightly earlier date cannot be excluded.",
+      "narrative_implication": "Use ranges and archaeological phases, never a single invention year.",
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-CLM-002"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0003",
+      "statement": "Uruk IVa is the most probable context for the oldest script at Uruk, but the original find documentation is too weak to make the stratigraphic placement definitive.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0002"
+      ],
+      "counterevidence": "No corrective reconstruction can fully repair the deficient find-spot and architectural documentation.",
+      "narrative_implication": "The uncertainty is archaeological, not merely rhetorical caution.",
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-CLM-003"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0004",
+      "statement": "The earliest Uruk IV corpus known to scholarship is overwhelmingly administrative; lexical texts become materially more visible in Uruk III.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0001"
+      ],
+      "counterevidence": "Survival and excavation bias mean the preserved corpus cannot prove that no other uses or media existed.",
+      "narrative_implication": "Early evidence supports an administrative center of gravity, not the claim that administration was the only origin or use.",
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-CLM-004"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0005",
+      "statement": "Calling the earliest system 'cuneiform' is potentially anachronistic: proto-cuneiform signs were initially drawn/incised and only later acquired the systematic wedge-impressed form associated with mature cuneiform.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0003",
+        "SRC-0004"
+      ],
+      "counterevidence": "Scholarly convention uses proto-cuneiform to name the ancestral system, so the term remains useful when explicitly qualified.",
+      "narrative_implication": "Distinguish proto-cuneiform from later wedge-shaped cuneiform in terminology and visuals.",
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-CLM-005"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0006",
+      "statement": "The language underlying Uruk IV–III proto-cuneiform cannot be securely identified as Sumerian because the texts encode little phonology and can often be interpreted without recovering continuous speech.",
+      "type": "contested",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0003",
+        "SRC-0004"
+      ],
+      "counterevidence": "Some rare rebus/phonetic readings may fit Sumerian, and the later descendant script unquestionably writes Sumerian; this makes Sumerian plausible but not demonstrated for the earliest horizon.",
+      "narrative_implication": "Do not convert 'found in southern Mesopotamia/Uruk' into 'written by ethnic Sumerians in Sumerian'.",
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-CLM-006"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0007",
+      "statement": "The safest attribution is regional and institutional: proto-cuneiform is first securely attested as a large corpus in the Uruk cultural sphere of southern Mesopotamia, especially Uruk, rather than securely attributable to a named ethnic population.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0001",
+        "SRC-0002",
+        "SRC-0004",
+        "SRC-0007"
+      ],
+      "counterevidence": "Uruk's corpus dominance may partly reflect excavation and preservation; related early practices are attested beyond Uruk and transmitted toward Susiana/Iran.",
+      "narrative_implication": "Use 'Uruk/southern Mesopotamian tradition' for the earliest phase; reserve 'Sumerian writing' for contexts with linguistic evidence.",
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-CLM-007"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0008",
+      "statement": "An unqualified claim that Sumer or Uruk produced the world's first writing is not defensible, because early Egyptian writing at Abydos overlaps the late-fourth-millennium date range and priority depends on calibration and definition.",
+      "type": "contested",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0005",
+        "SRC-0006"
+      ],
+      "counterevidence": "Uruk provides one of the earliest and by far the largest early corpora and may precede Egyptian material under some chronologies; neither establishes a universally accepted single winner.",
+      "narrative_implication": "Claim 'one of the earliest independently developed writing traditions' or 'earliest large writing corpus', not an uncontested world first.",
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-CLM-008"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0009",
+      "statement": "The relative sequence Uruk IV proto-cuneiform → Uruk III proto-cuneiform → later language-explicit cuneiform is much more secure than the absolute dates or a sharp boundary between proto-writing and writing.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0001",
+        "SRC-0002",
+        "SRC-0003",
+        "SRC-0007"
+      ],
+      "counterevidence": "Local corpora and cross-regional contacts complicate a single linear sequence, and the exact transition to language-explicit writing is gradual.",
+      "narrative_implication": "Organize chronology by states and transitions rather than invention moments.",
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-CLM-009"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0019",
+      "statement": "Proto-cuneiform and mature cuneiform differ in ductus: early signs were largely drawn, while wedge impressions became systematic later.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0004",
+        "SRC-0005"
+      ],
+      "counterevidence": "The ancestral system is conventionally still called proto-cuneiform.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-CLM-001"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0020",
+      "statement": "Tablet cases, subcases and spatial organization carried relations that later writing could encode more linguistically.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0005"
+      ],
+      "counterevidence": "Layout conventions varied and do not map cleanly to spoken syntax.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-CLM-002"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0021",
+      "statement": "Rare rebus/phonetic uses appear early, but consistent phonetic writing becomes evident mainly in the third millennium BCE.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0004",
+        "SRC-0005"
+      ],
+      "counterevidence": "Dating and identification of individual early phonetic examples remain debated.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-CLM-003"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0022",
+      "statement": "Cuneiform developed as a logo-syllabic system with semantic and phonological values, not as a stage naturally progressing toward alphabetic writing.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0004",
+        "SRC-0013"
+      ],
+      "counterevidence": "Later alphabetic cuneiform at Ugarit is a separate adaptation, not the endpoint of Sumerian evolution.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-CLM-004"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0023",
+      "statement": "Changes in metrology and sign standardization were pragmatic adaptations, not uniform replacement of old systems.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0012"
+      ],
+      "counterevidence": "Corpus gaps prevent a complete state-by-state reconstruction.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-CLM-005"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0024",
+      "statement": "Proto-cuneiform sign distribution and tablet position can reveal structural regularities even when a sign's spoken value or underlying language remains uncertain.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0005",
+        "SRC-0010"
+      ],
+      "counterevidence": "Corpus readability, sign variants and genre classification affect frequency and positional analysis.",
+      "narrative_implication": "Separate observable graphic pattern from modern decipherment and language attribution.",
+      "provenance": [
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-CLM-006"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0025",
+      "statement": "A system's technical capacity to encode a relation is not evidence that communities used it consistently for that purpose.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0004",
+        "SRC-0005",
+        "SRC-0012",
+        "SRC-0010"
+      ],
+      "counterevidence": "Repeated attested examples can establish use for a bounded corpus and period.",
+      "narrative_implication": "Route claims about actual economic, legal, literary or pedagogical uptake to WS05.",
+      "provenance": [
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-CLM-007"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0034",
+      "statement": "Uruk IV evidence is overwhelmingly administrative, while lexical texts become substantially more visible in Uruk III.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0001"
+      ],
+      "counterevidence": "Preservation and excavation bias prevent exclusivity claims.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-CLM-001"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0042",
+      "statement": "P005390/MMA 1988.433.2 is a physical Uruk III administrative tablet recording grain-related quantities; its language and exact transaction remain uncertain.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0023",
+        "SRC-0024"
+      ],
+      "counterevidence": "CDLI and the Met use overlapping but different date labels, and both qualify the Uruk provenience; missing verbs prevent a fully secure reading of deliveries versus distributions.",
+      "narrative_implication": "Use as a representative preserved administrative form, not as a quoted individual voice or proof of a specific economic institution.",
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-CLM-009"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-0001",
+      "title": "Proto-Cuneiform Account-Books and Journals",
+      "author": "Robert K. Englund",
+      "year": 2004,
+      "type": "scholarly chapter / corpus synthesis",
+      "authority": "Leading specialist synthesis grounded in the archaic tablet corpus and CDLI work.",
+      "url": "https://cdli.earth/files-up/publications/englund2004a.pdf",
+      "locators": [
+        "pp. 24–27 (PDF pp. 2–5), especially chronology figure and discussion of Uruk IV/III corpus",
+        "pp. 24–31",
+        "pp. 28–31"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Chronological ranges and corpus counts reflect the state of publication in 2004; some causal interpretation belongs to WS02.",
+        "Older chronology; causal interpretation remains debated.",
+        "Earliest corpus only."
+      ],
+      "notes": [
+        "Supports ca. 3300 BCE emergence, relative Uruk IV→III sequence, overwhelmingly administrative earliest corpus, and caution around token continuity.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-001"
+        },
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-002"
+        },
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-001"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0002",
+      "title": "Uruk and I",
+      "author": "Hans J. Nissen",
+      "year": 2024,
+      "type": "scholarly excavation historiography",
+      "authority": "CDLI Journal article by a senior Uruk specialist auditing excavation records and chronology.",
+      "url": "https://cdli.earth/articles/cdlj/2024-1",
+      "locators": [
+        "§15.8; §16.1–16.4; §17.3; §18.2"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Author explicitly foregrounds failures in legacy excavation documentation; exact absolute dates remain model-dependent."
+      ],
+      "notes": [
+        "Uruk IVa is the most probable archaeological placement of the oldest script, slightly earlier cannot be excluded; find context is often insufficient and unreliable."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0003",
+      "title": "Writing in Early Mesopotamia: Beyond the Meme",
+      "author": "Massimo Maiocchi",
+      "year": 2019,
+      "type": "peer-reviewed scholarly chapter",
+      "authority": "Assyriological synthesis focused on early Mesopotamian writing, semiotics and material systems.",
+      "url": "https://iris.unive.it/retrieve/e4239dde-83dd-7180-e053-3705fe0a3322/Maiocchi%20M.%202019%2C%20Writing%20in%20Early%20Mesopotamia%20--%20Beyond%20the%20Meme.pdf",
+      "locators": [
+        "pp. 410–412 (PDF pp. 15–17), especially discussion of glottographic/semasiographic boundary",
+        "pp. 410–412"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "The chapter advocates a fluid continuum; terminology is analytical rather than a universally accepted threshold definition.",
+        "Framework-oriented rather than a new excavation report."
+      ],
+      "notes": [
+        "Useful counterweight to a binary true-writing/proto-writing distinction and to a linear token→tablet story.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-003"
+        },
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0004",
+      "title": "The Origins of Writing",
+      "author": "Ira Spar",
+      "year": 2004,
+      "type": "museum scholarly essay",
+      "authority": "Metropolitan Museum of Art Heilbrunn Timeline essay by a cuneiform specialist.",
+      "url": "https://www.metmuseum.org/essays/the-origins-of-writing",
+      "locators": [
+        "paragraphs 62–69",
+        "paragraph 69"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Introductory synthesis and now older; statements about possible mid-fourth-millennium Syrian/Turkish systems are provisional.",
+        "Introductory; dates rounded.",
+        "Broad chronological compression."
+      ],
+      "notes": [
+        "States that Sumerian identification of Uruk tablets is popular but not universal; phonetic use is sparse before 3000 and consistently apparent much later.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-004"
+        },
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-001"
+        },
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0005",
+      "title": "Visible Language: Inventions of Writing in the Ancient Middle East and Beyond",
+      "author": "Christopher Woods (ed.)",
+      "year": 2010,
+      "type": "academic museum catalogue / comparative synthesis",
+      "authority": "University of Chicago Oriental Institute catalogue curated by a Sumerologist.",
+      "url": "https://isac.uchicago.edu/sites/default/files/uploads/shared/docs/oimp32.pdf",
+      "locators": [
+        "comparative chronology and essays on earliest Mesopotamian and Egyptian writing; catalogue overview",
+        "pp. 33–50; development of accounting systems",
+        "Mesopotamian writing essays"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Catalogue compresses specialist disagreements for comparative presentation; use for comparison scope, not exact Uruk stratigraphy.",
+        "Comparative overview; some pathways remain hypothetical.",
+        "Catalogue compresses disagreements."
+      ],
+      "notes": [
+        "Treats Mesopotamia and Egypt as roughly contemporary independent inventions; supports avoiding an unqualified unique 'world first' claim.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-005"
+        },
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-001"
+        },
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0006",
+      "title": "Visible Language exhibition overview",
+      "author": "Institute for the Study of Ancient Cultures, University of Chicago",
+      "year": 2010,
+      "type": "academic institutional overview",
+      "authority": "Official ISAC summary of the Woods-curated exhibition.",
+      "url": "https://isac.uchicago.edu/museum-exhibits/visible-language-inventions-writing-ancient-middle-east-fall-2010",
+      "locators": [
+        "paragraphs 46–51"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Public-facing overview rather than full argument; dates are rounded."
+      ],
+      "notes": [
+        "Places Mesopotamian tablets around 3200 BCE and early Egyptian tags around 3320 BCE, illustrating why 'first' depends on definition and dating."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-006"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0007",
+      "title": "The State of Decipherment of Proto-Elamite",
+      "author": "Robert K. Englund",
+      "year": 2004,
+      "type": "scholarly chapter / comparative script study",
+      "authority": "Corpus-based comparison by a leading proto-cuneiform and proto-Elamite specialist.",
+      "url": "https://cdli.earth/files-up/publications/englund2004c.pdf",
+      "locators": [
+        "pp. 124–127 and 139–140 (PDF pp. 24–27, 39–40)"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Proto-Elamite comparison is secondary to WS01 and does not establish the spoken language of Uruk scribes."
+      ],
+      "notes": [
+        "Supports relative order Uruk IV before Uruk III and contemporaneity/contact with proto-Elamite; shows attribution is regional and transmissional, not a simple ethnic label."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-007"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0008",
+      "title": "The Origins of Writing",
+      "author": "Metropolitan Museum of Art, object and corpus context",
+      "year": 2004,
+      "type": "museum corpus overview",
+      "authority": "Major museum collection context linked to excavated and collected early tablets.",
+      "url": "https://www.metmuseum.org/art/collection/search/327385",
+      "locators": [
+        "object description: earliest tablets around 3300 BCE; two early phases"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Single object is illustrative, not representative; provenance and dating of market-derived tablets can be weaker than excavated material."
+      ],
+      "notes": [
+        "Material anchor for the approximate 3300 BCE date and phase distinction."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-008"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0010",
+      "title": "A Quantitative Analysis of Proto-Cuneiform Sign Use in Archaic Tribute",
+      "author": "Logan Born and Kathryn Erin Kelley, 2021",
+      "year": null,
+      "type": "peer-reviewed corpus study",
+      "authority": "CDLI corpus-based quantitative analysis",
+      "url": "https://cdli.earth/articles/cdlb/2021-6",
+      "locators": [
+        "§§1–3; corpus definition, sign-frequency and genre limits",
+        "§§1–3; 6,726-artifact working corpus and sign-use method"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Sign-frequency patterns do not by themselves establish sign meanings or causal direction.",
+        "Readability, sign variants, genre assignment and corpus growth constrain quantitative conclusions."
+      ],
+      "notes": [
+        "Used to test how far administrative subgenres can be distinguished from the preserved corpus.",
+        "Used to separate observed sign distribution from reconstructed linguistic value."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-005"
+        },
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-005"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0012",
+      "title": "Numerical and Metrological Graphemes",
+      "author": "Christine Proust, 2009",
+      "year": null,
+      "type": "peer-reviewed article",
+      "authority": "Detailed grapheme/metrology study",
+      "url": "https://cdli.mpiwg-berlin.mpg.de/articles/cdlj/2009-1.pdf",
+      "locators": [
+        "§3.5 and conclusions"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Focuses on specific numerical systems."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-003"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0013",
+      "title": "Classifying and Comparing Early Writing Systems",
+      "author": "Amalia Gnanadesikan, 2023",
+      "year": null,
+      "type": "scholarly handbook chapter",
+      "authority": "Current comparative orthography synthesis",
+      "url": "https://www.cambridge.org/core/books/cambridge-handbook-of-historical-orthography/classifying-and-comparing-early-writing-systems/1FB931255299DED0DCF6C0E712E8A653",
+      "locators": [
+        "chapter summary"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Accessible summary rather than full chapter."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0023",
+      "title": "MSVO 3, 79 artifact entry (P005390)",
+      "author": "Cuneiform Digital Library Initiative; transliterations by Robert K. Englund, Jacob L. Dahl and CDLI",
+      "year": null,
+      "type": "primary artifact record and corpus transliteration",
+      "authority": "CDLI object-level record linked to the Metropolitan Museum of Art",
+      "url": "https://cdli.earth/P005390",
+      "locators": [
+        "CDLI P005390; MMA 1988.433.2",
+        "Text: obverse columns 1–2 and reverse columns 1–2",
+        "Edition references: MSVO 3 no. 79; Frühe Schrift no. 4.79; CTMMA IV no. 180"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "CDLI labels Uruk provenience uncertain and dates the tablet to Uruk III ca. 3200–3000 BCE; the Met uses Jemdet Nasr ca. 3100–2900 BCE. Language is undetermined and the document lacks verbs, limiting transaction-level interpretation."
+      ],
+      "notes": [
+        "Selected administrative object. Contemporary ancient tablet, not a later copy; use as an early economic-classification case, not a transparent voice."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-006"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0024",
+      "title": "Cuneiform tablet: administrative account concerning the distribution of barley and emmer",
+      "author": "Metropolitan Museum of Art",
+      "year": null,
+      "type": "museum object record",
+      "authority": "Holding-institution record for MMA 1988.433.2",
+      "url": "https://www.metmuseum.org/art/collection/search/327384",
+      "locators": [
+        "Object no. 1988.433.2",
+        "Object overview and artwork details",
+        "Open Access/Public Domain image flag"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "The museum gives 'probably from Uruk' and a broad interpretive description; acquisition rather than excavation context means exact provenience is uncertain."
+      ],
+      "notes": [
+        "Rights anchor for the selected administrative object: Met object images are marked Public Domain; credit the museum and object number."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-007"
+        }
+      ]
+    }
+  ],
+  "rule": "These claims define the section truth territory. Writer may use any subset and any narrative route. Source-level resolution may increase through bounded retrieval; new interpretation/generalization requires evidence authority.",
+  "cycle_id": "C003",
+  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
+  "claim_ids": [
+    "CLM-0001",
+    "CLM-0002",
+    "CLM-0003",
+    "CLM-0004",
+    "CLM-0005",
+    "CLM-0006",
+    "CLM-0007",
+    "CLM-0008",
+    "CLM-0009",
+    "CLM-0019",
+    "CLM-0020",
+    "CLM-0021",
+    "CLM-0022",
+    "CLM-0023",
+    "CLM-0024",
+    "CLM-0025",
+    "CLM-0034",
+    "CLM-0042"
+  ],
+  "source_ids": [
+    "SRC-0001",
+    "SRC-0002",
+    "SRC-0003",
+    "SRC-0004",
+    "SRC-0005",
+    "SRC-0006",
+    "SRC-0007",
+    "SRC-0008",
+    "SRC-0010",
+    "SRC-0012",
+    "SRC-0013",
+    "SRC-0023",
+    "SRC-0024"
+  ]
+}

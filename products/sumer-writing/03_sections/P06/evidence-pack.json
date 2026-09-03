@@ -1,0 +1,389 @@
+{
+  "schema_version": 3,
+  "section": "P06",
+  "claims": [
+    {
+      "id": "CLM-0037",
+      "statement": "Legal documents, letters and contracts provide human-scale cases but are mediated by scribal formula and institutional context.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0021"
+      ],
+      "counterevidence": "First-person grammar is not transparent access to private interiority.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-CLM-004"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0040",
+      "statement": "The bounded primary-text shortlist is fixed to four cases: administrative tablet P005390/MMA 1988.433.2, private letter MMA 86.11.111, lexical school tablet P228744, and literary composition ETCSL 3.1.19.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0023",
+        "SRC-0024",
+        "SRC-0025",
+        "SRC-0026",
+        "SRC-0027"
+      ],
+      "counterevidence": "The four cases cover distinct functional turns but cannot represent every city, period, social group or genre.",
+      "narrative_implication": "Use only these four handoff candidates unless a later production task documents why a substitution is needed.",
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-CLM-007"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0043",
+      "statement": "MMA 86.11.111 is a ca. 1632 BCE Old Babylonian letter in which Marduk-mushallim reports failure to implement a royal security order.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0021",
+        "SRC-0025"
+      ],
+      "counterevidence": "Its probable Sippar-Yahrurum origin lacks excavated context, and the museum itself presents the letter as unusual.",
+      "narrative_implication": "Use as an exceptional human-scale epistolary case illustrating reporting and command, not as representative everyday correspondence or proof that writing caused compliance.",
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-CLM-010"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0049",
+      "statement": "A written law, norm or transaction is evidence of recording and claim-making, not automatic evidence of enforcement.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0031"
+      ],
+      "counterevidence": "Case-specific links among tablet, witnesses, seal and action are required.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-CLM-004"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0052",
+      "statement": "Agency belongs to people and institutions using records: tablets stabilize classifications, scribes and sealers authenticate them, archives make them retrievable, and authorities supply enforcement.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0029",
+        "SRC-0030",
+        "SRC-0033"
+      ],
+      "counterevidence": "The strength of each link differs by archive; a preserved record alone cannot demonstrate enforcement.",
+      "narrative_implication": "Never say writing itself commanded, owned or coerced.",
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-CLM-007"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-0021",
+      "title": "Cuneiform Texts in the Metropolitan Museum, Vol. I",
+      "author": "Metropolitan Museum of Art",
+      "year": null,
+      "type": "scholarly catalogue",
+      "authority": "Edited translations and object records",
+      "url": "https://www.metmuseum.org/met-publications/cuneiform-texts-in-the-metropolitan-museum-of-art-volume-i-tablets-cones-and-bricks-of-the-third",
+      "locators": [
+        "catalogue overview for commercial, legal and epistolary texts",
+        "MMA 86.11.111 = CTMMA I no. 69, p. 87; plates 63–64 and 135–136"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Collection selection is not representative of total use; the modern edition/translation requires attribution and a separate quotation-rights check."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0023",
+      "title": "MSVO 3, 79 artifact entry (P005390)",
+      "author": "Cuneiform Digital Library Initiative; transliterations by Robert K. Englund, Jacob L. Dahl and CDLI",
+      "year": null,
+      "type": "primary artifact record and corpus transliteration",
+      "authority": "CDLI object-level record linked to the Metropolitan Museum of Art",
+      "url": "https://cdli.earth/P005390",
+      "locators": [
+        "CDLI P005390; MMA 1988.433.2",
+        "Text: obverse columns 1–2 and reverse columns 1–2",
+        "Edition references: MSVO 3 no. 79; Frühe Schrift no. 4.79; CTMMA IV no. 180"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "CDLI labels Uruk provenience uncertain and dates the tablet to Uruk III ca. 3200–3000 BCE; the Met uses Jemdet Nasr ca. 3100–2900 BCE. Language is undetermined and the document lacks verbs, limiting transaction-level interpretation."
+      ],
+      "notes": [
+        "Selected administrative object. Contemporary ancient tablet, not a later copy; use as an early economic-classification case, not a transparent voice."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-006"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0024",
+      "title": "Cuneiform tablet: administrative account concerning the distribution of barley and emmer",
+      "author": "Metropolitan Museum of Art",
+      "year": null,
+      "type": "museum object record",
+      "authority": "Holding-institution record for MMA 1988.433.2",
+      "url": "https://www.metmuseum.org/art/collection/search/327384",
+      "locators": [
+        "Object no. 1988.433.2",
+        "Object overview and artwork details",
+        "Open Access/Public Domain image flag"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "The museum gives 'probably from Uruk' and a broad interpretive description; acquisition rather than excavation context means exact provenience is uncertain."
+      ],
+      "notes": [
+        "Rights anchor for the selected administrative object: Met object images are marked Public Domain; credit the museum and object number."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-007"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0025",
+      "title": "Cuneiform tablet: private letter",
+      "author": "Metropolitan Museum of Art",
+      "year": null,
+      "type": "primary artifact record with scholarly overview",
+      "authority": "Holding-institution record for MMA 86.11.111",
+      "url": "https://www.metmuseum.org/art/collection/search/321706",
+      "locators": [
+        "Object no. 86.11.111",
+        "Overview: Marduk-mushallim's report on non-implementation of a royal security order",
+        "Artwork details: Old Babylonian, ca. 1632 BCE, probably Sippar-Yahrurum"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Purchased in 1886; exact archaeological context is unavailable and geography is qualified as probable. The letter is unusual, so it cannot represent ordinary correspondence."
+      ],
+      "notes": [
+        "Selected epistolary object. Treat as an ancient documentary letter, not an Old Babylonian school copy. Met object images are marked Public Domain; modern translation wording is not cleared for direct quotation."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-008"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0026",
+      "title": "N 6052 (+) UM 29-16-393 artifact entry (P228744)",
+      "author": "Cuneiform Digital Library Initiative / Digital Corpus of Cuneiform Lexical Texts",
+      "year": null,
+      "type": "primary artifact record, transliteration and composite witness",
+      "authority": "CDLI/DCCLT object-level lexical corpus",
+      "url": "https://cdli.earth/P228744",
+      "locators": [
+        "CDLI P228744; museum nos. N 6052 (+) UM 29-16-393",
+        "Reverse columns 1–2, preserved lines 4–30",
+        "Witness to CDLI Lexical 000001 / composite Q000001"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Fragmented Old Babylonian school tablet; obverse is not preserved and findspot/stratigraphic fields are blank. It represents formal lexical training at Nippur, not general literacy."
+      ],
+      "notes": [
+        "Selected knowledge/training object. Excavated at Nippur, ca. 1900–1600 BCE. CDLI provides transliteration; the photograph is marked © Penn Museum and requires a separate image-use check."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-009"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0027",
+      "title": "Letter from Puzur-Shulgi to Ibbi-Suen about Ishbi-Erra's claim on Isin (ETCSL 3.1.19)",
+      "author": "Electronic Text Corpus of Sumerian Literature, University of Oxford",
+      "year": null,
+      "type": "primary-text composite edition and translation",
+      "authority": "Curated Sumerian literary corpus with manuscript list and edition bibliography",
+      "url": "https://etcsl.orinst.ox.ac.uk/section3/b3119.htm",
+      "locators": [
+        "ETCSL composition 3.1.19",
+        "Composite text lines 1–53: section3/c3119.htm",
+        "English translation lines 1–53: section3/tr3119.htm",
+        "Cuneiform witnesses include 3N-T311 = IM 58418 and IM 13347; full witness list in bibliography"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "The online text is a modern composite reconstructed from multiple Old Babylonian school manuscripts. It is not a surviving contemporary Ur III letter or a single speaker's unmediated voice."
+      ],
+      "notes": [
+        "Selected literary-memory text. The narrated setting belongs to the end of Ur III, while the surviving manuscripts are later Old Babylonian copies."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-010"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0029",
+      "title": "An Interdisciplinary Overview of a Mesopotamian City and its Hinterlands",
+      "author": "Robert McC. Adams, 2008",
+      "year": null,
+      "type": "peer-reviewed article",
+      "authority": "Major archaeological synthesis",
+      "url": "https://cdli.earth/articles/cdlj/2008-1",
+      "locators": [
+        "§2.3 and archive discussion"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Umma/Ur III case is not universal."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-001"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0030",
+      "title": "Equivalency Values and the Command Economy of the Ur III Period",
+      "author": "Robert K. Englund, 2012",
+      "year": null,
+      "type": "scholarly study",
+      "authority": "Corpus-based administrative study",
+      "url": "https://cdli.earth/files-up/publications/englund2012a.pdf",
+      "locators": [
+        "labor norms and equivalencies"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Ur III is much later than writing’s origin."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0031",
+      "title": "Old Babylonian Networks of Urban Notables",
+      "author": "Marc Van De Mieroop, 2009",
+      "year": null,
+      "type": "peer-reviewed article",
+      "authority": "Specialist socio-economic interpretation",
+      "url": "https://cdli.earth/articles/cdlj/2009-7",
+      "locators": [
+        "§1.2 and §2.4"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Broad model debated; Old Babylonian focus."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-003"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0033",
+      "title": "A Reconstruction of the Puzriš-Dagan Central Livestock Agency",
+      "author": "Tonia Sharlach, 2013",
+      "year": null,
+      "type": "peer-reviewed corpus study",
+      "authority": "CDLI archive reconstruction",
+      "url": "https://cdli.earth/articles/cdlj/2013-2",
+      "locators": [
+        "§§1.2–1.5; archive function and more than 13,500 tablets"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Ur III royal institution; archive reconstruction does not establish ordinary experience or empire-wide uniformity."
+      ],
+      "notes": [
+        "Used as a bounded case linking documents, officials, seals and institutional action."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-005"
+        }
+      ]
+    }
+  ],
+  "rule": "These claims define the section truth territory. Writer may use any subset and any narrative route. Source-level resolution may increase through bounded retrieval; new interpretation/generalization requires evidence authority.",
+  "cycle_id": "C003",
+  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
+  "claim_ids": [
+    "CLM-0037",
+    "CLM-0040",
+    "CLM-0043",
+    "CLM-0049",
+    "CLM-0052"
+  ],
+  "source_ids": [
+    "SRC-0021",
+    "SRC-0023",
+    "SRC-0024",
+    "SRC-0025",
+    "SRC-0026",
+    "SRC-0027",
+    "SRC-0029",
+    "SRC-0030",
+    "SRC-0031",
+    "SRC-0033"
+  ]
+}

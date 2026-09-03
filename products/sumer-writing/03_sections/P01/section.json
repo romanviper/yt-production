@@ -2,7 +2,6 @@
   "schema_version": 4,
   "id": "P01",
   "title": "Trước chữ viết đã có một bài toán phải giải",
-  "mission": "Điều gì khiến việc giữ thông tin bằng những dấu bền trên đất sét trở nên hữu ích?",
   "order": 1,
   "status": "ready_for_review",
   "human_approved": false,
@@ -15,8 +14,14 @@
     "max": 1550
   },
   "cycle_id": "C003",
-  "outline_sha256": "d707db0c172a9db579593a136791d2b1e629892315e31bedfa0d795b8c92da9d",
+  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
+  "mission": "Điều gì khiến việc giữ thông tin bằng những dấu bền trên đất sét trở nên hữu ích?",
   "transition": "Nếu nhu cầu và các recording practices đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.",
+  "historical_change": {
+    "from": "Kế toán bằng token và ấn tín rời rạc chỉ đủ sức theo dõi các giao dịch điểm-điểm trong một cộng đồng nhỏ.",
+    "to": "Sự xuất hiện của các tập hợp ký hiệu số và dấu ấn hình thành hệ thống lưu trữ ngoại thân đầu tiên, cho phép thiết chế duy trì nghĩa vụ qua thời gian và khoảng cách."
+  },
+  "earned_meaning": "Chữ viết ban đầu không phải là một nỗ lực ghi lại lời nói, mà là một công nghệ vật chất để neo giữ các cam kết thực tế khi trí nhớ con người không còn gánh nổi.",
   "movement_ids": [
     "M01"
   ],
@@ -44,7 +49,7 @@
     "handoff_sha256": "5423ddd9e15bb607c007be15a07f6dc4f2aa5aa22b3bed6ca43b7c8877327deb",
     "schema_version": 2,
     "packet_schema_version": 5,
-    "task_packet_sha256": "c621c10a2c6d183c7a8dae63adfcbaa24e10d9cef6fe14d787415623014214d1"
+    "task_packet_sha256": "0d68f7fe90c4546a7bd83eafc25604f63963e75dde85f4c9fb59b9e072facc10"
   },
   "review_provenance": {
     "task_id": "T0036-review-section-P01",

@@ -1,0 +1,280 @@
+{
+  "schema_version": 4,
+  "section": "P08",
+  "cycle_id": "C003",
+  "created_at": "2026-09-03T16:55:04.185995+00:00",
+  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
+  "brief_sha256": "fc080358009d8f8ef52cbe250ef7db2fd8b8de9e0a6756fda7f699bcfb035eb6",
+  "evidence_pack_sha256": "ad64fad5abd4cf4106d648638f9e9f567afe8885de70265701c3351365682b9d",
+  "permitted_claims": [
+    {
+      "id": "CLM-0063",
+      "statement": "Cuneiform use contracted over centuries rather than ending through one event.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "counterevidence": "Regional and genre-specific endpoints differ.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0035",
+        "SRC-0034"
+      ]
+    },
+    {
+      "id": "CLM-0064",
+      "statement": "Lexical and scholarly traditions persisted into the first centuries CE in narrowed institutional settings.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Exact last-tablet dates depend on genre and dating; ‘last’ remains a discovery-sensitive claim.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0035"
+      ]
+    },
+    {
+      "id": "CLM-0065",
+      "statement": "Material tablets survived after living reading competence disappeared, creating a break between ancient transmission and modern knowledge.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Some local knowledge of ruins or objects may have persisted without script competence.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0035",
+        "SRC-0039",
+        "SRC-0040"
+      ]
+    },
+    {
+      "id": "CLM-0066",
+      "statement": "Nineteenth-century decipherment was cumulative and comparative, not a single eureka moment.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Public narratives often center Behistun and a few individuals, underrepresenting collaboration and error.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0039",
+        "SRC-0040"
+      ]
+    },
+    {
+      "id": "CLM-0067",
+      "statement": "Cuneiform’s defensible modern legacy is recovery-mediated knowledge of ancient societies and influence through ancient Near Eastern textual transmission; resemblance to digital record systems is analogy, not lineage.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "counterevidence": "Specific transmitted texts or concepts require separate chains of evidence.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0035",
+        "SRC-0039",
+        "SRC-0040"
+      ]
+    },
+    {
+      "id": "CLM-0068",
+      "statement": "The latest currently known dated cuneiform tablet is an astronomical text from 75 CE, but this is a latest-discovered datum, not a proven final act of writing.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "counterevidence": "New finds may move the endpoint, and competence could outlast the latest preserved tablet.",
+      "narrative_implication": "Use 'latest currently known' and keep WS07's institutional-reproduction definition.",
+      "sources": [
+        "SRC-0041"
+      ]
+    },
+    {
+      "id": "CLM-0069",
+      "statement": "Cuneiform decline combined language competition, institutional contraction, changing political economies and the cost of specialist training; no surviving evidence isolates one sufficient cause.",
+      "type": "inference",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "counterevidence": "The relative weight of Aramaic, Greek, temple change and regional politics differs by place and century.",
+      "narrative_implication": "End with a mechanism set, not a single-collapse explanation.",
+      "sources": [
+        "SRC-0035",
+        "SRC-0034",
+        "SRC-0041"
+      ]
+    },
+    {
+      "id": "CLM-0070",
+      "statement": "Modern recovery proceeded through copied inscriptions, the partial decipherment of Old Persian, multilingual comparison at Behistun, and subsequent testing of Akkadian and Sumerian readings.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Individual milestones are important but none alone recovered the full cuneiform tradition.",
+      "narrative_implication": "Use a short cumulative chain rather than a hero-only eureka story.",
+      "sources": [
+        "SRC-0039",
+        "SRC-0040",
+        "SRC-0042"
+      ]
+    },
+    {
+      "id": "CLM-0071",
+      "statement": "Legacy claims fall into three classes: direct ancient transmission, recovery-mediated modern knowledge, and analogy without lineage.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Each proposed direct transmission still requires its own documented chain.",
+      "narrative_implication": "Permit only the first two as historical legacy; label digital-record parallels as analogy.",
+      "sources": [
+        "SRC-0035",
+        "SRC-0039",
+        "SRC-0040",
+        "SRC-0042"
+      ]
+    }
+  ],
+  "qualifications": [
+    {
+      "id": "CLM-0063",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "Regional and genre-specific endpoints differ."
+    },
+    {
+      "id": "CLM-0064",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "Exact last-tablet dates depend on genre and dating; ‘last’ remains a discovery-sensitive claim."
+    },
+    {
+      "id": "CLM-0065",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "Some local knowledge of ruins or objects may have persisted without script competence."
+    },
+    {
+      "id": "CLM-0066",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "Public narratives often center Behistun and a few individuals, underrepresenting collaboration and error."
+    },
+    {
+      "id": "CLM-0067",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "Specific transmitted texts or concepts require separate chains of evidence."
+    },
+    {
+      "id": "CLM-0068",
+      "constraint": "Use 'latest currently known' and keep WS07's institutional-reproduction definition.",
+      "counterevidence": "New finds may move the endpoint, and competence could outlast the latest preserved tablet."
+    },
+    {
+      "id": "CLM-0069",
+      "constraint": "End with a mechanism set, not a single-collapse explanation.",
+      "counterevidence": "The relative weight of Aramaic, Greek, temple change and regional politics differs by place and century."
+    },
+    {
+      "id": "CLM-0070",
+      "constraint": "Use a short cumulative chain rather than a hero-only eureka story.",
+      "counterevidence": "Individual milestones are important but none alone recovered the full cuneiform tradition."
+    },
+    {
+      "id": "CLM-0071",
+      "constraint": "Permit only the first two as historical legacy; label digital-record parallels as analogy.",
+      "counterevidence": "Each proposed direct transmission still requires its own documented chain."
+    }
+  ],
+  "guardrails": [
+    {
+      "source": "outline.non_goal",
+      "constraint": "Không 'last reader' scene; không absolute final date; không single-hero/eureka decipherment; không direct living transmission; không Sumer→modern-writing lineage."
+    }
+  ],
+  "excluded_claim_ids": [],
+  "exclusion_rule": "Any substantive historical interpretation/generalization outside permitted_claims requires evidence-authority validation before narration.",
+  "source_refs": [
+    {
+      "id": "SRC-0034",
+      "title": "The Sumerian language",
+      "author": "Oracc / University of Pennsylvania, 2019",
+      "type": "academic reference",
+      "authority": "Curated specialist project",
+      "url": "https://oracc.museum.upenn.edu/nimrud/ancientkalhu/thewritings/sumerian/",
+      "locators": [
+        "full overview",
+        "overview"
+      ]
+    },
+    {
+      "id": "SRC-0035",
+      "title": "Ancient Mesopotamia",
+      "author": "Niek Veldhuis, 2019",
+      "type": "scholarly handbook chapter",
+      "authority": "Leading specialist on lexical traditions",
+      "url": "https://www.cambridge.org/core/books/cambridge-world-history-of-lexicography/ancient-mesopotamia/B020E908200C609176018CA9FCCA363A",
+      "locators": [
+        "summary"
+      ]
+    },
+    {
+      "id": "SRC-0039",
+      "title": "Art of the Ancient Near East: A Resource for Educators",
+      "author": "Metropolitan Museum of Art",
+      "type": "museum scholarly publication",
+      "authority": "Major museum synthesis",
+      "url": "https://resources.metmuseum.org/resources/metpublications/pdf/Art_of_the_Ancient_Near_East_A_Resource_for_Educators.pdf",
+      "locators": [
+        "Cuneiform Messages, pp. 27–29"
+      ]
+    },
+    {
+      "id": "SRC-0040",
+      "title": "Discoveries and Excavations — The City of Babylon",
+      "author": "Olof Pedersén, 2021",
+      "type": "scholarly monograph chapter",
+      "authority": "Modern excavation/decipherment history",
+      "url": "https://www.cambridge.org/core/books/city-of-babylon/discoveries-and-excavations/4E8A13224F291C14876F2E5DC9260F65",
+      "locators": [
+        "chapter overview"
+      ]
+    },
+    {
+      "id": "SRC-0041",
+      "title": "The extinction of cuneiform writing",
+      "author": "Centre for the Study of Manuscript Cultures, Universität Hamburg, 2020",
+      "type": "academic research overview",
+      "authority": "University manuscript-culture research center",
+      "url": "https://www.csmc.uni-hamburg.de/publications/mesopotamia/2020-08-31.html",
+      "locators": [
+        "late-text chronology; first-century BCE/CE astronomical corpus and 75 CE tablet"
+      ]
+    },
+    {
+      "id": "SRC-0042",
+      "title": "The Earliest Contributions to the Decipherment of Sumerian and Akkadian",
+      "author": "Irving L. Finkel and colleagues, 2011",
+      "type": "peer-reviewed history of decipherment",
+      "authority": "CDLI Journal specialist study",
+      "url": "https://cdli.earth/articles/cdlj/2011-1.pdf",
+      "locators": [
+        "§§2–4; Old Persian, Behistun and subsequent comparative steps"
+      ]
+    }
+  ],
+  "retrieval_scope": {
+    "claim_ids": [
+      "CLM-0063",
+      "CLM-0064",
+      "CLM-0065",
+      "CLM-0066",
+      "CLM-0067",
+      "CLM-0068",
+      "CLM-0069",
+      "CLM-0070",
+      "CLM-0071"
+    ],
+    "source_ids": [
+      "SRC-0034",
+      "SRC-0035",
+      "SRC-0039",
+      "SRC-0040",
+      "SRC-0041",
+      "SRC-0042"
+    ],
+    "adapter": "scripts/draft_evidence.py",
+    "rule": "Writer may increase source-level resolution inside these sources but may not silently expand the truth ceiling."
+  },
+  "writer_contract": "Permitted claims define a truth ceiling, not a required content list or narrative route. The writer may use any evidence-safe subset and any authored structure that reaches the section objective. Bounded evidence retrieval may add factual resolution from approved supporting sources; new claims, causal conclusions, contradictions or generalizations must return to research authority."
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": 4,
+  "id": "P02",
+  "title": "Hữu ích trước khi thành câu",
+  "order": 2,
+  "status": "ready_for_draft",
+  "human_approved": false,
+  "dependencies": [
+    "P01"
+  ],
+  "narrative_job": "Giải thích early record có thể làm công việc có thật trước khi continuous speech hoặc underlying language được recover chắc chắn. Section phải land được usefulness trước khi mở các guardrail về writing threshold, chronology, language và world-first.",
+  "entry_state": "Khán giả vẫn có thể nghĩ 'chưa thành câu' đồng nghĩa 'chưa phải công nghệ có sức nặng'.",
+  "exit_state": "Khán giả hiểu structured signs/layout có thể giữ repeatable relations đủ để vận hành administration; ranh giới writing/proto-writing và language attribution vẫn phải qualified.",
+  "target_words": {
+    "min": 1150,
+    "max": 1750
+  },
+  "cycle_id": "C003",
+  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
+  "mission": "Làm thế nào một hệ thống ký hiệu chưa thể ghi lại lời nói trọn vẹn vẫn giải quyết được các nhu cầu vận hành thực tế?",
+  "transition": "Một system đã có thể làm việc. Bây giờ câu chuyện cần theo dõi điều gì xảy ra khi writing được dùng cho ngày càng nhiều loại việc khác nhau.",
+  "movement_ids": [
+    "M02"
+  ],
+  "macro_movements": [
+    {
+      "id": "M02",
+      "title": "Một hệ thống có thể hữu ích trước khi thành câu",
+      "narrative_job": "Xác lập writing threshold và early function mà không làm khán giả sa vào định nghĩa. Movement phải cho thấy record có thể giữ cấu trúc, quantity/category/position và những quan hệ lặp lại đủ để dùng trước khi continuous speech hay underlying language có thể được phục hồi chắc chắn.",
+      "entry_state": "Nếu chưa ghi được câu nói thì hệ thống dễ bị xem là chưa thực sự có tác dụng.",
+      "exit_state": "Khán giả thấy usefulness đến trước sentence-likeness; từ đây câu hỏi trở thành hệ thống đó tích lũy thêm năng lực ra sao."
+    }
+  ],
+  "acts": [
+    {
+      "id": "A01",
+      "role": "opening",
+      "title": "Khi một xã hội cần trí nhớ ngoài con người"
+    }
+  ]
+}

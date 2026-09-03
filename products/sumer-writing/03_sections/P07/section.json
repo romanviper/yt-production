@@ -1,0 +1,41 @@
+{
+  "schema_version": 4,
+  "id": "P07",
+  "title": "Muốn sống lâu, chữ hình nêm phải học cách thay đổi",
+  "order": 7,
+  "status": "ready_for_draft",
+  "human_approved": false,
+  "dependencies": [
+    "P06"
+  ],
+  "narrative_job": "Thiết lập adaptation as survival mechanism. Section phải tách script, language và institutional survival; cho thấy transmission cần specialists, curricula, copying/contact và modification of conventions, đồng thời giữ transfer là selective chứ không uniform.",
+  "entry_state": "Khán giả biết competence phải được tái tạo nhưng có thể vẫn nghĩ continuity là giữ nguyên cùng một language/system.",
+  "exit_state": "Khán giả hiểu cuneiform sống lâu nhờ adaptation; Sumerian có thể tồn tại như learned language sau vernacular decline, còn script tiếp tục phục vụ các languages khác.",
+  "target_words": {
+    "min": 1000,
+    "max": 1450
+  },
+  "cycle_id": "C003",
+  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
+  "mission": "Một truyền thống chữ viết thích nghi và biến đổi ra sao khi chuyển dịch qua các ngôn ngữ mới?",
+  "transition": "Adaptation giải thích vì sao tradition có thể sống rất lâu. Ending bắt đầu khi chính ecosystem dạy, chép và dùng system ấy co lại.",
+  "movement_ids": [
+    "M07"
+  ],
+  "macro_movements": [
+    {
+      "id": "M07",
+      "title": "Muốn sống lâu, truyền thống phải biết thay đổi",
+      "narrative_job": "Cho thấy survival là adaptation chứ không phải purity. Script có thể được sửa convention để ghi ngôn ngữ mới; Sumerian language, cuneiform script và institutional tradition có thể sống theo các timeline khác nhau; transfer đi qua specialists, curricula, copying và contact, không phải diffusion tự động.",
+      "entry_state": "Continuity vẫn dễ bị hiểu là giữ nguyên một script của cùng một people/language.",
+      "exit_state": "Khán giả hiểu một tradition sống được vì nó có thể được học lại và biến đổi; survival của script không đồng nghĩa survival của language hay institution."
+    }
+  ],
+  "acts": [
+    {
+      "id": "A03",
+      "role": "ending",
+      "title": "Khi hệ thống phải sống qua thay đổi và đứt gãy"
+    }
+  ]
+}

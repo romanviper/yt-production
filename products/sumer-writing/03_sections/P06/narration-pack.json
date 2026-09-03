@@ -1,0 +1,261 @@
+{
+  "schema_version": 4,
+  "section": "P06",
+  "cycle_id": "C003",
+  "created_at": "2026-09-03T16:55:04.161989+00:00",
+  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
+  "brief_sha256": "8f9bdb8361fa1a5cd828ed4751d86560bf7fdc0fb9d443caf36567c29bf33baa",
+  "evidence_pack_sha256": "6c9ffff97d0fd999518155ec8027992099437367526db571a2e8cc4e867cdcee",
+  "permitted_claims": [
+    {
+      "id": "CLM-0037",
+      "statement": "Legal documents, letters and contracts provide human-scale cases but are mediated by scribal formula and institutional context.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "counterevidence": "First-person grammar is not transparent access to private interiority.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0021"
+      ]
+    },
+    {
+      "id": "CLM-0040",
+      "statement": "The bounded primary-text shortlist is fixed to four cases: administrative tablet P005390/MMA 1988.433.2, private letter MMA 86.11.111, lexical school tablet P228744, and literary composition ETCSL 3.1.19.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "The four cases cover distinct functional turns but cannot represent every city, period, social group or genre.",
+      "narrative_implication": "Use only these four handoff candidates unless a later production task documents why a substitution is needed.",
+      "sources": [
+        "SRC-0023",
+        "SRC-0024",
+        "SRC-0025",
+        "SRC-0026",
+        "SRC-0027"
+      ]
+    },
+    {
+      "id": "CLM-0043",
+      "statement": "MMA 86.11.111 is a ca. 1632 BCE Old Babylonian letter in which Marduk-mushallim reports failure to implement a royal security order.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "counterevidence": "Its probable Sippar-Yahrurum origin lacks excavated context, and the museum itself presents the letter as unusual.",
+      "narrative_implication": "Use as an exceptional human-scale epistolary case illustrating reporting and command, not as representative everyday correspondence or proof that writing caused compliance.",
+      "sources": [
+        "SRC-0021",
+        "SRC-0025"
+      ]
+    },
+    {
+      "id": "CLM-0049",
+      "statement": "A written law, norm or transaction is evidence of recording and claim-making, not automatic evidence of enforcement.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Case-specific links among tablet, witnesses, seal and action are required.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0031"
+      ]
+    },
+    {
+      "id": "CLM-0052",
+      "statement": "Agency belongs to people and institutions using records: tablets stabilize classifications, scribes and sealers authenticate them, archives make them retrievable, and authorities supply enforcement.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "The strength of each link differs by archive; a preserved record alone cannot demonstrate enforcement.",
+      "narrative_implication": "Never say writing itself commanded, owned or coerced.",
+      "sources": [
+        "SRC-0029",
+        "SRC-0030",
+        "SRC-0033"
+      ]
+    }
+  ],
+  "qualifications": [
+    {
+      "id": "CLM-0037",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "First-person grammar is not transparent access to private interiority."
+    },
+    {
+      "id": "CLM-0040",
+      "constraint": "Use only these four handoff candidates unless a later production task documents why a substitution is needed.",
+      "counterevidence": "The four cases cover distinct functional turns but cannot represent every city, period, social group or genre."
+    },
+    {
+      "id": "CLM-0043",
+      "constraint": "Use as an exceptional human-scale epistolary case illustrating reporting and command, not as representative everyday correspondence or proof that writing caused compliance.",
+      "counterevidence": "Its probable Sippar-Yahrurum origin lacks excavated context, and the museum itself presents the letter as unusual."
+    },
+    {
+      "id": "CLM-0049",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "Case-specific links among tablet, witnesses, seal and action are required."
+    },
+    {
+      "id": "CLM-0052",
+      "constraint": "Never say writing itself commanded, owned or coerced.",
+      "counterevidence": "The strength of each link differs by archive; a preserved record alone cannot demonstrate enforcement."
+    }
+  ],
+  "guardrails": [
+    {
+      "source": "outline.non_goal",
+      "constraint": "Không generalize một failure case thành norm; không suy đoán motive; không gọi writing powerless; không equate documentary survival với enforcement."
+    }
+  ],
+  "excluded_claim_ids": [],
+  "exclusion_rule": "Any substantive historical interpretation/generalization outside permitted_claims requires evidence-authority validation before narration.",
+  "source_refs": [
+    {
+      "id": "SRC-0021",
+      "title": "Cuneiform Texts in the Metropolitan Museum, Vol. I",
+      "author": "Metropolitan Museum of Art",
+      "type": "scholarly catalogue",
+      "authority": "Edited translations and object records",
+      "url": "https://www.metmuseum.org/met-publications/cuneiform-texts-in-the-metropolitan-museum-of-art-volume-i-tablets-cones-and-bricks-of-the-third",
+      "locators": [
+        "catalogue overview for commercial, legal and epistolary texts",
+        "MMA 86.11.111 = CTMMA I no. 69, p. 87; plates 63–64 and 135–136"
+      ]
+    },
+    {
+      "id": "SRC-0023",
+      "title": "MSVO 3, 79 artifact entry (P005390)",
+      "author": "Cuneiform Digital Library Initiative; transliterations by Robert K. Englund, Jacob L. Dahl and CDLI",
+      "type": "primary artifact record and corpus transliteration",
+      "authority": "CDLI object-level record linked to the Metropolitan Museum of Art",
+      "url": "https://cdli.earth/P005390",
+      "locators": [
+        "CDLI P005390; MMA 1988.433.2",
+        "Text: obverse columns 1–2 and reverse columns 1–2",
+        "Edition references: MSVO 3 no. 79; Frühe Schrift no. 4.79; CTMMA IV no. 180"
+      ]
+    },
+    {
+      "id": "SRC-0024",
+      "title": "Cuneiform tablet: administrative account concerning the distribution of barley and emmer",
+      "author": "Metropolitan Museum of Art",
+      "type": "museum object record",
+      "authority": "Holding-institution record for MMA 1988.433.2",
+      "url": "https://www.metmuseum.org/art/collection/search/327384",
+      "locators": [
+        "Object no. 1988.433.2",
+        "Object overview and artwork details",
+        "Open Access/Public Domain image flag"
+      ]
+    },
+    {
+      "id": "SRC-0025",
+      "title": "Cuneiform tablet: private letter",
+      "author": "Metropolitan Museum of Art",
+      "type": "primary artifact record with scholarly overview",
+      "authority": "Holding-institution record for MMA 86.11.111",
+      "url": "https://www.metmuseum.org/art/collection/search/321706",
+      "locators": [
+        "Object no. 86.11.111",
+        "Overview: Marduk-mushallim's report on non-implementation of a royal security order",
+        "Artwork details: Old Babylonian, ca. 1632 BCE, probably Sippar-Yahrurum"
+      ]
+    },
+    {
+      "id": "SRC-0026",
+      "title": "N 6052 (+) UM 29-16-393 artifact entry (P228744)",
+      "author": "Cuneiform Digital Library Initiative / Digital Corpus of Cuneiform Lexical Texts",
+      "type": "primary artifact record, transliteration and composite witness",
+      "authority": "CDLI/DCCLT object-level lexical corpus",
+      "url": "https://cdli.earth/P228744",
+      "locators": [
+        "CDLI P228744; museum nos. N 6052 (+) UM 29-16-393",
+        "Reverse columns 1–2, preserved lines 4–30",
+        "Witness to CDLI Lexical 000001 / composite Q000001"
+      ]
+    },
+    {
+      "id": "SRC-0027",
+      "title": "Letter from Puzur-Shulgi to Ibbi-Suen about Ishbi-Erra's claim on Isin (ETCSL 3.1.19)",
+      "author": "Electronic Text Corpus of Sumerian Literature, University of Oxford",
+      "type": "primary-text composite edition and translation",
+      "authority": "Curated Sumerian literary corpus with manuscript list and edition bibliography",
+      "url": "https://etcsl.orinst.ox.ac.uk/section3/b3119.htm",
+      "locators": [
+        "ETCSL composition 3.1.19",
+        "Composite text lines 1–53: section3/c3119.htm",
+        "English translation lines 1–53: section3/tr3119.htm",
+        "Cuneiform witnesses include 3N-T311 = IM 58418 and IM 13347; full witness list in bibliography"
+      ]
+    },
+    {
+      "id": "SRC-0029",
+      "title": "An Interdisciplinary Overview of a Mesopotamian City and its Hinterlands",
+      "author": "Robert McC. Adams, 2008",
+      "type": "peer-reviewed article",
+      "authority": "Major archaeological synthesis",
+      "url": "https://cdli.earth/articles/cdlj/2008-1",
+      "locators": [
+        "§2.3 and archive discussion"
+      ]
+    },
+    {
+      "id": "SRC-0030",
+      "title": "Equivalency Values and the Command Economy of the Ur III Period",
+      "author": "Robert K. Englund, 2012",
+      "type": "scholarly study",
+      "authority": "Corpus-based administrative study",
+      "url": "https://cdli.earth/files-up/publications/englund2012a.pdf",
+      "locators": [
+        "labor norms and equivalencies"
+      ]
+    },
+    {
+      "id": "SRC-0031",
+      "title": "Old Babylonian Networks of Urban Notables",
+      "author": "Marc Van De Mieroop, 2009",
+      "type": "peer-reviewed article",
+      "authority": "Specialist socio-economic interpretation",
+      "url": "https://cdli.earth/articles/cdlj/2009-7",
+      "locators": [
+        "§1.2 and §2.4"
+      ]
+    },
+    {
+      "id": "SRC-0033",
+      "title": "A Reconstruction of the Puzriš-Dagan Central Livestock Agency",
+      "author": "Tonia Sharlach, 2013",
+      "type": "peer-reviewed corpus study",
+      "authority": "CDLI archive reconstruction",
+      "url": "https://cdli.earth/articles/cdlj/2013-2",
+      "locators": [
+        "§§1.2–1.5; archive function and more than 13,500 tablets"
+      ]
+    }
+  ],
+  "retrieval_scope": {
+    "claim_ids": [
+      "CLM-0037",
+      "CLM-0040",
+      "CLM-0043",
+      "CLM-0049",
+      "CLM-0052"
+    ],
+    "source_ids": [
+      "SRC-0021",
+      "SRC-0023",
+      "SRC-0024",
+      "SRC-0025",
+      "SRC-0026",
+      "SRC-0027",
+      "SRC-0029",
+      "SRC-0030",
+      "SRC-0031",
+      "SRC-0033"
+    ],
+    "adapter": "scripts/draft_evidence.py",
+    "rule": "Writer may increase source-level resolution inside these sources but may not silently expand the truth ceiling."
+  },
+  "writer_contract": "Permitted claims define a truth ceiling, not a required content list or narrative route. The writer may use any evidence-safe subset and any authored structure that reaches the section objective. Bounded evidence retrieval may add factual resolution from approved supporting sources; new claims, causal conclusions, contradictions or generalizations must return to research authority."
+}

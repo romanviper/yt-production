@@ -1,0 +1,41 @@
+{
+  "schema_version": 4,
+  "id": "P08",
+  "title": "Khi đất sét sống lâu hơn người đọc",
+  "order": 8,
+  "status": "ready_for_draft",
+  "human_approved": false,
+  "dependencies": [
+    "P07"
+  ],
+  "narrative_job": "Khóa lifecycle bằng contraction → competence break → modern recovery. Section phải giữ decline là multicausal và gradual, latest-known date là qualified anchor, rồi dùng decipherment để trả lời central question: material can survive without living meaning; competence can later be rebuilt from evidence.",
+  "entry_state": "P07 cho thấy tradition có thể sống qua thay đổi nếu competence tiếp tục được tái tạo.",
+  "exit_state": "Khán giả có final understanding: marks chỉ trở thành historical force khi communities khiến chúng có thể lặp lại, truy hồi và hành động; clay có thể vượt qua collapse của community, nhưng meaning không tự vượt qua.",
+  "target_words": {
+    "min": 1500,
+    "max": 2500
+  },
+  "cycle_id": "C003",
+  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
+  "mission": "Điều gì xảy ra khi cộng đồng biết đọc tan rã, để lại các văn bản đất sét chờ đợi sự phục dựng hiện đại?",
+  "transition": "Kết central question; không mở thesis mới sau recovery/legacy payoff.",
+  "movement_ids": [
+    "M08"
+  ],
+  "macro_movements": [
+    {
+      "id": "M08",
+      "title": "Khi đất sét sống lâu hơn cộng đồng biết đọc nó",
+      "narrative_job": "Đóng lifecycle bằng contraction, competence break và recovery. Movement không được dựng một 'last reader' hay absolute final date; thay vào đó phải cho thấy living tradition co lại, material tablets còn, rồi modern decipherment phục dựng competence qua copying, multilingual comparison và repeated testing. Legacy được khóa ở recovery-mediated knowledge, không direct lineage tới writing hiện đại.",
+      "entry_state": "P07 cho thấy competence có thể sống rất lâu nếu được tái tạo và thích nghi.",
+      "exit_state": "Final answer: signs không tự mang power hay meaning qua thời gian. Historical force xuất hiện khi communities làm chúng repeatable, retrievable và actionable; modern reading là một lần xây lại chuỗi đó sau khi nó đã đứt."
+    }
+  ],
+  "acts": [
+    {
+      "id": "A03",
+      "role": "ending",
+      "title": "Khi hệ thống phải sống qua thay đổi và đứt gãy"
+    }
+  ]
+}

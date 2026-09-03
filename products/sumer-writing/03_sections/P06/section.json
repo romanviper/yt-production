@@ -1,0 +1,41 @@
+{
+  "schema_version": 4,
+  "id": "P06",
+  "title": "Một mệnh lệnh được viết ra vẫn có thể thất bại",
+  "order": 6,
+  "status": "ready_for_draft",
+  "human_approved": false,
+  "dependencies": [
+    "P05"
+  ],
+  "narrative_job": "Stress-test agency của writing bằng việc tách documentary persistence khỏi compliance. Section phải cho thấy written order/law/norm có thể tồn tại, được truyền và được viện dẫn trong khi implementation vẫn thất bại hoặc cần enforcement từ bên ngoài text.",
+  "entry_state": "Khán giả đã thấy records + trained competence + authority như một system mạnh; written authority vì vậy dễ bị xem như effective authority.",
+  "exit_state": "Khán giả hiểu writing có thể mở rộng memory, claim-making và coordination nhưng không tự tạo compliance; đây là giới hạn tích cực của thesis chứ không phải phủ định value của writing.",
+  "target_words": {
+    "min": 800,
+    "max": 1200
+  },
+  "cycle_id": "C003",
+  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
+  "mission": "Những ranh giới thực tế nào bộc lộ khi văn bản hành chính không thể tự đảm bảo sự tuân thủ?",
+  "transition": "Nếu power nằm trong community dùng writing hơn là trong marks, lifecycle chỉ có thể kéo dài khi community ấy mang competence sang những language và institution mới.",
+  "movement_ids": [
+    "M06"
+  ],
+  "macro_movements": [
+    {
+      "id": "M06",
+      "title": "Văn bản có thể giữ một mệnh lệnh mà vẫn không làm nó xảy ra",
+      "narrative_job": "Đặt giới hạn rõ nhất cho agency của writing. Movement phải tách claim-making, persistence và coordination khỏi enforcement/compliance; writing có thể giúp một instruction, law hay norm tồn tại và được truy hồi, nhưng action vẫn phụ thuộc người và authority bên ngoài text.",
+      "entry_state": "Sau institutional feedback và trained competence, written authority rất dễ bị đồng nhất với effective authority.",
+      "exit_state": "Khán giả có một boundary sạch: writing có thể mở rộng trí nhớ và coordination, nhưng không tự cưỡng chế thế giới."
+    }
+  ],
+  "acts": [
+    {
+      "id": "A02",
+      "role": "body",
+      "title": "Khi record trở thành hạ tầng xã hội"
+    }
+  ]
+}

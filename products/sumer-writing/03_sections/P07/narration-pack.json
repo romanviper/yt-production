@@ -1,0 +1,262 @@
+{
+  "schema_version": 4,
+  "section": "P07",
+  "cycle_id": "C003",
+  "created_at": "2026-09-03T16:55:04.173990+00:00",
+  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
+  "brief_sha256": "8b06b46acc844a01241e4d2c5eef296004aba4259c59e5c8b79109364e734177",
+  "evidence_pack_sha256": "715a8c8e20c736c0107449989e8a9884cc9761acf81ec10df9dfad5389fdcca2",
+  "permitted_claims": [
+    {
+      "id": "CLM-0055",
+      "statement": "Cuneiform was adapted from Sumerian-associated use to Akkadian and then to multiple unrelated languages.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Adaptation was not uniform and sometimes imported Mesopotamian languages alongside the script.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0034",
+        "SRC-0016",
+        "SRC-0036"
+      ]
+    },
+    {
+      "id": "CLM-0056",
+      "statement": "Adaptation required modification of sign values and orthographic conventions rather than simple substitution of words.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Degree of modification differed by language and scribal center.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0034",
+        "SRC-0036"
+      ]
+    },
+    {
+      "id": "CLM-0057",
+      "statement": "Lexical lists and bilingual curricula were key transmission infrastructure across regions and centuries.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Surviving lists privilege formal training contexts.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0016",
+        "SRC-0035",
+        "SRC-0036"
+      ]
+    },
+    {
+      "id": "CLM-0058",
+      "statement": "Sumerian outlived probable vernacular use as a learned literary, cultic and scholarly language.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "counterevidence": "The date and social extent of spoken-language decline remain debated.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0034",
+        "SRC-0035"
+      ]
+    },
+    {
+      "id": "CLM-0059",
+      "statement": "The living-tradition endpoint is institutional reproduction: active teaching, copying and competent reuse, not the survival of old tablets alone.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Sparse late evidence makes the exact endpoint regional rather than singular.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0016",
+        "SRC-0035"
+      ]
+    },
+    {
+      "id": "CLM-0060",
+      "statement": "Transmission moved through courts, traveling or imported specialists, diplomatic contact, copying and formal curricula rather than by script diffusion alone.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "The balance among channels varies by region and is often reconstructed from elite archives.",
+      "narrative_implication": "Name the human and institutional carrier for every spread claim.",
+      "sources": [
+        "SRC-0036",
+        "SRC-0037",
+        "SRC-0038"
+      ]
+    },
+    {
+      "id": "CLM-0061",
+      "statement": "The Hittite case shows selective transfer: scholarly and literary cuneiform practices traveled, while Mesopotamian bookkeeping and metrology did not necessarily travel with them.",
+      "type": "fact",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "counterevidence": "Other Anatolian sites and periods may preserve different practical uses.",
+      "narrative_implication": "Use as a transformation-cost case, not a universal rule of adaptation.",
+      "sources": [
+        "SRC-0037"
+      ]
+    },
+    {
+      "id": "CLM-0062",
+      "statement": "Script survival, language survival and institutional survival are separable: cuneiform could encode new languages, Sumerian could persist as learned content, and both depended on training communities.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Sparse regional evidence prevents one synchronized timeline.",
+      "narrative_implication": "Track the three layers independently through the endpoint passed to WS08.",
+      "sources": [
+        "SRC-0034",
+        "SRC-0016",
+        "SRC-0035",
+        "SRC-0037"
+      ]
+    }
+  ],
+  "qualifications": [
+    {
+      "id": "CLM-0055",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "Adaptation was not uniform and sometimes imported Mesopotamian languages alongside the script."
+    },
+    {
+      "id": "CLM-0056",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "Degree of modification differed by language and scribal center."
+    },
+    {
+      "id": "CLM-0057",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "Surviving lists privilege formal training contexts."
+    },
+    {
+      "id": "CLM-0058",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "The date and social extent of spoken-language decline remain debated."
+    },
+    {
+      "id": "CLM-0059",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "Sparse late evidence makes the exact endpoint regional rather than singular."
+    },
+    {
+      "id": "CLM-0060",
+      "constraint": "Name the human and institutional carrier for every spread claim.",
+      "counterevidence": "The balance among channels varies by region and is often reconstructed from elite archives."
+    },
+    {
+      "id": "CLM-0061",
+      "constraint": "Use as a transformation-cost case, not a universal rule of adaptation.",
+      "counterevidence": "Other Anatolian sites and periods may preserve different practical uses."
+    },
+    {
+      "id": "CLM-0062",
+      "constraint": "Track the three layers independently through the endpoint passed to WS08.",
+      "counterevidence": "Sparse regional evidence prevents one synchronized timeline."
+    }
+  ],
+  "guardrails": [
+    {
+      "source": "outline.non_goal",
+      "constraint": "Không civilization tour; không one-scene adoption; không uniform diffusion; không đồng nhất script survival với language survival; không direct lineage."
+    }
+  ],
+  "excluded_claim_ids": [],
+  "exclusion_rule": "Any substantive historical interpretation/generalization outside permitted_claims requires evidence-authority validation before narration.",
+  "source_refs": [
+    {
+      "id": "SRC-0016",
+      "title": "DCCLT lexical introduction",
+      "author": "Oracc / University of Pennsylvania",
+      "type": "academic corpus introduction",
+      "authority": "Curated specialist corpus",
+      "url": "https://oracc.museum.upenn.edu/dcclt/intro/lexical_intro.html",
+      "locators": [
+        "introductory sections",
+        "introduction"
+      ]
+    },
+    {
+      "id": "SRC-0034",
+      "title": "The Sumerian language",
+      "author": "Oracc / University of Pennsylvania, 2019",
+      "type": "academic reference",
+      "authority": "Curated specialist project",
+      "url": "https://oracc.museum.upenn.edu/nimrud/ancientkalhu/thewritings/sumerian/",
+      "locators": [
+        "full overview",
+        "overview"
+      ]
+    },
+    {
+      "id": "SRC-0035",
+      "title": "Ancient Mesopotamia",
+      "author": "Niek Veldhuis, 2019",
+      "type": "scholarly handbook chapter",
+      "authority": "Leading specialist on lexical traditions",
+      "url": "https://www.cambridge.org/core/books/cambridge-world-history-of-lexicography/ancient-mesopotamia/B020E908200C609176018CA9FCCA363A",
+      "locators": [
+        "summary"
+      ]
+    },
+    {
+      "id": "SRC-0036",
+      "title": "A History of Hittite Literacy — Introduction",
+      "author": "Theo van den Hout, 2020",
+      "type": "scholarly monograph chapter",
+      "authority": "Leading Hittitologist synthesis",
+      "url": "https://www.cambridge.org/core/books/history-of-hittite-literacy/introduction/2665C532BD423C96A11075D908A9EF09",
+      "locators": [
+        "introduction"
+      ]
+    },
+    {
+      "id": "SRC-0037",
+      "title": "The Construction of Meaning on the Cuneiform Periphery",
+      "author": "Mark Weeden, 2017",
+      "type": "scholarly chapter",
+      "authority": "Open-access specialist study of transmission and adaptation",
+      "url": "https://discovery.ucl.ac.uk/id/eprint/10198300/",
+      "locators": [
+        "pp. 3–13; Hittite curricula, bilingual lists and selective transfer"
+      ]
+    },
+    {
+      "id": "SRC-0038",
+      "title": "Literacy and Literature in the Old Kingdom until 1500 BC",
+      "author": "Theo van den Hout, 2020",
+      "type": "scholarly monograph chapter",
+      "authority": "Specialist history of Hittite literacy",
+      "url": "https://www.cambridge.org/core/books/history-of-hittite-literacy/literacy-and-literature-in-the-old-kingdom-until-1500-bc/CB1156B309B3C70FFB307EF48A7349ED",
+      "locators": [
+        "chapter summary; local Hittite form and continued oral domains"
+      ]
+    }
+  ],
+  "retrieval_scope": {
+    "claim_ids": [
+      "CLM-0055",
+      "CLM-0056",
+      "CLM-0057",
+      "CLM-0058",
+      "CLM-0059",
+      "CLM-0060",
+      "CLM-0061",
+      "CLM-0062"
+    ],
+    "source_ids": [
+      "SRC-0016",
+      "SRC-0034",
+      "SRC-0035",
+      "SRC-0036",
+      "SRC-0037",
+      "SRC-0038"
+    ],
+    "adapter": "scripts/draft_evidence.py",
+    "rule": "Writer may increase source-level resolution inside these sources but may not silently expand the truth ceiling."
+  },
+  "writer_contract": "Permitted claims define a truth ceiling, not a required content list or narrative route. The writer may use any evidence-safe subset and any authored structure that reaches the section objective. Bounded evidence retrieval may add factual resolution from approved supporting sources; new claims, causal conclusions, contradictions or generalizations must return to research authority."
+}

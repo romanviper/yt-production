@@ -3,9 +3,9 @@
   "section": "P01",
   "cycle_id": "C003",
   "created_at": "2026-08-19T10:21:00+00:00",
-  "outline_sha256": "d707db0c172a9db579593a136791d2b1e629892315e31bedfa0d795b8c92da9d",
+  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
   "brief_sha256": "95e3739f6707521143b26085330ac1097d0416dba59b0418c3466f9a44e8888b",
-  "evidence_pack_sha256": "488fbbd30dffd8f874eb1ad8cb44d153a0384b309d2c7637fa85dcd19b0e10df",
+  "evidence_pack_sha256": "3de13e531d8a0da23fc5dced71728890be21a3744700b9b37f96f5e05b858127",
   "permitted_claims": [
     {
       "id": "CLM-0011",

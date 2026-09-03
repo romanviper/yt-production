@@ -31,12 +31,12 @@
   "inputs": [
     {
       "path": "03_sections/P01/section.json",
-      "sha256": "6325b9a0d7170ea3321bf86f107c64cc5c572a6944f728cc3747ebd557444d0b",
-      "bytes": 3307
+      "sha256": "173a84ceea6adc7e0f4ca70e32a50b538887ade6abf49782a2626e605722f6ee",
+      "bytes": 3974
     },
     {
       "path": "03_sections/P01/narration-pack.json",
-      "sha256": "616fdb1ae38d719c01c647b31b9b09e36f20b054dd6d39d75421e5df8ab83708",
+      "sha256": "e8173f538d26df937955737a2b715f8ddc3705efc6367d43492096afb026ba5d",
       "bytes": 12338
     },
     {

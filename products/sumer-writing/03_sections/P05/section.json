@@ -1,0 +1,41 @@
+{
+  "schema_version": 4,
+  "id": "P05",
+  "title": "Đất sét không tự truyền được cách đọc nó",
+  "order": 5,
+  "status": "ready_for_draft",
+  "human_approved": false,
+  "dependencies": [
+    "P04"
+  ],
+  "narrative_job": "Làm rõ human infrastructure của writing: competence phải được dạy, luyện, chép, sửa và tái tạo. Section phải tách professional title, functional competence và broad literacy, đồng thời giữ access asymmetry trong evidence ceiling.",
+  "entry_state": "Sau P04, audience có thể nghĩ records sống lâu thì knowledge cũng tự sống lâu.",
+  "exit_state": "Khán giả hiểu continuity là labor được tái tạo qua communities of practice; material durability không đảm bảo living competence.",
+  "target_words": {
+    "min": 1150,
+    "max": 1700
+  },
+  "cycle_id": "C003",
+  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
+  "mission": "Kỹ năng đọc viết và truyền thống sao chép được duy trì thế nào qua các thế hệ học viên?",
+  "transition": "Nếu trained people và institutions đã có thể giữ text sống, boundary tiếp theo là liệu một written instruction có tự biến thành action hay không.",
+  "movement_ids": [
+    "M05"
+  ],
+  "macro_movements": [
+    {
+      "id": "M05",
+      "title": "Hạ tầng ấy phải được tái tạo trong con người",
+      "narrative_job": "Chuyển từ institutional memory sang competence. Movement phải chứng minh continuity không nằm ở clay hay sign list một mình mà ở quá trình đào tạo, sao chép, sửa, tính toán, học lexical/genre conventions và duy trì communities of practice. Access phải được trình bày như bất đối xứng nhưng không định lượng quá evidence.",
+      "entry_state": "Khán giả có thể nghĩ một archive bền thì knowledge cũng tự bền.",
+      "exit_state": "Khán giả hiểu hệ thống chỉ sống khi competence được tái tạo; durability of material và continuity of practice là hai việc khác nhau."
+    }
+  ],
+  "acts": [
+    {
+      "id": "A02",
+      "role": "body",
+      "title": "Khi record trở thành hạ tầng xã hội"
+    }
+  ]
+}
