@@ -171,6 +171,8 @@ def create_task(
     }
     if "evidence_access" in packet:
         work_order["evidence_access"] = packet["evidence_access"]
+        if "material_snapshot_sha256" in packet["evidence_access"]:
+            work_order["material_snapshot_sha256"] = packet["evidence_access"]["material_snapshot_sha256"]
     if "review_contract_version" in packet:
         work_order["review_contract_version"] = packet["review_contract_version"]
     if "execution_runtime" in packet:
@@ -239,6 +241,14 @@ def verify_task(product_dir: Path, task_id: str, *, state_override: str | None =
         errors.append("runtime-owned paths differ between work order and packet")
     if work.get("packet_manifest") != expected_manifest or work.get("context_packet") != expected_context:
         errors.append("work order must point to its router-generated packet and context")
+    expected_snapshot_hash = work.get("material_snapshot_sha256")
+    if expected_snapshot_hash:
+        section = work.get("target", {}).get("section")
+        snapshot_path = product_dir / "03_sections" / str(section) / "material-snapshot.json"
+        if not snapshot_path.is_file():
+            errors.append(f"task {task_id} material snapshot is missing")
+        elif sha256(snapshot_path) != expected_snapshot_hash:
+            errors.append(f"task {task_id} material snapshot is stale / mutated since task creation")
     return errors
 
 

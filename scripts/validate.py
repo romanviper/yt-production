@@ -198,6 +198,21 @@ def validate_product(product_dir: Path) -> list[Issue]:
                     prefix=f"section {section_id} material",
                 ):
                     issues.append(Issue("ERROR", str(section_materials_path), error))
+            snapshot_path = root / "material-snapshot.json"
+            if snapshot_path.is_file():
+                try:
+                    snap = read_json(snapshot_path)
+                    if snap.get("schema_version") != 1:
+                        issues.append(Issue("ERROR", str(snapshot_path), "material snapshot schema_version must be 1"))
+                    if snap.get("section") != section_id:
+                        issues.append(Issue("ERROR", str(snapshot_path), f"material snapshot section must be {section_id}"))
+                    expected_mat_hash = snap.get("materials_sha256")
+                    if section_materials_path.is_file():
+                        actual_mat_hash = sha256(section_materials_path)
+                        if expected_mat_hash != actual_mat_hash:
+                            issues.append(Issue("ERROR", str(snapshot_path), f"material snapshot hash mismatch: snapshot has {expected_mat_hash}, materials.json has {actual_mat_hash}"))
+                except Exception as exc:
+                    issues.append(Issue("ERROR", str(snapshot_path), f"invalid material snapshot: {exc}"))
 
     validated_task_ids: set[str] = set()
     active_path = product_dir / "tasks" / "ACTIVE.json"

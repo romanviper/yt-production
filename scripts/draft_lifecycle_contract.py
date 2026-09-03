@@ -250,6 +250,9 @@ def validate_evidence_trace(product_dir: Path, task_id: str) -> list[str]:
             errors.append(f"task {task_id} evidence trace line {index} uses undeclared capability {capability!r}")
         if record.get("evidence_pack_sha256") != expected_evidence_hash:
             errors.append(f"task {task_id} evidence trace line {index} is stale relative to evidence pack")
+        expected_snapshot_hash = work.get("material_snapshot_sha256")
+        if expected_snapshot_hash and record.get("material_snapshot_sha256") != expected_snapshot_hash:
+            errors.append(f"task {task_id} evidence trace line {index} is stale relative to material snapshot")
         if record.get("truth_ceiling_unchanged") is not True:
             errors.append(f"task {task_id} evidence trace line {index} does not preserve truth ceiling")
         response = record.get("response")

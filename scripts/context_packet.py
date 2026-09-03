@@ -569,6 +569,23 @@ def compile_packet(
         }
         if evidence_access.get("required_before_submit"):
             evidence_packet["required_before_submit"] = list(evidence_access["required_before_submit"])
+        if section:
+            sec_dir = product_dir / "03_sections" / section
+            sec_mat = sec_dir / "materials.json"
+            snapshot_path = sec_dir / "material-snapshot.json"
+            if sec_mat.is_file():
+                if not snapshot_path.is_file() or sha256(sec_mat) != read_json_local(snapshot_path).get("materials_sha256"):
+                    mat_data = read_json_local(sec_mat)
+                    snapshot = {
+                        "schema_version": 1,
+                        "section": section,
+                        "created_at": datetime.now(timezone.utc).isoformat(),
+                        "materials_sha256": sha256(sec_mat),
+                        "materials": mat_data.get("materials", []) if isinstance(mat_data, dict) else mat_data,
+                    }
+                    write_json(snapshot_path, snapshot)
+            if snapshot_path.is_file():
+                evidence_packet["material_snapshot_sha256"] = sha256(snapshot_path)
 
     model_write_paths = outputs + optional_outputs + [report_path, operator_brief_path]
     allowed = model_write_paths

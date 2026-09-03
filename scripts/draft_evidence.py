@@ -645,6 +645,16 @@ class DraftEvidenceBroker:
             raise EvidenceAccessError("evidence pack is stale relative to narration authority")
         if self.evidence.get("section") != self.section:
             raise EvidenceAccessError("evidence pack section differs from task target")
+        expected_snapshot_hash = self.work.get("material_snapshot_sha256")
+        if expected_snapshot_hash:
+            snapshot_path = self.root / "material-snapshot.json"
+            if not snapshot_path.is_file():
+                raise EvidenceAccessError(f"material snapshot {snapshot_path.name} is missing for task {self.task_id}")
+            actual_hash = sha256(snapshot_path)
+            if actual_hash != expected_snapshot_hash:
+                raise EvidenceAccessError(
+                    f"material snapshot has mutated since task creation: expected {expected_snapshot_hash}, got {actual_hash}"
+                )
 
     def _scope_from_narration(self) -> tuple[list[str], list[str]]:
         if self.narration.get("schema_version") == 4:
@@ -811,6 +821,7 @@ class DraftEvidenceBroker:
             "evidence_pack_sha256": sha256(self.evidence_path),
             "optional_material_ledger_sha256": sha256(self.material_ledger_path) if self.material_ledger_path.is_file() else None,
             "section_materials_sha256": sha256(self.section_materials_path) if self.section_materials_path.is_file() else None,
+            "material_snapshot_sha256": sha256(self.root / "material-snapshot.json") if (self.root / "material-snapshot.json").is_file() else None,
             "error": error,
             "truth_ceiling_unchanged": True,
         }
@@ -819,6 +830,7 @@ class DraftEvidenceBroker:
             handle.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
 
     def call(self, capability: str, arguments: dict[str, Any] | None = None) -> Any:
+        self._validate_fresh_handoff()
         arguments = arguments or {}
         handlers = {
             "scope": self.scope,
