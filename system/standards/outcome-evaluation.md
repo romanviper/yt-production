@@ -1,50 +1,32 @@
 # Outcome Evaluation Standard
 
-Judge the draft by **outcome → diagnosis**, never method compliance.
+Judge **outcome → diagnosis**, never method compliance.
 
 ## Primary judgment
 
-First evaluate:
+Within the hard gates, judge hook and retention first: is the listener following a historical story and discovering meaning through what unfolds, or receiving a thesis-led explanation decorated with story-like language? A repeatable conclusion alone fails. Then judge mission payoff, retellable progression, causality, continuity, one-hearing orientation and evidence integrity. Diagnose the resulting state, not a missing craft device.
 
-- mission answer, retellable historical path and meaningful exit progression;
-- authored narration and a mental experience of change, not research recital;
-- focal orientation across anchored, earned shifts;
-- causal clarity and continuity;
-- evidence integrity: no fabricated documentary fact, false certainty, truth-ceiling expansion or hidden qualification/contradiction.
+Fail fabricated documentary fact, false certainty, truth-ceiling expansion or hidden material qualifications.
 
-A factually correct draft may still fail if it delivers conclusions as a list or essay without a retellable progression. A nominal scene fails when imagery only decorates explanation.
-
-Do not require a particular route: carrier, scene, object, before/after, clue, process, chronological order or recount-before-interpret.
-
-A signaled representative reconstruction passes only when it adds no unsupported factual or causal meaning and cannot be mistaken for documented history.
+No scene, character, object, carrier, point of view, chronology, scale pattern, reveal order or recount-before-interpret method is required. A representative reconstruction may contain plausible connective particulars, but they cannot pose as evidence, create historical meaning or be mistaken for a documented event.
 
 ## Required outcome questions
 
-Every review must answer both questions explicitly:
+Every review answers:
 
-1. After hearing the section, can the audience answer the section mission in their own words?
-2. Can the audience retell the historical path that led to that answer?
+1. After the opening, does a willing listener have a credible reason to continue?
+2. What historical reality did the listener follow, and what meaning emerged as it developed?
+3. Can the audience state the section's earned meaning in their own words?
+4. Can the audience retell how the story made that meaning discoverable?
 
-A `pass` requires both outcomes to be supported by the draft.
+A `pass` requires all four. Mission recall cannot compensate for an attention or orientation failure.
 
-## Diagnose after failure
+## Diagnosis and routing
 
-Only after an outcome problem is observed, diagnose the responsible layer. Any suggested repair method is optional; it is not a pass/fail invariant.
+Diagnose only after observing failure:
 
-## Common failures
-
-- `document mode`: accurate conclusions without a retellable historical progression;
-- disguised lecture: a nominal scene carrying sequential explanations;
-- illustrated argument or focal break: imagery decorates claims, a cut drops its anchor, or narrator knowledge changes without an earned boundary;
-- false documentary scene: unsupported reconstruction posed as witnessed fact;
-- causal blur;
-- continuity failure;
-- evidence overreach.
-
-## Routing
-
-- `prose_execution`: mission/evidence territory are sound; execution failed to produce the required outcome.
+- `prose_execution`: mission and evidence territory are sound; the audience outcome failed.
 - `product_architecture`: mission, boundary, progression or evidence territory is wrong.
-- `evidence`: support is missing/contradicted/insufficient or requires truth-ceiling expansion.
+- `evidence`: support is missing, contradicted or requires truth-ceiling expansion.
 
-No active story-plan/local-design authority exists on the current path. Give the smallest responsible revision scope and an observable acceptance test.
+Give the smallest responsible scope and an observable acceptance test. State the failure and desired outcome; do not prescribe a narrative device or paragraph plan. Label any operator-side repair example `non_binding_hypothesis` and keep it outside Writer context.

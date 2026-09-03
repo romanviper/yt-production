@@ -44,12 +44,25 @@ class WriterExcerptPacketTests(unittest.TestCase):
             self.assertIn('"output_language": "vi"', context)
             self.assertIn("one contiguous slice of the longer section", context)
             self.assertIn("not a compressed target for the whole section", context)
-            self.assertIn("cinematic narrative-nonfiction thinking", context)
-            self.assertIn("curiosity, consequence and payoff", context)
-            self.assertIn("claims and then illustrating them", context)
-            self.assertIn("focal carrier", context)
-            self.assertIn("physical or causal anchor", context)
-            self.assertIn("standalone technique note", context)
+            self.assertIn("Use the same style compass", context)
+            self.assertIn("tell a compelling piece of a historical story", context)
+            self.assertIn("Let meaning emerge through what unfolds", context)
+            self.assertIn("not a proposition to prove in advance", context)
+            self.assertIn("Hook and retention are audience outcomes", context)
+            self.assertIn("optional questions, not required beats or prose order", context)
+            self.assertIn("Choose how the passage works", context)
+            self.assertIn("No creative method or sequence is compulsory", context)
+            for method_priming in [
+                "cinematic narrative-nonfiction thinking",
+                "curiosity, consequence and payoff",
+                "focal carrier",
+                "physical or causal anchor",
+                "micro and macro",
+                "first-person",
+                "third-person",
+                "omniscient",
+            ]:
+                self.assertNotIn(method_priming, context)
             self.assertNotIn("Ken Follett", context)
             self.assertIn("Approved fact for P01.", context)
             self.assertNotIn("CLM-0001", context)
@@ -77,8 +90,10 @@ class WriterExcerptPacketTests(unittest.TestCase):
         self.assertEqual(["CLM-0014"], packet["selected_claim_ids"])
         self.assertEqual("representative_fiction", packet["narrative_mode"])
         self.assertIn('"narrative_mode": "representative_fiction"', context)
-        self.assertIn("Invented people", context)
-        self.assertIn("does not need to supply the protagonist", context)
+        self.assertIn("naturally signaled representative reconstruction", context)
+        self.assertIn("composite person or local event", context)
+        self.assertIn("representative-reconstruction boundary", context)
+        self.assertIn("may not pose as documented evidence", context)
         self.assertIn("Administrative scale is a major formation pressure", context)
         self.assertNotIn("Numerical systems provide", context)
         self.assertNotIn("Neolithic clay objects", context)

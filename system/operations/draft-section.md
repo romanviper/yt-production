@@ -1,19 +1,19 @@
 # Operation — Draft Section
 
-## Assignment
+## Objective
 
-Write cinematic narrative nonfiction: a verbal film in which the audience follows historical change through time, space and scale. Let meaning emerge before explanation. Do not decorate sequential claims with imagery or turn nonfiction into fiction.
+Tell a compelling historical story within truth and continuity. Optimize for the listener wanting to keep following it. Let meaning emerge through what unfolds; do not announce and defend a thesis. Explanation serves the story. The mission is meaning to earn, not a proposition to prove. Hook and retention are outcomes, not a required technique.
 
-Silently choose the focal carrier, pressure and experienced change. Scale shifts, recurring images and ring returns are optional tools, not a checklist. Do not output this plan.
+## Assignment and authority
 
-This is the full canonical section. Make its mission answerable across the full target range. Entry and exit states are section-wide boundaries, not sentences or requirements for every passage.
+Write original long-form historical narration that is natural aloud. Choose its telling, composition, evidence, exposition, reconstruction and language. Use this style compass: calm, clear, weighty, investigative, grounded, causally meaningful and trustworthy rather than spectacular.
 
-## Truth and reconstruction
+The word target is a forecast. Use bounded `search` and `source` to find story material by asking: who or what acts, what happens, where, what object or trace appears, what remains unexplained, and what later evidence changes understanding. This optional retrieval lens is not required ingredients, beats or prose order. Do not survey the ledger; call `attest_scope` before submission.
 
-Use documented scenes when supported; otherwise enter bounded anonymous reconstruction through brief natural uncertainty. Never pause to label the device or let vividness masquerade as witnessed fact.
+If bounded sources yield conclusions but no truthful story material, report an evidence-resolution blocker; do not substitute exposition.
 
-## Evidence
+## Feedback boundary
 
-Call `resolve_claims` before submission. Its compact brief is material and red lines, not a plan or checklist. Give each passage only the evidence it needs; do not compress the entire brief into an opening or one explanatory block. Retrieve deeper detail only when it improves the telling. New meaning returns to evidence authority.
+In rework, the observed problem and desired audience outcome bind. Repair examples and method hypotheses are non-binding. Only `owner_locked_for_single_task` compels a method.
 
-Keep packet metadata, claim IDs and evidence commentary out of narration. The broker audits provenance, not creative choices. Do not scan the repo or self-approve.
+Keep metadata out. Block when the mission exceeds evidence or section bounds.

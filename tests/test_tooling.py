@@ -913,7 +913,7 @@ class ModularProductionTests(unittest.TestCase):
                 encoding="utf-8",
             )
             write_json(product / "tasks" / work["id"] / "operator-brief.json", valid_operator_brief())
-            DraftEvidenceBroker(product, work["id"]).call("resolve_claims")
+            DraftEvidenceBroker(product, work["id"]).call("attest_scope")
             self.assertEqual([], submit_task(product, work["id"]))
 
     def test_production_unit_hard_cap_remains_enforced(self) -> None:
@@ -1276,7 +1276,7 @@ class ModularProductionTests(unittest.TestCase):
             make_approved_story_plan(product, "P06")
             root = product / "03_sections" / "P06"
             draft_work = create_task(product, "draft_section", "P06", None, False)
-            DraftEvidenceBroker(product, draft_work["id"]).call("resolve_claims")
+            DraftEvidenceBroker(product, draft_work["id"]).call("attest_scope")
             (root / "draft.md").write_text("Draft P06.", encoding="utf-8")
             (root / "handoff.md").write_text("Exit state P06.", encoding="utf-8")
             (product / "tasks" / draft_work["id"] / "report.md").write_text("Draft ready.\n", encoding="utf-8")

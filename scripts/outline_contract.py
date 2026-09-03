@@ -257,6 +257,14 @@ def validate_outline_contract(
             ):
                 errors.append(f"outline section {section_id or '?'} planned_moves must contain one to ten story moves")
 
+        if current_contract:
+            job = section.get("narrative_job")
+            if isinstance(job, str):
+                forbidden_camera = ["close-up", "tracking shot", "camera moves", "cut to", "establishing shot"]
+                for term in forbidden_camera:
+                    if term in job.lower():
+                        errors.append(f"outline section {section_id or '?'} narrative_job must not prescribe camera or scene grammar: {term!r}")
+
         dependencies = section.get("dependencies", [])
         if not isinstance(dependencies, list) or not all(isinstance(item, str) for item in dependencies):
             errors.append(f"outline section {section_id or '?'} dependencies must be a list")
