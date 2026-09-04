@@ -3,9 +3,10 @@
 
 The previous compiler is retained in ``context_packet_legacy``. This module
 keeps its packet/provenance machinery but changes canonical Historical
-Substrate routing at the runtime boundary: Reviewer receives the same compact
-historical model as Writer, bounded evidence access is secondary verification,
-and stale section/substrate projections cannot spawn tasks.
+Substrate routing at the runtime boundary: whole-outline creation requires
+product-complete substrate, Reviewer receives the same compact historical
+model as Writer, bounded evidence access is secondary verification, and stale
+section/substrate projections cannot spawn tasks.
 """
 
 from __future__ import annotations
@@ -17,10 +18,12 @@ from typing import Any
 try:
     import scripts.context_packet_legacy as _legacy
     from scripts.context_packet_legacy import *  # noqa: F401,F403 - compatibility surface
+    from scripts.historical_substrate_contract import validate_historical_substrate
     from scripts.substrate_preflight import require_canonical_section_state
 except ModuleNotFoundError:  # pragma: no cover
     import context_packet_legacy as _legacy
     from context_packet_legacy import *  # type: ignore # noqa: F401,F403
+    from historical_substrate_contract import validate_historical_substrate
     from substrate_preflight import require_canonical_section_state
 
 
@@ -60,6 +63,23 @@ def _historical_substrate_runtime(product_dir: Path, operation: str, section: st
     return int(state.get("historical_substrate_contract_version") or 0) >= 1
 
 
+def _require_product_complete_outline_substrate(product_dir: Path) -> None:
+    product_dir = product_dir.resolve()
+    substrate_path = product_dir / "01_research" / "historical-substrate.json"
+    claims_path = product_dir / "01_research" / "claim-ledger.json"
+    sources_path = product_dir / "01_research" / "source-index.json"
+    if not substrate_path.is_file():
+        raise ValueError("Outline creation requires 01_research/historical-substrate.json")
+    errors = validate_historical_substrate(
+        _legacy.read_json_local(substrate_path),
+        _legacy.read_json_local(claims_path),
+        _legacy.read_json_local(sources_path),
+        require_product_complete=True,
+    )
+    if errors:
+        raise ValueError("Outline Historical Substrate preflight failed: " + "; ".join(errors))
+
+
 def compile_packet(
     product_dir: Path,
     operation: str,
@@ -68,6 +88,9 @@ def compile_packet(
     unit: str | None = None,
     execution_runtime: str | None = None,
 ) -> tuple[dict[str, Any], str]:
+    if operation == "outline":
+        _require_product_complete_outline_substrate(product_dir)
+
     canonical_substrate = _historical_substrate_runtime(product_dir, operation, section)
     if canonical_substrate and section:
         require_canonical_section_state(product_dir, section)
@@ -104,7 +127,6 @@ def compile_packet(
 
 
 def main() -> int:
-    # legacy.main resolves compile_packet in its own module globals.
     _legacy.compile_packet = compile_packet
     return _legacy.main()
 
