@@ -37,11 +37,11 @@ _ORIGINAL_LOAD_REGISTRY = _legacy.load_registry
 _ORIGINAL_REVIEW_INPUTS = list(_legacy.CANONICAL_REVIEW_REQUIRED_INPUTS)
 _ORIGINAL_LEGACY_DRAFT_INSTRUCTIONS = list(_legacy.LEGACY_DRAFT_INSTRUCTION_FILES)
 
-COMPAT_CREATIVE_BOUNDARIES = "system/operations/compat/creative-boundaries.md"
+COMPAT_CREATIVE_BOUNDARIES = "system/core/creative-boundaries.md"
 COMPAT_OUTLINE_INSTRUCTIONS = [
     COMPAT_CREATIVE_BOUNDARIES,
     "system/standards/channel-constitution.md",
-    "system/operations/compat/outline.md",
+    "system/operations/outline.md",
 ]
 COMPAT_OUTLINE_INPUTS = [
     "product.json",
@@ -52,12 +52,12 @@ COMPAT_OUTLINE_INPUTS = [
 ]
 COMPAT_DIRECT_DRAFT_INSTRUCTIONS = [
     COMPAT_CREATIVE_BOUNDARIES,
-    "system/operations/compat/draft-section.md",
+    "system/operations/draft-section.md",
 ]
 COMPAT_LEGACY_DRAFT_INSTRUCTIONS = [
     COMPAT_CREATIVE_BOUNDARIES,
     "system/standards/channel-constitution.md",
-    "system/operations/compat/draft-section.md",
+    "system/operations/draft-section.md",
 ]
 COMPAT_DIRECT_DRAFT_INPUTS = [
     "03_sections/{section}/section.json",
@@ -68,12 +68,22 @@ COMPAT_REVIEW_INSTRUCTIONS = [
     "system/standards/channel-constitution.md",
     "system/standards/outcome-evaluation.md",
     "system/standards/section-quality-gate.md",
-    "system/operations/compat/review-section.md",
+    "system/operations/review-section.md",
+]
+COMPAT_REVIEW_INPUTS = [
+    "02_outline/outline.json",
+    "02_outline/story-bible.md",
+    "02_outline/voice-profile.md",
+    "03_sections/{section}/section.json",
+    "03_sections/{section}/brief.md",
+    "03_sections/{section}/narration-pack.json",
+    "03_sections/{section}/draft.md",
+    "03_sections/{section}/handoff.md",
 ]
 COMPAT_REVISE_INSTRUCTIONS = [
     COMPAT_CREATIVE_BOUNDARIES,
     "system/standards/channel-constitution.md",
-    "system/operations/compat/revise-section.md",
+    "system/operations/revise-section.md",
 ]
 COMPAT_DIRECT_REVISE_INPUTS = [
     "02_outline/outline.json",
@@ -91,6 +101,26 @@ ADOPTED_REVIEW_INPUTS = [
     "03_sections/{section}/narration-pack.json",
     "03_sections/{section}/draft.md",
     "03_sections/{section}/handoff.md",
+]
+
+SUBSTRATE_OUTLINE_INSTRUCTIONS = [
+    "system/core/creative-boundaries.md",
+    "system/standards/channel-constitution.md",
+    "system/operations/substrate/outline.md",
+]
+SUBSTRATE_DRAFT_INSTRUCTIONS = [
+    "system/core/creative-boundaries.md",
+    "system/operations/substrate/draft-section.md",
+]
+SUBSTRATE_REVIEW_INSTRUCTIONS = [
+    "system/standards/outcome-evaluation.md",
+    "system/standards/section-quality-gate.md",
+    "system/operations/substrate/review-section.md",
+]
+SUBSTRATE_REVISE_INSTRUCTIONS = [
+    "system/core/creative-boundaries.md",
+    "system/standards/channel-constitution.md",
+    "system/operations/substrate/revise-section.md",
 ]
 
 COMPAT_DRAFT_EVIDENCE_ACCESS = {
@@ -158,33 +188,37 @@ def _adapt_registry(
     if not isinstance(spec, dict):
         return registry
 
-    if operation == "outline" and not outline_adopted:
-        spec["instruction_files"] = list(COMPAT_OUTLINE_INSTRUCTIONS)
-        spec["required_inputs"] = list(COMPAT_OUTLINE_INPUTS)
+    if operation == "outline":
+        if outline_adopted:
+            spec["instruction_files"] = list(SUBSTRATE_OUTLINE_INSTRUCTIONS)
+        else:
+            spec["instruction_files"] = list(COMPAT_OUTLINE_INSTRUCTIONS)
+            spec["required_inputs"] = list(COMPAT_OUTLINE_INPUTS)
 
-    if operation == "draft_section" and not section_adopted:
-        spec["instruction_files"] = list(COMPAT_DIRECT_DRAFT_INSTRUCTIONS)
-        spec["required_inputs"] = list(COMPAT_DIRECT_DRAFT_INPUTS)
-        spec["evidence_access"] = deepcopy(COMPAT_DRAFT_EVIDENCE_ACCESS)
-    elif operation == "review_section" and not section_adopted:
-        spec["instruction_files"] = list(COMPAT_REVIEW_INSTRUCTIONS)
-    elif operation == "revise_section" and not section_adopted:
-        spec["instruction_files"] = list(COMPAT_REVISE_INSTRUCTIONS)
-        spec["required_inputs"] = list(COMPAT_DIRECT_REVISE_INPUTS)
+    if operation == "draft_section":
+        if section_adopted:
+            spec["instruction_files"] = list(SUBSTRATE_DRAFT_INSTRUCTIONS)
+        else:
+            spec["instruction_files"] = list(COMPAT_DIRECT_DRAFT_INSTRUCTIONS)
+            spec["required_inputs"] = list(COMPAT_DIRECT_DRAFT_INPUTS)
+            spec["evidence_access"] = deepcopy(COMPAT_DRAFT_EVIDENCE_ACCESS)
+    elif operation == "review_section":
+        if section_adopted:
+            # The evaluator sees the same substrate as Writer. Keep only evaluation
+            # policy + operation contract so canonical review stays inside budget.
+            spec["instruction_files"] = list(SUBSTRATE_REVIEW_INSTRUCTIONS)
+        else:
+            spec["instruction_files"] = list(COMPAT_REVIEW_INSTRUCTIONS)
+            spec["required_inputs"] = list(COMPAT_REVIEW_INPUTS)
+    elif operation == "revise_section":
+        if section_adopted:
+            spec["instruction_files"] = list(SUBSTRATE_REVISE_INSTRUCTIONS)
+        else:
+            spec["instruction_files"] = list(COMPAT_REVISE_INSTRUCTIONS)
+            spec["required_inputs"] = list(COMPAT_DIRECT_REVISE_INPUTS)
 
-    if section_adopted and operation == "review_section":
-        # The evaluator sees the same substrate as Writer. Keep only evaluation
-        # policy + operation contract here so canonical review remains inside its
-        # existing instruction budget.
-        spec["instruction_files"] = [
-            "system/standards/outcome-evaluation.md",
-            "system/standards/section-quality-gate.md",
-            "system/operations/review-section.md",
-        ]
-
-    # Adopted evidence semantics are inserted by this architecture layer before
-    # final context-budget validation. Removing evidence_access prevents the
-    # legacy compiler from emitting evidence-as-story-discovery instructions.
+    # Adopted evidence semantics are inserted by this architecture layer. Removing
+    # evidence_access before legacy assembly prevents evidence-led story discovery.
     if section_adopted and operation in {"draft_section", "review_section", "revise_section"}:
         spec.pop("evidence_access", None)
     return registry
