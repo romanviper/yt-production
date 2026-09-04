@@ -22,11 +22,13 @@ except ModuleNotFoundError:  # pragma: no cover - direct execution fallback
 
 
 SECTION_OVERLAY_SCHEMA_VERSION = 1
+HISTORICAL_SUBSTRATE_CONTRACT_VERSION = 1
 ALLOWED_OVERLAY_FIELDS = {
     "schema_version",
     "section",
     "status",
     "base_outline_sha256",
+    "historical_substrate_contract_version",
     "historical_territory",
     "historical_change",
     "historical_substrate_ids",
@@ -80,6 +82,12 @@ def validate_section_overlay(
     if overlay.get("status") != "approved_migration":
         errors.append("section overlay status must be approved_migration")
 
+    adoption_version = overlay.get("historical_substrate_contract_version")
+    if adoption_version is not None and adoption_version != HISTORICAL_SUBSTRATE_CONTRACT_VERSION:
+        errors.append(
+            f"section overlay historical_substrate_contract_version must be {HISTORICAL_SUBSTRATE_CONTRACT_VERSION} when present"
+        )
+
     expected_outline_hash = sha256(outline_path)
     if overlay.get("base_outline_sha256") != expected_outline_hash:
         errors.append("section overlay base_outline_sha256 does not match current approved outline")
@@ -113,13 +121,7 @@ def resolve_section_spec(
     outline: dict[str, Any] | None = None,
     outline_path: Path | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    """Resolve the canonical section contract and return provenance metadata.
-
-    Without an overlay, the approved outline section is returned unchanged. With
-    an overlay, only the history-facing fields are replaced. A declarative
-    ``mission`` compatibility alias is derived from ``historical_territory`` so
-    older packet code never receives the legacy question-shaped mission.
-    """
+    """Resolve canonical section contract and return authority provenance."""
 
     product_dir = product_dir.resolve()
     outline_path = (outline_path or product_dir / "02_outline" / "outline.json").resolve()
@@ -134,6 +136,7 @@ def resolve_section_spec(
             "kind": "approved_outline",
             "outline_sha256": sha256(outline_path),
             "overlay_sha256": None,
+            "historical_substrate_contract_version": None,
         }
 
     overlay = read_json(path)
@@ -149,9 +152,7 @@ def resolve_section_spec(
         resolved["audience_discovery"] = overlay["audience_discovery"].strip()
     else:
         resolved.pop("audience_discovery", None)
-    # Compatibility only. The authoritative semantic field is historical_territory.
     resolved["mission"] = resolved["historical_territory"]
-    # Old thesis-priming metadata must not regain Writer authority through the base outline.
     resolved.pop("earned_meaning", None)
 
     return resolved, {
@@ -159,5 +160,8 @@ def resolve_section_spec(
         "outline_sha256": sha256(outline_path),
         "overlay_path": str(path.relative_to(product_dir)),
         "overlay_sha256": sha256(path),
+        "historical_substrate_contract_version": overlay.get(
+            "historical_substrate_contract_version"
+        ),
         "authority_note": overlay.get("authority_note"),
     }
