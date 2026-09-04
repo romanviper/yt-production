@@ -63,12 +63,7 @@ def section_adopts_historical_substrate(
     product: dict[str, Any] | None = None,
     outline: dict[str, Any] | None = None,
 ) -> bool:
-    """Return whether one section explicitly adopts v1.
-
-    Whole-product adoption covers every section. Otherwise only an approved
-    bounded overlay carrying the explicit contract marker may adopt a section.
-    File presence alone is not adoption.
-    """
+    """Return whether one section explicitly adopts v1."""
 
     product_dir = product_dir.resolve()
     if outline_adopts_historical_substrate(product_dir, product=product, outline=outline):
@@ -84,6 +79,29 @@ def section_adopts_historical_substrate(
         and _version(overlay.get("historical_substrate_contract_version"))
         == HISTORICAL_SUBSTRATE_CONTRACT_VERSION
     )
+
+
+def adopted_section_overlays(product_dir: Path) -> list[str]:
+    """List explicitly adopted bounded section overlays, without inferring adoption."""
+
+    root = product_dir.resolve() / "02_outline" / "section-overlays"
+    if not root.is_dir():
+        return []
+    adopted: list[str] = []
+    for path in sorted(root.glob("P??.json")):
+        try:
+            value = read_json(path)
+        except (OSError, ValueError):
+            continue
+        section = value.get("section")
+        if (
+            isinstance(section, str)
+            and value.get("status") == "approved_migration"
+            and _version(value.get("historical_substrate_contract_version"))
+            == HISTORICAL_SUBSTRATE_CONTRACT_VERSION
+        ):
+            adopted.append(section)
+    return adopted
 
 
 def adoption_scope(
