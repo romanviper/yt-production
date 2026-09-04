@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "experiment": "P01-HSUB-CLEAN-PROBE-01",
+  "status": "AUTHORIZED_TO_RUN_FRESH_P01_PROBE",
+  "architecture_freeze_commit": "84a73da11f7929704d386858a46b011fd17f134e",
+  "gate_commit": "4277fdbbcb5b677425c68b4c1e32b1c06663b3ba",
+  "gate_run_id": 33855087234,
+  "gate_test": "tests/test_p01_probe_gate.py::P01FrozenProbeGate::test_current_p01_is_ready_for_clean_historical_substrate_probe",
+  "rematerialization": {
+    "mode": "normal_bounded_materialization",
+    "section": "P01",
+    "checked_in_section_state_reproduced_exactly": true,
+    "checked_in_writer_substrate_reproduced_exactly": true,
+    "preflight_errors": []
+  },
+  "historical_substrate": {
+    "contract_version": 1,
+    "selected_ids": [
+      "HS-P01-0001",
+      "HS-P01-0003",
+      "HS-P01-0004",
+      "HS-P01-0007"
+    ],
+    "world_shaped": true,
+    "forbidden_narrative_fields_found": [],
+    "truth_boundaries_present": true,
+    "section_projection_sha256": "4890f94d54ed07923db885c486cd018ebb15902f8069e60c943742ceeb30a2c5"
+  },
+  "writer_packet": {
+    "canonical_context_sha256": "65992acd578be4c3c72ae31de43cc4ff1231b6c63946fa33d8d3a5f30c7e3084",
+    "effective_probe_context_sha256": "338b3b14c425c0907f9920fc8a7240dfbe427f890750fba4ed4c97e83b57140a",
+    "instruction_files": [
+      "system/core/creative-boundaries.md",
+      "system/operations/substrate/draft-section.md"
+    ],
+    "primary_inputs": [
+      "03_sections/P01/section.json",
+      "03_sections/P01/historical-substrate.json",
+      "03_sections/P01/narration-pack.json",
+      "03_sections/P01/continuity-in.md"
+    ],
+    "historical_substrate_role": "primary_history_model",
+    "evidence_role": "secondary_verification_only",
+    "old_probe_text_in_packet": false,
+    "evaluator_diagnosis_in_packet": false,
+    "competitor_prose_in_packet": false,
+    "old_feedback_in_packet": false,
+    "claim_or_material_ledger_as_primary_input": false
+  },
+  "broad_ci": {
+    "is_experiment_gate": false,
+    "known_nonblocking_failures": 3,
+    "policy": "Architecture is frozen. Do not change the adopted P01 path to satisfy legacy exact-shape, exact-wording, or pre-probe review fixtures."
+  }
+}
