@@ -35,11 +35,45 @@ except ModuleNotFoundError:  # pragma: no cover
 
 _ORIGINAL_LOAD_REGISTRY = _legacy.load_registry
 _ORIGINAL_REVIEW_INPUTS = list(_legacy.CANONICAL_REVIEW_REQUIRED_INPUTS)
+_ORIGINAL_LEGACY_DRAFT_INSTRUCTIONS = list(_legacy.LEGACY_DRAFT_INSTRUCTION_FILES)
 
+COMPAT_CREATIVE_BOUNDARIES = "system/operations/compat/creative-boundaries.md"
+COMPAT_OUTLINE_INSTRUCTIONS = [
+    COMPAT_CREATIVE_BOUNDARIES,
+    "system/standards/channel-constitution.md",
+    "system/operations/compat/outline.md",
+]
+COMPAT_OUTLINE_INPUTS = [
+    "product.json",
+    "00_brief/product-brief.md",
+    "00_brief/benchmark.md",
+    "01_research/research-synthesis.md",
+    "01_research/outline-evidence-pack.json",
+]
+COMPAT_DIRECT_DRAFT_INSTRUCTIONS = [
+    COMPAT_CREATIVE_BOUNDARIES,
+    "system/operations/compat/draft-section.md",
+]
+COMPAT_LEGACY_DRAFT_INSTRUCTIONS = [
+    COMPAT_CREATIVE_BOUNDARIES,
+    "system/standards/channel-constitution.md",
+    "system/operations/compat/draft-section.md",
+]
 COMPAT_DIRECT_DRAFT_INPUTS = [
     "03_sections/{section}/section.json",
     "03_sections/{section}/narration-pack.json",
     "03_sections/{section}/continuity-in.md",
+]
+COMPAT_REVIEW_INSTRUCTIONS = [
+    "system/standards/channel-constitution.md",
+    "system/standards/outcome-evaluation.md",
+    "system/standards/section-quality-gate.md",
+    "system/operations/compat/review-section.md",
+]
+COMPAT_REVISE_INSTRUCTIONS = [
+    COMPAT_CREATIVE_BOUNDARIES,
+    "system/standards/channel-constitution.md",
+    "system/operations/compat/revise-section.md",
 ]
 COMPAT_DIRECT_REVISE_INPUTS = [
     "02_outline/outline.json",
@@ -59,8 +93,16 @@ ADOPTED_REVIEW_INPUTS = [
     "03_sections/{section}/handoff.md",
 ]
 
+COMPAT_DRAFT_EVIDENCE_ACCESS = {
+    "kind": "bounded_claim_sources",
+    "adapter": "scripts/draft_evidence.py",
+    "interface_version": 4,
+    "capabilities": ["scope", "resolve_claims", "source", "search", "record"],
+    "required_before_submit": ["resolve_claims"],
+}
+
 CANONICAL_SECONDARY_GUIDANCE = (
-    "Task context includes a bounded evidence capability. Historical Substrate is the primary history model.\n"
+    "Evidence access is secondary verification only. Historical Substrate is the primary history model.\n"
     "Use evidence only after choosing a telling from that model, to verify, sharpen, or qualify a specific detail.\n"
     "Do not survey evidence to discover the story route or to decide what historical reality exists to tell.\n"
     "Every capability call is audit-logged; new claims or causal generalizations remain evidence-authority work."
@@ -117,20 +159,23 @@ def _adapt_registry(
         return registry
 
     if operation == "outline" and not outline_adopted:
-        spec["required_inputs"] = [
-            item for item in spec.get("required_inputs", [])
-            if item != "01_research/historical-substrate.json"
-        ]
+        spec["instruction_files"] = list(COMPAT_OUTLINE_INSTRUCTIONS)
+        spec["required_inputs"] = list(COMPAT_OUTLINE_INPUTS)
 
     if operation == "draft_section" and not section_adopted:
+        spec["instruction_files"] = list(COMPAT_DIRECT_DRAFT_INSTRUCTIONS)
         spec["required_inputs"] = list(COMPAT_DIRECT_DRAFT_INPUTS)
+        spec["evidence_access"] = deepcopy(COMPAT_DRAFT_EVIDENCE_ACCESS)
+    elif operation == "review_section" and not section_adopted:
+        spec["instruction_files"] = list(COMPAT_REVIEW_INSTRUCTIONS)
     elif operation == "revise_section" and not section_adopted:
+        spec["instruction_files"] = list(COMPAT_REVISE_INSTRUCTIONS)
         spec["required_inputs"] = list(COMPAT_DIRECT_REVISE_INPUTS)
 
     if section_adopted and operation == "review_section":
-        # Channel identity is upstream product context; the evaluation standard +
-        # production gate + operation contract are sufficient here and keep the
-        # canonical evaluator inside its existing prompt budget.
+        # The evaluator sees the same substrate as Writer. Keep only evaluation
+        # policy + operation contract here so canonical review remains inside its
+        # existing instruction budget.
         spec["instruction_files"] = [
             "system/standards/outcome-evaluation.md",
             "system/standards/section-quality-gate.md",
@@ -138,8 +183,8 @@ def _adapt_registry(
         ]
 
     # Adopted evidence semantics are inserted by this architecture layer before
-    # final context-budget validation. Removing evidence_access here prevents the
-    # legacy compiler from emitting its evidence-as-story-discovery paragraph.
+    # final context-budget validation. Removing evidence_access prevents the
+    # legacy compiler from emitting evidence-as-story-discovery instructions.
     if section_adopted and operation in {"draft_section", "review_section", "revise_section"}:
         spec.pop("evidence_access", None)
     return registry
@@ -234,10 +279,13 @@ def compile_packet(
     )
     old_loader = _legacy.load_registry
     old_review_inputs = list(_legacy.CANONICAL_REVIEW_REQUIRED_INPUTS)
+    old_legacy_draft_instructions = list(_legacy.LEGACY_DRAFT_INSTRUCTION_FILES)
     _legacy.load_registry = lambda: adapted_registry
     _legacy.CANONICAL_REVIEW_REQUIRED_INPUTS = (
         list(ADOPTED_REVIEW_INPUTS) if section_adopted else list(_ORIGINAL_REVIEW_INPUTS)
     )
+    if not section_adopted:
+        _legacy.LEGACY_DRAFT_INSTRUCTION_FILES = list(COMPAT_LEGACY_DRAFT_INSTRUCTIONS)
     try:
         packet, text = _legacy.compile_packet(
             product_dir,
@@ -250,6 +298,7 @@ def compile_packet(
     finally:
         _legacy.load_registry = old_loader
         _legacy.CANONICAL_REVIEW_REQUIRED_INPUTS = old_review_inputs
+        _legacy.LEGACY_DRAFT_INSTRUCTION_FILES = old_legacy_draft_instructions
 
     if not section_adopted or not section:
         return packet, text
