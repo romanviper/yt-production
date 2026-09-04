@@ -1,0 +1,3351 @@
+{
+  "mission_id": "TRUTH_AUDITOR_CALIBRATION_V1",
+  "status": "CALIBRATION_FAILED_EVIDENCE_PRESERVED",
+  "auditor_a": {
+    "evaluator": "Historical Truth Auditor A (fc8e31a1-2a83-44da-b3ec-eb1fad4baadc)",
+    "claim_results": [
+      {
+        "claim_id": "CAL-TRUTH-001",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "DOCUMENTED",
+          "actual": "DOCUMENTED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-MAT-0001",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Small geometric clay objects survive in several forms; some bear incisions.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Small geometric clay objects survive in several forms; some bear incisions.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-002",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "DOCUMENTED",
+          "actual": "DOCUMENTED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-INST-0001",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-003",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "QUALIFIED_INFERENCE",
+          "actual": "QUALIFIED_INFERENCE",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "SUPPORTED",
+            "actual": "N/A",
+            "match": false
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0002",
+              "locator": "epistemic_layers.functional_inference[0].statement",
+              "exact_quote": "Exterior marks made enclosed quantities inspectable without immediately opening the envelope.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          },
+          {
+            "expected": {
+              "component": "scope",
+              "record_id": "HS-P01-0003",
+              "locator": "world.carries[1]",
+              "exact_quote": "on some examples exterior impressions or sealings",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Exterior marks made enclosed quantities inspectable without immediately opening the envelope.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-004",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "QUALIFIED_INFERENCE",
+          "actual": "QUALIFIED_INFERENCE",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "SUPPORTED",
+            "actual": "N/A",
+            "match": false
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0003",
+              "locator": "epistemic_layers.functional_inference[0].statement",
+              "exact_quote": "Seal impressions marked an association with authority, custody or witnessing.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Seal impressions marked an association with authority, custody or witnessing.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-005",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "REPRESENTATIVE_RECONSTRUCTION",
+          "actual": "REPRESENTATIVE_RECONSTRUCTION",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "P01-MAT-0002",
+              "locator": "epistemic_layers.representative_reconstruction[0].statement",
+              "exact_quote": "An operator deposits counters, closes the envelope, marks and seals it, then lets it dry.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "An operator deposits counters, closes the envelope, marks and seals it, then lets it dry.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-006",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "REPRESENTATIVE_RECONSTRUCTION",
+          "actual": "REPRESENTATIVE_RECONSTRUCTION",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "P01-MAT-0007",
+              "locator": "epistemic_layers.representative_reconstruction[0].statement",
+              "exact_quote": "An operator binds a closure, presses clay over it and rolls a seal; later access breaks it.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "An operator binds a closure, presses clay over it and rolls a seal; later access breaks it.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-007",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "UNSUPPORTED",
+          "actual": "PROHIBITED",
+          "match": false
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-INST-0001",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-INST-0002",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Catalogue object ChM III-937a is a 4.8 × 3.2 × 2.0 cm clay tablet fragment from Chogha Mish with five numeral signs and several rollings of an animal seal that includes a bull.",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "relationship",
+              "record_id": "P01-INST-0002",
+              "locator": "epistemic_layers.prohibited_or_rejected_inference[0].qualification",
+              "exact_quote": "The two objects share site and broad period, but the approved source does not establish a direct sequence or shared transaction type.",
+              "role": "REJECTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "This tablet replaced the broken envelope or records the same kind of event.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "same_transaction_relationship"
+          ],
+          "actual": [
+            "relationship: numerical tablet fragment ChM III-937a recording the same transaction as hollow envelope OIM A64678",
+            "sequence: direct transaction sequence from OIM A64678 to ChM III-937a"
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-008",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "UNSUPPORTED",
+            "match": false
+          },
+          "function": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-MAT-0003",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Engraved cylinders and continuous rolled impressions survive on several clay media.",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0003",
+              "locator": "epistemic_layers.functional_inference[0].statement",
+              "exact_quote": "Seal impressions marked an association with authority, custody or witnessing.",
+              "role": "LIMITS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "relationship",
+              "record_id": "P01-MAT-0003",
+              "locator": "epistemic_layers.functional_inference[0].qualification",
+              "exact_quote": "Inferred from context; no unique event or speaker is identified.",
+              "role": "LIMITS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [],
+        "missing_bindings": {
+          "expected_tokens": [
+            "communal_responsibility",
+            "Sumerian_village_elders"
+          ],
+          "actual": [
+            "motive: cylinder seals used specifically to bind communal responsibility",
+            "relationship: cylinder seals binding communal responsibility among Sumerian village elders",
+            "actor: Sumerian village elders"
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-009",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "PROHIBITED",
+          "actual": "PROHIBITED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "motive",
+              "record_id": "P01-MAT-0002",
+              "locator": "epistemic_layers.prohibited_or_rejected_inference[0].statement",
+              "exact_quote": "Bullae emerged specifically to prevent fraud or solve verification at distance.",
+              "role": "REJECTS"
+            },
+            "matched": true
+          },
+          {
+            "expected": {
+              "component": "motive",
+              "record_id": "P01-MAT-0002",
+              "locator": "epistemic_layers.prohibited_or_rejected_inference[0].qualification",
+              "exact_quote": "Causal hypothesis; the artifacts alone do not establish a single motive.",
+              "role": "REJECTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Bullae emerged specifically to prevent fraud or solve verification at distance.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "fraud_prevention_motive",
+            "long_distance_causal_origin"
+          ],
+          "actual": [
+            "motive: bullae emerged specifically to prevent fraud during long-distance administration",
+            "causality: emergence of bullae caused by long-distance fraud prevention"
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-010",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "PROHIBITED",
+          "actual": "UNSUPPORTED",
+          "match": false
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "motive": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "UNSUPPORTED",
+            "match": false
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-INST-0001",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "motive",
+              "record_id": "P01-INST-0001",
+              "locator": "limitations[0]",
+              "exact_quote": "The catalogue entry identifies the object and enclosed tokens but does not specify a transaction, operator, motive, exact find stratum, or correspondence between exterior marks and contents",
+              "role": "REJECTS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [],
+        "missing_bindings": {
+          "expected_tokens": [
+            "administrator",
+            "shepherd",
+            "sheep_transaction",
+            "distrust_motive"
+          ],
+          "actual": [
+            "actor: administrator and shepherd",
+            "transaction: delivery of sheep",
+            "motive: administrator distrusting shepherd",
+            "causality: administrator distrust causing creation of OIM A64678"
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-011",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "UNSUPPORTED",
+            "match": false
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "UNSUPPORTED",
+            "match": false
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-MAT-0001",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Small geometric clay objects survive in several forms; some bear incisions.",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [],
+        "missing_bindings": {
+          "expected_tokens": [
+            "urban_growth_to_memory_failure",
+            "memory_failure_to_token_invention"
+          ],
+          "actual": [
+            "causality: urban growth causing administrative memory failure",
+            "causality: administrative memory failure directly causing invention of clay tokens",
+            "event: single invention event for clay tokens"
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-012",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "PROHIBITED",
+          "actual": "PROHIBITED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "UNSUPPORTED",
+            "match": false
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "UNSUPPORTED",
+            "match": false
+          },
+          "function": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "sequence": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0002",
+              "locator": "limitations[0]",
+              "exact_quote": "Breakable verification device; once opened to inspect contents, the sealed envelope is permanently destroyed",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "HS-P01-0007",
+              "locator": "world.qualification",
+              "exact_quote": "the shift does not identify one invention event or an immediate complete replacement",
+              "role": "REJECTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "HS-P01-0007",
+              "locator": "world.coexistence",
+              "exact_quote": "older and parallel clay practices continued to overlap with direct surface recording",
+              "role": "REJECTS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "The affordance does not establish a single transitional step toward tablets.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "breakability_caused_tablet_invention",
+            "accountants_abandoned_envelopes"
+          ],
+          "actual": [
+            "causality: need to break hollow envelopes causing abandonment and invention of numerical tablets",
+            "relationship: direct replacement genealogy from envelopes to numerical tablets"
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-013",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "UNSUPPORTED",
+          "actual": "PROHIBITED",
+          "match": false
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "SUPPORTED",
+            "match": false
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "scope",
+              "record_id": "HS-P01-0003",
+              "locator": "substrate_boundaries[1]",
+              "exact_quote": "Exterior impressions are not universal to every envelope.",
+              "role": "REJECTS"
+            },
+            "matched": true
+          },
+          {
+            "expected": {
+              "component": "scope",
+              "record_id": "HS-P01-0003",
+              "locator": "world.carries[1]",
+              "exact_quote": "on some examples exterior impressions or sealings",
+              "role": "LIMITS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Exterior impressions are not universal to every envelope.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "universal_all_envelopes"
+          ],
+          "actual": [
+            "scope: universal scope ('All') for exterior impressions on hollow clay envelopes"
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-014",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "PROHIBITED",
+          "actual": "PROHIBITED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "scope",
+              "record_id": "P01-MAT-0001",
+              "locator": "limitations[0]",
+              "exact_quote": "Contexts in early excavations often disturbed; Neolithic antecedents vary in function and do not represent a single unified code across 5000 years",
+              "role": "REJECTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "scope",
+              "record_id": "P01-MAT-0001",
+              "locator": "epistemic_layers.functional_inference[0].qualification",
+              "exact_quote": "Supported for bounded late administrative contexts, not a universal code across millennia.",
+              "role": "REJECTS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Contexts in early excavations often disturbed; Neolithic antecedents vary in function and do not represent a single unified code across 5000 years",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "unified_code_across_5000_years"
+          ],
+          "actual": [
+            "function: geometric clay tokens forming a single unified accounting code",
+            "scope: single unified code across 5,000 years"
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-015",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "PROHIBITED",
+          "actual": "PROHIBITED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "UNSUPPORTED",
+            "match": false
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "HSC-P01-0001",
+              "locator": "substrate_boundaries[6]",
+              "exact_quote": "Do not convert overlapping clay practices into a direct token-to-tablet replacement genealogy.",
+              "role": "REJECTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "HS-P01-0001",
+              "locator": "substrate_boundaries[0]",
+              "exact_quote": "Parallel practices must not be converted into a single mandatory developmental sequence.",
+              "role": "REJECTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Parallel practices must not be converted into a single mandatory developmental sequence.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "obligatory_developmental_sequence"
+          ],
+          "actual": [
+            "sequence: obligatory sequence from tokens to hollow envelopes to surface impressions to numerical tablets to proto-cuneiform"
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-016",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "PROHIBITED",
+          "actual": "PROHIBITED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "UNSUPPORTED",
+            "match": false
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "scope": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "HS-P01-0004",
+              "locator": "substrate_boundaries[4]",
+              "exact_quote": "Direct surface recording must not be described as wholesale replacement of envelopes or tokens.",
+              "role": "REJECTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "scope",
+              "record_id": "HS-P01-0007",
+              "locator": "substrate_boundaries[5]",
+              "exact_quote": "Increasing direct surface recording does not imply immediate or complete replacement of other clay practices.",
+              "role": "REJECTS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Direct surface recording must not be described as wholesale replacement of envelopes or tokens.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "immediate_complete_replacement"
+          ],
+          "actual": [
+            "sequence: immediate replacement of envelopes and tokens",
+            "scope: complete/wholesale replacement of envelopes and tokens"
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-017",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "DOCUMENTED",
+          "actual": "DOCUMENTED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0003",
+              "locator": "limitations[0]",
+              "exact_quote": "Identifies institutional authority or witness presence, not spoken syntax or linguistic phonology",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Identifies institutional authority or witness presence, not spoken syntax or linguistic phonology",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-018",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "DOCUMENTED",
+          "actual": "DOCUMENTED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0005",
+              "locator": "limitations[0]",
+              "exact_quote": "Texts are ledger-style administrative allocations; do not record running continuous spoken discourse, poetry, or historical narrative",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Texts are ledger-style administrative allocations; do not record running continuous spoken discourse, poetry, or historical narrative",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-019",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "QUALIFIED_INFERENCE",
+          "actual": "QUALIFIED_INFERENCE",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "SUPPORTED",
+            "match": false
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-MAT-0006",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Clay surfaces preserve rounded impressions and incised lines made by differently shaped tips.",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0006",
+              "locator": "epistemic_layers.functional_inference[0].statement",
+              "exact_quote": "Reed tools likely produced these marks.",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Reed tools likely produced these marks.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-020",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "QUALIFIED_INFERENCE",
+          "actual": "QUALIFIED_INFERENCE",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "N/A",
+            "actual": "SUPPORTED",
+            "match": false
+          },
+          "relationship": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "SUPPORTED",
+            "match": false
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "SUPPORTED",
+            "match": false
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "relationship",
+              "record_id": "HS-P01-0007",
+              "locator": "world.later_state",
+              "exact_quote": "numerical information increasingly appeared directly on durable clay surfaces, sometimes alongside authentication marks",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          },
+          {
+            "expected": {
+              "component": "relationship",
+              "record_id": "HS-P01-0007",
+              "locator": "world.coexistence",
+              "exact_quote": "older and parallel clay practices continued to overlap with direct surface recording",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "numerical information increasingly appeared directly on durable clay surfaces, sometimes alongside authentication marks",
+            "exact_substring": true
+          },
+          {
+            "quote": "older and parallel clay practices continued to overlap with direct surface recording",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      }
+    ],
+    "summary": {
+      "TVA": "20/20 (100.0%)",
+      "ESA": "17/20 (85.0%)",
+      "CSMA": "125/140 (89.3%)",
+      "BA": "15/35 (42.9%)",
+      "VQE": "18/18 (100.0%)",
+      "MBA_free_form_rate": "17/17 (100.0%)",
+      "VERDICT": "TRUTH_AUDITOR_CALIBRATION_FAIL"
+    }
+  },
+  "auditor_b": {
+    "evaluator": "Historical Truth Auditor B (17e24e82-a0db-4ba9-a8c4-c48e385f0780)",
+    "claim_results": [
+      {
+        "claim_id": "CAL-TRUTH-001",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "DOCUMENTED",
+          "actual": "DOCUMENTED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-MAT-0001",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Small geometric clay objects survive in several forms; some bear incisions.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Small geometric clay objects survive in several forms; some bear incisions.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-002",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "DOCUMENTED",
+          "actual": "DOCUMENTED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-INST-0001",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-003",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "QUALIFIED_INFERENCE",
+          "actual": "QUALIFIED_INFERENCE",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "SUPPORTED",
+            "actual": "N/A",
+            "match": false
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0002",
+              "locator": "epistemic_layers.functional_inference[0].statement",
+              "exact_quote": "Exterior marks made enclosed quantities inspectable without immediately opening the envelope.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          },
+          {
+            "expected": {
+              "component": "scope",
+              "record_id": "HS-P01-0003",
+              "locator": "world.carries[1]",
+              "exact_quote": "on some examples exterior impressions or sealings",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Exterior marks made enclosed quantities inspectable without immediately opening the envelope.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-004",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "QUALIFIED_INFERENCE",
+          "actual": "QUALIFIED_INFERENCE",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "SUPPORTED",
+            "actual": "N/A",
+            "match": false
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0003",
+              "locator": "epistemic_layers.functional_inference[0].statement",
+              "exact_quote": "Seal impressions marked an association with authority, custody or witnessing.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Seal impressions marked an association with authority, custody or witnessing.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-005",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "REPRESENTATIVE_RECONSTRUCTION",
+          "actual": "REPRESENTATIVE_RECONSTRUCTION",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "P01-MAT-0002",
+              "locator": "epistemic_layers.representative_reconstruction[0].statement",
+              "exact_quote": "An operator deposits counters, closes the envelope, marks and seals it, then lets it dry.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "An operator deposits counters, closes the envelope, marks and seals it, then lets it dry.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-006",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "REPRESENTATIVE_RECONSTRUCTION",
+          "actual": "REPRESENTATIVE_RECONSTRUCTION",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "P01-MAT-0007",
+              "locator": "epistemic_layers.representative_reconstruction[0].statement",
+              "exact_quote": "An operator binds a closure, presses clay over it and rolls a seal; later access breaks it.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "An operator binds a closure, presses clay over it and rolls a seal; later access breaks it.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-007",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "UNSUPPORTED",
+          "actual": "PROHIBITED",
+          "match": false
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-INST-0001",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-INST-0002",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Catalogue object ChM III-937a is a 4.8 × 3.2 × 2.0 cm clay tablet fragment from Chogha Mish with five numeral signs and several rollings of an animal seal that includes a bull.",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "relationship",
+              "record_id": "P01-INST-0002",
+              "locator": "epistemic_layers.prohibited_or_rejected_inference[0].qualification",
+              "exact_quote": "The two objects share site and broad period, but the approved source does not establish a direct sequence or shared transaction type.",
+              "role": "REJECTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "This tablet replaced the broken envelope or records the same kind of event.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "same_transaction_relationship"
+          ],
+          "actual": [
+            "No authority binds ChM III-937a and OIM A64678 to the same transaction or sequence."
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-008",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "UNSUPPORTED",
+            "match": false
+          },
+          "function": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-MAT-0003",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Engraved cylinders and continuous rolled impressions survive on several clay media.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          },
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0003",
+              "locator": "epistemic_layers.functional_inference[0].statement",
+              "exact_quote": "Seal impressions marked an association with authority, custody or witnessing.",
+              "role": "LIMITS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "relationship",
+              "record_id": "P01-MAT-0003",
+              "locator": "epistemic_layers.functional_inference[0].qualification",
+              "exact_quote": "Inferred from context; no unique event or speaker is identified.",
+              "role": "LIMITS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Engraved cylinders and continuous rolled impressions survive on several clay media.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "communal_responsibility",
+            "Sumerian_village_elders"
+          ],
+          "actual": [
+            "No authority establishes that cylinder seals were used specifically to bind communal responsibility among Sumerian village elders."
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-009",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "PROHIBITED",
+          "actual": "PROHIBITED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "motive",
+              "record_id": "P01-MAT-0002",
+              "locator": "epistemic_layers.prohibited_or_rejected_inference[0].statement",
+              "exact_quote": "Bullae emerged specifically to prevent fraud or solve verification at distance.",
+              "role": "REJECTS"
+            },
+            "matched": true
+          },
+          {
+            "expected": {
+              "component": "motive",
+              "record_id": "P01-MAT-0002",
+              "locator": "epistemic_layers.prohibited_or_rejected_inference[0].qualification",
+              "exact_quote": "Causal hypothesis; the artifacts alone do not establish a single motive.",
+              "role": "REJECTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Bullae emerged specifically to prevent fraud or solve verification at distance.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "fraud_prevention_motive",
+            "long_distance_causal_origin"
+          ],
+          "actual": [
+            "No authority establishes fraud prevention during long-distance administration as the specific motive for the emergence of hollow clay bullae."
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-010",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "PROHIBITED",
+          "actual": "PROHIBITED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "motive": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "UNSUPPORTED",
+            "match": false
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-INST-0001",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "motive",
+              "record_id": "P01-INST-0001",
+              "locator": "limitations[0]",
+              "exact_quote": "The catalogue entry identifies the object and enclosed tokens but does not specify a transaction, operator, motive, exact find stratum, or correspondence between exterior marks and contents",
+              "role": "REJECTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "This specimen documents a particular transaction or proves why clay envelopes were invented.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "administrator",
+            "shepherd",
+            "sheep_transaction",
+            "distrust_motive"
+          ],
+          "actual": [
+            "No authority documents an administrator distrusting a shepherd delivering sheep, or any specific transaction or motive for OIM A64678."
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-011",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-MAT-0001",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Small geometric clay objects survive in several forms; some bear incisions.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Small geometric clay objects survive in several forms; some bear incisions.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "urban_growth_to_memory_failure",
+            "memory_failure_to_token_invention"
+          ],
+          "actual": [
+            "No authority establishes that urban growth caused administrative memory to fail or that this failure caused the invention of clay tokens."
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-012",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "PROHIBITED",
+          "actual": "PROHIBITED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "SUPPORTED",
+            "actual": "N/A",
+            "match": false
+          },
+          "causality": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "sequence": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0002",
+              "locator": "limitations[0]",
+              "exact_quote": "Breakable verification device; once opened to inspect contents, the sealed envelope is permanently destroyed",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "HS-P01-0007",
+              "locator": "world.qualification",
+              "exact_quote": "the shift does not identify one invention event or an immediate complete replacement",
+              "role": "REJECTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "HS-P01-0007",
+              "locator": "world.coexistence",
+              "exact_quote": "older and parallel clay practices continued to overlap with direct surface recording",
+              "role": "REJECTS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "The affordance does not establish a single transitional step toward tablets.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "breakability_caused_tablet_invention",
+            "accountants_abandoned_envelopes"
+          ],
+          "actual": [
+            "No authority establishes that the need to break envelopes caused accountants to abandon envelopes and invent numerical tablets."
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-013",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "UNSUPPORTED",
+          "actual": "PROHIBITED",
+          "match": false
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "scope",
+              "record_id": "HS-P01-0003",
+              "locator": "substrate_boundaries[1]",
+              "exact_quote": "Exterior impressions are not universal to every envelope.",
+              "role": "REJECTS"
+            },
+            "matched": true
+          },
+          {
+            "expected": {
+              "component": "scope",
+              "record_id": "HS-P01-0003",
+              "locator": "world.carries[1]",
+              "exact_quote": "on some examples exterior impressions or sealings",
+              "role": "LIMITS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Exterior impressions are not universal to every envelope.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "universal_all_envelopes"
+          ],
+          "actual": [
+            "No authority establishes that all hollow clay envelopes bear exterior impressions; authority attests impressions on only some examples."
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-014",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "PROHIBITED",
+          "actual": "PROHIBITED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "UNSUPPORTED",
+            "match": false
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "UNSUPPORTED",
+            "actual": "N/A",
+            "match": false
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "scope",
+              "record_id": "P01-MAT-0001",
+              "locator": "limitations[0]",
+              "exact_quote": "Contexts in early excavations often disturbed; Neolithic antecedents vary in function and do not represent a single unified code across 5000 years",
+              "role": "REJECTS"
+            },
+            "matched": true
+          },
+          {
+            "expected": {
+              "component": "scope",
+              "record_id": "P01-MAT-0001",
+              "locator": "epistemic_layers.functional_inference[0].qualification",
+              "exact_quote": "Supported for bounded late administrative contexts, not a universal code across millennia.",
+              "role": "REJECTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Contexts in early excavations often disturbed; Neolithic antecedents vary in function and do not represent a single unified code across 5000 years",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "unified_code_across_5000_years"
+          ],
+          "actual": [
+            "No authority supports a unified accounting code across 5,000 years; Neolithic antecedents vary in function and do not represent a single unified code."
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-015",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "PROHIBITED",
+          "actual": "PROHIBITED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "HSC-P01-0001",
+              "locator": "substrate_boundaries[6]",
+              "exact_quote": "Do not convert overlapping clay practices into a direct token-to-tablet replacement genealogy.",
+              "role": "REJECTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "HS-P01-0001",
+              "locator": "substrate_boundaries[0]",
+              "exact_quote": "Parallel practices must not be converted into a single mandatory developmental sequence.",
+              "role": "REJECTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Parallel practices must not be converted into a single mandatory developmental sequence.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "obligatory_developmental_sequence"
+          ],
+          "actual": [
+            "No authority establishes an obligatory sequence from tokens to envelopes to surface impressions to numerical tablets to proto-cuneiform."
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-016",
+        "verdict": {
+          "expected": "UNSUPPORTED",
+          "actual": "UNSUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "PROHIBITED",
+          "actual": "PROHIBITED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          },
+          "scope": {
+            "expected": "UNSUPPORTED",
+            "actual": "UNSUPPORTED",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "sequence",
+              "record_id": "HS-P01-0004",
+              "locator": "substrate_boundaries[4]",
+              "exact_quote": "Direct surface recording must not be described as wholesale replacement of envelopes or tokens.",
+              "role": "REJECTS"
+            },
+            "matched": true
+          },
+          {
+            "expected": {
+              "component": "scope",
+              "record_id": "HS-P01-0007",
+              "locator": "substrate_boundaries[5]",
+              "exact_quote": "Increasing direct surface recording does not imply immediate or complete replacement of other clay practices.",
+              "role": "REJECTS"
+            },
+            "matched": false
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Direct surface recording must not be described as wholesale replacement of envelopes or tokens.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [
+            "immediate_complete_replacement"
+          ],
+          "actual": [
+            "No authority establishes that direct numerical recording immediately or completely replaced envelopes and tokens."
+          ],
+          "free_form_detected": true
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-017",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "DOCUMENTED",
+          "actual": "DOCUMENTED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0003",
+              "locator": "limitations[0]",
+              "exact_quote": "Identifies institutional authority or witness presence, not spoken syntax or linguistic phonology",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Identifies institutional authority or witness presence, not spoken syntax or linguistic phonology",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-018",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "DOCUMENTED",
+          "actual": "DOCUMENTED",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0005",
+              "locator": "limitations[0]",
+              "exact_quote": "Texts are ledger-style administrative allocations; do not record running continuous spoken discourse, poetry, or historical narrative",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Texts are ledger-style administrative allocations; do not record running continuous spoken discourse, poetry, or historical narrative",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-019",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "QUALIFIED_INFERENCE",
+          "actual": "QUALIFIED_INFERENCE",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "relationship": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "entity",
+              "record_id": "P01-MAT-0006",
+              "locator": "epistemic_layers.observed[0].statement",
+              "exact_quote": "Clay surfaces preserve rounded impressions and incised lines made by differently shaped tips.",
+              "role": "SUPPORTS"
+            },
+            "matched": false
+          },
+          {
+            "expected": {
+              "component": "function",
+              "record_id": "P01-MAT-0006",
+              "locator": "epistemic_layers.functional_inference[0].statement",
+              "exact_quote": "Reed tools likely produced these marks.",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "Reed tools likely produced these marks.",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-020",
+        "verdict": {
+          "expected": "SUPPORTED",
+          "actual": "SUPPORTED",
+          "match": true
+        },
+        "epistemic_status": {
+          "expected": "QUALIFIED_INFERENCE",
+          "actual": "QUALIFIED_INFERENCE",
+          "match": true
+        },
+        "components": {
+          "entity": {
+            "expected": "N/A",
+            "actual": "SUPPORTED",
+            "match": false
+          },
+          "relationship": {
+            "expected": "SUPPORTED",
+            "actual": "SUPPORTED",
+            "match": true
+          },
+          "motive": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "function": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "causality": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          },
+          "sequence": {
+            "expected": "N/A",
+            "actual": "SUPPORTED",
+            "match": false
+          },
+          "scope": {
+            "expected": "N/A",
+            "actual": "N/A",
+            "match": true
+          }
+        },
+        "required_bindings": [
+          {
+            "expected": {
+              "component": "relationship",
+              "record_id": "HS-P01-0007",
+              "locator": "world.later_state",
+              "exact_quote": "numerical information increasingly appeared directly on durable clay surfaces, sometimes alongside authentication marks",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          },
+          {
+            "expected": {
+              "component": "relationship",
+              "record_id": "HS-P01-0007",
+              "locator": "world.coexistence",
+              "exact_quote": "older and parallel clay practices continued to overlap with direct surface recording",
+              "role": "SUPPORTS"
+            },
+            "matched": true
+          }
+        ],
+        "quotes": [
+          {
+            "quote": "numerical information increasingly appeared directly on durable clay surfaces, sometimes alongside authentication marks",
+            "exact_substring": true
+          },
+          {
+            "quote": "older and parallel clay practices continued to overlap with direct surface recording",
+            "exact_substring": true
+          }
+        ],
+        "missing_bindings": {
+          "expected_tokens": [],
+          "actual": [],
+          "free_form_detected": "N/A"
+        }
+      }
+    ],
+    "summary": {
+      "TVA": "20/20 (100.0%)",
+      "ESA": "18/20 (90.0%)",
+      "CSMA": "131/140 (93.6%)",
+      "BA": "22/35 (62.9%)",
+      "VQE": "21/21 (100.0%)",
+      "MBA_free_form_rate": "17/17 (100.0%)",
+      "VERDICT": "TRUTH_AUDITOR_CALIBRATION_FAIL"
+    }
+  }
+}
