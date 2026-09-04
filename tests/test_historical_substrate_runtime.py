@@ -59,12 +59,15 @@ class HistoricalSubstrateRuntimeIntegrationTest(unittest.TestCase):
         self.assertTrue((self.product / "03_sections/P01/historical-substrate.json").is_file())
         self.assertTrue(any(path.name == "section.json" for path in paths))
         self.assertEqual(verify_canonical_section_state(self.product, "P01"), [])
-        with self.assertRaisesRegex(ValueError, "coverage does not authorize"):
+        with self.assertRaisesRegex(ValueError, "explicit Historical Substrate adoption"):
             materialize(self.product, section="P02")
         with self.assertRaisesRegex(ValueError, "product-complete"):
             materialize(self.product)
 
     def test_whole_outline_task_requires_product_complete_substrate(self) -> None:
+        product = read_json(self.product / "product.json")
+        product.setdefault("production_cycle", {})["historical_substrate_contract_version"] = 1
+        write_json(self.product / "product.json", product)
         with self.assertRaisesRegex(ValueError, "product-complete"):
             compile_packet(self.product, "outline", "T9000-outline")
 
