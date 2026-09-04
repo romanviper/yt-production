@@ -4,8 +4,8 @@
 The previous compiler is retained in ``context_packet_legacy``. This module
 keeps its packet/provenance machinery but changes canonical Historical
 Substrate routing at the runtime boundary: Reviewer receives the same compact
-historical model as Writer, and bounded evidence access is secondary
-verification rather than story discovery.
+historical model as Writer, bounded evidence access is secondary verification,
+and stale section/substrate projections cannot spawn tasks.
 """
 
 from __future__ import annotations
@@ -17,9 +17,11 @@ from typing import Any
 try:
     import scripts.context_packet_legacy as _legacy
     from scripts.context_packet_legacy import *  # noqa: F401,F403 - compatibility surface
+    from scripts.substrate_preflight import require_canonical_section_state
 except ModuleNotFoundError:  # pragma: no cover
     import context_packet_legacy as _legacy
     from context_packet_legacy import *  # type: ignore # noqa: F401,F403
+    from substrate_preflight import require_canonical_section_state
 
 
 CANONICAL_REVIEW_REQUIRED_INPUTS = [
@@ -66,6 +68,10 @@ def compile_packet(
     unit: str | None = None,
     execution_runtime: str | None = None,
 ) -> tuple[dict[str, Any], str]:
+    canonical_substrate = _historical_substrate_runtime(product_dir, operation, section)
+    if canonical_substrate and section:
+        require_canonical_section_state(product_dir, section)
+
     packet, text = _legacy.compile_packet(
         product_dir,
         operation,
@@ -74,7 +80,7 @@ def compile_packet(
         unit=unit,
         execution_runtime=execution_runtime,
     )
-    if not _historical_substrate_runtime(product_dir, operation, section):
+    if not canonical_substrate or not section:
         return packet, text
 
     if _LEGACY_DISCOVERY_TEXT not in text:
@@ -83,6 +89,15 @@ def compile_packet(
             "runtime header drifted."
         )
     text = text.replace(_LEGACY_DISCOVERY_TEXT, _CANONICAL_SECONDARY_TEXT)
+
+    section_substrate = product_dir.resolve() / "03_sections" / section / "historical-substrate.json"
+    state = _legacy.read_json_local(product_dir.resolve() / "03_sections" / section / "section.json")
+    packet["historical_substrate"] = {
+        "contract_version": state.get("historical_substrate_contract_version"),
+        "section_projection_path": f"03_sections/{section}/historical-substrate.json",
+        "section_projection_sha256": _legacy.sha256(section_substrate),
+        "architecture_authority": state.get("architecture_authority"),
+    }
     packet["context_sha256"] = hashlib.sha256(text.encode("utf-8")).hexdigest()
     packet["estimated_context_tokens"] = _legacy.estimate_tokens(text)
     return packet, text
