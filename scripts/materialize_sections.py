@@ -10,6 +10,11 @@ from typing import Any
 
 try:
     from scripts.common import read_json, sha256, write_json
+    from scripts.historical_substrate_contract import (
+        materialize_writer_section_substrate,
+        validate_historical_substrate,
+        validate_section_binding,
+    )
     from scripts.outline_contract import (
         OUTLINE_SCHEMA_VERSION,
         normalize_outline_contract,
@@ -20,6 +25,11 @@ try:
     from scripts.story_plan_contract import build_narration_pack, empty_story_plan, is_direct_authorship_outline
 except ModuleNotFoundError:
     from common import read_json, sha256, write_json
+    from historical_substrate_contract import (
+        materialize_writer_section_substrate,
+        validate_historical_substrate,
+        validate_section_binding,
+    )
     from outline_contract import (
         OUTLINE_SCHEMA_VERSION,
         normalize_outline_contract,
@@ -50,6 +60,23 @@ def materialize(product_dir: Path) -> list[Path]:
     outline = normalize_outline_contract(outline, product.get("target"))
     current_contract = outline.get("schema_version") == OUTLINE_SCHEMA_VERSION
     direct_authorship = is_direct_authorship_outline(outline)
+
+    historical_substrate: dict[str, Any] | None = None
+    if direct_authorship:
+        substrate_path = product_dir / "01_research" / "historical-substrate.json"
+        if not substrate_path.is_file():
+            raise ValueError(
+                "Direct-authorship materialization requires 01_research/historical-substrate.json."
+            )
+        historical_substrate = read_json(substrate_path)
+        substrate_errors = validate_historical_substrate(
+            historical_substrate,
+            claims_doc,
+            sources_doc,
+            require_product_complete=True,
+        )
+        if substrate_errors:
+            raise ValueError("Historical Substrate is not ready for whole-outline materialization: " + "; ".join(substrate_errors))
 
     cycle_id = product.get("production_cycle", {}).get("id")
     if current_contract and cycle_id and outline.get("cycle_id") != cycle_id:
@@ -94,16 +121,19 @@ def materialize(product_dir: Path) -> list[Path]:
                 )
 
         mission: str | None = None
+        historical_territory: str | None = None
         if direct_authorship:
-            outline_mission = item.get("mission")
-            existing_mission = existing_state.get("mission") if isinstance(existing_state, dict) else None
-            candidate = outline_mission if isinstance(outline_mission, str) and outline_mission.strip() else existing_mission
-            if not isinstance(candidate, str) or not candidate.strip():
+            assert historical_substrate is not None
+            binding_errors = validate_section_binding(item, historical_substrate)
+            if binding_errors:
                 raise ValueError(
-                    f"Direct-authorship section {section_id} requires a non-empty mission before materialization; "
-                    "do not infer one from title or architecture prose."
+                    f"Direct-authorship section {section_id} is not bound to Historical Substrate: "
+                    + "; ".join(binding_errors)
                 )
-            mission = candidate.strip()
+            historical_territory = str(item["historical_territory"]).strip()
+            # mission is a compatibility alias only. Never propagate an old answer-shaped
+            # question into the Writer-facing section state.
+            mission = historical_territory
 
         state = {
             "schema_version": 4 if direct_authorship else (2 if current_contract else 1),
@@ -121,14 +151,22 @@ def materialize(product_dir: Path) -> list[Path]:
             "outline_sha256": sha256(outline_path),
         }
         if mission is not None:
+            state["historical_substrate_contract_version"] = 1
+            state["historical_territory"] = historical_territory
             state["mission"] = mission
+            state["historical_substrate_ids"] = list(item["historical_substrate_ids"])
         if isinstance(item.get("transition"), str) and item["transition"].strip():
             state["transition"] = item["transition"].strip()
         hist_change = item.get("historical_change") or item.get("historical_movement")
         if hist_change is not None:
             state["historical_change"] = hist_change
-        if isinstance(item.get("earned_meaning"), str) and item["earned_meaning"].strip():
-            state["earned_meaning"] = item["earned_meaning"].strip()
+        # audience_discovery / earned_meaning may remain in section state for owner/reviewer
+        # evaluation, but canonical Writer projection does not expose them.
+        audience_discovery = item.get("audience_discovery")
+        if isinstance(audience_discovery, str) and audience_discovery.strip():
+            state["audience_discovery"] = audience_discovery.strip()
+        elif isinstance(item.get("earned_meaning"), str) and item["earned_meaning"].strip():
+            state["audience_discovery"] = item["earned_meaning"].strip()
         if current_contract:
             section_acts = list(dict.fromkeys(movement["act_id"] for movement in section_movements))
             state["movement_ids"] = [movement["id"] for movement in section_movements]
@@ -173,6 +211,14 @@ def materialize(product_dir: Path) -> list[Path]:
             movement_lines = [f"{movement['id']} — {movement['title']}" for movement in section_movements]
             transition = render_outline_value(item.get("transition"), "Section kế tiếp theo whole-product progression.")
             evidence_territory = render_outline_value(item.get("claim_ids"), "Không có claim allowance.")
+            historical_block = ""
+            if direct_authorship:
+                historical_block = (
+                    f"\n\n## Historical territory\n\n{historical_territory}"
+                    f"\n\n## Historical change\n\n"
+                    f"From: {item['historical_change']['from']}\n\nTo: {item['historical_change']['to']}"
+                    f"\n\n## Historical Substrate IDs\n\n{render_outline_value(item.get('historical_substrate_ids'))}"
+                )
             legacy_anchor_block = ""
             if not direct_authorship:
                 legacy_anchor_block = f"\n\n## Anchor options\n\n{render_outline_value(item.get('anchor_options'))}"
@@ -181,10 +227,11 @@ def materialize(product_dir: Path) -> list[Path]:
                 f"Cycle: `{cycle_id}`\n\n"
                 f"## Whole-script acts\n\n{render_outline_value(act_lines)}\n\n"
                 f"## Macro movements\n\n{render_outline_value(movement_lines)}\n\n"
-                f"## Section objective\n\n{item['narrative_job']}\n\n"
+                f"## Section objective\n\n{item['narrative_job']}"
+                f"{historical_block}\n\n"
                 f"## Entry state\n\n{item['entry_state']}\n\n"
                 f"## Exit state\n\n{item['exit_state']}\n\n"
-                f"## Evidence territory\n\n{evidence_territory}"
+                f"## Evidence authority\n\n{evidence_territory}"
                 f"{legacy_anchor_block}\n\n"
                 f"## Transition\n\n{transition}\n\n"
                 f"## Continuity in\n\n{render_outline_value(item.get('continuity_in'))}\n\n"
@@ -252,6 +299,8 @@ def materialize(product_dir: Path) -> list[Path]:
         created.append(evidence_path)
 
         if direct_authorship:
+            section_substrate_path = materialize_writer_section_substrate(product_dir, section_id)
+            created.append(section_substrate_path)
             narration_path = root / "narration-pack.json"
             build_narration_pack(product_dir, section_id)
             created.append(narration_path)
