@@ -18,21 +18,6 @@ jobs:
           python-version: "3.12"
       - name: Unit tests
         run: python -m unittest discover -s tests -v
-      - name: Rematerialize P01 snapshot
-        if: always()
-        run: python scripts/materialize_sections.py products/sumer-writing --section P01
-      - name: Upload rematerialized P01
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: p01-rematerialized
-          path: |
-            products/sumer-writing/03_sections/P01/section.json
-            products/sumer-writing/03_sections/P01/brief.md
-            products/sumer-writing/03_sections/P01/evidence-pack.json
-            products/sumer-writing/03_sections/P01/historical-substrate.json
-            products/sumer-writing/03_sections/P01/narration-pack.json
-            products/sumer-writing/03_sections/P01/continuity-in.md
       - name: Enforce architecture boundary for every commit
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
