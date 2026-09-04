@@ -6,13 +6,28 @@
   "gate_commit": "4277fdbbcb5b677425c68b4c1e32b1c06663b3ba",
   "gate_run_id": 33855087234,
   "gate_test": "tests/test_p01_probe_gate.py::P01FrozenProbeGate::test_current_p01_is_ready_for_clean_historical_substrate_probe",
-  "executor_commit": "b4faf173a16171e093585bc71eec181259e142a4",
-  "executor_run_id": 33855681929,
+  "executor_commit": "b167724d56d40a5fa1c860629bae3eecc172012d",
+  "executor_run_id": null,
   "executor_test": "tests/test_p01_probe_executor.py::P01ProbeExecutorTest::test_executor_reproduces_the_gated_writer_context",
-  "executor_verified": true,
+  "executor_verified": false,
   "rematerialization": {
     "mode": "normal_bounded_materialization",
     "section": "P01",
+    "source_head": "9dcb0e4cbbe8826fdb3eb2145844a405efe43996",
+    "source_run_id": 33857904846,
+    "artifact_id": 9930924140,
+    "artifact_digest": "sha256:c63ae2b924f28fcc0307bbe07adb2dace0ce25f46a50f65158cf832451c2eef7",
+    "canonical_artifacts_applied": true,
+    "changed_artifacts": [
+      "03_sections/P01/brief.md",
+      "03_sections/P01/evidence-pack.json",
+      "03_sections/P01/narration-pack.json"
+    ],
+    "unchanged_artifacts": [
+      "03_sections/P01/section.json",
+      "03_sections/P01/historical-substrate.json",
+      "03_sections/P01/continuity-in.md"
+    ],
     "checked_in_section_state_reproduced_exactly": true,
     "checked_in_writer_substrate_reproduced_exactly": true,
     "preflight_errors": []
