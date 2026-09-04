@@ -6,15 +6,20 @@ from __future__ import annotations
 import hashlib
 import json
 import shutil
+import sys
 import tempfile
 from pathlib import Path
+
+
+REPO_ROOT = Path(__file__).resolve().parents[6]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from scripts.context_packet import compile_packet
 from scripts.materialize_sections import materialize
 from scripts.substrate_preflight import verify_canonical_section_state
 
 
-REPO_ROOT = Path(__file__).resolve().parents[6]
 SOURCE_PRODUCT = REPO_ROOT / "products" / "sumer-writing"
 PROBE_ROOT = SOURCE_PRODUCT / "03_sections" / "P01" / "probes" / "hsub-clean-01"
 TASK_ID = "T9900-draft-section-P01"
