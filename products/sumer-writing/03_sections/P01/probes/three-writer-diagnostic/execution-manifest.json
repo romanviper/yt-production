@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "experiment": "P01-THREE-CLEAN-WRITER-DIAGNOSTIC",
+  "architecture_frozen": true,
+  "model_configuration": "gpt-5.6-sol / high",
+  "shared_target_words": {
+    "min": 450,
+    "max": 650
+  },
+  "a_c_rich_material_sha256": "3043954bc8cf1ee4d5fcad019581eed4d22ad86e7aff62179d7e0f3db36a57b0",
+  "variants": [
+    {
+      "variant": "A",
+      "context_path": "products/sumer-writing/03_sections/P01/probes/three-writer-diagnostic/writer-a-context.md",
+      "context_sha256": "82aeda18630b16e016f3f88b7ca4c042e3cd3bff4c6f20e04a0ee203ef02025d"
+    },
+    {
+      "variant": "B",
+      "context_path": "products/sumer-writing/03_sections/P01/probes/three-writer-diagnostic/writer-b-context.md",
+      "context_sha256": "42aab651d0dea76ea156b7fd5f6b272912ef1d2457fdac3de45673deb7911878"
+    },
+    {
+      "variant": "C",
+      "context_path": "products/sumer-writing/03_sections/P01/probes/three-writer-diagnostic/writer-c-context.md",
+      "context_sha256": "9409c45368fce2590ddb0b9c3845cc937bb9ed8664d4eeb74e1a24bc238cd3a8"
+    }
+  ],
+  "outputs": {
+    "A": "writer-a-rich-material.md",
+    "B": "writer-b-substrate.md",
+    "C": "writer-c-composition.md",
+    "C_composition_record": "writer-c-composition-decision.json"
+  },
+  "execution_results": {
+    "A": {
+      "word_count": 627,
+      "output_sha256": "74b58c51cb71ad3a5406a79cfc8438a39b4a528e80052c3f0f8fe8801c26a33d",
+      "evidence_lookup_used": false
+    },
+    "B": {
+      "word_count": 640,
+      "output_sha256": "6d732d4838adcc3d75b167dca5f9d61c28c566546f8b5285b2fdcdc8f5a359e2",
+      "evidence_lookup_used": false
+    },
+    "C": {
+      "word_count": 604,
+      "output_sha256": "e5b6493b7cb8b9516425f1dbfbac5b830a6842e344f5df1db54f9c81745daf0e",
+      "evidence_lookup_used": false,
+      "composition_record_kind": "high_level_decision_only"
+    }
+  }
+}

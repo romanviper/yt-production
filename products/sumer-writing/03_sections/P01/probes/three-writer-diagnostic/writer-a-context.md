@@ -1,0 +1,543 @@
+# ISOLATED WRITER TASK
+
+{
+  "section": "P01",
+  "language": "vi",
+  "target_words": {
+    "min": 450,
+    "max": 650
+  },
+  "form": "one contiguous passage from a larger unfinished section",
+  "completion_rule": "Do not summarize or complete the whole P01 movement.",
+  "creative_authority": "The Writer owns the telling, composition, exposition, reconstruction and language.",
+  "forbidden_prescriptions": [
+    "required scene",
+    "required protagonist",
+    "required hook",
+    "fixed beats",
+    "required reveal order",
+    "required climax",
+    "sensory quota",
+    "stylistic imitation"
+  ],
+  "truth_rule": "Stay inside the supplied historical authority. Do not invent named actors, attributed quotations, chronology, measurements, institutions, motives, dialogue, private thoughts or causal conclusions.",
+  "metadata_rule": "Evidence and boundary metadata constrain the prose; they do not need to be narrated.",
+  "experiment": "P01-THREE-WRITER-A",
+  "variant": "rich historical material, direct draft",
+  "instruction": "Draft directly from the material below. Choose what to use; do not first produce a plan or composition artifact.",
+  "historical_material": {
+    "role": "primary rich historical material; choose freely and do not cover exhaustively",
+    "records": [
+      {
+        "id": "P01-MAT-0001",
+        "kind": "object",
+        "label": "Geometric clay tokens in Late Uruk administrative levels",
+        "source_refs": [
+          {
+            "source_id": "SRC-0005",
+            "locators": [
+              "pp. 33–38"
+            ]
+          },
+          {
+            "source_id": "SRC-0009",
+            "locators": [
+              "pp. 12–16"
+            ]
+          }
+        ],
+        "source_relation": "contemporary_material",
+        "object_or_trace": "Small unbaked or lightly fired clay geometric shapes (spheres, cones, disks, cylinders), some plain and some incised with geometric marks",
+        "actor": "Unknown; an administrative user role is inferred from context",
+        "time": "Late Uruk period (ca. 3400–3200 BCE)",
+        "place": "Eanna precinct, Uruk / Warka",
+        "physical_description": "Hand-modeled clay objects generally between 1 and 3 cm in dimension, with matte earthen surface and fingernail or stylus incisions",
+        "measurement": "1 to 3 cm in diameter / height",
+        "limitations": [
+          "Contexts in early excavations often disturbed; Neolithic antecedents vary in function and do not represent a single unified code across 5000 years"
+        ],
+        "representativeness": "Attested in Late Uruk administrative levels; broader function and continuity remain contested",
+        "epistemic_layers": {
+          "observed": [
+            {
+              "statement": "Small geometric clay objects survive in several forms; some bear incisions."
+            }
+          ],
+          "functional_inference": [
+            {
+              "statement": "Some Late Uruk examples participated in numerical or administrative practices.",
+              "qualification": "Supported for bounded late administrative contexts, not a universal code across millennia."
+            }
+          ],
+          "representative_reconstruction": [],
+          "qualified_live_hypothesis": [],
+          "prohibited_or_rejected_inference": [
+            {
+              "statement": "Tokens formed a direct linear precursor to writing.",
+              "qualification": "Contested; approved evidence supports a parallel ecology of practices."
+            }
+          ]
+        }
+      },
+      {
+        "id": "P01-MAT-0002",
+        "kind": "object",
+        "label": "Hollow clay bulla (envelope) with enclosed tokens and exterior impressions",
+        "source_refs": [
+          {
+            "source_id": "SRC-0005",
+            "locators": [
+              "pp. 41–46"
+            ]
+          },
+          {
+            "source_id": "SRC-0001",
+            "locators": [
+              "pp. 20–25"
+            ]
+          }
+        ],
+        "source_relation": "contemporary_material",
+        "object_or_trace": "Globular hollow clay sphere sealed shut while moist, containing tokens inside and displaying surface impressions of those tokens and cylinder seals on the outside",
+        "actor": "Unknown; possible institutional operators are inferred",
+        "time": "Late Uruk period (ca. 3350–3200 BCE)",
+        "place": "Uruk and Susa administrative precincts",
+        "physical_description": "Spherical to ovoid clay ball 5 to 7 cm across, with thick walls, hollow core, and overlapping impressed marks and rolled figurative seal impressions",
+        "measurement": "5 to 7 cm diameter, wall thickness 1 to 1.5 cm",
+        "limitations": [
+          "Breakable verification device; once opened to inspect contents, the sealed envelope is permanently destroyed"
+        ],
+        "representativeness": "Attested at Uruk and Susa; prevalence and exact function vary by context",
+        "epistemic_layers": {
+          "observed": [
+            {
+              "statement": "Hollow clay envelopes contain tokens and bear exterior impressions and seal rollings."
+            }
+          ],
+          "functional_inference": [
+            {
+              "statement": "Exterior marks made enclosed quantities inspectable without immediately opening the envelope.",
+              "qualification": "Functional inference from the relation between contents and surface marks."
+            }
+          ],
+          "representative_reconstruction": [
+            {
+              "statement": "An operator deposits counters, closes the envelope, marks and seals it, then lets it dry.",
+              "qualification": "Manufacture workflow reconstructed from artifact features, not a witnessed event."
+            }
+          ],
+          "qualified_live_hypothesis": [],
+          "prohibited_or_rejected_inference": [
+            {
+              "statement": "Bullae emerged specifically to prevent fraud or solve verification at distance.",
+              "qualification": "Causal hypothesis; the artifacts alone do not establish a single motive."
+            }
+          ]
+        }
+      },
+      {
+        "id": "P01-MAT-0003",
+        "kind": "object",
+        "label": "Cylinder seal and impressed clay rollings",
+        "source_refs": [
+          {
+            "source_id": "SRC-0005",
+            "locators": [
+              "pp. 47–52"
+            ]
+          },
+          {
+            "source_id": "SRC-0010",
+            "locators": [
+              "pp. 70–75"
+            ]
+          }
+        ],
+        "source_relation": "contemporary_material",
+        "object_or_trace": "Carved hard stone cylinder (limestone, lapis, calcite) engraved with negative relief of captive processions, animal herds, or administrative activities",
+        "actor": "Unknown; an authorized agent or witness role is inferred",
+        "time": "Middle to Late Uruk period (ca. 3500–3100 BCE)",
+        "place": "Uruk, Susa, Habuba Kabira",
+        "physical_description": "Perforated stone cylinder 2 to 5 cm in length, diameter 1 to 2.5 cm, engraved with micro-relief scenes",
+        "measurement": "length 2–5 cm, diameter 1–2.5 cm",
+        "limitations": [
+          "Identifies institutional authority or witness presence, not spoken syntax or linguistic phonology"
+        ],
+        "representativeness": "Widely attested in the cited contexts; not established here as universal",
+        "epistemic_layers": {
+          "observed": [
+            {
+              "statement": "Engraved cylinders and continuous rolled impressions survive on several clay media."
+            }
+          ],
+          "functional_inference": [
+            {
+              "statement": "Seal impressions marked an association with authority, custody or witnessing.",
+              "qualification": "Inferred from context; no unique event or speaker is identified."
+            }
+          ],
+          "representative_reconstruction": [],
+          "qualified_live_hypothesis": [],
+          "prohibited_or_rejected_inference": []
+        }
+      },
+      {
+        "id": "P01-MAT-0004",
+        "kind": "record",
+        "label": "Solid numerical tablet with stylus impressions",
+        "source_refs": [
+          {
+            "source_id": "SRC-0001",
+            "locators": [
+              "pp. 22–27"
+            ]
+          },
+          {
+            "source_id": "SRC-0005",
+            "locators": [
+              "pp. 45–50"
+            ]
+          }
+        ],
+        "source_relation": "contemporary_material",
+        "object_or_trace": "Cushion-shaped clay tablet bearing impressed circular, semi-circular, and stroke-shaped numerical signs without pictographic script signs",
+        "actor": "Unknown; an administrative record-maker role is inferred",
+        "time": "Late Uruk period, Uruk V to early IV (ca. 3300–3200 BCE)",
+        "place": "Eanna district, Uruk; Susa",
+        "physical_description": "Thick rounded rectangular clay tablet, roughly palm-sized, with distinct deep round depressions and oblique circular cups",
+        "measurement": "4 to 6 cm length, 3 to 5 cm width, 1.5 to 2.5 cm thickness",
+        "limitations": [
+          "Records quantities and transaction categories without specifying full grammatical sentences or spoken words"
+        ],
+        "representativeness": "Attested before and alongside pictographic tablets; a single direct genealogy is not established",
+        "epistemic_layers": {
+          "observed": [
+            {
+              "statement": "Clay tablets bear round and oblique numerical impressions and sometimes seal rollings."
+            }
+          ],
+          "functional_inference": [
+            {
+              "statement": "The impressed marks record numerical information.",
+              "qualification": "Supported by specialist comparison and administrative context."
+            }
+          ],
+          "representative_reconstruction": [
+            {
+              "statement": "A record-maker shapes damp clay and applies differently angled impressions before drying it.",
+              "qualification": "Reconstructed manufacture sequence, not a documented individual act."
+            }
+          ],
+          "qualified_live_hypothesis": [],
+          "prohibited_or_rejected_inference": [
+            {
+              "statement": "Numerical tablets were a necessary direct step toward proto-cuneiform.",
+              "qualification": "Genealogical interpretation remains non-linear and contested."
+            }
+          ]
+        }
+      },
+      {
+        "id": "P01-MAT-0005",
+        "kind": "record",
+        "label": "Archaic proto-cuneiform administrative account (Uruk IV)",
+        "source_refs": [
+          {
+            "source_id": "SRC-0001",
+            "locators": [
+              "pp. 28–35"
+            ]
+          },
+          {
+            "source_id": "SRC-0005",
+            "locators": [
+              "pp. 52–60"
+            ]
+          }
+        ],
+        "source_relation": "contemporary_material",
+        "object_or_trace": "Clay tablet ruled into compartments (cases), combining impressed numerical notations with incised pictographic signs representing commodities, persons, and institutions",
+        "actor": "Unknown; a trained administrative record-maker is inferred",
+        "time": "Uruk IV period (ca. 3300–3100 BCE)",
+        "place": "Eanna Temple Complex, Uruk",
+        "physical_description": "Convex clay tablet 5 to 8 cm square, light buff or greyish clay, clearly divided by incision lines with deeply impressed numerals and thin drawn pictographs",
+        "measurement": "5 to 8 cm length, 4 to 7 cm width, 1.5 to 2 cm thickness",
+        "limitations": [
+          "Texts are ledger-style administrative allocations; do not record running continuous spoken discourse, poetry, or historical narrative"
+        ],
+        "representativeness": "Representative of the cited Uruk IV administrative corpus, not a universal canonical form",
+        "epistemic_layers": {
+          "observed": [
+            {
+              "statement": "Ruled tablets combine impressed numerals with incised pictographic signs in compartments."
+            }
+          ],
+          "functional_inference": [
+            {
+              "statement": "The layout organizes quantities and categories for accounting.",
+              "qualification": "Inferred from corpus, sign distribution and document structure."
+            }
+          ],
+          "representative_reconstruction": [
+            {
+              "statement": "A record-maker rules compartments, enters marks, and may total entries on the reverse.",
+              "qualification": "Representative recording workflow; no named writer or event survives."
+            }
+          ],
+          "qualified_live_hypothesis": [],
+          "prohibited_or_rejected_inference": []
+        }
+      },
+      {
+        "id": "P01-MAT-0006",
+        "kind": "object",
+        "label": "Pointed and round-ended reed styluses",
+        "source_refs": [
+          {
+            "source_id": "SRC-0001",
+            "locators": [
+              "pp. 36–39"
+            ]
+          },
+          {
+            "source_id": "SRC-0005",
+            "locators": [
+              "pp. 55–58"
+            ]
+          }
+        ],
+        "source_relation": "contemporary_material",
+        "object_or_trace": "Cut marsh reed (Phragmites australis) stalks with carved pointed end for incising curved lines and blunt rounded/semi-circular ends for numerical punches",
+        "actor": "Unknown record-maker",
+        "time": "Late Uruk period (ca. 3300–3000 BCE)",
+        "place": "Southern Mesopotamian riverine and marsh landscape",
+        "physical_description": "Short slender reed stalk 10 to 15 cm long, smooth exterior siliceous rind, cut diagonally and rounded on opposite ends",
+        "measurement": "10–15 cm length, 0.5–0.8 cm diameter",
+        "limitations": [
+          "Organic material rarely preserved directly in archaeological record; tool morphology reconstructed from impressions and incisions in clay"
+        ],
+        "representativeness": "Tool form inferred from marks; organic implements rarely survive directly",
+        "epistemic_layers": {
+          "observed": [
+            {
+              "statement": "Clay surfaces preserve rounded impressions and incised lines made by differently shaped tips."
+            }
+          ],
+          "functional_inference": [
+            {
+              "statement": "Reed tools likely produced these marks.",
+              "qualification": "Tool morphology is reconstructed from impressions because the tools rarely survive."
+            }
+          ],
+          "representative_reconstruction": [
+            {
+              "statement": "A record-maker shapes a reed, then presses or draws it at different angles in wet clay.",
+              "qualification": "Plausible reconstruction, not a directly observed workflow."
+            }
+          ],
+          "qualified_live_hypothesis": [],
+          "prohibited_or_rejected_inference": []
+        }
+      },
+      {
+        "id": "P01-MAT-0007",
+        "kind": "trace",
+        "label": "Administrative sealing assemblage on clay jar stoppers and door pegs",
+        "source_refs": [
+          {
+            "source_id": "SRC-0010",
+            "locators": [
+              "pp. 82–88"
+            ]
+          },
+          {
+            "source_id": "SRC-0005",
+            "locators": [
+              "pp. 60–64"
+            ]
+          }
+        ],
+        "source_relation": "contemporary_material",
+        "object_or_trace": "Clay sealings (cretulae) pressed over woven reed mats, jar cloth covers, wooden pegs inserted into storeroom walls, with cord impressions on underside and seal rollings on top",
+        "actor": "Unknown; custody and inspection roles are inferred",
+        "time": "Late Uruk period (ca. 3400–3100 BCE)",
+        "place": "Institutional storehouses in Eanna, Uruk",
+        "physical_description": "Irregular lumps of clay bearing negative impressions of rope, wood pegs, or coarse cloth on interior face and multiple seal rollings on exterior",
+        "measurement": "3 to 8 cm width",
+        "limitations": [
+          "Documents physical custody and unauthorized entry prevention, not textual content"
+        ],
+        "representativeness": "Attested sealing practice in the cited institutional contexts",
+        "epistemic_layers": {
+          "observed": [
+            {
+              "statement": "Clay sealings preserve impressions of cord, cloth or wood and exterior seal rollings."
+            }
+          ],
+          "functional_inference": [
+            {
+              "statement": "Sealings participated in controlling or evidencing access.",
+              "qualification": "Inferred from attachment traces and find contexts."
+            }
+          ],
+          "representative_reconstruction": [
+            {
+              "statement": "An operator binds a closure, presses clay over it and rolls a seal; later access breaks it.",
+              "qualification": "Representative custody workflow, not a documented incident."
+            }
+          ],
+          "qualified_live_hypothesis": [],
+          "prohibited_or_rejected_inference": []
+        }
+      },
+      {
+        "id": "P01-MAT-0008",
+        "kind": "process",
+        "label": "Institutional ration accounting and disbursement procedure",
+        "source_refs": [
+          {
+            "source_id": "SRC-0001",
+            "locators": [
+              "pp. 40–48"
+            ]
+          },
+          {
+            "source_id": "SRC-0010",
+            "locators": [
+              "pp. 95–102"
+            ]
+          }
+        ],
+        "source_relation": "contemporary_material",
+        "object_or_trace": "Standard bevel-rimmed clay bowls (mass-produced mold-made coarse pottery) used in conjunction with tabular lists of barley portions",
+        "actor": "Unknown; proposed distributors, recipients and record-keepers are reconstructed roles",
+        "time": "Late Uruk period (ca. 3300–3100 BCE)",
+        "place": "Central storehouses, Eanna district, Uruk",
+        "physical_description": "Standardized conical coarse clay bowls, roughly 0.8 liter capacity, roughly made by pressing straw-tempered clay into earth mold, found discarded in thousands",
+        "measurement": "rim diameter ca. 18 cm, capacity ca. 0.8 liter",
+        "limitations": [
+          "Connection between bowl volume and specific sign for ration (GAR / NINDA) is analytical; exact operational link varies by site"
+        ],
+        "representativeness": "Bowls are abundant in cited contexts; their link to particular ration signs varies by site",
+        "epistemic_layers": {
+          "observed": [
+            {
+              "statement": "Many similarly formed bevel-rimmed bowls occur in Uruk-period contexts alongside records."
+            }
+          ],
+          "functional_inference": [
+            {
+              "statement": "The bowls may have served standardized portions in provisioning.",
+              "qualification": "The bowl-volume and ration-sign connection is analytical and varies by site."
+            }
+          ],
+          "representative_reconstruction": [
+            {
+              "statement": "Workers assemble, an official checks an allocation, grain is measured, and a record is updated.",
+              "qualification": "Composite reconstruction; not a documented unique event."
+            }
+          ],
+          "qualified_live_hypothesis": [],
+          "prohibited_or_rejected_inference": [
+            {
+              "statement": "This workflow proves a redistribution system caused writing to emerge.",
+              "qualification": "Causal synthesis exceeds what the association alone proves."
+            }
+          ]
+        }
+      },
+      {
+        "id": "P01-INST-0001",
+        "kind": "object",
+        "label": "Broken clay envelope OIM A64678 with tokens inside",
+        "source_refs": [
+          {
+            "source_id": "SRC-0005",
+            "locators": [
+              "Catalog No. 32, p. 66",
+              "Delougaz and Kantor 1996, pls. 38:a–b, 40:a, 147:f"
+            ]
+          }
+        ],
+        "source_relation": "contemporary_material",
+        "object_or_trace": "A broken hollow clay envelope preserving clay tokens inside",
+        "actor": "Unknown",
+        "time": "Late Uruk period (3350–3100 BCE)",
+        "place": "Chogha Mish, Iran",
+        "physical_description": "Broken clay envelope with the enclosed tokens visible through the missing part of the shell",
+        "measurement": "Envelope 7.8 × 7.2 cm; enclosed tokens 1.6 cm in diameter",
+        "limitations": [
+          "The catalogue entry identifies the object and enclosed tokens but does not specify a transaction, operator, motive, exact find stratum, or correspondence between exterior marks and contents"
+        ],
+        "representativeness": "One individually catalogued Chogha Mish specimen; it does not by itself establish the typical form or function of all bullae",
+        "epistemic_layers": {
+          "observed": [
+            {
+              "statement": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter."
+            }
+          ],
+          "functional_inference": [
+            {
+              "statement": "The object is usable as evidence for one attested envelope-and-token configuration, not as a universal bulla type.",
+              "qualification": "Bounded to this individually catalogued specimen and its catalogue description."
+            }
+          ],
+          "representative_reconstruction": [],
+          "qualified_live_hypothesis": [],
+          "prohibited_or_rejected_inference": [
+            {
+              "statement": "This specimen documents a particular transaction or proves why clay envelopes were invented.",
+              "qualification": "The catalogue supplies object identity and surviving features, not an event, operator, purpose, or causal origin."
+            }
+          ]
+        }
+      },
+      {
+        "id": "P01-INST-0002",
+        "kind": "record",
+        "label": "Sealed numerical tablet fragment ChM III-937a",
+        "source_refs": [
+          {
+            "source_id": "SRC-0005",
+            "locators": [
+              "Catalog No. 31, p. 65",
+              "Delougaz and Kantor 1996, pl. 137:a"
+            ]
+          }
+        ],
+        "source_relation": "contemporary_material",
+        "object_or_trace": "A broken clay numerical tablet fragment bearing five numeral signs and several seal rollings",
+        "actor": "Unknown",
+        "time": "Late Uruk period (3350–3100 BCE)",
+        "place": "Chogha Mish, Iran",
+        "physical_description": "Clay tablet fragment with five numeral signs; several rollings show a seal image containing animals, including a bull",
+        "measurement": "4.8 × 3.2 × 2.0 cm",
+        "limitations": [
+          "The catalogue does not establish the recorded commodity, transaction, operator, reading of each numeral, or a direct genealogical relationship to OIM A64678"
+        ],
+        "representativeness": "One individually catalogued Chogha Mish numerical-tablet fragment; it is not a universal form",
+        "epistemic_layers": {
+          "observed": [
+            {
+              "statement": "Catalogue object ChM III-937a is a 4.8 × 3.2 × 2.0 cm clay tablet fragment from Chogha Mish with five numeral signs and several rollings of an animal seal that includes a bull."
+            }
+          ],
+          "functional_inference": [
+            {
+              "statement": "The five impressed signs carry numerical information.",
+              "qualification": "The catalogue identifies them as numeral signs but does not provide a complete reading or transaction context."
+            }
+          ],
+          "representative_reconstruction": [],
+          "qualified_live_hypothesis": [],
+          "prohibited_or_rejected_inference": [
+            {
+              "statement": "This tablet replaced the broken envelope or records the same kind of event.",
+              "qualification": "The two objects share site and broad period, but the approved source does not establish a direct sequence or shared transaction type."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

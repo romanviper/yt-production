@@ -1,0 +1,19 @@
+{
+  "chosen_thread": "Từ lượng vật nhỏ được giữ trong phong bì đất sét đến lượng được đưa lên bề mặt đất sét",
+  "begins_at": "Chiếc phong bì vỡ OIM A64678 với các token còn nhìn thấy bên trong",
+  "stops_before": "Sự kết hợp số lượng và hình vẽ trong các bảng proto-cuneiform Uruk IV",
+  "intended_material_ids": [
+    "P01-INST-0001",
+    "P01-MAT-0002",
+    "P01-MAT-0003",
+    "P01-MAT-0004",
+    "P01-INST-0002"
+  ],
+  "intentionally_unused_material_ids": [
+    "P01-MAT-0001",
+    "P01-MAT-0005",
+    "P01-MAT-0006",
+    "P01-MAT-0007",
+    "P01-MAT-0008"
+  ]
+}
