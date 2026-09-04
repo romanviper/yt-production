@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Materialize canonical section state from approved outline + bounded overlays.
+"""Materialize sections through an explicit architecture-adoption boundary.
 
-Historical-Substrate products may be materialized either as a whole product when
-coverage is product-complete, or as one explicitly covered section when the
-substrate is a bounded ``section_migration``. This keeps migrated P01 state
-reproducible without pretending P02-P08 were rebuilt under the new contract.
+Unadopted products keep the existing direct-authorship compatibility path.
+Historical-Substrate products use the canonical world-model path only when the
+whole product/cycle or the targeted bounded section explicitly adopts it.
 """
 
 from __future__ import annotations
@@ -16,6 +15,11 @@ from typing import Any
 
 try:
     from scripts.common import read_json, sha256, write_json
+    from scripts.historical_substrate_adoption import (
+        adopted_section_overlays,
+        outline_adopts_historical_substrate,
+        section_adopts_historical_substrate,
+    )
     from scripts.historical_substrate_contract import (
         build_writer_section_substrate,
         validate_historical_substrate,
@@ -23,10 +27,15 @@ try:
     )
     from scripts.outline_contract import OUTLINE_SCHEMA_VERSION, normalize_outline_contract, validate_outline_contract
     from scripts.section_overlay_contract import resolve_section_spec
-    from scripts.story_plan_contract import build_narration_pack, empty_story_plan, is_direct_authorship_outline
+    from scripts.story_plan_contract import build_narration_pack, is_direct_authorship_outline
     from scripts import materialize_sections_legacy as legacy
 except ModuleNotFoundError:  # pragma: no cover
     from common import read_json, sha256, write_json
+    from historical_substrate_adoption import (
+        adopted_section_overlays,
+        outline_adopts_historical_substrate,
+        section_adopts_historical_substrate,
+    )
     from historical_substrate_contract import (
         build_writer_section_substrate,
         validate_historical_substrate,
@@ -34,7 +43,7 @@ except ModuleNotFoundError:  # pragma: no cover
     )
     from outline_contract import OUTLINE_SCHEMA_VERSION, normalize_outline_contract, validate_outline_contract
     from section_overlay_contract import resolve_section_spec
-    from story_plan_contract import build_narration_pack, empty_story_plan, is_direct_authorship_outline
+    from story_plan_contract import build_narration_pack, is_direct_authorship_outline
     import materialize_sections_legacy as legacy
 
 
@@ -53,7 +62,7 @@ def _coverage_allows(substrate: dict[str, Any], section: str) -> bool:
     return section in set(coverage.get("covered_sections", []))
 
 
-def _materialize_direct_section(
+def _materialize_substrate_section(
     product_dir: Path,
     outline: dict[str, Any],
     outline_path: Path,
@@ -66,9 +75,7 @@ def _materialize_direct_section(
     if not re.fullmatch(r"P\d{2}", section_id):
         raise ValueError(f"Invalid section ID: {section_id}")
     if not _coverage_allows(substrate, section_id):
-        raise ValueError(
-            f"Historical Substrate coverage does not authorize materializing {section_id}."
-        )
+        raise ValueError(f"Historical Substrate coverage does not authorize materializing {section_id}.")
 
     resolved, architecture_authority = resolve_section_spec(
         product_dir, section_id, outline=outline, outline_path=outline_path
@@ -208,14 +215,7 @@ def _materialize_direct_section(
             encoding="utf-8",
         )
 
-    return [
-        section_path,
-        brief_path,
-        evidence_path,
-        section_substrate_path,
-        narration_path,
-        continuity_path,
-    ]
+    return [section_path, brief_path, evidence_path, section_substrate_path, narration_path, continuity_path]
 
 
 def materialize(product_dir: Path, section: str | None = None) -> list[Path]:
@@ -227,10 +227,36 @@ def materialize(product_dir: Path, section: str | None = None) -> list[Path]:
     if outline.get("status") != "approved":
         raise ValueError("Outline must be human-approved before section materialization.")
 
-    if not is_direct_authorship_outline(outline):
+    direct_authorship = is_direct_authorship_outline(outline)
+    product_adopted = outline_adopts_historical_substrate(
+        product_dir, product=product, outline=outline
+    )
+    section_adopted = bool(
+        section
+        and section_adopts_historical_substrate(
+            product_dir, section, product=product, outline=outline
+        )
+    )
+
+    if not direct_authorship:
         if section is not None:
             raise ValueError("Legacy materialization does not support bounded --section migration.")
         return legacy.materialize(product_dir)
+
+    if section is None and not product_adopted:
+        partial = adopted_section_overlays(product_dir)
+        if partial:
+            raise ValueError(
+                "Whole-product materialization is blocked by bounded Historical Substrate adoption for: "
+                + ", ".join(partial)
+                + ". Materialize those sections explicitly or adopt the whole product/cycle."
+            )
+        return legacy.materialize(product_dir)
+
+    if section is not None and not section_adopted:
+        raise ValueError(
+            f"Bounded materialization for {section} requires explicit Historical Substrate adoption."
+        )
 
     claims_doc = read_json(product_dir / "01_research" / "claim-ledger.json")
     sources_doc = read_json(product_dir / "01_research" / "source-index.json")
@@ -247,7 +273,7 @@ def materialize(product_dir: Path, section: str | None = None) -> list[Path]:
 
     substrate_path = product_dir / "01_research" / "historical-substrate.json"
     if not substrate_path.is_file():
-        raise ValueError("Direct-authorship materialization requires 01_research/historical-substrate.json.")
+        raise ValueError("Adopted Historical Substrate materialization requires 01_research/historical-substrate.json.")
     substrate = read_json(substrate_path)
     substrate_errors = validate_historical_substrate(
         substrate,
@@ -260,15 +286,15 @@ def materialize(product_dir: Path, section: str | None = None) -> list[Path]:
         scope = "whole-product" if section is None else f"section {section}"
         raise ValueError(f"Historical Substrate is not ready for {scope} materialization: " + "; ".join(substrate_errors))
 
-    if section is None:
-        targets = [item["id"] for item in outline.get("sections", []) if isinstance(item, dict)]
-    else:
-        targets = [section]
-
+    targets = (
+        [item["id"] for item in outline.get("sections", []) if isinstance(item, dict)]
+        if section is None
+        else [section]
+    )
     created: list[Path] = []
     for section_id in targets:
         created.extend(
-            _materialize_direct_section(
+            _materialize_substrate_section(
                 product_dir,
                 outline,
                 outline_path,
@@ -295,7 +321,7 @@ def archive_previous_cycle(product_dir: Path) -> list[Path]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("product", type=Path)
-    parser.add_argument("--section", help="Materialize one covered migrated section (P##).")
+    parser.add_argument("--section", help="Materialize one explicitly adopted migrated section (P##).")
     parser.add_argument("--archive-previous-cycle", action="store_true")
     args = parser.parse_args()
     try:
