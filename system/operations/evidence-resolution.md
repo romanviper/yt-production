@@ -47,5 +47,14 @@ When a section's evidence territory contains only abstract claims and propositio
    - `source_refs`: source IDs from the section evidence pack with narrow, specific locators;
    - `limitations`: explicit boundaries on what the evidence does and does not prove;
    - `source_relation`: classification of source proximity to the narrated reality.
-2. Concrete factual affordances (`actor`, `object_or_trace`, `documented_action`, `explicit_sequence`, `time`, `place`, `physical_description`, `measurement`, `spatial_relation`, `unresolved_question`, `later_evidence`) must be populated only when directly attested in approved sources.
+   - `epistemic_layers`: four explicit lists named `observed`,
+     `functional_inference`, `representative_reconstruction`, and
+     `interpretive_hypothesis`. Each entry has a `statement`; every
+     non-observed entry also has a source-honest `qualification`.
+2. Concrete factual affordances must preserve their epistemic layer. A manufacture
+   action visible in an artifact may be `documented_action`; a complete workflow
+   assembled from several sources is a representative reconstruction, never a
+   documented incident. Unknown actors remain unknown; plausible roles are labeled
+   inferred. Representativeness claims require a qualified inference and bounded
+   source scope—never unsupported `universal`, `standard`, or `canonical`.
 3. Output materials must be consolidated into the section territory and available to the writer via the bounded evidence broker.

@@ -74,11 +74,12 @@ class HistoricalMovementContractTests(unittest.TestCase):
                 section="P01",
             )
 
-            # Writer context must include historical_change and earned_meaning
+            # Writer context includes observable movement but not owner-only earned meaning.
             self.assertIn('"historical_change"', context)
             self.assertIn("Ký ức sinh học đơn lẻ", context)
             self.assertIn("Trí nhớ ngoại thân ổn định", context)
-            self.assertIn("Dấu vết vật chất định hình trật tự xã hội", context)
+            self.assertNotIn('"earned_meaning"', context)
+            self.assertNotIn("Dấu vết vật chất định hình trật tự xã hội", context)
 
             # Writer context must NOT expose legacy choreography fields or claim lists
             self.assertNotIn('"entry_state"', context)
@@ -86,6 +87,29 @@ class HistoricalMovementContractTests(unittest.TestCase):
             self.assertNotIn('"story_strategy"', context)
             self.assertNotIn('"story_plan"', context)
             self.assertNotIn("permitted_claims", context)
+
+    def test_problem_solution_thesis_fails_historical_change_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            outline = json.loads((product / "02_outline" / "outline.json").read_text(encoding="utf-8"))
+            p01 = next(sec for sec in outline["sections"] if sec["id"] == "P01")
+            p01["historical_change"] = {
+                "from": "Loose marks were insufficient for larger institutions",
+                "to": "Durable tablets therefore emerged, enabling obligations across distance",
+            }
+            errors = validate_outline_contract(outline, require_current=True)
+            self.assertTrue(any("inadequacy→solution→capability" in error for error in errors))
+
+    def test_observable_material_change_passes(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            outline = json.loads((product / "02_outline" / "outline.json").read_text(encoding="utf-8"))
+            p01 = next(sec for sec in outline["sections"] if sec["id"] == "P01")
+            p01["historical_change"] = {
+                "from": "Quantities and authentication appear across several clay devices",
+                "to": "Numerical information appears directly on durable clay surfaces beside seal impressions",
+            }
+            self.assertEqual([], validate_outline_contract(outline, require_current=True))
 
 
 if __name__ == "__main__":

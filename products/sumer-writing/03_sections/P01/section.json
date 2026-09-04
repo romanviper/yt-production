@@ -5,6 +5,12 @@
   "order": 1,
   "status": "ready_for_review",
   "human_approved": false,
+  "probe_1_disposition": {
+    "status": "rejected_by_owner_architecture_review",
+    "draft_task_id": "T0058-draft-section-P01",
+    "draft_sha256": "1405d20e2c41bf27c24eed096dad1dac65a8ad2b6e3f71d81e967a6c32a0de1f",
+    "preserve_artifacts": true
+  },
   "dependencies": [],
   "narrative_job": "Thiết lập các pressure và information practices trước/sát thời điểm proto-cuneiform xuất hiện, đồng thời phá hai shortcut: một invention event duy nhất và token→tablet như đường tiến hóa tất định. Section phải kết thúc khi audience đã hiểu vì sao durable, inspectable records trở nên đáng giá mà chưa cần biết 'ai phát minh chữ viết'.",
   "entry_state": "Chữ viết được hình dung như một ý tưởng xuất hiện đột ngột.",
@@ -18,8 +24,8 @@
   "mission": "Điều gì khiến việc giữ thông tin bằng những dấu bền trên đất sét trở nên hữu ích?",
   "transition": "Nếu nhu cầu và các recording practices đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.",
   "historical_change": {
-    "from": "Kế toán bằng token và ấn tín rời rạc chỉ đủ sức theo dõi các giao dịch điểm-điểm trong một cộng đồng nhỏ.",
-    "to": "Sự xuất hiện của các tập hợp ký hiệu số và dấu ấn hình thành hệ thống lưu trữ ngoại thân đầu tiên, cho phép thiết chế duy trì nghĩa vụ qua thời gian và khoảng cách."
+    "from": "Bằng chứng Late Uruk lưu giữ số lượng và sự xác thực trên nhiều vật mang và thực hành bằng đất sét khác nhau.",
+    "to": "Thông tin số ngày càng xuất hiện trực tiếp trên các bề mặt đất sét bền, bên cạnh các dấu xác thực."
   },
   "earned_meaning": "Chữ viết ban đầu không phải là một nỗ lực ghi lại lời nói, mà là một công nghệ vật chất để neo giữ các cam kết thực tế khi trí nhớ con người không còn gánh nổi.",
   "movement_ids": [
@@ -54,7 +60,9 @@
   "review_provenance": {
     "task_id": "T0036-review-section-P01",
     "contract_version": 3,
-    "review_sha256": "fafb219ad930720e30307e949516ed41c29906172d683de70dd5cf08e70e856f"
+    "review_sha256": "fafb219ad930720e30307e949516ed41c29906172d683de70dd5cf08e70e856f",
+    "authority": "stale_mismatched_non_authoritative",
+    "binding_error": "Review content is not bound to the Probe 1 draft/task identity."
   },
   "revision_pass": {
     "cycle_id": "C003",

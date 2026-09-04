@@ -44,6 +44,15 @@ class MaterialContractTests(unittest.TestCase):
             "measurement": "2cm height",
             "limitations": ["Attested in administrative contexts only"],
             "representativeness": "standard administrative token",
+            "epistemic_layers": {
+                "observed": [{"statement": "A geometric clay object bears an impressed mark."}],
+                "functional_inference": [{
+                    "statement": "The object was used in accounting.",
+                    "qualification": "Inferred from its administrative context and comparison."
+                }],
+                "representative_reconstruction": [],
+                "interpretive_hypothesis": []
+            },
         }
 
     def test_valid_record_passes_contract(self) -> None:
@@ -92,6 +101,20 @@ class MaterialContractTests(unittest.TestCase):
         collection = [self.valid_record, self.valid_record]
         errors = validate_materials_collection(collection)
         self.assertTrue(any("duplicate material ID: MAT-0001" in err for err in errors))
+
+    def test_epistemic_layers_are_required_and_inferences_are_qualified(self) -> None:
+        bad = dict(self.valid_record)
+        bad.pop("epistemic_layers")
+        self.assertTrue(any("missing required epistemic_layers" in error for error in validate_material_record(bad, require_epistemic_layers=True)))
+
+        bad = dict(self.valid_record)
+        bad["epistemic_layers"] = {
+            "observed": [{"statement": "A seal impression survives."}],
+            "functional_inference": [{"statement": "It authenticated a transfer."}],
+            "representative_reconstruction": [],
+            "interpretive_hypothesis": [],
+        }
+        self.assertTrue(any("requires qualification" in error for error in validate_material_record(bad)))
 
     def test_validate_materials_file(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

@@ -183,8 +183,7 @@ def compile_excerpt_packet(
     hist_change = state.get("historical_change") or state.get("historical_movement")
     if hist_change:
         excerpt_contract["historical_change"] = hist_change
-    if state.get("earned_meaning"):
-        excerpt_contract["earned_meaning"] = state.get("earned_meaning")
+    # Keep earned_meaning out of Writer-facing excerpt authority.
     if position == "opening":
         excerpt_contract["starting_audience_assumption"] = state.get("entry_state")
     if completes_section:

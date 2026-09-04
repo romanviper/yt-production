@@ -61,6 +61,13 @@ Do not compress every source into propositions alone. When available inside scop
 
 These fields are evidence observations. They must not assign an opening, focal carrier, reversal, climax, ending, emotional beat or narrative route. Do not introduce a narratability score.
 
+Every material record keeps four epistemic layers visible to downstream retrieval:
+observed/materially attested detail; source-supported functional inference;
+representative operational reconstruction; and interpretive/causal hypothesis.
+Concrete wording must not collapse those layers. In particular, a plausible actor
+or reconstructed workflow is not `documented_action`, and representativeness is
+always qualified to the source-supported corpus or context.
+
 ## Writer retrieval boundary
 
 A writer may increase evidence resolution inside the approved section territory through the bounded evidence capability.

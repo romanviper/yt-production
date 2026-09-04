@@ -26,6 +26,13 @@ VALID_SOURCE_RELATIONS = {
     "modern_hypothesis",
 }
 
+EPISTEMIC_LAYERS = (
+    "observed",
+    "functional_inference",
+    "representative_reconstruction",
+    "interpretive_hypothesis",
+)
+
 FORBIDDEN_CREATIVE_FIELDS = {
     "opening",
     "hook",
@@ -62,6 +69,7 @@ ALLOWED_FACTUAL_FIELDS = {
     "provenance",
     "details",
     "material",
+    "epistemic_layers",
 }
 
 
@@ -71,6 +79,7 @@ def validate_material_record(
     allowed_source_ids: set[str] | None = None,
     require_source_relation: bool = False,
     prefix: str = "material",
+    require_epistemic_layers: bool = False,
 ) -> list[str]:
     """Validate a single material record against the evidence contract."""
     if not isinstance(item, dict):
@@ -147,6 +156,41 @@ def validate_material_record(
     ):
         errors.append(f"{label} explicit_sequence must be a list of strings")
 
+    layers = item.get("epistemic_layers")
+    if layers is None and not require_epistemic_layers:
+        pass
+    elif not isinstance(layers, dict):
+        errors.append(f"{label} missing required epistemic_layers object")
+    else:
+        unknown_layers = sorted(set(layers) - set(EPISTEMIC_LAYERS))
+        if unknown_layers:
+            errors.append(f"{label} has unknown epistemic layers: {', '.join(unknown_layers)}")
+        for layer in EPISTEMIC_LAYERS:
+            entries = layers.get(layer)
+            if not isinstance(entries, list):
+                errors.append(f"{label} epistemic layer {layer} must be a list")
+                continue
+            for index, entry in enumerate(entries, 1):
+                if not isinstance(entry, dict) or not isinstance(entry.get("statement"), str) or not entry["statement"].strip():
+                    errors.append(f"{label} {layer} entry #{index} requires a statement")
+                    continue
+                if layer != "observed" and (
+                    not isinstance(entry.get("qualification"), str) or not entry["qualification"].strip()
+                ):
+                    errors.append(f"{label} {layer} entry #{index} requires qualification")
+        if not layers.get("observed"):
+            errors.append(f"{label} requires at least one observed material statement")
+
+    if isinstance(item.get("representativeness"), str) and item["representativeness"].strip():
+        represented = []
+        if isinstance(layers, dict):
+            represented = (
+                (layers.get("functional_inference") if isinstance(layers.get("functional_inference"), list) else [])
+                + (layers.get("interpretive_hypothesis") if isinstance(layers.get("interpretive_hypothesis"), list) else [])
+            )
+        if not represented:
+            errors.append(f"{label} representativeness must be qualified in an inference layer")
+
     return errors
 
 
@@ -156,6 +200,7 @@ def validate_materials_collection(
     allowed_source_ids: set[str] | None = None,
     require_source_relation: bool = False,
     prefix: str = "material",
+    require_epistemic_layers: bool = False,
 ) -> list[str]:
     """Validate a list of material records."""
     if not isinstance(materials, list):
@@ -171,6 +216,7 @@ def validate_materials_collection(
             allowed_source_ids=allowed_source_ids,
             require_source_relation=require_source_relation,
             prefix=prefix,
+            require_epistemic_layers=require_epistemic_layers,
         )
         errors.extend(record_errors)
         if isinstance(item, dict):
@@ -206,10 +252,12 @@ def validate_materials_file(
     else:
         return [f"material file root must be an object or array: {path}"]
 
+    require_layers = isinstance(data, dict) and int(data.get("schema_version", 1)) >= 2
     return validate_materials_collection(
         materials,
         allowed_claim_ids=allowed_claim_ids,
         allowed_source_ids=allowed_source_ids,
         require_source_relation=require_source_relation,
         prefix=prefix,
+        require_epistemic_layers=require_layers,
     )

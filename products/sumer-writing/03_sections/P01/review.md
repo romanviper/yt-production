@@ -1,4 +1,10 @@
 # Outcome Evaluation — P01
+Status: stale_mismatched_non_authoritative
+
+> This review is preserved for provenance only. It evaluates material and progression
+> that are not present in the Probe 1 excerpt submitted by `T0058-draft-section-P01`.
+> It cannot satisfy a review or approval gate for that draft.
+
 Verdict: pass
 ## Outcome judgment
 Draft đạt cả hai outcome bắt buộc trong một lần nghe. Khán giả có thể trả lời vì sao dấu bền trên đất sét trở nên hữu ích, đồng thời kể lại con đường lịch sử-vật chất dẫn đến câu trả lời ấy. Exit state cũng đạt: formation hiện ra như một ecology chồng lấn của thực hành số, token, bulla, dấu trên bề mặt, bảng số, con dấu và áp lực thiết chế; hành chính được giữ là pressure lớn chứ không bị biến thành monocause.

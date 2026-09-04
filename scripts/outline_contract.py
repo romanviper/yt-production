@@ -13,6 +13,29 @@ LEGACY_ADAPTIVE_SCHEMA_VERSION = 3
 MAX_SECTION_WORDS = 3000
 ACT_ROLES = ("opening", "body", "ending")
 
+_INADEQUACY_MARKERS = (
+    "inadequate", "insufficient", "could not", "unable to", "failed to",
+    "không đủ", "không thể", "thất bại", "quá tải",
+)
+_SOLUTION_MARKERS = (
+    "therefore", "to solve", "allowing", "enabled", "enables", "so that",
+    "do đó", "để giải quyết", "cho phép", "nhờ đó",
+)
+
+
+def validate_historical_change_semantics(value: Any, prefix: str) -> list[str]:
+    """Reject a problem→solution thesis disguised as an observable state change."""
+    if not isinstance(value, dict):
+        return []
+    before = str(value.get("from") or "").lower()
+    after = str(value.get("to") or "").lower()
+    if any(term in before for term in _INADEQUACY_MARKERS) and any(term in after for term in _SOLUTION_MARKERS):
+        return [
+            f"{prefix} historical_change must describe observable/evidentiary states, "
+            "not an inadequacy→solution→capability explanation"
+        ]
+    return []
+
 
 def outline_section_count(outline: dict[str, Any]) -> int | None:
     """Return the canonical section count while accepting the v1 field during migration."""
@@ -275,6 +298,8 @@ def validate_outline_contract(
                     or not hist_change["to"].strip()
                 ):
                     errors.append(f"outline section {section_id or '?'} historical_change must be an object with non-empty 'from' and 'to' strings")
+                else:
+                    errors.extend(validate_historical_change_semantics(hist_change, f"outline section {section_id or '?'}"))
 
             earned_meaning = section.get("earned_meaning")
             if earned_meaning is not None:

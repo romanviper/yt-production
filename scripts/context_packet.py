@@ -319,8 +319,7 @@ def _canonical_writer_projection(relative: str, path: Path, section: str, operat
         hist_change = state.get("historical_change") or state.get("historical_movement")
         if hist_change:
             projection["historical_change"] = hist_change
-        if state.get("earned_meaning"):
-            projection["earned_meaning"] = state.get("earned_meaning")
+        # earned_meaning is an owner/reviewer evaluation target, not a Writer thesis.
         if operation == "draft_section":
             projection["length_forecast_words"] = state.get("target_words")
         else:

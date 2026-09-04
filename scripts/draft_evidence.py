@@ -760,6 +760,8 @@ class DraftEvidenceBroker:
             }
             if details not in (None, "", []):
                 entry["details"] = details
+            if material.get("epistemic_layers"):
+                entry["epistemic_layers"] = material.get("epistemic_layers")
             for field in [
                 "actor",
                 "object_or_trace",
@@ -796,6 +798,7 @@ class DraftEvidenceBroker:
                         "measurement",
                         "physical_description",
                         "details",
+                        "epistemic_layers",
                     ]
                 )
                 if has_concrete and item.get("material_id"):
@@ -1595,6 +1598,7 @@ def preflight_section_materials(product_dir: Path, section: str) -> dict[str, An
                 "measurement",
                 "physical_description",
                 "details",
+                "epistemic_layers",
             ]
         )
         if has_concrete:
