@@ -96,9 +96,9 @@ ADOPTED_REVIEW_INPUTS = [
 COMPAT_DRAFT_EVIDENCE_ACCESS = {
     "kind": "bounded_claim_sources",
     "adapter": "scripts/draft_evidence.py",
-    "interface_version": 4,
-    "capabilities": ["scope", "resolve_claims", "source", "search", "record"],
-    "required_before_submit": ["resolve_claims"],
+    "interface_version": 5,
+    "capabilities": ["scope", "attest_scope", "source", "search", "record"],
+    "required_before_submit": ["attest_scope"],
 }
 
 CANONICAL_SECONDARY_GUIDANCE = (
