@@ -1,0 +1,175 @@
+{
+  "mission_id": "P01-REVIEWER-INDEPENDENCE-VALIDATION-01",
+  "team": "PLANNING_AGENTS_TEAM_V1",
+  "branch": "codex/p01-podcast-narrative-probe-v1",
+  "commit": "e681ed25a6546d08c4f0e05b65d9c36551ffc493",
+  "commander": {
+    "role": "Planning Commander",
+    "status": "CONTEXT_CONTAMINATED_FOR_CONTENT_REVIEW",
+    "duties": "Orchestrate runs, freeze outputs, enforce boundaries, mechanical gate matrix assembly"
+  },
+  "custodian": {
+    "role": "Packet Custodian",
+    "status": "CONTEXT_CONTAMINATED_FOR_CONTENT_REVIEW",
+    "duties": "Materialize derivatives, exact record extraction, hash inputs"
+  },
+  "frozen_source_candidate": {
+    "path": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/editorial-revision/revised-probe.md",
+    "blob_hash": "c44a417ad2a92c1d6df9c24042e4a88f9b8f725c",
+    "word_count_excluding_title": 860
+  },
+  "candidate_derivatives": {
+    "transformation": "Remove title line 1 and empty line 2. Retain lines 3-18 (8 paragraphs).",
+    "product_anonymized": {
+      "path": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/planning-agents-team-v1/candidate-product-anonymized.md",
+      "blob_hash": "83c30b5373b904951f9de5db44f3f2adf0375e8b",
+      "word_count": 860
+    },
+    "truth_neutral": {
+      "path": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/planning-agents-team-v1/candidate-truth-neutral.md",
+      "blob_hash": "83c30b5373b904951f9de5db44f3f2adf0375e8b",
+      "word_count": 860
+    },
+    "body_identity_verified": true
+  },
+  "benchmark_craft_packet": {
+    "source_file": "competitor's scripts/The sumerians FoC opening - Equal P01.md",
+    "source_blob": "391febd843f0d99a8ba3730ae447b4e2eefb9061",
+    "destination_file": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/planning-agents-team-v1/foc-craft-excerpt.md",
+    "destination_blob": "2dbe7b365a44ddb7a7bb405d672d11c3e395b353",
+    "locator": "Section 1 (Opening + hook, Pietro della Valle 1625 discovery of Ur and stamped bricks/tablets)",
+    "selection_rule": "Pre-declared canonical opening narrative episode bounded before author introduction, 646 words, 3592 bytes",
+    "role": "Narrative scale and carrier orientation only. Excluded as wording template or factual authority."
+  },
+  "truth_record_packet": {
+    "destination_file": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/planning-agents-team-v1/truth-record-packet.json",
+    "destination_blob": "d328b983a5582f8d8ecd039fd84e74b0a826ca29",
+    "selection_rule": "notebook-authority.md enumerated authority family",
+    "counts": {
+      "materials": 9,
+      "substrate_primitives": 4,
+      "substrate_boundaries": 8
+    }
+  },
+  "specialist_runs": {
+    "product_reviewer_a": {
+      "role": "Product Quality Reviewer A",
+      "context_mode": "fresh_subagent_context",
+      "allowed_inputs": [
+        "candidate-product-anonymized.md",
+        "products/sumer-writing/00_brief/product-brief.md",
+        "products/sumer-writing/00_brief/benchmark.md",
+        "foc-craft-excerpt.md"
+      ],
+      "denied_inputs": [
+        "feedback-planning-agents-team-handoff.md",
+        "prior reviews and audits",
+        "writer notebooks",
+        "truth packets",
+        "commit history"
+      ],
+      "output_path": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/planning-agents-team-v1/product-review-a-raw.md"
+    },
+    "product_reviewer_b": {
+      "role": "Product Quality Reviewer B",
+      "context_mode": "fresh_subagent_context",
+      "allowed_inputs": [
+        "candidate-product-anonymized.md",
+        "products/sumer-writing/00_brief/product-brief.md",
+        "products/sumer-writing/00_brief/benchmark.md",
+        "foc-craft-excerpt.md"
+      ],
+      "denied_inputs": [
+        "feedback-planning-agents-team-handoff.md",
+        "product-review-a-raw.md",
+        "prior reviews and audits",
+        "writer notebooks",
+        "truth packets",
+        "commit history"
+      ],
+      "output_path": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/planning-agents-team-v1/product-review-b-raw.md"
+    },
+    "truth_auditor_a": {
+      "role": "Historical Truth Auditor A",
+      "context_mode": "fresh_subagent_context",
+      "allowed_inputs": [
+        "candidate-truth-neutral.md",
+        "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/writer-notebook.md",
+        "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/notebook-authority.md",
+        "truth-record-packet.json"
+      ],
+      "denied_inputs": [
+        "feedback-planning-agents-team-handoff.md",
+        "product brief",
+        "benchmark.md",
+        "foc-craft-excerpt.md",
+        "product reviews",
+        "prior audits",
+        "external web"
+      ],
+      "output_path": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/planning-agents-team-v1/truth-audit-a-raw.md"
+    },
+    "truth_auditor_b": {
+      "role": "Historical Truth Auditor B",
+      "context_mode": "fresh_subagent_context",
+      "allowed_inputs": [
+        "candidate-truth-neutral.md",
+        "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/writer-notebook.md",
+        "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/notebook-authority.md",
+        "truth-record-packet.json"
+      ],
+      "denied_inputs": [
+        "feedback-planning-agents-team-handoff.md",
+        "truth-audit-a-raw.md",
+        "product brief",
+        "benchmark.md",
+        "foc-craft-excerpt.md",
+        "product reviews",
+        "prior audits",
+        "external web"
+      ],
+      "output_path": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/planning-agents-team-v1/truth-audit-b-raw.md"
+    },
+    "protocol_auditor": {
+      "role": "Protocol Auditor",
+      "context_mode": "fresh_subagent_context",
+      "allowed_inputs": [
+        "feedback-planning-agents-team-handoff.md",
+        "run-manifest.json",
+        "product-review-a-raw.md",
+        "product-review-b-raw.md",
+        "truth-audit-a-raw.md",
+        "truth-audit-b-raw.md",
+        "candidate-product-anonymized.md",
+        "truth-record-packet.json"
+      ],
+      "output_path": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/planning-agents-team-v1/protocol-independence-audit.md"
+    }
+  },
+  "gate_semantics": {
+    "product_enum": [
+      "PASS",
+      "NEAR_BAR",
+      "FAIL",
+      "BLOCKED"
+    ],
+    "truth_enum": [
+      "PASS",
+      "FAIL",
+      "BLOCKED"
+    ],
+    "truth_severity_enum": [
+      "LOW",
+      "MEDIUM",
+      "HIGH"
+    ],
+    "protocol_enum": [
+      "PROCESS_VALID",
+      "PROCESS_VALID_WITH_DECLARED_LIMITATION",
+      "PROCESS_INVALID — RERUN_REQUIRED",
+      "PROCESS_BLOCKED — INDEPENDENCE_UNAVAILABLE"
+    ],
+    "concurrence_rule": "Top-level exact match required within sibling pairs. Mismatch returns REVIEWER_STABILITY_UNVALIDATED.",
+    "advancement_rule": "PROTOCOL_PASS AND PRODUCT_A_B_CONCUR AND TRUTH_A_B_CONCUR AND BOTH_CONTENT_GATES_CLEAR -> ELIGIBLE_FOR_OWNER_DECISION"
+  }
+}
