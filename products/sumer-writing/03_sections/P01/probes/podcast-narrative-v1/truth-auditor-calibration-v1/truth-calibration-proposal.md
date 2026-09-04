@@ -1,81 +1,154 @@
-# Planning Commander Proposal: Truth Auditor Calibration V1
+# Planning Commander Proposal: Truth Auditor Calibration V1 — Corrected Packet
 
 To: **Product & System Owner**  
 From: **Planning Commander**  
-Date: 2026-09-04  
 Mission: `TRUTH_AUDITOR_CALIBRATION_V1`  
-Status: `PREPARE_TRUTH_CALIBRATION_FOR_OWNER_APPROVAL — NO_EXECUTION — NO_WRITER`
+Status: `CORRECTED_PACKET_PENDING_OWNER_APPROVAL — NO_EXECUTION — NO_WRITER`
 
 ---
 
-## 1. Executive Summary
+## 1. Purpose
 
-In accordance with Section 4 and Section 11 of `calibration-gated-team-handoff.md`, this proposal submits the complete, frozen calibration packet for **Mission A: `TRUTH_AUDITOR_CALIBRATION_V1`** for explicit Owner review and approval.
+This proposal submits the corrected calibration packet for owner review. It does **not** claim that the gold set is already owner-locked or semantically validated.
 
-The purpose of this mission is to calibrate the Truth Auditor role on an **owner-locked ground-truth test set of 20 atomic claims** before any real candidate review of `revised-probe.md` is permitted.
+The mission tests whether a Truth Auditor can distinguish supported entities from unsupported relationships, motives, functions, causal directions, sequences and scope claims before the role is allowed to inspect any real production candidate.
 
-No auditor runs have been launched. Execution is strictly halted at this gate awaiting your sign-off.
-
----
-
-## 2. Calibration Packet Structure
-
-The calibration materials have been organized in products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/truth-auditor-calibration-v1/:
-
-| File | Git Blob Hash | Size (Bytes) | Role / Purpose |
-|---|---|---|---|
-| [`truth-calibration-claims.json`](truth-calibration-claims.json) | `7d6838f5c512f27889fed3decd4cc2fa66c95135` | 4,796 | 20 test claims fixture (auditor input) |
-| [`truth-calibration-gold.json`](truth-calibration-gold.json) | `e30414f1302a206c91d7a20ac08826169f33da30` | 21,225 | Frozen ground truth answers & quotes |
-| [`truth-auditor-prompt.md`](truth-auditor-prompt.md) | `73627a9b281bf149c5423ea71fc59e52d546665a` | 4,379 | Auditor prompt & 15-field schema spec |
-| [`scoring-policy-and-protocol.md`](scoring-policy-and-protocol.md) | `b5ba611e15ca5b46739a4b62423066869db32b69` | 3,833 | Scoring thresholds & hard stop rules |
-| [`../product-reviewer-calibration-v1/README.md`](../product-reviewer-calibration-v1/README.md) | `d7de8f5d770ad99a4edfcb1d09a28336d8dca882` | 459 | Reserved directory placeholder |
-
-## 3. Test Set Composition (20 Claims Across 10 Categories)
-
-The 20 atomic claims are balanced 50/50 (10 `SUPPORTED`, 10 `UNSUPPORTED`) across the 10 deliberate trap categories specified in the handoff:
-
-| Category ID | Category Name | Claim IDs | Target Failure Mode Tested | Expected Verdict |
-|---|---|---|---|---|
-| **Cat 1** | Direct Documented Fact | `CAL-TRUTH-001`, `CAL-TRUTH-002` | Tests baseline ability to recognize physical artifact features | `SUPPORTED` |
-| **Cat 2** | Qualified Functional Inference | `CAL-TRUTH-003`, `CAL-TRUTH-004` | Tests recognition of licensed functional deductions | `SUPPORTED` |
-| **Cat 3** | Allowed Representative Reconstruction | `CAL-TRUTH-005`, `CAL-TRUTH-006` | Tests recognition of permissible manufacturing workflows | `SUPPORTED` |
-| **Cat 4** | Entity Correct, Relationship Unsupported | `CAL-TRUTH-007`, `CAL-TRUTH-008` | Prevents linking real artifacts/practices to unevidenced institutions/transactions | `UNSUPPORTED` |
-| **Cat 5** | Entity Correct, Motive Unsupported | `CAL-TRUTH-009`, `CAL-TRUTH-010` | Prevents attributing fraud prevention or psychological motives | `UNSUPPORTED` |
-| **Cat 6** | Plausible Causality, No Binding | `CAL-TRUTH-011`, `CAL-TRUTH-012` | Prevents inventing causal ladders (memory overload, breakability causing tablets) | `UNSUPPORTED` |
-| **Cat 7** | Scope / Quantifier Overreach | `CAL-TRUTH-013`, `CAL-TRUTH-014` | Prevents generalizing "some" to "all", or universal codes | `UNSUPPORTED` |
-| **Cat 8** | Coexistence Converted to Genealogy | `CAL-TRUTH-015`, `CAL-TRUTH-016` | Prevents mandatory 4-stage evolutionary ladders or immediate replacement | `UNSUPPORTED` |
-| **Cat 9** | Exact Supported Negative Statement | `CAL-TRUTH-017`, `CAL-TRUTH-018` | Tests recognition that tokens/proto-cuneiform do NOT record spoken syntax | `SUPPORTED` |
-| **Cat 10** | Inference with Visible Epistemic Status | `CAL-TRUTH-019`, `CAL-TRUTH-020` | Tests tagging reed-tool inferences and macro shifts as qualified inferences | `SUPPORTED` |
+No Truth Auditor, Product Reviewer or Writer run is authorized by this proposal.
 
 ---
 
-## 4. Exact-Binding Verification
+## 2. Corrections applied after review of commit `7366eec`
 
-Every single quote in `truth-calibration-gold.json` has been programmatically verified as a **100% exact substring** of `products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/planning-agents-team-v1/truth-record-packet.json`.
+The original proposal had four material design defects. They are corrected here:
 
-There are zero paraphrased quotes, zero external archaeological assumptions, and zero ambiguous locators.
+1. **Wrong-entity gold binding removed**
+   - Old `CAL-TRUTH-017` attempted to certify a token proposition with a cylinder-seal record.
+   - New `CAL-TRUTH-017` is a cylinder-seal negative statement bound to the cylinder-seal record itself.
+
+2. **Epistemic overstatement removed**
+   - Old `CAL-TRUTH-019` said marks “were produced” by reed tools while authority said “likely produced”.
+   - New claim preserves `likely` in the claim text and remains `QUALIFIED_INFERENCE`.
+
+3. **Component-level binding introduced**
+   - Auditor output now uses a `bindings` array and seven independently scored component states.
+   - One supported noun can no longer mechanically rescue an unsupported relationship.
+
+4. **Scoring tightened to 100%**
+   - Top-level verdict, epistemic status, all component cells, required bindings, verbatim quotes and required missing bindings must all score 100%.
+   - The previous 95%/90% partial thresholds are removed for Calibration V1.
 
 ---
 
-## 5. Proposed Execution Plan (Post-Owner Approval)
+## 3. Corrected packet
 
-Once Owner approval is granted:
-1. **Launch Sibling Auditors (A & B):**
-   - Launch Truth Auditor A and Truth Auditor B as independent, fresh subagents.
-   - Supply only: `truth-calibration-claims.json`, `truth-auditor-prompt.md`, `truth-record-packet.json`, `notebook-authority.md`, and `writer-notebook.md`.
-   - Withhold `truth-calibration-gold.json` and any prior evaluation logs.
-2. **Protocol Auditor Scoring:**
-   - Protocol Auditor deterministically evaluates raw outputs against `truth-calibration-gold.json` and computes scores against `scoring-policy-and-protocol.md`.
-3. **Commander Gate Matrix:**
-   - Commander records outcomes and returns the calibration matrix to Owner.
+Directory:
+
+`products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/truth-auditor-calibration-v1/`
+
+| File | Current Git Blob Hash | Status |
+|---|---|---|
+| `truth-calibration-claims.json` | `ff44ef68a8e66e13f2d2e6a6c362bcdf70f6194f` | Proposed fixture pending owner approval |
+| `truth-calibration-gold.json` | `412ac4baf92d19a4b38e5497c7333573e9e24f58` | `PROPOSED_GOLD_PENDING_OWNER_APPROVAL` |
+| `truth-auditor-prompt.md` | `c7f2bdf6b81104fad4d9964055af4447d4767936` | Proposed prompt pending owner approval |
+| `scoring-policy-and-protocol.md` | `f2457a7f380027f07a23def11543e023456b33cf` | Proposed zero-tolerance scoring policy |
+| `../product-reviewer-calibration-v1/README.md` | `d7de8f5d770ad99a4edfcb1d09a28336d8dca882` | Reserved only; no Product mission started |
+
+The pre-existing bounded authority packet remains:
+
+`planning-agents-team-v1/truth-record-packet.json`  
+Git blob: `d328b983a5582f8d8ecd039fd84e74b0a826ca29`
 
 ---
 
-## 6. Action Requested from Owner
+## 4. Calibration design
 
-Please review the proposed materials and indicate your decision:
-1. **Approve:** Authorize `TRUTH_AUDITOR_CALIBRATION_V1` execution with the proposed packet, gold answers, prompt, and scoring policy.
-2. **Modify:** Request specific edits to claims, gold rationales, or thresholds.
-3. **Reject:** Return with blocking feedback.
+The fixture retains 20 claims across ten failure-mode categories:
 
-Status remains: `PREPARE_TRUTH_CALIBRATION_FOR_OWNER_APPROVAL — NO_EXECUTION — NO_WRITER`.
+1. direct documented fact;
+2. qualified functional inference;
+3. representative reconstruction;
+4. correct entities with unsupported relationship;
+5. correct entity with unsupported motive;
+6. plausible causal explanation with no binding;
+7. scope/quantifier overreach;
+8. coexistence converted into genealogy/replacement;
+9. exact supported negative statement;
+10. inference whose epistemic qualification must remain visible.
+
+The proposed verdict balance remains 10 `SUPPORTED` / 10 `UNSUPPORTED`.
+
+The claims were rewritten where needed to reduce compound propositions and make the component under test explicit.
+
+---
+
+## 5. Gold semantics
+
+`truth-calibration-gold.json` is presently a **proposal**, not an owner-approved answer key.
+
+Each gold record now contains:
+
+- expected top-level verdict;
+- required epistemic status;
+- expected support state for seven components;
+- required exact bindings with component, record ID, locator, exact quote and binding role;
+- explicit `missing_bindings` where unsupported relationships have no authority wording that could license them;
+- bounded deterministic rationale.
+
+Exact string existence alone does not establish semantic correctness. Owner review must confirm that each quote belongs to the correct record/entity/component before approval.
+
+---
+
+## 6. Proposed scoring gate
+
+Calibration passes only if all dimensions are perfect:
+
+```text
+PROCESS_VALID
+AND 20/20 top-level verdicts correct
+AND 20/20 epistemic statuses correct
+AND 140/140 component states correct
+AND 100% required binding accuracy
+AND 100% verbatim quote exactness
+AND 100% required missing bindings detected
+AND zero external-knowledge repair
+AND zero wrong-entity binding
+```
+
+Any content error returns:
+
+`TRUTH_AUDITOR_CALIBRATION_FAIL`
+
+If platform evidence cannot establish packet compliance/context isolation:
+
+`PROCESS_BLOCKED — INDEPENDENCE_UNAVAILABLE`
+
+Sibling agreement cannot override a gold failure.
+
+---
+
+## 7. Execution boundary after approval
+
+Even after owner approval of this packet:
+
+1. approval authorizes only the calibration run;
+2. the gold file must be withheld from auditors;
+3. raw auditor output must be frozen before scoring;
+4. Protocol Auditor may score mechanically but may not alter gold or adjudicate historical semantics;
+5. calibration PASS does **not** authorize review of `revised-probe.md`;
+6. real-candidate review requires a separate owner authorization;
+7. Product Reviewer calibration remains a separate later mission;
+8. Writer remains stopped.
+
+---
+
+## 8. Owner decision requested
+
+Please choose one:
+
+- **APPROVE CALIBRATION PACKET** — freeze these exact blobs as owner-approved inputs and authorize only `TRUTH_AUDITOR_CALIBRATION_V1` execution;
+- **MODIFY** — return specific corrections; no execution;
+- **REJECT** — stop calibration design.
+
+Current status:
+
+`CORRECTED_PACKET_PENDING_OWNER_APPROVAL — NO_EXECUTION — NO_WRITER`
