@@ -1,8 +1,8 @@
 {
   "schema_version": "2.0.0",
   "mission_id": "TRUTH_AUDITOR_CALIBRATION_V1",
-  "status": "PROPOSED_GOLD_PENDING_OWNER_APPROVAL",
-  "description": "Proposed ground-truth fixture for calibrating component-level exact binding. This file is not owner-locked until explicit owner approval is recorded after review.",
+  "status": "LOCKED_INTERNAL_GOLD_V2",
+  "description": "Locked ground-truth fixture for calibrating component-level exact binding under owner-interaction-operating-rule.md.",
   "claim_count": 20,
   "component_enum": ["SUPPORTED", "UNSUPPORTED", "N/A"],
   "epistemic_enum": ["DOCUMENTED", "QUALIFIED_INFERENCE", "REPRESENTATIVE_RECONSTRUCTION", "UNSUPPORTED", "PROHIBITED"],
@@ -99,7 +99,7 @@
       "category_name": "entity_correct_relationship_unsupported",
       "atomic_claim": "Numerical tablet fragment ChM III-937a recorded the same transaction previously secured by hollow envelope OIM A64678.",
       "expected_verdict": "UNSUPPORTED",
-      "required_epistemic_status": "UNSUPPORTED",
+      "required_epistemic_status": "PROHIBITED",
       "expected_components": {"entity": "SUPPORTED", "relationship": "UNSUPPORTED", "motive": "N/A", "function": "N/A", "causality": "N/A", "sequence": "UNSUPPORTED", "scope": "N/A"},
       "required_bindings": [
         {"component": "entity", "record_id": "P01-INST-0001", "locator": "epistemic_layers.observed[0].statement", "exact_quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.", "role": "SUPPORTS"},
@@ -107,7 +107,7 @@
         {"component": "relationship", "record_id": "P01-INST-0002", "locator": "epistemic_layers.prohibited_or_rejected_inference[0].qualification", "exact_quote": "The two objects share site and broad period, but the approved source does not establish a direct sequence or shared transaction type.", "role": "REJECTS"}
       ],
       "missing_bindings": ["same_transaction_relationship"],
-      "deterministic_rationale": "Both entities are attested; their asserted shared transaction and sequence are not."
+      "deterministic_rationale": "Both entities are attested; their asserted shared transaction and direct sequence are explicitly prohibited/rejected by P01-INST-0002."
     },
     {
       "claim_id": "CAL-TRUTH-008",
@@ -191,14 +191,14 @@
       "category_name": "scope_quantifier_overreach",
       "atomic_claim": "All hollow clay envelopes bear exterior impressions.",
       "expected_verdict": "UNSUPPORTED",
-      "required_epistemic_status": "UNSUPPORTED",
+      "required_epistemic_status": "PROHIBITED",
       "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "N/A", "causality": "N/A", "sequence": "N/A", "scope": "UNSUPPORTED"},
       "required_bindings": [
         {"component": "scope", "record_id": "HS-P01-0003", "locator": "substrate_boundaries[1]", "exact_quote": "Exterior impressions are not universal to every envelope.", "role": "REJECTS"},
         {"component": "scope", "record_id": "HS-P01-0003", "locator": "world.carries[1]", "exact_quote": "on some examples exterior impressions or sealings", "role": "LIMITS"}
       ],
       "missing_bindings": ["universal_all_envelopes"],
-      "deterministic_rationale": "The universal quantifier contradicts explicit scope limits."
+      "deterministic_rationale": "The universal quantifier is explicitly prohibited by HS-P01-0003 boundary stating exterior impressions are not universal."
     },
     {
       "claim_id": "CAL-TRUTH-014",

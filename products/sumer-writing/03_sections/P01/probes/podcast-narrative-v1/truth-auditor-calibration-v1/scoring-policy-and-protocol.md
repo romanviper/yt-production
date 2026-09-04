@@ -1,9 +1,9 @@
 # Scoring Policy & Calibration Protocol Specification
 
 Mission: `TRUTH_AUDITOR_CALIBRATION_V1`  
-Protocol classification: `DETERMINISTIC_SCORING_AGAINST_PROPOSED_GOLD_PENDING_OWNER_APPROVAL`
+Protocol classification: `DETERMINISTIC_SCORING_UNDER_DELEGATED_OPERATING_RULE`
 
-Status: `PROPOSED_PENDING_OWNER_APPROVAL — DO_NOT_RUN`
+Status: `ACTIVE_CALIBRATION_PROTOCOL_V2 — DELEGATED_INTERNAL_GATE`
 
 ---
 
@@ -13,7 +13,7 @@ This calibration tests whether a Truth Auditor can bind claims to the approved a
 
 The calibration target is the **auditor**, not `revised-probe.md`.
 
-The proposed gold file is not owner-locked until explicit owner approval is recorded after review.
+Under `owner-interaction-operating-rule.md`, internal evaluator calibration and gold set maintenance are delegated to the planning/review system. All zero-tolerance scoring criteria remain strictly enforced.
 
 ---
 
@@ -121,10 +121,10 @@ Content calibration cannot be certified unless process evidence also clears.
 
 Before any run the Commander must record:
 
-- explicit owner approval ID/date for the exact claims, gold, prompt and scoring policy;
-- hashes of all frozen calibration inputs;
+- Commander run authorization under `owner-interaction-operating-rule.md`;
+- hashes of all frozen calibration inputs (claims, gold, prompt, packet);
 - prompt hash;
-- run IDs and model/config metadata if available;
+- run IDs and model/config metadata;
 - start/finish timestamps;
 - allowed-input enforcement evidence;
 - read/tool logs or equivalent platform evidence sufficient to establish packet compliance;
@@ -161,4 +161,4 @@ or, when process evidence itself cannot establish a valid run:
 
 `PROCESS_BLOCKED — INDEPENDENCE_UNAVAILABLE`
 
-No calibration result authorizes review of `revised-probe.md` automatically. A real-candidate review requires a separate owner authorization after calibration results are frozen.
+Under `owner-interaction-operating-rule.md`, passing Truth Auditor calibration unlocks Product Reviewer calibration (Mission B). A real-candidate review remains prohibited until both evaluators are legitimately calibrated.
