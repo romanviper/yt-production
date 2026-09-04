@@ -74,6 +74,27 @@
       ],
       "context_profile": "research"
     },
+    "historical_substrate": {
+      "target_kind": "product",
+      "max_context_tokens": 32000,
+      "instruction_files": [
+        "system/standards/evidence.md",
+        "system/operations/historical-substrate.md"
+      ],
+      "required_inputs": [
+        "01_research/research-synthesis.md",
+        "01_research/claim-ledger.json",
+        "01_research/source-index.json"
+      ],
+      "optional_inputs": [
+        "01_research/material-ledger.json",
+        "01_research/historical-substrate.json"
+      ],
+      "outputs": [
+        "01_research/historical-substrate.json"
+      ],
+      "context_profile": "research"
+    },
     "outline": {
       "target_kind": "product",
       "max_context_tokens": 30000,
@@ -92,7 +113,7 @@
         "00_brief/product-brief.md",
         "00_brief/benchmark.md",
         "01_research/research-synthesis.md",
-        "01_research/outline-evidence-pack.json"
+        "01_research/historical-substrate.json"
       ],
       "optional_inputs": [
         "02_outline/outline-change-request.md"
@@ -165,6 +186,7 @@
       ],
       "required_inputs": [
         "03_sections/{section}/section.json",
+        "03_sections/{section}/historical-substrate.json",
         "03_sections/{section}/narration-pack.json",
         "03_sections/{section}/continuity-in.md"
       ],
@@ -209,6 +231,7 @@
         "02_outline/voice-profile.md",
         "03_sections/{section}/section.json",
         "03_sections/{section}/brief.md",
+        "03_sections/{section}/historical-substrate.json",
         "03_sections/{section}/narration-pack.json",
         "03_sections/{section}/draft.md",
         "03_sections/{section}/handoff.md"
@@ -249,7 +272,7 @@
       "required_inputs": [
         "02_outline/outline.json",
         "03_sections/{section}/section.json",
-        "03_sections/{section}/narration-pack.json",
+        "03_sections/{section}/historical-substrate.json",
         "03_sections/{section}/draft.md",
         "03_sections/{section}/handoff.md",
         "03_sections/{section}/review.md",
