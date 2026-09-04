@@ -1,21 +1,24 @@
 {
-  "center_of_gravity": "Quy trình chế tác, đóng kín và niêm phong bì thư đất sét rỗng (clay envelope) chứa vật đếm hình học tại vùng Lưỡng Hà thời kỳ Hậu Uruk.",
-  "what_is_happening": "Các thao tác vật lý theo trình tự thực tế: gom các vật đếm đất sét nhỏ, nặn đất ẩm thành khoang rỗng, đưa vật đếm vào trong, miết kín miệng, tạo vết ấn chỉ báo số lượng và lăn con dấu hình trụ lên bề mặt ướt, rồi để khô.",
-  "what_changes_during_passage": "Trạng thái vật lý của số lượng thay đổi từ những vật đếm rời rạc, tự do di chuyển và trực tiếp nhìn thấy sang một vật thể rắn khép kín, nơi số lượng bị giấu kín bên trong nhưng được chỉ báo một phần ra bề mặt cùng dấu tích xác thực, tạo nên tình trạng muốn kiểm tra đối chiếu bên trong thì buộc phải phá hủy vật chứa.",
-  "begins_at": "Những vật đếm đất sét hình học nhỏ nằm rời rạc trên tay hoặc bề mặt mở trước khi được đưa vào đất sét ẩm.",
-  "stops_before": "Trước khi chuyển sang thực hành ghi nhận trực tiếp trên các phiến đất sét đặc (numerical tablets) hoặc các dạng chữ viết proto-cuneiform sơ khai.",
+  "center_of_gravity": "The material operation and physical asymmetry of hollow clay envelopes and enclosed counters, anchored by the attested specimen OIM A64678.",
+  "what_is_happening": "Small clay counters are enclosed in moist clay to form a hollow envelope; the envelope is sealed, may receive exterior impressions and seal rollings, and dries into an opaque sphere.",
+  "what_changes_during_passage": "Loose, directly visible counters become sealed within an opaque hollow sphere where contents are hidden from view, establishing a physical asymmetry where direct inspection destroys the sealed container, while surface marks on some specimens allow quantity to be read without immediate breakage.",
+  "begins_at": "Handling small geometric clay counters and wrapping workable moist clay around them to form a hollow envelope.",
+  "stops_before": "Transitioning to solid numerical tablets (such as ChM III-937a), proto-cuneiform tablets, or proposing any evolutionary progression from envelopes to tablets.",
   "causal_bridges_claimed": [],
   "notebook_threads_to_use": [
-    "Vật đếm đất sét hình học nhỏ (hình cầu, nón, đĩa, trụ) từ một đến ba centimet",
-    "Quy trình chế tác bì thư đất sét rỗng: bọc vật đếm trong đất ẩm, đóng kín, tạo dấu ấn và lăn con dấu hình trụ lên bề mặt, để khô",
-    "Tình trạng vật lý của bì thư đóng kín: vật đếm không nhìn thấy được, mở ra để kiểm tra sẽ phá hủy vật thể; vết ấn bề mặt giúp kiểm tra mà không cần đập vỡ ngay",
-    "Con dấu hình trụ bằng đá khắc chìm lăn thành dải hoa văn liên tục trên đất ướt để đánh dấu quyền lực, lưu giữ hoặc chứng thực"
+    "Small geometric clay counters (spheres, cones, disks, cylinders) in Late Uruk administrative practice",
+    "Representative manufacture sequence of hollow clay envelopes (enclosing counters in moist clay, closing, drying)",
+    "Exterior surface impressions making quantity inspectable on some envelopes without immediate breakage",
+    "Cylinder seal rollings as marks of authority, custody, or witnessing across wet clay",
+    "Physical asymmetry: intact envelope hides contents; inspection destroys the sealed object",
+    "Attested broken envelope OIM A64678 from Chogha Mish (dimensions ~7.8 x 7.2 cm, visible ~1.6 cm counters through break)"
   ],
   "deliberately_unused_threads": [
-    "Phiến đất sét đặc ghi số (numerical tablets) và phiến ChM III-937a",
-    "Hiện vật vỡ OIM A64678 tại Chogha Mish (chỉ giữ logic vật lý vỡ/kín chứ không dẫn dắt bằng siêu dữ liệu khảo cổ)",
-    "Bảng proto-cuneiform thời Uruk IV và chữ viết tượng hình",
-    "Con dấu và bùn niêm phong trên dây, vải, cửa kho",
-    "Lịch sử hàng thiên niên kỷ của vật đếm tiền thân"
+    "Evolutionary ladder from tokens to tablets",
+    "Solid numerical tablets (ChM III-937a and Uruk palm-sized tablets)",
+    "Early proto-cuneiform tablets and compartmentalized administrative records (Uruk IV)",
+    "Reed stylus cutting and shaping techniques",
+    "Lumps of clay on cord/cloth/wood closures (door/container sealings)",
+    "Inferred motives such as fraud prevention, theft, or long-distance trade administration"
   ]
 }

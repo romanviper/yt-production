@@ -54,6 +54,12 @@ Your composition decision should answer:
 - What state is different by the time we leave?
 - Where do we deliberately stop before needing another historical practice to create motion?
 
+Prefer anchoring the passage with an attested material carrier from the notebook (such as the broken clay envelope OIM A64678) to constrain specificity and hold the operation-level passage together. If an attested object like OIM A64678 is used:
+- distinguish the object's observed physical condition (e.g., dimensions, break, visible enclosed counters) from the representative manufacture sequence reconstructed for the wider practice;
+- do not claim why it broke;
+- do not assign exterior impressions, sealings, a commodity, transaction, operator, or purpose to this specific specimen unless the notebook explicitly supplies them;
+- stop before another medium or practice is needed to create progression.
+
 You are encouraged to ignore most of the notebook. Depth in one bounded thread is preferable to covering everything.
 
 ## Draft
@@ -71,13 +77,17 @@ Requirements:
 - It must deliberately stop before completing the whole P01 movement.
 - Natural when spoken aloud.
 - Historical meaning should emerge from what unfolds rather than from announcing and defending a thesis.
-- Follow the unfolding of physical action and state changes inside the chosen practice, rather than repeatedly announcing or analyzing the conceptual significance of each affordance.
+- Follow the unfolding of physical action and state changes inside the chosen practice. Build narrative pressure only from notebook-authorized actions and state changes.
+- Do not use inferred vulnerability (e.g. framing loose counters as vulnerable to tampering/theft to justify the envelope), motive, protection, transfer, exact correspondence, universal purpose, or absolute verification as narrative glue.
+- When specificity is needed, prefer an attested object, measured dimension, or documented surface mark from the notebook over plausible invented micro-actions (avoid inventing ungrounded hand techniques, rotary shaping, disappearing seams, or clay colour changes).
 - Representative ordinary actions explicitly permitted by the notebook may be used as nonfiction reconstruction.
 - You may create continuity in the telling, but do not invent a causal bridge between historical practices. A material contrast, coexistence, or change in affordance does not by itself mean one practice caused, solved, replaced, or developed into another. If the notebook does not support why a new practice appeared, narrate what changes in the material arrangement without supplying the missing historical motive.
 - Do not state that every geometric counter shape represents a specific quantity/item mapping unless explicitly supported.
-- Do not imply a universal one-to-one correspondence between every exterior impression and every enclosed counter.
+- Do not claim enclosed counters are "locked solid" inside hollow cores; while the envelope remains closed, the counters are simply not directly visible or inspectable.
+- Do not imply a universal one-to-one correspondence between every exterior impression and every enclosed counter (exterior impressions on *some examples* make quantity inspectable).
 - Do not convert a functional affordance into a universal purpose.
-- Do not make co-occurrence evidence prove a developmental relationship.
+- Seal impressions mark an association with authority, custody, or witnessing; do not treat them as identifying a unique speaker, operator, or historical event.
+- The physical asymmetry is already strong: an intact envelope hides its contents; inspecting the contents destroys that intact sealed state. Let that material consequence carry the weight without resorting to moralized hyperbole about absolute truth or philosophical loss.
 - Do not invent named actors, dialogue, private thoughts, motives or unsupported causal conclusions.
 - Do not narrate research metadata or provenance.
 - Do not mechanically recite every uncertainty or boundary. Apply them silently unless a qualification is genuinely needed for the listener.
