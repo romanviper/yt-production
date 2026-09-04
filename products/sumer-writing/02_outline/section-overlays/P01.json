@@ -3,6 +3,7 @@
   "section": "P01",
   "status": "approved_migration",
   "base_outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+  "historical_substrate_contract_version": 1,
   "historical_territory": "Các thực hành ghi nhận và xác thực bằng đất sét trong Late Uruk, đặc biệt sự dịch chuyển toward việc đặt thông tin số trực tiếp trên bề mặt bền trong khi nhiều phương tiện cũ vẫn cùng tồn tại.",
   "historical_change": {
     "from": "Số lượng và sự xác thực được xử lý qua nhiều thiết bị và thực hành đất sét cùng tồn tại, gồm counters, envelopes, sealings và các bề mặt ghi số.",
