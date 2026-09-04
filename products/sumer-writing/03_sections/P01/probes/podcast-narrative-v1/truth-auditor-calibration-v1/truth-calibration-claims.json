@@ -1,88 +1,89 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "2.0.0",
   "mission_id": "TRUTH_AUDITOR_CALIBRATION_V1",
-  "description": "Owner-locked 20 atomic test claims for Truth Auditor calibration",
+  "status": "PROPOSED_PENDING_OWNER_APPROVAL",
+  "description": "Proposed 20-claim calibration fixture. Claims are intentionally bounded so component-level support can be scored without allowing one supported noun to rescue an unsupported relationship.",
   "claim_count": 20,
   "claims": [
     {
       "claim_id": "CAL-TRUTH-001",
-      "atomic_claim": "Small geometric clay objects surviving from Late Uruk administrative levels exist in forms such as spheres, cones, disks, and cylinders between 1 and 3 cm in dimension."
+      "atomic_claim": "Small geometric clay objects survive in several forms, and some bear incisions."
     },
     {
       "claim_id": "CAL-TRUTH-002",
-      "atomic_claim": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish measuring 7.8 by 7.2 cm that preserves clay tokens inside."
+      "atomic_claim": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside."
     },
     {
       "claim_id": "CAL-TRUTH-003",
-      "atomic_claim": "Exterior marks on some hollow clay envelopes allowed administrators to inspect enclosed quantities without immediately opening the envelope."
+      "atomic_claim": "Exterior marks on some hollow clay envelopes made enclosed quantities inspectable without immediately opening the envelope."
     },
     {
       "claim_id": "CAL-TRUTH-004",
-      "atomic_claim": "Impressed cylinder-seal rollings on clay media functioned to mark an association with authority, custody or witnessing."
+      "atomic_claim": "Seal impressions marked an association with authority, custody or witnessing."
     },
     {
       "claim_id": "CAL-TRUTH-005",
-      "atomic_claim": "In a representative manufacturing workflow, an administrative operator deposited clay counters into moist clay, closed the envelope, marked and sealed its exterior, and let it dry."
+      "atomic_claim": "In a representative manufacture workflow, an operator deposits counters, closes the envelope, marks and seals it, then lets it dry."
     },
     {
       "claim_id": "CAL-TRUTH-006",
-      "atomic_claim": "In a representative sealing practice, an operator bound a closure with cord, pressed moist clay over it and rolled a seal, such that later access broke the clay."
+      "atomic_claim": "In a representative sealing workflow, an operator binds a closure, presses clay over it and rolls a seal; later access breaks the sealing."
     },
     {
       "claim_id": "CAL-TRUTH-007",
-      "atomic_claim": "Numerical tablet fragment ChM III-937a was created to record the exact transaction previously secured by hollow envelope OIM A64678."
+      "atomic_claim": "Numerical tablet fragment ChM III-937a recorded the same transaction previously secured by hollow envelope OIM A64678."
     },
     {
       "claim_id": "CAL-TRUTH-008",
-      "atomic_claim": "Cylinder seals were rolled across clay envelopes specifically to bind communal responsibility among Sumerian village elders."
+      "atomic_claim": "Cylinder seals were used specifically to bind communal responsibility among Sumerian village elders."
     },
     {
       "claim_id": "CAL-TRUTH-009",
-      "atomic_claim": "Hollow clay bullae were invented specifically to prevent fraud and theft during the long-distance transport of goods."
+      "atomic_claim": "Hollow clay bullae emerged specifically to prevent fraud during long-distance administration."
     },
     {
       "claim_id": "CAL-TRUTH-010",
-      "atomic_claim": "Chogha Mish envelope OIM A64678 was manufactured because an administrator distrusted an illiterate shepherd delivering sheep."
+      "atomic_claim": "OIM A64678 was made because an administrator distrusted a shepherd delivering sheep."
     },
     {
       "claim_id": "CAL-TRUTH-011",
-      "atomic_claim": "The rapid physical expansion of Uruk caused human administrative memory to collapse, which directly produced the invention of clay tokens."
+      "atomic_claim": "Urban growth caused administrative memory to fail, and that failure directly caused the invention of clay tokens."
     },
     {
       "claim_id": "CAL-TRUTH-012",
-      "atomic_claim": "The inconvenience of having to break hollow clay envelopes in order to verify contents caused accountants to abandon envelopes and invent flat numerical tablets."
+      "atomic_claim": "The need to break hollow envelopes to inspect their contents caused accountants to abandon envelopes and invent numerical tablets."
     },
     {
       "claim_id": "CAL-TRUTH-013",
-      "atomic_claim": "All hollow clay envelopes bear exterior stylus impressions reflecting the exact quantity and shapes of the tokens enclosed inside."
+      "atomic_claim": "All hollow clay envelopes bear exterior impressions."
     },
     {
       "claim_id": "CAL-TRUTH-014",
-      "atomic_claim": "Geometric clay tokens formed a single, universally standardized accounting code across all prehistoric Near Eastern settlements for 5,000 years."
+      "atomic_claim": "Geometric clay tokens formed one unified accounting code across 5,000 years."
     },
     {
       "claim_id": "CAL-TRUTH-015",
-      "atomic_claim": "Administrative recording evolved through an obligatory developmental sequence: loose tokens were placed into hollow envelopes, which led to surface impressions, which evolved into solid numerical tablets, which finally became proto-cuneiform."
+      "atomic_claim": "Administrative recording followed an obligatory sequence from tokens to hollow envelopes to surface impressions to numerical tablets to proto-cuneiform."
     },
     {
       "claim_id": "CAL-TRUTH-016",
-      "atomic_claim": "The appearance of flat numerical tablets immediately and completely replaced the use of hollow envelopes and loose tokens across southern Mesopotamia."
+      "atomic_claim": "Direct numerical recording on clay immediately and completely replaced envelopes and tokens."
     },
     {
       "claim_id": "CAL-TRUTH-017",
-      "atomic_claim": "Late Uruk geometric clay tokens themselves do not carry written phonetic language or transcribe human speech."
+      "atomic_claim": "Cylinder-seal impressions do not identify spoken syntax or linguistic phonology."
     },
     {
       "claim_id": "CAL-TRUTH-018",
-      "atomic_claim": "Surviving proto-cuneiform tablets from Uruk IV do not record continuous spoken discourse, poetry, or historical narrative."
+      "atomic_claim": "Uruk IV proto-cuneiform texts do not record running continuous spoken discourse, poetry, or historical narrative."
     },
     {
       "claim_id": "CAL-TRUTH-019",
-      "atomic_claim": "Surviving rounded and semi-circular depressions on Late Uruk clay tablets were produced by carved reed styluses, though the wooden and reed tools themselves rarely survive in the archaeological record."
+      "atomic_claim": "Reed tools likely produced the surviving rounded impressions and incised lines on Late Uruk clay."
     },
     {
       "claim_id": "CAL-TRUTH-020",
-      "atomic_claim": "During the late fourth millennium BCE in southern Mesopotamia, there was an administrative shift toward direct surface recording on clay, but this shift took place alongside overlapping earlier clay practices rather than through a single invention event."
+      "atomic_claim": "Numerical information increasingly appeared directly on durable clay surfaces while older and parallel clay practices continued to overlap with direct surface recording."
     }
   ]
 }
