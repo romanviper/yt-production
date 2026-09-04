@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "experiment": "P01-HSUB-CLEAN-PROBE-01",
+  "canonical_output": false,
+  "section": "P01",
+  "output_language": "vi",
+  "target_words": {
+    "min": 450,
+    "max": 650
+  },
+  "output_scope": "Write one contiguous passage from the larger unfinished P01. Do not compress, summarize, or complete the whole section.",
+  "completion_rule": "P01 must remain unfinished after this passage.",
+  "context_rule": "Use only this task-local bound plus the canonical Writer context whose hash is bound in gate-manifest.json. Do not inspect the repository or previous probes, feedback, reviews, or competitor prose.",
+  "method_authority": "none",
+  "forbidden_prescriptions": [
+    "required scene",
+    "required protagonist",
+    "required artifact carrier",
+    "required hook",
+    "required reveal sequence",
+    "required sensory beat",
+    "required climax",
+    "required prose method"
+  ]
+}
