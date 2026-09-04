@@ -1,304 +1,307 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "2.0.0",
   "mission_id": "TRUTH_AUDITOR_CALIBRATION_V1",
-  "description": "Owner-locked frozen ground truth for Truth Auditor calibration",
+  "status": "PROPOSED_GOLD_PENDING_OWNER_APPROVAL",
+  "description": "Proposed ground-truth fixture for calibrating component-level exact binding. This file is not owner-locked until explicit owner approval is recorded after review.",
   "claim_count": 20,
-  "category_distribution": {
-    "1_direct_documented_fact": 2,
-    "2_qualified_functional_inference": 2,
-    "3_allowed_representative_reconstruction": 2,
-    "4_entity_correct_relationship_unsupported": 2,
-    "5_entity_correct_motive_unsupported": 2,
-    "6_plausible_causal_explanation_no_binding": 2,
-    "7_scope_quantifier_overreach": 2,
-    "8_coexistence_converted_into_genealogy": 2,
-    "9_exact_supported_negative_statement": 2,
-    "10_inference_visible_epistemic_status": 2
-  },
-  "verdict_distribution": {
-    "SUPPORTED": 10,
-    "UNSUPPORTED": 10
-  },
+  "component_enum": ["SUPPORTED", "UNSUPPORTED", "N/A"],
+  "epistemic_enum": ["DOCUMENTED", "QUALIFIED_INFERENCE", "REPRESENTATIVE_RECONSTRUCTION", "UNSUPPORTED", "PROHIBITED"],
+  "verdict_distribution": {"SUPPORTED": 10, "UNSUPPORTED": 10},
   "gold_claims": [
     {
       "claim_id": "CAL-TRUTH-001",
       "category_id": 1,
       "category_name": "direct_documented_fact",
-      "component_type": "entity",
-      "atomic_claim": "Small geometric clay objects surviving from Late Uruk administrative levels exist in forms such as spheres, cones, disks, and cylinders between 1 and 3 cm in dimension.",
+      "atomic_claim": "Small geometric clay objects survive in several forms, and some bear incisions.",
       "expected_verdict": "SUPPORTED",
       "required_epistemic_status": "DOCUMENTED",
-      "exact_authority_record_id": "P01-MAT-0001",
-      "exact_authority_field_or_locator": "epistemic_layers.observed[0] / physical_description",
-      "exact_authority_quote": "Small geometric clay objects survive in several forms; some bear incisions.",
-      "supporting_authority_quote": "Hand-modeled clay objects generally between 1 and 3 cm in dimension, with matte earthen surface and fingernail or stylus incisions",
-      "deterministic_rationale": "Directly documented by archaeological observation of physical token assemblages in Late Uruk administrative levels."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "N/A", "causality": "N/A", "sequence": "N/A", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "entity", "record_id": "P01-MAT-0001", "locator": "epistemic_layers.observed[0].statement", "exact_quote": "Small geometric clay objects survive in several forms; some bear incisions.", "role": "SUPPORTS"}
+      ],
+      "missing_bindings": [],
+      "deterministic_rationale": "Direct observed statement."
     },
     {
       "claim_id": "CAL-TRUTH-002",
       "category_id": 1,
       "category_name": "direct_documented_fact",
-      "component_type": "entity",
-      "atomic_claim": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish measuring 7.8 by 7.2 cm that preserves clay tokens inside.",
+      "atomic_claim": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside.",
       "expected_verdict": "SUPPORTED",
       "required_epistemic_status": "DOCUMENTED",
-      "exact_authority_record_id": "P01-INST-0001",
-      "exact_authority_field_or_locator": "epistemic_layers.observed[0]",
-      "exact_authority_quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.",
-      "supporting_authority_quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.",
-      "deterministic_rationale": "Verbatim documented catalogued artifact from Chogha Mish."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "N/A", "causality": "N/A", "sequence": "N/A", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "entity", "record_id": "P01-INST-0001", "locator": "epistemic_layers.observed[0].statement", "exact_quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.", "role": "SUPPORTS"}
+      ],
+      "missing_bindings": [],
+      "deterministic_rationale": "Direct catalogued artifact statement."
     },
     {
       "claim_id": "CAL-TRUTH-003",
       "category_id": 2,
       "category_name": "qualified_functional_inference",
-      "component_type": "function",
-      "atomic_claim": "Exterior marks on some hollow clay envelopes allowed administrators to inspect enclosed quantities without immediately opening the envelope.",
+      "atomic_claim": "Exterior marks on some hollow clay envelopes made enclosed quantities inspectable without immediately opening the envelope.",
       "expected_verdict": "SUPPORTED",
       "required_epistemic_status": "QUALIFIED_INFERENCE",
-      "exact_authority_record_id": "P01-MAT-0002",
-      "exact_authority_field_or_locator": "epistemic_layers.functional_inference[0].statement",
-      "exact_authority_quote": "Exterior marks made enclosed quantities inspectable without immediately opening the envelope.",
-      "supporting_authority_quote": "Exterior marks made enclosed quantities inspectable without immediately opening the envelope.",
-      "deterministic_rationale": "Explicitly licensed as a qualified functional inference from artifact features on envelopes bearing exterior marks."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "SUPPORTED", "causality": "N/A", "sequence": "N/A", "scope": "SUPPORTED"},
+      "required_bindings": [
+        {"component": "function", "record_id": "P01-MAT-0002", "locator": "epistemic_layers.functional_inference[0].statement", "exact_quote": "Exterior marks made enclosed quantities inspectable without immediately opening the envelope.", "role": "SUPPORTS"},
+        {"component": "scope", "record_id": "HS-P01-0003", "locator": "world.carries[1]", "exact_quote": "on some examples exterior impressions or sealings", "role": "SUPPORTS"}
+      ],
+      "missing_bindings": [],
+      "deterministic_rationale": "Function is explicitly licensed as inference and scope is explicitly limited to some examples."
     },
     {
       "claim_id": "CAL-TRUTH-004",
       "category_id": 2,
       "category_name": "qualified_functional_inference",
-      "component_type": "function",
-      "atomic_claim": "Impressed cylinder-seal rollings on clay media functioned to mark an association with authority, custody or witnessing.",
+      "atomic_claim": "Seal impressions marked an association with authority, custody or witnessing.",
       "expected_verdict": "SUPPORTED",
       "required_epistemic_status": "QUALIFIED_INFERENCE",
-      "exact_authority_record_id": "P01-MAT-0003",
-      "exact_authority_field_or_locator": "epistemic_layers.functional_inference[0].statement",
-      "exact_authority_quote": "Seal impressions marked an association with authority, custody or witnessing.",
-      "supporting_authority_quote": "Seal impressions marked an association with authority, custody or witnessing.",
-      "deterministic_rationale": "Explicitly licensed as an administrative functional inference from seal use contexts."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "SUPPORTED", "motive": "N/A", "function": "SUPPORTED", "causality": "N/A", "sequence": "N/A", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "function", "record_id": "P01-MAT-0003", "locator": "epistemic_layers.functional_inference[0].statement", "exact_quote": "Seal impressions marked an association with authority, custody or witnessing.", "role": "SUPPORTS"}
+      ],
+      "missing_bindings": [],
+      "deterministic_rationale": "Exact licensed functional relationship."
     },
     {
       "claim_id": "CAL-TRUTH-005",
       "category_id": 3,
       "category_name": "allowed_representative_reconstruction",
-      "component_type": "reconstruction",
-      "atomic_claim": "In a representative manufacturing workflow, an administrative operator deposited clay counters into moist clay, closed the envelope, marked and sealed its exterior, and let it dry.",
+      "atomic_claim": "In a representative manufacture workflow, an operator deposits counters, closes the envelope, marks and seals it, then lets it dry.",
       "expected_verdict": "SUPPORTED",
       "required_epistemic_status": "REPRESENTATIVE_RECONSTRUCTION",
-      "exact_authority_record_id": "P01-MAT-0002",
-      "exact_authority_field_or_locator": "epistemic_layers.representative_reconstruction[0].statement",
-      "exact_authority_quote": "An operator deposits counters, closes the envelope, marks and seals it, then lets it dry.",
-      "supporting_authority_quote": "Manufacture workflow reconstructed from artifact features, not a witnessed event.",
-      "deterministic_rationale": "Explicitly allowed as a representative technological workflow reconstruction, qualified as not being an eyewitnessed historical event."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "N/A", "causality": "N/A", "sequence": "SUPPORTED", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "sequence", "record_id": "P01-MAT-0002", "locator": "epistemic_layers.representative_reconstruction[0].statement", "exact_quote": "An operator deposits counters, closes the envelope, marks and seals it, then lets it dry.", "role": "SUPPORTS"}
+      ],
+      "missing_bindings": [],
+      "deterministic_rationale": "Explicitly licensed representative manufacture sequence, not a witnessed event."
     },
     {
       "claim_id": "CAL-TRUTH-006",
       "category_id": 3,
       "category_name": "allowed_representative_reconstruction",
-      "component_type": "reconstruction",
-      "atomic_claim": "In a representative sealing practice, an operator bound a closure with cord, pressed moist clay over it and rolled a seal, such that later access broke the clay.",
+      "atomic_claim": "In a representative sealing workflow, an operator binds a closure, presses clay over it and rolls a seal; later access breaks the sealing.",
       "expected_verdict": "SUPPORTED",
       "required_epistemic_status": "REPRESENTATIVE_RECONSTRUCTION",
-      "exact_authority_record_id": "P01-MAT-0007",
-      "exact_authority_field_or_locator": "epistemic_layers.representative_reconstruction[0].statement",
-      "exact_authority_quote": "An operator binds a closure, presses clay over it and rolls a seal; later access breaks it.",
-      "supporting_authority_quote": "Representative custody workflow, not a documented incident.",
-      "deterministic_rationale": "Explicitly licensed as a representative custody workflow based on cord impressions and breakable sealing assemblages."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "N/A", "causality": "N/A", "sequence": "SUPPORTED", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "sequence", "record_id": "P01-MAT-0007", "locator": "epistemic_layers.representative_reconstruction[0].statement", "exact_quote": "An operator binds a closure, presses clay over it and rolls a seal; later access breaks it.", "role": "SUPPORTS"}
+      ],
+      "missing_bindings": [],
+      "deterministic_rationale": "Explicitly licensed representative sealing workflow."
     },
     {
       "claim_id": "CAL-TRUTH-007",
       "category_id": 4,
       "category_name": "entity_correct_relationship_unsupported",
-      "component_type": "relationship",
-      "atomic_claim": "Numerical tablet fragment ChM III-937a was created to record the exact transaction previously secured by hollow envelope OIM A64678.",
+      "atomic_claim": "Numerical tablet fragment ChM III-937a recorded the same transaction previously secured by hollow envelope OIM A64678.",
       "expected_verdict": "UNSUPPORTED",
       "required_epistemic_status": "UNSUPPORTED",
-      "exact_authority_record_id": "P01-INST-0002",
-      "exact_authority_field_or_locator": "epistemic_layers.prohibited_or_rejected_inference[0].qualification",
-      "exact_authority_quote": "The two objects share site and broad period, but the approved source does not establish a direct sequence or shared transaction type.",
-      "supporting_authority_quote": "The catalogue does not establish the recorded commodity, transaction, operator, reading of each numeral, or a direct genealogical relationship to OIM A64678",
-      "deterministic_rationale": "Both artifacts exist at Chogha Mish, but asserting that the tablet recorded the transaction of the envelope is an unevidenced relationship."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "UNSUPPORTED", "motive": "N/A", "function": "N/A", "causality": "N/A", "sequence": "UNSUPPORTED", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "entity", "record_id": "P01-INST-0001", "locator": "epistemic_layers.observed[0].statement", "exact_quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.", "role": "SUPPORTS"},
+        {"component": "entity", "record_id": "P01-INST-0002", "locator": "epistemic_layers.observed[0].statement", "exact_quote": "Catalogue object ChM III-937a is a 4.8 × 3.2 × 2.0 cm clay tablet fragment from Chogha Mish with five numeral signs and several rollings of an animal seal that includes a bull.", "role": "SUPPORTS"},
+        {"component": "relationship", "record_id": "P01-INST-0002", "locator": "epistemic_layers.prohibited_or_rejected_inference[0].qualification", "exact_quote": "The two objects share site and broad period, but the approved source does not establish a direct sequence or shared transaction type.", "role": "REJECTS"}
+      ],
+      "missing_bindings": ["same_transaction_relationship"],
+      "deterministic_rationale": "Both entities are attested; their asserted shared transaction and sequence are not."
     },
     {
       "claim_id": "CAL-TRUTH-008",
       "category_id": 4,
       "category_name": "entity_correct_relationship_unsupported",
-      "component_type": "relationship",
-      "atomic_claim": "Cylinder seals were rolled across clay envelopes specifically to bind communal responsibility among Sumerian village elders.",
+      "atomic_claim": "Cylinder seals were used specifically to bind communal responsibility among Sumerian village elders.",
       "expected_verdict": "UNSUPPORTED",
       "required_epistemic_status": "UNSUPPORTED",
-      "exact_authority_record_id": "P01-MAT-0003",
-      "exact_authority_field_or_locator": "limitations[0]",
-      "exact_authority_quote": "Identifies institutional authority or witness presence, not spoken syntax or linguistic phonology",
-      "supporting_authority_quote": "Seal impressions marked an association with authority, custody or witnessing.",
-      "deterministic_rationale": "Cylinder seals and envelopes are attested, but 'binding communal responsibility among Sumerian village elders' is an unevidenced social relationship and institution unmentioned in authority text."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "UNSUPPORTED", "motive": "N/A", "function": "UNSUPPORTED", "causality": "N/A", "sequence": "N/A", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "entity", "record_id": "P01-MAT-0003", "locator": "epistemic_layers.observed[0].statement", "exact_quote": "Engraved cylinders and continuous rolled impressions survive on several clay media.", "role": "SUPPORTS"},
+        {"component": "function", "record_id": "P01-MAT-0003", "locator": "epistemic_layers.functional_inference[0].statement", "exact_quote": "Seal impressions marked an association with authority, custody or witnessing.", "role": "LIMITS"},
+        {"component": "relationship", "record_id": "P01-MAT-0003", "locator": "epistemic_layers.functional_inference[0].qualification", "exact_quote": "Inferred from context; no unique event or speaker is identified.", "role": "LIMITS"}
+      ],
+      "missing_bindings": ["communal_responsibility", "Sumerian_village_elders"],
+      "deterministic_rationale": "The seal entity and a bounded authority/custody/witness association are attested; the specific communal-responsibility relationship is not."
     },
     {
       "claim_id": "CAL-TRUTH-009",
       "category_id": 5,
       "category_name": "entity_correct_motive_unsupported",
-      "component_type": "motive",
-      "atomic_claim": "Hollow clay bullae were invented specifically to prevent fraud and theft during the long-distance transport of goods.",
+      "atomic_claim": "Hollow clay bullae emerged specifically to prevent fraud during long-distance administration.",
       "expected_verdict": "UNSUPPORTED",
-      "required_epistemic_status": "UNSUPPORTED",
-      "exact_authority_record_id": "P01-MAT-0002",
-      "exact_authority_field_or_locator": "epistemic_layers.prohibited_or_rejected_inference[0].statement",
-      "exact_authority_quote": "Bullae emerged specifically to prevent fraud or solve verification at distance.",
-      "supporting_authority_quote": "Causal hypothesis; the artifacts alone do not establish a single motive.",
-      "deterministic_rationale": "Bullae exist, but attributing their emergence to fraud prevention or transport verification is an explicitly prohibited motive inference."
+      "required_epistemic_status": "PROHIBITED",
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "UNSUPPORTED", "function": "N/A", "causality": "UNSUPPORTED", "sequence": "N/A", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "motive", "record_id": "P01-MAT-0002", "locator": "epistemic_layers.prohibited_or_rejected_inference[0].statement", "exact_quote": "Bullae emerged specifically to prevent fraud or solve verification at distance.", "role": "REJECTS"},
+        {"component": "motive", "record_id": "P01-MAT-0002", "locator": "epistemic_layers.prohibited_or_rejected_inference[0].qualification", "exact_quote": "Causal hypothesis; the artifacts alone do not establish a single motive.", "role": "REJECTS"}
+      ],
+      "missing_bindings": ["fraud_prevention_motive", "long_distance_causal_origin"],
+      "deterministic_rationale": "The proposed motive/causal origin is explicitly rejected."
     },
     {
       "claim_id": "CAL-TRUTH-010",
       "category_id": 5,
       "category_name": "entity_correct_motive_unsupported",
-      "component_type": "motive",
-      "atomic_claim": "Chogha Mish envelope OIM A64678 was manufactured because an administrator distrusted an illiterate shepherd delivering sheep.",
+      "atomic_claim": "OIM A64678 was made because an administrator distrusted a shepherd delivering sheep.",
       "expected_verdict": "UNSUPPORTED",
-      "required_epistemic_status": "UNSUPPORTED",
-      "exact_authority_record_id": "P01-INST-0001",
-      "exact_authority_field_or_locator": "limitations[0]",
-      "exact_authority_quote": "The catalogue entry identifies the object and enclosed tokens but does not specify a transaction, operator, motive, exact find stratum, or correspondence between exterior marks and contents",
-      "supporting_authority_quote": "The catalogue supplies object identity and surviving features, not an event, operator, purpose, or causal origin.",
-      "deterministic_rationale": "The object is documented, but the private motive ('distrusted an illiterate shepherd') and transaction details are completely unevidenced."
+      "required_epistemic_status": "PROHIBITED",
+      "expected_components": {"entity": "SUPPORTED", "relationship": "UNSUPPORTED", "motive": "UNSUPPORTED", "function": "N/A", "causality": "N/A", "sequence": "N/A", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "entity", "record_id": "P01-INST-0001", "locator": "epistemic_layers.observed[0].statement", "exact_quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.", "role": "SUPPORTS"},
+        {"component": "motive", "record_id": "P01-INST-0001", "locator": "limitations[0]", "exact_quote": "The catalogue entry identifies the object and enclosed tokens but does not specify a transaction, operator, motive, exact find stratum, or correspondence between exterior marks and contents", "role": "REJECTS"}
+      ],
+      "missing_bindings": ["administrator", "shepherd", "sheep_transaction", "distrust_motive"],
+      "deterministic_rationale": "The object exists; the actor, transaction and private motive do not survive."
     },
     {
       "claim_id": "CAL-TRUTH-011",
       "category_id": 6,
       "category_name": "plausible_causal_explanation_no_binding",
-      "component_type": "causality",
-      "atomic_claim": "The rapid physical expansion of Uruk caused human administrative memory to collapse, which directly produced the invention of clay tokens.",
+      "atomic_claim": "Urban growth caused administrative memory to fail, and that failure directly caused the invention of clay tokens.",
       "expected_verdict": "UNSUPPORTED",
       "required_epistemic_status": "UNSUPPORTED",
-      "exact_authority_record_id": "P01-MAT-0001",
-      "exact_authority_field_or_locator": "epistemic_layers.functional_inference[0].qualification / limitations[0]",
-      "exact_authority_quote": "Neolithic antecedents vary in function and do not represent a single unified code across 5000 years",
-      "supporting_authority_quote": "Some Late Uruk examples participated in numerical or administrative practices.",
-      "deterministic_rationale": "Urban growth and tokens both exist, but the causal bridge 'urban scaling caused memory collapse which produced tokens' has no binding in authority records."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "N/A", "causality": "UNSUPPORTED", "sequence": "N/A", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "entity", "record_id": "P01-MAT-0001", "locator": "epistemic_layers.observed[0].statement", "exact_quote": "Small geometric clay objects survive in several forms; some bear incisions.", "role": "SUPPORTS"}
+      ],
+      "missing_bindings": ["urban_growth_to_memory_failure", "memory_failure_to_token_invention"],
+      "deterministic_rationale": "Tokens are attested; the proposed causal chain has no authority binding."
     },
     {
       "claim_id": "CAL-TRUTH-012",
       "category_id": 6,
       "category_name": "plausible_causal_explanation_no_binding",
-      "component_type": "causality",
-      "atomic_claim": "The inconvenience of having to break hollow clay envelopes in order to verify contents caused accountants to abandon envelopes and invent flat numerical tablets.",
+      "atomic_claim": "The need to break hollow envelopes to inspect their contents caused accountants to abandon envelopes and invent numerical tablets.",
       "expected_verdict": "UNSUPPORTED",
-      "required_epistemic_status": "UNSUPPORTED",
-      "exact_authority_record_id": "HS-P01-0007",
-      "exact_authority_field_or_locator": "world.qualification",
-      "exact_authority_quote": "the shift does not identify one invention event or an immediate complete replacement",
-      "supporting_authority_quote": "older and parallel clay practices continued to overlap with direct surface recording",
-      "deterministic_rationale": "Breaking envelopes is an affordance constraint, but asserting it as the causal engine that led to abandoning envelopes and inventing tablets is an unevidenced causal ladder contradicted by parallel coexistence."
+      "required_epistemic_status": "PROHIBITED",
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "SUPPORTED", "causality": "UNSUPPORTED", "sequence": "UNSUPPORTED", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "function", "record_id": "P01-MAT-0002", "locator": "limitations[0]", "exact_quote": "Breakable verification device; once opened to inspect contents, the sealed envelope is permanently destroyed", "role": "SUPPORTS"},
+        {"component": "sequence", "record_id": "HS-P01-0007", "locator": "world.qualification", "exact_quote": "the shift does not identify one invention event or an immediate complete replacement", "role": "REJECTS"},
+        {"component": "sequence", "record_id": "HS-P01-0007", "locator": "world.coexistence", "exact_quote": "older and parallel clay practices continued to overlap with direct surface recording", "role": "REJECTS"}
+      ],
+      "missing_bindings": ["breakability_caused_tablet_invention", "accountants_abandoned_envelopes"],
+      "deterministic_rationale": "Destructive inspection is supported; using it as the causal engine of tablet invention/replacement is not."
     },
     {
       "claim_id": "CAL-TRUTH-013",
       "category_id": 7,
       "category_name": "scope_quantifier_overreach",
-      "component_type": "scope",
-      "atomic_claim": "All hollow clay envelopes bear exterior stylus impressions reflecting the exact quantity and shapes of the tokens enclosed inside.",
+      "atomic_claim": "All hollow clay envelopes bear exterior impressions.",
       "expected_verdict": "UNSUPPORTED",
       "required_epistemic_status": "UNSUPPORTED",
-      "exact_authority_record_id": "HS-P01-0003",
-      "exact_authority_field_or_locator": "substrate_boundaries[1]",
-      "exact_authority_quote": "Exterior impressions are not universal to every envelope.",
-      "supporting_authority_quote": "on some examples exterior impressions or sealings",
-      "deterministic_rationale": "Quantifier overreach ('All'). The authority explicitly restricts exterior impressions to 'some examples' and notes they are not universal."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "N/A", "causality": "N/A", "sequence": "N/A", "scope": "UNSUPPORTED"},
+      "required_bindings": [
+        {"component": "scope", "record_id": "HS-P01-0003", "locator": "substrate_boundaries[1]", "exact_quote": "Exterior impressions are not universal to every envelope.", "role": "REJECTS"},
+        {"component": "scope", "record_id": "HS-P01-0003", "locator": "world.carries[1]", "exact_quote": "on some examples exterior impressions or sealings", "role": "LIMITS"}
+      ],
+      "missing_bindings": ["universal_all_envelopes"],
+      "deterministic_rationale": "The universal quantifier contradicts explicit scope limits."
     },
     {
       "claim_id": "CAL-TRUTH-014",
       "category_id": 7,
       "category_name": "scope_quantifier_overreach",
-      "component_type": "scope",
-      "atomic_claim": "Geometric clay tokens formed a single, universally standardized accounting code across all prehistoric Near Eastern settlements for 5,000 years.",
+      "atomic_claim": "Geometric clay tokens formed one unified accounting code across 5,000 years.",
       "expected_verdict": "UNSUPPORTED",
-      "required_epistemic_status": "UNSUPPORTED",
-      "exact_authority_record_id": "P01-MAT-0001",
-      "exact_authority_field_or_locator": "limitations[0]",
-      "exact_authority_quote": "Neolithic antecedents vary in function and do not represent a single unified code across 5000 years",
-      "supporting_authority_quote": "Supported for bounded late administrative contexts, not a universal code across millennia.",
-      "deterministic_rationale": "Contradicted by explicit authority limitation; authority denies a single unified code across millennia."
+      "required_epistemic_status": "PROHIBITED",
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "UNSUPPORTED", "causality": "N/A", "sequence": "N/A", "scope": "UNSUPPORTED"},
+      "required_bindings": [
+        {"component": "scope", "record_id": "P01-MAT-0001", "locator": "limitations[0]", "exact_quote": "Contexts in early excavations often disturbed; Neolithic antecedents vary in function and do not represent a single unified code across 5000 years", "role": "REJECTS"},
+        {"component": "scope", "record_id": "P01-MAT-0001", "locator": "epistemic_layers.functional_inference[0].qualification", "exact_quote": "Supported for bounded late administrative contexts, not a universal code across millennia.", "role": "REJECTS"}
+      ],
+      "missing_bindings": ["unified_code_across_5000_years"],
+      "deterministic_rationale": "The authority explicitly denies a unified token code across millennia."
     },
     {
       "claim_id": "CAL-TRUTH-015",
       "category_id": 8,
       "category_name": "coexistence_converted_into_genealogy",
-      "component_type": "sequence",
-      "atomic_claim": "Administrative recording evolved through an obligatory developmental sequence: loose tokens were placed into hollow envelopes, which led to surface impressions, which evolved into solid numerical tablets, which finally became proto-cuneiform.",
+      "atomic_claim": "Administrative recording followed an obligatory sequence from tokens to hollow envelopes to surface impressions to numerical tablets to proto-cuneiform.",
       "expected_verdict": "UNSUPPORTED",
       "required_epistemic_status": "PROHIBITED",
-      "exact_authority_record_id": "HSC-P01-0001",
-      "exact_authority_field_or_locator": "substrate_boundaries[6]",
-      "exact_authority_quote": "Do not convert overlapping clay practices into a direct token-to-tablet replacement genealogy.",
-      "supporting_authority_quote": "Parallel practices must not be converted into a single mandatory developmental sequence.",
-      "deterministic_rationale": "Converting overlapping parallel practices into a mandatory linear developmental sequence is explicitly prohibited by Historical Substrate boundaries."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "N/A", "causality": "N/A", "sequence": "UNSUPPORTED", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "sequence", "record_id": "HSC-P01-0001", "locator": "substrate_boundaries[6]", "exact_quote": "Do not convert overlapping clay practices into a direct token-to-tablet replacement genealogy.", "role": "REJECTS"},
+        {"component": "sequence", "record_id": "HS-P01-0001", "locator": "substrate_boundaries[0]", "exact_quote": "Parallel practices must not be converted into a single mandatory developmental sequence.", "role": "REJECTS"}
+      ],
+      "missing_bindings": ["obligatory_developmental_sequence"],
+      "deterministic_rationale": "Mandatory genealogy is explicitly prohibited."
     },
     {
       "claim_id": "CAL-TRUTH-016",
       "category_id": 8,
       "category_name": "coexistence_converted_into_genealogy",
-      "component_type": "sequence",
-      "atomic_claim": "The appearance of flat numerical tablets immediately and completely replaced the use of hollow envelopes and loose tokens across southern Mesopotamia.",
+      "atomic_claim": "Direct numerical recording on clay immediately and completely replaced envelopes and tokens.",
       "expected_verdict": "UNSUPPORTED",
       "required_epistemic_status": "PROHIBITED",
-      "exact_authority_record_id": "HS-P01-0004",
-      "exact_authority_field_or_locator": "substrate_boundaries[4]",
-      "exact_authority_quote": "Direct surface recording must not be described as wholesale replacement of envelopes or tokens.",
-      "supporting_authority_quote": "older and parallel clay practices continued to overlap with direct surface recording",
-      "deterministic_rationale": "Wholesale immediate replacement is explicitly prohibited; parallel coexistence is documented."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "N/A", "causality": "N/A", "sequence": "UNSUPPORTED", "scope": "UNSUPPORTED"},
+      "required_bindings": [
+        {"component": "sequence", "record_id": "HS-P01-0004", "locator": "substrate_boundaries[4]", "exact_quote": "Direct surface recording must not be described as wholesale replacement of envelopes or tokens.", "role": "REJECTS"},
+        {"component": "scope", "record_id": "HS-P01-0007", "locator": "substrate_boundaries[5]", "exact_quote": "Increasing direct surface recording does not imply immediate or complete replacement of other clay practices.", "role": "REJECTS"}
+      ],
+      "missing_bindings": ["immediate_complete_replacement"],
+      "deterministic_rationale": "Immediate wholesale replacement is explicitly prohibited."
     },
     {
       "claim_id": "CAL-TRUTH-017",
       "category_id": 9,
       "category_name": "exact_supported_negative_statement",
-      "component_type": "inference",
-      "atomic_claim": "Late Uruk geometric clay tokens themselves do not carry written phonetic language or transcribe human speech.",
+      "atomic_claim": "Cylinder-seal impressions do not identify spoken syntax or linguistic phonology.",
       "expected_verdict": "SUPPORTED",
       "required_epistemic_status": "DOCUMENTED",
-      "exact_authority_record_id": "P01-MAT-0003",
-      "exact_authority_field_or_locator": "limitations[0]",
-      "exact_authority_quote": "Identifies institutional authority or witness presence, not spoken syntax or linguistic phonology",
-      "supporting_authority_quote": "Do NOT treat numerical impressions or seal imagery as continuous spoken language.",
-      "deterministic_rationale": "Explicitly supported negative boundary statement defining the limits of pre-script clay counters."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "SUPPORTED", "causality": "N/A", "sequence": "N/A", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "function", "record_id": "P01-MAT-0003", "locator": "limitations[0]", "exact_quote": "Identifies institutional authority or witness presence, not spoken syntax or linguistic phonology", "role": "SUPPORTS"}
+      ],
+      "missing_bindings": [],
+      "deterministic_rationale": "The negative linguistic boundary is bound to the same cylinder-seal entity rather than borrowed from another record."
     },
     {
       "claim_id": "CAL-TRUTH-018",
       "category_id": 9,
       "category_name": "exact_supported_negative_statement",
-      "component_type": "inference",
-      "atomic_claim": "Surviving proto-cuneiform tablets from Uruk IV do not record continuous spoken discourse, poetry, or historical narrative.",
+      "atomic_claim": "Uruk IV proto-cuneiform texts do not record running continuous spoken discourse, poetry, or historical narrative.",
       "expected_verdict": "SUPPORTED",
       "required_epistemic_status": "DOCUMENTED",
-      "exact_authority_record_id": "P01-MAT-0005",
-      "exact_authority_field_or_locator": "limitations[0]",
-      "exact_authority_quote": "Texts are ledger-style administrative allocations; do not record running continuous spoken discourse, poetry, or historical narrative",
-      "supporting_authority_quote": "Texts are ledger-style administrative allocations; do not record running continuous spoken discourse, poetry, or historical narrative",
-      "deterministic_rationale": "Direct verbatim match for documented limitation of Uruk IV proto-cuneiform accounts."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "SUPPORTED", "causality": "N/A", "sequence": "N/A", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "function", "record_id": "P01-MAT-0005", "locator": "limitations[0]", "exact_quote": "Texts are ledger-style administrative allocations; do not record running continuous spoken discourse, poetry, or historical narrative", "role": "SUPPORTS"}
+      ],
+      "missing_bindings": [],
+      "deterministic_rationale": "Direct documented limitation of the Uruk IV administrative corpus."
     },
     {
       "claim_id": "CAL-TRUTH-019",
       "category_id": 10,
       "category_name": "inference_visible_epistemic_status",
-      "component_type": "inference",
-      "atomic_claim": "Surviving rounded and semi-circular depressions on Late Uruk clay tablets were produced by carved reed styluses, though the wooden and reed tools themselves rarely survive in the archaeological record.",
+      "atomic_claim": "Reed tools likely produced the surviving rounded impressions and incised lines on Late Uruk clay.",
       "expected_verdict": "SUPPORTED",
       "required_epistemic_status": "QUALIFIED_INFERENCE",
-      "exact_authority_record_id": "P01-MAT-0006",
-      "exact_authority_field_or_locator": "epistemic_layers.functional_inference[0] / limitations[0]",
-      "exact_authority_quote": "Reed tools likely produced these marks.",
-      "supporting_authority_quote": "Tool morphology is reconstructed from impressions because the tools rarely survive.",
-      "deterministic_rationale": "Supported as a qualified functional inference from impressions due to organic tool preservation limits; epistemic status must be explicitly recorded as QUALIFIED_INFERENCE."
+      "expected_components": {"entity": "SUPPORTED", "relationship": "N/A", "motive": "N/A", "function": "SUPPORTED", "causality": "N/A", "sequence": "N/A", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "entity", "record_id": "P01-MAT-0006", "locator": "epistemic_layers.observed[0].statement", "exact_quote": "Clay surfaces preserve rounded impressions and incised lines made by differently shaped tips.", "role": "SUPPORTS"},
+        {"component": "function", "record_id": "P01-MAT-0006", "locator": "epistemic_layers.functional_inference[0].statement", "exact_quote": "Reed tools likely produced these marks.", "role": "SUPPORTS"}
+      ],
+      "missing_bindings": [],
+      "deterministic_rationale": "The claim preserves the authority's 'likely' qualification instead of upgrading inference to observed fact."
     },
     {
       "claim_id": "CAL-TRUTH-020",
       "category_id": 10,
       "category_name": "inference_visible_epistemic_status",
-      "component_type": "inference",
-      "atomic_claim": "During the late fourth millennium BCE in southern Mesopotamia, there was an administrative shift toward direct surface recording on clay, but this shift took place alongside overlapping earlier clay practices rather than through a single invention event.",
+      "atomic_claim": "Numerical information increasingly appeared directly on durable clay surfaces while older and parallel clay practices continued to overlap with direct surface recording.",
       "expected_verdict": "SUPPORTED",
       "required_epistemic_status": "QUALIFIED_INFERENCE",
-      "exact_authority_record_id": "HS-P01-0007",
-      "exact_authority_field_or_locator": "world.coexistence / world.qualification",
-      "exact_authority_quote": "older and parallel clay practices continued to overlap with direct surface recording",
-      "supporting_authority_quote": "the shift does not identify one invention event or an immediate complete replacement",
-      "deterministic_rationale": "Supported macro-level change, but explicitly qualified as an inference characterized by overlapping coexistence rather than an isolated invention event."
+      "expected_components": {"entity": "N/A", "relationship": "SUPPORTED", "motive": "N/A", "function": "N/A", "causality": "N/A", "sequence": "N/A", "scope": "N/A"},
+      "required_bindings": [
+        {"component": "relationship", "record_id": "HS-P01-0007", "locator": "world.later_state", "exact_quote": "numerical information increasingly appeared directly on durable clay surfaces, sometimes alongside authentication marks", "role": "SUPPORTS"},
+        {"component": "relationship", "record_id": "HS-P01-0007", "locator": "world.coexistence", "exact_quote": "older and parallel clay practices continued to overlap with direct surface recording", "role": "SUPPORTS"}
+      ],
+      "missing_bindings": [],
+      "deterministic_rationale": "Qualified macro change and coexistence are both explicitly present in HS-P01-0007."
     }
   ]
 }
