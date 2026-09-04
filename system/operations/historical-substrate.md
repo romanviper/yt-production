@@ -2,9 +2,7 @@
 
 ## Responsibility
 
-Convert approved evidence authority into a bounded model of the historical world. This operation owns **what historical states, practices, processes, roles, objects, relations and changes the approved evidence supports**. It does not write narration and does not decide how a story should be told.
-
-Historical Substrate sits between Research/Evidence Authority and Outline/Writer.
+Convert approved evidence authority into a bounded **model of the historical world**. This operation owns historical practices, object affordances, relations, changes, roles and states supported by evidence. It does not write narration and does not decide how a story should be told.
 
 ```text
 Evidence Authority
@@ -14,70 +12,80 @@ Evidence Authority
 → Evidence Review
 ```
 
-## Inputs and authority
+## Native representation
 
-Use only the approved claim ledger, reviewed source index and completed research synthesis. Optional material records may increase factual resolution only when they remain inside the same claim/source authority.
+Schema v2 is world-shaped, not a claim deck. Each ordinary record contains a structured `world` object appropriate to its `kind`:
 
-Each substrate record must preserve:
+```text
+practice
+  participants
+  operation
+  object_or_medium
+  information_or_relation_handled
+  context
 
-- historical-world statement;
-- kind (`practice`, `state`, `process`, `relation`, `change`, `object_affordance`, `actor_role`, `constraint`);
-- epistemic status;
-- time/place scope;
-- claim IDs;
-- reviewed source references and useful locators;
-- limitations / known unknowns.
+object_affordance
+  object
+  permits
+  carries
+  constrains
 
-A record may synthesize several approved claims into one bounded historical proposition. It may not silently widen their truth ceiling.
+relation
+  left
+  relation
+  right
+  temporal_scope
+  qualification
+
+change
+  dimension
+  earlier_state
+  later_state
+  coexistence
+  qualification
+```
+
+Other supported kinds (`state`, `process`, `actor_role`) must still carry structured historical data. Do not create a giant ontology merely to fill fields.
+
+`statement` is an optional human-readable rendering. It is **not** the canonical semantic payload: removing statements must leave the historical relationships intelligible from `world`.
+
+Each record also preserves epistemic status, time/place scope, claim IDs, reviewed source refs/locators and non-narrative boundaries.
+
+## Truth-only constraints
+
+Historiographical/evidence-state limits do not belong in Writer-facing historical primitives. Put them in top-level `constraints`, with:
+
+- `rule`;
+- `applies_to` historical record IDs;
+- claim/source provenance.
+
+Writer projection exposes applicable constraint rules as boundaries, not as historical events/facts to narrate.
 
 ## Forbidden authority
 
-Historical Substrate is **not** a story plan. Do not add or imply:
+Historical Substrate is not a story plan. Records must reject opening, hook, ending, carrier, protagonist, scene, beat sequence, reveal order, climax, emotional turn, camera language, recommended order, story role or narrative route.
 
-- opening, hook or ending;
-- carrier or protagonist;
-- scene or beat sequence;
-- reveal order;
-- climax or emotional turn;
-- camera language;
-- recommended paragraph/order;
-- story role or narrative route.
-
-Do not choose an artifact merely because it would make a good opening. An artifact may appear only as historical-world support or object affordance when the evidence supports it.
+Do not choose an artifact because it would make a good opening. An object belongs here only when its historical affordance is source-backed.
 
 ## Epistemic boundary
 
-Encode uncertainty as metadata/limitations attached to the historical proposition. `unknown` does not mean the eventual narrator must say “we do not know.” `contested` does not require a historiographical aside. Those are authority limits for Writer and Reviewer.
+`unknown` means Writer may not invent an answer; it does not mean narration must announce the unknown. `contested` constrains certainty; it does not require a historiographical aside.
 
-Use:
+Use `documented`, `qualified_inference`, or `bounded_reconstruction`. Reconstruction may describe ordinary operations only inside approved conditions; never invent names, dialogue, motives, unsupported chronology or causal conclusions.
 
-- `documented` when the historical proposition is directly supported;
-- `qualified_inference` when the proposition is supported but requires a stated boundary;
-- `bounded_reconstruction` only for ordinary historical operations that remain within approved conditions and do not invent names, dialogue, motives, chronology or causal conclusions.
+## Coverage and output
 
-## Output
+Write `01_research/historical-substrate.json` using `scripts/historical_substrate_contract.py` schema version 2.
 
-Write `01_research/historical-substrate.json` using `scripts/historical_substrate_contract.py` schema version 1.
+A normal new product uses `coverage.mode: product`. A bounded migration may use `section_migration` and list only the migrated sections. Section materialization requires coverage for the requested section; whole-outline creation requires product-complete coverage.
 
-For a normal new product, set `coverage.mode` to `product` and cover the historical territory needed by the whole outline. A bounded migration may use `section_migration` and explicitly list the sections covered; that partial artifact is not sufficient for creating a new whole-product outline.
-
-Run:
+Validate with:
 
 ```text
 python scripts/historical_substrate.py validate <product>
-```
-
-A new outline requires product-complete coverage:
-
-```text
 python scripts/historical_substrate.py validate <product> --require-product-complete
 ```
 
 ## Stop conditions
 
-Block instead of filling gaps when:
-
-- a needed historical proposition has no approved claim/source authority;
-- the evidence only supports an evidence-state statement, not the historical-world proposition being requested;
-- chronology, actor identity, institution, motive or causality would have to be invented;
-- a proposed record is actually narrative choreography.
+Block instead of filling gaps when a needed historical primitive has no approved authority; when only a truth/evidence boundary is supportable; when chronology, actor identity, institution, motive or causality would have to be invented; or when a proposed field is actually narrative choreography.

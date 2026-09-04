@@ -68,7 +68,7 @@ class HistoricalSubstrateRuntimeIntegrationTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "product-complete"):
             compile_packet(self.product, "outline", "T9000-outline")
 
-    def test_writer_packet_uses_substrate_and_secondary_evidence_only(self) -> None:
+    def test_writer_packet_uses_world_substrate_and_secondary_evidence_only(self) -> None:
         self._materialize_p01()
         packet, text = compile_packet(
             self.product,
@@ -83,6 +83,9 @@ class HistoricalSubstrateRuntimeIntegrationTest(unittest.TestCase):
             packet["historical_substrate"]["section_projection_path"],
             "03_sections/P01/historical-substrate.json",
         )
+        projection = read_json(self.product / "03_sections/P01/historical-substrate.json")
+        self.assertIn("world", projection["primitives"][0])
+        self.assertNotIn("statement", projection["primitives"][0])
 
     def test_reviewer_packet_contains_same_historical_substrate(self) -> None:
         self._materialize_p01()
@@ -104,7 +107,7 @@ class HistoricalSubstrateRuntimeIntegrationTest(unittest.TestCase):
         self._materialize_p01()
         path = self.product / "03_sections/P01/historical-substrate.json"
         value = read_json(path)
-        value["primitives"][0]["statement"] += " edited"
+        value["primitives"][0]["world"]["operation"] += " edited"
         write_json(path, value)
         with self.assertRaisesRegex(ValueError, "stale or edited"):
             compile_packet(

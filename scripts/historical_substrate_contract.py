@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""Executable authority contract for Historical Substrate.
+"""Executable authority contract for world-shaped Historical Substrate.
 
-This module owns three separations:
-1. evidence authority -> product Historical Substrate;
-2. approved outline + bounded section overlay -> canonical section binding;
-3. canonical section binding -> deterministic Writer-facing projection.
-
-The Writer projection hides claim/source IDs while retaining deterministic
-provenance and truth boundaries.
+The product representation stores source-backed historical primitives as
+structured world relationships. Human-readable ``statement`` strings are
+optional renderings; Writer-facing projections consume ``world`` structures,
+not those statements. Truth-only constraints live separately and are projected
+as boundaries rather than ordinary historical primitives.
 """
 
 from __future__ import annotations
@@ -26,29 +24,20 @@ except ModuleNotFoundError:  # pragma: no cover
     from section_overlay_contract import resolve_section_spec
 
 
-HISTORICAL_SUBSTRATE_SCHEMA_VERSION = 1
-SECTION_SUBSTRATE_SCHEMA_VERSION = 1
+HISTORICAL_SUBSTRATE_SCHEMA_VERSION = 2
+SECTION_SUBSTRATE_SCHEMA_VERSION = 2
 HISTORICAL_SUBSTRATE_CONTRACT_VERSION = 1
 
 ALLOWED_KINDS = {
-    "practice",
-    "state",
-    "process",
-    "relation",
-    "change",
-    "object_affordance",
-    "actor_role",
-    "constraint",
+    "practice", "state", "process", "relation", "change", "object_affordance", "actor_role"
 }
 ALLOWED_EPISTEMIC_STATUS = {
-    "documented",
-    "qualified_inference",
-    "bounded_reconstruction",
+    "documented", "qualified_inference", "bounded_reconstruction"
 }
 FORBIDDEN_NARRATIVE_FIELDS = {
-    "opening", "hook", "carrier", "scene", "beat", "reveal", "climax",
-    "ending", "emotional_turn", "camera", "story_role", "recommended_order",
-    "paragraph_order", "narrative_route",
+    "opening", "hook", "carrier", "scene", "beat", "reveal", "climax", "ending",
+    "emotional_turn", "camera", "story_role", "recommended_order", "paragraph_order",
+    "narrative_route",
 }
 _EVIDENCE_WORLD_MARKERS = (
     "bằng chứng", "evidence", "catalogue", "catalog ", "corpus",
@@ -61,11 +50,7 @@ def _nonempty(value: Any) -> bool:
 
 
 def _string_list(value: Any, *, allow_empty: bool = False) -> bool:
-    return (
-        isinstance(value, list)
-        and (allow_empty or bool(value))
-        and all(_nonempty(item) for item in value)
-    )
+    return isinstance(value, list) and (allow_empty or bool(value)) and all(_nonempty(item) for item in value)
 
 
 def _canonical_json(value: Any) -> str:
@@ -85,21 +70,132 @@ def binding_sha256(section_spec: dict[str, Any]) -> str:
 def _claim_map(doc: dict[str, Any] | None) -> dict[str, dict[str, Any]]:
     if not isinstance(doc, dict):
         return {}
-    return {
-        item["id"]: item
-        for item in doc.get("claims", [])
-        if isinstance(item, dict) and _nonempty(item.get("id"))
-    }
+    return {item["id"]: item for item in doc.get("claims", []) if isinstance(item, dict) and _nonempty(item.get("id"))}
 
 
 def _source_map(doc: dict[str, Any] | None) -> dict[str, dict[str, Any]]:
     if not isinstance(doc, dict):
         return {}
-    return {
-        item["id"]: item
-        for item in doc.get("sources", [])
-        if isinstance(item, dict) and _nonempty(item.get("id"))
-    }
+    return {item["id"]: item for item in doc.get("sources", []) if isinstance(item, dict) and _nonempty(item.get("id"))}
+
+
+def _world_text(value: Any) -> str:
+    if isinstance(value, dict):
+        return " ".join(_world_text(item) for item in value.values())
+    if isinstance(value, list):
+        return " ".join(_world_text(item) for item in value)
+    return str(value or "")
+
+
+def _validate_world(kind: str, world: Any, prefix: str) -> list[str]:
+    errors: list[str] = []
+    if not isinstance(world, dict) or not world:
+        return [f"{prefix} world must be a non-empty object"]
+    marker_text = _world_text(world).lower()
+    markers = sorted({marker for marker in _EVIDENCE_WORLD_MARKERS if marker in marker_text})
+    if markers:
+        errors.append(
+            f"{prefix} world contains evidence-state language; move it to a boundary/constraint: "
+            + ", ".join(markers)
+        )
+
+    if kind == "practice":
+        if not _string_list(world.get("participants", []), allow_empty=True):
+            errors.append(f"{prefix} world.participants must be a list of role labels")
+        if not _nonempty(world.get("operation")):
+            errors.append(f"{prefix} world.operation is required")
+        if not _string_list(world.get("object_or_medium")):
+            errors.append(f"{prefix} world.object_or_medium must be a non-empty list")
+        if not _string_list(world.get("information_or_relation_handled")):
+            errors.append(f"{prefix} world.information_or_relation_handled must be a non-empty list")
+        if not _nonempty(world.get("context")):
+            errors.append(f"{prefix} world.context is required")
+    elif kind == "object_affordance":
+        if not _nonempty(world.get("object")):
+            errors.append(f"{prefix} world.object is required")
+        for field in ("permits", "carries", "constrains"):
+            if not _string_list(world.get(field, []), allow_empty=True):
+                errors.append(f"{prefix} world.{field} must be a list")
+        if not any(world.get(field) for field in ("permits", "carries", "constrains")):
+            errors.append(f"{prefix} object_affordance must define at least one affordance/constraint")
+    elif kind == "relation":
+        if world.get("left") in (None, "", []):
+            errors.append(f"{prefix} world.left is required")
+        if not _nonempty(world.get("relation")):
+            errors.append(f"{prefix} world.relation is required")
+        if world.get("right") in (None, "", []):
+            errors.append(f"{prefix} world.right is required")
+        if not _nonempty(world.get("temporal_scope")):
+            errors.append(f"{prefix} world.temporal_scope is required")
+    elif kind == "change":
+        for field in ("dimension", "earlier_state", "later_state", "coexistence"):
+            if not _nonempty(world.get(field)):
+                errors.append(f"{prefix} world.{field} is required")
+    else:
+        # Future state/process/actor-role records stay structured without forcing a giant ontology.
+        meaningful = [value for value in world.values() if value not in (None, "", [], {})]
+        if not meaningful:
+            errors.append(f"{prefix} world must contain historical data")
+    return errors
+
+
+def _validate_provenance(
+    item: dict[str, Any],
+    prefix: str,
+    claims: dict[str, dict[str, Any]],
+    sources: dict[str, dict[str, Any]],
+) -> list[str]:
+    errors: list[str] = []
+    claim_ids = item.get("claim_ids")
+    if not _string_list(claim_ids):
+        errors.append(f"{prefix} claim_ids must be a non-empty list")
+        claim_ids = []
+    elif len(claim_ids) != len(set(claim_ids)):
+        errors.append(f"{prefix} claim_ids must be unique")
+
+    refs = item.get("source_refs")
+    if not isinstance(refs, list) or not refs:
+        errors.append(f"{prefix} source_refs must be a non-empty list")
+        refs = []
+    referenced: set[str] = set()
+    for index, ref in enumerate(refs):
+        if not isinstance(ref, dict) or not _nonempty(ref.get("source_id")):
+            errors.append(f"{prefix} source_ref #{index + 1} requires source_id")
+            continue
+        referenced.add(str(ref["source_id"]))
+        if ref.get("locator") is not None and not _nonempty(ref.get("locator")):
+            errors.append(f"{prefix} source_ref #{index + 1} locator must be non-empty when present")
+
+    if claims:
+        unknown = [claim_id for claim_id in claim_ids if claim_id not in claims]
+        if unknown:
+            errors.append(f"{prefix} references unknown claims: {', '.join(unknown)}")
+        not_ready = [
+            claim_id for claim_id in claim_ids
+            if claim_id in claims and claims[claim_id].get("status") not in {"supported", "qualified"}
+        ]
+        if not_ready:
+            errors.append(f"{prefix} references claims not writing-ready: {', '.join(not_ready)}")
+        allowed_sources = {
+            source_id
+            for claim_id in claim_ids if claim_id in claims
+            for source_id in claims[claim_id].get("sources", [])
+            if isinstance(source_id, str)
+        }
+        outside = sorted(referenced - allowed_sources)
+        if outside:
+            errors.append(f"{prefix} source refs exceed referenced claim authority: {', '.join(outside)}")
+    if sources:
+        unknown_sources = sorted(referenced - sources.keys())
+        if unknown_sources:
+            errors.append(f"{prefix} references unknown sources: {', '.join(unknown_sources)}")
+        unreviewed = sorted(
+            source_id for source_id in referenced
+            if source_id in sources and sources[source_id].get("status") != "reviewed"
+        )
+        if unreviewed:
+            errors.append(f"{prefix} references unreviewed sources: {', '.join(unreviewed)}")
+    return errors
 
 
 def validate_historical_substrate(
@@ -110,18 +206,9 @@ def validate_historical_substrate(
     require_product_complete: bool = False,
     required_sections: set[str | None] | None = None,
 ) -> list[str]:
-    """Validate authority, coverage and route-neutrality.
-
-    ``required_sections`` lets bounded section migrations pass only for the
-    sections explicitly declared by ``coverage.covered_sections``. Operations
-    that rebuild whole-product architecture must use ``require_product_complete``.
-    """
-
     errors: list[str] = []
     if document.get("schema_version") != HISTORICAL_SUBSTRATE_SCHEMA_VERSION:
-        errors.append(
-            f"historical substrate schema_version must be {HISTORICAL_SUBSTRATE_SCHEMA_VERSION}"
-        )
+        errors.append(f"historical substrate schema_version must be {HISTORICAL_SUBSTRATE_SCHEMA_VERSION}")
 
     coverage = document.get("coverage")
     if not isinstance(coverage, dict):
@@ -130,30 +217,26 @@ def validate_historical_substrate(
     mode = coverage.get("mode")
     if mode not in {"product", "section_migration"}:
         errors.append("historical substrate coverage.mode must be product or section_migration")
-    covered_sections = coverage.get("covered_sections", [])
-    if not _string_list(covered_sections, allow_empty=True):
+    covered = coverage.get("covered_sections", [])
+    if not _string_list(covered, allow_empty=True):
         errors.append("historical substrate coverage.covered_sections must be a list of section IDs")
-        covered_sections = []
+        covered = []
     if require_product_complete and mode != "product":
         errors.append("outline creation requires product-complete historical substrate coverage")
-    if required_sections:
+    if required_sections and mode == "section_migration":
         requested = {item for item in required_sections if isinstance(item, str) and item}
-        if mode == "section_migration":
-            missing = sorted(requested - set(covered_sections))
-            if missing:
-                errors.append(
-                    "historical substrate section_migration does not cover required sections: "
-                    + ", ".join(missing)
-                )
+        missing = sorted(requested - set(covered))
+        if missing:
+            errors.append("historical substrate section_migration does not cover required sections: " + ", ".join(missing))
 
     records = document.get("records")
     if not isinstance(records, list) or not records:
         errors.append("historical substrate records must be a non-empty list")
         return errors
-
     claims = _claim_map(claims_doc)
     sources = _source_map(sources_doc)
     seen: set[str] = set()
+    record_ids: set[str] = set()
     for index, record in enumerate(records):
         prefix = f"historical substrate record #{index + 1}"
         if not isinstance(record, dict):
@@ -162,82 +245,57 @@ def validate_historical_substrate(
         forbidden = sorted(FORBIDDEN_NARRATIVE_FIELDS.intersection(record))
         if forbidden:
             errors.append(f"{prefix} contains narrative-authority fields: {', '.join(forbidden)}")
-
         record_id = record.get("id")
         if not _nonempty(record_id) or not re.fullmatch(r"HS-[A-Z0-9]+-\d{4}", str(record_id)):
             errors.append(f"{prefix} id must use HS-<SCOPE>-#### format")
         elif record_id in seen:
             errors.append(f"historical substrate has duplicate id: {record_id}")
         else:
-            seen.add(str(record_id))
-
-        if record.get("kind") not in ALLOWED_KINDS:
-            errors.append(f"{prefix} kind is invalid: {record.get('kind')!r}")
-        if not _nonempty(record.get("statement")):
-            errors.append(f"{prefix} statement is required")
+            seen.add(str(record_id)); record_ids.add(str(record_id))
+        kind = record.get("kind")
+        if kind not in ALLOWED_KINDS:
+            errors.append(f"{prefix} kind is invalid: {kind!r}")
+        else:
+            errors.extend(_validate_world(str(kind), record.get("world"), prefix))
+        statement = record.get("statement")
+        if statement is not None and not _nonempty(statement):
+            errors.append(f"{prefix} statement must be non-empty when present")
         if record.get("epistemic_status") not in ALLOWED_EPISTEMIC_STATUS:
             errors.append(f"{prefix} epistemic_status is invalid")
         if not _nonempty(record.get("time_scope")):
             errors.append(f"{prefix} time_scope is required")
         if not _nonempty(record.get("place_scope")):
             errors.append(f"{prefix} place_scope is required")
+        if not _string_list(record.get("boundaries", []), allow_empty=True):
+            errors.append(f"{prefix} boundaries must be a list")
+        errors.extend(_validate_provenance(record, prefix, claims, sources))
 
-        claim_ids = record.get("claim_ids")
-        if not _string_list(claim_ids):
-            errors.append(f"{prefix} claim_ids must be a non-empty list")
-            claim_ids = []
-        elif len(claim_ids) != len(set(claim_ids)):
-            errors.append(f"{prefix} claim_ids must be unique")
-
-        source_refs = record.get("source_refs")
-        if not isinstance(source_refs, list) or not source_refs:
-            errors.append(f"{prefix} source_refs must be a non-empty list")
-            source_refs = []
-        referenced_sources: set[str] = set()
-        for ref_index, ref in enumerate(source_refs):
-            ref_prefix = f"{prefix} source_ref #{ref_index + 1}"
-            if not isinstance(ref, dict) or not _nonempty(ref.get("source_id")):
-                errors.append(f"{ref_prefix} requires source_id")
-                continue
-            referenced_sources.add(str(ref["source_id"]))
-            if ref.get("locator") is not None and not _nonempty(ref.get("locator")):
-                errors.append(f"{ref_prefix} locator must be non-empty when present")
-
-        limitations = record.get("limitations", [])
-        if not _string_list(limitations, allow_empty=True):
-            errors.append(f"{prefix} limitations must be a list of non-empty strings")
-
-        if claims:
-            unknown_claims = [claim_id for claim_id in claim_ids if claim_id not in claims]
-            if unknown_claims:
-                errors.append(f"{prefix} references unknown claims: {', '.join(unknown_claims)}")
-            not_ready = [
-                claim_id for claim_id in claim_ids
-                if claim_id in claims and claims[claim_id].get("status") not in {"supported", "qualified"}
-            ]
-            if not_ready:
-                errors.append(f"{prefix} references claims not writing-ready: {', '.join(not_ready)}")
-            allowed_sources = {
-                source_id
-                for claim_id in claim_ids if claim_id in claims
-                for source_id in claims[claim_id].get("sources", [])
-                if isinstance(source_id, str)
-            }
-            outside = sorted(referenced_sources - allowed_sources)
-            if outside:
-                errors.append(
-                    f"{prefix} source refs exceed referenced claim authority: {', '.join(outside)}"
-                )
-        if sources:
-            unknown_sources = sorted(referenced_sources - sources.keys())
-            if unknown_sources:
-                errors.append(f"{prefix} references unknown sources: {', '.join(unknown_sources)}")
-            unreviewed = sorted(
-                source_id for source_id in referenced_sources
-                if source_id in sources and sources[source_id].get("status") != "reviewed"
-            )
-            if unreviewed:
-                errors.append(f"{prefix} references unreviewed sources: {', '.join(unreviewed)}")
+    constraints = document.get("constraints", [])
+    if not isinstance(constraints, list):
+        errors.append("historical substrate constraints must be a list")
+        constraints = []
+    constraint_ids: set[str] = set()
+    for index, constraint in enumerate(constraints):
+        prefix = f"historical substrate constraint #{index + 1}"
+        if not isinstance(constraint, dict):
+            errors.append(f"{prefix} must be an object"); continue
+        cid = constraint.get("id")
+        if not _nonempty(cid) or not re.fullmatch(r"HSC-[A-Z0-9]+-\d{4}", str(cid)):
+            errors.append(f"{prefix} id must use HSC-<SCOPE>-#### format")
+        elif cid in constraint_ids:
+            errors.append(f"historical substrate has duplicate constraint id: {cid}")
+        else:
+            constraint_ids.add(str(cid))
+        if not _nonempty(constraint.get("rule")):
+            errors.append(f"{prefix} rule is required")
+        applies = constraint.get("applies_to")
+        if not _string_list(applies):
+            errors.append(f"{prefix} applies_to must be a non-empty record-ID list")
+            applies = []
+        unknown = sorted(set(applies) - record_ids)
+        if unknown:
+            errors.append(f"{prefix} applies_to unknown records: {', '.join(unknown)}")
+        errors.extend(_validate_provenance(constraint, prefix, claims, sources))
     return errors
 
 
@@ -249,12 +307,9 @@ def validate_section_binding(section_spec: dict[str, Any], substrate: dict[str, 
         errors.append(f"section {section_id} historical_territory is required")
     elif "?" in str(territory):
         errors.append(f"section {section_id} historical_territory must not be an answer-shaped question")
-
     change = section_spec.get("historical_change")
     if not isinstance(change, dict) or not _nonempty(change.get("from")) or not _nonempty(change.get("to")):
-        errors.append(
-            f"section {section_id} historical_change must contain non-empty historical-world from/to states"
-        )
+        errors.append(f"section {section_id} historical_change must contain non-empty historical-world from/to states")
     else:
         combined = f"{change['from']} {change['to']}".lower()
         markers = sorted({marker for marker in _EVIDENCE_WORLD_MARKERS if marker in combined})
@@ -263,44 +318,32 @@ def validate_section_binding(section_spec: dict[str, Any], substrate: dict[str, 
                 f"section {section_id} historical_change describes evidence-state rather than historical-world state: "
                 + ", ".join(markers)
             )
-
     selected = section_spec.get("historical_substrate_ids")
     if not _string_list(selected):
         errors.append(f"section {section_id} historical_substrate_ids must be a non-empty list")
         return errors
     if len(selected) != len(set(selected)):
         errors.append(f"section {section_id} historical_substrate_ids must be unique")
-
     coverage = substrate.get("coverage", {}) if isinstance(substrate, dict) else {}
     if coverage.get("mode") == "section_migration" and section_id not in set(coverage.get("covered_sections", [])):
         errors.append(f"section {section_id} is outside section_migration substrate coverage")
-
     records = {
-        item.get("id"): item
-        for item in substrate.get("records", [])
+        item.get("id"): item for item in substrate.get("records", [])
         if isinstance(item, dict) and _nonempty(item.get("id"))
     }
     unknown = [item for item in selected if item not in records]
     if unknown:
-        errors.append(
-            f"section {section_id} references unknown historical substrate records: {', '.join(unknown)}"
-        )
-
-    claim_ceiling = {
-        item for item in section_spec.get("claim_ids", []) if isinstance(item, str) and item
-    }
+        errors.append(f"section {section_id} references unknown historical substrate records: {', '.join(unknown)}")
+    claim_ceiling = {item for item in section_spec.get("claim_ids", []) if isinstance(item, str) and item}
     if claim_ceiling:
-        substrate_claims = {
+        selected_claim_ids = {
             claim_id
             for record_id in selected if record_id in records
-            for claim_id in records[record_id].get("claim_ids", [])
-            if isinstance(claim_id, str)
+            for claim_id in records[record_id].get("claim_ids", []) if isinstance(claim_id, str)
         }
-        outside = sorted(substrate_claims - claim_ceiling)
+        outside = sorted(selected_claim_ids - claim_ceiling)
         if outside:
-            errors.append(
-                f"section {section_id} substrate exceeds approved outline claim territory: {', '.join(outside)}"
-            )
+            errors.append(f"section {section_id} substrate exceeds approved outline claim territory: {', '.join(outside)}")
     return errors
 
 
@@ -312,31 +355,37 @@ def build_writer_section_substrate(
     architecture_authority: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     substrate = read_json(product_substrate_path)
-    records = {
-        item["id"]: item
-        for item in substrate.get("records", [])
-        if isinstance(item, dict) and _nonempty(item.get("id"))
-    }
-    selected = [records[item_id] for item_id in section_spec.get("historical_substrate_ids", [])]
+    records = {item["id"]: item for item in substrate.get("records", []) if isinstance(item, dict) and _nonempty(item.get("id"))}
+    selected_ids = list(section_spec.get("historical_substrate_ids", []))
+    selected = [records[item_id] for item_id in selected_ids]
     primitives = [
         {
             "id": item["id"],
             "kind": item["kind"],
-            "statement": item["statement"],
+            "world": item["world"],
             "epistemic_status": item["epistemic_status"],
             "time_scope": item["time_scope"],
             "place_scope": item["place_scope"],
         }
         for item in selected
     ]
-    boundaries = [
-        {"id": item["id"], "limitations": list(item.get("limitations", []))}
-        for item in selected if item.get("limitations")
-    ]
+    boundaries: list[dict[str, Any]] = []
+    for item in selected:
+        for rule in item.get("boundaries", []):
+            boundaries.append({"source": item["id"], "rule": rule})
+    selected_set = set(selected_ids)
+    for constraint in substrate.get("constraints", []):
+        if not isinstance(constraint, dict):
+            continue
+        applies = selected_set.intersection(constraint.get("applies_to", []))
+        if applies:
+            boundaries.append({
+                "source": constraint.get("id"),
+                "applies_to": sorted(applies),
+                "rule": constraint.get("rule"),
+            })
     authority = architecture_authority or {
-        "kind": "approved_outline",
-        "outline_sha256": sha256(outline_path),
-        "overlay_sha256": None,
+        "kind": "approved_outline", "outline_sha256": sha256(outline_path), "overlay_sha256": None
     }
     return {
         "schema_version": SECTION_SUBSTRATE_SCHEMA_VERSION,
@@ -353,8 +402,8 @@ def build_writer_section_substrate(
             "section_binding_sha256": binding_sha256(section_spec),
         },
         "writer_contract": (
-            "Historical Substrate is the primary history model. Evidence lookup is secondary: use it only "
-            "to verify, sharpen or qualify a telling already chosen from this historical model."
+            "Historical Substrate is the primary model of historical reality. Evidence lookup is secondary "
+            "and only verifies, sharpens or qualifies details needed by a telling already chosen from this model."
         ),
     }
 
@@ -363,9 +412,7 @@ def _canonical_section(product_dir: Path, section: str) -> tuple[dict[str, Any],
     product_dir = product_dir.resolve()
     outline_path = product_dir / "02_outline" / "outline.json"
     outline = read_json(outline_path)
-    resolved, authority = resolve_section_spec(
-        product_dir, section, outline=outline, outline_path=outline_path
-    )
+    resolved, authority = resolve_section_spec(product_dir, section, outline=outline, outline_path=outline_path)
     return resolved, authority, outline_path
 
 
@@ -383,13 +430,9 @@ def verify_writer_section_substrate(product_dir: Path, section: str) -> list[str
     ):
         if not path.is_file():
             return [f"missing {label}"]
-
     substrate = read_json(product_substrate_path)
     authority_errors = validate_historical_substrate(
-        substrate,
-        read_json(claims_path),
-        read_json(sources_path),
-        required_sections={section},
+        substrate, read_json(claims_path), read_json(sources_path), required_sections={section}
     )
     if authority_errors:
         return authority_errors
@@ -401,10 +444,7 @@ def verify_writer_section_substrate(product_dir: Path, section: str) -> list[str
     if binding_errors:
         return binding_errors
     expected = build_writer_section_substrate(
-        product_substrate_path,
-        resolved,
-        outline_path,
-        architecture_authority=authority,
+        product_substrate_path, resolved, outline_path, architecture_authority=authority
     )
     actual = read_json(section_path)
     if actual != expected:
@@ -419,10 +459,7 @@ def materialize_writer_section_substrate(product_dir: Path, section: str) -> Pat
     sources_path = product_dir / "01_research" / "source-index.json"
     substrate = read_json(product_substrate_path)
     errors = validate_historical_substrate(
-        substrate,
-        read_json(claims_path),
-        read_json(sources_path),
-        required_sections={section},
+        substrate, read_json(claims_path), read_json(sources_path), required_sections={section}
     )
     if errors:
         raise ValueError("Invalid historical substrate: " + "; ".join(errors))
@@ -434,10 +471,7 @@ def materialize_writer_section_substrate(product_dir: Path, section: str) -> Pat
     write_json(
         output,
         build_writer_section_substrate(
-            product_substrate_path,
-            resolved,
-            outline_path,
-            architecture_authority=authority,
+            product_substrate_path, resolved, outline_path, architecture_authority=authority
         ),
     )
     return output

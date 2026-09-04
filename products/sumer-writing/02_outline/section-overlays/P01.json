@@ -16,9 +16,8 @@
     "HS-P01-0005",
     "HS-P01-0006",
     "HS-P01-0007",
-    "HS-P01-0008",
     "HS-P01-0009"
   ],
   "audience_discovery": "Nguồn gốc của durable recording được hiểu như một ecology nhiều thực hành chồng lấn thay vì một invention event hay một genealogy tuyến tính.",
-  "authority_note": "Bounded P01 architecture migration requested by owner after Historical Substrate v2 review; P02-P08 approved outline authority remains unchanged."
+  "authority_note": "Bounded P01 architecture migration requested by owner after Historical Substrate v2 review; evidence-only classification limits are represented as substrate constraints rather than Writer-facing historical primitives."
 }
