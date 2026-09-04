@@ -3,7 +3,7 @@
   "id": "P01",
   "title": "Trước chữ viết đã có một bài toán phải giải",
   "order": 1,
-  "status": "ready_for_review",
+  "status": "ready_for_draft",
   "human_approved": false,
   "dependencies": [],
   "narrative_job": "Thiết lập các pressure và information practices trước/sát thời điểm proto-cuneiform xuất hiện, đồng thời phá hai shortcut: một invention event duy nhất và token→tablet như đường tiến hóa tất định. Section phải kết thúc khi audience đã hiểu vì sao durable, inspectable records trở nên đáng giá mà chưa cần biết 'ai phát minh chữ viết'.",
@@ -15,13 +15,25 @@
   },
   "cycle_id": "C003",
   "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
-  "mission": "Điều gì khiến việc giữ thông tin bằng những dấu bền trên đất sét trở nên hữu ích?",
-  "transition": "Nếu nhu cầu và các recording practices đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.",
+  "historical_substrate_contract_version": 1,
+  "historical_territory": "Các thực hành ghi nhận và xác thực bằng đất sét trong Late Uruk, đặc biệt sự dịch chuyển toward việc đặt thông tin số trực tiếp trên bề mặt bền trong khi nhiều phương tiện cũ vẫn cùng tồn tại.",
+  "mission": "Các thực hành ghi nhận và xác thực bằng đất sét trong Late Uruk chuyển dần toward việc đặt thông tin số trực tiếp trên bề mặt bền trong khi nhiều phương tiện cũ vẫn cùng tồn tại.",
   "historical_change": {
-    "from": "Bằng chứng Late Uruk lưu giữ số lượng và sự xác thực trên nhiều vật mang và thực hành bằng đất sét khác nhau.",
-    "to": "Thông tin số ngày càng xuất hiện trực tiếp trên các bề mặt đất sét bền, bên cạnh các dấu xác thực."
+    "from": "Số lượng và sự xác thực được xử lý qua nhiều thiết bị và thực hành đất sét cùng tồn tại, gồm counters, envelopes, sealings và các bề mặt ghi số.",
+    "to": "Thực hành ghi nhận ngày càng đặt thông tin số trực tiếp trên bề mặt đất sét bền, đôi khi cùng dấu xác thực, trong khi các phương tiện cũ vẫn tiếp tục chồng lấn."
   },
-  "earned_meaning": "Việc ghi chép Late Uruk không xuất hiện như một invention event duy nhất: thông tin số và xác thực đã được vật chất hóa qua nhiều thực hành đất sét, trong đó có những bề mặt bền có thể tiếp tục được kiểm tra sau tình huống trực tiếp.",
+  "historical_substrate_ids": [
+    "HS-P01-0001",
+    "HS-P01-0002",
+    "HS-P01-0003",
+    "HS-P01-0004",
+    "HS-P01-0005",
+    "HS-P01-0006",
+    "HS-P01-0007",
+    "HS-P01-0008",
+    "HS-P01-0009"
+  ],
+  "transition": "Nếu nhu cầu và các recording practices đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.",
   "movement_ids": [
     "M01"
   ],
@@ -41,14 +53,9 @@
       "title": "Khi một xã hội cần trí nhớ ngoài con người"
     }
   ],
-  "prose_provenance": {
-    "task_id": "T0061-draft-section-P01",
-    "operation": "draft_section",
-    "submitted_at": "2026-09-04T04:18:19.463474+00:00",
-    "draft_sha256": "98c67e50c9d1b0e368679317f351be86fb1f3dd8a56dfc41176c13deed5a8803",
-    "handoff_sha256": "dd7f3b0da655b3ae866798f3915c210787ddddc6c8aedc5b9e27e8b2522a124a",
-    "schema_version": 2,
-    "packet_schema_version": 5,
-    "task_packet_sha256": "0864ea84d1005854fb83af7663639d32af74297197bc0d99d8665dd9e48a3307"
+  "substrate_migration": {
+    "coverage": "P01",
+    "source_git_blob": "87ea84d8ba9a2b30ba9a306a0180e38268145b39",
+    "note": "Legacy question-shaped mission removed from Writer semantics; mission remains a declarative compatibility alias only."
   }
 }
