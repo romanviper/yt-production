@@ -23,15 +23,40 @@ from scripts.substrate_preflight import verify_canonical_section_state
 SOURCE_PRODUCT = REPO_ROOT / "products" / "sumer-writing"
 PROBE_ROOT = SOURCE_PRODUCT / "03_sections" / "P01" / "probes" / "hsub-clean-01"
 TASK_ID = "T9900-draft-section-P01"
-EXPECTED_CANONICAL_CONTEXT_SHA256 = "65992acd578be4c3c72ae31de43cc4ff1231b6c63946fa33d8d3a5f30c7e3084"
-EXPECTED_EFFECTIVE_CONTEXT_SHA256 = "338b3b14c425c0907f9920fc8a7240dfbe427f890750fba4ed4c97e83b57140a"
+READY_STATUS = "READY_FOR_FRESH_WRITER_EXECUTION"
+
+
+def _required_manifest_value(gate: dict, *path: str) -> str:
+    value: object = gate
+    for key in path:
+        if not isinstance(value, dict) or key not in value:
+            raise SystemExit("gate manifest is missing required field: " + ".".join(path))
+        value = value[key]
+    if not isinstance(value, str) or not value:
+        raise SystemExit("gate manifest field is not a non-empty string: " + ".".join(path))
+    return value
 
 
 def main() -> int:
     gate = json.loads((PROBE_ROOT / "gate-manifest.json").read_text(encoding="utf-8"))
     contract = json.loads((PROBE_ROOT / "probe-contract.json").read_text(encoding="utf-8"))
-    if gate.get("status") != "AUTHORIZED_TO_RUN_FRESH_P01_PROBE":
-        raise SystemExit("probe gate is not authorized")
+    if gate.get("status") != READY_STATUS:
+        raise SystemExit(
+            f"probe gate is not ready: {gate.get('status')!r}; expected {READY_STATUS!r}"
+        )
+    rematerialization = gate.get("rematerialization", {})
+    if not isinstance(rematerialization, dict) or not rematerialization.get("canonical_artifacts_applied"):
+        raise SystemExit("probe gate does not attest that canonical rematerialized P01 artifacts were applied")
+
+    expected_canonical_sha = _required_manifest_value(
+        gate, "writer_packet", "canonical_context_sha256"
+    )
+    expected_effective_sha = _required_manifest_value(
+        gate, "writer_packet", "effective_probe_context_sha256"
+    )
+    expected_projection_sha = _required_manifest_value(
+        gate, "historical_substrate", "section_projection_sha256"
+    )
 
     with tempfile.TemporaryDirectory() as temp:
         product = Path(temp) / "sumer-writing"
@@ -47,10 +72,16 @@ def main() -> int:
             TASK_ID,
             section="P01",
         )
-        canonical_sha = hashlib.sha256(canonical_context.encode("utf-8")).hexdigest()
-        if canonical_sha != EXPECTED_CANONICAL_CONTEXT_SHA256:
+        projection_sha = packet.get("historical_substrate", {}).get("section_projection_sha256")
+        if projection_sha != expected_projection_sha:
             raise SystemExit(
-                f"canonical Writer context changed: {canonical_sha} != {EXPECTED_CANONICAL_CONTEXT_SHA256}"
+                f"Writer substrate projection changed: {projection_sha} != {expected_projection_sha}"
+            )
+
+        canonical_sha = hashlib.sha256(canonical_context.encode("utf-8")).hexdigest()
+        if canonical_sha != expected_canonical_sha:
+            raise SystemExit(
+                f"canonical Writer context changed: {canonical_sha} != {expected_canonical_sha}"
             )
 
         effective_context = (
@@ -60,9 +91,9 @@ def main() -> int:
             + canonical_context
         )
         effective_sha = hashlib.sha256(effective_context.encode("utf-8")).hexdigest()
-        if effective_sha != EXPECTED_EFFECTIVE_CONTEXT_SHA256:
+        if effective_sha != expected_effective_sha:
             raise SystemExit(
-                f"effective probe context changed: {effective_sha} != {EXPECTED_EFFECTIVE_CONTEXT_SHA256}"
+                f"effective probe context changed: {effective_sha} != {expected_effective_sha}"
             )
 
         packet_out = {
@@ -80,8 +111,8 @@ def main() -> int:
         )
         (PROBE_ROOT / "writer-context.md").write_text(effective_context, encoding="utf-8")
 
-    print("AUTHORIZED_TO_RUN_FRESH_P01_PROBE")
-    print(f"writer-context.md sha256={EXPECTED_EFFECTIVE_CONTEXT_SHA256}")
+    print(READY_STATUS)
+    print(f"writer-context.md sha256={expected_effective_sha}")
     return 0
 
 
