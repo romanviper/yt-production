@@ -38,12 +38,13 @@ Use only these fields:
   "what_changes_during_passage": "...",
   "begins_at": "...",
   "stops_before": "...",
+  "causal_bridges_claimed": ["..."],
   "notebook_threads_to_use": ["..."],
   "deliberately_unused_threads": ["..."]
 }
 ```
 
-Keep this high level. Do not write detailed reasoning, beats, scene plans, hook plans, reveal plans or a prose outline.
+Keep this high level. Do not write detailed reasoning, beats, scene plans, hook plans, reveal plans or a prose outline. In `causal_bridges_claimed`, list any historical A→B causal claims you intend to rely on, or `[]` if the passage uses only coexistence, contrast, or material change.
 
 You are encouraged to ignore most of the notebook. Depth in one bounded thread is preferable to covering everything.
 
@@ -63,6 +64,7 @@ Requirements:
 - Natural when spoken aloud.
 - Historical meaning should emerge from what unfolds rather than from announcing and defending a thesis.
 - Representative ordinary actions explicitly permitted by the notebook may be used as nonfiction reconstruction.
+- You may create continuity in the telling, but do not invent a causal bridge between historical practices. A material contrast, coexistence, or change in affordance does not by itself mean one practice caused, solved, replaced, or developed into another. If the notebook does not support why a new practice appeared, narrate what changes in the material arrangement without supplying the missing historical motive.
 - Do not invent named actors, dialogue, private thoughts, motives or unsupported causal conclusions.
 - Do not narrate research metadata or provenance.
 - Do not mechanically recite every uncertainty or boundary. Apply them silently unless a qualification is genuinely needed for the listener.

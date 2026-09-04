@@ -1,19 +1,21 @@
 {
-  "center_of_gravity": "Sự dịch chuyển của vị trí lưu giữ thông tin số lượng: từ các vật thể vật lý giấu kín trong lòng phong bao đất sét rỗng sang các dấu ấn hiển thị trực tiếp trên bề mặt đất rắn.",
-  "what_is_happening": "Các thao tác bọc những con tính hình học vào khối đất dẻo, lăn con dấu niêm phong, ấn dấu đối chiếu lên bề mặt ngoài, và sự xuất hiện song hành của các phiến đất số đặc hình lòng bàn tay.",
-  "what_changes_during_passage": "Cách thức kiểm tra số lượng: từ chỗ hoàn toàn phụ thuộc vào việc đập vỡ lớp vỏ phong bao để nhìn thấy các vật đếm bên trong, sang chỗ có thể đọc trực tiếp các dấu ấn trên bề mặt đất sét mà không cần phá hủy vật thể.",
-  "begins_at": "Thao tác đặt các con tính đất sét nhỏ vào lòng đất ẩm để tạo thành một phong bao rỗng nhằm cố định số lượng.",
-  "stops_before": "Các bảng đất proto-cuneiform thời Uruk IV với các ô phân chia phức tạp, chữ tượng hình chỉ hàng hóa và bảng tổng kết ở mặt sau.",
+  "center_of_gravity": "The physical shift in where quantity and custody reside in clay: from three-dimensional counters enclosed within hollow clay envelopes to impressions visible directly on the surface of solid tablets.",
+  "what_is_happening": "A spoken-word reconstruction of ordinary Late Uruk clay practices: handling loose geometric counters, enclosing them inside hollow clay balls with rolled seals and exterior impressions, and impressing numerical marks with reeds directly onto solid clay tablets.",
+  "what_changes_during_passage": "The physical condition of inspecting quantity and authentication: moving from hidden contents requiring destruction of the envelope to marks inspectable directly on a durable clay surface, while both practices continue to coexist.",
+  "begins_at": "Handling loose geometric clay counters between fingers in Late Uruk administrative contexts.",
+  "stops_before": "The emergence of proto-cuneiform pictographic tablets with ruled compartments and complex commodity signs.",
+  "causal_bridges_claimed": [],
   "notebook_threads_to_use": [
-    "Các vật đếm hình học nhỏ và phong bao đất sét rỗng",
-    "Thao tác bọc đất, lăn con dấu hình trụ và tạo dấu ấn bên ngoài",
-    "Nghịch lý vật lý của phong bao kín và sự ra đời của dấu ấn bề mặt",
-    "Phiến đất số đặc hình lòng bàn tay và sự song hành của các thực hành"
+    "Small geometric clay counters (spheres, cones, disks, cylinders) handling quantity in Late Uruk.",
+    "Hollow clay envelopes enclosing counters, creating a physical condition where inspection requires breaking.",
+    "Cylinder seals rolled across wet clay marking custody, authority, or witnessing.",
+    "Exterior impressions on envelopes mirroring enclosed quantities without immediate breakage.",
+    "Solid numerical tablets with reed impressions and seal rollings.",
+    "Coexistence and overlapping of these media without an evolutionary ladder or direct replacement."
   ],
   "deliberately_unused_threads": [
-    "Bảng đất proto-cuneiform Uruk IV có kẻ ô, chữ tượng hình và bảng tổng kết mặt sau",
-    "Các cục đất niêm phong chốt cửa, dây buộc đồ vật hay bao bì",
-    "Hiện vật và số hiệu bảo tàng cụ thể tại Chogha Mish (OIM A64678, ChM III-937a)",
-    "Lịch sử hàng thiên niên kỷ của các con tính trước thời kỳ Uruk muộn"
+    "Proto-cuneiform pictographic tablets with ruled compartments and commodity/institutional signs (Uruk IV).",
+    "Clay sealings on cord, cloth, or wooden door closures.",
+    "Specific museum specimen numbers (OIM A64678, ChM III-937a) and site-specific provenance details."
   ]
 }
