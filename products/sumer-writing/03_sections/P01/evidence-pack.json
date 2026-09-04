@@ -1,6 +1,26 @@
 {
   "schema_version": 3,
   "section": "P01",
+  "cycle_id": "C003",
+  "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+  "claim_ids": [
+    "CLM-0011",
+    "CLM-0012",
+    "CLM-0013",
+    "CLM-0014",
+    "CLM-0015",
+    "CLM-0016",
+    "CLM-0017",
+    "CLM-0018"
+  ],
+  "source_ids": [
+    "SRC-0001",
+    "SRC-0003",
+    "SRC-0005",
+    "SRC-0009",
+    "SRC-0010",
+    "SRC-0011"
+  ],
   "claims": [
     {
       "id": "CLM-0011",
@@ -353,25 +373,5 @@
       ]
     }
   ],
-  "rule": "These claims define the section truth territory. Writer may use any subset and any narrative route. Source-level resolution may increase through bounded retrieval; new interpretation/generalization requires evidence authority.",
-  "cycle_id": "C003",
-  "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
-  "claim_ids": [
-    "CLM-0011",
-    "CLM-0012",
-    "CLM-0013",
-    "CLM-0014",
-    "CLM-0015",
-    "CLM-0016",
-    "CLM-0017",
-    "CLM-0018"
-  ],
-  "source_ids": [
-    "SRC-0001",
-    "SRC-0003",
-    "SRC-0005",
-    "SRC-0009",
-    "SRC-0010",
-    "SRC-0011"
-  ]
+  "rule": "This is secondary evidence authority. Historical Substrate is the primary history model; evidence lookup verifies or sharpens a chosen telling and does not define the story route."
 }
