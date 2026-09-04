@@ -1,21 +1,21 @@
 {
-  "center_of_gravity": "The physical shift in where quantity and custody reside in clay: from three-dimensional counters enclosed within hollow clay envelopes to impressions visible directly on the surface of solid tablets.",
-  "what_is_happening": "A spoken-word reconstruction of ordinary Late Uruk clay practices: handling loose geometric counters, enclosing them inside hollow clay balls with rolled seals and exterior impressions, and impressing numerical marks with reeds directly onto solid clay tablets.",
-  "what_changes_during_passage": "The physical condition of inspecting quantity and authentication: moving from hidden contents requiring destruction of the envelope to marks inspectable directly on a durable clay surface, while both practices continue to coexist.",
-  "begins_at": "Handling loose geometric clay counters between fingers in Late Uruk administrative contexts.",
-  "stops_before": "The emergence of proto-cuneiform pictographic tablets with ruled compartments and complex commodity signs.",
+  "center_of_gravity": "Quy trình chế tác, đóng kín và niêm phong bì thư đất sét rỗng (clay envelope) chứa vật đếm hình học tại vùng Lưỡng Hà thời kỳ Hậu Uruk.",
+  "what_is_happening": "Các thao tác vật lý theo trình tự thực tế: gom các vật đếm đất sét nhỏ, nặn đất ẩm thành khoang rỗng, đưa vật đếm vào trong, miết kín miệng, tạo vết ấn chỉ báo số lượng và lăn con dấu hình trụ lên bề mặt ướt, rồi để khô.",
+  "what_changes_during_passage": "Trạng thái vật lý của số lượng thay đổi từ những vật đếm rời rạc, tự do di chuyển và trực tiếp nhìn thấy sang một vật thể rắn khép kín, nơi số lượng bị giấu kín bên trong nhưng được chỉ báo một phần ra bề mặt cùng dấu tích xác thực, tạo nên tình trạng muốn kiểm tra đối chiếu bên trong thì buộc phải phá hủy vật chứa.",
+  "begins_at": "Những vật đếm đất sét hình học nhỏ nằm rời rạc trên tay hoặc bề mặt mở trước khi được đưa vào đất sét ẩm.",
+  "stops_before": "Trước khi chuyển sang thực hành ghi nhận trực tiếp trên các phiến đất sét đặc (numerical tablets) hoặc các dạng chữ viết proto-cuneiform sơ khai.",
   "causal_bridges_claimed": [],
   "notebook_threads_to_use": [
-    "Small geometric clay counters (spheres, cones, disks, cylinders) handling quantity in Late Uruk.",
-    "Hollow clay envelopes enclosing counters, creating a physical condition where inspection requires breaking.",
-    "Cylinder seals rolled across wet clay marking custody, authority, or witnessing.",
-    "Exterior impressions on envelopes mirroring enclosed quantities without immediate breakage.",
-    "Solid numerical tablets with reed impressions and seal rollings.",
-    "Coexistence and overlapping of these media without an evolutionary ladder or direct replacement."
+    "Vật đếm đất sét hình học nhỏ (hình cầu, nón, đĩa, trụ) từ một đến ba centimet",
+    "Quy trình chế tác bì thư đất sét rỗng: bọc vật đếm trong đất ẩm, đóng kín, tạo dấu ấn và lăn con dấu hình trụ lên bề mặt, để khô",
+    "Tình trạng vật lý của bì thư đóng kín: vật đếm không nhìn thấy được, mở ra để kiểm tra sẽ phá hủy vật thể; vết ấn bề mặt giúp kiểm tra mà không cần đập vỡ ngay",
+    "Con dấu hình trụ bằng đá khắc chìm lăn thành dải hoa văn liên tục trên đất ướt để đánh dấu quyền lực, lưu giữ hoặc chứng thực"
   ],
   "deliberately_unused_threads": [
-    "Proto-cuneiform pictographic tablets with ruled compartments and commodity/institutional signs (Uruk IV).",
-    "Clay sealings on cord, cloth, or wooden door closures.",
-    "Specific museum specimen numbers (OIM A64678, ChM III-937a) and site-specific provenance details."
+    "Phiến đất sét đặc ghi số (numerical tablets) và phiến ChM III-937a",
+    "Hiện vật vỡ OIM A64678 tại Chogha Mish (chỉ giữ logic vật lý vỡ/kín chứ không dẫn dắt bằng siêu dữ liệu khảo cổ)",
+    "Bảng proto-cuneiform thời Uruk IV và chữ viết tượng hình",
+    "Con dấu và bùn niêm phong trên dây, vải, cửa kho",
+    "Lịch sử hàng thiên niên kỷ của vật đếm tiền thân"
   ]
 }

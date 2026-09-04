@@ -46,6 +46,14 @@ Use only these fields:
 
 Keep this high level. Do not write detailed reasoning, beats, scene plans, hook plans, reveal plans or a prose outline. In `causal_bridges_claimed`, list any historical A→B causal claims you intend to rely on, or `[]` if the passage uses only coexistence, contrast, or material change.
 
+Choose a center of gravity that is primarily contained within **one practice, one material operation, or one evidence-supported local process** (following a sequence of operations and state changes within that bounded practice). Do not choose as your primary movement a cross-media developmental trajectory from one historical practice to another (such as token → envelope → tablet, envelope → tablet, or hidden quantity → surface recording as an overarching transition). A second practice may appear briefly as contrast or as an opening toward the next unfinished passage, but it must not be the destination that gives this passage its narrative movement.
+
+Your composition decision should answer:
+- What material situation are we entering?
+- What physically happens within that bounded practice?
+- What state is different by the time we leave?
+- Where do we deliberately stop before needing another historical practice to create motion?
+
 You are encouraged to ignore most of the notebook. Depth in one bounded thread is preferable to covering everything.
 
 ## Draft
@@ -63,8 +71,13 @@ Requirements:
 - It must deliberately stop before completing the whole P01 movement.
 - Natural when spoken aloud.
 - Historical meaning should emerge from what unfolds rather than from announcing and defending a thesis.
+- Follow the unfolding of physical action and state changes inside the chosen practice, rather than repeatedly announcing or analyzing the conceptual significance of each affordance.
 - Representative ordinary actions explicitly permitted by the notebook may be used as nonfiction reconstruction.
 - You may create continuity in the telling, but do not invent a causal bridge between historical practices. A material contrast, coexistence, or change in affordance does not by itself mean one practice caused, solved, replaced, or developed into another. If the notebook does not support why a new practice appeared, narrate what changes in the material arrangement without supplying the missing historical motive.
+- Do not state that every geometric counter shape represents a specific quantity/item mapping unless explicitly supported.
+- Do not imply a universal one-to-one correspondence between every exterior impression and every enclosed counter.
+- Do not convert a functional affordance into a universal purpose.
+- Do not make co-occurrence evidence prove a developmental relationship.
 - Do not invent named actors, dialogue, private thoughts, motives or unsupported causal conclusions.
 - Do not narrate research metadata or provenance.
 - Do not mechanically recite every uncertainty or boundary. Apply them silently unless a qualification is genuinely needed for the listener.
