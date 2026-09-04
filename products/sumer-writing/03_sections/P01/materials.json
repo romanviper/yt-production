@@ -28,7 +28,6 @@
       "source_relation": "contemporary_material",
       "object_or_trace": "Small unbaked or lightly fired clay geometric shapes (spheres, cones, disks, cylinders), some plain and some incised with geometric marks",
       "actor": "Unknown; an administrative user role is inferred from context",
-      "documented_action": "Clay was modeled into small geometric forms; some examples bear incisions",
       "time": "Late Uruk period (ca. 3400–3200 BCE)",
       "place": "Eanna precinct, Uruk / Warka",
       "physical_description": "Hand-modeled clay objects generally between 1 and 3 cm in dimension, with matte earthen surface and fingernail or stylus incisions",
@@ -41,7 +40,8 @@
         "observed": [{"statement": "Small geometric clay objects survive in several forms; some bear incisions."}],
         "functional_inference": [{"statement": "Some Late Uruk examples participated in numerical or administrative practices.", "qualification": "Supported for bounded late administrative contexts, not a universal code across millennia."}],
         "representative_reconstruction": [],
-        "interpretive_hypothesis": [{"statement": "Tokens formed a direct linear precursor to writing.", "qualification": "Contested; approved evidence supports a parallel ecology of practices."}]
+        "qualified_live_hypothesis": [],
+        "prohibited_or_rejected_inference": [{"statement": "Tokens formed a direct linear precursor to writing.", "qualification": "Contested; approved evidence supports a parallel ecology of practices."}]
       }
     },
     {
@@ -70,7 +70,6 @@
       "source_relation": "contemporary_material",
       "object_or_trace": "Globular hollow clay sphere sealed shut while moist, containing tokens inside and displaying surface impressions of those tokens and cylinder seals on the outside",
       "actor": "Unknown; possible institutional operators are inferred",
-      "documented_action": "Tokens were enclosed in wet clay; impressions and seal rollings were applied to some exteriors",
       "time": "Late Uruk period (ca. 3350–3200 BCE)",
       "place": "Uruk and Susa administrative precincts",
       "physical_description": "Spherical to ovoid clay ball 5 to 7 cm across, with thick walls, hollow core, and overlapping impressed marks and rolled figurative seal impressions",
@@ -83,7 +82,8 @@
         "observed": [{"statement": "Hollow clay envelopes contain tokens and bear exterior impressions and seal rollings."}],
         "functional_inference": [{"statement": "Exterior marks made enclosed quantities inspectable without immediately opening the envelope.", "qualification": "Functional inference from the relation between contents and surface marks."}],
         "representative_reconstruction": [{"statement": "An operator deposits counters, closes the envelope, marks and seals it, then lets it dry.", "qualification": "Manufacture workflow reconstructed from artifact features, not a witnessed event."}],
-        "interpretive_hypothesis": [{"statement": "Bullae emerged specifically to prevent fraud or solve verification at distance.", "qualification": "Causal hypothesis; the artifacts alone do not establish a single motive."}]
+        "qualified_live_hypothesis": [],
+        "prohibited_or_rejected_inference": [{"statement": "Bullae emerged specifically to prevent fraud or solve verification at distance.", "qualification": "Causal hypothesis; the artifacts alone do not establish a single motive."}]
       }
     },
     {
@@ -111,7 +111,6 @@
       "source_relation": "contemporary_material",
       "object_or_trace": "Carved hard stone cylinder (limestone, lapis, calcite) engraved with negative relief of captive processions, animal herds, or administrative activities",
       "actor": "Unknown; an authorized agent or witness role is inferred",
-      "documented_action": "Rolling engraved cylinder across wet clay surface of bullae, jar stoppers, or numerical tablets to leave continuous raised impression",
       "time": "Middle to Late Uruk period (ca. 3500–3100 BCE)",
       "place": "Uruk, Susa, Habuba Kabira",
       "physical_description": "Perforated stone cylinder 2 to 5 cm in length, diameter 1 to 2.5 cm, engraved with micro-relief scenes",
@@ -124,7 +123,8 @@
         "observed": [{"statement": "Engraved cylinders and continuous rolled impressions survive on several clay media."}],
         "functional_inference": [{"statement": "Seal impressions marked an association with authority, custody or witnessing.", "qualification": "Inferred from context; no unique event or speaker is identified."}],
         "representative_reconstruction": [],
-        "interpretive_hypothesis": []
+        "qualified_live_hypothesis": [],
+        "prohibited_or_rejected_inference": []
       }
     },
     {
@@ -153,7 +153,6 @@
       "source_relation": "contemporary_material",
       "object_or_trace": "Cushion-shaped clay tablet bearing impressed circular, semi-circular, and stroke-shaped numerical signs without pictographic script signs",
       "actor": "Unknown; an administrative record-maker role is inferred",
-      "documented_action": "Shaping lump of clay into flattened pillow, pressing blunt round end of reed or wood stylus perpendicularly or at an angle to create numerical impressions, rolling seal across reverse",
       "time": "Late Uruk period, Uruk V to early IV (ca. 3300–3200 BCE)",
       "place": "Eanna district, Uruk; Susa",
       "physical_description": "Thick rounded rectangular clay tablet, roughly palm-sized, with distinct deep round depressions and oblique circular cups",
@@ -166,7 +165,8 @@
         "observed": [{"statement": "Clay tablets bear round and oblique numerical impressions and sometimes seal rollings."}],
         "functional_inference": [{"statement": "The impressed marks record numerical information.", "qualification": "Supported by specialist comparison and administrative context."}],
         "representative_reconstruction": [{"statement": "A record-maker shapes damp clay and applies differently angled impressions before drying it.", "qualification": "Reconstructed manufacture sequence, not a documented individual act."}],
-        "interpretive_hypothesis": [{"statement": "Numerical tablets were a necessary direct step toward proto-cuneiform.", "qualification": "Genealogical interpretation remains non-linear and contested."}]
+        "qualified_live_hypothesis": [],
+        "prohibited_or_rejected_inference": [{"statement": "Numerical tablets were a necessary direct step toward proto-cuneiform.", "qualification": "Genealogical interpretation remains non-linear and contested."}]
       }
     },
     {
@@ -195,7 +195,6 @@
       "source_relation": "contemporary_material",
       "object_or_trace": "Clay tablet ruled into compartments (cases), combining impressed numerical notations with incised pictographic signs representing commodities, persons, and institutions",
       "actor": "Unknown; a trained administrative record-maker is inferred",
-      "documented_action": "Scoring dividing lines into soft clay with pointed stylus, pressing numerical punches, incising ideographic drawings (heads, grain sheaves, vessels, animals), totaling sums on reverse",
       "time": "Uruk IV period (ca. 3300–3100 BCE)",
       "place": "Eanna Temple Complex, Uruk",
       "physical_description": "Convex clay tablet 5 to 8 cm square, light buff or greyish clay, clearly divided by incision lines with deeply impressed numerals and thin drawn pictographs",
@@ -208,7 +207,8 @@
         "observed": [{"statement": "Ruled tablets combine impressed numerals with incised pictographic signs in compartments."}],
         "functional_inference": [{"statement": "The layout organizes quantities and categories for accounting.", "qualification": "Inferred from corpus, sign distribution and document structure."}],
         "representative_reconstruction": [{"statement": "A record-maker rules compartments, enters marks, and may total entries on the reverse.", "qualification": "Representative recording workflow; no named writer or event survives."}],
-        "interpretive_hypothesis": []
+        "qualified_live_hypothesis": [],
+        "prohibited_or_rejected_inference": []
       }
     },
     {
@@ -236,7 +236,6 @@
       "source_relation": "contemporary_material",
       "object_or_trace": "Cut marsh reed (Phragmites australis) stalks with carved pointed end for incising curved lines and blunt rounded/semi-circular ends for numerical punches",
       "actor": "Unknown record-maker",
-      "documented_action": "Differently shaped tool tips were pressed or drawn through wet clay",
       "time": "Late Uruk period (ca. 3300–3000 BCE)",
       "place": "Southern Mesopotamian riverine and marsh landscape",
       "physical_description": "Short slender reed stalk 10 to 15 cm long, smooth exterior siliceous rind, cut diagonally and rounded on opposite ends",
@@ -249,7 +248,8 @@
         "observed": [{"statement": "Clay surfaces preserve rounded impressions and incised lines made by differently shaped tips."}],
         "functional_inference": [{"statement": "Reed tools likely produced these marks.", "qualification": "Tool morphology is reconstructed from impressions because the tools rarely survive."}],
         "representative_reconstruction": [{"statement": "A record-maker shapes a reed, then presses or draws it at different angles in wet clay.", "qualification": "Plausible reconstruction, not a directly observed workflow."}],
-        "interpretive_hypothesis": []
+        "qualified_live_hypothesis": [],
+        "prohibited_or_rejected_inference": []
       }
     },
     {
@@ -278,7 +278,6 @@
       "source_relation": "contemporary_material",
       "object_or_trace": "Clay sealings (cretulae) pressed over woven reed mats, jar cloth covers, wooden pegs inserted into storeroom walls, with cord impressions on underside and seal rollings on top",
       "actor": "Unknown; custody and inspection roles are inferred",
-      "documented_action": "Clay was pressed over cord, cloth, wood or closures and marked with seal rollings",
       "time": "Late Uruk period (ca. 3400–3100 BCE)",
       "place": "Institutional storehouses in Eanna, Uruk",
       "physical_description": "Irregular lumps of clay bearing negative impressions of rope, wood pegs, or coarse cloth on interior face and multiple seal rollings on exterior",
@@ -291,7 +290,8 @@
         "observed": [{"statement": "Clay sealings preserve impressions of cord, cloth or wood and exterior seal rollings."}],
         "functional_inference": [{"statement": "Sealings participated in controlling or evidencing access.", "qualification": "Inferred from attachment traces and find contexts."}],
         "representative_reconstruction": [{"statement": "An operator binds a closure, presses clay over it and rolls a seal; later access breaks it.", "qualification": "Representative custody workflow, not a documented incident."}],
-        "interpretive_hypothesis": []
+        "qualified_live_hypothesis": [],
+        "prohibited_or_rejected_inference": []
       }
     },
     {
@@ -331,7 +331,8 @@
         "observed": [{"statement": "Many similarly formed bevel-rimmed bowls occur in Uruk-period contexts alongside records."}],
         "functional_inference": [{"statement": "The bowls may have served standardized portions in provisioning.", "qualification": "The bowl-volume and ration-sign connection is analytical and varies by site."}],
         "representative_reconstruction": [{"statement": "Workers assemble, an official checks an allocation, grain is measured, and a record is updated.", "qualification": "Composite reconstruction; not a documented unique event."}],
-        "interpretive_hypothesis": [{"statement": "This workflow proves a redistribution system caused writing to emerge.", "qualification": "Causal synthesis exceeds what the association alone proves."}]
+        "qualified_live_hypothesis": [],
+        "prohibited_or_rejected_inference": [{"statement": "This workflow proves a redistribution system caused writing to emerge.", "qualification": "Causal synthesis exceeds what the association alone proves."}]
       }
     }
   ]

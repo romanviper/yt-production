@@ -1,6 +1,6 @@
 # Probe 2 owner checkpoint — P01
 
-Status: `awaiting_human_review`
+Status: `awaiting_human_review_after_feedback_corrections`
 
 ## Mission
 
@@ -19,8 +19,12 @@ added during material reclassification.
 ## Material layer summary
 
 Eight records now distinguish observed material, functional inference,
-representative reconstruction and interpretive/causal hypothesis. Inferred actor
+representative reconstruction, qualified live hypothesis and prohibited/rejected
+inference. Inferred actor
 roles are labeled unknown/inferred; global representativeness language was narrowed.
+Reconstructed workflows no longer remain duplicated in top-level
+`documented_action` or `explicit_sequence`. Writer retrieval receives usable
+layers separately from a concise `red_lines` constraint surface.
 
 ## Epistemic warnings
 
@@ -33,3 +37,8 @@ roles are labeled unknown/inferred; global representativeness language was narro
 
 No Probe 2 Writer task has been created. A fresh material snapshot and task may be
 bound only after human review of this checkpoint.
+
+Deterministic `historical_change` validation is only a guardrail against common
+thesis-shaped formulations. It cannot prove semantic route-neutrality. This owner
+checkpoint remains the authority for deciding whether the movement observes a
+historical change without pre-authoring its explanation.
