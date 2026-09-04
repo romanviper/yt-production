@@ -12,6 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 PROBE_ROOT = REPO_ROOT / "products" / "sumer-writing" / "03_sections" / "P01" / "probes" / "hsub-clean-01"
 EXPECTED_EFFECTIVE_SHA256 = "338b3b14c425c0907f9920fc8a7240dfbe427f890750fba4ed4c97e83b57140a"
 EXPECTED_CANONICAL_SHA256 = "65992acd578be4c3c72ae31de43cc4ff1231b6c63946fa33d8d3a5f30c7e3084"
+READY_STATUS = "READY_FOR_FRESH_WRITER_EXECUTION"
 
 
 class P01ProbeExecutorTest(unittest.TestCase):
@@ -27,7 +28,7 @@ class P01ProbeExecutorTest(unittest.TestCase):
                 check=False,
             )
             self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-            self.assertIn("AUTHORIZED_TO_RUN_FRESH_P01_PROBE", result.stdout)
+            self.assertIn(READY_STATUS, result.stdout)
             context = context_path.read_text(encoding="utf-8")
             packet = json.loads(packet_path.read_text(encoding="utf-8"))
             self.assertEqual(
