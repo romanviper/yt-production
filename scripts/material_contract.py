@@ -30,7 +30,8 @@ EPISTEMIC_LAYERS = (
     "observed",
     "functional_inference",
     "representative_reconstruction",
-    "interpretive_hypothesis",
+    "qualified_live_hypothesis",
+    "prohibited_or_rejected_inference",
 )
 
 FORBIDDEN_CREATIVE_FIELDS = {
@@ -181,12 +182,23 @@ def validate_material_record(
         if not layers.get("observed"):
             errors.append(f"{label} requires at least one observed material statement")
 
+        reconstruction_text = " ".join(
+            str(entry.get("statement", "")).strip().lower()
+            for entry in layers.get("representative_reconstruction", [])
+            if isinstance(entry, dict)
+        )
+        documented = item.get("documented_action")
+        if isinstance(documented, str) and documented.strip() and documented.strip().lower() in reconstruction_text:
+            errors.append(f"{label} documented_action duplicates representative reconstruction")
+        if require_epistemic_layers and item.get("explicit_sequence"):
+            errors.append(f"{label} schema-v2 explicit_sequence must be classified inside epistemic_layers")
+
     if isinstance(item.get("representativeness"), str) and item["representativeness"].strip():
         represented = []
         if isinstance(layers, dict):
             represented = (
                 (layers.get("functional_inference") if isinstance(layers.get("functional_inference"), list) else [])
-                + (layers.get("interpretive_hypothesis") if isinstance(layers.get("interpretive_hypothesis"), list) else [])
+                + (layers.get("qualified_live_hypothesis") if isinstance(layers.get("qualified_live_hypothesis"), list) else [])
             )
         if not represented:
             errors.append(f"{label} representativeness must be qualified in an inference layer")

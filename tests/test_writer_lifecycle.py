@@ -421,6 +421,15 @@ class WriterLifecycleRegression(unittest.TestCase):
                 approve_section(product, "P01")
 
             review_path.write_text(review_text, encoding="utf-8")
+            state_path = root / "section.json"
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            state["review_provenance"]["authority"] = "stale_mismatched_non_authoritative"
+            write_json(state_path, state)
+            with self.assertRaisesRegex(ValueError, "stale/mismatched and non-authoritative"):
+                approve_section(product, "P01")
+
+            state["review_provenance"].pop("authority")
+            write_json(state_path, state)
             approve_section(product, "P01")
             approved = json.loads((root / "section.json").read_text(encoding="utf-8"))
             self.assertTrue(approved["human_approved"])

@@ -19,7 +19,9 @@ _INADEQUACY_MARKERS = (
 )
 _SOLUTION_MARKERS = (
     "therefore", "to solve", "allowing", "enabled", "enables", "so that",
-    "do đó", "để giải quyết", "cho phép", "nhờ đó",
+    "became a system", "formed a system", "external memory", "replacement",
+    "do đó", "để giải quyết", "cho phép", "nhờ đó", "hình thành hệ thống",
+    "trí nhớ ngoại thân", "thay thế",
 )
 
 
@@ -29,7 +31,7 @@ def validate_historical_change_semantics(value: Any, prefix: str) -> list[str]:
         return []
     before = str(value.get("from") or "").lower()
     after = str(value.get("to") or "").lower()
-    if any(term in before for term in _INADEQUACY_MARKERS) and any(term in after for term in _SOLUTION_MARKERS):
+    if any(term in before for term in _INADEQUACY_MARKERS) or any(term in after for term in _SOLUTION_MARKERS):
         return [
             f"{prefix} historical_change must describe observable/evidentiary states, "
             "not an inadequacy→solution→capability explanation"

@@ -73,6 +73,28 @@ class EvidenceAccessError(ValueError):
     pass
 
 
+def writer_epistemic_projection(layers: dict[str, Any]) -> dict[str, Any]:
+    """Separate usable Writer material from rejected-inference red lines."""
+    usable = {
+        name: layers.get(name, [])
+        for name in (
+            "observed",
+            "functional_inference",
+            "representative_reconstruction",
+            "qualified_live_hypothesis",
+        )
+    }
+    result: dict[str, Any] = {"epistemic_layers": usable}
+    rejected = layers.get("prohibited_or_rejected_inference", [])
+    if rejected:
+        result["red_lines"] = [
+            {"prohibited": item.get("statement"), "basis": item.get("qualification")}
+            for item in rejected
+            if isinstance(item, dict)
+        ]
+    return result
+
+
 def _json_hash(value: Any) -> str:
     text = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
@@ -760,8 +782,9 @@ class DraftEvidenceBroker:
             }
             if details not in (None, "", []):
                 entry["details"] = details
-            if material.get("epistemic_layers"):
-                entry["epistemic_layers"] = material.get("epistemic_layers")
+            layers = material.get("epistemic_layers")
+            if isinstance(layers, dict):
+                entry.update(writer_epistemic_projection(layers))
             for field in [
                 "actor",
                 "object_or_trace",

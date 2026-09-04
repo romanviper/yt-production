@@ -63,7 +63,8 @@ These fields are evidence observations. They must not assign an opening, focal c
 
 Every material record keeps four epistemic layers visible to downstream retrieval:
 observed/materially attested detail; source-supported functional inference;
-representative operational reconstruction; and interpretive/causal hypothesis.
+representative operational reconstruction; qualified live hypothesis; and
+prohibited/rejected inference.
 Concrete wording must not collapse those layers. In particular, a plausible actor
 or reconstructed workflow is not `documented_action`, and representativeness is
 always qualified to the source-supported corpus or context.

@@ -47,9 +47,10 @@ When a section's evidence territory contains only abstract claims and propositio
    - `source_refs`: source IDs from the section evidence pack with narrow, specific locators;
    - `limitations`: explicit boundaries on what the evidence does and does not prove;
    - `source_relation`: classification of source proximity to the narrated reality.
-   - `epistemic_layers`: four explicit lists named `observed`,
+   - `epistemic_layers`: five explicit lists named `observed`,
      `functional_inference`, `representative_reconstruction`, and
-     `interpretive_hypothesis`. Each entry has a `statement`; every
+     `qualified_live_hypothesis`, plus `prohibited_or_rejected_inference`.
+     Each entry has a `statement`; every
      non-observed entry also has a source-honest `qualification`.
 2. Concrete factual affordances must preserve their epistemic layer. A manufacture
    action visible in an artifact may be `documented_action`; a complete workflow
@@ -57,4 +58,5 @@ When a section's evidence territory contains only abstract claims and propositio
    documented incident. Unknown actors remain unknown; plausible roles are labeled
    inferred. Representativeness claims require a qualified inference and bounded
    source scope—never unsupported `universal`, `standard`, or `canonical`.
+   Rejected inference is a red-line surface, not a positive Writer affordance.
 3. Output materials must be consolidated into the section territory and available to the writer via the bounded evidence broker.

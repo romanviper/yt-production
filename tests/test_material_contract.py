@@ -7,7 +7,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from scripts.draft_evidence import DraftEvidenceBroker, EvidenceAccessError
+from scripts.draft_evidence import DraftEvidenceBroker, EvidenceAccessError, writer_epistemic_projection
 from scripts.material_contract import (
     FORBIDDEN_CREATIVE_FIELDS,
     VALID_MATERIAL_KINDS,
@@ -51,7 +51,8 @@ class MaterialContractTests(unittest.TestCase):
                     "qualification": "Inferred from its administrative context and comparison."
                 }],
                 "representative_reconstruction": [],
-                "interpretive_hypothesis": []
+                "qualified_live_hypothesis": [],
+                "prohibited_or_rejected_inference": []
             },
         }
 
@@ -112,9 +113,26 @@ class MaterialContractTests(unittest.TestCase):
             "observed": [{"statement": "A seal impression survives."}],
             "functional_inference": [{"statement": "It authenticated a transfer."}],
             "representative_reconstruction": [],
-            "interpretive_hypothesis": [],
+            "qualified_live_hypothesis": [],
+            "prohibited_or_rejected_inference": [],
         }
         self.assertTrue(any("requires qualification" in error for error in validate_material_record(bad)))
+
+    def test_schema_v2_rejects_workflow_duplicated_as_documented_fact(self) -> None:
+        bad = dict(self.valid_record)
+        bad["documented_action"] = "shape clay, press signs, and seal the reverse"
+        bad["epistemic_layers"] = {
+            "observed": [{"statement": "The tablet bears impressed signs."}],
+            "functional_inference": [],
+            "representative_reconstruction": [{
+                "statement": "shape clay, press signs, and seal the reverse",
+                "qualification": "Workflow reconstructed from morphology."
+            }],
+            "qualified_live_hypothesis": [],
+            "prohibited_or_rejected_inference": [],
+        }
+        errors = validate_material_record(bad, require_epistemic_layers=True)
+        self.assertTrue(any("duplicates representative reconstruction" in error for error in errors))
 
     def test_validate_materials_file(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -149,6 +167,22 @@ class MaterialContractTests(unittest.TestCase):
             with self.assertRaises(EvidenceAccessError) as ctx:
                 broker.call("source", {"id": "SRC-0001"})
             self.assertIn("forbidden creative-authority field: story_role", str(ctx.exception))
+
+    def test_writer_broker_projects_rejected_inference_only_as_red_line(self) -> None:
+        projected = writer_epistemic_projection({
+            "observed": [{"statement": "Marks survive on clay."}],
+            "functional_inference": [],
+            "representative_reconstruction": [],
+            "qualified_live_hypothesis": [],
+            "prohibited_or_rejected_inference": [{
+                "statement": "Memory failure caused writing.",
+                "qualification": "Not established by the evidence.",
+            }],
+        })
+        usable = json.dumps(projected["epistemic_layers"])
+        self.assertNotIn("prohibited_or_rejected_inference", projected["epistemic_layers"])
+        self.assertNotIn("Memory failure caused writing.", usable)
+        self.assertEqual("Memory failure caused writing.", projected["red_lines"][0]["prohibited"])
 
 
 if __name__ == "__main__":
