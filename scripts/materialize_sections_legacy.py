@@ -124,6 +124,11 @@ def materialize(product_dir: Path) -> list[Path]:
             state["mission"] = mission
         if isinstance(item.get("transition"), str) and item["transition"].strip():
             state["transition"] = item["transition"].strip()
+        hist_change = item.get("historical_change") or item.get("historical_movement")
+        if hist_change is not None:
+            state["historical_change"] = hist_change
+        if isinstance(item.get("earned_meaning"), str) and item["earned_meaning"].strip():
+            state["earned_meaning"] = item["earned_meaning"].strip()
         if current_contract:
             section_acts = list(dict.fromkeys(movement["act_id"] for movement in section_movements))
             state["movement_ids"] = [movement["id"] for movement in section_movements]

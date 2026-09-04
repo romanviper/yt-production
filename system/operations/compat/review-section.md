@@ -2,7 +2,7 @@
 
 ## Responsibility
 
-Evaluate; do not rewrite. Judge whether one hearing lets the audience answer the mission and retell its historical path. Also judge exit state, causal clarity, current/next boundary, continuity and evidence integrity. Use bounded evidence for unresolved facts; do not scan the repository.
+Evaluate; do not rewrite. Apply the Outcome Evaluation Standard, including its hook-and-retention priority. Also judge exit state, current/next boundary and evidence integrity. Use bounded evidence for unresolved facts; do not scan the repository.
 
 ## Exact output contract
 
