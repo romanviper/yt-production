@@ -1,0 +1,19 @@
+{
+  "center_of_gravity": "Sự dịch chuyển của vị trí lưu giữ thông tin số lượng: từ các vật thể vật lý giấu kín trong lòng phong bao đất sét rỗng sang các dấu ấn hiển thị trực tiếp trên bề mặt đất rắn.",
+  "what_is_happening": "Các thao tác bọc những con tính hình học vào khối đất dẻo, lăn con dấu niêm phong, ấn dấu đối chiếu lên bề mặt ngoài, và sự xuất hiện song hành của các phiến đất số đặc hình lòng bàn tay.",
+  "what_changes_during_passage": "Cách thức kiểm tra số lượng: từ chỗ hoàn toàn phụ thuộc vào việc đập vỡ lớp vỏ phong bao để nhìn thấy các vật đếm bên trong, sang chỗ có thể đọc trực tiếp các dấu ấn trên bề mặt đất sét mà không cần phá hủy vật thể.",
+  "begins_at": "Thao tác đặt các con tính đất sét nhỏ vào lòng đất ẩm để tạo thành một phong bao rỗng nhằm cố định số lượng.",
+  "stops_before": "Các bảng đất proto-cuneiform thời Uruk IV với các ô phân chia phức tạp, chữ tượng hình chỉ hàng hóa và bảng tổng kết ở mặt sau.",
+  "notebook_threads_to_use": [
+    "Các vật đếm hình học nhỏ và phong bao đất sét rỗng",
+    "Thao tác bọc đất, lăn con dấu hình trụ và tạo dấu ấn bên ngoài",
+    "Nghịch lý vật lý của phong bao kín và sự ra đời của dấu ấn bề mặt",
+    "Phiến đất số đặc hình lòng bàn tay và sự song hành của các thực hành"
+  ],
+  "deliberately_unused_threads": [
+    "Bảng đất proto-cuneiform Uruk IV có kẻ ô, chữ tượng hình và bảng tổng kết mặt sau",
+    "Các cục đất niêm phong chốt cửa, dây buộc đồ vật hay bao bì",
+    "Hiện vật và số hiệu bảo tàng cụ thể tại Chogha Mish (OIM A64678, ChM III-937a)",
+    "Lịch sử hàng thiên niên kỷ của các con tính trước thời kỳ Uruk muộn"
+  ]
+}
