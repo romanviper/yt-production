@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "mission_id": "PRODUCT_REVIEWER_CALIBRATION_V1",
+  "passage_count": 4,
+  "description": "Contrasting passage calibration fixture to verify Product Reviewer ability to distinguish genuine narrative carrier from explanatory essay, static catalogue, and invented causal drama.",
+  "passages": [
+    {
+      "passage_id": "CAL-PROD-001",
+      "title": "The Administrative Evolution of Clay Accounting",
+      "mode": "EXPLANATORY_ESSAY",
+      "text": "Vào thiên niên kỷ thứ tư trước Công nguyên tại miền nam Lưỡng Hà, sự hình thành của các đô thị cổ đại đã kéo theo sự phát triển mạnh mẽ của hệ thống hành chính. Ban đầu, các nhà quản lý Sumer sử dụng các con tính bằng đất sét nhỏ với nhiều hình dạng khác nhau như viên bi, hình nón, đĩa dẹt và ống trụ để biểu thị các đại lượng hàng hóa cụ thể như ngũ cốc, gia súc hoặc ngày công lao động. Khi số lượng giao dịch gia tăng, nhu cầu bảo mật thông tin đã dẫn đến việc sáng tạo ra các phong bao đất sét rỗng (bullae). Các con tính được bọc kín bên trong và niêm phong bằng cách lăn con dấu hình trụ trên bề mặt ngoài. Để biết được số lượng bên trong mà không phải đập vỡ phong bao, người ta đã ấn các dấu vết lên mặt ngoài để phản chiếu số lượng con tính bên trong. Cuối cùng, phương pháp này đã tiến hóa thành các phiến đất số đặc, nơi các con số được ghi trực tiếp bằng đầu que sậy lên bề mặt phẳng, đặt nền móng cho hệ thống chữ viết sau này."
+    },
+    {
+      "passage_id": "CAL-PROD-002",
+      "title": "Bẫy kịch tính suy diễn: Cuộc đối đầu giữa viên quan và người chăn cừu",
+      "mode": "INVENTED_CAUSAL_DRAMA",
+      "text": "Dưới cái nắng gay gắt của buổi trưa Uruk, viên quan cai quản kho đầm đìa mồ hôi đứng nhìn đàn cừu mệt mỏi tiến vào cổng thành. Ông ta nheo mắt nhìn người chăn cừu trẻ tuổi với ánh mắt đầy nghi kỵ. Trong lòng viên quan dấy lên nỗi lo sợ quen thuộc: người chăn cừu này chắc chắn đã bớt xén vài con cừu trên đường vận chuyển từ đồng cỏ xa xôi, rồi sẽ viện cớ bị chó sói tấn công để trốn tránh trách nhiệm. Không thể tin vào lời nói hay trí nhớ của kẻ chăn cừu, viên quan lập tức lấy một nắm đất sét ẩm, vo tròn và nhét chính xác 15 viên bi đất tượng trưng cho 15 con cừu vào ruột, rồi miết chặt lại. Ông ta lăn con dấu đá hình trụ của mình lên bề mặt để đe dọa người chăn cừu rằng nếu dám đập vỡ chiếc phong bao này thì hình phạt của các vị thần sẽ giáng xuống đầu anh ta. Chính nỗi sợ gian lận và sự ngờ vực sâu sắc này giữa những con người trong xã hội đô thị đã trở thành động lực duy nhất khai sinh ra toàn bộ hệ thống phong bao đất sét và mở đường cho chữ viết."
+    },
+    {
+      "passage_id": "CAL-PROD-003",
+      "title": "Bản kê hiện vật: Bộ sưu tập đất sét thời Uruk",
+      "mode": "STATIC_CATALOGUE",
+      "text": "Các hiện vật đất sét thời Uruk muộn được khai quật tại miền nam Lưỡng Hà bao gồm nhiều nhóm vật thể đặc thù. Nhóm thứ nhất là các con tính hình học, kích thước dao động từ 1 đến 3 centimet, bề mặt có màu nâu đất thô ráp, một số mang các vết khía song song hoặc lỗ bấm li ti được tạo bởi que nhọn. Nhóm thứ hai là các phong bao đất sét hình cầu rỗng, đường kính khoảng 5 đến 7 centimet, độ dày thành từ 1 đến 2 centimet, bên trong chứa từ vài đến vài chục con tính rời rạc. Nhóm thứ ba là các con dấu hình trụ bằng đá mềm như đá vôi, đá steatite, dài 2 đến 4 centimet, đường kính 1 centimet, khắc chìm đồ án động vật như bò, sư tử hoặc cảnh sinh hoạt. Nhóm thứ tư là các mảnh phiến đất sét đặc hình chữ nhật vát góc, kích thước lòng bàn tay, bề mặt mang vết ấn tròn lõm sâu và rãnh vát bán nguyệt."
+    },
+    {
+      "passage_id": "CAL-PROD-004",
+      "title": "Dấu chân trong đổ nát: Cuộc hành trình năm 1625",
+      "mode": "GENUINE_NARRATIVE_MOVEMENT",
+      "text": "Vào tháng Sáu năm 1625, giữa cái nóng thiêu đốt của hoang mạc Lưỡng Hà, một quý tộc người Ý tên là Pietro della Valle cùng đoàn tùy tùng đang phải di chuyển trong nỗi sợ hãi tột cùng. Vùng đất quanh họ đang chìm trong cuộc chiến tranh tàn khốc giữa Đế quốc Ottoman và Ba Tư, trong khi các toán cướp sa mạc liên tục lùng sục những kẻ lữ hành đơn độc. Nhận thấy nguy hiểm cận kề trên đường chân trời, những người dẫn đường Ả Rập vội vã đưa Della Valle ẩn náu dưới chân những gò đồi nhân tạo khổng lồ—những phế tích đồ sộ nổi lên giữa hư không mà không ai biết tên. Trong những ngày dài ẩn nấp chờ đợi đoàn đàm phán xin lối đi an toàn, Della Valle bắt đầu đi dạo giữa những đống gạch vụn khô cằn. Dưới chân ông rải rác những mảnh đất nung mang hoa văn kỳ lạ: những viên gạch được gắn kết bằng hắc ín thay vì vữa vôi, và trên mặt chúng dập nổi những ký tự hình nêm sắc nhọn chưa từng được ai ở châu Âu nhìn thấy. Della Valle cúi xuống, nhặt một mẩu đất sét nhỏ lên lòng bàn tay. Ông nhìn những ký hiệu bí ẩn như hình mũi tên và ngôi sao tám cánh, tự hỏi: ai đã xây dựng nên những tòa thành sừng sững giữa sa mạc hoang vu này, và làm thế nào mà một thành phố vĩ đại như thế lại có thể biến mất không dấu vết vào lòng đất?"
+    }
+  ]
+}

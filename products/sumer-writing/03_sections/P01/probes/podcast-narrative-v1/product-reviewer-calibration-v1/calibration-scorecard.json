@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "mission_id": "PRODUCT_REVIEWER_CALIBRATION_V1",
+  "status": "PRODUCT_REVIEWER_CALIBRATION_PASS",
+  "evaluator": "Product Quality Reviewer (Calibration V1)",
+  "conversation_id": "69bc0fd4-d3e4-4c1b-b040-fed6d9114436",
+  "raw_artifact": "product-reviewer-calibrated-raw.json",
+  "gold_reference": "product-calibration-gold.json",
+  "scoring_policy": "scoring-policy-and-protocol.md",
+  "metrics": {
+    "PVA_percent": 100.0,
+    "MCA_percent": 100.0,
+    "CDA_percent": 100.0,
+    "QPA_percent": 100.0,
+    "CALIBRATION_RESULT": "PRODUCT_REVIEWER_CALIBRATION_PASS"
+  },
+  "summary": {
+    "PVA": "4/4 (100.0%)",
+    "MCA": "4/4 (100.0%)",
+    "CDA": "4/4 (100.0%)",
+    "QPA": "4/4 (100.0%)",
+    "REVIEWER_ADDED_INTERPRETATION": "0 unacknowledged violations",
+    "TRUTH_BOUNDARY_CROSSINGS": "0 violations",
+    "FINAL_VERDICT": "PRODUCT_REVIEWER_CALIBRATION_PASS"
+  },
+  "mismatches": []
+}

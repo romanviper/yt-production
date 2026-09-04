@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "mission_id": "PRODUCT_REVIEWER_CALIBRATION_V1",
+  "description": "Frozen gold evaluation key for Product Quality Reviewer calibration.",
+  "passage_count": 4,
+  "evaluations": [
+    {
+      "passage_id": "CAL-PROD-001",
+      "mode": "EXPLANATORY_ESSAY",
+      "expected_verdict": "FAIL",
+      "carrier_status": "CARRIER_ABSENT",
+      "question_status": "NO_SUSTAINED_QUESTION",
+      "sensory_anchoring": "LOW_OR_ABSTRACT",
+      "narrative_momentum": "EXPLANATORY_ONLY",
+      "scale_shifts": "MINIMAL_CHRONOLOGICAL",
+      "prohibited_reviewer_behavior": "Must NOT hallucinate a dramatic human story or declare this passage engaging history podcast prose. Must identify it as an educational explainer/textbook essay.",
+      "rationale": "Classic explanatory essay. Smooth and informative, but completely lacks a narrative carrier, dramatic tension, or reason to keep listening beyond textbook curiosity."
+    },
+    {
+      "passage_id": "CAL-PROD-002",
+      "mode": "INVENTED_CAUSAL_DRAMA",
+      "expected_verdict": "FAIL",
+      "carrier_status": "CARRIER_PRESENT_BUT_FABRICATED",
+      "question_status": "SUPERFICIAL_MELODRAMA",
+      "sensory_anchoring": "HIGH_MELODRAMATIC",
+      "narrative_momentum": "INVENTED_PSYCHOLOGICAL_DRAMA",
+      "scale_shifts": "LOCAL_MICROCENE_ONLY",
+      "prohibited_reviewer_behavior": "Must NOT reward the passage for 'good storytelling' without flagging that its entire momentum depends on invented private thoughts, undocumented psychological suspicion, and teleological fraud attribution.",
+      "rationale": "High surface momentum, but constructed entirely out of invented historical causality and unevidenced private motives. Fails the benchmark standard of emotional weight from evidence not hyperbole."
+    },
+    {
+      "passage_id": "CAL-PROD-003",
+      "mode": "STATIC_CATALOGUE",
+      "expected_verdict": "FAIL",
+      "carrier_status": "CARRIER_ABSENT",
+      "question_status": "NO_SUSTAINED_QUESTION",
+      "sensory_anchoring": "HIGH_BUT_DISCONNECTED_PHYSICAL_CATALOGUE",
+      "narrative_momentum": "STATIC_EXPOSITION",
+      "scale_shifts": "NONE",
+      "prohibited_reviewer_behavior": "Must NOT confuse physical measurements and artifact details with narrative progression. Must identify absence of narrative movement and carrier.",
+      "rationale": "Static museum inventory. Rich in physical measurements and typology, but completely devoid of temporal movement, human agency, or narrative progression."
+    },
+    {
+      "passage_id": "CAL-PROD-004",
+      "mode": "GENUINE_NARRATIVE_MOVEMENT",
+      "expected_verdict": "PASS",
+      "carrier_status": "CARRIER_AUTHENTIC_AND_PERSISTENT",
+      "question_status": "SUSTAINED_AUTHENTIC_INVESTIGATION",
+      "sensory_anchoring": "VIVID_PHYSICAL_WITH_PROVENANCE",
+      "narrative_momentum": "FORWARD_DRIVEN_BY_SITUATION_AND_DISCOVERY",
+      "scale_shifts": "EFFORTLESS_TRANSITION_INDIVIDUAL_TO_CIVILIZATION",
+      "prohibited_reviewer_behavior": "Must NOT reject passage merely because it describes a 17th-century traveler rather than Late Uruk directly; must recognize that Pietro della Valle acts as a legitimate narrative carrier introducing the ancient world with authentic historical stakes.",
+      "rationale": "Meets the Fall of Civilizations benchmark standard: authentic documented carrier, genuine stakes, tangible physical encounter with inscribed clay, natural question progression, and seamless transition from human danger to monumental lost civilization."
+    }
+  ]
+}
