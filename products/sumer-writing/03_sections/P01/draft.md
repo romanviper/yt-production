@@ -1,13 +1,21 @@
-# P01 — Trước chữ viết đã có một bài toán phải giải
+# P01 — Probe 2
 
-Nửa sau thiên niên kỷ thứ tư trước Công nguyên, đô thị Uruk trải rộng trên vùng đồng bằng phù sa phía nam Lưỡng Hà. Giữa những bờ kênh và những cụm dân cư mở rộng nhanh chóng, khu đền Eanna trở thành nơi tập trung một dòng chảy vật chất chưa từng có: ngũ cốc từ những cánh đồng cách xa hàng chục cây số, cừu và len từ các bầy gia súc ngoại vi, cùng hàng nghìn lao dịch nhận khẩu phần hàng ngày được đong bằng những chiếc bát đất nặn thô vát miệng.
+Một khối đất sét rỗng đã bị vỡ. Nhờ vậy, thứ từng được giấu kín bên trong nó mới lộ ra: những vật nhỏ bằng đất sét, có viên tròn, có viên hình nón, có miếng dẹt như một chiếc đĩa.
 
-Trong một không gian như vậy, bài toán đầu tiên của những người quản lý không phải là ghi lại lời nói, mà là giữ cho các nghĩa vụ vật chất không bị trôi mất theo thời gian.
+Khi khối đất sét ấy còn nguyên, không ai có thể nhìn thấy chúng.
 
-Trước khi bất kỳ chữ viết nào xuất hiện, người ta đã đếm và ghi nhớ bằng những vật thể cụ thể. Trong các gian phòng kho và lối đi của Eanna, những viên đất sét nhỏ nặn bằng tay—hình cầu, hình nón, hình đĩa, kích thước chỉ từ một đến ba centimet—được phân loại để đại diện cho từng đơn vị hàng hóa. Cùng lúc đó, các chốt cửa kho bằng gỗ và nút vải buộc trên miệng chum dầu được trát một lớp đất sét ướt, rồi lăn qua bằng con lăn ấn đá khắc chìm để chứng thực người chịu trách nhiệm. Những công cụ này hoạt động hiệu quả trong các cuộc giao dịch trực tiếp, nơi người giao và người nhận đứng đối diện nhau, có thể nhìn thấy đồ vật đổi tay và cùng đồng thuận về số lượng.
+Những vật như thế xuất hiện trong các tầng khảo cổ thuộc thời Late Uruk. Một số chỉ nhỏ từ một đến ba centimet. Có vật để trơn; có vật mang những đường khía. Chúng thường được gọi là token, nhưng cái tên ấy dễ khiến mọi thứ có vẻ chắc chắn hơn thực tế. Những vật nhỏ tương tự đã tồn tại rất lâu và có thể từng được dùng theo nhiều cách khác nhau. Chỉ trong những bối cảnh hành chính muộn, một phần trong số chúng mới có thể được gắn tương đối chắc với việc ghi số lượng.
 
-Nhưng khi quy mô quản trị tăng lên, sự tin cậy dựa trên mặt đối mặt bắt đầu vỡ vụn. Một chuyến hàng ngũ cốc thu từ một làng xa không thể đi kèm với trí nhớ của người gặt suốt nhiều ngày đường; một người giữ kho không thể nhớ tuần trước mình đã phát bao nhiêu khẩu phần lúa mạch nếu chỉ nhìn vào những viên token rời rạc có thể dễ dàng rơi mất hoặc bị nhặt bớt khỏi giỏ. Trí nhớ con người có giới hạn, còn các vật phẩm kiểm đếm rời rạc thì không có khả năng tự bảo vệ mình trước sự hoài nghi hay gian lận.
+Khối vỏ bọc bên ngoài còn kỳ lạ hơn.
 
-Chính áp lực đó đã thúc đẩy một bước chuyển vật chất quan trọng. Để biến việc kiểm đếm thành một cam kết không thể bị thay đổi dọc đường, những người quản lý đã gom các viên token vào trong một khối đất sét rỗng, miết kín miệng lại thành một quả cầu bulla. Trước khi đất khô, họ ấn chính các viên token ấy lên bề mặt ngoài để in lại số lượng bên trong, rồi lăn con lăn ấn tín bao quanh để niêm phong toàn bộ lớp vỏ.
+Nó là một quả cầu đất sét rỗng, thường chỉ rộng khoảng năm đến bảy centimet. Khi đất còn ướt, những token được đặt vào trong rồi lớp vỏ được khép lại. Trên bề mặt một số vỏ, người ta có thể thấy những hõm mang hình của chính các token bên trong. Một con dấu hình trụ cũng được lăn qua lớp đất mềm, để lại một dải hình ảnh liên tục.
 
-Bằng cách đó, một thiết bị lưu trữ ngoại thân đầu tiên ra đời. Người nhận hàng ở Eanna không cần phải đập vỡ quả cầu để biết bên trong có bao nhiêu đơn vị; họ chỉ cần đọc những vết lõm trên lớp vỏ đã được con dấu của người gửi khóa lại. Từ những vật thể rời rạc phụ thuộc vào sự có mặt của con người, thông tin đã được đóng băng thành một khối vật chất độc lập, có thể di chuyển qua không gian, chịu được sự chậm trễ của thời gian, và tự nó đứng ra làm bằng chứng khi những người liên quan không còn đứng cạnh nhau.
+Một vật như vậy giữ lại hai lớp dấu vết. Các token nằm trong khoang kín. Những dấu ấn nằm ở bên ngoài. Muốn chạm đến lớp thứ nhất, người ta phải phá vỏ; nhưng trước khi làm thế, lớp thứ hai đã cho phép kiểm tra một phần điều đang được giữ bên trong. Đó là điều có thể suy ra từ cấu tạo của vật, dù chúng ta không biết người nào đã cầm nó, giao nó cho ai, hay cuộc trao đổi cụ thể nào đứng phía sau.
+
+Rồi ở Uruk và Susa còn xuất hiện những miếng đất sét đặc, dẹt và vừa trong lòng bàn tay. Chúng không chứa token. Trên bề mặt là những hõm tròn, bán nguyệt hoặc xiên, được tạo ra khi một đầu bút được ấn xuống đất ướt. Các dấu ấy mang thông tin số. Một số bảng còn có dấu lăn của con dấu ở mặt kia.
+
+Không có một hàng rào thời gian sạch sẽ ngăn cách những vật này. Token, bulla, dấu niêm phong và bảng số có thể cùng tồn tại; bằng chứng không cho phép xếp chúng thành một chiếc thang đơn giản, trong đó vật trước thất bại rồi bị vật sau thay thế. Nhưng giữa chúng có một thay đổi mà đất sét còn giữ được.
+
+Ở một đầu, số lượng được mang bởi những vật nhỏ có thể bị đặt vào trong một lớp vỏ. Ở đầu kia, số lượng hiện diện ngay trên bề mặt của một vật bền. Không cần mở nó ra để các dấu được nhìn thấy. Không cần lấy từng token khỏi khoang kín để chúng được đếm lại.
+
+Và khi thông tin đã nằm trên bề mặt, đất sét bắt đầu có thêm những khoảng trống để chia cắt, sắp xếp và đặt các loại dấu cạnh nhau. Những bảng thuộc Uruk IV cho thấy các đường kẻ chia mặt bảng thành từng ô; trong đó, dấu số đứng bên những hình khắc chỉ người, vật phẩm hoặc thiết chế. Đây vẫn chưa phải là những câu văn theo nghĩa quen thuộc. Nhưng bàn tay làm ra chúng đã không còn chỉ cất những vật đếm vào trong đất sét nữa.

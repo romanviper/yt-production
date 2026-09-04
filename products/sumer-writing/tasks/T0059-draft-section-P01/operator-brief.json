@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "task_id": "T0059-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "Probe 2 P01 đã hoàn thành dưới authority và material snapshot mới.",
+  "material_points": [
+    "Passage giữ đúng phạm vi 450–650 từ và không hoàn tất toàn bộ mission P01.",
+    "Narrative theo dấu vết vật chất mà không biến token→bulla→tablet thành genealogy tất định.",
+    "Không đưa Probe 1, FoC analysis, diagnostic feedback hay earned_meaning vào Writer packet."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Đánh giá Probe 2 bằng cùng năm outcome gates của Probe 1?",
+    "recommendation": "Review độc lập trước khi thay đổi thêm architecture hoặc Writer objective.",
+    "options": [
+      {
+        "label": "Review Probe 2",
+        "effect": "So sánh trực tiếp khả năng kể chuyện với Probe 1 bằng cùng năm gates."
+      },
+      {
+        "label": "Yêu cầu sửa",
+        "effect": "Ghi nhận failure cụ thể mà không tự động thêm rule vào harness."
+      }
+    ]
+  },
+  "next_step": ""
+}

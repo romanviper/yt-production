@@ -5,12 +5,6 @@
   "order": 1,
   "status": "ready_for_review",
   "human_approved": false,
-  "probe_1_disposition": {
-    "status": "rejected_by_owner_architecture_review",
-    "draft_task_id": "T0058-draft-section-P01",
-    "draft_sha256": "1405d20e2c41bf27c24eed096dad1dac65a8ad2b6e3f71d81e967a6c32a0de1f",
-    "preserve_artifacts": true
-  },
   "dependencies": [],
   "narrative_job": "Thiết lập các pressure và information practices trước/sát thời điểm proto-cuneiform xuất hiện, đồng thời phá hai shortcut: một invention event duy nhất và token→tablet như đường tiến hóa tất định. Section phải kết thúc khi audience đã hiểu vì sao durable, inspectable records trở nên đáng giá mà chưa cần biết 'ai phát minh chữ viết'.",
   "entry_state": "Chữ viết được hình dung như một ý tưởng xuất hiện đột ngột.",
@@ -20,7 +14,7 @@
     "max": 1550
   },
   "cycle_id": "C003",
-  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
+  "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
   "mission": "Điều gì khiến việc giữ thông tin bằng những dấu bền trên đất sét trở nên hữu ích?",
   "transition": "Nếu nhu cầu và các recording practices đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.",
   "historical_change": {
@@ -48,24 +42,13 @@
     }
   ],
   "prose_provenance": {
-    "task_id": "T0058-draft-section-P01",
+    "task_id": "T0059-draft-section-P01",
     "operation": "draft_section",
-    "submitted_at": "2026-09-03T17:04:16.781744+00:00",
-    "draft_sha256": "1405d20e2c41bf27c24eed096dad1dac65a8ad2b6e3f71d81e967a6c32a0de1f",
-    "handoff_sha256": "984a988f1ea5b2bd4f413a5584b0d5f431b221fc27d203b6cf867543316d5181",
+    "submitted_at": "2026-09-04T03:58:22.782874+00:00",
+    "draft_sha256": "3d96ddf19ed7633d4f23c61b2cb1d15b863cf202e7cad433b183c9fed38cb9ff",
+    "handoff_sha256": "2a3c98abf960f58e52e844b394503b96c53d7faafee715b6122f6ad6c3cf348d",
     "schema_version": 2,
     "packet_schema_version": 5,
-    "task_packet_sha256": "b8e96b39d58d3b2696c223c4afe5ffd3a22e858db615f474922ee04c09ceff82"
-  },
-  "review_provenance": {
-    "task_id": "T0036-review-section-P01",
-    "contract_version": 3,
-    "review_sha256": "fafb219ad930720e30307e949516ed41c29906172d683de70dd5cf08e70e856f",
-    "authority": "stale_mismatched_non_authoritative",
-    "binding_error": "Review content is not bound to the Probe 1 draft/task identity."
-  },
-  "revision_pass": {
-    "cycle_id": "C003",
-    "count": 1
+    "task_packet_sha256": "fd2c493a4d18d59fc941e448beaeda9e854948a39564b7d82103579e5fa5a78f"
   }
 }

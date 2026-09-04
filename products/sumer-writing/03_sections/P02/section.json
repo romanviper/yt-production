@@ -16,7 +16,7 @@
     "max": 1750
   },
   "cycle_id": "C003",
-  "outline_sha256": "b9e871fb741abb5cd890ddb83c15c947bbe47a25171f4a10e81236e6d56b860e",
+  "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
   "mission": "Làm thế nào một hệ thống ký hiệu chưa thể ghi lại lời nói trọn vẹn vẫn giải quyết được các nhu cầu vận hành thực tế?",
   "transition": "Một system đã có thể làm việc. Bây giờ câu chuyện cần theo dõi điều gì xảy ra khi writing được dùng cho ngày càng nhiều loại việc khác nhau.",
   "movement_ids": [
