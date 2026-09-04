@@ -31,6 +31,7 @@ When a section's evidence territory contains only abstract claims and propositio
 ## Optional inputs
 
 - `01_research/material-ledger.json`
+- `03_sections/{section}/materials.json`
 - `03_sections/{section}/evidence-resolution-request.md`
 
 ## Required outputs

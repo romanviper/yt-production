@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "task_id": "T0061-draft-section-P01",
+  "status": "ready_for_review",
+  "headline": "Probe 3 draft follows two resolved Chogha Mish instances within the evidence ceiling.",
+  "material_points": [
+    "The passage is a contiguous 450–650 word excerpt and deliberately leaves P01 unfinished.",
+    "It distinguishes observed features from inference and does not turn either artifact class into an invented event.",
+    "It does not claim that the numerical tablet replaced the clay envelope or that the two objects record the same transaction."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Approve Probe 3 for the next editorial evaluation round?",
+    "recommendation": "Approve for evaluation because the passage stays within the evidence ceiling and follows two resolved instances.",
+    "options": [
+      {
+        "label": "Approve",
+        "effect": "Use this draft as the Probe 3 evaluation artifact."
+      },
+      {
+        "label": "Revise",
+        "effect": "Request another bounded Writer pass before evaluation."
+      }
+    ]
+  },
+  "next_step": ""
+}

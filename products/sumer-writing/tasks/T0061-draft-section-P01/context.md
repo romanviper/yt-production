@@ -1,0 +1,123 @@
+# Context Packet — T0061-draft-section-P01
+
+- Product: `sumer-writing`
+- Operation: `draft_section`
+- Context profile: `creative_draft`
+- Section: `P01`
+- Unit: `-`
+- Allowed writes: `03_sections/P01/draft.md`, `03_sections/P01/handoff.md`, `tasks/T0061-draft-section-P01/report.md`, `tasks/T0061-draft-section-P01/operator-brief.json`
+
+Write full operational detail to `report.md`. Write only decision-relevant summary to `operator-brief.json`.
+The final chat response must use the rendered operator brief, not the task report.
+
+Task context is this packet plus the bounded evidence capability below. Do not scan the repository.
+Evidence adapter: `python scripts/draft_evidence.py products/sumer-writing T0061-draft-section-P01 <capability>`.
+Capabilities: `scope`, `attest_scope`, `source`, `search`, `record`.
+Use it inside the approved claim/source scope to discover story material as well as verify facts: who or what acts, what happens, where, what object or trace is present, what remains unexplained, and what later evidence changes the current understanding.
+These are optional retrieval questions, not required story ingredients or a narrative order; evidence records prescribe no creative route.
+Every capability call is audit-logged. If external source reading adds detail, record it through the adapter before relying on it.
+New claims, causal conclusions, contradictions or generalizations must be routed back to evidence authority.
+
+Submission requirement: call `attest_scope` successfully before submitting this task.
+
+# BEGIN INSTRUCTION: system/core/creative-boundaries.md
+# Creative Boundaries
+
+These are authorship limits, not story instructions.
+
+1. Make no factual historical claim beyond approved evidence. Preserve qualifications, uncertainty, disagreement and counterevidence.
+2. Distinguish documented fact, qualified inference and naturally signaled representative reconstruction. Reconstruction may add plausible ordinary action, perception or spatial detail around a composite person or local event embodying approved conditions. It is not evidence and cannot invent named actors, attributed quotes, chronology, measurements, institutions, motives, dialogue, private thoughts or causal conclusions.
+3. Stay inside the section mission and established continuity unless explicitly authorized.
+4. Keep evidence metadata out of narration.
+5. Do not imitate another creator's wording, cadence, motifs, persona or signature structure.
+6. Report a blocker when evidence or authority is insufficient.
+
+Within these boundaries, every creative choice belongs to the writer. No creative method or sequence is compulsory unless the user locks it for this task.
+# END INSTRUCTION: system/core/creative-boundaries.md
+
+# BEGIN INSTRUCTION: system/operations/draft-section.md
+# Operation — Draft Section
+
+## Objective
+
+Tell a compelling historical story within truth and continuity. Optimize for the listener wanting to keep following it. Let meaning emerge through what unfolds; do not announce and defend a thesis. Explanation serves the story. The mission is meaning to earn, not a proposition to prove. Hook and retention are outcomes, not a required technique.
+
+## Assignment and authority
+
+Write original long-form historical narration that is natural aloud. Choose its telling, composition, evidence, exposition, reconstruction and language. Use this style compass: calm, clear, weighty, investigative, grounded, causally meaningful and trustworthy rather than spectacular.
+
+The word target is a forecast. Use bounded `search` and `source` to find story material by asking: who or what acts, what happens, where, what object or trace appears, what remains unexplained, and what later evidence changes understanding. This optional retrieval lens is not required ingredients, beats or prose order. Do not survey the ledger; call `attest_scope` before submission.
+
+If bounded sources yield conclusions but no truthful story material, report an evidence-resolution blocker; do not substitute exposition.
+
+## Feedback boundary
+
+In rework, the observed problem and desired audience outcome bind. Repair examples and method hypotheses are non-binding. Only `owner_locked_for_single_task` compels a method.
+
+Keep metadata out. Block when the mission exceeds evidence or section bounds.
+# END INSTRUCTION: system/operations/draft-section.md
+
+# BEGIN INPUT: 03_sections/P01/section.json
+{
+  "section": "P01",
+  "title": "Trước chữ viết đã có một bài toán phải giải",
+  "mission": "Điều gì khiến việc giữ thông tin bằng những dấu bền trên đất sét trở nên hữu ích?",
+  "historical_change": {
+    "from": "Bằng chứng Late Uruk lưu giữ số lượng và sự xác thực trên nhiều vật mang và thực hành bằng đất sét khác nhau.",
+    "to": "Thông tin số ngày càng xuất hiện trực tiếp trên các bề mặt đất sét bền, bên cạnh các dấu xác thực."
+  },
+  "length_forecast_words": {
+    "min": 1050,
+    "max": 1550
+  }
+}
+# END INPUT: 03_sections/P01/section.json
+
+# BEGIN INPUT: 03_sections/P01/narration-pack.json
+{
+  "section": "P01",
+  "cycle_id": "C003",
+  "evidence": {
+    "mode": "writer_directed_on_demand_v1",
+    "access": "search_or_open_only_when_chosen_telling_needs_it"
+  }
+}
+# END INPUT: 03_sections/P01/narration-pack.json
+
+# BEGIN INPUT: 03_sections/P01/continuity-in.md
+# Continuity Input — P01
+
+Cycle: `C003`
+
+Dependencies: Không có.
+
+## Prior handoff
+
+Chưa có hoặc sẽ được task owner cập nhật trước drafting.
+
+## Canonical terms required here
+
+Tham chiếu story bible.
+# END INPUT: 03_sections/P01/continuity-in.md
+
+# BEGIN INPUT: 03_sections/P01/draft-rework-request.md
+# Draft Rework — P01
+
+Requested by: user
+
+Requested at: 2026-09-04T04:15:18.877713+00:00
+
+## Observed failure and desired outcome
+
+Probe 2 escaped thesis-led essay structure but became a catalogue of artifact classes and briefly presented generic or reconstructed material as a specific documented instance. Probe 3 should remain evidence-honest while giving the listener a concrete, identifiable evidence thread to follow; authorship route remains Writer-owned.
+
+## Method authority
+
+owner_locked_for_single_task
+
+## Owner-locked method for this task only
+
+Probe ID P01-PROBE-3. Write one contiguous 450–650 word passage from the larger unfinished P01 section; do not compress or complete the whole P01 mission. Do not turn a type-level record into a specific instance. Any representative manufacturing or action sequence must remain naturally identifiable as reconstruction or inference. No opening, carrier, scene, chronology, reveal order or prose method is prescribed.
+
+This lock expires with this task and must not be promoted into the reusable writer harness.
+# END INPUT: 03_sections/P01/draft-rework-request.md

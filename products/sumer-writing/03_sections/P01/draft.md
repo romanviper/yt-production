@@ -1,21 +1,13 @@
-# P01 — Probe 2
+# P01 — Probe 3
 
-Một khối đất sét rỗng đã bị vỡ. Nhờ vậy, thứ từng được giấu kín bên trong nó mới lộ ra: những vật nhỏ bằng đất sét, có viên tròn, có viên hình nón, có miếng dẹt như một chiếc đĩa.
+Ở Chogha Mish, trên vùng đất nay thuộc Iran, một phong bì đất sét từ cuối thời Uruk còn lại trong tình trạng đã vỡ. Phần khuyết của lớp vỏ làm lộ những viên đất sét nhỏ vẫn nằm bên trong. Bản thân chiếc phong bì rộng 7,8 x 7,2 centimet; mỗi viên bên trong có đường kính khoảng 1,6 centimet. Những con số ấy không cho biết ai đã làm ra vật này, nó từng được giao cho ai, hay nó gắn với một lần trao đổi nào. Nhưng chúng giữ câu chuyện ở đúng một vật đã được tìm thấy: một khoang đất sét, những vật đếm còn ở trong khoang, và một lớp vỏ không còn nguyên.
 
-Khi khối đất sét ấy còn nguyên, không ai có thể nhìn thấy chúng.
+Khi chiếc phong bì còn kín, điều nó cất giữ không thể được nhìn thấy trực tiếp. Đất sét đã làm cho những viên nhỏ ấy thành một tập hợp có thể mang đi mà không bị rời ra, nhưng cũng đặt chúng sau một bức tường. Muốn nhìn lại toàn bộ bên trong, người ta phải mở vỏ; với một vật đã được niêm kín, việc ấy đồng thời phá trạng thái mà người kiểm tra muốn xác nhận. Đây là điều cấu tạo của chiếc phong bì cho phép ta nhận ra. Ta không biết vết vỡ còn lại xảy ra vào lúc sử dụng hay lâu sau đó, vì vậy không thể biến nó thành cảnh một người xưa đập vỏ để kiểm đếm.
 
-Những vật như thế xuất hiện trong các tầng khảo cổ thuộc thời Late Uruk. Một số chỉ nhỏ từ một đến ba centimet. Có vật để trơn; có vật mang những đường khía. Chúng thường được gọi là token, nhưng cái tên ấy dễ khiến mọi thứ có vẻ chắc chắn hơn thực tế. Những vật nhỏ tương tự đã tồn tại rất lâu và có thể từng được dùng theo nhiều cách khác nhau. Chỉ trong những bối cảnh hành chính muộn, một phần trong số chúng mới có thể được gắn tương đối chắc với việc ghi số lượng.
+Ngay cạnh nó trong danh mục khảo cổ là một mảnh đất sét khác, cũng đến từ Chogha Mish và cũng được định niên đại vào khoảng 3350–3100 trước Công nguyên. Mảnh này không rỗng. Nó là một phần của bảng số, chỉ dài 4,8 centimet, rộng 3,2 centimet và dày 2 centimet. Trên mặt còn năm dấu số. Một con dấu hình trụ từng được lăn qua đất ướt nhiều lần, để lại hình các con vật, trong đó có một con bò.
 
-Khối vỏ bọc bên ngoài còn kỳ lạ hơn.
+Năm dấu ấy mang thông tin số, nhưng bảng đã vỡ không nói cho ta biết thứ gì được đếm. Hình con bò cũng không đủ để biến con bò thành đáp án; dấu lăn có thể cho thấy sự gắn kết với một thẩm quyền hoặc người chứng nhận, chứ không tự nó đọc ra nội dung của lần ghi chép. Vật nhỏ này vì thế vừa nói được nhiều hơn một bề mặt trống, vừa giữ im lặng về chính sự việc đã khiến nó ra đời.
 
-Nó là một quả cầu đất sét rỗng, thường chỉ rộng khoảng năm đến bảy centimet. Khi đất còn ướt, những token được đặt vào trong rồi lớp vỏ được khép lại. Trên bề mặt một số vỏ, người ta có thể thấy những hõm mang hình của chính các token bên trong. Một con dấu hình trụ cũng được lăn qua lớp đất mềm, để lại một dải hình ảnh liên tục.
+Hai hiện vật cùng địa điểm và cùng một khoảng thời gian rộng không nhất thiết thuộc về cùng một loại giao dịch. Bằng chứng cũng không cho phép nói chiếc bảng đặc đã thay thế chiếc phong bì vỡ. Điều có thể đặt cạnh nhau khiêm tốn hơn: ở chiếc phong bì, những vật mang số lượng nằm sau lớp vỏ; ở mảnh bảng, thông tin số còn lại ngay trên bề mặt. Một vật buộc cái nhìn dừng ở bên ngoài, vật kia đưa dấu đếm ra nơi mắt có thể gặp nó mà không cần phá thêm một lớp đất sét.
 
-Một vật như vậy giữ lại hai lớp dấu vết. Các token nằm trong khoang kín. Những dấu ấn nằm ở bên ngoài. Muốn chạm đến lớp thứ nhất, người ta phải phá vỏ; nhưng trước khi làm thế, lớp thứ hai đã cho phép kiểm tra một phần điều đang được giữ bên trong. Đó là điều có thể suy ra từ cấu tạo của vật, dù chúng ta không biết người nào đã cầm nó, giao nó cho ai, hay cuộc trao đổi cụ thể nào đứng phía sau.
-
-Rồi ở Uruk và Susa còn xuất hiện những miếng đất sét đặc, dẹt và vừa trong lòng bàn tay. Chúng không chứa token. Trên bề mặt là những hõm tròn, bán nguyệt hoặc xiên, được tạo ra khi một đầu bút được ấn xuống đất ướt. Các dấu ấy mang thông tin số. Một số bảng còn có dấu lăn của con dấu ở mặt kia.
-
-Không có một hàng rào thời gian sạch sẽ ngăn cách những vật này. Token, bulla, dấu niêm phong và bảng số có thể cùng tồn tại; bằng chứng không cho phép xếp chúng thành một chiếc thang đơn giản, trong đó vật trước thất bại rồi bị vật sau thay thế. Nhưng giữa chúng có một thay đổi mà đất sét còn giữ được.
-
-Ở một đầu, số lượng được mang bởi những vật nhỏ có thể bị đặt vào trong một lớp vỏ. Ở đầu kia, số lượng hiện diện ngay trên bề mặt của một vật bền. Không cần mở nó ra để các dấu được nhìn thấy. Không cần lấy từng token khỏi khoang kín để chúng được đếm lại.
-
-Và khi thông tin đã nằm trên bề mặt, đất sét bắt đầu có thêm những khoảng trống để chia cắt, sắp xếp và đặt các loại dấu cạnh nhau. Những bảng thuộc Uruk IV cho thấy các đường kẻ chia mặt bảng thành từng ô; trong đó, dấu số đứng bên những hình khắc chỉ người, vật phẩm hoặc thiết chế. Đây vẫn chưa phải là những câu văn theo nghĩa quen thuộc. Nhưng bàn tay làm ra chúng đã không còn chỉ cất những vật đếm vào trong đất sét nữa.
+Nhưng một bề mặt nhìn thấy được không chỉ giải quyết chuyện nhìn. Nó còn đặt dấu số cạnh dấu niêm, khiến lượng và sự xác nhận cùng tồn tại trên một vật nhỏ vừa trong tay. Từ đây, câu hỏi không còn chỉ là đất sét có thể giữ được bao nhiêu. Câu hỏi là điều gì bắt đầu xảy ra khi một dấu bền có thể được xem lại, mang đi, và đặt cạnh những dấu khác—trong khi người, vật và sự việc mà nó từng quy chiếu đã rời khỏi đó.

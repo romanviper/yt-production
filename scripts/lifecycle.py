@@ -689,6 +689,12 @@ def prepare_section_rework(
             raise ValueError("Review rework requires a valid narration pack: " + "; ".join(pack_errors))
         if not (root / "draft.md").is_file():
             raise FileNotFoundError(f"Review rework requires {section}/draft.md.")
+    elif operation == "evidence_resolution":
+        _write_request(
+            root / "evidence-resolution-request.md",
+            f"Evidence Resolution Rework — {section}",
+            request,
+        )
     elif operation == "revise_section":
         pack_errors = verify_narration_pack(product_dir, section)
         if pack_errors:

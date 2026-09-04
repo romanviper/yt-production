@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "section": "P01",
-  "created_at": "2026-09-04T03:55:42.670786+00:00",
-  "materials_sha256": "2ce5ae40fba4ca350e9ad7be3947ef3d4ad96ea22057dd71b72bc15b699abfed",
+  "created_at": "2026-09-04T04:15:18.882086+00:00",
+  "materials_sha256": "7a54d9de59449040b2e53db27bc3dda694854c9ada8ee80b623c4460791964fb",
   "materials": [
     {
       "id": "P01-MAT-0001",
@@ -455,6 +455,107 @@
           {
             "statement": "This workflow proves a redistribution system caused writing to emerge.",
             "qualification": "Causal synthesis exceeds what the association alone proves."
+          }
+        ]
+      }
+    },
+    {
+      "id": "P01-INST-0001",
+      "kind": "object",
+      "label": "Broken clay envelope OIM A64678 with tokens inside",
+      "claim_ids": [
+        "CLM-0011",
+        "CLM-0013"
+      ],
+      "source_refs": [
+        {
+          "source_id": "SRC-0005",
+          "locators": [
+            "Catalog No. 32, p. 66",
+            "Delougaz and Kantor 1996, pls. 38:a–b, 40:a, 147:f"
+          ]
+        }
+      ],
+      "source_relation": "contemporary_material",
+      "object_or_trace": "A broken hollow clay envelope preserving clay tokens inside",
+      "actor": "Unknown",
+      "time": "Late Uruk period (3350–3100 BCE)",
+      "place": "Chogha Mish, Iran",
+      "physical_description": "Broken clay envelope with the enclosed tokens visible through the missing part of the shell",
+      "measurement": "Envelope 7.8 × 7.2 cm; enclosed tokens 1.6 cm in diameter",
+      "limitations": [
+        "The catalogue entry identifies the object and enclosed tokens but does not specify a transaction, operator, motive, exact find stratum, or correspondence between exterior marks and contents"
+      ],
+      "representativeness": "One individually catalogued Chogha Mish specimen; it does not by itself establish the typical form or function of all bullae",
+      "epistemic_layers": {
+        "observed": [
+          {
+            "statement": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter."
+          }
+        ],
+        "functional_inference": [
+          {
+            "statement": "The object is usable as evidence for one attested envelope-and-token configuration, not as a universal bulla type.",
+            "qualification": "Bounded to this individually catalogued specimen and its catalogue description."
+          }
+        ],
+        "representative_reconstruction": [],
+        "qualified_live_hypothesis": [],
+        "prohibited_or_rejected_inference": [
+          {
+            "statement": "This specimen documents a particular transaction or proves why clay envelopes were invented.",
+            "qualification": "The catalogue supplies object identity and surviving features, not an event, operator, purpose, or causal origin."
+          }
+        ]
+      }
+    },
+    {
+      "id": "P01-INST-0002",
+      "kind": "record",
+      "label": "Sealed numerical tablet fragment ChM III-937a",
+      "claim_ids": [
+        "CLM-0011",
+        "CLM-0013",
+        "CLM-0015"
+      ],
+      "source_refs": [
+        {
+          "source_id": "SRC-0005",
+          "locators": [
+            "Catalog No. 31, p. 65",
+            "Delougaz and Kantor 1996, pl. 137:a"
+          ]
+        }
+      ],
+      "source_relation": "contemporary_material",
+      "object_or_trace": "A broken clay numerical tablet fragment bearing five numeral signs and several seal rollings",
+      "actor": "Unknown",
+      "time": "Late Uruk period (3350–3100 BCE)",
+      "place": "Chogha Mish, Iran",
+      "physical_description": "Clay tablet fragment with five numeral signs; several rollings show a seal image containing animals, including a bull",
+      "measurement": "4.8 × 3.2 × 2.0 cm",
+      "limitations": [
+        "The catalogue does not establish the recorded commodity, transaction, operator, reading of each numeral, or a direct genealogical relationship to OIM A64678"
+      ],
+      "representativeness": "One individually catalogued Chogha Mish numerical-tablet fragment; it is not a universal form",
+      "epistemic_layers": {
+        "observed": [
+          {
+            "statement": "Catalogue object ChM III-937a is a 4.8 × 3.2 × 2.0 cm clay tablet fragment from Chogha Mish with five numeral signs and several rollings of an animal seal that includes a bull."
+          }
+        ],
+        "functional_inference": [
+          {
+            "statement": "The five impressed signs carry numerical information.",
+            "qualification": "The catalogue identifies them as numeral signs but does not provide a complete reading or transaction context."
+          }
+        ],
+        "representative_reconstruction": [],
+        "qualified_live_hypothesis": [],
+        "prohibited_or_rejected_inference": [
+          {
+            "statement": "This tablet replaced the broken envelope or records the same kind of event.",
+            "qualification": "The two objects share site and broad period, but the approved source does not establish a direct sequence or shared transaction type."
           }
         ]
       }

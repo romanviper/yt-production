@@ -1,14 +1,14 @@
-# P01 Probe 2 handoff
+# P01 Probe 3 handoff
 
-Contiguous 450–650 word diagnostic passage. It follows the surviving change from
-enclosed counters and exterior impressions to numerical information carried
-directly on durable clay surfaces. It deliberately stops before completing P01's
-full mission or converting coexistence into a linear token→tablet genealogy.
+Contiguous 450–650 word diagnostic passage. It follows two individually catalogued
+objects from Chogha Mish: a broken clay envelope with tokens still inside and a
+sealed numerical-tablet fragment. The passage stops at the new question opened by
+visible, durable marks rather than completing P01's mission.
 
 Evidence qualifications retained:
 
-- token functions across millennia are not treated as one universal code;
-- bulla use is inferred from material configuration, not a witnessed transaction;
-- no named or specific operator is invented;
-- token, bulla, sealings and numerical tablets may coexist;
-- numerical tablets are not asserted to be a necessary evolutionary replacement.
+- neither object is assigned a specific transaction, operator or motive;
+- the envelope's break is not narrated as an ancient verification event;
+- the animal sealing is not treated as a reading of the tablet's commodity;
+- shared site and broad date do not establish a shared transaction or direct lineage;
+- the numerical tablet is not claimed to replace the envelope.

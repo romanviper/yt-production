@@ -354,6 +354,67 @@ def _canonical_writer_projection(relative: str, path: Path, section: str, operat
     return None
 
 
+def _evidence_resolution_projection(product_dir: Path, relative: str, path: Path, section: str) -> str | None:
+    """Project only the section's approved claim/source graph into resolution tasks."""
+    if relative not in {
+        "02_outline/outline.json",
+        "01_research/claim-ledger.json",
+        "01_research/source-index.json",
+        "01_research/material-ledger.json",
+    }:
+        return None
+    pack = read_json_local(product_dir / "03_sections" / section / "evidence-pack.json")
+    claim_ids = {item for item in pack.get("claim_ids", []) if isinstance(item, str)}
+    source_ids = {item for item in pack.get("source_ids", []) if isinstance(item, str)}
+    data = read_json_local(path)
+    if relative == "02_outline/outline.json":
+        return json.dumps(
+            {
+                "schema_version": data.get("schema_version"),
+                "status": data.get("status"),
+                "cycle_id": data.get("cycle_id"),
+                "sections": [
+                    item for item in data.get("sections", [])
+                    if isinstance(item, dict) and item.get("id") == section
+                ],
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+    if relative == "01_research/claim-ledger.json":
+        return json.dumps(
+            {**{key: value for key, value in data.items() if key != "claims"},
+             "claims": [item for item in data.get("claims", []) if isinstance(item, dict) and item.get("id") in claim_ids]},
+            ensure_ascii=False,
+            indent=2,
+        )
+    if relative == "01_research/source-index.json":
+        return json.dumps(
+            {**{key: value for key, value in data.items() if key != "sources"},
+             "sources": [item for item in data.get("sources", []) if isinstance(item, dict) and item.get("id") in source_ids]},
+            ensure_ascii=False,
+            indent=2,
+        )
+    if relative == "01_research/material-ledger.json":
+        return json.dumps(
+            {**{key: value for key, value in data.items() if key != "materials"},
+             "materials": [
+                 item for item in data.get("materials", [])
+                 if isinstance(item, dict)
+                 and (
+                     set(item.get("claim_ids", [])).intersection(claim_ids)
+                     or any(
+                         isinstance(ref, dict) and ref.get("source_id") in source_ids
+                         for ref in item.get("source_refs", [])
+                     )
+                 )
+             ]},
+            ensure_ascii=False,
+            indent=2,
+        )
+    return None
+
+
 def _review_boundary_projection(path: Path, section: str) -> str:
     """Project only current/next outline boundaries while binding the review to the full approved outline hash."""
 
@@ -503,6 +564,8 @@ def compile_packet(
                 if direct_authorship and section
                 else None
             )
+            if operation == "evidence_resolution" and section:
+                projected = _evidence_resolution_projection(product_dir, relative, path, str(section)) or projected
             if operation in {"review_section", "revise_section"} and relative == "02_outline/outline.json" and section:
                 projected = _review_boundary_projection(path, str(section))
             if (

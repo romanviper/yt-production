@@ -25,7 +25,13 @@ except ModuleNotFoundError:  # Direct execution: python scripts/rework.py
     from task import create_task
 
 
-SECTION_REWORK_OPERATIONS = {"design_section", "draft_section", "review_section", "revise_section"}
+SECTION_REWORK_OPERATIONS = {
+    "design_section",
+    "draft_section",
+    "evidence_resolution",
+    "review_section",
+    "revise_section",
+}
 
 
 def _write_outline_rework_request(product_dir: Path, request: str) -> None:
