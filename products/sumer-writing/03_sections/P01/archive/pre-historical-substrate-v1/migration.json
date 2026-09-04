@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "section": "P01",
+  "migration": "historical_substrate_contract_v1",
+  "status": "superseded_history",
+  "canonical_prose_status": "vacated_for_fresh_draft_task",
+  "archived_from": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md"
+  ],
+  "superseded_submitted_tasks": [
+    "T0058-draft-section-P01",
+    "T0059-draft-section-P01",
+    "T0061-draft-section-P01"
+  ],
+  "reason": "P01 adopted a new hash-bound Historical Substrate architecture. Pre-adoption prose and submitted task lineage remain historical but no longer own canonical P01 prose."
+}

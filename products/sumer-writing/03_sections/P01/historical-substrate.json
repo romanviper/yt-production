@@ -132,7 +132,7 @@
   "authority_binding": {
     "product_substrate_sha256": "eb7ada6dc9414e5cd629fdc262e09bcf6fdb3afa6327ba0d8dcb19adf93ef818",
     "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
-    "section_overlay_sha256": "3f2d8016add69b0876412adae83ad7be00609db8be57ffc9eb2592b56887bc87",
+    "section_overlay_sha256": "5db68ce464d768dfbe59854208f8ecd5c9317878ebce96b062e176b2365e3973",
     "section_binding_sha256": "a4fe962b6fe8a094085fbe8f152e5bb6033dd51ebf6d8c8fa6168150e0143332"
   },
   "writer_contract": "Historical Substrate is the primary model of historical reality. Evidence lookup is secondary and only verifies, sharpens or qualifies details needed by a telling already chosen from this model."

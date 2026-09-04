@@ -32,7 +32,8 @@
     "kind": "approved_section_overlay",
     "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
     "overlay_path": "02_outline/section-overlays/P01.json",
-    "overlay_sha256": "3f2d8016add69b0876412adae83ad7be00609db8be57ffc9eb2592b56887bc87",
+    "overlay_sha256": "5db68ce464d768dfbe59854208f8ecd5c9317878ebce96b062e176b2365e3973",
+    "historical_substrate_contract_version": 1,
     "authority_note": "Minimal P01 primary substrate: retain only coexisting recording practice, envelope affordance, numerical-tablet affordance and the historical change. Broader claim authority remains available through secondary evidence verification."
   },
   "transition": "Nếu nhu cầu và các recording practices đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.",

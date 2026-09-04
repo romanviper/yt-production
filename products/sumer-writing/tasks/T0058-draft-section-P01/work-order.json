@@ -8,7 +8,7 @@
     "section": "P01",
     "unit": null
   },
-  "state": "ready_for_review",
+  "state": "cancelled",
   "created_at": "2026-09-03T17:02:05.816635+00:00",
   "context_packet": "tasks/T0058-draft-section-P01/context.md",
   "packet_manifest": "tasks/T0058-draft-section-P01/packet.json",
@@ -44,5 +44,6 @@
   },
   "material_snapshot_sha256": "1664983c27c73a8e4d36bbc3fd56823c71e9e57a48ad3f450735b41ff5f83a11",
   "submitted_at": "2026-09-03T17:04:16.781744+00:00",
-  "updated_at": "2026-09-03T17:04:16.781744+00:00"
+  "updated_at": "2026-09-04T08:18:00+00:00",
+  "cancel_reason": "architecture migration: superseded by P01 Historical Substrate contract v1; fresh canonical draft task required"
 }
