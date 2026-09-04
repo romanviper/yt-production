@@ -1,5 +1,6 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
+  "contract_version": 1,
   "section": "P01",
   "historical_territory": "Các thực hành ghi nhận và xác thực bằng đất sét trong Late Uruk, đặc biệt sự dịch chuyển toward việc đặt thông tin số trực tiếp trên bề mặt bền trong khi nhiều phương tiện cũ vẫn cùng tồn tại.",
   "historical_change": {
@@ -10,23 +11,42 @@
     {
       "id": "HS-P01-0001",
       "kind": "practice",
-      "statement": "Late-Uruk administrative recording and authentication used several clay-based practices and devices rather than one uniform recording medium.",
+      "world": {
+        "participants": [],
+        "operation": "record and authenticate administrative information through several coexisting clay-based practices",
+        "object_or_medium": [
+          "clay counters/tokens",
+          "clay envelopes",
+          "sealings",
+          "numerical tablets",
+          "early written clay surfaces"
+        ],
+        "information_or_relation_handled": [
+          "quantities",
+          "authentication"
+        ],
+        "context": "Late-Uruk administrative practice"
+      },
       "epistemic_status": "documented",
       "time_scope": "Late Uruk, especially the late fourth millennium BCE",
       "place_scope": "Southern Mesopotamia and associated Late-Uruk administrative contexts"
     },
     {
-      "id": "HS-P01-0002",
-      "kind": "practice",
-      "statement": "Numerical information was materialized through clay counting and recording practices, with the strongest continuity into proto-cuneiform lying in numerical systems rather than in a secure one-to-one inheritance of every sign form.",
-      "epistemic_status": "qualified_inference",
-      "time_scope": "Late prehistoric to Late Uruk transition, bounded to evidence relevant to early Mesopotamian recording",
-      "place_scope": "Mesopotamian and related contexts represented in the approved research"
-    },
-    {
       "id": "HS-P01-0003",
       "kind": "object_affordance",
-      "statement": "Some hollow clay envelopes enclosed counters, and some envelopes also carried exterior impressions or sealings that placed information or authentication on the outside surface.",
+      "world": {
+        "object": "hollow clay envelope",
+        "permits": [
+          "enclose small clay counters"
+        ],
+        "carries": [
+          "enclosed counters",
+          "on some examples exterior impressions or sealings"
+        ],
+        "constrains": [
+          "enclosed counters are not directly inspectable while the envelope remains closed"
+        ]
+      },
       "epistemic_status": "documented",
       "time_scope": "Late Uruk",
       "place_scope": "Late-Uruk administrative contexts represented in the approved source set"
@@ -34,121 +54,86 @@
     {
       "id": "HS-P01-0004",
       "kind": "object_affordance",
-      "statement": "Numerical tablets could carry quantity information directly as impressions on a durable clay surface, and sealing or authentication marks could coexist on such recording surfaces.",
+      "world": {
+        "object": "numerical clay tablet",
+        "permits": [
+          "place quantity information directly on a durable exterior surface"
+        ],
+        "carries": [
+          "numerical impressions",
+          "on some examples sealing or authentication marks"
+        ],
+        "constrains": []
+      },
       "epistemic_status": "documented",
       "time_scope": "Late Uruk",
-      "place_scope": "Southern Mesopotamia and related Late-Uruk administrative sites represented in the approved source set"
-    },
-    {
-      "id": "HS-P01-0005",
-      "kind": "relation",
-      "statement": "Tokens, envelopes, sealings, numerical tablets and early written tablets belonged to overlapping recording and authentication practices; a simple token-to-tablet replacement genealogy is not established.",
-      "epistemic_status": "qualified_inference",
-      "time_scope": "Formation period around the late fourth millennium BCE",
-      "place_scope": "Mesopotamian recording traditions covered by the approved research"
-    },
-    {
-      "id": "HS-P01-0006",
-      "kind": "relation",
-      "statement": "Growth in administrative and institutional scale coincided with strong demand for records and authentication, without establishing administration as the sole cause of writing or a one-way causal sequence.",
-      "epistemic_status": "qualified_inference",
-      "time_scope": "Late Uruk formation period",
-      "place_scope": "Urban and institutional contexts in southern Mesopotamia represented by the approved evidence"
+      "place_scope": "Southern Mesopotamia and related Late-Uruk administrative sites in the approved source set"
     },
     {
       "id": "HS-P01-0007",
       "kind": "change",
-      "statement": "Within Late-Uruk recording practice, numerical information increasingly appeared directly on durable clay surfaces, sometimes alongside authentication marks, while older and parallel clay practices continued to coexist.",
+      "world": {
+        "dimension": "physical placement and inspectability of numerical information",
+        "earlier_state": "quantities and authentication were handled across several coexisting physical devices and clay practices",
+        "later_state": "numerical information increasingly appeared directly on durable clay surfaces, sometimes alongside authentication marks",
+        "coexistence": "older and parallel clay practices continued to overlap with direct surface recording",
+        "qualification": "the shift does not identify one invention event or an immediate complete replacement"
+      },
       "epistemic_status": "qualified_inference",
       "time_scope": "Late Uruk, late fourth millennium BCE",
       "place_scope": "Southern Mesopotamia and related Late-Uruk administrative contexts"
-    },
-    {
-      "id": "HS-P01-0008",
-      "kind": "constraint",
-      "statement": "Early records support identification of accounting or administrative contexts more securely than fine distinctions among market exchange, tax, tribute, redistribution, labor obligation or ownership.",
-      "epistemic_status": "qualified_inference",
-      "time_scope": "Proto-cuneiform and immediately relevant formation contexts",
-      "place_scope": "Early Mesopotamian administrative corpora represented in the approved sources"
-    },
-    {
-      "id": "HS-P01-0009",
-      "kind": "relation",
-      "statement": "A feedback relationship between expanding institutions and improved record systems is plausible: institutions could demand more records, and better records could increase institutional capacity.",
-      "epistemic_status": "qualified_inference",
-      "time_scope": "Formation period around Late Uruk",
-      "place_scope": "Institutional contexts represented in the approved evidence"
     }
   ],
   "boundaries": [
     {
-      "id": "HS-P01-0001",
-      "limitations": [
-        "Do not turn the parallel ecology into a single mandatory developmental sequence."
-      ]
+      "source": "HS-P01-0001",
+      "rule": "Parallel practices must not be converted into a single mandatory developmental sequence."
     },
     {
-      "id": "HS-P01-0002",
-      "limitations": [
-        "Do not present Neolithic tokens as a millennia-long standardized accounting code.",
-        "Do not claim continuity for individual non-numerical sign shapes without separate support."
-      ]
+      "source": "HS-P01-0003",
+      "rule": "Exterior impressions are not universal to every envelope."
     },
     {
-      "id": "HS-P01-0003",
-      "limitations": [
-        "The statement describes a class of practices, not a universal feature of every envelope.",
-        "It does not establish exterior impressions as a single transitional step toward tablets."
-      ]
+      "source": "HS-P01-0003",
+      "rule": "The affordance does not establish a single transitional step toward tablets."
     },
     {
-      "id": "HS-P01-0004",
-      "limitations": [
-        "A numerical tablet does not by itself identify the commodity, transaction mechanism or named actor.",
-        "Do not describe this as wholesale replacement of envelopes or tokens."
-      ]
+      "source": "HS-P01-0004",
+      "rule": "A numerical tablet alone does not identify a commodity, transaction mechanism or named actor."
     },
     {
-      "id": "HS-P01-0005",
-      "limitations": [
-        "Temporal overlap does not establish the exact contribution of each practice.",
-        "Do not narrate a deterministic evolutionary ladder."
-      ]
+      "source": "HS-P01-0004",
+      "rule": "Direct surface recording must not be described as wholesale replacement of envelopes or tokens."
     },
     {
-      "id": "HS-P01-0006",
-      "limitations": [
-        "Administration is a major formation pressure, not a monocausal explanation.",
-        "Co-occurrence does not prove which side caused the other."
-      ]
+      "source": "HS-P01-0007",
+      "rule": "Increasing direct surface recording does not imply immediate or complete replacement of other clay practices."
     },
     {
-      "id": "HS-P01-0007",
-      "limitations": [
-        "The change is a shift in practice, not proof of a single invention event.",
-        "Increasing direct surface recording does not imply immediate or complete replacement of counters, envelopes or sealings."
-      ]
+      "source": "HSC-P01-0001",
+      "applies_to": [
+        "HS-P01-0001",
+        "HS-P01-0003",
+        "HS-P01-0004",
+        "HS-P01-0007"
+      ],
+      "rule": "Do not convert overlapping clay practices into a direct token-to-tablet replacement genealogy."
     },
     {
-      "id": "HS-P01-0008",
-      "limitations": [
-        "Do not label a specific economic mechanism unless the evidence supports it.",
-        "This boundary need not be narrated unless the chosen telling approaches it."
-      ]
-    },
-    {
-      "id": "HS-P01-0009",
-      "limitations": [
-        "This is a medium-confidence feedback model, not a completed causal verdict.",
-        "Do not back-project later institutional effects as established Late-Uruk facts."
-      ]
+      "source": "HSC-P01-0003",
+      "applies_to": [
+        "HS-P01-0001",
+        "HS-P01-0004",
+        "HS-P01-0007"
+      ],
+      "rule": "Do not label a specific economic mechanism such as market exchange, tax, tribute, redistribution, labor obligation or ownership unless independent transaction evidence supports it."
     }
   ],
   "authority_binding": {
-    "product_substrate_git_blob": "87ea84d8ba9a2b30ba9a306a0180e38268145b39",
-    "section_state_git_blob": "79de432aed38ed1d2507b9654700b4b79f960e86",
-    "approved_outline_git_blob": "bc13c1b6bafc94bb0bc7df4adc535ffff48bfbfc",
-    "binding_mode": "p01_section_migration_v1"
+    "product_substrate_sha256": "eb7ada6dc9414e5cd629fdc262e09bcf6fdb3afa6327ba0d8dcb19adf93ef818",
+    "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+    "section_overlay_sha256": "3f2d8016add69b0876412adae83ad7be00609db8be57ffc9eb2592b56887bc87",
+    "section_binding_sha256": "a4fe962b6fe8a094085fbe8f152e5bb6033dd51ebf6d8c8fa6168150e0143332"
   },
-  "writer_contract": "Author from this bounded historical world and its historical change. Boundaries limit claims but are not lines that must be narrated. Use the evidence broker only to verify or sharpen a telling already chosen from this substrate; do not discover the story by surveying evidence records."
+  "writer_contract": "Historical Substrate is the primary model of historical reality. Evidence lookup is secondary and only verifies, sharpens or qualifies details needed by a telling already chosen from this model."
 }

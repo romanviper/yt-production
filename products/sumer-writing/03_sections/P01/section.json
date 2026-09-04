@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "id": "P01",
   "title": "Trước chữ viết đã có một bài toán phải giải",
   "order": 1,
@@ -17,45 +17,26 @@
   "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
   "historical_substrate_contract_version": 1,
   "historical_territory": "Các thực hành ghi nhận và xác thực bằng đất sét trong Late Uruk, đặc biệt sự dịch chuyển toward việc đặt thông tin số trực tiếp trên bề mặt bền trong khi nhiều phương tiện cũ vẫn cùng tồn tại.",
-  "mission": "Các thực hành ghi nhận và xác thực bằng đất sét trong Late Uruk chuyển dần toward việc đặt thông tin số trực tiếp trên bề mặt bền trong khi nhiều phương tiện cũ vẫn cùng tồn tại.",
+  "mission": "Các thực hành ghi nhận và xác thực bằng đất sét trong Late Uruk, đặc biệt sự dịch chuyển toward việc đặt thông tin số trực tiếp trên bề mặt bền trong khi nhiều phương tiện cũ vẫn cùng tồn tại.",
   "historical_change": {
     "from": "Số lượng và sự xác thực được xử lý qua nhiều thiết bị và thực hành đất sét cùng tồn tại, gồm counters, envelopes, sealings và các bề mặt ghi số.",
     "to": "Thực hành ghi nhận ngày càng đặt thông tin số trực tiếp trên bề mặt đất sét bền, đôi khi cùng dấu xác thực, trong khi các phương tiện cũ vẫn tiếp tục chồng lấn."
   },
   "historical_substrate_ids": [
     "HS-P01-0001",
-    "HS-P01-0002",
     "HS-P01-0003",
     "HS-P01-0004",
-    "HS-P01-0005",
-    "HS-P01-0006",
-    "HS-P01-0007",
-    "HS-P01-0008",
-    "HS-P01-0009"
+    "HS-P01-0007"
   ],
+  "architecture_authority": {
+    "kind": "approved_section_overlay",
+    "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+    "overlay_path": "02_outline/section-overlays/P01.json",
+    "overlay_sha256": "3f2d8016add69b0876412adae83ad7be00609db8be57ffc9eb2592b56887bc87",
+    "authority_note": "Minimal P01 primary substrate: retain only coexisting recording practice, envelope affordance, numerical-tablet affordance and the historical change. Broader claim authority remains available through secondary evidence verification."
+  },
   "transition": "Nếu nhu cầu và các recording practices đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.",
   "movement_ids": [
     "M01"
-  ],
-  "macro_movements": [
-    {
-      "id": "M01",
-      "title": "Trước chữ viết đã có một bài toán phải giải",
-      "narrative_job": "Xác lập formation pressure và ecology: nhu cầu giữ thông tin hành chính/xác thực tăng trong bối cảnh thiết chế lớn hơn, nhưng evidence không cho phép một nguyên nhân duy nhất hay một genealogy tuyến tính. Movement phải khiến câu hỏi chuyển từ 'ai phát minh?' sang 'những áp lực và thực hành nào khiến durable recording trở nên hữu ích?'.",
-      "entry_state": "Nguồn gốc được tưởng như một invention event đơn lẻ.",
-      "exit_state": "Nguồn gốc được hiểu như một quá trình nhiều thực hành và nhiều áp lực cùng hội tụ; administration là trọng tâm nhưng không phải monocause."
-    }
-  ],
-  "acts": [
-    {
-      "id": "A01",
-      "role": "opening",
-      "title": "Khi một xã hội cần trí nhớ ngoài con người"
-    }
-  ],
-  "substrate_migration": {
-    "coverage": "P01",
-    "source_git_blob": "87ea84d8ba9a2b30ba9a306a0180e38268145b39",
-    "note": "Legacy question-shaped mission removed from Writer semantics; mission remains a declarative compatibility alias only."
-  }
+  ]
 }

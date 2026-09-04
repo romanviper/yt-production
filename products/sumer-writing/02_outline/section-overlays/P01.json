@@ -10,14 +10,10 @@
   },
   "historical_substrate_ids": [
     "HS-P01-0001",
-    "HS-P01-0002",
     "HS-P01-0003",
     "HS-P01-0004",
-    "HS-P01-0005",
-    "HS-P01-0006",
-    "HS-P01-0007",
-    "HS-P01-0009"
+    "HS-P01-0007"
   ],
   "audience_discovery": "Nguồn gốc của durable recording được hiểu như một ecology nhiều thực hành chồng lấn thay vì một invention event hay một genealogy tuyến tính.",
-  "authority_note": "Bounded P01 architecture migration requested by owner after Historical Substrate v2 review; evidence-only classification limits are represented as substrate constraints rather than Writer-facing historical primitives."
+  "authority_note": "Minimal P01 primary substrate: retain only coexisting recording practice, envelope affordance, numerical-tablet affordance and the historical change. Broader claim authority remains available through secondary evidence verification."
 }
