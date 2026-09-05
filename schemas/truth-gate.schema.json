@@ -8,6 +8,7 @@
     "audit_id",
     "sample_id",
     "authority_packet_id",
+    "authority_boundary",
     "claims",
     "gates",
     "unresolved",
