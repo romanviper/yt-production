@@ -9,11 +9,16 @@
     "contract_version",
     "evidence_medium",
     "samples",
+    "overall_preference",
     "pairwise_criteria",
     "defect_annotations",
     "failure_signature"
   ],
   "$defs": {
+    "overallResult": {
+      "type": "string",
+      "enum": ["A", "B", "TIE", "UNCERTAIN"]
+    },
     "pairwiseResult": {
       "type": "string",
       "enum": ["A", "B", "TIE", "UNCERTAIN", "NOT_APPLICABLE"]
@@ -32,6 +37,18 @@
       "properties": {
         "sample": {"type": "string", "enum": ["A", "B"]},
         "quote": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "preferenceEvaluation": {
+      "type": "object",
+      "required": ["result", "spans", "observation", "interpretation", "uncertainty"],
+      "properties": {
+        "result": {"$ref": "#/$defs/overallResult"},
+        "spans": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+        "observation": {"type": "string"},
+        "interpretation": {"type": "string"},
+        "uncertainty": {"type": "string"}
       },
       "additionalProperties": false
     },
@@ -79,6 +96,7 @@
       },
       "additionalProperties": false
     },
+    "overall_preference": {"$ref": "#/$defs/preferenceEvaluation"},
     "pairwise_criteria": {
       "type": "object",
       "required": ["continue", "movement", "specificity", "connections", "spoken_comprehension", "payoff"],
