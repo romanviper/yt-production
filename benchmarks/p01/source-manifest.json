@@ -1,0 +1,38 @@
+{
+  "version": "1.0.0",
+  "manifest_id": "MANIFEST-P01-CALIBRATION-V1",
+  "description": "Frozen reference and source manifest with stable hashes and locators",
+  "artifacts": [
+    {
+      "sample_id": "SMP-P01-ESSAY",
+      "locator": "products/sumer-writing/03_sections/P01/probes/hsub-clean-01/probe.md",
+      "sha256": "c8090ae33576063aa56a370cb2b8d78505c0fe12a71aa7866f8eb13638ebaa0e",
+      "role": "HISTORICAL_ESSAY_NEGATIVE_PROBE",
+      "authority": "PRODUCT_ARCHIVE_IMMUTABLE"
+    },
+    {
+      "sample_id": "SMP-P01-BASE",
+      "locator": "experiments/p01-writer-trace-v2/runs/round-01/product-1-packet.json -> samples.B",
+      "source_commit": "2bf59edd0a5e83a9d186146bff4bd6e0c18c671b",
+      "sha256": "974515f03a8652cb8234ed5b83d7e2997d00bf07ef1d79044f72621632db1f29",
+      "role": "HISTORICAL_BASELINE",
+      "authority": "CANONICAL_PRODUCT_BASELINE"
+    },
+    {
+      "sample_id": "SMP-P01-CAND-R01",
+      "locator": "experiments/p01-writer-trace-v2/runs/round-01/candidate.md",
+      "source_run": "round-01",
+      "sha256": "57e790a6d685edaafc5930ef3f4d08f482e37bcc193cfd5d32c2d710fc3c546b",
+      "role": "ROUND_01_CANDIDATE",
+      "authority": "EXPERIMENT_TRACE_IMMUTABLE"
+    },
+    {
+      "sample_id": "SMP-P01-CRAFT-FOC",
+      "locator": "experiments/p01-writer-trace-v2/runs/round-01/product-1-packet.json -> craft_references[0]",
+      "craft_id": "FOC-INVESTIGATION",
+      "sha256": "52d2a8370c98465f15140718c13924904490f4d9b1befab1612fe439872bddba",
+      "role": "EXTERNAL_CRAFT_REFERENCE",
+      "authority": "CRAFT_ONLY_NOT_TRUTH"
+    }
+  ]
+}

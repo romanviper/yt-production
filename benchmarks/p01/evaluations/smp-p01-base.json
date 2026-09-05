@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0.0",
+  "evaluation_id": "EVAL-CALIB-P01-BASE",
+  "sample_id": "SMP-P01-BASE",
+  "sample_type": "current_baseline",
+  "text_sha256": "974515f03a8652cb8234ed5b83d7e2997d00bf07ef1d79044f72621632db1f29",
+  "absolute_gates": {
+    "G_TRUTH": {
+      "status": "PASS",
+      "evidence_spans": [
+        "OIM A64678",
+        "ChM III-937a",
+        "đường kính chừng bảy đến tám centimet"
+      ],
+      "notes": "Chính xác tuyệt đối theo chứng cứ lịch sử và mã hiệu khảo cổ."
+    },
+    "G_COHERENCE": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Chừng nào phong bao còn lành lặn, các con tính bên trong được bảo vệ khỏi sự thất lạc hay can thiệp. Nhưng sự an toàn đó đi liền với sự mù mịt về thị giác..."
+      ],
+      "notes": "Mâu thuẫn cơ học được xây dựng mạch lạc, không xung đột logic."
+    },
+    "G_SCOPE": {
+      "status": "PASS",
+      "evidence_spans": [
+        "...tại gò phế tích Chogha Mish: một khối đất tròn rỗng ruột mang mã số OIM A64678."
+      ],
+      "notes": "Hoàn toàn nằm trong phạm vi P01."
+    },
+    "G_LANGUAGE": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Hãy hình dung những vật thể đất sét rất nhỏ nằm gọn giữa các đầu ngón tay..."
+      ],
+      "notes": "Tiếng Việt gợi hình, mượt mà, văn phong phát thanh tự nhiên."
+    },
+    "G_CAUSALITY": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Chúng ta nhìn thấy được bên trong chỉ bởi vì trạng thái niêm phong ban đầu của nó đã bị phá hủy."
+      ],
+      "notes": "Nhân quả cơ học chính xác, không suy diễn tâm lý."
+    },
+    "overall_gate_pass": true
+  },
+  "craft_dimensions": {
+    "continue": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "Hãy hình dung những vật thể đất sét rất nhỏ nằm gọn giữa các đầu ngón tay: vài viên bi tròn, hình nón, đĩa dẹt hay ống trụ nhỏ, mỗi thứ chỉ chừng một đến hai centimet."
+      ],
+      "listener_consequence": "Mở đầu đưa người nghe vào góc nhìn xúc giác gần gũi, khơi gợi trí tưởng tượng."
+    },
+    "movement": {
+      "rating": "PASS",
+      "evidence_spans": [
+        "Cũng từ chính tầng phế tích hành chính thời Uruk muộn tại Chogha Mish, các nhà khảo cổ đã tìm thấy một giải pháp vật chất khác... mảnh phiến đất mang mã số ChM III-937a."
+      ],
+      "listener_consequence": "Mạch truyện có dịch chuyển qua các bước phát triển công nghệ, tuy nhiên nhịp điệu giữa các đoạn còn êm đềm, lực đẩy kịch tính vừa phải."
+    },
+    "specificity": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "OIM A64678",
+        "đường kính chừng bảy đến tám centimet",
+        "đường kính chừng một centimet rưỡi",
+        "ChM III-937a",
+        "năm centimet chiều dài và dày hai centimet"
+      ],
+      "listener_consequence": "Các số đo và hiện vật cụ thể giúp người nghe hình dung rõ ràng trong không gian."
+    },
+    "connections": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "Thế nhưng, chính khoảnh khắc lớp vỏ đất sét khép kín quanh các con tính, một nghịch lý vật chất đã nảy sinh."
+      ],
+      "listener_consequence": "Khớp nối chuyển tiếp xuất phát trực tiếp từ hậu quả cơ học của việc bọc kín đất sét."
+    },
+    "listenability": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "Muốn kiểm tra xem bên trong có bao nhiêu con tính, người kiểm tra chỉ có một lựa chọn vật lý duy nhất: đập vỡ khối đất."
+      ],
+      "listener_consequence": "Câu văn gãy gọn, cụm hơi thở phân bố đều, cực kỳ dễ đọc to và dễ tiếp nhận trong một lần nghe."
+    },
+    "payoff": {
+      "rating": "PASS",
+      "evidence_spans": [
+        "Con số được phơi bày trực tiếp và bền vững trên mặt phẳng, sẵn sàng cho việc kiểm tra lặp đi lặp lại mà không đòi hỏi bất kỳ sự phá hủy nào đối với vật thể lưu giữ."
+      ],
+      "listener_consequence": "Giải tỏa được mâu thuẫn phá hủy phong bao đã đặt ra từ trước."
+    },
+    "essay_tendency": {
+      "rating": "PASS",
+      "evidence_spans": [
+        "Hãy hình dung những vật thể đất sét rất nhỏ...",
+        "Bản chất vật lý của phương cách ấy được lưu giữ nguyên vẹn..."
+      ],
+      "listener_consequence": "Hiện vật và thao tác bàn tay đi trước lời bình luận, không bị rơi vào giọng điệu thuyết giảng học thuật."
+    }
+  },
+  "target_gap": {
+    "baseline_comparison": "BASELINE_SELF",
+    "distance_to_target": "MODERATE",
+    "summary": "Mẫu mốc chuẩn đạt yêu cầu tốt về nhịp thở nói và tính gợi hình, nhưng xung lực kịch tính ở mở đầu và độ sắc nét biện chứng còn có thể đẩy cao hơn."
+  },
+  "failure_signature": {
+    "code": "NONE",
+    "primary_symptom": "Không có vi phạm nghiêm trọng; nhịp điệu mở đầu an toàn và xung lực đẩy kịch tính ở mức trung bình.",
+    "secondary_symptom": "Đoạn kết còn mang tính đúc kết tĩnh thay vì phóng một câu hỏi treo gai góc cho chặng kế tiếp.",
+    "suspect_upstream_regions": [
+      "Narrative Planner (Tension Scaling / High-Stakes Hook)"
+    ],
+    "observable_span": "Khi các trung tâm quản lý thời Uruk muộn tiếp tục mở rộng quy mô, sự gia tăng của các luồng hàng hóa và tài sản đòi hỏi những phương cách vật chất cụ thể..."
+  }
+}

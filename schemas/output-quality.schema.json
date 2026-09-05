@@ -1,0 +1,261 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OutputQualityContractSchema",
+  "description": "Schema for Output Quality Evaluations and Benchmark Artifacts under Phase 1 of Observable Learning Architecture",
+  "definitions": {
+    "GateStatus": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "FAIL",
+        "UNCERTAIN"
+      ]
+    },
+    "DimensionRating": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "GOOD",
+        "WEAK",
+        "FAIL",
+        "UNCERTAIN"
+      ]
+    },
+    "BaselineComparison": {
+      "type": "string",
+      "enum": [
+        "SUPERIOR",
+        "PARITY",
+        "INFERIOR",
+        "BASELINE_SELF",
+        "UNCERTAIN"
+      ]
+    },
+    "TargetDistance": {
+      "type": "string",
+      "enum": [
+        "NEAR",
+        "MODERATE",
+        "FAR",
+        "CRAFT_EXEMPLAR"
+      ]
+    },
+    "FailureCode": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "E01_TRUTH_BREACH",
+        "E02_ESSAY_LECTURE",
+        "E03_DENSE_CADENCE",
+        "E04_STAGNANT_MOVEMENT",
+        "E05_UNEARNED_LEAP"
+      ]
+    },
+    "GateEvaluation": {
+      "type": "object",
+      "required": [
+        "status",
+        "evidence_spans",
+        "notes"
+      ],
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/GateStatus"
+        },
+        "evidence_spans": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "DimensionEvaluation": {
+      "type": "object",
+      "required": [
+        "rating",
+        "evidence_spans",
+        "listener_consequence"
+      ],
+      "properties": {
+        "rating": {
+          "$ref": "#/definitions/DimensionRating"
+        },
+        "evidence_spans": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "listener_consequence": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "FailureSignature": {
+      "type": "object",
+      "required": [
+        "code",
+        "primary_symptom",
+        "secondary_symptom",
+        "suspect_upstream_regions",
+        "observable_span"
+      ],
+      "properties": {
+        "code": {
+          "$ref": "#/definitions/FailureCode"
+        },
+        "primary_symptom": {
+          "type": "string"
+        },
+        "secondary_symptom": {
+          "type": "string"
+        },
+        "suspect_upstream_regions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "observable_span": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "required": [
+    "schema_version",
+    "evaluation_id",
+    "sample_id",
+    "sample_type",
+    "text_sha256",
+    "absolute_gates",
+    "craft_dimensions",
+    "target_gap",
+    "failure_signature"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "evaluation_id": {
+      "type": "string"
+    },
+    "sample_id": {
+      "type": "string"
+    },
+    "sample_type": {
+      "type": "string",
+      "enum": [
+        "known_weak_essay",
+        "current_baseline",
+        "round_candidate",
+        "craft_reference"
+      ]
+    },
+    "text_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "absolute_gates": {
+      "type": "object",
+      "required": [
+        "G_TRUTH",
+        "G_COHERENCE",
+        "G_SCOPE",
+        "G_LANGUAGE",
+        "G_CAUSALITY",
+        "overall_gate_pass"
+      ],
+      "properties": {
+        "G_TRUTH": {
+          "$ref": "#/definitions/GateEvaluation"
+        },
+        "G_COHERENCE": {
+          "$ref": "#/definitions/GateEvaluation"
+        },
+        "G_SCOPE": {
+          "$ref": "#/definitions/GateEvaluation"
+        },
+        "G_LANGUAGE": {
+          "$ref": "#/definitions/GateEvaluation"
+        },
+        "G_CAUSALITY": {
+          "$ref": "#/definitions/GateEvaluation"
+        },
+        "overall_gate_pass": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "craft_dimensions": {
+      "type": "object",
+      "required": [
+        "continue",
+        "movement",
+        "specificity",
+        "connections",
+        "listenability",
+        "payoff",
+        "essay_tendency"
+      ],
+      "properties": {
+        "continue": {
+          "$ref": "#/definitions/DimensionEvaluation"
+        },
+        "movement": {
+          "$ref": "#/definitions/DimensionEvaluation"
+        },
+        "specificity": {
+          "$ref": "#/definitions/DimensionEvaluation"
+        },
+        "connections": {
+          "$ref": "#/definitions/DimensionEvaluation"
+        },
+        "listenability": {
+          "$ref": "#/definitions/DimensionEvaluation"
+        },
+        "payoff": {
+          "$ref": "#/definitions/DimensionEvaluation"
+        },
+        "essay_tendency": {
+          "$ref": "#/definitions/DimensionEvaluation"
+        }
+      },
+      "additionalProperties": false
+    },
+    "target_gap": {
+      "type": "object",
+      "required": [
+        "baseline_comparison",
+        "distance_to_target",
+        "summary"
+      ],
+      "properties": {
+        "baseline_comparison": {
+          "$ref": "#/definitions/BaselineComparison"
+        },
+        "distance_to_target": {
+          "$ref": "#/definitions/TargetDistance"
+        },
+        "summary": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "failure_signature": {
+      "$ref": "#/definitions/FailureSignature"
+    }
+  },
+  "additionalProperties": false
+}

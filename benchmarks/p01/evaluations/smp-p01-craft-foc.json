@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0.0",
+  "evaluation_id": "EVAL-CALIB-P01-CRAFT-FOC",
+  "sample_id": "SMP-P01-CRAFT-FOC",
+  "sample_type": "craft_reference",
+  "text_sha256": "52d2a8370c98465f15140718c13924904490f4d9b1befab1612fe439872bddba",
+  "absolute_gates": {
+    "G_TRUTH": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Pietro della Valle",
+        "1625",
+        "ruins of Ur"
+      ],
+      "notes": "Cứ liệu lịch sử chuyến đi của Pietro della Valle chính xác (sử dụng với tư cách mẫu tham chiếu thủ pháp nghệ thuật, không thay thế cho sử liệu P01)."
+    },
+    "G_COHERENCE": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Being suspicious to some Arabian vagrants or vagabonds, for more security we removed a mile further..."
+      ],
+      "notes": "Hành trình thực địa mạch lạc, chân thực."
+    },
+    "G_SCOPE": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Della Valle and his wife didn't know it, but they had stumbled across the ruins of Ur..."
+      ],
+      "notes": "Khung cảnh khám phá tàn tích Lưỡng Hà."
+    },
+    "G_LANGUAGE": {
+      "status": "PASS",
+      "evidence_spans": [
+        "All the way home, Della Valle must have turned those tablets over in his hands, gazed at their mysterious ancient symbols."
+      ],
+      "notes": "Tiếng Anh phát thanh mẫu mực của podcast FoC."
+    },
+    "G_CAUSALITY": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Eventually, negotiations with the local leader fell apart, and Della Valle's guides no longer felt safe..."
+      ],
+      "notes": "Diễn biến thực tế khách quan."
+    },
+    "overall_gate_pass": true
+  },
+  "craft_dimensions": {
+    "continue": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "In the distance, they spotted the looming mass of a series of enormous ruins..."
+      ],
+      "listener_consequence": "Mối nguy hiểm từ cướp bóc và sư tử hoang dã buộc người nghe nín thở theo dõi xem họ sẽ trốn vào đâu."
+    },
+    "movement": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "Della Valle and his wife didn't know it, but they had stumbled across the ruins of Ur, a city that had formed the center of one of mankind's first civilizations."
+      ],
+      "listener_consequence": "Dịch chuyển nhận thức từ nỗi sợ hãi chạy trốn sang khoảnh khắc kinh ngạc phát hiện ra thành bang cổ đại đã mất."
+    },
+    "specificity": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "built with very good bricks... cemented together not with lime, but with bitumen or pitch",
+        "pieces of black marble, hard and fine",
+        "One was like a pyramid, and the other resembled a star of eight points"
+      ],
+      "listener_consequence": "Các chi tiết vật liệu cụ thể (nhựa đường bitumen, đá cẩm thạch đen, hình sao tám cánh) đưa người nghe bước vào hiện trường khảo cổ."
+    },
+    "connections": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "Due to these various dangers, Della Valle's guides were constantly on edge. It was June the 18th, 1625, when they spotted a distant group of tribesmen on the horizon."
+      ],
+      "listener_consequence": "Mạch nối giữa mối đe dọa chung sang sự việc cụ thể diễn ra tự nhiên, không gượng ép."
+    },
+    "listenability": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "All the way home, Della Valle must have turned those tablets over in his hands, gazed at their mysterious ancient symbols."
+      ],
+      "listener_consequence": "Nhịp câu có độ lắng sâu sắc, cụm từ giàu âm nhạc và hình ảnh, hoàn hảo cho định dạng âm thanh thính giác."
+    },
+    "payoff": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "He must have wondered to himself, who had built those enormous mounds of brick and earth, all alone out there in the middle of the desert? What did the symbols on those broken pieces of clay mean, and if such a great city had once stood there, what in all the world could have happened to it?"
+      ],
+      "listener_consequence": "Kết thúc mở ra câu hỏi lớn của toàn bộ tập podcast, tạo cảm giác thỏa mãn và thôi thúc tột độ."
+    },
+    "essay_tendency": {
+      "rating": "PASS",
+      "evidence_spans": [
+        "In the year 1625, an Italian nobleman named Pietro della Valle went on a tour of the Middle East..."
+      ],
+      "listener_consequence": "Con người, hành động, không gian nguy hiểm đi trước; ý nghĩa lịch sử chỉ hé lộ khi nhân vật đã chạm tay vào mảnh gạch cổ."
+    }
+  },
+  "target_gap": {
+    "baseline_comparison": "SUPERIOR",
+    "distance_to_target": "CRAFT_EXEMPLAR",
+    "summary": "Mẫu chuẩn mực về nghệ thuật dẫn chuyện podcast: biến tri thức lịch sử thành cuộc điều tra kịch tính với nhân vật, xúc cảm và nhịp điệu phát thanh hoàn hảo."
+  },
+  "failure_signature": {
+    "code": "NONE",
+    "primary_symptom": "Không có lỗi; mẫu chuẩn mực về thủ pháp dẫn chuyện podcast.",
+    "secondary_symptom": "Biến tri thức lịch sử thành hành trình điều tra ly kỳ.",
+    "suspect_upstream_regions": [],
+    "observable_span": "What did the symbols on those broken pieces of clay mean, and if such a great city had once stood there, what in all the world could have happened to it?"
+  }
+}

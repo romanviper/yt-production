@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0.0",
+  "evaluation_id": "EVAL-CALIB-P01-CAND-R01",
+  "sample_id": "SMP-P01-CAND-R01",
+  "sample_type": "round_candidate",
+  "text_sha256": "57e790a6d685edaafc5930ef3f4d08f482e37bcc193cfd5d32c2d710fc3c546b",
+  "absolute_gates": {
+    "G_TRUTH": {
+      "status": "PASS",
+      "evidence_spans": [
+        "OIM A64678",
+        "7,8 nhân 7,2 centimet",
+        "1,6 centimet",
+        "ChM III-937a",
+        "4,8 nhân 3,2 nhân 2,0 centimet",
+        "năm ký hiệu số",
+        "con bò đực"
+      ],
+      "notes": "32/32 câu chuẩn xác tuyệt đối theo sự thật khảo cổ, được bảo chứng bằng Truth Reviewer."
+    },
+    "G_COHERENCE": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Khối cầu niêm phong bảo đảm an toàn cho số lượng, song cái giá phải trả là sự mù mịt về thị giác."
+      ],
+      "notes": "Xung đột nhận thức và giải pháp kỹ thuật nhất quán xuyên suốt."
+    },
+    "G_SCOPE": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Mảnh vỡ ChM III-937a không ghi hàng hóa, không cho biết người lập, và không thuộc về cùng giao dịch hay chứng minh quan hệ kế thừa trực tiếp với phong bì vỡ."
+      ],
+      "notes": "Xử lý phạm vi chặt chẽ, khẳng định rõ ranh giới chứng cứ."
+    },
+    "G_LANGUAGE": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Bước chuyển ở đây không phải là một phát minh đột ngột hay nấc thang tiến hóa bắt buộc, mà là sự thay đổi về nơi thông tin cư ngụ..."
+      ],
+      "notes": "Tiếng Việt sắc sảo, chuẩn xác, giàu tính tư duy."
+    },
+    "G_CAUSALITY": {
+      "status": "PASS",
+      "evidence_spans": [
+        "...không thuộc về cùng giao dịch hay chứng minh quan hệ kế thừa trực tiếp với phong bì vỡ."
+      ],
+      "notes": "Tuyệt đối không bịa đặt quan hệ kế thừa tuyến tính."
+    },
+    "overall_gate_pass": true
+  },
+  "craft_dimensions": {
+    "continue": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "Làm sao một viên chức có thể kiểm tra lượng con tính bên trong mà không phá hủy chính vật chứa bảo đảm cho giao dịch?"
+      ],
+      "listener_consequence": "Móc nối câu hỏi treo tạo áp lực tò mò mạnh mẽ sang giải pháp kế tiếp."
+    },
+    "movement": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "Bước chuyển ở đây không phải là một phát minh đột ngột hay nấc thang tiến hóa bắt buộc, mà là sự thay đổi về nơi thông tin cư ngụ và cách thức kiểm tra nó: từ khối hình học ba chiều giấu kín trong quả cầu đất sang vết ấn hai chiều bền vững trên mặt phẳng."
+      ],
+      "listener_consequence": "Động lực dịch chuyển nhận thức cực kỳ mạnh mẽ, người nghe hiểu sâu sắc bước ngoặt công nghệ từ 3D sang 2D."
+    },
+    "specificity": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "7,8 nhân 7,2 centimet",
+        "1,6 centimet",
+        "4,8 nhân 3,2 nhân 2,0 centimet",
+        "năm ký hiệu số ấn sâu, cùng các vết lăn dấu mang hình động vật, trong đó có một con bò đực"
+      ],
+      "listener_consequence": "Chi tiết vật lý chính xác đến từng mi-li-mét trực tiếp gánh vác lập luận."
+    },
+    "connections": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "Nhưng cấu trúc của nó phản ánh một thao tác rõ ràng: các con tính rời được đặt vào đất sét ẩm, rồi miết kín thành quả cầu rỗng. Trớ trêu thay..."
+      ],
+      "listener_consequence": "Khớp nối chuyển ý sắc bén qua quan hệ nghịch lý vật chất."
+    },
+    "listenability": {
+      "rating": "WEAK",
+      "evidence_spans": [
+        "Nhưng cấu trúc của nó phản ánh một thao tác rõ ràng: các con tính rời được đặt vào đất sét ẩm, rồi miết kín thành quả cầu rỗng. Trớ trêu thay, người quan sát ngày nay thấy được bên trong chỉ vì trạng thái niêm phong ban đầu đã bị phá hủy.",
+        "Mảnh vỡ ChM III-937a không ghi hàng hóa, không cho biết người lập, và không thuộc về cùng giao dịch hay chứng minh quan hệ kế thừa trực tiếp với phong bì vỡ."
+      ],
+      "listener_consequence": "Câu ghép dài với nhiều vế phụ và từ ngữ nén mật độ cao ('không thuộc về cùng giao dịch hay chứng minh quan hệ kế thừa trực tiếp'). Khi đọc to, người dẫn chuyện bị hụt hơi, người nghe phải xử lý quá nhiều mệnh đề đối ngẫu trong một nhịp thở."
+    },
+    "payoff": {
+      "rating": "GOOD",
+      "evidence_spans": [
+        "Khi thông tin định lượng đã đứng vững trên phiến đất sét, câu hỏi kế tiếp mở ra: làm sao để bề mặt phẳng ấy không chỉ ghi nhớ con số, mà còn gọi tên chính xác từng loại hàng hóa, con người và thiết chế trong một xã hội ngày càng phức tạp?"
+      ],
+      "listener_consequence": "Phần thưởng nhận thức thỏa đáng kết hợp mở rộng chân trời câu hỏi cho phần sau."
+    },
+    "essay_tendency": {
+      "rating": "PASS",
+      "evidence_spans": [
+        "Trong các cuộc thảo luận về buổi đầu của chữ viết ở Lưỡng Hà... Nhưng trước khi nét chữ đầu tiên xuất hiện... Đó là các con tính bằng đất sét nặn tay..."
+      ],
+      "listener_consequence": "Dù mở đầu có nhắc tới 'các cuộc thảo luận', câu văn ngay lập tức kéo xuống thực thể bàn tay và con tính vật lý, không sa vào thuyết giảng trừu tượng."
+    }
+  },
+  "target_gap": {
+    "baseline_comparison": "PARITY",
+    "distance_to_target": "MODERATE",
+    "summary": "Đột phá vượt trội về động lực diễn tiến (movement) và tính gắn kết logic (connections), nhưng bị khựng lại ở độ thông thoáng nhịp thở khi đọc thoại (listenability) do câu văn quá cô đọng và nhiều mệnh đề phụ."
+  },
+  "failure_signature": {
+    "code": "E03_DENSE_CADENCE",
+    "primary_symptom": "Câu văn nén quá nhiều tầng mệnh đề phụ và ý đối ngẫu, gây áp lực lên nhịp thở người đọc và tai người nghe.",
+    "secondary_symptom": "Mật độ thông tin cao cản trở khả năng lĩnh hội ngay trong một lần nghe (single-pass comprehension).",
+    "suspect_upstream_regions": [
+      "Writer Realization (Sentence Length & Pacing)",
+      "Polish Module (Spoken Cadence / Breath Groups)"
+    ],
+    "observable_span": "Mảnh vỡ ChM III-937a không ghi hàng hóa, không cho biết người lập, và không thuộc về cùng giao dịch hay chứng minh quan hệ kế thừa trực tiếp với phong bì vỡ."
+  }
+}

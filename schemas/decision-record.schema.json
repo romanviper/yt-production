@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DecisionRecordSchema",
+  "description": "Minimal Decision Record Schema for Consequential Choices under Observable Learning Architecture",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "decision_id",
+    "trial_ref",
+    "candidate_sha256",
+    "outcome_status",
+    "addressed_failure_signature",
+    "decision_rationale",
+    "inspectable_evidence",
+    "created_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "decision_id": {
+      "type": "string"
+    },
+    "trial_ref": {
+      "type": "string"
+    },
+    "candidate_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "outcome_status": {
+      "type": "string",
+      "enum": [
+        "DEMONSTRATED_GAIN",
+        "NO_DEMONSTRATED_GAIN",
+        "GATE_BREACH",
+        "INCONCLUSIVE"
+      ]
+    },
+    "addressed_failure_signature": {
+      "type": "string"
+    },
+    "decision_rationale": {
+      "type": "string"
+    },
+    "inspectable_evidence": {
+      "type": "object",
+      "required": [
+        "truth_report_ref",
+        "product_eval_refs"
+      ],
+      "properties": {
+        "truth_report_ref": {
+          "type": "string"
+        },
+        "product_eval_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "created_at": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

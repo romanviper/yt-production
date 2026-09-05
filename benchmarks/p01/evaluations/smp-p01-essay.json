@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0.0",
+  "evaluation_id": "EVAL-CALIB-P01-ESSAY",
+  "sample_id": "SMP-P01-ESSAY",
+  "sample_type": "known_weak_essay",
+  "text_sha256": "c8090ae33576063aa56a370cb2b8d78505c0fe12a71aa7866f8eb13638ebaa0e",
+  "absolute_gates": {
+    "G_TRUTH": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Những viên đếm nhỏ bằng đất sét, các vỏ bao rỗng cũng bằng đất sét, dấu niêm, bảng số và những bề mặt đất sét mang dấu viết sớm cùng tồn tại như nhiều cách khác nhau..."
+      ],
+      "notes": "Sử liệu không sai nhưng bị trừu tượng hóa tối đa, chỉ liệt kê các chủng loại phương tiện."
+    },
+    "G_COHERENCE": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Khi còn nguyên, nó giữ các vật ấy cùng nhau, nhưng đồng thời che chúng khỏi sự quan sát trực tiếp."
+      ],
+      "notes": "Logic nội tại nhất quán, không tự mâu thuẫn."
+    },
+    "G_SCOPE": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Trong các bối cảnh hành chính Late Uruk ở miền nam Lưỡng Hà và những nơi liên quan..."
+      ],
+      "notes": "Nằm trong phạm vi Hậu Uruk và công cụ đất sét của P01."
+    },
+    "G_LANGUAGE": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Trước khi có chữ viết theo nghĩa quen thuộc, đã có một bài toán vật chất..."
+      ],
+      "notes": "Tiếng Việt đúng ngữ pháp nhưng mang cấu trúc khảo luận học thuật."
+    },
+    "G_CAUSALITY": {
+      "status": "PASS",
+      "evidence_spans": [
+        "Đây không phải khoảnh khắc một nhà phát minh vô danh đột nhiên tạo ra chữ viết, cũng không phải cuộc thay ngôi tức thời..."
+      ],
+      "notes": "Cẩn trọng về nhân quả, không bịa đặt."
+    },
+    "overall_gate_pass": true
+  },
+  "craft_dimensions": {
+    "continue": {
+      "rating": "WEAK",
+      "evidence_spans": [
+        "Trước khi có chữ viết theo nghĩa quen thuộc, đã có một bài toán vật chất: làm sao giữ cho một con số không biến mất khi người ta rời mắt khỏi những gì đang được đếm..."
+      ],
+      "listener_consequence": "Mở đầu bằng định nghĩa khái quát và câu hỏi mang tính giáo khoa, tạo cảm giác người nghe đang đọc một bài báo nghiên cứu chứ không kéo người nghe tò mò theo dõi một câu chuyện."
+    },
+    "movement": {
+      "rating": "FAIL",
+      "evidence_spans": [
+        "Đây không phải khoảnh khắc một nhà phát minh vô danh đột nhiên tạo ra chữ viết, cũng không phải cuộc thay ngôi tức thời trong đó bảng đất sét quét sạch viên đếm, vỏ bao và dấu niêm. Ta chỉ có thể nói thận trọng hơn..."
+      ],
+      "listener_consequence": "Đoạn văn tiêu tốn dung lượng lớn để thanh minh và phủ định các giả định sai lầm thay vì tạo ra chuyển biến nhận thức cụ thể. Người nghe cảm thấy dậm chân tại chỗ."
+    },
+    "specificity": {
+      "rating": "FAIL",
+      "evidence_spans": [
+        "Những viên đếm nhỏ bằng đất sét, các vỏ bao rỗng cũng bằng đất sét, dấu niêm, bảng số và những bề mặt đất sét mang dấu viết sớm cùng tồn tại như nhiều cách khác nhau để xử lý số lượng và sự xác thực."
+      ],
+      "listener_consequence": "Hoàn toàn vắng bóng các chi tiết cảm giác và hiện vật cụ thể (không mã số OIM A64678, không kích thước, không vết vỡ). Hiện vật chỉ là các danh từ phân loại khô cứng."
+    },
+    "connections": {
+      "rating": "WEAK",
+      "evidence_spans": [
+        "Với bảng số bằng đất sét, quan hệ giữa thông tin và bề mặt đổi khác... Sự thay đổi vì thế không chỉ nằm ở hình dạng của đồ vật. Nó nằm ở vị trí vật lý của thông tin..."
+      ],
+      "listener_consequence": "Chuyển ý dựa trên bình luận siêu ngôn ngữ ('quan hệ đổi khác', 'sự thay đổi nằm ở') thay vì mâu thuẫn vật chất hay hệ quả hành động trực tiếp."
+    },
+    "listenability": {
+      "rating": "WEAK",
+      "evidence_spans": [
+        "Chưa cần biết con số chỉ hàng hóa nào, nghĩa vụ nào hay cơ chế giao dịch nào—những điều bản thân một bảng số không thể nói—ta vẫn thấy một khả năng mới đang được củng cố."
+      ],
+      "listener_consequence": "Mệnh đề chêm xen dài và nhiều tầng rào đón khiến người nghe khó bám bắt trọng tâm khi chỉ nghe nói một lần."
+    },
+    "payoff": {
+      "rating": "WEAK",
+      "evidence_spans": [
+        "...khi con số đã được đưa lên mặt đất sét, người ta còn cần đặt thêm những gì bên cạnh nó để một dấu vết trở thành một bản ghi có thể được hiểu?"
+      ],
+      "listener_consequence": "Kết thúc bằng câu hỏi triết học trừu tượng, không để lại hình ảnh đọng lại hay phần thưởng nhận thức cụ thể sau khi nghe."
+    },
+    "essay_tendency": {
+      "rating": "FAIL",
+      "evidence_spans": [
+        "Trước khi có chữ viết theo nghĩa quen thuộc, đã có một bài toán vật chất...",
+        "Ta chỉ có thể nói thận trọng hơn: trong thế giới hành chính ấy, việc đặt thông tin số trực tiếp lên bề mặt đất sét bền ngày càng trở nên nổi bật..."
+      ],
+      "listener_consequence": "Thuyết giảng lý thuyết và kết luận khảo cổ đi trước hoàn toàn trải nghiệm trực quan. Người nghe bị biến thành học viên dự thính bài giảng."
+    }
+  },
+  "target_gap": {
+    "baseline_comparison": "INFERIOR",
+    "distance_to_target": "FAR",
+    "summary": "Mẫu văn bản mang trọn vẹn lỗi tiểu luận học thuật: trừu tượng, giải thích lý thuyết trước trải nghiệm, thiếu chi tiết hiện vật và dậm chân tại chỗ."
+  },
+  "failure_signature": {
+    "code": "E02_ESSAY_LECTURE",
+    "primary_symptom": "Lời bình và kết luận trừu tượng đi trước và lấn át hoàn toàn trải nghiệm vật chất của hiện vật.",
+    "secondary_symptom": "Vắng bóng chi tiết khảo cổ cụ thể; các đoạn văn lặp lại luận điểm đính chính giả thiết sai.",
+    "suspect_upstream_regions": [
+      "Narrative Planner (Beat Structure / Listener-State Design)",
+      "Writer Realization (Expository Compression Habit)"
+    ],
+    "observable_span": "Trước khi có chữ viết theo nghĩa quen thuộc, đã có một bài toán vật chất: làm sao giữ cho một con số không biến mất..."
+  }
+}
