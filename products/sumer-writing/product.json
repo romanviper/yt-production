@@ -4,7 +4,7 @@
   "working_title": "Chữ viết đã thay đổi xã hội Sumer như thế nào?",
   "language": "vi",
   "format": "long_form_history_documentary",
-  "status": "outline_approved",
+  "status": "sections_materialized",
   "created_at": "2026-08-12",
   "target": {
     "duration_minutes": {
@@ -75,7 +75,7 @@
   },
   "production_cycle": {
     "id": "C003",
-    "status": "outline_approved",
+    "status": "sections_materialized",
     "previous": "C002",
     "started_at": "2026-08-18T13:45:00+00:00",
     "reason": "The clean writer-authorship-v1 outline was explicitly approved by the user on 2026-08-19. Legacy material-aware artifacts and the contaminated P01 output have been removed from the active product surface; section work remains paused until the next canonical task is routed."

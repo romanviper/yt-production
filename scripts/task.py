@@ -28,17 +28,19 @@ try:
         task_submit_errors,
         task_transition_errors,
     )
+    from scripts.draft_evidence import preflight_section_materials
     from scripts.operator_brief import empty_brief, render_brief, validate_brief_file
     from scripts.outcome_eval_contract import validate_outcome_review
     from scripts.outline_contract import MAX_SECTION_WORDS, validate_outline_contract
     from scripts.packet_contract import validate_packet_contract
     from scripts.research_plan_contract import validate_research_plan_contract
-    from scripts.story_plan_contract import validate_story_plan
+    from scripts.story_plan_contract import is_direct_authorship_outline, validate_story_plan
     from scripts.voice_profile_contract import validate_voice_profile
 except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from common import load_registry, narration_text, product_relative, read_json, sha256, word_count, write_json
     from consolidate_research import ensure_consolidated
     from context_packet import compile_packet
+    from draft_evidence import preflight_section_materials
     from draft_lifecycle_contract import record_submitted_prose, validate_evidence_trace, validate_required_evidence_resolution
     from lifecycle import (
         apply_research_submission,
@@ -55,7 +57,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/task.py
     from outline_contract import MAX_SECTION_WORDS, validate_outline_contract
     from packet_contract import validate_packet_contract
     from research_plan_contract import validate_research_plan_contract
-    from story_plan_contract import validate_story_plan
+    from story_plan_contract import is_direct_authorship_outline, validate_story_plan
     from voice_profile_contract import validate_voice_profile
 
 
@@ -99,6 +101,23 @@ def create_task(
             raise ValueError(
                 f"Section {section} already used its one diagnosed revision pass; route a blocker or start a new production cycle."
             )
+
+    if operation == "draft_section" and section:
+        outline_path = product_dir / "02_outline" / "outline.json"
+        if outline_path.is_file():
+            outline = read_json(outline_path)
+            if is_direct_authorship_outline(outline):
+                preflight = preflight_section_materials(product_dir, section)
+                status = preflight.get("status")
+                if status != "material_ready":
+                    if status == "needs_evidence_resolution":
+                        raise ValueError(
+                            f"Section {section} material readiness preflight failed (needs_evidence_resolution): "
+                            "route evidence_resolution before creating a draft_section task."
+                        )
+                    raise ValueError(
+                        f"Section {section} material readiness preflight blocked: {preflight.get('reason', 'insufficient evidence')}"
+                    )
 
     if operation == "research_synthesis":
         ensure_consolidated(product_dir)
@@ -152,6 +171,8 @@ def create_task(
     }
     if "evidence_access" in packet:
         work_order["evidence_access"] = packet["evidence_access"]
+        if "material_snapshot_sha256" in packet["evidence_access"]:
+            work_order["material_snapshot_sha256"] = packet["evidence_access"]["material_snapshot_sha256"]
     if "review_contract_version" in packet:
         work_order["review_contract_version"] = packet["review_contract_version"]
     if "execution_runtime" in packet:
@@ -220,6 +241,14 @@ def verify_task(product_dir: Path, task_id: str, *, state_override: str | None =
         errors.append("runtime-owned paths differ between work order and packet")
     if work.get("packet_manifest") != expected_manifest or work.get("context_packet") != expected_context:
         errors.append("work order must point to its router-generated packet and context")
+    expected_snapshot_hash = work.get("material_snapshot_sha256")
+    if expected_snapshot_hash:
+        section = work.get("target", {}).get("section")
+        snapshot_path = product_dir / "03_sections" / str(section) / "material-snapshot.json"
+        if not snapshot_path.is_file():
+            errors.append(f"task {task_id} material snapshot is missing")
+        elif sha256(snapshot_path) != expected_snapshot_hash:
+            errors.append(f"task {task_id} material snapshot is stale / mutated since task creation")
     return errors
 
 

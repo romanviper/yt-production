@@ -1,0 +1,54 @@
+[
+  {
+    "passage_id": "CAL-PROD-001",
+    "mode": "EXPLANATORY_ESSAY",
+    "carrier_status": "CARRIER_ABSENT",
+    "question_status": "NO_SUSTAINED_QUESTION",
+    "sensory_anchoring": "Relies on generic, abstract categories of artifacts (spheres, cones, flat discs, clay envelopes) without grounding the listener in tangible material textures, acoustic atmosphere, or specific physical encounters.",
+    "narrative_momentum": "Lacks narrative drive; progression is driven entirely by analytical exposition and chronological transition markers ('Ban đầu', 'Khi số lượng...', 'Cuối cùng') rather than dramatic tension, character movement, or suspense.",
+    "scale_shifts": "Operates on a flat historical-analytical plane, moving mechanically from macro urban emergence to administrative artifact evolution without human-scale grounding or perspective dynamics.",
+    "reviewer_added_interpretation_detected": false,
+    "strengths": "Clear, coherent chronological summary of administrative clay accounting evolution into writing precursors.",
+    "weaknesses": "Lacks a human narrative carrier, sensory immersion, situational stakes, and open investigatory questions; reads as an encyclopedic textbook entry rather than long-form narrative podcasting.",
+    "verdict": "FAIL"
+  },
+  {
+    "passage_id": "CAL-PROD-002",
+    "mode": "INVENTED_CAUSAL_DRAMA",
+    "carrier_status": "CARRIER_PRESENT_BUT_FABRICATED",
+    "question_status": "SUPERFICIAL_MELODRAMA",
+    "sensory_anchoring": "Sensory details (sweating under the noon sun, squinting eyes, moist clay balls) are visceral but deployed in service of a theatrical, fictionalized domestic confrontation.",
+    "narrative_momentum": "Artificial narrative propulsion driven by unevidenced interpersonal suspicion and private psychological paranoia, culminating in an unearned monocausal leap claiming fear was the sole origin of writing.",
+    "scale_shifts": "Abrupt, ungrounded transition directly from an invented interpersonal confrontation to an absolute civilizational claim without legitimate evidentiary bridging.",
+    "reviewer_added_interpretation_detected": false,
+    "strengths": "Vivid staging, immediate physical action, and tactile descriptions of sealing clay tokens.",
+    "weaknesses": "Relies on fabricated interior monologue, unevidenced emotional conflict, and reductive monocausal determinism disguised as narrative momentum.",
+    "verdict": "FAIL"
+  },
+  {
+    "passage_id": "CAL-PROD-003",
+    "mode": "STATIC_CATALOGUE",
+    "carrier_status": "CARRIER_ABSENT",
+    "question_status": "NO_SUSTAINED_QUESTION",
+    "sensory_anchoring": "High physical granularity and material specificity (centimeter measurements, rough brown clay, incised lines, carved stones), but completely clinical, resembling a museum inventory or archaeological field catalogue.",
+    "narrative_momentum": "Completely static; zero temporal movement or listening drive; strictly organized around itemized taxonomic groupings ('Nhóm thứ nhất', 'Nhóm thứ hai', etc.).",
+    "scale_shifts": "Monotonous micro-focus restricted entirely to object dimensions and surface morphology, devoid of human connection or macro-historical significance.",
+    "reviewer_added_interpretation_detected": false,
+    "strengths": "Precise dimensional measurements, clear descriptive typology, and accurate physical descriptions of material artifacts.",
+    "weaknesses": "Total absence of a narrative carrier, temporal progression, human perspective, or central driving question; unsuitable for audio narrative listening.",
+    "verdict": "FAIL"
+  },
+  {
+    "passage_id": "CAL-PROD-004",
+    "mode": "GENUINE_NARRATIVE_MOVEMENT",
+    "carrier_status": "CARRIER_AUTHENTIC_AND_PERSISTENT",
+    "question_status": "SUSTAINED_AUTHENTIC_INVESTIGATION",
+    "sensory_anchoring": "Rich, palpable physical reality: the scorching heat of the Mesopotamian wasteland, towering nameless mounds on the horizon, bricks cemented with pitch/bitumen, and sharp cuneiform impressions held in the palm of a hand.",
+    "narrative_momentum": "Compelling narrative drive propelled by authentic historical jeopardy (Ottoman-Persian warfare, desert bandits), taking refuge among ruins, tactile discovery, and organic wonder.",
+    "scale_shifts": "Seamless oscillation from geopolitical macro-conflict down to immediate physical peril, shifting into close-up tactile contact with a handheld clay fragment, and expanding outward to profound civilizational questions of deep time.",
+    "reviewer_added_interpretation_detected": false,
+    "strengths": "Documented historical traveler as a compelling narrative carrier, authentic situational stakes, vivid sensory grounding, and natural question progression that hooks the listener.",
+    "weaknesses": "Slight compression of historical timeline and reflection compared to the unabridged travel accounts, though fully appropriate and effective for the podcast opening format.",
+    "verdict": "PASS"
+  }
+]

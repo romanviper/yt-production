@@ -119,6 +119,10 @@ class WriterLifecycleRegression(unittest.TestCase):
             packet_path = product / "tasks" / work["id"] / "packet.json"
             packet = json.loads(packet_path.read_text(encoding="utf-8"))
             packet["evidence_access"]["interface_version"] = 2
+            packet["evidence_access"]["capabilities"] = [
+                "scope", "resolve_claims", "claims", "sources", "source", "search", "record"
+            ]
+            packet["evidence_access"]["required_before_submit"] = ["resolve_claims"]
             write_json(packet_path, packet)
             broker = DraftEvidenceBroker(product, work["id"])
             resolved = broker.call("resolve_claims", {"route_intent": ROUTE_INTENT})
@@ -144,6 +148,10 @@ class WriterLifecycleRegression(unittest.TestCase):
             packet_path = product / "tasks" / work["id"] / "packet.json"
             packet = json.loads(packet_path.read_text(encoding="utf-8"))
             packet["evidence_access"]["interface_version"] = 3
+            packet["evidence_access"]["capabilities"] = [
+                "scope", "resolve_claims", "claims", "sources", "source", "search", "record"
+            ]
+            packet["evidence_access"]["required_before_submit"] = ["resolve_claims"]
             write_json(packet_path, packet)
 
             broker = DraftEvidenceBroker(product, work["id"])
@@ -183,50 +191,36 @@ class WriterLifecycleRegression(unittest.TestCase):
             state = json.loads(state_path.read_text(encoding="utf-8"))
             self.assertEqual([], validate_canonical_draft_lifecycle(product, "P01", state))
 
-            # Whole-scope claim resolution is mandatory and audit-bound; deeper retrieval remains optional.
+            # Route-neutral scope attestation is mandatory; Writer-directed retrieval remains optional.
             broker = DraftEvidenceBroker(product, task_id)
             scope = broker.call("scope")
             self.assertTrue(validate_required_evidence_resolution(product, task_id))
-            self.assertEqual("compact_writer_brief_v1", scope["brief_mode"])
+            self.assertEqual("writer_directed_on_demand_v1", scope["mode"])
             self.assertNotIn("claims", broker.packet["evidence_access"]["capabilities"])
             self.assertNotIn("sources", broker.packet["evidence_access"]["capabilities"])
+            self.assertNotIn("resolve_claims", broker.packet["evidence_access"]["capabilities"])
             broker.call("search", {"query": "approved"})
-            with self.assertRaisesRegex(EvidenceAccessError, "takes no arguments"):
-                broker.call("resolve_claims", {"story_route": STORY_ROUTE})
-            resolved = broker.call("resolve_claims")
+            attestation = broker.call("attest_scope")
             self.assertEqual([], validate_evidence_trace(product, task_id))
             self.assertEqual([], validate_required_evidence_resolution(product, task_id))
-            self.assertEqual(4, broker.packet["evidence_access"]["interface_version"])
-            self.assertEqual(1, resolved["writer_brief"]["schema_version"])
-            self.assertEqual(1, len(resolved["writer_brief"]["materials"]))
-            self.assertEqual([], resolved["writer_brief"]["redlines"])
-            self.assertEqual(
-                "Approved fact for P01.",
-                resolved["writer_brief"]["materials"][0]["material"],
-            )
-            self.assertIn("omission is expected", resolved["writer_brief"]["selection_rule"])
-            self.assertNotIn("route_intent_attestation", resolved)
-            self.assertNotIn("story_route_attestation", resolved)
-            self.assertNotIn("composition_contract", resolved)
-            self.assertNotIn("resolved_claim_ids", resolved)
-            self.assertNotIn("claim_records", resolved)
-            self.assertNotIn("source_records", resolved)
-            self.assertNotIn("claims", resolved)
-            self.assertNotIn("sources", resolved)
-            self.assertNotIn("telemetry", resolved)
-            serialized = json.dumps(resolved, ensure_ascii=False).encode("utf-8")
-            self.assertLess((len(serialized) + 3) // 4, 600)
+            self.assertEqual(5, broker.packet["evidence_access"]["interface_version"])
+            self.assertEqual("bounded_scope_loaded", attestation["scope_attestation"]["status"])
+            self.assertEqual(1, attestation["scope_attestation"]["claim_count"])
+            serialized = json.dumps(attestation, ensure_ascii=False).encode("utf-8")
+            self.assertNotIn(b"CLM-", serialized)
+            self.assertNotIn(b"SRC-", serialized)
+            self.assertLess((len(serialized) + 3) // 4, 300)
 
-            # Submission requires a complete truth resolution and rejects a hidden creative-plan argument.
+            # Submission requires an exact route-neutral attestation.
             trace_path = product / "tasks" / task_id / "evidence-trace.jsonl"
             original_trace = trace_path.read_text(encoding="utf-8")
             trace_records = [json.loads(line) for line in original_trace.splitlines()]
-            successful_resolution = next(
+            successful_attestation = next(
                 item
                 for item in trace_records
-                if item.get("capability") == "resolve_claims" and item.get("error") is None
+                if item.get("capability") == "attest_scope" and item.get("error") is None
             )
-            successful_resolution["arguments"] = {"creative_route": "must not be audited by the evidence broker"}
+            successful_attestation["arguments"] = {"creative_route": "must not be audited by the evidence broker"}
             trace_path.write_text(
                 "\n".join(json.dumps(item, ensure_ascii=False) for item in trace_records) + "\n",
                 encoding="utf-8",
@@ -406,7 +400,7 @@ class WriterLifecycleRegression(unittest.TestCase):
 
             draft_work = create_task(product, "draft_section", "P01", None, False)
             draft_broker = DraftEvidenceBroker(product, draft_work["id"])
-            draft_broker.call("resolve_claims")
+            draft_broker.call("attest_scope")
             (root / "draft.md").write_text("# P01\n\nA supported routed draft.\n", encoding="utf-8")
             (root / "handoff.md").write_text("The listener reaches State 1.\n", encoding="utf-8")
             write_ready_task_admin(product / "tasks" / draft_work["id"], "P01 draft is ready for review.")
@@ -427,6 +421,15 @@ class WriterLifecycleRegression(unittest.TestCase):
                 approve_section(product, "P01")
 
             review_path.write_text(review_text, encoding="utf-8")
+            state_path = root / "section.json"
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            state["review_provenance"]["authority"] = "stale_mismatched_non_authoritative"
+            write_json(state_path, state)
+            with self.assertRaisesRegex(ValueError, "stale/mismatched and non-authoritative"):
+                approve_section(product, "P01")
+
+            state["review_provenance"].pop("authority")
+            write_json(state_path, state)
             approve_section(product, "P01")
             approved = json.loads((root / "section.json").read_text(encoding="utf-8"))
             self.assertTrue(approved["human_approved"])

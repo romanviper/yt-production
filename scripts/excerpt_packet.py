@@ -180,6 +180,10 @@ def compile_excerpt_packet(
             "This target is one contiguous slice of the longer section, not a compressed target for the whole section."
         ),
     }
+    hist_change = state.get("historical_change") or state.get("historical_movement")
+    if hist_change:
+        excerpt_contract["historical_change"] = hist_change
+    # Keep earned_meaning out of Writer-facing excerpt authority.
     if position == "opening":
         excerpt_contract["starting_audience_assumption"] = state.get("entry_state")
     if completes_section:

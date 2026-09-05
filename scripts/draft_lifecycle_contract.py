@@ -11,10 +11,10 @@ from typing import Any
 
 try:
     from scripts.common import read_json, sha256, write_json
-    from scripts.draft_evidence import build_narrative_writer_brief
+    from scripts.draft_evidence import build_narrative_writer_brief, build_writer_scope_attestation
 except ModuleNotFoundError:
     from common import read_json, sha256, write_json
-    from draft_evidence import build_narrative_writer_brief
+    from draft_evidence import build_narrative_writer_brief, build_writer_scope_attestation
 
 
 LIVE_TASK_STATES = {"ready", "in_progress"}
@@ -25,6 +25,7 @@ BOUND_PACKET_SCHEMA = 5
 ROUTE_FIRST_EVIDENCE_INTERFACE_VERSION = 2
 STORY_ROUTE_EVIDENCE_INTERFACE_VERSION = 3
 NARRATIVE_EVIDENCE_INTERFACE_VERSION = 4
+WRITER_DIRECTED_EVIDENCE_INTERFACE_VERSION = 5
 MIN_ROUTE_INTENT_CHARS = 200
 MAX_ROUTE_INTENT_CHARS = 2000
 ROUTE_INTENT_COPY_WINDOW_WORDS = 10
@@ -249,6 +250,9 @@ def validate_evidence_trace(product_dir: Path, task_id: str) -> list[str]:
             errors.append(f"task {task_id} evidence trace line {index} uses undeclared capability {capability!r}")
         if record.get("evidence_pack_sha256") != expected_evidence_hash:
             errors.append(f"task {task_id} evidence trace line {index} is stale relative to evidence pack")
+        expected_snapshot_hash = work.get("material_snapshot_sha256")
+        if expected_snapshot_hash and record.get("material_snapshot_sha256") != expected_snapshot_hash:
+            errors.append(f"task {task_id} evidence trace line {index} is stale relative to material snapshot")
         if record.get("truth_ceiling_unchanged") is not True:
             errors.append(f"task {task_id} evidence trace line {index} does not preserve truth ceiling")
         response = record.get("response")
@@ -259,7 +263,7 @@ def validate_evidence_trace(product_dir: Path, task_id: str) -> list[str]:
 
 
 def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> list[str]:
-    """Require an audited whole-scope claim resolution only when the packet declares it."""
+    """Require the packet's route-neutral scope check or a legacy whole-scope resolution."""
 
     product_dir = product_dir.resolve()
     task_dir = product_dir / "tasks" / task_id
@@ -270,7 +274,7 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
         return [f"cannot validate required evidence resolution for {task_id}: {exc}"]
     access = packet.get("evidence_access")
     requirements = access.get("required_before_submit", []) if isinstance(access, dict) else []
-    if "resolve_claims" not in requirements:
+    if "resolve_claims" not in requirements and "attest_scope" not in requirements:
         return []
 
     section = str(work.get("target", {}).get("section") or "")
@@ -278,7 +282,7 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
     evidence_path = product_dir / "03_sections" / section / "evidence-pack.json"
     trace_path = product_dir / str(access.get("trace_path") or "")
     if not narration_path.is_file():
-        return [f"task {task_id} cannot resolve claims without narration pack"]
+        return [f"task {task_id} cannot validate evidence scope without narration pack"]
     narration = read_json(narration_path)
     evidence = read_json(evidence_path) if evidence_path.is_file() else {"claims": []}
     if narration.get("schema_version") == 4:
@@ -292,9 +296,39 @@ def validate_required_evidence_resolution(product_dir: Path, task_id: str) -> li
             for item in narration.get(field, [])
             if isinstance(item, dict) and item.get("id")
         ]
-        expected_sources = []
+        expected_sources = [
+            item.get("id")
+            for item in narration.get("source_refs", [])
+            if isinstance(item, dict) and item.get("id")
+        ]
     expected_ids = list(dict.fromkeys(expected))
     expected_source_ids = list(dict.fromkeys(expected_sources))
+
+    if "attest_scope" in requirements:
+        if access.get("interface_version") != WRITER_DIRECTED_EVIDENCE_INTERFACE_VERSION:
+            return [f"task {task_id} declares attest_scope on an unsupported evidence interface"]
+        if not trace_path.is_file():
+            return [f"task {task_id} must call attest_scope before submission"]
+        expected_attestation = build_writer_scope_attestation(section, expected_ids, expected_source_ids)
+        for line in trace_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                record = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            response = record.get("response")
+            if (
+                record.get("capability") == "attest_scope"
+                and record.get("error") is None
+                and record.get("arguments") == {}
+                and response == expected_attestation
+                and record.get("response_sha256") == _json_hash(response)
+                and record.get("truth_ceiling_unchanged") is True
+            ):
+                return []
+        return [f"task {task_id} must successfully attest the complete bounded scope before submission"]
+
     if not trace_path.is_file():
         return [f"task {task_id} must call resolve_claims before submission"]
 

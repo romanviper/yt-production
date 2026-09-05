@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "hash_normalization": "UTF-8, BOM removed, CRLF to LF",
+  "files": {
+    "AGENTS.md": "24002c41ff1f3244f0f81587e37662d4cf8b913efd0b233847588964b0085b23",
+    "competitor's scripts/Section 2 FoC Sumerians.md": "2e38f9f9c476740b0b14bfa34401e56c905ea76f1c63eedef9955fe1fac5f0c0",
+    "competitor's scripts/The sumerians FoC opening - Equal P01.md": "9c8901ed9df0824bb6e82fb3e07a4efa3ad2a70f1ab20a34f5486ea61041a8e1",
+    "competitor's scripts/the sumerians -Channel fall of civilization.md": "d4957bcd46a353a5d669d1f06f1536435750de8114e654beb9821de67ded5412",
+    "docs/experiments/p01-foc-loop/START.md": "3fef57006b1e5e9db9d3f62c7531ae1fe24b7daef2803ae2ba19192c581521b7",
+    "docs/experiments/p01-foc-loop/protocol.md": "6a8d1a9dcdbf27deffd4f51829bd3ab4502139cd272ce823044cfa9ff64d2a49",
+    "docs/experiments/p01-foc-loop/round-01.json": "72041ef253bc64667f5d14741ccce607ea299db391e6ae7ab6d1e48e2db108d6",
+    "products/sumer-writing/00_brief/benchmark.md": "2c06edfc81f85897b108d058a90337f1d3e4a03f24029ccadbe3815f0817669e",
+    "products/sumer-writing/00_brief/product-brief.md": "6ebb71fb3c49d831147b6ed845b011c5942e9e48a6a6940c653d354bdbb45b12",
+    "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/meaningful-probe-v1.md": "7821a8e55c997334e40a3f6954f07f9bed46dd28c18eab9f0f6c9e3408e9db99",
+    "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/notebook-authority.md": "2ad3b29847eae30f07ccbaf7a6ff03337fe16de54fb2264fb8bae17bd1e1cab8",
+    "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/planning-agents-team-v1/truth-record-packet.json": "d54be51bdd629fdd31acdc09375737f0a3a8304a915972df83e53d9902347e20",
+    "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/writer-notebook.md": "46d5c23d8c1a627c15bbf1b452c19e14b90694578683fa570f0b2234c8f1c8eb",
+    "scripts/experiments/p01_foc_loop.py": "9fc8f55680eac489afedf33caf9c536111a482753f59862266fba7d2bc1708ca",
+    "tests/test_p01_foc_loop.py": "8be57f9cd3d99a5b491aa9b62317396ff521e193744af2370a5c7ea96354f925"
+  },
+  "baseline_excerpt_sha256": "974515f03a8652cb8234ed5b83d7e2997d00bf07ef1d79044f72621632db1f29",
+  "reference_excerpt_sha256": {
+    "FOC-INVESTIGATION": "52d2a8370c98465f15140718c13924904490f4d9b1befab1612fe439872bddba",
+    "FOC-MECHANISM": "e25e09568f46170c28ee94fcb63da8b16719938f923acacd6373c1db0af4f030",
+    "FOC-SCALE": "2e38f9f9c476740b0b14bfa34401e56c905ea76f1c63eedef9955fe1fac5f0c0"
+  }
+}

@@ -1,10 +1,9 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "id": "P01",
   "title": "Trước chữ viết đã có một bài toán phải giải",
-  "mission": "Điều gì khiến việc giữ thông tin bằng những dấu bền trên đất sét trở nên hữu ích?",
   "order": 1,
-  "status": "ready_for_review",
+  "status": "ready_for_draft",
   "human_approved": false,
   "dependencies": [],
   "narrative_job": "Thiết lập các pressure và information practices trước/sát thời điểm proto-cuneiform xuất hiện, đồng thời phá hai shortcut: một invention event duy nhất và token→tablet như đường tiến hóa tất định. Section phải kết thúc khi audience đã hiểu vì sao durable, inspectable records trở nên đáng giá mà chưa cần biết 'ai phát minh chữ viết'.",
@@ -15,44 +14,30 @@
     "max": 1550
   },
   "cycle_id": "C003",
-  "outline_sha256": "d707db0c172a9db579593a136791d2b1e629892315e31bedfa0d795b8c92da9d",
+  "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+  "historical_substrate_contract_version": 1,
+  "historical_territory": "Các thực hành ghi nhận và xác thực bằng đất sét trong Late Uruk, đặc biệt sự dịch chuyển toward việc đặt thông tin số trực tiếp trên bề mặt bền trong khi nhiều phương tiện cũ vẫn cùng tồn tại.",
+  "mission": "Các thực hành ghi nhận và xác thực bằng đất sét trong Late Uruk, đặc biệt sự dịch chuyển toward việc đặt thông tin số trực tiếp trên bề mặt bền trong khi nhiều phương tiện cũ vẫn cùng tồn tại.",
+  "historical_change": {
+    "from": "Số lượng và sự xác thực được xử lý qua nhiều thiết bị và thực hành đất sét cùng tồn tại, gồm counters, envelopes, sealings và các bề mặt ghi số.",
+    "to": "Thực hành ghi nhận ngày càng đặt thông tin số trực tiếp trên bề mặt đất sét bền, đôi khi cùng dấu xác thực, trong khi các phương tiện cũ vẫn tiếp tục chồng lấn."
+  },
+  "historical_substrate_ids": [
+    "HS-P01-0001",
+    "HS-P01-0003",
+    "HS-P01-0004",
+    "HS-P01-0007"
+  ],
+  "architecture_authority": {
+    "kind": "approved_section_overlay",
+    "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+    "overlay_path": "02_outline/section-overlays/P01.json",
+    "overlay_sha256": "5db68ce464d768dfbe59854208f8ecd5c9317878ebce96b062e176b2365e3973",
+    "historical_substrate_contract_version": 1,
+    "authority_note": "Minimal P01 primary substrate: retain only coexisting recording practice, envelope affordance, numerical-tablet affordance and the historical change. Broader claim authority remains available through secondary evidence verification."
+  },
   "transition": "Nếu nhu cầu và các recording practices đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.",
   "movement_ids": [
     "M01"
-  ],
-  "macro_movements": [
-    {
-      "id": "M01",
-      "title": "Trước chữ viết đã có một bài toán phải giải",
-      "narrative_job": "Xác lập formation pressure và ecology: nhu cầu giữ thông tin hành chính/xác thực tăng trong bối cảnh thiết chế lớn hơn, nhưng evidence không cho phép một nguyên nhân duy nhất hay một genealogy tuyến tính. Movement phải khiến câu hỏi chuyển từ 'ai phát minh?' sang 'những áp lực và thực hành nào khiến durable recording trở nên hữu ích?'.",
-      "entry_state": "Nguồn gốc được tưởng như một invention event đơn lẻ.",
-      "exit_state": "Nguồn gốc được hiểu như một quá trình nhiều thực hành và nhiều áp lực cùng hội tụ; administration là trọng tâm nhưng không phải monocause."
-    }
-  ],
-  "acts": [
-    {
-      "id": "A01",
-      "role": "opening",
-      "title": "Khi một xã hội cần trí nhớ ngoài con người"
-    }
-  ],
-  "prose_provenance": {
-    "task_id": "T0057-draft-section-P01",
-    "operation": "draft_section",
-    "submitted_at": "2026-08-26T15:05:19.960438+00:00",
-    "draft_sha256": "3da0e0d315c8924b07b5edbbd77c8441f60c0aee31aca6bbd40bdb9d0e09e5f3",
-    "handoff_sha256": "5423ddd9e15bb607c007be15a07f6dc4f2aa5aa22b3bed6ca43b7c8877327deb",
-    "schema_version": 2,
-    "packet_schema_version": 5,
-    "task_packet_sha256": "c621c10a2c6d183c7a8dae63adfcbaa24e10d9cef6fe14d787415623014214d1"
-  },
-  "review_provenance": {
-    "task_id": "T0036-review-section-P01",
-    "contract_version": 3,
-    "review_sha256": "fafb219ad930720e30307e949516ed41c29906172d683de70dd5cf08e70e856f"
-  },
-  "revision_pass": {
-    "cycle_id": "C003",
-    "count": 1
-  }
+  ]
 }

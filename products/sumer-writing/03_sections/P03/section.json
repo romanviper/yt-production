@@ -1,0 +1,41 @@
+{
+  "schema_version": 4,
+  "id": "P03",
+  "title": "Khi chữ viết bắt đầu làm nhiều việc hơn",
+  "order": 3,
+  "status": "ready_for_draft",
+  "human_approved": false,
+  "dependencies": [
+    "P02"
+  ],
+  "narrative_job": "Thiết lập functional expansion như additions và recombinations thay vì một ladder. Section phải cho audience thấy writing đi từ dominant administrative use tới một repertoire rộng hơn và giải thích vì sao expansion này thay đổi stakes của câu chuyện: writing giờ không chỉ giữ hàng hóa mà còn có thể giữ claims, categories, instructions và textual traditions.",
+  "entry_state": "Writing vẫn chủ yếu được nhìn như công cụ bookkeeping.",
+  "exit_state": "Khán giả hiểu writing đã trở thành một môi trường nhiều chức năng; càng nhiều domain dựa vào nó, càng quan trọng việc duy trì convention, access và competence.",
+  "target_words": {
+    "min": 1000,
+    "max": 1450
+  },
+  "cycle_id": "C003",
+  "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+  "mission": "Chữ viết mở rộng từ công cụ kiểm kê hạn hẹp thành một hệ sinh thái nhiều chức năng như thế nào?",
+  "transition": "Expansion cho biết writing được dùng ở đâu; phần tiếp theo phải trả lời nó thực sự thay đổi năng lực của một institution bằng cơ chế nào.",
+  "movement_ids": [
+    "M03"
+  ],
+  "macro_movements": [
+    {
+      "id": "M03",
+      "title": "Từ công cụ hành chính thành một repertoire",
+      "narrative_job": "Cho thấy writing không đi theo chiếc thang accounting→literature mà tích lũy và tái kết hợp thêm các use cases: kinh tế, tôn giáo, chính trị, thư từ, luật/normative practice, lexical/scholarly work và textual memory. Movement phải làm rõ consequence của expansion: càng nhiều domain phụ thuộc vào writing, càng nhiều convention và competence phải được duy trì.",
+      "entry_state": "Writing vẫn được hiểu chủ yếu như bookkeeping.",
+      "exit_state": "Khán giả hiểu nó đã trở thành một repertoire nhiều chức năng, nhưng expansion này làm nảy sinh nhu cầu về hạ tầng tổ chức và người biết vận hành."
+    }
+  ],
+  "acts": [
+    {
+      "id": "A02",
+      "role": "body",
+      "title": "Khi record trở thành hạ tầng xã hội"
+    }
+  ]
+}

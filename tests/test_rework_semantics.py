@@ -70,5 +70,31 @@ class ResearchSemanticReworkTests(unittest.TestCase):
             create.assert_called_once_with(product.resolve(), "research_workstream", None, "WS01", False, None)
 
 
+class DraftSemanticReworkTests(unittest.TestCase):
+    def test_draft_rework_requires_writer_outcome(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = Path(temp) / "demo"
+            fake_registry = {"draft_section": {"target_kind": "section"}}
+            with (
+                patch("scripts.rework.load_registry", return_value=fake_registry),
+                patch("scripts.rework.cancel_active_task"),
+            ):
+                with self.assertRaises(ValueError) as cm:
+                    rework(product, "draft_section", section="P01", unit=None, request="Needs rework")
+                self.assertIn("Draft rework requires writer_outcome", str(cm.exception))
+
+    def test_lock_method_rejected_for_non_draft_operations(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = Path(temp) / "demo"
+            fake_registry = {"outline": {"target_kind": "product"}}
+            with (
+                patch("scripts.rework.load_registry", return_value=fake_registry),
+                patch("scripts.rework.cancel_active_task"),
+            ):
+                with self.assertRaises(ValueError) as cm:
+                    rework(product, "outline", section=None, unit=None, request="Needs rework", lock_method=True)
+                self.assertIn("lock_method is available only for draft_section", str(cm.exception))
+
+
 if __name__ == "__main__":
     unittest.main()

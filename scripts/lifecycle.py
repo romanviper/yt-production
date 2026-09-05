@@ -24,6 +24,7 @@ TASK_STATES = TASK_LIVE_STATES | TASK_SUBMITTED_STATES | TASK_TERMINAL_STATES
 SECTION_OPERATION_ENTRY_STATES = {
     "design_section": {"needs_story_plan", "story_plan_changes_requested"},
     "draft_section": {"ready_for_draft"},
+    "evidence_resolution": {"needs_evidence_resolution", "ready_for_draft"},
     "review_section": {"ready_for_review"},
     "revise_section": {"changes_requested"},
 }
@@ -31,6 +32,7 @@ SECTION_OPERATION_ENTRY_STATES = {
 SECTION_OPERATION_SUBMISSION_STATES = {
     "design_section": "story_plan_review",
     "draft_section": "ready_for_review",
+    "evidence_resolution": "ready_for_draft",
     "review_section": "review_complete",
     "revise_section": "ready_for_review",
 }
@@ -38,6 +40,7 @@ SECTION_OPERATION_SUBMISSION_STATES = {
 SECTION_OPERATION_REWORK_STATES = {
     "design_section": "story_plan_changes_requested",
     "draft_section": "ready_for_draft",
+    "evidence_resolution": "needs_evidence_resolution",
     "review_section": "ready_for_review",
     "revise_section": "changes_requested",
 }
@@ -586,7 +589,60 @@ def _write_request(path: Path, title: str, request: str) -> None:
     )
 
 
-def prepare_section_rework(product_dir: Path, operation: str, section: str, request: str) -> None:
+def _write_draft_rework_request(
+    path: Path,
+    section: str,
+    writer_outcome: str,
+    *,
+    locked_method: str | None = None,
+) -> None:
+    method_authority = "owner_locked_for_single_task" if locked_method is not None else "writer_owned"
+    blocks = [
+        f"# Draft Rework — {section}",
+        "",
+        "Requested by: user",
+        "",
+        f"Requested at: {_now()}",
+        "",
+        "## Observed failure and desired outcome",
+        "",
+        writer_outcome.strip(),
+        "",
+        "## Method authority",
+        "",
+        method_authority,
+        "",
+    ]
+    if locked_method is None:
+        blocks.extend(
+            [
+                "The writer owns the repair method. Examples and hypotheses from evaluation or conversation are not instructions and are intentionally absent from this packet.",
+                "",
+            ]
+        )
+    else:
+        blocks.extend(
+            [
+                "## Owner-locked method for this task only",
+                "",
+                locked_method.strip(),
+                "",
+                "This lock expires with this task and must not be promoted into the reusable writer harness.",
+                "",
+            ]
+        )
+    path.write_text("\n".join(blocks), encoding="utf-8")
+
+
+def prepare_section_rework(
+    product_dir: Path,
+    operation: str,
+    section: str,
+    request: str,
+    *,
+    writer_outcome: str | None = None,
+    lock_method: bool = False,
+) -> None:
     if operation not in SECTION_OPERATION_REWORK_STATES:
         raise ValueError(f"Operation {operation} is not a section rework operation.")
     if not request.strip():
@@ -620,13 +676,25 @@ def prepare_section_rework(product_dir: Path, operation: str, section: str, requ
         pack_errors = verify_narration_pack(product_dir, section)
         if pack_errors:
             raise ValueError("Draft rework requires a valid narration pack: " + "; ".join(pack_errors))
-        _write_request(root / "draft-rework-request.md", f"Draft Rework — {section}", request)
+        outcome = writer_outcome.strip() if isinstance(writer_outcome, str) and writer_outcome.strip() else request.strip()
+        _write_draft_rework_request(
+            root / "draft-rework-request.md",
+            section,
+            outcome,
+            locked_method=request if lock_method else None,
+        )
     elif operation == "review_section":
         pack_errors = verify_narration_pack(product_dir, section)
         if pack_errors:
             raise ValueError("Review rework requires a valid narration pack: " + "; ".join(pack_errors))
         if not (root / "draft.md").is_file():
             raise FileNotFoundError(f"Review rework requires {section}/draft.md.")
+    elif operation == "evidence_resolution":
+        _write_request(
+            root / "evidence-resolution-request.md",
+            f"Evidence Resolution Rework — {section}",
+            request,
+        )
     elif operation == "revise_section":
         pack_errors = verify_narration_pack(product_dir, section)
         if pack_errors:

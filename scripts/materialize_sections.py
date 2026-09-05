@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Create cycle-safe section workspaces and deterministic route-neutral writer handoffs."""
+"""Materialize sections through an explicit architecture-adoption boundary.
+
+Unadopted products keep the existing direct-authorship compatibility path.
+Historical-Substrate products use the canonical world-model path only when the
+whole product/cycle or the targeted bounded section explicitly adopts it.
+"""
 
 from __future__ import annotations
 
@@ -10,27 +15,210 @@ from typing import Any
 
 try:
     from scripts.common import read_json, sha256, write_json
-    from scripts.outline_contract import (
-        OUTLINE_SCHEMA_VERSION,
-        normalize_outline_contract,
-        render_outline_value,
-        render_section_question_payoff,
-        validate_outline_contract,
+    from scripts.historical_substrate_adoption import (
+        adopted_section_overlays,
+        outline_adopts_historical_substrate,
+        section_adopts_historical_substrate,
     )
-    from scripts.story_plan_contract import build_narration_pack, empty_story_plan, is_direct_authorship_outline
-except ModuleNotFoundError:
+    from scripts.historical_substrate_contract import (
+        build_writer_section_substrate,
+        validate_historical_substrate,
+        validate_section_binding,
+    )
+    from scripts.outline_contract import OUTLINE_SCHEMA_VERSION, normalize_outline_contract, validate_outline_contract
+    from scripts.section_overlay_contract import resolve_section_spec
+    from scripts.story_plan_contract import build_narration_pack, is_direct_authorship_outline
+    from scripts import materialize_sections_legacy as legacy
+except ModuleNotFoundError:  # pragma: no cover
     from common import read_json, sha256, write_json
-    from outline_contract import (
-        OUTLINE_SCHEMA_VERSION,
-        normalize_outline_contract,
-        render_outline_value,
-        render_section_question_payoff,
-        validate_outline_contract,
+    from historical_substrate_adoption import (
+        adopted_section_overlays,
+        outline_adopts_historical_substrate,
+        section_adopts_historical_substrate,
     )
-    from story_plan_contract import build_narration_pack, empty_story_plan, is_direct_authorship_outline
+    from historical_substrate_contract import (
+        build_writer_section_substrate,
+        validate_historical_substrate,
+        validate_section_binding,
+    )
+    from outline_contract import OUTLINE_SCHEMA_VERSION, normalize_outline_contract, validate_outline_contract
+    from section_overlay_contract import resolve_section_spec
+    from story_plan_contract import build_narration_pack, is_direct_authorship_outline
+    import materialize_sections_legacy as legacy
 
 
-def materialize(product_dir: Path) -> list[Path]:
+def _render(value: Any, fallback: str = "Không có.") -> str:
+    if isinstance(value, list):
+        items = [str(item).strip() for item in value if str(item).strip()]
+        return "\n".join(f"- {item}" for item in items) if items else fallback
+    text = str(value or "").strip()
+    return text or fallback
+
+
+def _coverage_allows(substrate: dict[str, Any], section: str) -> bool:
+    coverage = substrate.get("coverage", {}) if isinstance(substrate, dict) else {}
+    if coverage.get("mode") == "product":
+        return True
+    return section in set(coverage.get("covered_sections", []))
+
+
+def _materialize_substrate_section(
+    product_dir: Path,
+    outline: dict[str, Any],
+    outline_path: Path,
+    product: dict[str, Any],
+    claims_doc: dict[str, Any],
+    sources_doc: dict[str, Any],
+    substrate: dict[str, Any],
+    section_id: str,
+) -> list[Path]:
+    if not re.fullmatch(r"P\d{2}", section_id):
+        raise ValueError(f"Invalid section ID: {section_id}")
+    if not _coverage_allows(substrate, section_id):
+        raise ValueError(f"Historical Substrate coverage does not authorize materializing {section_id}.")
+
+    resolved, architecture_authority = resolve_section_spec(
+        product_dir, section_id, outline=outline, outline_path=outline_path
+    )
+    binding_errors = validate_section_binding(resolved, substrate)
+    if binding_errors:
+        raise ValueError(
+            f"Historical Substrate binding is invalid for {section_id}: " + "; ".join(binding_errors)
+        )
+
+    root = product_dir / "03_sections" / section_id
+    root.mkdir(parents=True, exist_ok=True)
+    section_path = root / "section.json"
+    if section_path.is_file():
+        existing = read_json(section_path)
+        if existing.get("status") not in {"outline_amended", "ready_for_draft", "needs_story_plan"}:
+            raise ValueError(
+                f"Existing {section_id} is already in production state {existing.get('status')!r}; "
+                "do not overwrite it through architecture migration."
+            )
+
+    cycle_id = product.get("production_cycle", {}).get("id")
+    state = {
+        "schema_version": 5,
+        "id": section_id,
+        "title": resolved["title"],
+        "order": resolved["order"],
+        "status": "ready_for_draft",
+        "human_approved": False,
+        "dependencies": resolved.get("dependencies", []),
+        "narrative_job": resolved["narrative_job"],
+        "entry_state": resolved["entry_state"],
+        "exit_state": resolved["exit_state"],
+        "target_words": resolved["target_words"],
+        "cycle_id": cycle_id,
+        "outline_sha256": sha256(outline_path),
+        "historical_substrate_contract_version": 1,
+        "historical_territory": resolved["historical_territory"],
+        "mission": resolved["historical_territory"],
+        "historical_change": resolved["historical_change"],
+        "historical_substrate_ids": list(resolved["historical_substrate_ids"]),
+        "architecture_authority": architecture_authority,
+    }
+    for field in ("transition", "movement_ids"):
+        if resolved.get(field) not in (None, "", []):
+            state[field] = resolved[field]
+    write_json(section_path, state)
+
+    brief_path = root / "brief.md"
+    brief_path.write_text(
+        f"# {section_id} — {resolved['title']}\n\n"
+        f"Cycle: `{cycle_id}`\n\n"
+        f"## Historical territory\n\n{resolved['historical_territory']}\n\n"
+        f"## Historical change\n\n"
+        f"- From: {resolved['historical_change']['from']}\n"
+        f"- To: {resolved['historical_change']['to']}\n\n"
+        f"## Section objective\n\n{resolved['narrative_job']}\n\n"
+        f"## Entry state\n\n{resolved['entry_state']}\n\n"
+        f"## Exit state\n\n{resolved['exit_state']}\n\n"
+        f"## Historical Substrate selection\n\n{_render(resolved['historical_substrate_ids'])}\n\n"
+        f"## Truth ceiling\n\n{_render(resolved.get('claim_ids'))}\n\n"
+        f"## Transition\n\n{_render(resolved.get('transition'))}\n\n"
+        f"## Non-goal\n\n{_render(resolved.get('non_goal'))}\n",
+        encoding="utf-8",
+    )
+
+    claim_map = {
+        item["id"]: item
+        for item in claims_doc.get("claims", [])
+        if isinstance(item, dict) and item.get("id")
+    }
+    source_map = {
+        item["id"]: item
+        for item in sources_doc.get("sources", [])
+        if isinstance(item, dict) and item.get("id")
+    }
+    selected_claims: list[dict[str, Any]] = []
+    source_ids: set[str] = set()
+    for claim_id in resolved.get("claim_ids", []):
+        claim = claim_map.get(claim_id)
+        if claim is None:
+            raise ValueError(f"{section_id} references missing claim {claim_id}")
+        if claim.get("status") not in {"supported", "qualified"}:
+            raise ValueError(f"{section_id} claim is not writing-ready: {claim_id}")
+        selected_claims.append(claim)
+        source_ids.update(item for item in claim.get("sources", []) if isinstance(item, str))
+    missing_sources = sorted(source_ids - source_map.keys())
+    if missing_sources:
+        raise ValueError(f"{section_id} claims reference missing sources: {missing_sources}")
+    unreviewed = sorted(
+        source_id for source_id in source_ids if source_map[source_id].get("status") != "reviewed"
+    )
+    if unreviewed:
+        raise ValueError(f"{section_id} sources are not reviewed: {unreviewed}")
+
+    evidence_path = root / "evidence-pack.json"
+    write_json(
+        evidence_path,
+        {
+            "schema_version": 3,
+            "section": section_id,
+            "cycle_id": cycle_id,
+            "outline_sha256": sha256(outline_path),
+            "claim_ids": list(resolved.get("claim_ids", [])),
+            "source_ids": sorted(source_ids),
+            "claims": selected_claims,
+            "sources": [source_map[source_id] for source_id in sorted(source_ids)],
+            "rule": (
+                "This is secondary evidence authority. Historical Substrate is the primary history model; "
+                "evidence lookup verifies or sharpens a chosen telling and does not define the story route."
+            ),
+        },
+    )
+
+    section_substrate_path = root / "historical-substrate.json"
+    product_substrate_path = product_dir / "01_research" / "historical-substrate.json"
+    write_json(
+        section_substrate_path,
+        build_writer_section_substrate(
+            product_substrate_path,
+            resolved,
+            outline_path,
+            architecture_authority=architecture_authority,
+        ),
+    )
+
+    narration_path = root / "narration-pack.json"
+    build_narration_pack(product_dir, section_id)
+
+    continuity_path = root / "continuity-in.md"
+    if not continuity_path.exists():
+        dependencies = ", ".join(resolved.get("dependencies", [])) or "Không có."
+        continuity_path.write_text(
+            f"# Continuity Input — {section_id}\n\nCycle: `{cycle_id}`\n\n"
+            f"Dependencies: {dependencies}\n\n"
+            "## Prior handoff\n\nChưa có hoặc sẽ được task owner cập nhật trước drafting.\n",
+            encoding="utf-8",
+        )
+
+    return [section_path, brief_path, evidence_path, section_substrate_path, narration_path, continuity_path]
+
+
+def materialize(product_dir: Path, section: str | None = None) -> list[Path]:
     product_dir = product_dir.resolve()
     outline_path = product_dir / "02_outline" / "outline.json"
     outline = read_json(outline_path)
@@ -39,237 +227,86 @@ def materialize(product_dir: Path) -> list[Path]:
     if outline.get("status") != "approved":
         raise ValueError("Outline must be human-approved before section materialization.")
 
+    direct_authorship = is_direct_authorship_outline(outline)
+    product_adopted = outline_adopts_historical_substrate(
+        product_dir, product=product, outline=outline
+    )
+    section_adopted = bool(
+        section
+        and section_adopts_historical_substrate(
+            product_dir, section, product=product, outline=outline
+        )
+    )
+
+    if not direct_authorship:
+        if section is not None:
+            raise ValueError("Legacy materialization does not support bounded --section migration.")
+        return legacy.materialize(product_dir)
+
+    if section is None and not product_adopted:
+        partial = adopted_section_overlays(product_dir)
+        if partial:
+            raise ValueError(
+                "Whole-product materialization is blocked by bounded Historical Substrate adoption for: "
+                + ", ".join(partial)
+                + ". Materialize those sections explicitly or adopt the whole product/cycle."
+            )
+        return legacy.materialize(product_dir)
+
+    if section is not None and not section_adopted:
+        raise ValueError(
+            f"Bounded materialization for {section} requires explicit Historical Substrate adoption."
+        )
+
     claims_doc = read_json(product_dir / "01_research" / "claim-ledger.json")
     sources_doc = read_json(product_dir / "01_research" / "source-index.json")
-    claims = {item["id"]: item for item in claims_doc.get("claims", []) if isinstance(item, dict) and item.get("id")}
-    sources = {item["id"]: item for item in sources_doc.get("sources", []) if isinstance(item, dict) and item.get("id")}
-
-    contract_errors = validate_outline_contract(outline, set(claims), product.get("target"))
+    contract_errors = validate_outline_contract(
+        outline,
+        {item.get("id") for item in claims_doc.get("claims", []) if isinstance(item, dict) and item.get("id")},
+        product.get("target"),
+    )
     if contract_errors:
         raise ValueError("Invalid approved outline: " + "; ".join(contract_errors))
     outline = normalize_outline_contract(outline, product.get("target"))
-    current_contract = outline.get("schema_version") == OUTLINE_SCHEMA_VERSION
-    direct_authorship = is_direct_authorship_outline(outline)
+    if outline.get("schema_version") != OUTLINE_SCHEMA_VERSION:
+        raise ValueError("Historical Substrate materialization requires current outline contract.")
 
-    cycle_id = product.get("production_cycle", {}).get("id")
-    if current_contract and cycle_id and outline.get("cycle_id") != cycle_id:
-        raise ValueError(f"Outline cycle {outline.get('cycle_id')} does not match product cycle {cycle_id}.")
+    substrate_path = product_dir / "01_research" / "historical-substrate.json"
+    if not substrate_path.is_file():
+        raise ValueError("Adopted Historical Substrate materialization requires 01_research/historical-substrate.json.")
+    substrate = read_json(substrate_path)
+    substrate_errors = validate_historical_substrate(
+        substrate,
+        claims_doc,
+        sources_doc,
+        require_product_complete=section is None,
+        required_sections={section} if section else None,
+    )
+    if substrate_errors:
+        scope = "whole-product" if section is None else f"section {section}"
+        raise ValueError(f"Historical Substrate is not ready for {scope} materialization: " + "; ".join(substrate_errors))
 
-    sections = outline.get("sections", [])
-    acts = {
-        item["id"]: item
-        for item in outline.get("script_architecture", {}).get("acts", [])
-        if isinstance(item, dict) and item.get("id")
-    }
-    movements = {
-        item["id"]: item
-        for item in outline.get("script_architecture", {}).get("movements", [])
-        if isinstance(item, dict) and item.get("id")
-    }
+    targets = (
+        [item["id"] for item in outline.get("sections", []) if isinstance(item, dict)]
+        if section is None
+        else [section]
+    )
     created: list[Path] = []
-
-    for item in sections:
-        section_id = item.get("id", "")
-        if not re.fullmatch(r"P\d{2}", section_id):
-            raise ValueError(f"Invalid section ID: {section_id}")
-        root = product_dir / "03_sections" / section_id
-        root.mkdir(parents=True, exist_ok=True)
-        section_movements = (
-            [movements[movement_id] for movement_id in item["movement_ids"]]
-            if current_contract
-            else [movements[item["movement_id"]]]
+    for section_id in targets:
+        created.extend(
+            _materialize_substrate_section(
+                product_dir,
+                outline,
+                outline_path,
+                product,
+                claims_doc,
+                sources_doc,
+                substrate,
+                section_id,
+            )
         )
-        section_path = root / "section.json"
-        existing_state: dict[str, Any] | None = None
-        if section_path.exists() and current_contract:
-            existing_state = read_json(section_path)
-            if existing_state.get("cycle_id") != cycle_id:
-                raise ValueError(
-                    f"Existing {section_id} belongs to an earlier production cycle; archive it before materializing {cycle_id}."
-                )
-            if existing_state.get("status") not in {"outline_amended", "ready_for_draft", "needs_story_plan"}:
-                raise ValueError(
-                    f"Existing {section_id} is already in production state {existing_state.get('status')!r}; "
-                    "do not overwrite it with a rematerialization."
-                )
 
-        mission: str | None = None
-        if direct_authorship:
-            outline_mission = item.get("mission")
-            existing_mission = existing_state.get("mission") if isinstance(existing_state, dict) else None
-            candidate = outline_mission if isinstance(outline_mission, str) and outline_mission.strip() else existing_mission
-            if not isinstance(candidate, str) or not candidate.strip():
-                raise ValueError(
-                    f"Direct-authorship section {section_id} requires a non-empty mission before materialization; "
-                    "do not infer one from title or architecture prose."
-                )
-            mission = candidate.strip()
-
-        state = {
-            "schema_version": 4 if direct_authorship else (2 if current_contract else 1),
-            "id": section_id,
-            "title": item["title"],
-            "order": item["order"],
-            "status": "ready_for_draft" if direct_authorship else "needs_story_plan",
-            "human_approved": False,
-            "dependencies": item.get("dependencies", []),
-            "narrative_job": item["narrative_job"],
-            "entry_state": item["entry_state"],
-            "exit_state": item["exit_state"],
-            "target_words": item["target_words"],
-            "cycle_id": cycle_id,
-            "outline_sha256": sha256(outline_path),
-        }
-        if mission is not None:
-            state["mission"] = mission
-        if isinstance(item.get("transition"), str) and item["transition"].strip():
-            state["transition"] = item["transition"].strip()
-        if current_contract:
-            section_acts = list(dict.fromkeys(movement["act_id"] for movement in section_movements))
-            state["movement_ids"] = [movement["id"] for movement in section_movements]
-            state["macro_movements"] = [
-                {
-                    "id": movement["id"],
-                    "title": movement["title"],
-                    "narrative_job": movement["narrative_job"],
-                    "entry_state": movement["entry_state"],
-                    "exit_state": movement["exit_state"],
-                }
-                for movement in section_movements
-            ]
-            state["acts"] = [
-                {"id": acts[act_id]["id"], "role": acts[act_id]["role"], "title": acts[act_id]["title"]}
-                for act_id in section_acts
-            ]
-        else:
-            movement = section_movements[0]
-            state.update(
-                {
-                    "movement_id": item["movement_id"],
-                    "macro_movement": {
-                        "id": movement["id"],
-                        "title": movement["title"],
-                        "narrative_job": movement["narrative_job"],
-                        "entry_state": movement["entry_state"],
-                        "exit_state": movement["exit_state"],
-                    },
-                    "structural_role": item["structural_role"],
-                    "planned_moves": item["planned_moves"],
-                    "budget_rationale": item["budget_rationale"],
-                }
-            )
-        write_json(section_path, state)
-        created.append(section_path)
-
-        brief = root / "brief.md"
-        if current_contract:
-            section_acts = list(dict.fromkeys(movement["act_id"] for movement in section_movements))
-            act_lines = [f"{acts[act_id]['role']} — {acts[act_id]['title']}" for act_id in section_acts]
-            movement_lines = [f"{movement['id']} — {movement['title']}" for movement in section_movements]
-            transition = render_outline_value(item.get("transition"), "Section kế tiếp theo whole-product progression.")
-            evidence_territory = render_outline_value(item.get("claim_ids"), "Không có claim allowance.")
-            legacy_anchor_block = ""
-            if not direct_authorship:
-                legacy_anchor_block = f"\n\n## Anchor options\n\n{render_outline_value(item.get('anchor_options'))}"
-            text = (
-                f"# {section_id} — {item['title']}\n\n"
-                f"Cycle: `{cycle_id}`\n\n"
-                f"## Whole-script acts\n\n{render_outline_value(act_lines)}\n\n"
-                f"## Macro movements\n\n{render_outline_value(movement_lines)}\n\n"
-                f"## Section objective\n\n{item['narrative_job']}\n\n"
-                f"## Entry state\n\n{item['entry_state']}\n\n"
-                f"## Exit state\n\n{item['exit_state']}\n\n"
-                f"## Evidence territory\n\n{evidence_territory}"
-                f"{legacy_anchor_block}\n\n"
-                f"## Transition\n\n{transition}\n\n"
-                f"## Continuity in\n\n{render_outline_value(item.get('continuity_in'))}\n\n"
-                f"## Continuity out\n\n{render_outline_value(item.get('continuity_out'))}\n\n"
-                f"## Non-goal\n\n{render_outline_value(item.get('non_goal'))}\n"
-            )
-        else:
-            movement = section_movements[0]
-            text = (
-                f"# {section_id} — {item['title']}\n\n"
-                f"## Macro movement\n\n{movement['id']} — {movement['title']}\n\n"
-                f"## Structural role\n\n{item['structural_role']}\n\n"
-                f"## Narrative job\n\n{item['narrative_job']}\n\n"
-                f"## Entry state\n\n{item['entry_state']}\n\n"
-                f"## Exit state\n\n{item['exit_state']}\n\n"
-                f"{render_section_question_payoff(item)}\n\n"
-                f"## Planned shape\n\n{render_outline_value(item.get('planned_moves'))}\n\n"
-                f"## Anchor requirements\n\n{render_outline_value(item.get('anchor_requirements'))}\n\n"
-                f"## Bridge in\n\n{item.get('bridge_in', '')}\n\n"
-                f"## Bridge out\n\n{item.get('bridge_out', '')}\n\n"
-                f"## Boundary\n\n{item.get('boundary', '')}\n\n"
-                f"## Risk\n\n{item.get('risk', '')}\n"
-            )
-        brief.write_text(text, encoding="utf-8")
-        created.append(brief)
-
-        selected_claims: list[dict[str, Any]] = []
-        selected_source_ids: set[str] = set()
-        for claim_id in item.get("claim_ids", []):
-            if claim_id not in claims:
-                raise ValueError(f"{section_id} references missing claim {claim_id}")
-            claim = claims[claim_id]
-            if claim.get("status") not in {"supported", "qualified"}:
-                raise ValueError(f"{section_id} claim is not writing-ready: {claim_id}")
-            selected_claims.append(claim)
-            selected_source_ids.update(claim.get("sources", []))
-        missing_sources = selected_source_ids - sources.keys()
-        if missing_sources:
-            raise ValueError(f"{section_id} claims reference missing sources: {sorted(missing_sources)}")
-        unreviewed = [source_id for source_id in selected_source_ids if sources[source_id].get("status") != "reviewed"]
-        if unreviewed:
-            raise ValueError(f"{section_id} sources are not reviewed: {sorted(unreviewed)}")
-
-        evidence_path = root / "evidence-pack.json"
-        evidence_doc = {
-            "schema_version": 3 if direct_authorship else 1,
-            "section": section_id,
-            "claims": selected_claims,
-            "sources": [sources[source_id] for source_id in sorted(selected_source_ids)],
-            "rule": (
-                "These claims define the section truth territory. Writer may use any subset and any narrative route. "
-                "Source-level resolution may increase through bounded retrieval; new interpretation/generalization requires evidence authority."
-            ),
-        }
-        if direct_authorship:
-            evidence_doc.update(
-                {
-                    "cycle_id": cycle_id,
-                    "outline_sha256": sha256(outline_path),
-                    "claim_ids": list(item.get("claim_ids", [])),
-                    "source_ids": sorted(selected_source_ids),
-                }
-            )
-        write_json(evidence_path, evidence_doc)
-        created.append(evidence_path)
-
-        if direct_authorship:
-            narration_path = root / "narration-pack.json"
-            build_narration_pack(product_dir, section_id)
-            created.append(narration_path)
-        else:
-            story_plan_path = root / "story-plan.json"
-            if not story_plan_path.exists():
-                write_json(story_plan_path, empty_story_plan(section_id, item["target_words"]))
-                created.append(story_plan_path)
-
-        continuity = root / "continuity-in.md"
-        if not continuity.exists():
-            dependencies = ", ".join(item.get("dependencies", [])) or "Không có."
-            continuity.write_text(
-                f"# Continuity Input — {section_id}\n\n"
-                f"Cycle: `{cycle_id}`\n\n"
-                f"Dependencies: {dependencies}\n\n"
-                "## Prior handoff\n\nChưa có hoặc sẽ được task owner cập nhật trước drafting.\n\n"
-                "## Canonical terms required here\n\nTham chiếu story bible.\n",
-                encoding="utf-8",
-            )
-            created.append(continuity)
-
-    if direct_authorship:
+    if section is None:
         product.setdefault("stages", {})["sections"] = "ready_for_draft"
         product["status"] = "sections_materialized"
         product.setdefault("production_cycle", {})["status"] = "sections_materialized"
@@ -278,41 +315,18 @@ def materialize(product_dir: Path) -> list[Path]:
 
 
 def archive_previous_cycle(product_dir: Path) -> list[Path]:
-    """Move superseded section workspaces into a recoverable product-local history tree."""
-
-    product_dir = product_dir.resolve()
-    product = read_json(product_dir / "product.json")
-    cycle = product.get("production_cycle", {})
-    current_id = cycle.get("id")
-    previous_id = cycle.get("previous")
-    if not current_id or not previous_id:
-        raise ValueError("Product does not declare a previous production cycle to archive.")
-
-    section_root = product_dir / "03_sections"
-    history_root = section_root / "_history" / previous_id
-    moved: list[Path] = []
-    candidates = sorted(path for path in section_root.iterdir() if path.is_dir() and re.fullmatch(r"P\d{2}", path.name))
-    for source in candidates:
-        state_path = source / "section.json"
-        if state_path.is_file() and read_json(state_path).get("cycle_id") == current_id:
-            continue
-        destination = history_root / source.name
-        if destination.exists():
-            raise ValueError(f"Archive destination already exists: {destination.relative_to(product_dir)}")
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        source.rename(destination)
-        moved.append(destination)
-    return moved
+    return legacy.archive_previous_cycle(product_dir)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("product", type=Path)
+    parser.add_argument("--section", help="Materialize one explicitly adopted migrated section (P##).")
     parser.add_argument("--archive-previous-cycle", action="store_true")
     args = parser.parse_args()
     try:
         archived = archive_previous_cycle(args.product) if args.archive_previous_cycle else []
-        created = materialize(args.product)
+        created = materialize(args.product, section=args.section)
     except (ValueError, FileNotFoundError, KeyError) as exc:
         parser.error(str(exc))
     print(f"Archived {len(archived)} old section workspace(s); materialized {len(created)} artifact(s).")

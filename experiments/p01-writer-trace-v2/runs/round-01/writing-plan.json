@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "segment_goal": "Guide the listener from the tactile, hand-held reality of loose geometric clay counters through the material paradox of sealed hollow envelopes (OIM A64678) to the emergence of direct surface recording on solid numerical tablets (ChM III-937a), revealing an overlapping ecology of practices where information physically moved from hidden 3D tokens to durable 2D surfaces without a simplistic linear ladder.",
+  "listener_start_state": {
+    "knows": [
+      "Late fourth-millennium BCE southern Mesopotamia was an increasingly complex urban society requiring administration of resources.",
+      "Writing is historically associated with Mesopotamian clay tablets and early cities."
+    ],
+    "does_not_yet_know": [
+      "That before written signs, administrative quantities were embodied as loose, physical geometric clay shapes held between fingers.",
+      "That enclosing counters inside hollow clay envelopes created an intractable material paradox: securing the count blinded the eye, and verifying the count required destroying the container.",
+      "That solid numerical tablets and hollow envelopes coexisted as parallel experimental media rather than forming a single, compulsory token-to-tablet evolutionary sequence."
+    ]
+  },
+  "beats": [
+    {
+      "id": "B01",
+      "function": "observation",
+      "evidence": [
+        {
+          "source": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/writer-notebook.md",
+          "locator": "Section: Material you can write from, Paragraph 1",
+          "source_quote": "Small geometric clay objects survive from Late Uruk administrative levels: spheres, cones, disks and cylinders, some plain and some incised. Many are roughly one to three centimeters across, small enough to sit between fingers."
+        }
+      ],
+      "listener_before": "The listener assumes ancient accounting or proto-writing begins with written symbols, words, or large monuments in Mesopotamia.",
+      "listener_after": "The listener realizes that before written script, administrative quantities were embodied as small, tangible geometric clay shapes held between fingers.",
+      "new_information": "Physical existence and scale (1 to 3 cm) of geometric clay shapes (spheres, cones, disks, cylinders) in Late Uruk administrative levels that embodied numerical practices without spoken words or script.",
+      "withheld_or_delayed": "Withholding how these individual counters were stored, authenticated, or secured when handled in transactions.",
+      "forward_pressure": "If numbers were just loose clay tokens that could easily get separated, lost, or swapped, how could an administrator keep a specific count intact and verifiable?",
+      "truth_boundary": "Do not claim a universal 5,000-year accounting code across the Neolithic, do not claim tokens were a linear precursor to writing, and do not invent named administrators or specific transactions."
+    },
+    {
+      "id": "B02",
+      "function": "reveal",
+      "evidence": [
+        {
+          "source": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/writer-notebook.md",
+          "locator": "Section: Material you can write from, Paragraph 8",
+          "source_quote": "A broken clay envelope from Chogha Mish, OIM A64678, gives a particularly concrete view of an object whose original logic was to keep its contents hidden. The surviving piece measures about 7.8 by 7.2 centimeters; small counters about 1.6 centimeters across remain visible through the break. The object does not preserve the name of an operator, a commodity, a transaction or the reason it broke. The modern viewer can see inside precisely because the ancient sealed state has been destroyed."
+        }
+      ],
+      "listener_before": "The listener wonders how loose counters were kept together and may assume they were stored in jars or open baskets.",
+      "listener_after": "The listener sees that counters were sealed inside a hollow ball of damp clay, but discovers this only through an ancient break in artifact OIM A64678 that destroyed its original sealed state.",
+      "new_information": "Specific artifact OIM A64678 from Chogha Mish (7.8 x 7.2 cm) with thick clay walls preserving 1.6 cm tokens visible inside its hollow interior only because the shell was broken.",
+      "withheld_or_delayed": "Withholding cylinder seals and the manufacturing process/sealing mechanism of how the envelope was closed and authorized.",
+      "forward_pressure": "Why would an administrator seal counters into a thick clay ball where nobody could see them, and what authorized this sealed object?",
+      "truth_boundary": "Do not invent an operator name, commodity, reason for the break, or claim this specimen proves why envelopes were invented."
+    },
+    {
+      "id": "B03",
+      "function": "question",
+      "evidence": [
+        {
+          "source": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/writer-notebook.md",
+          "locator": "Section: Material you can write from, Paragraph 4",
+          "source_quote": "The envelope creates a simple physical condition. While it remains closed, the enclosed counters are not directly visible. Opening it to inspect the contents destroys the sealed object."
+        }
+      ],
+      "listener_before": "The listener sees the clay envelope simply as an effective safe container for tokens.",
+      "listener_after": "The listener confronts the intractable material paradox: securing the count blinds the viewer, and the only physical way to verify the count is to destroy the very envelope that guarantees it.",
+      "new_information": "The operational conflict of the envelope: intact closure prevents tampering but prevents visual inspection; verification requires destruction of the sealed medium.",
+      "withheld_or_delayed": "Withholding the historical responses/workarounds that administrators attempted on the clay surface to bypass this dilemma.",
+      "forward_pressure": "How can anyone verify what is inside the sealed clay sphere without smashing it and destroying its authentication?",
+      "truth_boundary": "Do not speculate on psychological motives, long-distance trade fraud prevention, or universal institutional regulations; frame strictly as an inescapable material property of the artifact."
+    },
+    {
+      "id": "B04",
+      "function": "reframe",
+      "evidence": [
+        {
+          "source": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/writer-notebook.md",
+          "locator": "Section: Material you can write from, Paragraph 4",
+          "source_quote": "Exterior impressions on some examples can make information about the enclosed quantity inspectable without immediately breaking the envelope."
+        }
+      ],
+      "listener_before": "The listener thinks verifying an envelope inevitably requires destroying it.",
+      "listener_after": "The listener realizes administrators could impress marks onto the moist exterior surface before drying, mirroring the internal count so the envelope can be inspected without breaking.",
+      "new_information": "Exterior impressions on wet envelope surfaces and rolled cylinder seals allowed inspectability of quantity and administrative witnessing directly on the outside shell.",
+      "withheld_or_delayed": "Withholding the emergence of solid clay tablets that eliminate the hollow envelope and enclosed tokens entirely.",
+      "forward_pressure": "If the marks on the outside already convey the count and the seal confirms authority, why bother enclosing loose tokens inside a hollow ball at all?",
+      "truth_boundary": "Do not claim exterior impressions were universal to all envelopes, do not claim a single invention event or fraud motive, and do not treat seal imagery as spoken language."
+    },
+    {
+      "id": "B05",
+      "function": "contrast",
+      "evidence": [
+        {
+          "source": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/writer-notebook.md",
+          "locator": "Section: Material you can write from, Paragraph 9",
+          "source_quote": "A sealed numerical tablet fragment from the same broad Late Uruk context at Chogha Mish, ChM III-937a, measures about 4.8 by 3.2 by 2.0 centimeters. Five numerical signs survive on it, along with several seal rollings, including animal imagery with a bull. The fragment does not securely identify the commodity, a named participant, a complete transaction or a direct historical relationship to OIM A64678."
+        }
+      ],
+      "listener_before": "The listener views surface marks merely as labels added onto hollow containers carrying tokens.",
+      "listener_after": "The listener encounters a completely solid clay tablet where hollow cavities and physical tokens disappear, leaving only impressed numerals and animal seal rollings directly on a durable flat plane.",
+      "new_information": "Concrete artifact ChM III-937a from Chogha Mish (4.8 x 3.2 x 2.0 cm), a solid tablet bearing five numerical signs and a bull seal rolling, without hollow space or tokens.",
+      "withheld_or_delayed": "Withholding the historical conclusion regarding how these two technologies coexisted rather than replacing each other.",
+      "forward_pressure": "Did this solid tablet directly replace the hollow envelope, representing the next mandatory step in the invention of writing?",
+      "truth_boundary": "Do not claim ChM III-937a replaced OIM A64678, do not assert they belong to the same transaction or stratum, and do not identify specific economic commodities or named actors."
+    },
+    {
+      "id": "B06",
+      "function": "payoff",
+      "evidence": [
+        {
+          "source": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/writer-notebook.md",
+          "locator": "Section: Material you can write from, Paragraphs 14 and 15",
+          "source_quote": "One historically meaningful shift therefore concerns where information physically resides and how it can be inspected: quantity may be embodied in small objects, hidden inside a sealed container, echoed by marks on an exterior, or impressed directly onto a durable surface. This does not prove that one form simply replaced the previous one."
+        }
+      ],
+      "listener_before": "The listener expects a clean evolutionary progress where tablets replaced envelopes and tokens in a linear sequence.",
+      "listener_after": "The listener grasps that late fourth-millennium administrative accounting was an overlapping ecology of coexisting practices, where the crucial transformation was where information physically resided—shifting from hidden 3D tokens to durable, inspectable 2D clay surfaces.",
+      "new_information": "Historical reality of coexisting practices: tokens, envelopes, and numerical tablets overlapped in Late Uruk administration; the shift was material and spatial (placement and inspectability of quantities) rather than an instant genealogical replacement.",
+      "withheld_or_delayed": "Withholding proto-cuneiform pictographic script, language phoneticization, and later historical developments reserved for subsequent sections.",
+      "forward_pressure": "Once numerical information could be recorded durably on a flat clay surface, how would administrators expand that surface to record not just quantities, but the identities of commodities, persons, and institutions?",
+      "truth_boundary": "Do not assert a direct token-to-tablet evolutionary ladder, do not claim wholesale replacement of older media, and do not claim writing was invented in a single breakthrough moment."
+    }
+  ],
+  "local_payoff": "The listener understands that the shift from hollow envelopes to solid numerical tablets was not a teleological leap toward modern writing, but a physical resolution to the problem of inspectability: moving information from hidden three-dimensional counters inside a breakable sphere to durable two-dimensional impressions on a permanent clay surface, while older practices continued to operate side by side.",
+  "essay_failure_risks": [
+    "Treating the artifacts as an abstract academic taxonomy or lecture outline rather than a tangible sensory and material investigation.",
+    "Narrating an inevitable, teleological evolution from tokens to bullae to numerical tablets, violating the documented coexistence of parallel practices.",
+    "Inventing named historical individuals, private thoughts, administrative motives (e.g. fraud prevention), or specific unevidenced transactions.",
+    "Over-explaining historical caveats and research debates in lecture style instead of allowing physical constraints and artifact features to carry the narrative."
+  ],
+  "realization_constraints": [
+    "Must maintain natural spoken Vietnamese storytelling cadence suitable for a documentary podcast (Fall of Civilizations craft benchmark).",
+    "Must preserve the physical, tactile focus on clay, hand movements, scale (1-3 cm tokens, 5-8 cm envelopes/tablets), and visual inspectability.",
+    "Must anchor the contrasting media in the two concrete Chogha Mish artifacts (OIM A64678 and ChM III-937a) without claiming a shared transaction or direct sequence.",
+    "Must keep candidate prose length strictly within the configured budget of 650 to 1050 whitespace units (words).",
+    "Must realize each beat's listener-state transition sequentially without omitting the material paradox or jumping ahead to proto-cuneiform writing."
+  ]
+}

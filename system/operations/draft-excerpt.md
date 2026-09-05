@@ -2,14 +2,20 @@
 
 ## Nature of this task
 
-Write one contiguous, non-canonical passage that could occupy the declared position inside a much longer section. The excerpt target is the size of that slice, never a reduced target for the whole section. This is a style and narrative calibration probe; it writes no product artifact and has no submission or approval authority.
+Write one contiguous, non-canonical passage that could occupy the declared position inside a longer section. The local job, completion rule, narrative mode and word range are boundaries for this slice, not a miniature outline for the whole section. The probe writes no product artifact and has no submission or approval authority.
 
-## Local authorship
+## Primary creative objective
 
-Obey only the excerpt's local job and completion rule. The whole section remains unresolved unless `completes_section` is explicitly true. Do not survey later material, race to the section conclusion or miniaturize the section architecture to fit the excerpt word range.
+Within this slice and its truth boundary, tell a compelling piece of a historical story and optimize first for the listener's desire to keep following it. Let meaning emerge through what unfolds; explanation may help the listener follow, but it must not replace the story with a thesis-led essay. The local job is meaning this slice must earn, not a proposition to prove in advance. Hook and retention are audience outcomes, not a required structure or technique.
 
-Before writing, silently choose the focal carrier, what pressure develops and what changes by the local stopping point. Do not output that plan. Use cinematic narrative-nonfiction thinking: stage an intelligible world, control focal distance, and reveal chronology in the order that creates the clearest sequence of curiosity, consequence and payoff without falsifying historical order. Move between micro and macro scale only when the shift changes meaning. Let a material image recur only when it earns cohesion. Let explanation become necessary through what changes instead of presenting claims and then illustrating them.
+## Writer authority
 
-The excerpt contract declares its `narrative_mode`. In `evidence_bound`, use a documented scene when available or enter bounded anonymous reconstruction through brief natural uncertainty. In `representative_fiction`, invent a plausible composite scene that embodies the assigned historical problem and signal it naturally at entry, never with a standalone technique note. The evidence subset defines the historical world and truth ceiling; it does not need to supply the protagonist, plot, local stakes, action sequence or focal transitions. Fictional connective events do not need individual attestation, but they may not smuggle in a new historical proposition or become evidence for the larger causal conclusion.
+Choose how the passage works. You own its composition, evidence subset, degree of exposition and language. Do not rush to the whole-section conclusion or reproduce a familiar solution merely because it worked in another probe.
 
-Use only the compact evidence subset supplied for historical meaning. It is a boundary, not a coverage checklist or plot outline. End where the local completion rule says to end, even when the larger question remains open. Output only the passage prose.
+Use the same style compass as canonical drafting: calm, clear, weighty and investigative; grounded and causally meaningful rather than trivia-led; natural when spoken; trustworthy rather than spectacular. End when the local completion rule is met, even if the larger question stays open.
+
+Interrogate the selected evidence for who or what acts, what happens, where, what object or trace is present, what remains unexplained, and what changes the current understanding. These are optional questions, not required beats or prose order.
+
+In `evidence_bound` mode, do not invent documentary particulars. In `representative_fiction` mode, apply the representative-reconstruction boundary: ordinary connective particulars may embody supported conditions but may not pose as documented evidence or create new historical meaning. The selected evidence is a truth boundary, not a coverage checklist or plot outline.
+
+Output only the passage prose.

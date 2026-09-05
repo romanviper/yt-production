@@ -2,10 +2,10 @@
   "schema_version": 4,
   "section": "P01",
   "cycle_id": "C003",
-  "created_at": "2026-08-19T10:21:00+00:00",
-  "outline_sha256": "d707db0c172a9db579593a136791d2b1e629892315e31bedfa0d795b8c92da9d",
-  "brief_sha256": "95e3739f6707521143b26085330ac1097d0416dba59b0418c3466f9a44e8888b",
-  "evidence_pack_sha256": "488fbbd30dffd8f874eb1ad8cb44d153a0384b309d2c7637fa85dcd19b0e10df",
+  "created_at": "2026-09-04T09:21:19.337033+00:00",
+  "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+  "brief_sha256": "43a0bb9a0387cdfed7b3558c662dcca655438e878eb6e3201a9925001cf22880",
+  "evidence_pack_sha256": "b5976a2680e2fc69cf95029e1edb70fa3d9e492ae5994bf893691462781eb980",
   "permitted_claims": [
     {
       "id": "CLM-0011",

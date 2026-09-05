@@ -1,413 +1,291 @@
 #!/usr/bin/env python3
-"""Compile the smallest self-contained context packet for one operation."""
+"""Architecture-aware context packet compiler.
+
+Compatibility and Historical Substrate routing are selected before the legacy
+packet machinery assembles or budgets a prompt. The shared legacy compiler is
+used as a packet/provenance engine, not as the authority for architecture mode.
+"""
 
 from __future__ import annotations
 
-import argparse
+from copy import deepcopy
 import hashlib
-import json
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 try:
-    from scripts.common import (
-        REPO_ROOT,
-        estimate_tokens,
-        expand_inputs,
-        expand_optional_inputs,
-        load_registry,
-        product_relative,
-        read_json,
-        render_pattern,
-        repo_relative,
-        sha256,
-        write_json,
+    import scripts.context_packet_legacy as _legacy
+    from scripts.context_packet_legacy import *  # noqa: F401,F403
+    from scripts.historical_substrate_adoption import (
+        outline_adopts_historical_substrate,
+        section_adopts_historical_substrate,
     )
-    from scripts.consolidate_research import verify_consolidation
-    from scripts.draft_evidence import (
-        REVIEW_RECORD_DATA_RULE,
-        REVIEW_RECORD_PROJECTION_END,
-        REVIEW_RECORD_PROJECTION_START,
-        build_review_record_projection,
-        build_revision_receipt_lineage_anchor,
+    from scripts.historical_substrate_contract import validate_historical_substrate
+    from scripts.substrate_preflight import require_canonical_section_state
+except ModuleNotFoundError:  # pragma: no cover
+    import context_packet_legacy as _legacy
+    from context_packet_legacy import *  # type: ignore # noqa: F401,F403
+    from historical_substrate_adoption import (
+        outline_adopts_historical_substrate,
+        section_adopts_historical_substrate,
     )
-    from scripts.lifecycle import research_rework_blocker, section_operation_state_error
-    from scripts.outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
-    from scripts.packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
-    from scripts.story_plan_contract import is_direct_authorship_outline, verify_narration_pack
-except ModuleNotFoundError:  # Direct execution: python scripts/context_packet.py
-    from common import (
-        REPO_ROOT,
-        estimate_tokens,
-        expand_inputs,
-        expand_optional_inputs,
-        load_registry,
-        product_relative,
-        read_json,
-        render_pattern,
-        repo_relative,
-        sha256,
-        write_json,
-    )
-    from consolidate_research import verify_consolidation
-    from draft_evidence import (
-        REVIEW_RECORD_DATA_RULE,
-        REVIEW_RECORD_PROJECTION_END,
-        REVIEW_RECORD_PROJECTION_START,
-        build_review_record_projection,
-        build_revision_receipt_lineage_anchor,
-    )
-    from lifecycle import research_rework_blocker, section_operation_state_error
-    from outline_evidence_pack import build_outline_evidence_pack, verify_outline_evidence_pack
-    from packet_contract import PACKET_COMPILER, PACKET_SCHEMA_VERSION
-    from story_plan_contract import is_direct_authorship_outline, verify_narration_pack
+    from historical_substrate_contract import validate_historical_substrate
+    from substrate_preflight import require_canonical_section_state
 
 
-HARNESS_PATH = REPO_ROOT / "system" / "harness.json"
+_ORIGINAL_LOAD_REGISTRY = _legacy.load_registry
+_ORIGINAL_REVIEW_INPUTS = list(_legacy.CANONICAL_REVIEW_REQUIRED_INPUTS)
+_ORIGINAL_LEGACY_DRAFT_INSTRUCTIONS = list(_legacy.LEGACY_DRAFT_INSTRUCTION_FILES)
 
-DSH_OUTLINE_CAPABILITIES = [
-    "get_task_state",
-    "get_product_direction",
-    "get_research_summary",
-    "search_evidence",
-    "get_claims",
-    "get_benchmark",
-    "get_current_outline",
-    "write_outputs",
-    "validate",
-    "submit",
+COMPAT_CREATIVE_BOUNDARIES = "system/core/creative-boundaries.md"
+COMPAT_OUTLINE_INSTRUCTIONS = [
+    COMPAT_CREATIVE_BOUNDARIES,
+    "system/standards/channel-constitution.md",
+    "system/operations/outline.md",
 ]
-DSH_OUTLINE_ADAPTER = "scripts/outline_runtime.py"
-
-LEGACY_DRAFT_INSTRUCTION_FILES = [
-    "system/core/creative-boundaries.md",
+COMPAT_OUTLINE_INPUTS = [
+    "product.json",
+    "00_brief/product-brief.md",
+    "00_brief/benchmark.md",
+    "01_research/research-synthesis.md",
+    "01_research/outline-evidence-pack.json",
+]
+COMPAT_DIRECT_DRAFT_INSTRUCTIONS = [
+    COMPAT_CREATIVE_BOUNDARIES,
+    "system/operations/draft-section.md",
+]
+COMPAT_LEGACY_DRAFT_INSTRUCTIONS = [
+    COMPAT_CREATIVE_BOUNDARIES,
     "system/standards/channel-constitution.md",
     "system/operations/draft-section.md",
 ]
-LEGACY_DRAFT_REQUIRED_INPUTS = [
+COMPAT_DIRECT_DRAFT_INPUTS = [
+    "03_sections/{section}/section.json",
+    "03_sections/{section}/narration-pack.json",
+    "03_sections/{section}/continuity-in.md",
+]
+COMPAT_REVIEW_INSTRUCTIONS = [
+    "system/standards/channel-constitution.md",
+    "system/standards/outcome-evaluation.md",
+    "system/standards/section-quality-gate.md",
+    "system/operations/review-section.md",
+]
+COMPAT_REVIEW_INPUTS = [
+    "02_outline/outline.json",
     "02_outline/story-bible.md",
     "02_outline/voice-profile.md",
     "03_sections/{section}/section.json",
     "03_sections/{section}/brief.md",
     "03_sections/{section}/narration-pack.json",
-    "03_sections/{section}/continuity-in.md",
+    "03_sections/{section}/draft.md",
+    "03_sections/{section}/handoff.md",
 ]
-LEGACY_DRAFT_OPTIONAL_INPUTS = [
-    "03_sections/{section}/story-plan.json",
-    "03_sections/{section}/draft-rework-request.md",
+COMPAT_REVISE_INSTRUCTIONS = [
+    COMPAT_CREATIVE_BOUNDARIES,
+    "system/standards/channel-constitution.md",
+    "system/operations/revise-section.md",
 ]
-LEGACY_REVISE_REQUIRED_INPUTS = [
-    "02_outline/story-bible.md",
-    "02_outline/voice-profile.md",
+COMPAT_DIRECT_REVISE_INPUTS = [
+    "02_outline/outline.json",
     "03_sections/{section}/section.json",
-    "03_sections/{section}/brief.md",
     "03_sections/{section}/narration-pack.json",
     "03_sections/{section}/draft.md",
     "03_sections/{section}/handoff.md",
     "03_sections/{section}/review.md",
     "03_sections/{section}/change-request.md",
 ]
-LEGACY_REVISE_OPTIONAL_INPUTS = ["03_sections/{section}/story-plan.json"]
-CANONICAL_REVIEW_REQUIRED_INPUTS = [
+ADOPTED_REVIEW_INPUTS = [
     "02_outline/outline.json",
     "03_sections/{section}/section.json",
+    "03_sections/{section}/historical-substrate.json",
     "03_sections/{section}/narration-pack.json",
     "03_sections/{section}/draft.md",
     "03_sections/{section}/handoff.md",
 ]
-MAX_REVISION_DIAGNOSIS_CHARS = 8000
-MAX_REVISION_DIAGNOSIS_TOKENS = 2200
+
+SUBSTRATE_OUTLINE_INSTRUCTIONS = [
+    "system/core/creative-boundaries.md",
+    "system/standards/channel-constitution.md",
+    "system/operations/substrate/outline.md",
+]
+SUBSTRATE_DRAFT_INSTRUCTIONS = [
+    "system/core/creative-boundaries.md",
+    "system/operations/substrate/draft-section.md",
+]
+SUBSTRATE_REVIEW_INSTRUCTIONS = [
+    "system/standards/outcome-evaluation.md",
+    "system/standards/section-quality-gate.md",
+    "system/operations/substrate/review-section.md",
+]
+SUBSTRATE_REVISE_INSTRUCTIONS = [
+    "system/core/creative-boundaries.md",
+    "system/standards/channel-constitution.md",
+    "system/operations/substrate/revise-section.md",
+]
+
+COMPAT_DRAFT_EVIDENCE_ACCESS = {
+    "kind": "bounded_claim_sources",
+    "adapter": "scripts/draft_evidence.py",
+    "interface_version": 5,
+    "capabilities": ["scope", "attest_scope", "source", "search", "record"],
+    "required_before_submit": ["attest_scope"],
+}
+
+CANONICAL_SECONDARY_GUIDANCE = (
+    "Evidence access is secondary verification only. Historical Substrate is the primary history model.\n"
+    "Use evidence only after choosing a telling from that model, to verify, sharpen, or qualify a specific detail.\n"
+    "Do not survey evidence to discover the story route or to decide what historical reality exists to tell.\n"
+    "Every capability call is audit-logged; new claims or causal generalizations remain evidence-authority work."
+)
 
 
-def load_harness() -> dict[str, Any]:
-    value = read_json(HARNESS_PATH)
-    if value.get("schema_version") != 1 or not isinstance(value.get("profiles"), dict):
-        raise ValueError("Invalid system/harness.json")
-    return value
-
-
-def validate_prompt_layers(
-    instruction_paths: list[Path],
-    profile: dict[str, Any],
-    harness: dict[str, Any],
-) -> None:
-    relative_paths = {repo_relative(path) for path in instruction_paths}
-    excluded = relative_paths.intersection(harness.get("prompt_excluded_files", []))
-    if excluded:
-        raise ValueError("Hard-policy files must stay outside task prompts: " + ", ".join(sorted(excluded)))
-    eval_only = relative_paths.intersection(harness.get("eval_only_files", []))
-    if eval_only and profile.get("kind") != "evaluation":
-        raise ValueError("Evaluation-only files cannot enter a creative prompt: " + ", ".join(sorted(eval_only)))
-
-
-def validate_target(operation: str, spec: dict[str, Any], section: str | None, unit: str | None) -> None:
-    kind = spec["target_kind"]
-    if kind == "section" and not section:
-        raise ValueError(f"{operation} requires --section P##")
-    if kind == "unit" and not unit:
-        raise ValueError(f"{operation} requires --unit WS##")
-    if kind == "product" and (section or unit):
-        raise ValueError(f"{operation} targets the product; omit --section/--unit")
-
-
-def resolve_execution_runtime(operation: str, spec: dict[str, Any], requested: str | None) -> str:
-    allowed = spec.get("execution_runtimes", ["legacy"])
-    default = spec.get("default_execution_runtime", "legacy")
-    runtime = requested or default
-    if runtime not in allowed:
-        raise ValueError(
-            f"Operation {operation} does not support execution runtime {runtime!r}; "
-            f"allowed: {', '.join(allowed)}"
-        )
-    if runtime == "dsh" and operation != "outline":
-        raise ValueError("DeepSeek Harness POC is limited to the outline operation.")
-    return runtime
-
-
-def validate_preconditions(product_dir: Path, operation: str, section: str | None, unit: str | None) -> None:
-    product = read_json_local(product_dir / "product.json")
-    stages = product.get("stages", {})
-    if operation == "research_plan" and stages.get("direction") != "approved":
-        raise ValueError("Product direction must be human-approved before research planning.")
-    if operation in {"research_workstream", "research_synthesis"}:
-        plan = read_json_local(product_dir / "01_research" / "plan.json")
-        if plan.get("status") != "approved":
-            raise ValueError("Research plan must be human-approved first.")
-        declared_units = {item.get("id") for item in plan.get("workstreams", []) if item.get("id")}
-        if operation == "research_workstream" and unit not in declared_units:
-            raise ValueError(f"Workstream {unit} is not declared in the approved research plan.")
-    if operation == "research_synthesis":
-        blocker = research_rework_blocker(product_dir)
-        if blocker:
-            raise ValueError("Research synthesis cannot start yet: " + blocker)
-        for expected_unit in sorted(declared_units):
-            root = product_dir / "01_research" / "workstreams" / str(expected_unit)
-            sources = read_json_local(root / "sources.json")
-            claims = read_json_local(root / "claims.json")
-            synthesis = root / "synthesis.md"
-            if sources.get("status") != "complete" or claims.get("status") != "complete":
-                raise ValueError(f"Incomplete workstream ledgers: {expected_unit}")
-            if "Status: complete" not in synthesis.read_text(encoding="utf-8"):
-                raise ValueError(f"Incomplete workstream synthesis: {synthesis.relative_to(product_dir)}")
-        consolidation_errors = verify_consolidation(product_dir)
-        if consolidation_errors:
-            raise ValueError("Research ledgers must be consolidated before synthesis: " + "; ".join(consolidation_errors))
-    if operation == "outline":
-        sources = read_json_local(product_dir / "01_research" / "source-index.json")
-        claims = read_json_local(product_dir / "01_research" / "claim-ledger.json")
-        if sources.get("status") != "complete" or claims.get("status") != "complete":
-            raise ValueError("Source index and claim ledger must be complete before outline.")
-        synthesis = product_dir / "01_research" / "research-synthesis.md"
-        synthesis_text = synthesis.read_text(encoding="utf-8")
-        legacy_approved = stages.get("research") == "approved" and "Status: ready_for_review" in synthesis_text
-        approved_baseline_replay = (
-            stages.get("research") not in {"approved", "complete"}
-            and bool(product.get("production_cycle", {}).get("previous"))
-            and "Status: complete" in synthesis_text
-            and research_rework_blocker(product_dir) is None
-        )
-        if stages.get("research") not in {"approved", "complete"} and not approved_baseline_replay:
-            raise ValueError("Research must be current before outline; finish semantic research rework and synthesis first.")
-        if "Status: complete" not in synthesis_text and not legacy_approved:
-            raise ValueError("Research synthesis must be complete before outline.")
-        build_outline_evidence_pack(product_dir)
-        pack_errors = verify_outline_evidence_pack(product_dir)
-        if pack_errors:
-            raise ValueError("Outline evidence pack is not ready: " + "; ".join(pack_errors))
-    if operation in {"design_section", "draft_section", "review_section", "revise_section"}:
-        outline = read_json_local(product_dir / "02_outline" / "outline.json")
-        if outline.get("status") != "approved":
-            raise ValueError("Outline must be human-approved first.")
-        state = read_json_local(product_dir / "03_sections" / str(section) / "section.json")
-        state_error = section_operation_state_error(operation, state.get("status"), section)
-        if state_error:
-            raise ValueError(state_error)
-    if operation in {"draft_section", "review_section", "revise_section"}:
-        narration_errors = verify_narration_pack(product_dir, str(section))
-        if narration_errors:
-            raise ValueError("Narration pack is not ready: " + "; ".join(narration_errors))
-    if operation == "integration_review":
-        outline = read_json_local(product_dir / "02_outline" / "outline.json")
-        if outline.get("status") != "approved":
-            raise ValueError("Outline must be human-approved before integration review.")
-        for item in outline.get("sections", []):
-            section_id = item["id"]
-            root = product_dir / "03_sections" / section_id
-            state = read_json_local(root / "section.json")
-            if state.get("status") != "approved" or state.get("human_approved") is not True:
-                raise ValueError(f"Integration review requires human-approved section: {section_id}")
-            if not (root / "handoff.md").is_file():
-                raise ValueError(f"Integration review requires handoff: {section_id}")
-    if operation == "final_audit":
-        manifest = read_json_local(product_dir / "05_delivery" / "assembly-manifest.json")
-        outline = read_json_local(product_dir / "02_outline" / "outline.json")
-        expected = [item["id"] for item in sorted(outline.get("sections", []), key=lambda value: value["order"])]
-        assembled = [item.get("id") for item in manifest.get("sections", [])]
-        if manifest.get("mode") != "full" or assembled != expected:
-            raise ValueError("Final audit requires a full assembly matching the approved outline.")
-        for record in manifest.get("sections", []):
-            draft = product_dir / record["source"]
-            state = read_json_local(draft.parent / "section.json")
-            if state.get("status") != "approved" or state.get("human_approved") is not True:
-                raise ValueError(f"Final audit requires human-approved section: {record.get('id')}.")
-            if not draft.is_file() or sha256(draft) != record.get("sha256"):
-                raise ValueError(f"Assembly is stale for section {record.get('id')}.")
-
-
-def read_json_local(path: Path) -> dict[str, Any]:
-    value = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(value, dict):
-        raise ValueError(f"Expected JSON object: {path}")
-    return value
-
-
-def _draft_context_lists(product_dir: Path, operation: str, spec: dict[str, Any]) -> tuple[list[str], list[str], list[str]]:
-    """Keep canonical prose packets minimal while preserving legacy story-plan context."""
-
-    instruction_files = list(spec["instruction_files"])
-    required_inputs = list(spec["required_inputs"])
-    optional_inputs = list(spec.get("optional_inputs", []))
-    if operation not in {"draft_section", "review_section", "revise_section"}:
-        return instruction_files, required_inputs, optional_inputs
-
-    outline = read_json_local(product_dir / "02_outline" / "outline.json")
-    if is_direct_authorship_outline(outline):
-        if operation == "review_section":
-            return instruction_files, list(CANONICAL_REVIEW_REQUIRED_INPUTS), []
-        return instruction_files, required_inputs, optional_inputs
-    if operation == "review_section":
-        return instruction_files, required_inputs, optional_inputs
-    if operation == "draft_section":
-        return (
-            list(LEGACY_DRAFT_INSTRUCTION_FILES),
-            list(LEGACY_DRAFT_REQUIRED_INPUTS),
-            list(LEGACY_DRAFT_OPTIONAL_INPUTS),
-        )
-    return instruction_files, list(LEGACY_REVISE_REQUIRED_INPUTS), list(LEGACY_REVISE_OPTIONAL_INPUTS)
-
-
-def _audience_readable_mission(state: dict[str, Any]) -> str:
-    """Return the explicit canonical section mission; never synthesize one from other fields."""
-
-    mission = state.get("mission")
-    if not isinstance(mission, str) or not mission.strip():
-        raise ValueError("Direct-authorship section requires a non-empty mission before drafting.")
-    return mission.strip()
-
-
-def _canonical_writer_projection(relative: str, path: Path, section: str, operation: str) -> str | None:
-    """Expose only mission/control state and the bounded retrieval mode to writers."""
-
-    section_rel = f"03_sections/{section}/section.json"
-    narration_rel = f"03_sections/{section}/narration-pack.json"
-    if relative == section_rel:
-        state = read_json_local(path)
-        projection = {
-            "section": state.get("id"),
-            "title": state.get("title"),
-            "mission": _audience_readable_mission(state),
-            "entry_state": state.get("entry_state"),
-            "exit_state": state.get("exit_state"),
-            "target_words": state.get("target_words"),
-        }
-        if operation != "draft_section":
-            projection["transition"] = state.get("transition")
-        return json.dumps(projection, ensure_ascii=False, indent=2)
-    if relative == narration_rel:
-        pack = read_json_local(path)
-        if operation != "draft_section":
-            scope = pack.get("retrieval_scope", {})
-            claim_ids = scope.get("claim_ids", []) if isinstance(scope, dict) else []
-            return json.dumps(
-                {
-                    "section": pack.get("section"),
-                    "cycle_id": pack.get("cycle_id"),
-                    "truth_ceiling": {"claim_ids": claim_ids},
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-        projection = {
-            "section": pack.get("section"),
-            "cycle_id": pack.get("cycle_id"),
-            "evidence": {"mode": "compact_writer_brief_v1", "access": "bounded_on_demand"},
-        }
-        return json.dumps(projection, ensure_ascii=False, indent=2)
-    return None
-
-
-def _review_boundary_projection(path: Path, section: str) -> str:
-    """Project only current/next outline boundaries while binding the review to the full approved outline hash."""
-
-    outline = read_json_local(path)
-    ordered = sorted(
-        [item for item in outline.get("sections", []) if isinstance(item, dict)],
-        key=lambda item: item.get("order", 0),
+def _require_product_complete_outline_substrate(product_dir: Path) -> None:
+    product_dir = product_dir.resolve()
+    substrate_path = product_dir / "01_research" / "historical-substrate.json"
+    claims_path = product_dir / "01_research" / "claim-ledger.json"
+    sources_path = product_dir / "01_research" / "source-index.json"
+    if not substrate_path.is_file():
+        raise ValueError("Adopted outline creation requires 01_research/historical-substrate.json")
+    errors = validate_historical_substrate(
+        _legacy.read_json_local(substrate_path),
+        _legacy.read_json_local(claims_path),
+        _legacy.read_json_local(sources_path),
+        require_product_complete=True,
     )
-    matches = [index for index, item in enumerate(ordered) if item.get("id") == section]
-    if len(matches) != 1:
-        raise ValueError(f"Approved outline must contain section {section} exactly once for review boundary projection.")
-    index = matches[0]
-
-    def boundary(item: dict[str, Any] | None) -> dict[str, Any] | None:
-        if item is None:
-            return None
-        fields = ["id", "title", "narrative_job", "entry_state", "exit_state", "transition", "non_goal"]
-        return {field: item.get(field) for field in fields if item.get(field) is not None}
-
-    projection = {
-        "projection_kind": "review_current_next_boundary",
-        "outline_sha256": sha256(path),
-        "current": boundary(ordered[index]),
-        "next": boundary(ordered[index + 1] if index + 1 < len(ordered) else None),
-    }
-    return json.dumps(projection, ensure_ascii=False, indent=2)
+    if errors:
+        raise ValueError("Outline Historical Substrate preflight failed: " + "; ".join(errors))
 
 
-def _revision_diagnosis_projection(path: Path, section: str) -> str:
-    """Keep the approved diagnosis exact without exposing evaluator scores or full review prose."""
-
-    text = path.read_text(encoding="utf-8")
-    lines = text.splitlines()
-    verdict_lines = [line for line in lines if line in {"Verdict: pass", "Verdict: changes_requested", "Verdict: blocked"}]
-    if len(verdict_lines) != 1:
-        raise ValueError("Revision requires exactly one literal verdict in the submitted review diagnosis.")
-
-    def body(heading: str) -> str:
-        if lines.count(heading) != 1:
-            raise ValueError(f"Revision diagnosis requires exactly one {heading} heading.")
-        start = lines.index(heading) + 1
-        collected: list[str] = []
-        for line in lines[start:]:
-            if line.startswith("## "):
-                break
-            collected.append(line)
-        value = "\n".join(collected).strip()
-        if not value:
-            raise ValueError(f"Revision diagnosis heading is empty: {heading}")
-        return value
-
-    issues = body("## Issues")
-    routing = body("## Routing")
-    if len(issues) + len(routing) > MAX_REVISION_DIAGNOSIS_CHARS:
-        raise ValueError(
-            "Revision diagnosis exceeds its compact context cap; compact Issues/Routing upstream without truncation."
+def _architecture_flags(
+    product_dir: Path, operation: str, section: str | None
+) -> tuple[bool, bool]:
+    product_dir = product_dir.resolve()
+    outline_path = product_dir / "02_outline" / "outline.json"
+    product_path = product_dir / "product.json"
+    outline = _legacy.read_json_local(outline_path) if outline_path.is_file() else {}
+    product = _legacy.read_json_local(product_path) if product_path.is_file() else {}
+    outline_adopted = outline_adopts_historical_substrate(
+        product_dir, product=product, outline=outline
+    )
+    section_adopted = bool(
+        section
+        and operation in {"draft_section", "review_section", "revise_section"}
+        and section_adopts_historical_substrate(
+            product_dir, section, product=product, outline=outline
         )
-    projection = {
-        "projection_kind": "revision_diagnosis",
-        "section": section,
-        "review_sha256": sha256(path),
-        "verdict": verdict_lines[0].split(":", 1)[1].strip(),
-        "issues": issues,
-        "routing": routing,
+    )
+    return outline_adopted, section_adopted
+
+
+def _adapt_registry(
+    operation: str,
+    *,
+    outline_adopted: bool,
+    section_adopted: bool,
+) -> dict[str, Any]:
+    registry = deepcopy(_ORIGINAL_LOAD_REGISTRY())
+    spec = registry.get(operation)
+    if not isinstance(spec, dict):
+        return registry
+
+    if operation == "outline":
+        if outline_adopted:
+            spec["instruction_files"] = list(SUBSTRATE_OUTLINE_INSTRUCTIONS)
+        else:
+            spec["instruction_files"] = list(COMPAT_OUTLINE_INSTRUCTIONS)
+            spec["required_inputs"] = list(COMPAT_OUTLINE_INPUTS)
+
+    if operation == "draft_section":
+        if section_adopted:
+            spec["instruction_files"] = list(SUBSTRATE_DRAFT_INSTRUCTIONS)
+        else:
+            spec["instruction_files"] = list(COMPAT_DIRECT_DRAFT_INSTRUCTIONS)
+            spec["required_inputs"] = list(COMPAT_DIRECT_DRAFT_INPUTS)
+            spec["evidence_access"] = deepcopy(COMPAT_DRAFT_EVIDENCE_ACCESS)
+    elif operation == "review_section":
+        if section_adopted:
+            # The evaluator sees the same substrate as Writer. Keep only evaluation
+            # policy + operation contract so canonical review stays inside budget.
+            spec["instruction_files"] = list(SUBSTRATE_REVIEW_INSTRUCTIONS)
+        else:
+            spec["instruction_files"] = list(COMPAT_REVIEW_INSTRUCTIONS)
+            spec["required_inputs"] = list(COMPAT_REVIEW_INPUTS)
+    elif operation == "revise_section":
+        if section_adopted:
+            spec["instruction_files"] = list(SUBSTRATE_REVISE_INSTRUCTIONS)
+        else:
+            spec["instruction_files"] = list(COMPAT_REVISE_INSTRUCTIONS)
+            spec["required_inputs"] = list(COMPAT_DIRECT_REVISE_INPUTS)
+
+    # Adopted evidence semantics are inserted by this architecture layer. Removing
+    # evidence_access before legacy assembly prevents evidence-led story discovery.
+    if section_adopted and operation in {"draft_section", "review_section", "revise_section"}:
+        spec.pop("evidence_access", None)
+    return registry
+
+
+def _evidence_packet(
+    product_dir: Path,
+    operation: str,
+    task_id: str,
+    section: str,
+) -> dict[str, Any] | None:
+    original_spec = _ORIGINAL_LOAD_REGISTRY().get(operation, {})
+    evidence_access = original_spec.get("evidence_access")
+    if not isinstance(evidence_access, dict):
+        return None
+    packet: dict[str, Any] = {
+        "kind": evidence_access["kind"],
+        "adapter": evidence_access["adapter"],
+        "interface_version": evidence_access["interface_version"],
+        "capabilities": list(evidence_access["capabilities"]),
+        "trace_path": f"tasks/{task_id}/evidence-trace.jsonl",
     }
-    rendered = json.dumps(projection, ensure_ascii=False, indent=2)
-    if estimate_tokens(rendered) > MAX_REVISION_DIAGNOSIS_TOKENS:
-        raise ValueError(
-            "Revision diagnosis exceeds its compact token cap; compact Issues/Routing upstream without truncation."
+    if evidence_access.get("required_before_submit"):
+        packet["required_before_submit"] = list(evidence_access["required_before_submit"])
+
+    sec_dir = product_dir.resolve() / "03_sections" / section
+    materials = sec_dir / "materials.json"
+    snapshot = sec_dir / "material-snapshot.json"
+    if materials.is_file():
+        if not snapshot.is_file() or _legacy.sha256(materials) != _legacy.read_json_local(snapshot).get("materials_sha256"):
+            value = _legacy.read_json_local(materials)
+            _legacy.write_json(
+                snapshot,
+                {
+                    "schema_version": 1,
+                    "section": section,
+                    "created_at": _legacy.datetime.now(_legacy.timezone.utc).isoformat(),
+                    "materials_sha256": _legacy.sha256(materials),
+                    "materials": value.get("materials", []) if isinstance(value, dict) else value,
+                },
+            )
+    if snapshot.is_file():
+        packet["material_snapshot_sha256"] = _legacy.sha256(snapshot)
+    return packet
+
+
+def _insert_canonical_evidence_guidance(
+    text: str, product_dir: Path, task_id: str, evidence: dict[str, Any]
+) -> str:
+    lines = [
+        "# Canonical evidence routing",
+        CANONICAL_SECONDARY_GUIDANCE,
+        f"Evidence adapter: `python {evidence['adapter']} products/{product_dir.name} {task_id} <capability>`.",
+        "Capabilities: " + ", ".join(f"`{item}`" for item in evidence["capabilities"]) + ".",
+    ]
+    if evidence.get("required_before_submit"):
+        lines.append(
+            "Submission requirement: call "
+            + ", ".join(f"`{item}`" for item in evidence["required_before_submit"])
+            + " successfully before submitting this task."
         )
-    return rendered
+    block = "\n".join(lines) + "\n\n"
+    marker = "# BEGIN INSTRUCTION:"
+    index = text.find(marker)
+    if index < 0:
+        return text.rstrip() + "\n\n" + block
+    return text[:index] + block + text[index:]
 
 
 def compile_packet(
@@ -419,284 +297,74 @@ def compile_packet(
     execution_runtime: str | None = None,
 ) -> tuple[dict[str, Any], str]:
     product_dir = product_dir.resolve()
-    registry = load_registry()
-    if operation not in registry:
-        raise ValueError(f"Unknown operation: {operation}")
-    spec = registry[operation]
-    harness = load_harness()
-    profile_name = spec.get("context_profile")
-    profile = harness["profiles"].get(profile_name)
-    if not isinstance(profile, dict):
-        raise ValueError(f"Operation {operation} has no valid context profile")
-    validate_target(operation, spec, section, unit)
-    runtime = resolve_execution_runtime(operation, spec, execution_runtime)
-    validate_preconditions(product_dir, operation, section, unit)
-
-    direct_authorship = False
-    if operation in {"draft_section", "review_section", "revise_section"}:
-        direct_authorship = is_direct_authorship_outline(
-            read_json_local(product_dir / "02_outline" / "outline.json")
-        )
-
-    instruction_files, required_inputs, optional_inputs = _draft_context_lists(product_dir, operation, spec)
-    instruction_paths = [(REPO_ROOT / item).resolve() for item in instruction_files]
-    for path in instruction_paths:
-        if not path.is_file():
-            raise FileNotFoundError(f"Missing instruction: {repo_relative(path)}")
-    validate_prompt_layers(instruction_paths, profile, harness)
-    input_paths = expand_inputs(product_dir, required_inputs, section, unit)
-    input_paths += expand_optional_inputs(product_dir, optional_inputs, section, unit)
-    include_dependency_handoffs = bool(spec.get("include_dependency_handoffs")) or (
-        operation == "revise_section" and not direct_authorship
+    outline_adopted, section_adopted = _architecture_flags(
+        product_dir, operation, section
     )
-    if include_dependency_handoffs and section:
-        state = read_json_local(product_dir / "03_sections" / section / "section.json")
-        for dependency in state.get("dependencies", []):
-            dependency_root = product_dir / "03_sections" / dependency
-            dependency_state_path = dependency_root / "section.json"
-            dependency_handoff = dependency_root / "handoff.md"
-            if dependency_state_path.is_file() and dependency_handoff.is_file():
-                dependency_state = read_json_local(dependency_state_path)
-                if dependency_state.get("status") == "approved" and dependency_state.get("human_approved") is True:
-                    input_paths.append(dependency_handoff.resolve())
-    input_paths = list(dict.fromkeys(input_paths))
 
-    blocks: list[str] = []
-    instruction_blocks: list[str] = []
-    input_blocks: list[str] = []
-    input_records: list[dict[str, Any]] = []
-    for path in instruction_paths:
-        content = path.read_text(encoding="utf-8")
-        block = [f"# BEGIN INSTRUCTION: {repo_relative(path)}", content.rstrip(), f"# END INSTRUCTION: {repo_relative(path)}", ""]
-        blocks.extend(block)
-        instruction_blocks.extend(block)
-    instruction_tokens = estimate_tokens("\n".join(instruction_blocks))
-    instruction_budget = int(profile["max_instruction_tokens"])
-    if instruction_tokens > instruction_budget:
-        raise ValueError(
-            f"Instruction estimate {instruction_tokens} exceeds {profile_name} budget {instruction_budget}; "
-            "move hard policy or evaluation logic out of the prompt."
-        )
-    for path in input_paths:
-        relative = product_relative(product_dir, path)
-        input_records.append({"path": relative, "sha256": sha256(path), "bytes": path.stat().st_size})
-        if runtime == "legacy":
-            projected = (
-                _canonical_writer_projection(relative, path, str(section), operation)
-                if direct_authorship and section
-                else None
-            )
-            if operation in {"review_section", "revise_section"} and relative == "02_outline/outline.json" and section:
-                projected = _review_boundary_projection(path, str(section))
-            if (
-                operation == "revise_section"
-                and direct_authorship
-                and relative == f"03_sections/{section}/review.md"
-            ):
-                projected = _revision_diagnosis_projection(path, str(section))
-            content = projected if projected is not None else path.read_text(encoding="utf-8")
-            block = [f"# BEGIN INPUT: {relative}", content.rstrip(), f"# END INPUT: {relative}", ""]
-            blocks.extend(block)
-            input_blocks.extend(block)
-    receipt_lineage_anchor = (
-        build_revision_receipt_lineage_anchor(product_dir, str(section), input_records)
-        if operation == "revise_section" and section
-        else None
+    if operation == "outline" and outline_adopted:
+        _require_product_complete_outline_substrate(product_dir)
+    if section_adopted and section:
+        require_canonical_section_state(product_dir, section)
+
+    adapted_registry = _adapt_registry(
+        operation,
+        outline_adopted=outline_adopted,
+        section_adopted=section_adopted,
     )
-    recorded_evidence_projection = (
-        build_review_record_projection(product_dir, str(section))
-        if operation == "review_section" and section
-        else None
+    old_loader = _legacy.load_registry
+    old_review_inputs = list(_legacy.CANONICAL_REVIEW_REQUIRED_INPUTS)
+    old_legacy_draft_instructions = list(_legacy.LEGACY_DRAFT_INSTRUCTION_FILES)
+    _legacy.load_registry = lambda: adapted_registry
+    _legacy.CANONICAL_REVIEW_REQUIRED_INPUTS = (
+        list(ADOPTED_REVIEW_INPUTS) if section_adopted else list(_ORIGINAL_REVIEW_INPUTS)
     )
-    if recorded_evidence_projection is not None:
-        projection_content = json.dumps(recorded_evidence_projection, ensure_ascii=False, indent=2)
-        projection_block = [
-            REVIEW_RECORD_DATA_RULE,
-            REVIEW_RECORD_PROJECTION_START,
-            projection_content,
-            REVIEW_RECORD_PROJECTION_END,
-            "",
-        ]
-        blocks.extend(projection_block)
-        input_blocks.extend(projection_block)
-    input_tokens = estimate_tokens("\n".join(input_blocks)) if input_blocks else 0
-
-    outputs = [render_pattern(item, section, unit) for item in spec["outputs"]]
-    optional_outputs = [render_pattern(item, section, unit) for item in spec.get("optional_outputs", [])]
-    output_baselines = []
-    for relative, required in [(item, True) for item in outputs] + [(item, False) for item in optional_outputs]:
-        path = product_dir / relative
-        output_baselines.append(
-            {
-                "path": relative,
-                "sha256": sha256(path) if path.is_file() else None,
-                "required": required,
-            }
+    if not section_adopted:
+        _legacy.LEGACY_DRAFT_INSTRUCTION_FILES = list(COMPAT_LEGACY_DRAFT_INSTRUCTIONS)
+    try:
+        packet, text = _legacy.compile_packet(
+            product_dir,
+            operation,
+            task_id,
+            section=section,
+            unit=unit,
+            execution_runtime=execution_runtime,
         )
-    report_path = f"tasks/{task_id}/report.md"
-    operator_brief_path = f"tasks/{task_id}/operator-brief.json"
-    runtime_owned_paths: list[str] = []
-    if runtime == "dsh":
-        runtime_owned_paths = [
-            f"tasks/{task_id}/runtime-trace.jsonl",
-            f"tasks/{task_id}/runtime-run.json",
-        ]
+    finally:
+        _legacy.load_registry = old_loader
+        _legacy.CANONICAL_REVIEW_REQUIRED_INPUTS = old_review_inputs
+        _legacy.LEGACY_DRAFT_INSTRUCTION_FILES = old_legacy_draft_instructions
 
-    evidence_access = spec.get("evidence_access")
-    evidence_packet: dict[str, Any] | None = None
-    if evidence_access is not None:
-        if operation not in {"draft_section", "review_section", "revise_section"}:
-            raise ValueError("Bounded section evidence access is allowed only for draft/review/revise operations.")
-        evidence_packet = {
-            "kind": evidence_access["kind"],
-            "adapter": evidence_access["adapter"],
-            "interface_version": evidence_access["interface_version"],
-            "capabilities": list(evidence_access["capabilities"]),
-            "trace_path": f"tasks/{task_id}/evidence-trace.jsonl",
-        }
-        if evidence_access.get("required_before_submit"):
-            evidence_packet["required_before_submit"] = list(evidence_access["required_before_submit"])
+    if not section_adopted or not section:
+        return packet, text
 
-    model_write_paths = outputs + optional_outputs + [report_path, operator_brief_path]
-    allowed = model_write_paths
-    write_label = "Model-writable paths" if runtime == "dsh" else "Allowed writes"
-    displayed_write_paths = model_write_paths if runtime == "dsh" else allowed
-    header = [f"# Context Packet — {task_id}", ""]
-    header.extend(
-        [
-            f"- Product: `{product_dir.name}`",
-            f"- Operation: `{operation}`",
-            f"- Context profile: `{profile_name}`",
-            f"- Section: `{section or '-'}`",
-            f"- Unit: `{unit or '-'}`",
-            f"- {write_label}: {', '.join(f'`{item}`' for item in displayed_write_paths)}",
-            "",
-        ]
-    )
-    if runtime == "dsh":
-        header.extend(
-            [
-                "This is a minimal task seed for the DeepSeek Harness outline POC.",
-                "Runtime-owned trace/run paths are not model-writable.",
-                "Use only the scoped capabilities exposed by the `yt_outline` MCP server:",
-                ", ".join(f"`{item}`" for item in DSH_OUTLINE_CAPABILITIES) + ".",
-                "",
-                "Call `get_task_state` first. Load product or evidence context only when the current design decision needs it.",
-                "Do not treat session memory, compaction summaries or unsupported inference as factual authority.",
-                "Repository artifacts returned by capabilities are the only factual authority; capability calls are audit-logged.",
-                "Use `write_outputs` for declared artifacts, `validate` before completion, and `submit` only after validation passes.",
-                "Human approval remains external: never mark the outline or voice profile approved.",
-                "Write full operational detail to `report.md` and only decision-relevant summary to `operator-brief.json`.",
-                "",
-            ]
-        )
-    else:
-        header.extend(
-            [
-                "Write full operational detail to `report.md`. Write only decision-relevant summary to `operator-brief.json`.",
-                "The final chat response must use the rendered operator brief, not the task report.",
-                "",
-            ]
-        )
-        if evidence_packet is not None:
-            header.extend(
-                [
-                    "Task context is this packet plus the bounded evidence capability below. Do not scan the repository.",
-                    f"Evidence adapter: `python {evidence_packet['adapter']} products/{product_dir.name} {task_id} <capability>`.",
-                    "Capabilities: " + ", ".join(f"`{item}`" for item in evidence_packet["capabilities"]) + ".",
-                    "Use it only to increase source-level resolution inside the approved claim/source scope.",
-                    "Every capability call is audit-logged. If external source reading adds detail, record it through the adapter before relying on it.",
-                    "New claims, causal conclusions, contradictions or generalizations must be routed back to evidence authority.",
-                    "",
-                ]
-            )
-            if evidence_packet.get("required_before_submit"):
-                header.extend(
-                    [
-                        "Submission requirement: call "
-                        + ", ".join(f"`{item}`" for item in evidence_packet["required_before_submit"])
-                        + " successfully before submitting this task.",
-                        "",
-                    ]
-                )
-        else:
-            header.extend(["Only the material inside this packet is task context. Do not scan the repository.", ""])
+    evidence = _evidence_packet(product_dir, operation, task_id, section)
+    if evidence is not None:
+        text = _insert_canonical_evidence_guidance(text, product_dir, task_id, evidence)
+        packet["evidence_access"] = evidence
 
-    packet_text = "\n".join(header + blocks).rstrip() + "\n"
-    tokens = estimate_tokens(packet_text)
-    budget = int(spec["max_context_tokens"])
-    if tokens > budget:
-        raise ValueError(f"Context packet estimate {tokens} exceeds budget {budget}; compact an upstream artifact.")
-
-    packet = {
-        "schema_version": PACKET_SCHEMA_VERSION,
-        "compiler": PACKET_COMPILER,
-        "context_sha256": hashlib.sha256(packet_text.encode("utf-8")).hexdigest(),
-        "authority": "product_agent",
-        "task_id": task_id,
-        "product": product_dir.name,
-        "operation": operation,
-        "target": {"section": section, "unit": unit},
-        "created_at": datetime.now(timezone.utc).isoformat(),
-        "context_profile": profile_name,
-        "max_context_tokens": budget,
-        "estimated_context_tokens": tokens,
-        "prompt_instruction_tokens": instruction_tokens,
-        "input_tokens": input_tokens,
-        "boundary_enforcement": harness["boundary_enforcement"],
-        "evaluation_gate": profile.get("evaluation_gate"),
-        "instruction_files": [repo_relative(path) for path in instruction_paths],
-        "inputs": input_records,
-        "operation_outputs": outputs,
-        "optional_operation_outputs": optional_outputs,
-        "output_baselines": output_baselines,
-        "allowed_write_paths": allowed,
-        "report_path": report_path,
-        "operator_brief_path": operator_brief_path,
-        "validation": [
-            f"python scripts/validate.py products/{product_dir.name}",
-            f"python scripts/task.py verify products/{product_dir.name} {task_id}",
-            f"python scripts/check_scope.py products/{product_dir.name}",
-            f"python scripts/operator_brief.py validate products/{product_dir.name}/{operator_brief_path}",
-        ],
+    section_substrate = product_dir / "03_sections" / section / "historical-substrate.json"
+    state = _legacy.read_json_local(product_dir / "03_sections" / section / "section.json")
+    packet["historical_substrate"] = {
+        "contract_version": state.get("historical_substrate_contract_version"),
+        "section_projection_path": f"03_sections/{section}/historical-substrate.json",
+        "section_projection_sha256": _legacy.sha256(section_substrate),
+        "architecture_authority": state.get("architecture_authority"),
     }
-    if spec.get("review_contract_version") is not None:
-        packet["review_contract_version"] = int(spec["review_contract_version"])
-    if receipt_lineage_anchor is not None:
-        packet["receipt_lineage_anchor"] = receipt_lineage_anchor
-    if recorded_evidence_projection is not None:
-        packet["recorded_evidence_projection"] = recorded_evidence_projection
-    if evidence_packet is not None:
-        packet["evidence_access"] = evidence_packet
-    if runtime == "dsh":
-        packet["execution_runtime"] = {
-            "kind": "dsh",
-            "adapter": DSH_OUTLINE_ADAPTER,
-            "interface_version": 1,
-            "capabilities": DSH_OUTLINE_CAPABILITIES,
-        }
-        packet["runtime_owned_paths"] = runtime_owned_paths
-    return packet, packet_text
+
+    tokens = _legacy.estimate_tokens(text)
+    budget = int(packet["max_context_tokens"])
+    if tokens > budget:
+        raise ValueError(
+            f"Context packet estimate {tokens} exceeds budget {budget}; compact canonical upstream context."
+        )
+    packet["context_sha256"] = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    packet["estimated_context_tokens"] = tokens
+    return packet, text
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("product", type=Path)
-    parser.add_argument("operation")
-    parser.add_argument("task_id")
-    parser.add_argument("--section")
-    parser.add_argument("--unit")
-    parser.add_argument("--runtime", choices=["legacy", "dsh"])
-    parser.add_argument("--out", type=Path)
-    args = parser.parse_args()
-    packet, text = compile_packet(args.product, args.operation, args.task_id, args.section, args.unit, args.runtime)
-    output = args.out or args.product / "tasks" / args.task_id / "context.md"
-    output.parent.mkdir(parents=True, exist_ok=True)
-    with output.open("w", encoding="utf-8", newline="\n") as handle:
-        handle.write(text)
-    write_json(output.with_name("packet.json"), packet)
-    print(f"Compiled {output} (~{packet['estimated_context_tokens']} tokens / {packet['max_context_tokens']}).")
-    return 0
+    _legacy.compile_packet = compile_packet
+    return _legacy.main()
 
 
 if __name__ == "__main__":

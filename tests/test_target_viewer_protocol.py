@@ -66,7 +66,7 @@ class TargetViewerProtocolTests(unittest.TestCase):
         self.assertIn("## Mode: `route_probe`", self.protocol)
         self.assertIn("## Mode: `draft_cold_read`", self.protocol)
         self.assertIn("does not replace or pre-author the writer's narrative choices", self.protocol)
-        writer_index = self.harness.index("Writer resolves")
+        writer_index = self.harness.index("Writer receives")
         cold_read_index = self.harness.index("Run a clean `draft_cold_read`")
         formal_review_index = self.harness.index("Route `review_section`")
         self.assertLess(writer_index, cold_read_index)
@@ -93,9 +93,14 @@ class TargetViewerProtocolTests(unittest.TestCase):
             with self.subTest(required=required):
                 self.assertIn(required, self.runtime)
         self.assertIn(
-            "The evidence broker never asks for, records or validates a creative route.",
+            "The broker never asks for, records or validates a creative route.",
             self.harness,
         )
+        self.assertIn("tell a compelling historical story that earns continued voluntary attention", self.harness)
+        self.assertIn("discover the mission's meaning through what unfolds", self.harness)
+        self.assertIn("keep proposed visual grammar outside the Writer packet", self.harness)
+        self.assertIn("Only observation and desired outcome enter a normal Writer packet", self.harness)
+        self.assertIn("owner_locked_for_single_task", self.harness)
 
 
 if __name__ == "__main__":

@@ -28,7 +28,7 @@ def submit_fixture_prose(product: Path, details: list[str], draft_body: str = "A
     work = create_task(product, "draft_section", "P01", None, False)
     task_id = work["id"]
     broker = DraftEvidenceBroker(product, task_id)
-    broker.call("resolve_claims")
+    broker.call("attest_scope")
     for index, detail in enumerate(details):
         broker.call(
             "record",
@@ -118,45 +118,61 @@ class WriterBaselineTests(unittest.TestCase):
             )
             self.assertTrue(set(input_paths[3:]).issubset({"03_sections/P01/draft-rework-request.md"}))
             self.assertIn("evidence_access", packet)
-            self.assertEqual(4, packet["evidence_access"]["interface_version"])
-            self.assertEqual(["resolve_claims"], packet["evidence_access"]["required_before_submit"])
+            self.assertEqual(5, packet["evidence_access"]["interface_version"])
+            self.assertEqual(["attest_scope"], packet["evidence_access"]["required_before_submit"])
             self.assertEqual(
-                ["scope", "resolve_claims", "source", "search", "record"],
+                ["scope", "attest_scope", "source", "search", "record"],
                 packet["evidence_access"]["capabilities"],
             )
-            self.assertIn("Write cinematic narrative nonfiction", context)
-            self.assertIn("Silently choose the focal carrier", context)
-            self.assertIn("Follow a focal carrier", context)
-            self.assertIn("physical or causal anchor", context)
-            self.assertIn("Make the cut, never explain it", context)
-            self.assertIn("not a technique label", context)
-            self.assertNotIn("passage from a novel", context)
-            self.assertIn("do not compress the entire brief", context)
-            self.assertNotIn("strong spoken historical nonfiction", context)
-            self.assertNotIn("Do not force a scene", context)
-            self.assertNotIn("answer the mission in their own words", context)
-            self.assertNotIn("retell the historical path", context)
-            self.assertNotIn("clearly signaled representative reconstruction", context)
+            self.assertIn("Use this style compass", context)
+            self.assertIn("Tell a compelling historical story", context)
+            self.assertIn("meaning emerge through what unfolds", context)
+            self.assertIn("not a proposition to prove", context)
+            self.assertIn("Hook and retention are outcomes", context)
+            self.assertIn("who or what acts", context)
+            self.assertIn("optional retrieval lens", context)
+            self.assertIn("It is not evidence", context)
+            self.assertIn("Choose its telling", context)
+            self.assertIn("every creative choice belongs to the writer", context)
+            self.assertIn("Repair examples and method hypotheses are non-binding", context)
+            self.assertIn("owner_locked_for_single_task", context)
+            for method_priming in [
+                "focal carrier",
+                "physical or causal anchor",
+                "verbal film",
+                "ring returns",
+                "micro-to-macro",
+                "camera-like",
+                "first-person",
+                "third-person",
+                "omniscient",
+            ]:
+                self.assertNotIn(method_priming, context)
+            self.assertNotIn("The mission is the objective", context)
+            self.assertNotIn("must open with", context.casefold())
+            self.assertNotIn("six required beats", context.casefold())
             self.assertNotIn("story_route", context)
             self.assertNotIn("3–6 ordered", context)
 
-            # The writer sees a plain mission projection plus control states, not upstream architecture prose.
+            # The writer sees the objective and a planning forecast, not hidden route/coverage states.
             self.assertIn('"mission"', context)
-            self.assertIn('"entry_state"', context)
-            self.assertIn('"exit_state"', context)
+            self.assertIn('"length_forecast_words"', context)
+            self.assertNotIn('"entry_state"', context)
+            self.assertNotIn('"exit_state"', context)
             self.assertNotIn('"transition"', context)
             self.assertNotIn('"narrative_job"', context)
             self.assertNotIn('"macro_movements"', context)
 
             # The packet exposes a retrieval mode, not ledger identifiers or claim/source prose.
-            self.assertIn("compact_writer_brief_v1", context)
+            self.assertIn("writer_directed_on_demand_v1", context)
+            self.assertNotIn("compact_writer_brief_v1", context)
             self.assertNotIn("CLM-0001", context)
             for value in [
                 "permitted_claims",
-                "qualifications",
+                '"qualifications":',
                 "source_refs",
                 "writer_contract",
-                "counterevidence",
+                '"counterevidence":',
                 "narrative_implication",
                 "Approved fact for P01.",
                 "Primary Source One",
@@ -528,6 +544,27 @@ class WriterBaselineTests(unittest.TestCase):
             narration["evidence_pack_sha256"] = sha256(evidence_path)
             write_json(narration_path, narration)
 
+            materials_path = root / "materials.json"
+            write_json(
+                materials_path,
+                {
+                    "schema_version": 1,
+                    "materials": [
+                        {
+                            "id": "P01-MAT-0001",
+                            "kind": "object",
+                            "label": "Clay accounting token",
+                            "claim_ids": ["CLM-0011"],
+                            "source_refs": [{"source_id": "SRC-0001", "locators": ["p. 42"]}],
+                            "source_relation": "contemporary_material",
+                            "actor": "Uruk administrative accountant",
+                            "object_or_trace": "Geometric clay token",
+                            "documented_action": "Impression on clay surface",
+                        }
+                    ],
+                },
+            )
+
             packet, context = compile_packet(
                 product,
                 "draft_section",
@@ -554,23 +591,29 @@ class WriterBaselineTests(unittest.TestCase):
             self.assertTrue(set(input_paths[3:]).issubset({"03_sections/P01/draft-rework-request.md"}))
             self.assertIn("evidence_access", packet)
             self.assertIn('"mission"', context)
-            self.assertIn("compact_writer_brief_v1", context)
+            self.assertIn("writer_directed_on_demand_v1", context)
+            self.assertNotIn('"entry_state"', context)
+            self.assertNotIn('"exit_state"', context)
             self.assertNotIn("CLM-0011", context)
             self.assertNotIn('"narrative_job"', context)
             self.assertNotIn("permitted_claims", context)
             self.assertNotIn("source_refs", context)
 
             work = create_task(product, "draft_section", "P01", None, False)
-            resolved = DraftEvidenceBroker(product, work["id"]).call("resolve_claims")
-            brief = resolved["writer_brief"]
-            self.assertEqual(5, len(brief["materials"]))
-            self.assertEqual(3, len(brief["redlines"]))
-            serialized = json.dumps(resolved, ensure_ascii=False)
+            broker = DraftEvidenceBroker(product, work["id"])
+            attestation = broker.call("attest_scope")
+            self.assertEqual(8, attestation["scope_attestation"]["claim_count"])
+            self.assertEqual(6, attestation["scope_attestation"]["source_count"])
+            serialized = json.dumps(attestation, ensure_ascii=False)
             self.assertNotIn("CLM-", serialized)
             self.assertNotIn("SRC-", serialized)
+            self.assertNotIn("writer_brief", serialized)
             self.assertNotIn("claim_records", serialized)
             self.assertNotIn("source_records", serialized)
-            self.assertLess((len(serialized.encode("utf-8")) + 3) // 4, 1200)
+            self.assertLess((len(serialized.encode("utf-8")) + 3) // 4, 300)
+            searched = broker.call("search", {"query": "administrative", "limit": 2})
+            self.assertTrue(searched["results"])
+            self.assertTrue(any(item["kind"] == "claim" for item in searched["results"]))
 
             forbidden = [
                 "02_outline/voice-profile.md",

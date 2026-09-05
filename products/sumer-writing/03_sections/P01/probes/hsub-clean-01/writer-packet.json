@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "experiment": "P01-HSUB-CLEAN-PROBE-01",
+  "canonical_output": false,
+  "canonical_writer_packet": {
+    "schema_version": 5,
+    "compiler": "scripts/context_packet.py",
+    "context_sha256": "65992acd578be4c3c72ae31de43cc4ff1231b6c63946fa33d8d3a5f30c7e3084",
+    "authority": "product_agent",
+    "task_id": "T9900-draft-section-P01",
+    "product": "sumer-writing",
+    "operation": "draft_section",
+    "target": {
+      "section": "P01",
+      "unit": null
+    },
+    "created_at": "2026-09-04T09:42:52.274261+00:00",
+    "context_profile": "creative_draft",
+    "max_context_tokens": 11000,
+    "estimated_context_tokens": 3869,
+    "prompt_instruction_tokens": 1009,
+    "input_tokens": 2416,
+    "boundary_enforcement": [
+      "authority_and_write_scope",
+      "ai_task_state_or_human_amendment_provenance",
+      "input_freshness_and_packet_integrity",
+      "evidence_provenance_and_narration_ceiling",
+      "context_and_production_unit_hard_caps"
+    ],
+    "evaluation_gate": "review_section_or_human_amendment",
+    "instruction_files": [
+      "system/core/creative-boundaries.md",
+      "system/operations/substrate/draft-section.md"
+    ],
+    "inputs": [
+      {
+        "path": "03_sections/P01/section.json",
+        "sha256": "cccaed5f616e7188163fb33d0a9b051f365aee89a8c1afd8c63a5e925d619898",
+        "bytes": 3155
+      },
+      {
+        "path": "03_sections/P01/historical-substrate.json",
+        "sha256": "4890f94d54ed07923db885c486cd018ebb15902f8069e60c943742ceeb30a2c5",
+        "bytes": 5915
+      },
+      {
+        "path": "03_sections/P01/narration-pack.json",
+        "sha256": "bfef0ebb3807f14e8c7967889eaf5b090c0014b99b0f03d6bdd2672540a1761a",
+        "bytes": 12074
+      },
+      {
+        "path": "03_sections/P01/continuity-in.md",
+        "sha256": "24750f9112b057a0da59e347d048cea664ad7e8771ac357dad165738c99937f0",
+        "bytes": 223
+      }
+    ],
+    "operation_outputs": [
+      "03_sections/P01/draft.md",
+      "03_sections/P01/handoff.md"
+    ],
+    "optional_operation_outputs": [],
+    "output_baselines": [
+      {
+        "path": "03_sections/P01/draft.md",
+        "sha256": null,
+        "required": true
+      },
+      {
+        "path": "03_sections/P01/handoff.md",
+        "sha256": null,
+        "required": true
+      }
+    ],
+    "allowed_write_paths": [
+      "03_sections/P01/draft.md",
+      "03_sections/P01/handoff.md",
+      "tasks/T9900-draft-section-P01/report.md",
+      "tasks/T9900-draft-section-P01/operator-brief.json"
+    ],
+    "report_path": "tasks/T9900-draft-section-P01/report.md",
+    "operator_brief_path": "tasks/T9900-draft-section-P01/operator-brief.json",
+    "validation": [
+      "python scripts/validate.py products/sumer-writing",
+      "python scripts/task.py verify products/sumer-writing T9900-draft-section-P01",
+      "python scripts/check_scope.py products/sumer-writing",
+      "python scripts/operator_brief.py validate products/sumer-writing/tasks/T9900-draft-section-P01/operator-brief.json"
+    ],
+    "evidence_access": {
+      "kind": "bounded_claim_sources",
+      "adapter": "scripts/draft_evidence.py",
+      "interface_version": 5,
+      "capabilities": [
+        "scope",
+        "attest_scope",
+        "source",
+        "search",
+        "record"
+      ],
+      "trace_path": "tasks/T9900-draft-section-P01/evidence-trace.jsonl",
+      "required_before_submit": [
+        "attest_scope"
+      ],
+      "material_snapshot_sha256": "e0d6b4925d2ccbe9a807e1fb08b7400d837ae5c3b1610c869e44f6efd37ae581"
+    },
+    "historical_substrate": {
+      "contract_version": 1,
+      "section_projection_path": "03_sections/P01/historical-substrate.json",
+      "section_projection_sha256": "4890f94d54ed07923db885c486cd018ebb15902f8069e60c943742ceeb30a2c5",
+      "architecture_authority": {
+        "kind": "approved_section_overlay",
+        "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+        "overlay_path": "02_outline/section-overlays/P01.json",
+        "overlay_sha256": "5db68ce464d768dfbe59854208f8ecd5c9317878ebce96b062e176b2365e3973",
+        "historical_substrate_contract_version": 1,
+        "authority_note": "Minimal P01 primary substrate: retain only coexisting recording practice, envelope affordance, numerical-tablet affordance and the historical change. Broader claim authority remains available through secondary evidence verification."
+      }
+    }
+  },
+  "probe_contract": {
+    "schema_version": 1,
+    "experiment": "P01-HSUB-CLEAN-PROBE-01",
+    "canonical_output": false,
+    "section": "P01",
+    "output_language": "vi",
+    "target_words": {
+      "min": 450,
+      "max": 650
+    },
+    "output_scope": "Write one contiguous passage from the larger unfinished P01. Do not compress, summarize, or complete the whole section.",
+    "completion_rule": "P01 must remain unfinished after this passage.",
+    "context_rule": "Use only this task-local bound plus the canonical Writer context below. Do not inspect the repository or previous probes, feedback, reviews, or competitor prose."
+  },
+  "canonical_context_sha256": "65992acd578be4c3c72ae31de43cc4ff1231b6c63946fa33d8d3a5f30c7e3084",
+  "effective_context_sha256": "338b3b14c425c0907f9920fc8a7240dfbe427f890750fba4ed4c97e83b57140a"
+}

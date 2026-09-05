@@ -1,0 +1,529 @@
+[
+  {
+    "claim_id": "CAL-TRUTH-001",
+    "atomic_claim": "Small geometric clay objects survive in several forms, and some bear incisions.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "N/A",
+      "causality": "N/A",
+      "sequence": "N/A",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "entity",
+        "record_id": "P01-MAT-0001",
+        "locator": "epistemic_layers.observed[0].statement",
+        "exact_quote": "Small geometric clay objects survive in several forms; some bear incisions.",
+        "binding_role": "SUPPORTS"
+      }
+    ],
+    "missing_bindings": [],
+    "epistemic_status": "DOCUMENTED",
+    "verdict": "SUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-002",
+    "atomic_claim": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "N/A",
+      "causality": "N/A",
+      "sequence": "N/A",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "entity",
+        "record_id": "P01-INST-0001",
+        "locator": "epistemic_layers.observed[0].statement",
+        "exact_quote": "Catalogue object OIM A64678 is a broken clay envelope from Chogha Mish with tokens still inside; the envelope measures 7.8 × 7.2 cm and the tokens 1.6 cm in diameter.",
+        "binding_role": "SUPPORTS"
+      }
+    ],
+    "missing_bindings": [],
+    "epistemic_status": "DOCUMENTED",
+    "verdict": "SUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-003",
+    "atomic_claim": "Exterior marks on some hollow clay envelopes made enclosed quantities inspectable without immediately opening the envelope.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "SUPPORTED",
+      "causality": "N/A",
+      "sequence": "N/A",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "function",
+        "record_id": "P01-MAT-0002",
+        "locator": "epistemic_layers.functional_inference[0].statement",
+        "exact_quote": "Exterior marks made enclosed quantities inspectable without immediately opening the envelope.",
+        "binding_role": "SUPPORTS"
+      }
+    ],
+    "missing_bindings": [],
+    "epistemic_status": "QUALIFIED_INFERENCE",
+    "verdict": "SUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-004",
+    "atomic_claim": "Seal impressions marked an association with authority, custody or witnessing.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "SUPPORTED",
+      "causality": "N/A",
+      "sequence": "N/A",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "function",
+        "record_id": "P01-MAT-0003",
+        "locator": "epistemic_layers.functional_inference[0].statement",
+        "exact_quote": "Seal impressions marked an association with authority, custody or witnessing.",
+        "binding_role": "SUPPORTS"
+      }
+    ],
+    "missing_bindings": [],
+    "epistemic_status": "QUALIFIED_INFERENCE",
+    "verdict": "SUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-005",
+    "atomic_claim": "In a representative manufacture workflow, an operator deposits counters, closes the envelope, marks and seals it, then lets it dry.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "N/A",
+      "causality": "N/A",
+      "sequence": "SUPPORTED",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "sequence",
+        "record_id": "P01-MAT-0002",
+        "locator": "epistemic_layers.representative_reconstruction[0].statement",
+        "exact_quote": "An operator deposits counters, closes the envelope, marks and seals it, then lets it dry.",
+        "binding_role": "SUPPORTS"
+      }
+    ],
+    "missing_bindings": [],
+    "epistemic_status": "REPRESENTATIVE_RECONSTRUCTION",
+    "verdict": "SUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-006",
+    "atomic_claim": "In a representative sealing workflow, an operator binds a closure, presses clay over it and rolls a seal; later access breaks the sealing.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "N/A",
+      "causality": "N/A",
+      "sequence": "SUPPORTED",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "sequence",
+        "record_id": "P01-MAT-0007",
+        "locator": "epistemic_layers.representative_reconstruction[0].statement",
+        "exact_quote": "An operator binds a closure, presses clay over it and rolls a seal; later access breaks it.",
+        "binding_role": "SUPPORTS"
+      }
+    ],
+    "missing_bindings": [],
+    "epistemic_status": "REPRESENTATIVE_RECONSTRUCTION",
+    "verdict": "SUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-007",
+    "atomic_claim": "Numerical tablet fragment ChM III-937a recorded the same transaction previously secured by hollow envelope OIM A64678.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "UNSUPPORTED",
+      "motive": "N/A",
+      "function": "N/A",
+      "causality": "N/A",
+      "sequence": "UNSUPPORTED",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "relationship",
+        "record_id": "P01-INST-0002",
+        "locator": "epistemic_layers.prohibited_or_rejected_inference[0].statement",
+        "exact_quote": "This tablet replaced the broken envelope or records the same kind of event.",
+        "binding_role": "REJECTS"
+      }
+    ],
+    "missing_bindings": [
+      "No authority binds ChM III-937a and OIM A64678 to the same transaction or sequence."
+    ],
+    "epistemic_status": "PROHIBITED",
+    "verdict": "UNSUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-008",
+    "atomic_claim": "Cylinder seals were used specifically to bind communal responsibility among Sumerian village elders.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "UNSUPPORTED",
+      "motive": "UNSUPPORTED",
+      "function": "UNSUPPORTED",
+      "causality": "N/A",
+      "sequence": "N/A",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "entity",
+        "record_id": "P01-MAT-0003",
+        "locator": "epistemic_layers.observed[0].statement",
+        "exact_quote": "Engraved cylinders and continuous rolled impressions survive on several clay media.",
+        "binding_role": "SUPPORTS"
+      }
+    ],
+    "missing_bindings": [
+      "No authority establishes that cylinder seals were used specifically to bind communal responsibility among Sumerian village elders."
+    ],
+    "epistemic_status": "UNSUPPORTED",
+    "verdict": "UNSUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-009",
+    "atomic_claim": "Hollow clay bullae emerged specifically to prevent fraud during long-distance administration.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "UNSUPPORTED",
+      "function": "N/A",
+      "causality": "UNSUPPORTED",
+      "sequence": "N/A",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "motive",
+        "record_id": "P01-MAT-0002",
+        "locator": "epistemic_layers.prohibited_or_rejected_inference[0].statement",
+        "exact_quote": "Bullae emerged specifically to prevent fraud or solve verification at distance.",
+        "binding_role": "REJECTS"
+      }
+    ],
+    "missing_bindings": [
+      "No authority establishes fraud prevention during long-distance administration as the specific motive for the emergence of hollow clay bullae."
+    ],
+    "epistemic_status": "PROHIBITED",
+    "verdict": "UNSUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-010",
+    "atomic_claim": "OIM A64678 was made because an administrator distrusted a shepherd delivering sheep.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "UNSUPPORTED",
+      "motive": "UNSUPPORTED",
+      "function": "N/A",
+      "causality": "UNSUPPORTED",
+      "sequence": "N/A",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "motive",
+        "record_id": "P01-INST-0001",
+        "locator": "epistemic_layers.prohibited_or_rejected_inference[0].statement",
+        "exact_quote": "This specimen documents a particular transaction or proves why clay envelopes were invented.",
+        "binding_role": "REJECTS"
+      }
+    ],
+    "missing_bindings": [
+      "No authority documents an administrator distrusting a shepherd delivering sheep, or any specific transaction or motive for OIM A64678."
+    ],
+    "epistemic_status": "PROHIBITED",
+    "verdict": "UNSUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-011",
+    "atomic_claim": "Urban growth caused administrative memory to fail, and that failure directly caused the invention of clay tokens.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "N/A",
+      "causality": "UNSUPPORTED",
+      "sequence": "N/A",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "entity",
+        "record_id": "P01-MAT-0001",
+        "locator": "epistemic_layers.observed[0].statement",
+        "exact_quote": "Small geometric clay objects survive in several forms; some bear incisions.",
+        "binding_role": "SUPPORTS"
+      }
+    ],
+    "missing_bindings": [
+      "No authority establishes that urban growth caused administrative memory to fail or that this failure caused the invention of clay tokens."
+    ],
+    "epistemic_status": "UNSUPPORTED",
+    "verdict": "UNSUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-012",
+    "atomic_claim": "The need to break hollow envelopes to inspect their contents caused accountants to abandon envelopes and invent numerical tablets.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "N/A",
+      "causality": "UNSUPPORTED",
+      "sequence": "UNSUPPORTED",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "causality",
+        "record_id": "HS-P01-0003",
+        "locator": "rule",
+        "exact_quote": "The affordance does not establish a single transitional step toward tablets.",
+        "binding_role": "REJECTS"
+      }
+    ],
+    "missing_bindings": [
+      "No authority establishes that the need to break envelopes caused accountants to abandon envelopes and invent numerical tablets."
+    ],
+    "epistemic_status": "PROHIBITED",
+    "verdict": "UNSUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-013",
+    "atomic_claim": "All hollow clay envelopes bear exterior impressions.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "N/A",
+      "causality": "N/A",
+      "sequence": "N/A",
+      "scope": "UNSUPPORTED"
+    },
+    "bindings": [
+      {
+        "component": "scope",
+        "record_id": "HS-P01-0003",
+        "locator": "rule",
+        "exact_quote": "Exterior impressions are not universal to every envelope.",
+        "binding_role": "REJECTS"
+      }
+    ],
+    "missing_bindings": [
+      "No authority establishes that all hollow clay envelopes bear exterior impressions; authority attests impressions on only some examples."
+    ],
+    "epistemic_status": "PROHIBITED",
+    "verdict": "UNSUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-014",
+    "atomic_claim": "Geometric clay tokens formed one unified accounting code across 5,000 years.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "UNSUPPORTED",
+      "motive": "N/A",
+      "function": "N/A",
+      "causality": "N/A",
+      "sequence": "N/A",
+      "scope": "UNSUPPORTED"
+    },
+    "bindings": [
+      {
+        "component": "scope",
+        "record_id": "P01-MAT-0001",
+        "locator": "limitations[0]",
+        "exact_quote": "Contexts in early excavations often disturbed; Neolithic antecedents vary in function and do not represent a single unified code across 5000 years",
+        "binding_role": "REJECTS"
+      }
+    ],
+    "missing_bindings": [
+      "No authority supports a unified accounting code across 5,000 years; Neolithic antecedents vary in function and do not represent a single unified code."
+    ],
+    "epistemic_status": "PROHIBITED",
+    "verdict": "UNSUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-015",
+    "atomic_claim": "Administrative recording followed an obligatory sequence from tokens to hollow envelopes to surface impressions to numerical tablets to proto-cuneiform.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "N/A",
+      "causality": "N/A",
+      "sequence": "UNSUPPORTED",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "sequence",
+        "record_id": "HS-P01-0001",
+        "locator": "rule",
+        "exact_quote": "Parallel practices must not be converted into a single mandatory developmental sequence.",
+        "binding_role": "REJECTS"
+      }
+    ],
+    "missing_bindings": [
+      "No authority establishes an obligatory sequence from tokens to envelopes to surface impressions to numerical tablets to proto-cuneiform."
+    ],
+    "epistemic_status": "PROHIBITED",
+    "verdict": "UNSUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-016",
+    "atomic_claim": "Direct numerical recording on clay immediately and completely replaced envelopes and tokens.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "N/A",
+      "causality": "N/A",
+      "sequence": "UNSUPPORTED",
+      "scope": "UNSUPPORTED"
+    },
+    "bindings": [
+      {
+        "component": "sequence",
+        "record_id": "HS-P01-0004",
+        "locator": "rule",
+        "exact_quote": "Direct surface recording must not be described as wholesale replacement of envelopes or tokens.",
+        "binding_role": "REJECTS"
+      }
+    ],
+    "missing_bindings": [
+      "No authority establishes that direct numerical recording immediately or completely replaced envelopes and tokens."
+    ],
+    "epistemic_status": "PROHIBITED",
+    "verdict": "UNSUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-017",
+    "atomic_claim": "Cylinder-seal impressions do not identify spoken syntax or linguistic phonology.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "SUPPORTED",
+      "causality": "N/A",
+      "sequence": "N/A",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "function",
+        "record_id": "P01-MAT-0003",
+        "locator": "limitations[0]",
+        "exact_quote": "Identifies institutional authority or witness presence, not spoken syntax or linguistic phonology",
+        "binding_role": "SUPPORTS"
+      }
+    ],
+    "missing_bindings": [],
+    "epistemic_status": "DOCUMENTED",
+    "verdict": "SUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-018",
+    "atomic_claim": "Uruk IV proto-cuneiform texts do not record running continuous spoken discourse, poetry, or historical narrative.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "SUPPORTED",
+      "causality": "N/A",
+      "sequence": "N/A",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "function",
+        "record_id": "P01-MAT-0005",
+        "locator": "limitations[0]",
+        "exact_quote": "Texts are ledger-style administrative allocations; do not record running continuous spoken discourse, poetry, or historical narrative",
+        "binding_role": "SUPPORTS"
+      }
+    ],
+    "missing_bindings": [],
+    "epistemic_status": "DOCUMENTED",
+    "verdict": "SUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-019",
+    "atomic_claim": "Reed tools likely produced the surviving rounded impressions and incised lines on Late Uruk clay.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "N/A",
+      "motive": "N/A",
+      "function": "SUPPORTED",
+      "causality": "N/A",
+      "sequence": "N/A",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "function",
+        "record_id": "P01-MAT-0006",
+        "locator": "epistemic_layers.functional_inference[0].statement",
+        "exact_quote": "Reed tools likely produced these marks.",
+        "binding_role": "SUPPORTS"
+      }
+    ],
+    "missing_bindings": [],
+    "epistemic_status": "QUALIFIED_INFERENCE",
+    "verdict": "SUPPORTED"
+  },
+  {
+    "claim_id": "CAL-TRUTH-020",
+    "atomic_claim": "Numerical information increasingly appeared directly on durable clay surfaces while older and parallel clay practices continued to overlap with direct surface recording.",
+    "components": {
+      "entity": "SUPPORTED",
+      "relationship": "SUPPORTED",
+      "motive": "N/A",
+      "function": "N/A",
+      "causality": "N/A",
+      "sequence": "SUPPORTED",
+      "scope": "N/A"
+    },
+    "bindings": [
+      {
+        "component": "sequence",
+        "record_id": "HS-P01-0007",
+        "locator": "world.later_state",
+        "exact_quote": "numerical information increasingly appeared directly on durable clay surfaces, sometimes alongside authentication marks",
+        "binding_role": "SUPPORTS"
+      },
+      {
+        "component": "relationship",
+        "record_id": "HS-P01-0007",
+        "locator": "world.coexistence",
+        "exact_quote": "older and parallel clay practices continued to overlap with direct surface recording",
+        "binding_role": "SUPPORTS"
+      }
+    ],
+    "missing_bindings": [],
+    "epistemic_status": "QUALIFIED_INFERENCE",
+    "verdict": "SUPPORTED"
+  }
+]

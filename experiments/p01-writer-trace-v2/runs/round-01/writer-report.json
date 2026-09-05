@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "plan_sha256": "b2ceb5440ec79f5c72e6299bebfbd5103fe006ef3ab28361bc42d616094bac58",
+  "beat_execution": [
+    {
+      "beat_id": "B01",
+      "status": "REALIZED",
+      "candidate_quote": "Đó là các con tính bằng đất sét nặn tay: hình cầu, hình nón, đĩa dẹt và hình trụ, có mảnh để trơn, có mảnh khía rãnh nông. Kích thước của chúng chỉ chừng một đến ba centimet, nằm lọt giữa các đầu ngón tay. Chúng thể hiện số lượng bằng chính sự hiện diện vật chất của mình, không cần đến lời nói hay văn tự.",
+      "note": "Sensory opening introduces hand-held geometric clay counters (spheres, cones, disks, cylinders, 1-3 cm) embodying numerical quantity prior to script, maintaining forward pressure on container security without claiming a universal Neolithic code."
+    },
+    {
+      "beat_id": "B02",
+      "status": "REALIZED",
+      "candidate_quote": "Mảnh vỡ còn lại đo được khoảng 7,8 nhân 7,2 centimet, với lớp vỏ đất dày ôm lấy khoang rỗng bên trong. Qua vết vỡ, những con tính nhỏ đường kính chừng 1,6 centimet vẫn nằm nguyên tại vị trí cũ. Khối cầu này không lưu tên người giao nhận, không ghi hàng hóa, không chép giao dịch và không giải thích vì sao nó vỡ.",
+      "note": "Concrete artifact OIM A64678 (7.8 x 7.2 cm) introduces tokens (1.6 cm) sealed within a hollow clay envelope, noting the modern viewer sees inside only because the sealed state was destroyed, while strictly withholding named operators or commodity specifics."
+    },
+    {
+      "beat_id": "B03",
+      "status": "REALIZED",
+      "candidate_quote": "Khi lớp vỏ còn nguyên, các con tính bên trong được bảo vệ trước mọi can thiệp, nhưng chúng cũng biến mất hoàn toàn khỏi tầm mắt. Khối cầu niêm phong bảo đảm an toàn cho số lượng, song cái giá phải trả là sự mù mịt về thị giác. Muốn kiểm tra bên trong chứa bao nhiêu hạt tính, người kiểm đếm buộc phải đập vỡ vỏ đất.",
+      "note": "Confronts the material paradox of the envelope: intact closure guarantees security but prevents inspection, whereas verification requires destroying the authenticated container. Excludes speculative fraud-prevention motives."
+    },
+    {
+      "beat_id": "B04",
+      "status": "REALIZED",
+      "candidate_quote": "Thay vì để vỏ trơn nhẵn, người tạo tác ấn lên mặt ngoài những vết lõm tương ứng với số lượng bên trong, rồi lăn con dấu hình trụ bằng đá tạo dải hoa văn quanh thân bao. Vết lăn dấu xác nhận thẩm quyền quản lý hoặc vai trò làm chứng, trong khi vết ấn ngoài vỏ giúp người tiếp nhận kiểm đếm số lượng mà không cần đập vỡ vật chứa.",
+      "note": "Reframes the practice through exterior surface impressions and cylinder seal rollings that allow inspectability without breaking, setting up forward pressure on why internal tokens are still needed, while noting non-universality."
+    },
+    {
+      "beat_id": "B05",
+      "status": "REALIZED",
+      "candidate_quote": "Khác biệt hoàn toàn với khối cầu rỗng OIM A64678, đây là phiến đất sét đặc, kích thước khoảng 4,8 nhân 3,2 nhân 2,0 centimet, không có khoang rỗng hay con tính nào bên trong. Bề mặt phẳng của nó lưu lại năm ký hiệu số ấn sâu, cùng các vết lăn dấu mang hình động vật, trong đó có một con bò đực.",
+      "note": "Introduces solid numerical tablet ChM III-937a (4.8 x 3.2 x 2.0 cm) with five impressed numerical signs and bull seal rolling, contrasting solid 2D recording with hollow envelopes while explicitly disclaiming a direct shared transaction or replacement relationship."
+    },
+    {
+      "beat_id": "B06",
+      "status": "REALIZED",
+      "candidate_quote": "Bước chuyển ở đây không phải là một phát minh đột ngột hay nấc thang tiến hóa bắt buộc, mà là sự thay đổi về nơi thông tin cư ngụ và cách thức kiểm tra nó: từ khối hình học ba chiều giấu kín trong quả cầu đất sang vết ấn hai chiều bền vững trên mặt phẳng.",
+      "note": "Delivers local payoff of coexisting administrative practices across Late Uruk ecology (loose tokens, envelopes, closure sealings, solid tablets) and frames the transition as a material/spatial shift in information placement and inspectability."
+    }
+  ],
+  "deviations": [],
+  "exposition_risks": [
+    "Introducing technical catalog identifiers (OIM A64678, ChM III-937a) and metric dimensions into spoken narrative risks sounding like an archaeological inventory; this was mitigated by weaving them directly into descriptions of physical scale and sensory touch."
+  ],
+  "truth_risks": [
+    "Juxtaposing two artifacts from Chogha Mish risks the listener assuming a linear before-and-after succession; this was mitigated by explicitly stating that ChM III-937a does not share a transaction or prove a direct evolutionary sequence with OIM A64678."
+  ],
+  "strongest_realization": "Beat B03 and B04 tightly frame the material paradox of the sealed envelope—securing the count blinds the viewer, while verification destroys the seal—and ground the exterior surface impressions directly as a physical response to inspectability rather than an abstract intellectual breakthrough.",
+  "weakest_realization": "Beat B01 must compress the variety of geometric shapes and the administrative context into a single spoken opening paragraph while withholding storage mechanisms, placing heavy reliance on the tactile finger-scale description."
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "experiment": "P01-HSUB-CLEAN-PROBE-01",
+  "status": "READY_FOR_FRESH_WRITER_EXECUTION",
+  "architecture_freeze_commit": "84a73da11f7929704d386858a46b011fd17f134e",
+  "gate_commit": "4277fdbbcb5b677425c68b4c1e32b1c06663b3ba",
+  "gate_run_id": 33855087234,
+  "gate_test": "tests/test_p01_probe_gate.py::P01FrozenProbeGate::test_current_p01_is_ready_for_clean_historical_substrate_probe",
+  "executor_commit": "b167724d56d40a5fa1c860629bae3eecc172012d",
+  "executor_run_id": 33859159102,
+  "executor_test": "tests/test_p01_probe_executor.py::P01ProbeExecutorTest::test_executor_reproduces_the_gated_writer_context",
+  "executor_verified": true,
+  "rematerialization": {
+    "mode": "normal_bounded_materialization",
+    "section": "P01",
+    "source_head": "9dcb0e4cbbe8826fdb3eb2145844a405efe43996",
+    "source_run_id": 33857904846,
+    "artifact_id": 9930924140,
+    "artifact_digest": "sha256:c63ae2b924f28fcc0307bbe07adb2dace0ce25f46a50f65158cf832451c2eef7",
+    "canonical_artifacts_applied": true,
+    "changed_artifacts": [
+      "03_sections/P01/brief.md",
+      "03_sections/P01/evidence-pack.json",
+      "03_sections/P01/narration-pack.json"
+    ],
+    "unchanged_artifacts": [
+      "03_sections/P01/section.json",
+      "03_sections/P01/historical-substrate.json",
+      "03_sections/P01/continuity-in.md"
+    ],
+    "checked_in_section_state_reproduced_exactly": true,
+    "checked_in_writer_substrate_reproduced_exactly": true,
+    "preflight_errors": []
+  },
+  "historical_substrate": {
+    "contract_version": 1,
+    "selected_ids": [
+      "HS-P01-0001",
+      "HS-P01-0003",
+      "HS-P01-0004",
+      "HS-P01-0007"
+    ],
+    "world_shaped": true,
+    "forbidden_narrative_fields_found": [],
+    "truth_boundaries_present": true,
+    "section_projection_sha256": "4890f94d54ed07923db885c486cd018ebb15902f8069e60c943742ceeb30a2c5"
+  },
+  "writer_packet": {
+    "canonical_context_sha256": "65992acd578be4c3c72ae31de43cc4ff1231b6c63946fa33d8d3a5f30c7e3084",
+    "effective_probe_context_sha256": "338b3b14c425c0907f9920fc8a7240dfbe427f890750fba4ed4c97e83b57140a",
+    "instruction_files": [
+      "system/core/creative-boundaries.md",
+      "system/operations/substrate/draft-section.md"
+    ],
+    "primary_inputs": [
+      "03_sections/P01/section.json",
+      "03_sections/P01/historical-substrate.json",
+      "03_sections/P01/narration-pack.json",
+      "03_sections/P01/continuity-in.md"
+    ],
+    "historical_substrate_role": "primary_history_model",
+    "evidence_role": "secondary_verification_only",
+    "old_probe_text_in_packet": false,
+    "evaluator_diagnosis_in_packet": false,
+    "competitor_prose_in_packet": false,
+    "old_feedback_in_packet": false,
+    "claim_or_material_ledger_as_primary_input": false
+  },
+  "fresh_writer_execution": {
+    "required": true,
+    "current_chat_is_valid_writer": false,
+    "reason": "The current chat has already seen rejected probes and architecture diagnosis, so using it as Writer would contaminate the causal experiment.",
+    "builder": "products/sumer-writing/03_sections/P01/probes/hsub-clean-01/build_probe_context.py",
+    "writer_input": "products/sumer-writing/03_sections/P01/probes/hsub-clean-01/writer-context.md",
+    "writer_output": "products/sumer-writing/03_sections/P01/probes/hsub-clean-01/probe.md"
+  },
+  "broad_ci": {
+    "is_experiment_gate": false,
+    "known_nonblocking_failures": 3,
+    "policy": "Architecture is frozen. Do not change the adopted P01 path to satisfy legacy exact-shape, exact-wording, or pre-probe review fixtures."
+  }
+}

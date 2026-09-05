@@ -1,0 +1,41 @@
+{
+  "schema_version": 4,
+  "id": "P04",
+  "title": "Khi record cho một institution trí nhớ dài hơn",
+  "order": 4,
+  "status": "ready_for_draft",
+  "human_approved": false,
+  "dependencies": [
+    "P03"
+  ],
+  "narrative_job": "Trình bày causal feedback ở dạng bounded test: records tăng institutional capacity khi gắn với procedure, authentication, responsible people, accumulation và retrieval. Section phải đồng thời cho thấy visibility này có bias và distributional effects.",
+  "entry_state": "Khán giả biết writing có nhiều chức năng nhưng chưa thấy cơ chế biến nhiều documents thành organizational capacity.",
+  "exit_state": "Khán giả hiểu record systems có thể làm labor/goods/obligations dễ phân loại, tổng hợp và audit hơn, nhưng agency và enforcement vẫn nằm ở người/authority; archives cũng không phải neutral sample của society.",
+  "target_words": {
+    "min": 1350,
+    "max": 2000
+  },
+  "cycle_id": "C003",
+  "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+  "mission": "Việc lưu giữ và tra cứu văn bản lâu dài đã tái cấu trúc trật tự và quyền lực thể chế ra sao?",
+  "transition": "Một archive chỉ mạnh khi có người hiểu và tái tạo conventions của nó. Vì vậy câu hỏi tiếp theo chuyển từ records sang competence.",
+  "movement_ids": [
+    "M04"
+  ],
+  "macro_movements": [
+    {
+      "id": "M04",
+      "title": "Khi record cho institution một loại trí nhớ mới",
+      "narrative_job": "Thử causal feedback ở cấp institution: writing tăng capacity khi được gắn với classification, responsibility, authentication, accumulation và retrieval. Movement phải đồng thời giữ archive bias và không back-project quy mô của later systems về Uruk.",
+      "entry_state": "Nhiều use cases cho thấy writing quan trọng hơn, nhưng cơ chế nó tăng institutional capacity vẫn mơ hồ.",
+      "exit_state": "Khán giả thấy một cơ chế cụ thể: record không tự có agency, nhưng network quanh record có thể làm nghĩa vụ và nguồn lực trở nên nhìn thấy, truy hồi và audit được ở quy mô lớn hơn."
+    }
+  ],
+  "acts": [
+    {
+      "id": "A02",
+      "role": "body",
+      "title": "Khi record trở thành hạ tầng xã hội"
+    }
+  ]
+}

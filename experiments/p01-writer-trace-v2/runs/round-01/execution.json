@@ -1,0 +1,70 @@
+{
+  "roles": {
+    "planner": {
+      "run_id": "6c9fe18d-56f5-48b9-bf14-6069b8dbae01",
+      "model_config": "gemini-2.5-pro-inherited",
+      "started_at": "2026-09-05T16:17:25Z",
+      "finished_at": "2026-09-05T16:18:55Z",
+      "operator_verified_input_isolation": true,
+      "input_packet": "planner-packet.json",
+      "input_packet_sha256": "1efec5d87db5bdb573c652fc45650a40975d1712f42a4eadcb4a66f3fda59e0c",
+      "platform_export": "planner-export.json",
+      "platform_export_sha256": "29e2e16e2bdc0dad2891ed4dd7d25805d8675df4f4b2677c0606c214498f8199"
+    },
+    "writer": {
+      "run_id": "872493e3-a170-4c10-90b9-89a2d86fe1b9",
+      "model_config": "gemini-2.5-pro-inherited",
+      "started_at": "2026-09-05T16:19:17Z",
+      "finished_at": "2026-09-05T16:22:20Z",
+      "operator_verified_input_isolation": true,
+      "input_packet": "writer-packet.json",
+      "input_packet_sha256": "c6df88a29c4578442013145a3f7d1cb4cbe8c26b1f554ded6d8214b8dab24de4",
+      "platform_export": "writer-export.json",
+      "platform_export_sha256": "1c0f17fdf02034c85f0989f9e58b150f23b9a701a12b24a75110eb602f9a2bac"
+    },
+    "trace-auditor": {
+      "run_id": "b445360a-137e-47ec-9b80-e5d2f4538f46",
+      "model_config": "gemini-2.5-pro-inherited",
+      "started_at": "2026-09-05T16:23:03Z",
+      "finished_at": "2026-09-05T16:23:37Z",
+      "operator_verified_input_isolation": true,
+      "input_packet": "trace-auditor-packet.json",
+      "input_packet_sha256": "01fafc5ba8b80c06da3720497dd6bb29f722dce786ce75d35ff1417867d78765",
+      "platform_export": "trace-auditor-export.json",
+      "platform_export_sha256": "1d94c0ebc45947b92f8d52d90cedd8d21f46a768eac40c6719e5b7f078526558"
+    },
+    "truth": {
+      "run_id": "3437e803-86dd-4fb1-a8de-2eb5491053b4",
+      "model_config": "gemini-2.5-pro-inherited",
+      "started_at": "2026-09-05T16:23:03Z",
+      "finished_at": "2026-09-05T16:24:49Z",
+      "operator_verified_input_isolation": true,
+      "input_packet": "truth-packet.json",
+      "input_packet_sha256": "4c9a0b6c92a546e0716967cf4aaa07efc067212050ce55f19adcfe375f587ba8",
+      "platform_export": "truth-export.json",
+      "platform_export_sha256": "a7daf7c28458879f89719a61cbb4238a5d41bb91bb013aec7f7e0a33f73f8761"
+    },
+    "product-1": {
+      "run_id": "cf455d73-3b68-4e44-9d19-38fc956a0597",
+      "model_config": "gemini-2.5-pro-inherited",
+      "started_at": "2026-09-05T16:23:03Z",
+      "finished_at": "2026-09-05T16:23:46Z",
+      "operator_verified_input_isolation": true,
+      "input_packet": "product-1-packet.json",
+      "input_packet_sha256": "9f45a0c62eb3f9f7945af09f7a82009a53b3e42901cc40ae5e50da8e7c34d953",
+      "platform_export": "product-1-export.json",
+      "platform_export_sha256": "1ff70d532f28dd6bc64b278cd29e16cd0e24ec2f661f3c2c671783e62d6e0bc9"
+    },
+    "product-2": {
+      "run_id": "2f2da19d-d3c5-4926-965d-cd7c391689aa",
+      "model_config": "gemini-2.5-pro-inherited",
+      "started_at": "2026-09-05T16:23:04Z",
+      "finished_at": "2026-09-05T16:23:48Z",
+      "operator_verified_input_isolation": true,
+      "input_packet": "product-2-packet.json",
+      "input_packet_sha256": "e24daac0be6bd72474065e941ea11c34fc53fe767af0f861a6872a041ecd2ae3",
+      "platform_export": "product-2-export.json",
+      "platform_export_sha256": "86424dee26d865cc36ea6a366b4616af51193e4a1f1588cfcad1fa30b69cb775"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "target_candidate": {
+    "derivative_file": "candidate-product-anonymized.md",
+    "git_blob_hash": "83c30b5373b904951f9de5db44f3f2adf0375e8b",
+    "sha256": "299fb4f1c333389c0ddafaf29161441d0ea491054dabdb3f787609104b6e33b2",
+    "byte_length": 5230,
+    "character_length": 3939,
+    "paragraph_count": 8,
+    "whitespace_delimited_word_count": 860,
+    "substring_counts": {
+      "người ta": {
+        "total_count": 10,
+        "per_paragraph": [
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          0
+        ],
+        "v1_reviewer_reported_count": 11,
+        "discrepancy_note": "Reviewer B reported 11 occurrences; recomputed deterministic count is exactly 10."
+      }
+    },
+    "source_candidate": {
+      "path": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/editorial-revision/revised-probe.md",
+      "git_blob_hash": "c44a417ad2a92c1d6df9c24042e4a88f9b8f725c",
+      "word_count_excluding_title": 860
+    }
+  },
+  "benchmark_excerpt": {
+    "file": "foc-craft-excerpt.md",
+    "git_blob_hash": "2dbe7b365a44ddb7a7bb405d672d11c3e395b353",
+    "byte_length": 4136,
+    "source_fixture": "competitor's scripts/The sumerians FoC opening - Equal P01.md",
+    "source_blob_hash": "391febd843f0d99a8ba3730ae447b4e2eefb9061",
+    "source_byte_length": 3592,
+    "whitespace_delimited_word_count": 646
+  },
+  "truth_record_packet": {
+    "file": "truth-record-packet.json",
+    "git_blob_hash": "d328b983a5582f8d8ecd039fd84e74b0a826ca29",
+    "byte_length": 25300,
+    "record_counts": {
+      "material_records": 9,
+      "substrate_primitives": 4,
+      "substrate_boundaries": 8
+    }
+  }
+}

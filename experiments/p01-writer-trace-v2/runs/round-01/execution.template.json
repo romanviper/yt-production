@@ -1,0 +1,70 @@
+{
+  "roles": {
+    "planner": {
+      "run_id": "",
+      "model_config": "",
+      "started_at": "",
+      "finished_at": "",
+      "operator_verified_input_isolation": false,
+      "input_packet": "planner-packet.json",
+      "input_packet_sha256": "1efec5d87db5bdb573c652fc45650a40975d1712f42a4eadcb4a66f3fda59e0c",
+      "platform_export": "",
+      "platform_export_sha256": ""
+    },
+    "writer": {
+      "run_id": "",
+      "model_config": "",
+      "started_at": "",
+      "finished_at": "",
+      "operator_verified_input_isolation": false,
+      "input_packet": "writer-packet.json",
+      "input_packet_sha256": "c6df88a29c4578442013145a3f7d1cb4cbe8c26b1f554ded6d8214b8dab24de4",
+      "platform_export": "",
+      "platform_export_sha256": ""
+    },
+    "trace-auditor": {
+      "run_id": "",
+      "model_config": "",
+      "started_at": "",
+      "finished_at": "",
+      "operator_verified_input_isolation": false,
+      "input_packet": "trace-auditor-packet.json",
+      "input_packet_sha256": "01fafc5ba8b80c06da3720497dd6bb29f722dce786ce75d35ff1417867d78765",
+      "platform_export": "",
+      "platform_export_sha256": ""
+    },
+    "truth": {
+      "run_id": "",
+      "model_config": "",
+      "started_at": "",
+      "finished_at": "",
+      "operator_verified_input_isolation": false,
+      "input_packet": "truth-packet.json",
+      "input_packet_sha256": "4c9a0b6c92a546e0716967cf4aaa07efc067212050ce55f19adcfe375f587ba8",
+      "platform_export": "",
+      "platform_export_sha256": ""
+    },
+    "product-1": {
+      "run_id": "",
+      "model_config": "",
+      "started_at": "",
+      "finished_at": "",
+      "operator_verified_input_isolation": false,
+      "input_packet": "product-1-packet.json",
+      "input_packet_sha256": "9f45a0c62eb3f9f7945af09f7a82009a53b3e42901cc40ae5e50da8e7c34d953",
+      "platform_export": "",
+      "platform_export_sha256": ""
+    },
+    "product-2": {
+      "run_id": "",
+      "model_config": "",
+      "started_at": "",
+      "finished_at": "",
+      "operator_verified_input_isolation": false,
+      "input_packet": "product-2-packet.json",
+      "input_packet_sha256": "e24daac0be6bd72474065e941ea11c34fc53fe767af0f861a6872a041ecd2ae3",
+      "platform_export": "",
+      "platform_export_sha256": ""
+    }
+  }
+}

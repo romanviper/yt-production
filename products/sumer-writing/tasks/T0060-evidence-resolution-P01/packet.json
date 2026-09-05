@@ -1,0 +1,87 @@
+{
+  "schema_version": 5,
+  "compiler": "scripts/context_packet.py",
+  "context_sha256": "0f233434a220b09e314b1892f63dc3cd8b3d95d32f628de0d02dffb6caec2040",
+  "authority": "product_agent",
+  "task_id": "T0060-evidence-resolution-P01",
+  "product": "sumer-writing",
+  "operation": "evidence_resolution",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "created_at": "2026-09-04T04:12:23.083074+00:00",
+  "context_profile": "research",
+  "max_context_tokens": 20000,
+  "estimated_context_tokens": 16029,
+  "prompt_instruction_tokens": 2984,
+  "input_tokens": 12842,
+  "boundary_enforcement": [
+    "authority_and_write_scope",
+    "ai_task_state_or_human_amendment_provenance",
+    "input_freshness_and_packet_integrity",
+    "evidence_provenance_and_narration_ceiling",
+    "context_and_production_unit_hard_caps"
+  ],
+  "evaluation_gate": "human_review",
+  "instruction_files": [
+    "system/standards/evidence.md",
+    "system/operations/evidence-resolution.md"
+  ],
+  "inputs": [
+    {
+      "path": "02_outline/outline.json",
+      "sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+      "bytes": 28438
+    },
+    {
+      "path": "03_sections/P01/section.json",
+      "sha256": "bae9c522911301b458323e68d7ad72693ac6016b7bd35bf2f7e3206f3ba2a882",
+      "bytes": 3668
+    },
+    {
+      "path": "03_sections/P01/brief.md",
+      "sha256": "95e3739f6707521143b26085330ac1097d0416dba59b0418c3466f9a44e8888b",
+      "bytes": 1581
+    },
+    {
+      "path": "03_sections/P01/evidence-pack.json",
+      "sha256": "b737e2f7169ad27cc710144b561e182a6fe6b6cd49b050211bfae70065ccc828",
+      "bytes": 13724
+    },
+    {
+      "path": "03_sections/P01/materials.json",
+      "sha256": "2ce5ae40fba4ca350e9ad7be3947ef3d4ad96ea22057dd71b72bc15b699abfed",
+      "bytes": 17244
+    },
+    {
+      "path": "03_sections/P01/evidence-resolution-request.md",
+      "sha256": "0aa60dd44e180d517d435c22a520140157a5ed6e15c510181f08755f2d94de56",
+      "bytes": 417
+    }
+  ],
+  "operation_outputs": [
+    "03_sections/P01/materials.json"
+  ],
+  "optional_operation_outputs": [],
+  "output_baselines": [
+    {
+      "path": "03_sections/P01/materials.json",
+      "sha256": "2ce5ae40fba4ca350e9ad7be3947ef3d4ad96ea22057dd71b72bc15b699abfed",
+      "required": true
+    }
+  ],
+  "allowed_write_paths": [
+    "03_sections/P01/materials.json",
+    "tasks/T0060-evidence-resolution-P01/report.md",
+    "tasks/T0060-evidence-resolution-P01/operator-brief.json"
+  ],
+  "report_path": "tasks/T0060-evidence-resolution-P01/report.md",
+  "operator_brief_path": "tasks/T0060-evidence-resolution-P01/operator-brief.json",
+  "validation": [
+    "python scripts/validate.py products/sumer-writing",
+    "python scripts/task.py verify products/sumer-writing T0060-evidence-resolution-P01",
+    "python scripts/check_scope.py products/sumer-writing",
+    "python scripts/operator_brief.py validate products/sumer-writing/tasks/T0060-evidence-resolution-P01/operator-brief.json"
+  ]
+}

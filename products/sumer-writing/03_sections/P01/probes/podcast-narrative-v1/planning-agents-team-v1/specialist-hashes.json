@@ -1,0 +1,26 @@
+{
+  "product-review-a-raw.md": {
+    "byte_length": 11659,
+    "char_length": 11344,
+    "sha256": "ce6f59bc91ed134087fbf96442b9c8b04e1751c79ae8e4a7fbcdeead52037be2",
+    "blob_hash": "826ffc6b045068ecb49faab0471db5755c689760"
+  },
+  "product-review-b-raw.md": {
+    "byte_length": 12863,
+    "char_length": 12564,
+    "sha256": "25e53c8a27ef581833ef60e8ebea340425974a9ca931860a0c2ab94b30f0c60e",
+    "blob_hash": "79ea576471e8d23f9c530069bd04d0d9c60e8bc0"
+  },
+  "truth-audit-a-raw.md": {
+    "byte_length": 25588,
+    "char_length": 22981,
+    "sha256": "7631f7fafb950ad2113370a6eb5218803219a9bdf06b81707c9f30d43a1cce1a",
+    "blob_hash": "f188c8a727e33c2cf3c2953e9c84f5f81bdfaa47"
+  },
+  "truth-audit-b-raw.md": {
+    "byte_length": 20526,
+    "char_length": 18999,
+    "sha256": "66fa70e4f7c3187f6b6717796b2865c34613056c68d68b0ef89fca93bcdf21e9",
+    "blob_hash": "06fcb41e08bb5fa66c1daa25d3cb500077498165"
+  }
+}

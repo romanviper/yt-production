@@ -1,0 +1,457 @@
+{
+  "schema_version": 3,
+  "section": "P04",
+  "claims": [
+    {
+      "id": "CLM-0015",
+      "statement": "The evidence supports a feedback model: expanding institutions demanded records, and better records could expand institutional capacity.",
+      "type": "inference",
+      "confidence": "medium",
+      "status": "qualified",
+      "sources": [
+        "SRC-0005",
+        "SRC-0001",
+        "SRC-0003"
+      ],
+      "counterevidence": "Downstream effects require WS06 case studies; WS02 cannot establish them alone.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-CLM-005"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0046",
+      "statement": "Administrative writing increased capacity to classify, aggregate and audit labor, goods and obligations when tied to institutional procedure.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0029",
+        "SRC-0030"
+      ],
+      "counterevidence": "Records alone do not prove compliance or causal primacy.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-CLM-001"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0047",
+      "statement": "Ur III labor records reveal ordinary people mainly through top-down categories and required work.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0029",
+        "SRC-0030"
+      ],
+      "counterevidence": "They do not recover the full lives or viewpoints of recorded workers.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-CLM-002"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0048",
+      "statement": "Writing’s power distribution changed over time: uses once concentrated in royal/institutional systems were later appropriated by urban private actors.",
+      "type": "inference",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0031"
+      ],
+      "counterevidence": "The scale and timing of ‘privatization’ vary by region.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-CLM-003"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0049",
+      "statement": "A written law, norm or transaction is evidence of recording and claim-making, not automatic evidence of enforcement.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0031"
+      ],
+      "counterevidence": "Case-specific links among tablet, witnesses, seal and action are required.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-CLM-004"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0050",
+      "statement": "Archive survival is structurally biased by clay durability, institutional discard, excavation history and antiquities-market provenance.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0029",
+        "SRC-0032"
+      ],
+      "counterevidence": "Bias does not invalidate the corpus, but limits population-wide inference.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-CLM-005"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0051",
+      "statement": "At Puzriš-Dagan, more than 13,500 tablets reconstruct an archival agency tied to livestock, taxation, royal gifts and diplomacy; the archive should not be read as a literal inventory of one stockyard.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0033"
+      ],
+      "counterevidence": "The surviving repository is selective and its reconstructed units remain scholarly models.",
+      "narrative_implication": "Use as a bounded causal case in which records, seals, officials and retrieval practices jointly made obligations actionable.",
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-CLM-006"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0052",
+      "statement": "Agency belongs to people and institutions using records: tablets stabilize classifications, scribes and sealers authenticate them, archives make them retrievable, and authorities supply enforcement.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0029",
+        "SRC-0030",
+        "SRC-0033"
+      ],
+      "counterevidence": "The strength of each link differs by archive; a preserved record alone cannot demonstrate enforcement.",
+      "narrative_implication": "Never say writing itself commanded, owned or coerced.",
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-CLM-007"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0053",
+      "statement": "Distributional effects were asymmetric: record systems improved institutional visibility and elite/private claims while exposing workers and dependents through imposed categories.",
+      "type": "inference",
+      "confidence": "medium-high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0029",
+        "SRC-0030",
+        "SRC-0031",
+        "SRC-0033"
+      ],
+      "counterevidence": "People could also use documents strategically, and private uptake widened access in some later settings.",
+      "narrative_implication": "Pair every capacity gain with who gained legibility, leverage, burden or exclusion.",
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-CLM-008"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0054",
+      "statement": "Oral negotiation, embodied skill, household practice and much routine exchange remained partly or wholly outside surviving writing.",
+      "type": "unknown",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0029",
+        "SRC-0032"
+      ],
+      "counterevidence": "Absence from archives cannot quantify the size of unwritten domains.",
+      "narrative_implication": "State the limit; do not turn archival silence into proof of absence.",
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-CLM-009"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-0001",
+      "title": "Proto-Cuneiform Account-Books and Journals",
+      "author": "Robert K. Englund",
+      "year": 2004,
+      "type": "scholarly chapter / corpus synthesis",
+      "authority": "Leading specialist synthesis grounded in the archaic tablet corpus and CDLI work.",
+      "url": "https://cdli.earth/files-up/publications/englund2004a.pdf",
+      "locators": [
+        "pp. 24–27 (PDF pp. 2–5), especially chronology figure and discussion of Uruk IV/III corpus",
+        "pp. 24–31",
+        "pp. 28–31"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Chronological ranges and corpus counts reflect the state of publication in 2004; some causal interpretation belongs to WS02.",
+        "Older chronology; causal interpretation remains debated.",
+        "Earliest corpus only."
+      ],
+      "notes": [
+        "Supports ca. 3300 BCE emergence, relative Uruk IV→III sequence, overwhelmingly administrative earliest corpus, and caution around token continuity.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-001"
+        },
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-002"
+        },
+        {
+          "workstream": "WS05",
+          "local_id": "WS05-SRC-001"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0003",
+      "title": "Writing in Early Mesopotamia: Beyond the Meme",
+      "author": "Massimo Maiocchi",
+      "year": 2019,
+      "type": "peer-reviewed scholarly chapter",
+      "authority": "Assyriological synthesis focused on early Mesopotamian writing, semiotics and material systems.",
+      "url": "https://iris.unive.it/retrieve/e4239dde-83dd-7180-e053-3705fe0a3322/Maiocchi%20M.%202019%2C%20Writing%20in%20Early%20Mesopotamia%20--%20Beyond%20the%20Meme.pdf",
+      "locators": [
+        "pp. 410–412 (PDF pp. 15–17), especially discussion of glottographic/semasiographic boundary",
+        "pp. 410–412"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "The chapter advocates a fluid continuum; terminology is analytical rather than a universally accepted threshold definition.",
+        "Framework-oriented rather than a new excavation report."
+      ],
+      "notes": [
+        "Useful counterweight to a binary true-writing/proto-writing distinction and to a linear token→tablet story.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-003"
+        },
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0005",
+      "title": "Visible Language: Inventions of Writing in the Ancient Middle East and Beyond",
+      "author": "Christopher Woods (ed.)",
+      "year": 2010,
+      "type": "academic museum catalogue / comparative synthesis",
+      "authority": "University of Chicago Oriental Institute catalogue curated by a Sumerologist.",
+      "url": "https://isac.uchicago.edu/sites/default/files/uploads/shared/docs/oimp32.pdf",
+      "locators": [
+        "comparative chronology and essays on earliest Mesopotamian and Egyptian writing; catalogue overview",
+        "pp. 33–50; development of accounting systems",
+        "Mesopotamian writing essays"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Catalogue compresses specialist disagreements for comparative presentation; use for comparison scope, not exact Uruk stratigraphy.",
+        "Comparative overview; some pathways remain hypothetical.",
+        "Catalogue compresses disagreements."
+      ],
+      "notes": [
+        "Treats Mesopotamia and Egypt as roughly contemporary independent inventions; supports avoiding an unqualified unique 'world first' claim.",
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS01",
+          "local_id": "WS01-SRC-005"
+        },
+        {
+          "workstream": "WS02",
+          "local_id": "WS02-SRC-001"
+        },
+        {
+          "workstream": "WS03",
+          "local_id": "WS03-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0029",
+      "title": "An Interdisciplinary Overview of a Mesopotamian City and its Hinterlands",
+      "author": "Robert McC. Adams, 2008",
+      "year": null,
+      "type": "peer-reviewed article",
+      "authority": "Major archaeological synthesis",
+      "url": "https://cdli.earth/articles/cdlj/2008-1",
+      "locators": [
+        "§2.3 and archive discussion"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Umma/Ur III case is not universal."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-001"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0030",
+      "title": "Equivalency Values and the Command Economy of the Ur III Period",
+      "author": "Robert K. Englund, 2012",
+      "year": null,
+      "type": "scholarly study",
+      "authority": "Corpus-based administrative study",
+      "url": "https://cdli.earth/files-up/publications/englund2012a.pdf",
+      "locators": [
+        "labor norms and equivalencies"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Ur III is much later than writing’s origin."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-002"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0031",
+      "title": "Old Babylonian Networks of Urban Notables",
+      "author": "Marc Van De Mieroop, 2009",
+      "year": null,
+      "type": "peer-reviewed article",
+      "authority": "Specialist socio-economic interpretation",
+      "url": "https://cdli.earth/articles/cdlj/2009-7",
+      "locators": [
+        "§1.2 and §2.4"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Broad model debated; Old Babylonian focus."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-003"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0032",
+      "title": "Cuneiform Tablets in Collections at the University of Kansas",
+      "author": "CDLI Bulletin, 2020",
+      "year": null,
+      "type": "scholarly catalogue article",
+      "authority": "Object-level provenance scholarship",
+      "url": "https://cdli.earth/articles/cdlb/2020-2",
+      "locators": [
+        "§1.7 provenance warning"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Collection-focused rather than archive theory."
+      ],
+      "notes": [
+        "Selected for this workstream's bounded question."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-004"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0033",
+      "title": "A Reconstruction of the Puzriš-Dagan Central Livestock Agency",
+      "author": "Tonia Sharlach, 2013",
+      "year": null,
+      "type": "peer-reviewed corpus study",
+      "authority": "CDLI archive reconstruction",
+      "url": "https://cdli.earth/articles/cdlj/2013-2",
+      "locators": [
+        "§§1.2–1.5; archive function and more than 13,500 tablets"
+      ],
+      "status": "reviewed",
+      "limitations": [
+        "Ur III royal institution; archive reconstruction does not establish ordinary experience or empire-wide uniformity."
+      ],
+      "notes": [
+        "Used as a bounded case linking documents, officials, seals and institutional action."
+      ],
+      "provenance": [
+        {
+          "workstream": "WS06",
+          "local_id": "WS06-SRC-005"
+        }
+      ]
+    }
+  ],
+  "rule": "These claims define the section truth territory. Writer may use any subset and any narrative route. Source-level resolution may increase through bounded retrieval; new interpretation/generalization requires evidence authority.",
+  "cycle_id": "C003",
+  "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+  "claim_ids": [
+    "CLM-0015",
+    "CLM-0046",
+    "CLM-0047",
+    "CLM-0048",
+    "CLM-0049",
+    "CLM-0050",
+    "CLM-0051",
+    "CLM-0052",
+    "CLM-0053",
+    "CLM-0054"
+  ],
+  "source_ids": [
+    "SRC-0001",
+    "SRC-0003",
+    "SRC-0005",
+    "SRC-0029",
+    "SRC-0030",
+    "SRC-0031",
+    "SRC-0032",
+    "SRC-0033"
+  ]
+}

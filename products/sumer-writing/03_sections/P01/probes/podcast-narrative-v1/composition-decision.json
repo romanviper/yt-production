@@ -1,0 +1,24 @@
+{
+  "center_of_gravity": "The material operation and physical asymmetry of hollow clay envelopes and enclosed counters, anchored by the attested specimen OIM A64678.",
+  "what_is_happening": "Small clay counters are enclosed in moist clay to form a hollow envelope; the envelope is sealed, may receive exterior impressions and seal rollings, and dries into an opaque sphere.",
+  "what_changes_during_passage": "Loose, directly visible counters become sealed within an opaque hollow sphere where contents are hidden from view, establishing a physical asymmetry where direct inspection destroys the sealed container, while surface marks on some specimens allow quantity to be read without immediate breakage.",
+  "begins_at": "Handling small geometric clay counters and wrapping workable moist clay around them to form a hollow envelope.",
+  "stops_before": "Transitioning to solid numerical tablets (such as ChM III-937a), proto-cuneiform tablets, or proposing any evolutionary progression from envelopes to tablets.",
+  "causal_bridges_claimed": [],
+  "notebook_threads_to_use": [
+    "Small geometric clay counters (spheres, cones, disks, cylinders) in Late Uruk administrative practice",
+    "Representative manufacture sequence of hollow clay envelopes (enclosing counters in moist clay, closing, drying)",
+    "Exterior surface impressions making quantity inspectable on some envelopes without immediate breakage",
+    "Cylinder seal rollings as marks of authority, custody, or witnessing across wet clay",
+    "Physical asymmetry: intact envelope hides contents; inspection destroys the sealed object",
+    "Attested broken envelope OIM A64678 from Chogha Mish (dimensions ~7.8 x 7.2 cm, visible ~1.6 cm counters through break)"
+  ],
+  "deliberately_unused_threads": [
+    "Evolutionary ladder from tokens to tablets",
+    "Solid numerical tablets (ChM III-937a and Uruk palm-sized tablets)",
+    "Early proto-cuneiform tablets and compartmentalized administrative records (Uruk IV)",
+    "Reed stylus cutting and shaping techniques",
+    "Lumps of clay on cord/cloth/wood closures (door/container sealings)",
+    "Inferred motives such as fraud prevention, theft, or long-distance trade administration"
+  ]
+}

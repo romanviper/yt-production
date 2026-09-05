@@ -319,6 +319,12 @@ def approve_section(product_dir: Path, section: str) -> None:
     review_path = root / "review.md"
     review_text = review_path.read_text(encoding="utf-8")
     review_provenance = state.get("review_provenance")
+    if isinstance(review_provenance, dict) and review_provenance.get("authority") in {
+        "stale_mismatched_non_authoritative",
+        "stale",
+        "non_authoritative",
+    }:
+        raise ValueError(f"Section {section} outcome review is stale/mismatched and non-authoritative.")
     review_contract_version = (
         int(review_provenance.get("contract_version", 1))
         if isinstance(review_provenance, dict)

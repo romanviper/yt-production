@@ -1,0 +1,128 @@
+"""Tests for historical movement outline contract and writer projection."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+import tempfile
+import unittest
+
+from scripts.context_packet import compile_packet
+from scripts.materialize_sections import materialize
+from scripts.outline_contract import validate_outline_contract
+from test_material_aware_handoff import make_direct_authorship_fixture, write_json
+
+
+class HistoricalMovementContractTests(unittest.TestCase):
+    def test_vietnamese_inadequacy_replacement_fails_without_connector(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            outline_path = product / "02_outline" / "outline.json"
+            outline = json.loads(outline_path.read_text(encoding="utf-8"))
+
+            # Add historical_change and earned_meaning to P01
+            p01 = next(sec for sec in outline["sections"] if sec["id"] == "P01")
+            p01["historical_change"] = {
+                "from": "Kế toán bằng token đất sét rời rạc không thể theo kịp quy mô đô thị hóa",
+                "to": "Tập hợp các ký hiệu số và dấu ấn hình thành hệ thống lưu trữ ngoại thân đầu tiên",
+            }
+            p01["earned_meaning"] = "Chữ viết xuất hiện từ áp lực quản trị vật chất chứ không phải phát minh ngôn ngữ thuần túy"
+            write_json(outline_path, outline)
+
+            errors = validate_outline_contract(outline, require_current=True)
+            self.assertTrue(any("observable/evidentiary states" in error for error in errors))
+
+    def test_malformed_historical_change_fails_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            outline_path = product / "02_outline" / "outline.json"
+            outline = json.loads(outline_path.read_text(encoding="utf-8"))
+
+            p01 = next(sec for sec in outline["sections"] if sec["id"] == "P01")
+            p01["historical_change"] = {"from": "", "to": "some state"}
+            write_json(outline_path, outline)
+
+            errors = validate_outline_contract(outline, require_current=True)
+            self.assertTrue(any("historical_change must be an object with non-empty 'from' and 'to'" in err for err in errors))
+
+    def test_materialization_and_writer_projection_preserve_historical_movement(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            outline_path = product / "02_outline" / "outline.json"
+            outline = json.loads(outline_path.read_text(encoding="utf-8"))
+
+            p01 = next(sec for sec in outline["sections"] if sec["id"] == "P01")
+            p01["historical_change"] = {
+                "from": "Số lượng xuất hiện trên nhiều vật mang bằng đất sét",
+                "to": "Ký hiệu số xuất hiện trực tiếp trên bề mặt bảng đất sét",
+            }
+            p01["earned_meaning"] = "Dấu vết vật chất định hình trật tự xã hội"
+            write_json(outline_path, outline)
+
+            materialize(product)
+
+            sec_path = product / "03_sections" / "P01" / "section.json"
+            sec_state = json.loads(sec_path.read_text(encoding="utf-8"))
+            self.assertEqual("Số lượng xuất hiện trên nhiều vật mang bằng đất sét", sec_state["historical_change"]["from"])
+            self.assertEqual("Ký hiệu số xuất hiện trực tiếp trên bề mặt bảng đất sét", sec_state["historical_change"]["to"])
+            self.assertEqual("Dấu vết vật chất định hình trật tự xã hội", sec_state["earned_meaning"])
+
+            packet, context = compile_packet(
+                product,
+                "draft_section",
+                "T0001-draft-section-P01",
+                section="P01",
+            )
+
+            # Writer context includes observable movement but not owner-only earned meaning.
+            self.assertIn('"historical_change"', context)
+            self.assertIn("Số lượng xuất hiện trên nhiều vật mang bằng đất sét", context)
+            self.assertIn("Ký hiệu số xuất hiện trực tiếp trên bề mặt bảng đất sét", context)
+            self.assertNotIn('"earned_meaning"', context)
+            self.assertNotIn("Dấu vết vật chất định hình trật tự xã hội", context)
+
+            # Writer context must NOT expose legacy choreography fields or claim lists
+            self.assertNotIn('"entry_state"', context)
+            self.assertNotIn('"exit_state"', context)
+            self.assertNotIn('"story_strategy"', context)
+            self.assertNotIn('"story_plan"', context)
+            self.assertNotIn("permitted_claims", context)
+
+    def test_problem_solution_thesis_fails_historical_change_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            outline = json.loads((product / "02_outline" / "outline.json").read_text(encoding="utf-8"))
+            p01 = next(sec for sec in outline["sections"] if sec["id"] == "P01")
+            p01["historical_change"] = {
+                "from": "Loose marks were insufficient for larger institutions",
+                "to": "Durable tablets therefore emerged, enabling obligations across distance",
+            }
+            errors = validate_outline_contract(outline, require_current=True)
+            self.assertTrue(any("inadequacy→solution→capability" in error for error in errors))
+
+    def test_observable_material_change_passes(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            outline = json.loads((product / "02_outline" / "outline.json").read_text(encoding="utf-8"))
+            p01 = next(sec for sec in outline["sections"] if sec["id"] == "P01")
+            p01["historical_change"] = {
+                "from": "Quantities and authentication appear across several clay devices",
+                "to": "Numerical information appears directly on durable clay surfaces beside seal impressions",
+            }
+            self.assertEqual([], validate_outline_contract(outline, require_current=True))
+
+    def test_english_problem_solution_fails_without_therefore(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            product = make_direct_authorship_fixture(Path(temp))
+            outline = json.loads((product / "02_outline" / "outline.json").read_text(encoding="utf-8"))
+            p01 = next(sec for sec in outline["sections"] if sec["id"] == "P01")
+            p01["historical_change"] = {
+                "from": "Loose counters were inadequate at urban scale",
+                "to": "Durable tablets formed a system for obligations across distance",
+            }
+            errors = validate_outline_contract(outline, require_current=True)
+            self.assertTrue(any("observable/evidentiary states" in error for error in errors))
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,5 +1,20 @@
 # AI Agent Router
 
+## Owner-authorized isolated experiment (2026-09-05)
+
+On `codex/p01-writer-trace-loop-v2` only, the owner authorized a parallel
+`system_architect` experiment based on `2bf59edd0a5e83a9d186146bff4bd6e0c18c671b`,
+without changing `main`, `codex/p01-podcast-narrative-probe-v1`, or the frozen
+`codex/p01-foc-evidence-loop-v1` experiment. For this bounded experiment, start
+at `docs/experiments/p01-writer-trace-v2/START.md`. Its packet generator is
+explicitly separate from the production router; do not create or edit production
+task/state artifacts to run it. Experiment outputs go only under
+`experiments/p01-writer-trace-v2/runs/<run-id>/`. Existing product content,
+historical authority and the v1 experiment remain read-only. No production
+approval or historical evidence expansion is granted. This exception supersedes
+the canonical-branch/product-entrypoint rules below only for this experiment.
+All other boundaries remain in force.
+
 This file contains only repo-wide operating boundaries. Creative logic belongs in the task packet.
 
 ## Canonical branch

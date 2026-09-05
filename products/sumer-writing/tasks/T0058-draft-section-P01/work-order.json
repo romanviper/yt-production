@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "authority": "product_agent",
+  "id": "T0058-draft-section-P01",
+  "product": "sumer-writing",
+  "operation": "draft_section",
+  "target": {
+    "section": "P01",
+    "unit": null
+  },
+  "state": "cancelled",
+  "created_at": "2026-09-03T17:02:05.816635+00:00",
+  "context_packet": "tasks/T0058-draft-section-P01/context.md",
+  "packet_manifest": "tasks/T0058-draft-section-P01/packet.json",
+  "allowed_write_paths": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md",
+    "tasks/T0058-draft-section-P01/report.md",
+    "tasks/T0058-draft-section-P01/operator-brief.json"
+  ],
+  "outputs": [
+    "03_sections/P01/draft.md",
+    "03_sections/P01/handoff.md"
+  ],
+  "optional_outputs": [],
+  "report_path": "tasks/T0058-draft-section-P01/report.md",
+  "operator_brief_path": "tasks/T0058-draft-section-P01/operator-brief.json",
+  "evidence_access": {
+    "kind": "bounded_claim_sources",
+    "adapter": "scripts/draft_evidence.py",
+    "interface_version": 5,
+    "capabilities": [
+      "scope",
+      "attest_scope",
+      "source",
+      "search",
+      "record"
+    ],
+    "trace_path": "tasks/T0058-draft-section-P01/evidence-trace.jsonl",
+    "required_before_submit": [
+      "attest_scope"
+    ],
+    "material_snapshot_sha256": "1664983c27c73a8e4d36bbc3fd56823c71e9e57a48ad3f450735b41ff5f83a11"
+  },
+  "material_snapshot_sha256": "1664983c27c73a8e4d36bbc3fd56823c71e9e57a48ad3f450735b41ff5f83a11",
+  "submitted_at": "2026-09-03T17:04:16.781744+00:00",
+  "updated_at": "2026-09-04T08:18:00+00:00",
+  "cancel_reason": "architecture migration: superseded by P01 Historical Substrate contract v1; fresh canonical draft task required"
+}

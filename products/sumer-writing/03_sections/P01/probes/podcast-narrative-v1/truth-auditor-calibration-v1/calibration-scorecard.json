@@ -1,0 +1,316 @@
+{
+  "schema_version": "2.1.0",
+  "mission_id": "TRUTH_AUDITOR_CALIBRATION_V1",
+  "calibration_phase": "CALIBRATION_V2",
+  "status": "CALIBRATION_VALIDATED_ZERO_TOLERANCE_PASS",
+  "gold_reference": "truth-calibration-gold.json (LOCKED_INTERNAL_GOLD_V2)",
+  "scoring_policy": "scoring-policy-and-protocol.md (ACTIVE_CALIBRATION_PROTOCOL_V2)",
+  "auditor_a_v2": {
+    "evaluator": "Historical Truth Auditor A (Calibration V2)",
+    "conversation_id": "c901d42c-48e4-4f84-8068-03c7f6b5ee71",
+    "raw_artifact": "truth-auditor-a-v2-raw.json",
+    "metrics": {
+      "TVA_percent": 100.0,
+      "ESA_percent": 100.0,
+      "CSMA_percent": 92.14285714285714,
+      "BA_percent": 51.42857142857142,
+      "VQE_percent": 100.0,
+      "MBA_percent": 100.0,
+      "CALIBRATION_RESULT": "TRUTH_AUDITOR_CALIBRATION_FAIL"
+    },
+    "summary": {
+      "TVA": "20/20 (100.0%)",
+      "ESA": "20/20 (100.0%)",
+      "CSMA": "129/140 (92.1%)",
+      "BA": "18/35 (51.4%)",
+      "VQE": "57/57 (100.0%)",
+      "MBA": "17/17 (100.0%)",
+      "VERDICT": "TRUTH_AUDITOR_CALIBRATION_FAIL"
+    },
+    "mismatches": [
+      {
+        "claim_id": "CAL-TRUTH-003",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "scope",
+          "record_id": "HS-P01-0003",
+          "locator": "world.carries[1]",
+          "exact_quote": "on some examples exterior impressions or sealings",
+          "role": "SUPPORTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-004",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "function",
+          "record_id": "P01-MAT-0003",
+          "locator": "epistemic_layers.functional_inference[0].statement",
+          "exact_quote": "Seal impressions marked an association with authority, custody or witnessing.",
+          "role": "SUPPORTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-006",
+        "dimension": "COMPONENT_FUNCTION",
+        "expected": "N/A",
+        "actual": "SUPPORTED"
+      },
+      {
+        "claim_id": "CAL-TRUTH-007",
+        "dimension": "COMPONENT_SEQUENCE",
+        "expected": "UNSUPPORTED",
+        "actual": "N/A"
+      },
+      {
+        "claim_id": "CAL-TRUTH-007",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "relationship",
+          "record_id": "P01-INST-0002",
+          "locator": "epistemic_layers.prohibited_or_rejected_inference[0].qualification",
+          "exact_quote": "The two objects share site and broad period, but the approved source does not establish a direct sequence or shared transaction type.",
+          "role": "REJECTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-008",
+        "dimension": "COMPONENT_MOTIVE",
+        "expected": "N/A",
+        "actual": "UNSUPPORTED"
+      },
+      {
+        "claim_id": "CAL-TRUTH-008",
+        "dimension": "COMPONENT_FUNCTION",
+        "expected": "UNSUPPORTED",
+        "actual": "N/A"
+      },
+      {
+        "claim_id": "CAL-TRUTH-008",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "function",
+          "record_id": "P01-MAT-0003",
+          "locator": "epistemic_layers.functional_inference[0].statement",
+          "exact_quote": "Seal impressions marked an association with authority, custody or witnessing.",
+          "role": "LIMITS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-008",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "relationship",
+          "record_id": "P01-MAT-0003",
+          "locator": "epistemic_layers.functional_inference[0].qualification",
+          "exact_quote": "Inferred from context; no unique event or speaker is identified.",
+          "role": "LIMITS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-009",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "motive",
+          "record_id": "P01-MAT-0002",
+          "locator": "epistemic_layers.prohibited_or_rejected_inference[0].qualification",
+          "exact_quote": "Causal hypothesis; the artifacts alone do not establish a single motive.",
+          "role": "REJECTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-010",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "motive",
+          "record_id": "P01-INST-0001",
+          "locator": "limitations[0]",
+          "exact_quote": "The catalogue entry identifies the object and enclosed tokens but does not specify a transaction, operator, motive, exact find stratum, or correspondence between exterior marks and contents",
+          "role": "REJECTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-012",
+        "dimension": "COMPONENT_MOTIVE",
+        "expected": "N/A",
+        "actual": "UNSUPPORTED"
+      },
+      {
+        "claim_id": "CAL-TRUTH-012",
+        "dimension": "COMPONENT_SEQUENCE",
+        "expected": "UNSUPPORTED",
+        "actual": "N/A"
+      },
+      {
+        "claim_id": "CAL-TRUTH-012",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "function",
+          "record_id": "P01-MAT-0002",
+          "locator": "limitations[0]",
+          "exact_quote": "Breakable verification device; once opened to inspect contents, the sealed envelope is permanently destroyed",
+          "role": "SUPPORTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-012",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "sequence",
+          "record_id": "HS-P01-0007",
+          "locator": "world.qualification",
+          "exact_quote": "the shift does not identify one invention event or an immediate complete replacement",
+          "role": "REJECTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-012",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "sequence",
+          "record_id": "HS-P01-0007",
+          "locator": "world.coexistence",
+          "exact_quote": "older and parallel clay practices continued to overlap with direct surface recording",
+          "role": "REJECTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-013",
+        "dimension": "COMPONENT_FUNCTION",
+        "expected": "N/A",
+        "actual": "SUPPORTED"
+      },
+      {
+        "claim_id": "CAL-TRUTH-013",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "scope",
+          "record_id": "HS-P01-0003",
+          "locator": "substrate_boundaries[1]",
+          "exact_quote": "Exterior impressions are not universal to every envelope.",
+          "role": "REJECTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-014",
+        "dimension": "COMPONENT_FUNCTION",
+        "expected": "UNSUPPORTED",
+        "actual": "N/A"
+      },
+      {
+        "claim_id": "CAL-TRUTH-014",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "scope",
+          "record_id": "P01-MAT-0001",
+          "locator": "epistemic_layers.functional_inference[0].qualification",
+          "exact_quote": "Supported for bounded late administrative contexts, not a universal code across millennia.",
+          "role": "REJECTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-015",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "sequence",
+          "record_id": "HSC-P01-0001",
+          "locator": "substrate_boundaries[6]",
+          "exact_quote": "Do not convert overlapping clay practices into a direct token-to-tablet replacement genealogy.",
+          "role": "REJECTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-015",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "sequence",
+          "record_id": "HS-P01-0001",
+          "locator": "substrate_boundaries[0]",
+          "exact_quote": "Parallel practices must not be converted into a single mandatory developmental sequence.",
+          "role": "REJECTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-016",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "sequence",
+          "record_id": "HS-P01-0004",
+          "locator": "substrate_boundaries[4]",
+          "exact_quote": "Direct surface recording must not be described as wholesale replacement of envelopes or tokens.",
+          "role": "REJECTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-016",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "scope",
+          "record_id": "HS-P01-0007",
+          "locator": "substrate_boundaries[5]",
+          "exact_quote": "Increasing direct surface recording does not imply immediate or complete replacement of other clay practices.",
+          "role": "REJECTS"
+        }
+      },
+      {
+        "claim_id": "CAL-TRUTH-020",
+        "dimension": "COMPONENT_ENTITY",
+        "expected": "N/A",
+        "actual": "SUPPORTED"
+      },
+      {
+        "claim_id": "CAL-TRUTH-020",
+        "dimension": "COMPONENT_FUNCTION",
+        "expected": "N/A",
+        "actual": "SUPPORTED"
+      },
+      {
+        "claim_id": "CAL-TRUTH-020",
+        "dimension": "COMPONENT_SEQUENCE",
+        "expected": "N/A",
+        "actual": "SUPPORTED"
+      },
+      {
+        "claim_id": "CAL-TRUTH-020",
+        "dimension": "REQUIRED_BINDING_MISSING",
+        "expected_binding": {
+          "component": "relationship",
+          "record_id": "HS-P01-0007",
+          "locator": "world.later_state",
+          "exact_quote": "numerical information increasingly appeared directly on durable clay surfaces, sometimes alongside authentication marks",
+          "role": "SUPPORTS"
+        }
+      }
+    ]
+  },
+  "auditor_b_v2": {
+    "evaluator": "Historical Truth Auditor B (Calibration V2)",
+    "conversation_id": "31e1aabe-900b-457f-a33c-b22dedc2f6cf",
+    "raw_artifact": "truth-auditor-b-v2-raw.json",
+    "metrics": {
+      "TVA_percent": 100.0,
+      "ESA_percent": 100.0,
+      "CSMA_percent": 100.0,
+      "BA_percent": 100.0,
+      "VQE_percent": 100.0,
+      "MBA_percent": 100.0,
+      "CALIBRATION_RESULT": "TRUTH_AUDITOR_CALIBRATION_PASS"
+    },
+    "summary": {
+      "TVA": "20/20 (100.0%)",
+      "ESA": "20/20 (100.0%)",
+      "CSMA": "140/140 (100.0%)",
+      "BA": "35/35 (100.0%)",
+      "VQE": "35/35 (100.0%)",
+      "MBA": "17/17 (100.0%)",
+      "VERDICT": "TRUTH_AUDITOR_CALIBRATION_PASS"
+    },
+    "mismatches": []
+  },
+  "overall_gate_outcome": {
+    "status": "TRUTH_AUDITOR_CALIBRATION_PASS",
+    "certified_evaluator": "Historical Truth Auditor B (Calibration V2)",
+    "certification_standard": "100% on TVA, ESA, CSMA, BA, VQE, MBA (zero hard failures)",
+    "downstream_authorization": "MISSION_B_PRODUCT_REVIEWER_CALIBRATION_UNLOCKED"
+  }
+}

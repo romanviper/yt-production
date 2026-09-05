@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "task_id": "T0060-evidence-resolution-P01",
+  "status": "ready_for_review",
+  "headline": "Đã tìm thấy hai artifact instance thật trong nguồn P01 đã duyệt.",
+  "material_points": [
+    "OIM A64678 là một bulla vỡ từ Chogha Mish, còn token bên trong và có kích thước riêng.",
+    "ChM III-937a là mảnh numerical tablet có năm dấu số và nhiều dấu lăn hình động vật.",
+    "Cả hai có catalogue locator riêng; không có bằng chứng rằng chúng thuộc cùng transaction hoặc một chuỗi thay thế trực tiếp."
+  ],
+  "decision": {
+    "required": true,
+    "question": "Dùng hai artifact instance này làm evidence territory cho Probe 3?",
+    "recommendation": "Phê duyệt vì identity, locator và giới hạn suy luận đều đã được khóa.",
+    "options": [
+      {
+        "label": "Phê duyệt",
+        "effect": "Tạo snapshot mới và Writer task Probe 3."
+      },
+      {
+        "label": "Dừng",
+        "effect": "Không tạo Writer task mới."
+      }
+    ]
+  },
+  "next_step": ""
+}

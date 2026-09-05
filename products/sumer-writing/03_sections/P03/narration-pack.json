@@ -1,0 +1,381 @@
+{
+  "schema_version": 4,
+  "section": "P03",
+  "cycle_id": "C003",
+  "created_at": "2026-09-04T03:55:22.559263+00:00",
+  "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+  "brief_sha256": "29c19d7546193a0ab319a852eaf2054181bd63203d940a272015e30a0d0363a4",
+  "evidence_pack_sha256": "3ff93d0a94ebeb4d78593a4be4ea9b7d3b254b35c3017bb58a176465d0d3c507",
+  "permitted_claims": [
+    {
+      "id": "CLM-0035",
+      "statement": "By the middle third millennium BCE cuneiform served economic, religious, political, literary and scholarly domains.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Chronologies differ by genre and city; ‘by’ does not mean simultaneous everywhere.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0004"
+      ]
+    },
+    {
+      "id": "CLM-0036",
+      "statement": "Lexical lists form a continuous knowledge-organizing tradition from the earliest writing through later cuneiform cultures.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "counterevidence": "Continuity involved copying, reordering and transformation, not static preservation.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0001",
+        "SRC-0016"
+      ]
+    },
+    {
+      "id": "CLM-0037",
+      "statement": "Legal documents, letters and contracts provide human-scale cases but are mediated by scribal formula and institutional context.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "counterevidence": "First-person grammar is not transparent access to private interiority.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0021"
+      ]
+    },
+    {
+      "id": "CLM-0038",
+      "statement": "Functional expansion should be narrated as successive additions and recombinations, not a ladder from accounting to literature.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Local discontinuities and corpus gaps remain.",
+      "narrative_implication": "Use only with the stated confidence and boundary.",
+      "sources": [
+        "SRC-0001",
+        "SRC-0004",
+        "SRC-0016",
+        "SRC-0021"
+      ]
+    },
+    {
+      "id": "CLM-0039",
+      "statement": "ETCSL's 394 literary compositions are modern composites based on late-third- and early-second-millennium manuscripts, so they are evidence for textual tradition rather than transparent transcripts of an original speaker.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Individual manuscripts can preserve locally and chronologically specific variants when cited at tablet level.",
+      "narrative_implication": "Attribute translation and edition; identify composite status and avoid invented authorial interiority.",
+      "sources": [
+        "SRC-0022"
+      ]
+    },
+    {
+      "id": "CLM-0040",
+      "statement": "The bounded primary-text shortlist is fixed to four cases: administrative tablet P005390/MMA 1988.433.2, private letter MMA 86.11.111, lexical school tablet P228744, and literary composition ETCSL 3.1.19.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "The four cases cover distinct functional turns but cannot represent every city, period, social group or genre.",
+      "narrative_implication": "Use only these four handoff candidates unless a later production task documents why a substitution is needed.",
+      "sources": [
+        "SRC-0023",
+        "SRC-0024",
+        "SRC-0025",
+        "SRC-0026",
+        "SRC-0027"
+      ]
+    },
+    {
+      "id": "CLM-0041",
+      "statement": "Published English translations are editorial products and require attribution and rights review before direct quotation.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Met object images selected here are explicitly Public Domain, but that status does not extend to modern catalogue prose, CDLI/Penn photographs or ETCSL/CTMMA translations.",
+      "narrative_implication": "Met images may be used with object credit; paraphrase modern translations unless a production-stage rights check clears quotation.",
+      "sources": [
+        "SRC-0021",
+        "SRC-0022",
+        "SRC-0024",
+        "SRC-0025",
+        "SRC-0026",
+        "SRC-0027",
+        "SRC-0028"
+      ]
+    },
+    {
+      "id": "CLM-0043",
+      "statement": "MMA 86.11.111 is a ca. 1632 BCE Old Babylonian letter in which Marduk-mushallim reports failure to implement a royal security order.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "counterevidence": "Its probable Sippar-Yahrurum origin lacks excavated context, and the museum itself presents the letter as unusual.",
+      "narrative_implication": "Use as an exceptional human-scale epistolary case illustrating reporting and command, not as representative everyday correspondence or proof that writing caused compliance.",
+      "sources": [
+        "SRC-0021",
+        "SRC-0025"
+      ]
+    },
+    {
+      "id": "CLM-0044",
+      "statement": "P228744 is a fragmented Old Babylonian lexical school tablet excavated at Nippur and a witness to the OB Nippur Ura 03 composite Q000001.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "The obverse is missing and the record does not preserve detailed stratigraphy; formal school material cannot establish population-wide literacy.",
+      "narrative_implication": "Use as a representative case of formal lexical classification and copying within the Nippur training tradition only.",
+      "sources": [
+        "SRC-0016",
+        "SRC-0026"
+      ]
+    },
+    {
+      "id": "CLM-0045",
+      "statement": "ETCSL 3.1.19 is a modern composite of the Puzur-Shulgi royal letter tradition assembled from multiple Old Babylonian manuscripts, not a contemporary Ur III dispatch.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "counterevidence": "Individual witnesses such as 3N-T311/IM 58418 preserve substantial portions and can be cited separately, but no one witness equals the complete ETCSL text.",
+      "narrative_implication": "Use to show retrospective political/literary memory and scribal copying; always distinguish narrated event, manuscript date and modern reconstruction.",
+      "sources": [
+        "SRC-0022",
+        "SRC-0027",
+        "SRC-0028"
+      ]
+    }
+  ],
+  "qualifications": [
+    {
+      "id": "CLM-0035",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "Chronologies differ by genre and city; ‘by’ does not mean simultaneous everywhere."
+    },
+    {
+      "id": "CLM-0036",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "Continuity involved copying, reordering and transformation, not static preservation."
+    },
+    {
+      "id": "CLM-0037",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "First-person grammar is not transparent access to private interiority."
+    },
+    {
+      "id": "CLM-0038",
+      "constraint": "Use only with the stated confidence and boundary.",
+      "counterevidence": "Local discontinuities and corpus gaps remain."
+    },
+    {
+      "id": "CLM-0039",
+      "constraint": "Attribute translation and edition; identify composite status and avoid invented authorial interiority.",
+      "counterevidence": "Individual manuscripts can preserve locally and chronologically specific variants when cited at tablet level."
+    },
+    {
+      "id": "CLM-0040",
+      "constraint": "Use only these four handoff candidates unless a later production task documents why a substitution is needed.",
+      "counterevidence": "The four cases cover distinct functional turns but cannot represent every city, period, social group or genre."
+    },
+    {
+      "id": "CLM-0041",
+      "constraint": "Met images may be used with object credit; paraphrase modern translations unless a production-stage rights check clears quotation.",
+      "counterevidence": "Met object images selected here are explicitly Public Domain, but that status does not extend to modern catalogue prose, CDLI/Penn photographs or ETCSL/CTMMA translations."
+    },
+    {
+      "id": "CLM-0043",
+      "constraint": "Use as an exceptional human-scale epistolary case illustrating reporting and command, not as representative everyday correspondence or proof that writing caused compliance.",
+      "counterevidence": "Its probable Sippar-Yahrurum origin lacks excavated context, and the museum itself presents the letter as unusual."
+    },
+    {
+      "id": "CLM-0044",
+      "constraint": "Use as a representative case of formal lexical classification and copying within the Nippur training tradition only.",
+      "counterevidence": "The obverse is missing and the record does not preserve detailed stratigraphy; formal school material cannot establish population-wide literacy."
+    },
+    {
+      "id": "CLM-0045",
+      "constraint": "Use to show retrospective political/literary memory and scribal copying; always distinguish narrated event, manuscript date and modern reconstruction.",
+      "counterevidence": "Individual witnesses such as 3N-T311/IM 58418 preserve substantial portions and can be cited separately, but no one witness equals the complete ETCSL text."
+    }
+  ],
+  "guardrails": [
+    {
+      "source": "outline.non_goal",
+      "constraint": "Không genre catalogue; không accounting→literature ladder; không biến later manuscripts thành original dispatches; không dùng translation hiện đại như primary voice chưa qua rights review."
+    }
+  ],
+  "excluded_claim_ids": [],
+  "exclusion_rule": "Any substantive historical interpretation/generalization outside permitted_claims requires evidence-authority validation before narration.",
+  "source_refs": [
+    {
+      "id": "SRC-0001",
+      "title": "Proto-Cuneiform Account-Books and Journals",
+      "author": "Robert K. Englund",
+      "year": 2004,
+      "type": "scholarly chapter / corpus synthesis",
+      "authority": "Leading specialist synthesis grounded in the archaic tablet corpus and CDLI work.",
+      "url": "https://cdli.earth/files-up/publications/englund2004a.pdf",
+      "locators": [
+        "pp. 24–27 (PDF pp. 2–5), especially chronology figure and discussion of Uruk IV/III corpus",
+        "pp. 24–31",
+        "pp. 28–31"
+      ]
+    },
+    {
+      "id": "SRC-0004",
+      "title": "The Origins of Writing",
+      "author": "Ira Spar",
+      "year": 2004,
+      "type": "museum scholarly essay",
+      "authority": "Metropolitan Museum of Art Heilbrunn Timeline essay by a cuneiform specialist.",
+      "url": "https://www.metmuseum.org/essays/the-origins-of-writing",
+      "locators": [
+        "paragraphs 62–69",
+        "paragraph 69"
+      ]
+    },
+    {
+      "id": "SRC-0016",
+      "title": "DCCLT lexical introduction",
+      "author": "Oracc / University of Pennsylvania",
+      "type": "academic corpus introduction",
+      "authority": "Curated specialist corpus",
+      "url": "https://oracc.museum.upenn.edu/dcclt/intro/lexical_intro.html",
+      "locators": [
+        "introductory sections",
+        "introduction"
+      ]
+    },
+    {
+      "id": "SRC-0021",
+      "title": "Cuneiform Texts in the Metropolitan Museum, Vol. I",
+      "author": "Metropolitan Museum of Art",
+      "type": "scholarly catalogue",
+      "authority": "Edited translations and object records",
+      "url": "https://www.metmuseum.org/met-publications/cuneiform-texts-in-the-metropolitan-museum-of-art-volume-i-tablets-cones-and-bricks-of-the-third",
+      "locators": [
+        "catalogue overview for commercial, legal and epistolary texts",
+        "MMA 86.11.111 = CTMMA I no. 69, p. 87; plates 63–64 and 135–136"
+      ]
+    },
+    {
+      "id": "SRC-0022",
+      "title": "ETCSL Manual",
+      "author": "Electronic Text Corpus of Sumerian Literature, University of Oxford",
+      "type": "academic corpus documentation",
+      "authority": "Curated transliteration and translation corpus",
+      "url": "https://etcsl.orinst.ox.ac.uk/edition2/etcslmanual.php",
+      "locators": [
+        "§1.1; corpus scope, 394 compositions, source-date range"
+      ]
+    },
+    {
+      "id": "SRC-0023",
+      "title": "MSVO 3, 79 artifact entry (P005390)",
+      "author": "Cuneiform Digital Library Initiative; transliterations by Robert K. Englund, Jacob L. Dahl and CDLI",
+      "type": "primary artifact record and corpus transliteration",
+      "authority": "CDLI object-level record linked to the Metropolitan Museum of Art",
+      "url": "https://cdli.earth/P005390",
+      "locators": [
+        "CDLI P005390; MMA 1988.433.2",
+        "Text: obverse columns 1–2 and reverse columns 1–2",
+        "Edition references: MSVO 3 no. 79; Frühe Schrift no. 4.79; CTMMA IV no. 180"
+      ]
+    },
+    {
+      "id": "SRC-0024",
+      "title": "Cuneiform tablet: administrative account concerning the distribution of barley and emmer",
+      "author": "Metropolitan Museum of Art",
+      "type": "museum object record",
+      "authority": "Holding-institution record for MMA 1988.433.2",
+      "url": "https://www.metmuseum.org/art/collection/search/327384",
+      "locators": [
+        "Object no. 1988.433.2",
+        "Object overview and artwork details",
+        "Open Access/Public Domain image flag"
+      ]
+    },
+    {
+      "id": "SRC-0025",
+      "title": "Cuneiform tablet: private letter",
+      "author": "Metropolitan Museum of Art",
+      "type": "primary artifact record with scholarly overview",
+      "authority": "Holding-institution record for MMA 86.11.111",
+      "url": "https://www.metmuseum.org/art/collection/search/321706",
+      "locators": [
+        "Object no. 86.11.111",
+        "Overview: Marduk-mushallim's report on non-implementation of a royal security order",
+        "Artwork details: Old Babylonian, ca. 1632 BCE, probably Sippar-Yahrurum"
+      ]
+    },
+    {
+      "id": "SRC-0026",
+      "title": "N 6052 (+) UM 29-16-393 artifact entry (P228744)",
+      "author": "Cuneiform Digital Library Initiative / Digital Corpus of Cuneiform Lexical Texts",
+      "type": "primary artifact record, transliteration and composite witness",
+      "authority": "CDLI/DCCLT object-level lexical corpus",
+      "url": "https://cdli.earth/P228744",
+      "locators": [
+        "CDLI P228744; museum nos. N 6052 (+) UM 29-16-393",
+        "Reverse columns 1–2, preserved lines 4–30",
+        "Witness to CDLI Lexical 000001 / composite Q000001"
+      ]
+    },
+    {
+      "id": "SRC-0027",
+      "title": "Letter from Puzur-Shulgi to Ibbi-Suen about Ishbi-Erra's claim on Isin (ETCSL 3.1.19)",
+      "author": "Electronic Text Corpus of Sumerian Literature, University of Oxford",
+      "type": "primary-text composite edition and translation",
+      "authority": "Curated Sumerian literary corpus with manuscript list and edition bibliography",
+      "url": "https://etcsl.orinst.ox.ac.uk/section3/b3119.htm",
+      "locators": [
+        "ETCSL composition 3.1.19",
+        "Composite text lines 1–53: section3/c3119.htm",
+        "English translation lines 1–53: section3/tr3119.htm",
+        "Cuneiform witnesses include 3N-T311 = IM 58418 and IM 13347; full witness list in bibliography"
+      ]
+    },
+    {
+      "id": "SRC-0028",
+      "title": "ETCSL credits and copyright",
+      "author": "Electronic Text Corpus of Sumerian Literature, University of Oxford",
+      "type": "rights and citation statement",
+      "authority": "Official corpus rights page",
+      "url": "https://etcsl.orinst.ox.ac.uk/credits.htm",
+      "locators": [
+        "Citations section",
+        "Copyright statement"
+      ]
+    }
+  ],
+  "retrieval_scope": {
+    "claim_ids": [
+      "CLM-0035",
+      "CLM-0036",
+      "CLM-0037",
+      "CLM-0038",
+      "CLM-0039",
+      "CLM-0040",
+      "CLM-0041",
+      "CLM-0043",
+      "CLM-0044",
+      "CLM-0045"
+    ],
+    "source_ids": [
+      "SRC-0001",
+      "SRC-0004",
+      "SRC-0016",
+      "SRC-0021",
+      "SRC-0022",
+      "SRC-0023",
+      "SRC-0024",
+      "SRC-0025",
+      "SRC-0026",
+      "SRC-0027",
+      "SRC-0028"
+    ],
+    "adapter": "scripts/draft_evidence.py",
+    "rule": "Writer may increase source-level resolution inside these sources but may not silently expand the truth ceiling."
+  },
+  "writer_contract": "Permitted claims define a truth ceiling, not a required content list or narrative route. The writer may use any evidence-safe subset and any authored structure that reaches the section objective. Bounded evidence retrieval may add factual resolution from approved supporting sources; new claims, causal conclusions, contradictions or generalizations must return to research authority."
+}
