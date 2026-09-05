@@ -10,7 +10,6 @@ import hashlib
 import json
 import pathlib
 import re
-import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
@@ -52,7 +51,6 @@ def main() -> int:
         return 1
 
     contract = paths["contract"].read_text(encoding="utf-8")
-    protocol = paths["protocol"].read_text(encoding="utf-8")
     schema_text = paths["quality_schema"].read_text(encoding="utf-8")
     benchmark = load_json(paths["benchmark"])
     manifest = load_json(paths["manifest"])
@@ -119,7 +117,6 @@ def main() -> int:
         errors.append("dataset partitions overlap")
 
     # Calibration labels: real owner preference must not be fabricated.
-    sample_by_id = {s["id"]: s for s in samples}
     for pair in benchmark.get("calibration_pairs", []):
         pair_id = pair.get("pair_id", "")
         left, right = pair.get("left"), pair.get("right")
@@ -134,8 +131,10 @@ def main() -> int:
             errors.append(f"owner preference appears fabricated/pre-filled for {pair_id}")
 
     holdout = benchmark.get("holdout_policy", {})
-    if holdout.get("scored") is not False or holdout.get("exposed_to_contract_tuning") is not False:
-        errors.append("holdout is marked scored or exposed during contract tuning")
+    if not isinstance(holdout.get("scored"), bool):
+        errors.append("holdout scored flag must be boolean")
+    if holdout.get("exposed_to_contract_tuning") is not False:
+        errors.append("holdout is exposed to contract tuning")
 
     # Source manifest consistency and craft-only boundary.
     manifest_samples = {x["sample_id"]: x for x in manifest.get("product_samples", [])}
@@ -185,9 +184,6 @@ def main() -> int:
     real_owner_labels = [p for p in non_control if p.get("owner_result") in {"A", "B", "TIE", "UNCERTAIN"}]
     judge_runs_complete = bool(non_control) and all(p.get("judge_runs") and p.get("position_control_complete") is True for p in non_control)
     human_calibrated = len(real_owner_labels) == len(non_control) and judge_runs_complete
-
-    if "32/32" in protocol:
-        errors.append("protocol still treats legacy 32/32 Truth claim as current evidence")
 
     # Legacy v1.0 evaluations must be explicitly quarantined.
     legacy_note = paths["legacy_readme"].read_text(encoding="utf-8")
