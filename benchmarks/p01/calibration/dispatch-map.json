@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0",
+  "visibility": "INTERNAL_NOT_REVIEWER_INPUT",
+  "owner_packets": {
+    "OWNER-CAL-01": {"A": "P01-C001", "B": "P01-C002"},
+    "OWNER-CAL-02": {"A": "P01-C002", "B": "P01-C003"},
+    "OWNER-CAL-03": {"A": "P01-C001", "B": "P01-C003"}
+  },
+  "future_judge_position_control": {
+    "P01-CAL-01": [
+      {"battle": "order-1", "A": "P01-C001", "B": "P01-C002"},
+      {"battle": "order-2", "A": "P01-C002", "B": "P01-C001"}
+    ],
+    "P01-CAL-02": [
+      {"battle": "order-1", "A": "P01-C002", "B": "P01-C003"},
+      {"battle": "order-2", "A": "P01-C003", "B": "P01-C002"}
+    ],
+    "P01-CAL-03": [
+      {"battle": "order-1", "A": "P01-C001", "B": "P01-C003"},
+      {"battle": "order-2", "A": "P01-C003", "B": "P01-C001"}
+    ],
+    "P01-CAL-DUP-01": [
+      {"battle": "same-text-control", "A": "P01-C001", "B": "P01-C001"}
+    ]
+  },
+  "rule": "Do not provide this file, source paths, or internal sample IDs to Product judges or owner preference packets."
+}
