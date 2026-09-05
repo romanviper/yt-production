@@ -1,5 +1,18 @@
 # AI Agent Router
 
+## Owner-authorized isolated experiment (2026-09-05)
+
+On `codex/p01-foc-evidence-loop-v1` only, the owner authorized a parallel
+`system_architect` implementation based on `82b94ed`, without changing `main`
+or `codex/p01-podcast-narrative-probe-v1`. For this bounded experiment, start
+at `docs/experiments/p01-foc-loop/START.md`. Its experimental packet generator
+is explicitly separate from the production router; do not create or edit
+production task/state artifacts to run it. Experiment outputs go only under
+`experiments/p01-foc-loop/runs/<run-id>/`. Existing product content and evidence
+remain read-only. No production approval or historical evidence expansion is
+granted. This exception supersedes the canonical-branch/product-entrypoint
+rules below only for this experiment. All other boundaries remain in force.
+
 This file contains only repo-wide operating boundaries. Creative logic belongs in the task packet.
 
 ## Canonical branch

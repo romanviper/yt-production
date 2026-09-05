@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "source_commit": "82b94ed0a933d0ab5fc1a3680adfbf759de6e856",
+  "branch": "codex/p01-foc-evidence-loop-v1",
+  "baseline": "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/meaningful-probe-v1.md",
+  "baseline_paragraphs": [1, 6],
+  "candidate_whitespace_units": [650, 1050],
+  "scope": "Replace only the six opening prose paragraphs: clay quantity, broken envelope and numerical tablet contrast. Do not write the whole episode or assert the remaining old paragraphs are approved.",
+  "hypothesis": "A sustained investigation of what a broken envelope reveals and conceals, followed by a materially contrasting numerical tablet, can produce clearer changes in listener understanding than the current typological explanation without inventing motives or a historical sequence.",
+  "primary_dimension": "movement",
+  "failure_prediction": "If the objects remain illustrations of completed explanations, the listener cannot identify a developing inquiry, or tension depends on unsupported ancient intentions, this intervention failed even if the prose is smoother.",
+  "writer_instruction": "Write Vietnamese prose only. Try the investigation hypothesis, not a compulsory named-character scene. Preserve the material contrast, distinguish contemporary observation from ancient purpose, and earn a local payoff. Correct inherited truth defects rather than imitating them. Use only the supplied authority for history. FoC is craft-only. No invented private thoughts, shared stratum, guaranteed security, institutional allocations imported from another record, or inevitable token-to-tablet invention ladder. Avoid dumping the audit into narration. Do not mention reviewers, certification, version numbers or scores.",
+  "authority": [
+    "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/planning-agents-team-v1/truth-record-packet.json",
+    "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/writer-notebook.md",
+    "products/sumer-writing/03_sections/P01/probes/podcast-narrative-v1/notebook-authority.md"
+  ],
+  "product_context": [
+    "products/sumer-writing/00_brief/product-brief.md",
+    "products/sumer-writing/00_brief/benchmark.md"
+  ],
+  "references": [
+    {
+      "id": "FOC-INVESTIGATION",
+      "function": "Primary: physical investigation opening and forward question",
+      "path": "competitor's scripts/The sumerians FoC opening - Equal P01.md",
+      "start": null,
+      "end": null,
+      "audio_status": "NOT_VERIFIED"
+    },
+    {
+      "id": "FOC-MECHANISM",
+      "function": "Supplementary: tangible process expands to historical stakes",
+      "path": "competitor's scripts/the sumerians -Channel fall of civilization.md",
+      "start": "For millennia, these rivers have brought life",
+      "end": "Other than its rich clay soil",
+      "audio_status": "NOT_VERIFIED"
+    },
+    {
+      "id": "FOC-SCALE",
+      "function": "Supplementary: spatial continuity without a named human carrier",
+      "path": "competitor's scripts/Section 2 FoC Sumerians.md",
+      "start": null,
+      "end": null,
+      "audio_status": "NOT_VERIFIED"
+    }
+  ],
+  "stop_after_consecutive_no_gain": 2,
+  "maximum_candidates_this_round": 1,
+  "status": "PREPARED_NOT_EXECUTED"
+}
