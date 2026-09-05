@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Phase1TruthGateAudit",
+  "description": "Lane A only: one sample audited against approved P01 historical authority. Craft references are forbidden as truth authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "audit_id",
+    "sample_id",
+    "authority_packet_id",
+    "claims",
+    "gates",
+    "unresolved",
+    "overall_status"
+  ],
+  "$defs": {
+    "claimStatus": {
+      "type": "string",
+      "enum": ["SUPPORTED", "QUALIFIED", "RECONSTRUCTION", "UNSUPPORTED", "NONFACTUAL"]
+    },
+    "gateStatus": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "UNCERTAIN"]
+    },
+    "gate": {
+      "type": "object",
+      "required": ["status", "observation", "evidence_refs", "uncertainty"],
+      "properties": {
+        "status": {"$ref": "#/$defs/gateStatus"},
+        "observation": {"type": "string"},
+        "evidence_refs": {"type": "array", "items": {"type": "string"}},
+        "uncertainty": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schema_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "audit_id": {"type": "string", "minLength": 1},
+    "sample_id": {"type": "string", "minLength": 1},
+    "authority_packet_id": {"type": "string", "minLength": 1},
+    "authority_boundary": {
+      "type": "string",
+      "const": "P01_HISTORICAL_AUTHORITY_ONLY_NO_CRAFT_REFERENCES"
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "claim_quote", "status", "source_ref", "source_quote", "locator", "reason"],
+        "properties": {
+          "claim_id": {"type": "string", "minLength": 1},
+          "claim_quote": {"type": "string", "minLength": 1},
+          "status": {"$ref": "#/$defs/claimStatus"},
+          "source_ref": {"type": ["string", "null"]},
+          "source_quote": {"type": ["string", "null"]},
+          "locator": {"type": ["string", "null"]},
+          "reason": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "gates": {
+      "type": "object",
+      "required": ["G_TRUTH", "G_COHERENCE", "G_SCOPE", "G_LANGUAGE"],
+      "properties": {
+        "G_TRUTH": {"$ref": "#/$defs/gate"},
+        "G_COHERENCE": {"$ref": "#/$defs/gate"},
+        "G_SCOPE": {"$ref": "#/$defs/gate"},
+        "G_LANGUAGE": {"$ref": "#/$defs/gate"}
+      },
+      "additionalProperties": false
+    },
+    "unresolved": {"type": "array", "items": {"type": "string"}},
+    "overall_status": {"type": "string", "enum": ["PASS", "FAIL", "UNCERTAIN"]}
+  },
+  "additionalProperties": false
+}
