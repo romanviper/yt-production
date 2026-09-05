@@ -1,0 +1,204 @@
+{
+  "schema_version": "1.0.0",
+  "iteration_id": "phase1-benchmark-iteration-02",
+  "source_commit": "f0902a96fa387c16fb848e7e135c5cc9b594c01a",
+  "created_at": "2026-09-06T01:16:52+07:00",
+  "process": {
+    "objective": "Resolve the Iteration 01 packaging defect by separating Truth, Product preference, and Target-gap measurement into independent evaluator lanes while preserving the observable Worker process/output boundary.",
+    "decisions": [
+      {
+        "id": "I02-D01",
+        "area": "measurement packaging",
+        "change": "Split Phase 1 evaluation into Lane A Truth, Lane B Product pairwise preference, and Lane C post-preference Target-gap analysis.",
+        "declared_reason": "Iteration 01 separated these concepts semantically but still packaged them in one evaluator-facing record, allowing measurement leakage and ambiguous A/B gate semantics.",
+        "basis": [
+          "Independent black-box review of Iteration 01 output",
+          "docs/phase1/ITERATION-02-WORK-ORDER.md",
+          "HELM-style separation of evaluation scenarios/metrics"
+        ],
+        "expected_effect": "Make each evaluator answer one bounded question and make later failures traceable to the measurement lane that produced them.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "I02-D02",
+        "area": "Product reviewer isolation",
+        "change": "Removed FoC craft references, Truth outputs, and target-gap records from Lane B Product reviewer inputs; craft references are introduced only after Product preference is frozen.",
+        "declared_reason": "A reviewer who sees FoC before choosing A/B may optimize for resemblance to the reference rather than the owner's product preference.",
+        "basis": [
+          "Iteration 01 output defect review",
+          "Chatbot Arena-style blind pairwise preference pattern",
+          "docs/quality/product-trial-protocol.md v1.2"
+        ],
+        "expected_effect": "Reduce reference-induced preference bias and preserve an interpretable pairwise Product signal.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "I02-D03",
+        "area": "schema boundaries",
+        "change": "Made `schemas/output-quality.schema.json` Product-pairwise only and added dedicated `truth-gate.schema.json` and `target-gap.schema.json`.",
+        "declared_reason": "Per-sample historical admissibility, pairwise product preference, and reference-gap analysis have different authorities and cannot share one clean schema without ambiguity.",
+        "basis": [
+          "docs/phase1/ITERATION-02-WORK-ORDER.md",
+          "Output defect found after Iteration 01"
+        ],
+        "expected_effect": "Enforce separation of concern at the artifact contract rather than relying only on prose instructions.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "I02-D04",
+        "area": "calibration signal alignment",
+        "change": "Added grounded `overall_preference` to the Product pairwise schema in addition to criterion-level preferences.",
+        "declared_reason": "Owner calibration records an overall A/B/TIE/UNCERTAIN result; without a matching judge output the intended owner/judge agreement metric could not be computed cleanly.",
+        "basis": [
+          "benchmarks/p01/owner-calibration.json",
+          "Iteration 02 implementation spot-audit"
+        ],
+        "expected_effect": "Make the primary personalized judge-reliability metric mechanically comparable between owner and Product judge.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "I02-D05",
+        "area": "authority invariants",
+        "change": "Made the Truth authority boundary a required constant and made Target-gap non-retroactivity a required constant.",
+        "declared_reason": "An optional const does not enforce anything if the field can simply be omitted.",
+        "basis": [
+          "Iteration 02 schema spot-audit",
+          "Observable architecture principle that important boundaries must be machine-readable"
+        ],
+        "expected_effect": "Prevent schema-valid outputs from silently omitting the no-craft Truth boundary or the frozen-preference guarantee.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "I02-D06",
+        "area": "holdout claims",
+        "change": "Changed the current transfer sample reliability to `FRESH_EXPOSED_NOT_BLIND` with `SHARED_REPO_NOT_SEQUESTERED` access enforcement.",
+        "declared_reason": "A file stored in the shared repository cannot honestly be called a sequestered blind holdout merely because the rubric author intends not to inspect it.",
+        "basis": [
+          "docs/phase1/ITERATION-02-WORK-ORDER.md",
+          "Phase 1 provenance/isolation policy"
+        ],
+        "expected_effect": "Prevent inflated reliability claims while retaining a useful fresh transfer sample.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "I02-D07",
+        "area": "structural verification",
+        "change": "Extended the structural verifier to check three measurement schemas, Product no-reference isolation, Truth no-craft boundary, Target-gap craft-only/frozen-preference fields, and explicit holdout reliability.",
+        "declared_reason": "The lane split should be mechanically observable rather than existing only in documentation.",
+        "basis": [
+          "docs/phase1/ITERATION-02-WORK-ORDER.md verifier requirements"
+        ],
+        "expected_effect": "Turn the Iteration 02 packaging fix into a testable structural invariant.",
+        "status": "APPLIED"
+      }
+    ],
+    "implementation_steps": [
+      {
+        "seq": 1,
+        "action": "Froze a narrow Iteration 02 work order from the first output defect found after Iteration 01.",
+        "files": ["docs/phase1/ITERATION-02-WORK-ORDER.md"],
+        "observed_result": "Scope was limited to evaluator-lane isolation and related verifier changes."
+      },
+      {
+        "seq": 2,
+        "action": "Rewrote Product trial protocol and Output Quality Contract to make Truth, Product, and Target-gap independent lanes.",
+        "files": ["docs/quality/product-trial-protocol.md", "docs/quality/output-quality-contract.md"],
+        "observed_result": "Lane B now explicitly forbids FoC references and Truth results; Lane C begins only after Product preference is frozen."
+      },
+      {
+        "seq": 3,
+        "action": "Split evaluator output contracts into three schemas.",
+        "files": ["schemas/output-quality.schema.json", "schemas/truth-gate.schema.json", "schemas/target-gap.schema.json"],
+        "observed_result": "Product schema is pairwise-only; Truth schema is single-sample historical-authority-only; Target-gap schema is post-preference CRAFT_ONLY."
+      },
+      {
+        "seq": 4,
+        "action": "Added overall Product preference and made two critical invariants required rather than optional.",
+        "files": ["schemas/output-quality.schema.json", "schemas/truth-gate.schema.json", "schemas/target-gap.schema.json"],
+        "observed_result": "Owner/judge overall comparison is representable; no-craft Truth boundary and no-retroactive Target-gap rule cannot be omitted by a schema-conforming output."
+      },
+      {
+        "seq": 5,
+        "action": "Recorded shared-repo holdout limitation explicitly.",
+        "files": ["benchmarks/p01/benchmark-set.json"],
+        "observed_result": "Holdout reliability is now `FRESH_EXPOSED_NOT_BLIND`, with access enforcement `SHARED_REPO_NOT_SEQUESTERED`."
+      },
+      {
+        "seq": 6,
+        "action": "Updated Phase 1 entrypoint and structural verifier for the lane-separated architecture.",
+        "files": ["docs/phase1/START.md", "scripts/experiments/verify_phase1_benchmark.py"],
+        "observed_result": "Active instructions and structural checks now refer to the same three-lane design."
+      }
+    ],
+    "validations": [
+      {
+        "command": "GitHub artifact review: Product protocol vs Product/Truth/Target schemas",
+        "status": "PASS",
+        "observed_result": "Manual connector review confirms Product schema no longer contains absolute_gates or target_gap; Truth and Target schemas are separate and Lane B protocol excludes FoC/Truth inputs."
+      },
+      {
+        "command": "GitHub schema spot-audit for calibration compatibility",
+        "status": "PASS",
+        "observed_result": "Caught and fixed missing overall Product preference plus optional authority/non-retroactivity fields before closing the iteration."
+      },
+      {
+        "command": "python scripts/experiments/verify_phase1_benchmark.py",
+        "status": "NOT_RUN",
+        "observed_result": "The current session still has connector-backed repository access but no executable checkout; the verifier is not represented as run."
+      }
+    ],
+    "deviations": [
+      "Iteration 02 added `overall_preference`, a small adjacent fix not explicitly named in the work order, after discovering the owner/judge calibration mismatch during output-schema inspection.",
+      "No owner labels, judge runs, holdout scores, Writer outputs, or audio verification were created."
+    ],
+    "unresolved": [
+      "Execute the structural verifier from a real repository checkout and fix any reported exact-anchor/schema errors.",
+      "Materialize reviewer-facing anonymized pair packets without source-path or role leakage.",
+      "Collect real owner preferences for the three non-control calibration pairs.",
+      "Run independent counterbalanced Product judges and compute reliability against owner preferences.",
+      "After calibration stabilizes the contract, run the fresh-exposed transfer check and preserve its non-blind limitation."
+    ]
+  },
+  "output": {
+    "benchmark_version": "1.2.0",
+    "deliverables": [
+      {"path": "docs/quality/output-quality-contract.md", "role": "three-lane quality contract"},
+      {"path": "docs/quality/product-trial-protocol.md", "role": "isolated evaluation protocol"},
+      {"path": "schemas/truth-gate.schema.json", "role": "Lane A single-sample truth/scope audit"},
+      {"path": "schemas/output-quality.schema.json", "role": "Lane B anonymized Product pairwise preference"},
+      {"path": "schemas/target-gap.schema.json", "role": "Lane C post-preference craft target-gap analysis"},
+      {"path": "benchmarks/p01/benchmark-set.json", "role": "partition and transfer reliability registry"},
+      {"path": "benchmarks/p01/owner-calibration.json", "role": "owner/judge calibration state"},
+      {"path": "benchmarks/p01/craft-corpus.json", "role": "function-matched CRAFT_ONLY corpus"},
+      {"path": "scripts/experiments/verify_phase1_benchmark.py", "role": "structural three-lane verifier"},
+      {"path": "benchmarks/p01/iterations/iteration-01.json", "role": "prior Worker process/output trace"}
+    ],
+    "measurement_design": {
+      "primary_evaluation": "Lane B: grounded overall + six-criterion anonymized counterbalanced A/B preference with no craft reference or Truth result visible before preference freeze.",
+      "diagnostic_method": "Lane A handles historical admissibility per sample; Lane B may add span-grounded Product defects; failure signatures remain output-side only.",
+      "target_gap_method": "Lane C begins only after Product preference freeze and compares exact sample/reference spans against function-matched CRAFT_ONLY excerpts without retroactively changing preference."
+    },
+    "dataset_partitions": {
+      "dev": "3 inspected development samples.",
+      "calibration": "3 unlabeled samples forming 3 real owner/judge pairs plus 1 same-text reliability control.",
+      "holdout": "1 transfer sample reserved unscored; reliability explicitly FRESH_EXPOSED_NOT_BLIND because it remains in the shared repo."
+    },
+    "owner_calibration_status": "PREPARED",
+    "craft_corpus_coverage": "8 transcript-only excerpts across The Sumerians and China's Han Dynasty covering investigation, mechanism, scale, uncertainty, transition, and payoff; craft material is available only to Lane C.",
+    "verifier_result": {
+      "status": "NOT_RUN",
+      "command": "python scripts/experiments/verify_phase1_benchmark.py",
+      "observed_result": "Verifier source now checks the three-lane architecture and holdout reliability, but repository-local execution was unavailable in this session."
+    },
+    "known_limitations": [
+      "No real owner preference labels have been collected.",
+      "No independent judge calibration runs have been executed.",
+      "Reviewer-facing anonymized pair packets are specified but not yet materialized.",
+      "Fresh transfer sample is exposed in the shared repo and cannot be described as blind/sequestered.",
+      "FoC references are transcript-only; audio cadence is unverified.",
+      "Structural verifier execution remains pending in a real checkout."
+    ],
+    "phase1_readiness": "EXPLORATORY",
+    "summary": "The main Iteration 01 measurement-leakage defect is now structurally addressed: Truth, Product preference, and Target-gap are distinct lanes, Product preference is reference-blind, and the owner/judge overall preference signal is aligned. The benchmark should not advance beyond EXPLORATORY until the structural verifier is actually run and anonymized calibration packets are materialized."
+  }
+}
