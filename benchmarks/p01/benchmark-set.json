@@ -1,12 +1,12 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "benchmark_id": "BM-P01-OBSERVABLE-V1",
-  "contract_version": "1.1",
+  "contract_version": "1.2",
   "scenario": "Vietnamese long-form historical podcast prose about the history of writing",
   "partition_policy": {
     "DEV": "May be inspected while the measurement contract is tuned.",
     "CALIBRATION": "Used for owner/judge agreement and reliability controls. Expected owner labels remain null until explicitly supplied.",
-    "HOLDOUT": "Reserved for fresh transfer after criteria stabilize. Do not tune the contract against this sample."
+    "HOLDOUT": "Reserved for fresh transfer after criteria stabilize. Shared-repository access means the current holdout is fresh/exposed rather than cryptographically blind."
   },
   "samples": [
     {
@@ -70,7 +70,7 @@
       "source_ref": "products/sumer-writing/03_sections/P01/archive/pre-historical-substrate-v1/draft.md",
       "source_identity": "0489689666d1b999d2dd1777824b97d7ee8f043c",
       "identity_kind": "GIT_BLOB_SHA1",
-      "internal_note": "Reserved transfer sample. Do not inspect or score while tuning Phase 1 criteria."
+      "internal_note": "Reserved transfer sample. Do not score while tuning Phase 1 criteria; repository presence prevents a claim of enforced blindness."
     }
   ],
   "calibration_pairs": [
@@ -111,6 +111,8 @@
     "sample_ids": ["P01-H001"],
     "scored": false,
     "exposed_to_contract_tuning": false,
-    "note": "A real transfer comparison will be defined only after the contract and owner calibration stabilize."
+    "reliability": "FRESH_EXPOSED_NOT_BLIND",
+    "access_enforcement": "SHARED_REPO_NOT_SEQUESTERED",
+    "note": "A fresh transfer comparison may use this sample after calibration, but it must not be described as a blind/sequestered holdout unless access controls change."
   }
 }
