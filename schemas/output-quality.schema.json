@@ -1,260 +1,166 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "OutputQualityContractSchema",
-  "description": "Schema for Output Quality Evaluations and Benchmark Artifacts under Phase 1 of Observable Learning Architecture",
-  "definitions": {
-    "GateStatus": {
-      "type": "string",
-      "enum": [
-        "PASS",
-        "FAIL",
-        "UNCERTAIN"
-      ]
-    },
-    "DimensionRating": {
-      "type": "string",
-      "enum": [
-        "PASS",
-        "GOOD",
-        "WEAK",
-        "FAIL",
-        "UNCERTAIN"
-      ]
-    },
-    "BaselineComparison": {
-      "type": "string",
-      "enum": [
-        "SUPERIOR",
-        "PARITY",
-        "INFERIOR",
-        "BASELINE_SELF",
-        "UNCERTAIN"
-      ]
-    },
-    "TargetDistance": {
-      "type": "string",
-      "enum": [
-        "NEAR",
-        "MODERATE",
-        "FAR",
-        "CRAFT_EXEMPLAR"
-      ]
-    },
-    "FailureCode": {
-      "type": "string",
-      "enum": [
-        "NONE",
-        "E01_TRUTH_BREACH",
-        "E02_ESSAY_LECTURE",
-        "E03_DENSE_CADENCE",
-        "E04_STAGNANT_MOVEMENT",
-        "E05_UNEARNED_LEAP"
-      ]
-    },
-    "GateEvaluation": {
-      "type": "object",
-      "required": [
-        "status",
-        "evidence_spans",
-        "notes"
-      ],
-      "properties": {
-        "status": {
-          "$ref": "#/definitions/GateStatus"
-        },
-        "evidence_spans": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "notes": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "DimensionEvaluation": {
-      "type": "object",
-      "required": [
-        "rating",
-        "evidence_spans",
-        "listener_consequence"
-      ],
-      "properties": {
-        "rating": {
-          "$ref": "#/definitions/DimensionRating"
-        },
-        "evidence_spans": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "listener_consequence": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "FailureSignature": {
-      "type": "object",
-      "required": [
-        "code",
-        "primary_symptom",
-        "secondary_symptom",
-        "suspect_upstream_regions",
-        "observable_span"
-      ],
-      "properties": {
-        "code": {
-          "$ref": "#/definitions/FailureCode"
-        },
-        "primary_symptom": {
-          "type": "string"
-        },
-        "secondary_symptom": {
-          "type": "string"
-        },
-        "suspect_upstream_regions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "observable_span": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    }
-  },
+  "title": "Phase1OutputQualityEvaluation",
   "type": "object",
   "required": [
     "schema_version",
     "evaluation_id",
-    "sample_id",
-    "sample_type",
-    "text_sha256",
+    "evaluation_kind",
+    "contract_version",
+    "evidence_medium",
     "absolute_gates",
-    "craft_dimensions",
-    "target_gap",
-    "failure_signature"
+    "pairwise_criteria",
+    "defect_annotations",
+    "failure_signature",
+    "target_gap"
   ],
-  "properties": {
-    "schema_version": {
+  "$defs": {
+    "gateStatus": {
       "type": "string",
-      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+      "enum": ["PASS", "FAIL", "UNCERTAIN"]
     },
-    "evaluation_id": {
-      "type": "string"
-    },
-    "sample_id": {
-      "type": "string"
-    },
-    "sample_type": {
+    "pairwiseResult": {
       "type": "string",
-      "enum": [
-        "known_weak_essay",
-        "current_baseline",
-        "round_candidate",
-        "craft_reference"
-      ]
+      "enum": ["A", "B", "TIE", "UNCERTAIN", "NOT_APPLICABLE"]
     },
-    "text_sha256": {
+    "medium": {
       "type": "string",
-      "pattern": "^[a-f0-9]{64}$"
+      "enum": ["TEXT_PREDICTION", "AUDIO_OBSERVATION", "LISTENER_REPORT"]
     },
-    "absolute_gates": {
+    "severity": {
+      "type": "string",
+      "enum": ["MINOR", "MAJOR", "CRITICAL"]
+    },
+    "span": {
       "type": "object",
-      "required": [
-        "G_TRUTH",
-        "G_COHERENCE",
-        "G_SCOPE",
-        "G_LANGUAGE",
-        "G_CAUSALITY",
-        "overall_gate_pass"
-      ],
+      "required": ["sample", "quote"],
       "properties": {
-        "G_TRUTH": {
-          "$ref": "#/definitions/GateEvaluation"
-        },
-        "G_COHERENCE": {
-          "$ref": "#/definitions/GateEvaluation"
-        },
-        "G_SCOPE": {
-          "$ref": "#/definitions/GateEvaluation"
-        },
-        "G_LANGUAGE": {
-          "$ref": "#/definitions/GateEvaluation"
-        },
-        "G_CAUSALITY": {
-          "$ref": "#/definitions/GateEvaluation"
-        },
-        "overall_gate_pass": {
-          "type": "boolean"
-        }
+        "sample": {"type": "string", "enum": ["A", "B", "REFERENCE"]},
+        "quote": {"type": "string", "minLength": 1}
       },
       "additionalProperties": false
     },
-    "craft_dimensions": {
+    "gateEvaluation": {
       "type": "object",
-      "required": [
-        "continue",
-        "movement",
-        "specificity",
-        "connections",
-        "listenability",
-        "payoff",
-        "essay_tendency"
-      ],
+      "required": ["status", "spans", "observation", "uncertainty"],
       "properties": {
-        "continue": {
-          "$ref": "#/definitions/DimensionEvaluation"
+        "status": {"$ref": "#/$defs/gateStatus"},
+        "spans": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+        "observation": {"type": "string"},
+        "uncertainty": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "criterionEvaluation": {
+      "type": "object",
+      "required": ["result", "spans", "observation", "interpretation", "uncertainty"],
+      "properties": {
+        "result": {"$ref": "#/$defs/pairwiseResult"},
+        "spans": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+        "observation": {"type": "string"},
+        "interpretation": {"type": "string"},
+        "uncertainty": {"type": "string"},
+        "not_applicable_reason": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "defectAnnotation": {
+      "type": "object",
+      "required": ["defect", "severity", "span", "observation", "consequence", "uncertainty"],
+      "properties": {
+        "defect": {
+          "type": "string",
+          "pattern": "^(TRUTH|PROGRESSION|EXPOSITION|CONNECTION|SPOKEN)\\.[A-Z0-9_]+$"
         },
-        "movement": {
-          "$ref": "#/definitions/DimensionEvaluation"
-        },
-        "specificity": {
-          "$ref": "#/definitions/DimensionEvaluation"
-        },
-        "connections": {
-          "$ref": "#/definitions/DimensionEvaluation"
-        },
-        "listenability": {
-          "$ref": "#/definitions/DimensionEvaluation"
-        },
-        "payoff": {
-          "$ref": "#/definitions/DimensionEvaluation"
-        },
-        "essay_tendency": {
-          "$ref": "#/definitions/DimensionEvaluation"
-        }
+        "severity": {"$ref": "#/$defs/severity"},
+        "span": {"$ref": "#/$defs/span"},
+        "observation": {"type": "string", "minLength": 1},
+        "consequence": {"type": "string", "minLength": 1},
+        "uncertainty": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schema_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "evaluation_id": {"type": "string", "minLength": 1},
+    "evaluation_kind": {"type": "string", "enum": ["PAIRWISE_PRODUCT", "SINGLE_DIAGNOSTIC"]},
+    "contract_version": {"type": "string", "minLength": 1},
+    "evidence_medium": {"$ref": "#/$defs/medium"},
+    "samples": {
+      "type": "object",
+      "properties": {
+        "A": {"type": "string"},
+        "B": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "absolute_gates": {
+      "type": "object",
+      "required": ["G_TRUTH", "G_COHERENCE", "G_SCOPE", "G_LANGUAGE"],
+      "properties": {
+        "G_TRUTH": {"$ref": "#/$defs/gateEvaluation"},
+        "G_COHERENCE": {"$ref": "#/$defs/gateEvaluation"},
+        "G_SCOPE": {"$ref": "#/$defs/gateEvaluation"},
+        "G_LANGUAGE": {"$ref": "#/$defs/gateEvaluation"}
+      },
+      "additionalProperties": false
+    },
+    "pairwise_criteria": {
+      "type": "object",
+      "required": ["continue", "movement", "specificity", "connections", "spoken_comprehension", "payoff"],
+      "properties": {
+        "continue": {"$ref": "#/$defs/criterionEvaluation"},
+        "movement": {"$ref": "#/$defs/criterionEvaluation"},
+        "specificity": {"$ref": "#/$defs/criterionEvaluation"},
+        "connections": {"$ref": "#/$defs/criterionEvaluation"},
+        "spoken_comprehension": {"$ref": "#/$defs/criterionEvaluation"},
+        "payoff": {"$ref": "#/$defs/criterionEvaluation"}
+      },
+      "additionalProperties": false
+    },
+    "defect_annotations": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/defectAnnotation"}
+    },
+    "failure_signature": {
+      "type": "object",
+      "required": ["signature_id", "primary_defect", "supporting_defects", "spans", "severity", "observation", "uncertainty"],
+      "properties": {
+        "signature_id": {"type": "string", "minLength": 1},
+        "primary_defect": {"type": ["string", "null"]},
+        "supporting_defects": {"type": "array", "items": {"type": "string"}},
+        "spans": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+        "severity": {"type": ["string", "null"], "enum": ["MINOR", "MAJOR", "CRITICAL", null]},
+        "observation": {"type": "string"},
+        "uncertainty": {"type": "string"}
       },
       "additionalProperties": false
     },
     "target_gap": {
       "type": "object",
-      "required": [
-        "baseline_comparison",
-        "distance_to_target",
-        "summary"
-      ],
+      "required": ["matched_reference_id", "matched_function", "candidate_spans", "reference_spans", "similarities", "differences", "remaining_gap", "retained_strengths", "medium_limitation"],
       "properties": {
-        "baseline_comparison": {
-          "$ref": "#/definitions/BaselineComparison"
-        },
-        "distance_to_target": {
-          "$ref": "#/definitions/TargetDistance"
-        },
-        "summary": {
-          "type": "string"
-        }
+        "matched_reference_id": {"type": ["string", "null"]},
+        "matched_function": {"type": ["string", "null"]},
+        "candidate_spans": {"type": "array", "items": {"type": "string"}},
+        "reference_spans": {"type": "array", "items": {"type": "string"}},
+        "similarities": {"type": "array", "items": {"type": "string"}},
+        "differences": {"type": "array", "items": {"type": "string"}},
+        "remaining_gap": {"type": "array", "items": {"type": "string"}},
+        "retained_strengths": {"type": "array", "items": {"type": "string"}},
+        "medium_limitation": {"type": "string"}
       },
       "additionalProperties": false
     },
-    "failure_signature": {
-      "$ref": "#/definitions/FailureSignature"
+    "diagnostic_hypothesis": {
+      "type": "object",
+      "properties": {
+        "status": {"type": "string", "enum": ["NOT_ASSESSED", "TENTATIVE"]},
+        "suspected_regions": {"type": "array", "items": {"type": "string"}},
+        "basis_refs": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false
