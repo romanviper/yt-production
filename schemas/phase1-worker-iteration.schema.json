@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Phase1WorkerIteration",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "iteration_id",
+    "source_commit",
+    "created_at",
+    "process",
+    "output"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "iteration_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "process": {
+      "type": "object",
+      "required": [
+        "objective",
+        "decisions",
+        "implementation_steps",
+        "validations",
+        "deviations",
+        "unresolved"
+      ],
+      "properties": {
+        "objective": {"type": "string", "minLength": 1},
+        "decisions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "area", "change", "declared_reason", "basis", "expected_effect", "status"],
+            "properties": {
+              "id": {"type": "string", "minLength": 1},
+              "area": {"type": "string", "minLength": 1},
+              "change": {"type": "string", "minLength": 1},
+              "declared_reason": {"type": "string", "minLength": 1},
+              "basis": {
+                "type": "array",
+                "items": {"type": "string", "minLength": 1},
+                "minItems": 1
+              },
+              "expected_effect": {"type": "string", "minLength": 1},
+              "status": {"type": "string", "enum": ["PROPOSED", "APPLIED", "REVISED", "REJECTED"]}
+            },
+            "additionalProperties": false
+          }
+        },
+        "implementation_steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["seq", "action", "files", "observed_result"],
+            "properties": {
+              "seq": {"type": "integer", "minimum": 1},
+              "action": {"type": "string", "minLength": 1},
+              "files": {"type": "array", "items": {"type": "string"}},
+              "observed_result": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
+          }
+        },
+        "validations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["command", "status", "observed_result"],
+            "properties": {
+              "command": {"type": "string", "minLength": 1},
+              "status": {"type": "string", "enum": ["PASS", "FAIL", "NOT_RUN"]},
+              "observed_result": {"type": "string"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "deviations": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "unresolved": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "output": {
+      "type": "object",
+      "required": [
+        "benchmark_version",
+        "deliverables",
+        "measurement_design",
+        "dataset_partitions",
+        "owner_calibration_status",
+        "craft_corpus_coverage",
+        "verifier_result",
+        "known_limitations",
+        "phase1_readiness",
+        "summary"
+      ],
+      "properties": {
+        "benchmark_version": {"type": "string", "minLength": 1},
+        "deliverables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["path", "role"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "role": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
+          }
+        },
+        "measurement_design": {
+          "type": "object",
+          "required": ["primary_evaluation", "diagnostic_method", "target_gap_method"],
+          "properties": {
+            "primary_evaluation": {"type": "string"},
+            "diagnostic_method": {"type": "string"},
+            "target_gap_method": {"type": "string"}
+          },
+          "additionalProperties": false
+        },
+        "dataset_partitions": {
+          "type": "object",
+          "required": ["dev", "calibration", "holdout"],
+          "properties": {
+            "dev": {"type": "string"},
+            "calibration": {"type": "string"},
+            "holdout": {"type": "string"}
+          },
+          "additionalProperties": false
+        },
+        "owner_calibration_status": {
+          "type": "string",
+          "enum": ["NOT_STARTED", "PREPARED", "PARTIAL", "COMPLETED"]
+        },
+        "craft_corpus_coverage": {"type": "string", "minLength": 1},
+        "verifier_result": {
+          "type": "object",
+          "required": ["status", "command", "observed_result"],
+          "properties": {
+            "status": {"type": "string", "enum": ["PASS", "FAIL", "NOT_RUN"]},
+            "command": {"type": "string"},
+            "observed_result": {"type": "string"}
+          },
+          "additionalProperties": false
+        },
+        "known_limitations": {"type": "array", "items": {"type": "string"}},
+        "phase1_readiness": {
+          "type": "string",
+          "enum": ["NOT_READY", "EXPLORATORY", "READY_FOR_HUMAN_CALIBRATION", "READY_FOR_EXIT_REVIEW"]
+        },
+        "summary": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
