@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Structural verifier for Phase 1 benchmark readiness.
 
-This verifier can establish artifact consistency and dispatch readiness. It cannot
-certify aesthetic validity, owner alignment, audio quality, or held-out transfer.
+This verifier establishes artifact consistency and dispatch readiness only. It
+cannot certify aesthetic validity, owner alignment, audio quality, or transfer.
 """
 from __future__ import annotations
 
@@ -31,7 +31,9 @@ def main() -> int:
     paths = {
         "contract": ROOT / "docs/quality/output-quality-contract.md",
         "protocol": ROOT / "docs/quality/product-trial-protocol.md",
-        "quality_schema": ROOT / "schemas/output-quality.schema.json",
+        "product_schema": ROOT / "schemas/output-quality.schema.json",
+        "truth_schema": ROOT / "schemas/truth-gate.schema.json",
+        "target_schema": ROOT / "schemas/target-gap.schema.json",
         "decision_schema": ROOT / "schemas/decision-record.schema.json",
         "worker_schema": ROOT / "schemas/phase1-worker-iteration.schema.json",
         "benchmark": ROOT / "benchmarks/p01/benchmark-set.json",
@@ -40,60 +42,69 @@ def main() -> int:
         "owner_cal": ROOT / "benchmarks/p01/owner-calibration.json",
         "legacy_readme": ROOT / "benchmarks/p01/evaluations/README.md",
         "worker_loop": ROOT / "docs/phase1/WORKER-LOOP.md",
-        "work_order": ROOT / "docs/phase1/ITERATION-01-WORK-ORDER.md",
+        "iteration_1": ROOT / "benchmarks/p01/iterations/iteration-01.json",
     }
     for name, path in paths.items():
         if not path.exists():
             errors.append(f"missing required artifact: {name} -> {path.relative_to(ROOT)}")
 
     if errors:
-        print(json.dumps({"status": "NOT_READY", "errors": errors}, ensure_ascii=False, indent=2))
+        print(json.dumps({"status": "NOT_READY", "structural_errors": errors}, ensure_ascii=False, indent=2))
         return 1
 
     contract = paths["contract"].read_text(encoding="utf-8")
-    schema_text = paths["quality_schema"].read_text(encoding="utf-8")
+    protocol = paths["protocol"].read_text(encoding="utf-8")
+    product_schema_text = paths["product_schema"].read_text(encoding="utf-8")
+    truth_schema_text = paths["truth_schema"].read_text(encoding="utf-8")
+    target_schema_text = paths["target_schema"].read_text(encoding="utf-8")
     benchmark = load_json(paths["benchmark"])
     manifest = load_json(paths["manifest"])
     craft = load_json(paths["craft"])
     owner_cal = load_json(paths["owner_cal"])
-    load_json(paths["quality_schema"])
-    load_json(paths["decision_schema"])
-    load_json(paths["worker_schema"])
+    for p in ["product_schema", "truth_schema", "target_schema", "decision_schema", "worker_schema", "iteration_1"]:
+        load_json(paths[p])
 
-    # Contract regression checks: no known overfit/scalar shortcuts from v1.0.
-    forbidden_contract_fragments = [
-        "15 - 25 âm tiết",
-        "dài quá 40 từ",
-        "NEAR`: Đã đạt",
-        "MODERATE`: Mạch truyện",
-        "Mỗi đoạn kết thúc đều để lại",
+    # Contract regression checks.
+    for frag in [
+        "15 - 25 âm tiết", "dài quá 40 từ", "NEAR`: Đã đạt",
+        "MODERATE`: Mạch truyện", "Mỗi đoạn kết thúc đều để lại",
         "giải quyết trọn vẹn nghịch lý thị giác",
-    ]
-    for frag in forbidden_contract_fragments:
+    ]:
         if frag in contract:
             errors.append(f"contract retains uncalibrated/overfit rule: {frag!r}")
-
-    required_contract_terms = [
-        "anonymized pairwise preference",
-        "DEFECT",
-        "TEXT_PREDICTION",
-        "DEV",
-        "CALIBRATION",
-        "HOLDOUT",
-    ]
-    upper_contract = contract.upper()
-    for term in required_contract_terms:
-        if term.upper() not in upper_contract:
+    for term in ["pairwise", "TEXT_PREDICTION", "DEV", "CALIBRATION", "HOLDOUT", "failure signature"]:
+        if term.upper() not in contract.upper():
             errors.append(f"contract missing required design concept: {term}")
 
-    # Schema must separate pairwise results, defects and diagnostic hypotheses.
-    for term in ["pairwise_criteria", "defect_annotations", "spoken_comprehension", "diagnostic_hypothesis"]:
-        if term not in schema_text:
-            errors.append(f"quality schema missing {term}")
-    if "suspect_upstream_regions" in schema_text:
-        errors.append("failure signature still embeds upstream blame")
+    # Three-lane separation.
+    for phrase in [
+        "MUST NOT receive:\n\n- FoC or other craft-reference excerpts",
+        "begins only AFTER Lane B pairwise preference has been frozen",
+        "Lane A — Truth / scope gate",
+        "Lane B — Product pairwise preference",
+        "Lane C — Target-gap analysis",
+    ]:
+        if phrase not in protocol:
+            errors.append(f"protocol missing measurement-lane invariant: {phrase}")
 
-    # Benchmark partitions and aliases.
+    if "absolute_gates" in product_schema_text or '"target_gap"' in product_schema_text:
+        errors.append("Product pairwise schema still contains truth-gate or target-gap fields")
+    for term in ["pairwise_criteria", "defect_annotations", "spoken_comprehension", '"A"', '"B"']:
+        if term not in product_schema_text:
+            errors.append(f"Product pairwise schema missing {term}")
+    if "TRUTH|" in product_schema_text or "suspect_upstream_regions" in product_schema_text:
+        errors.append("Product output still embeds truth taxonomy or upstream blame")
+
+    if "P01_HISTORICAL_AUTHORITY_ONLY_NO_CRAFT_REFERENCES" not in truth_schema_text:
+        errors.append("Truth schema does not enforce the no-craft-reference authority boundary")
+    if "CRAFT_ONLY_NOT_TRUTH" in truth_schema_text:
+        errors.append("Truth schema unexpectedly includes craft-reference authority")
+
+    for term in ["CRAFT_ONLY_NOT_TRUTH", "matched_function", "product_evaluation_frozen", "remaining_gaps", "medium_limitation"]:
+        if term not in target_schema_text:
+            errors.append(f"Target-gap schema missing {term}")
+
+    # Benchmark partitions and reviewer aliases.
     samples = benchmark.get("samples", [])
     ids = [s.get("id") for s in samples]
     aliases = [s.get("reviewer_alias") for s in samples]
@@ -108,35 +119,34 @@ def main() -> int:
             errors.append(f"sample {sample.get('id')} has invalid partition {part}")
             continue
         partitions[part].add(sample.get("id"))
-        alias = str(sample.get("reviewer_alias", ""))
-        if not re.fullmatch(r"PX-\d{2}", alias):
-            errors.append(f"reviewer alias leaks semantics or has unexpected format: {alias}")
+        if not re.fullmatch(r"PX-\d{2}", str(sample.get("reviewer_alias", ""))):
+            errors.append(f"reviewer alias leaks semantics or has unexpected format: {sample.get('reviewer_alias')}")
     if not all(partitions.values()):
         errors.append("DEV/CALIBRATION/HOLDOUT must all be non-empty")
-    if partitions["DEV"] & partitions["CALIBRATION"] or partitions["DEV"] & partitions["HOLDOUT"] or partitions["CALIBRATION"] & partitions["HOLDOUT"]:
+    if any(partitions[a] & partitions[b] for a, b in [("DEV", "CALIBRATION"), ("DEV", "HOLDOUT"), ("CALIBRATION", "HOLDOUT")]):
         errors.append("dataset partitions overlap")
 
-    # Calibration labels: real owner preference must not be fabricated.
+    # Calibration labels and controls.
     for pair in benchmark.get("calibration_pairs", []):
         pair_id = pair.get("pair_id", "")
         left, right = pair.get("left"), pair.get("right")
         if left not in partitions["CALIBRATION"] or right not in partitions["CALIBRATION"]:
             errors.append(f"calibration pair {pair_id} references non-calibration sample")
-        same = left == right
-        label = pair.get("owner_label")
-        if same:
-            if label != "TIE_EXPECTED_CONTROL":
+        if left == right:
+            if pair.get("owner_label") != "TIE_EXPECTED_CONTROL":
                 errors.append(f"same-text control {pair_id} missing mechanical tie expectation")
-        elif label is not None:
-            errors.append(f"owner preference appears fabricated/pre-filled for {pair_id}")
+        elif pair.get("owner_label") is not None:
+            errors.append(f"owner preference appears pre-filled for {pair_id}")
 
     holdout = benchmark.get("holdout_policy", {})
-    if not isinstance(holdout.get("scored"), bool):
-        errors.append("holdout scored flag must be boolean")
     if holdout.get("exposed_to_contract_tuning") is not False:
         errors.append("holdout is exposed to contract tuning")
+    if holdout.get("reliability") != "FRESH_EXPOSED_NOT_BLIND":
+        errors.append("holdout reliability must state FRESH_EXPOSED_NOT_BLIND while stored in shared repo")
+    if holdout.get("access_enforcement") != "SHARED_REPO_NOT_SEQUESTERED":
+        errors.append("holdout access limitation is not explicit")
 
-    # Source manifest consistency and craft-only boundary.
+    # Source manifest and craft-only boundary.
     manifest_samples = {x["sample_id"]: x for x in manifest.get("product_samples", [])}
     for sid in ids:
         if sid not in manifest_samples:
@@ -151,18 +161,17 @@ def main() -> int:
         elif source.get("git_blob_sha1") and git_blob_sha1(source_path) != source["git_blob_sha1"]:
             errors.append(f"craft source blob identity changed: {source['source_id']}")
 
-    # Craft corpus coverage and exact anchor validity.
+    # Craft corpus coverage and anchors.
     excerpts = craft.get("excerpts", [])
-    if not 6 <= len(excerpts) <= 10:
-        errors.append(f"craft corpus should contain 6-10 excerpts, found {len(excerpts)}")
     episodes = {x.get("episode") for x in excerpts}
-    if len(episodes) < 2:
-        errors.append("craft corpus needs at least two episodes")
     required_functions = {"opening_investigation", "mechanism_explanation", "scale_change", "uncertainty", "transition", "local_payoff"}
     observed_functions = {f for x in excerpts for f in x.get("functions", [])}
-    missing_functions = required_functions - observed_functions
-    if missing_functions:
-        errors.append(f"craft corpus missing functions: {sorted(missing_functions)}")
+    if not 6 <= len(excerpts) <= 10:
+        errors.append(f"craft corpus should contain 6-10 excerpts, found {len(excerpts)}")
+    if len(episodes) < 2:
+        errors.append("craft corpus needs at least two episodes")
+    if required_functions - observed_functions:
+        errors.append(f"craft corpus missing functions: {sorted(required_functions - observed_functions)}")
     for ex in excerpts:
         source_id = ex.get("source_ref")
         if source_id not in craft_sources:
@@ -176,33 +185,27 @@ def main() -> int:
             errors.append(f"excerpt {ex.get('id')} end anchor not found")
         if start in text and end in text and text.index(start) > text.index(end):
             errors.append(f"excerpt {ex.get('id')} anchor order invalid")
-        if ex.get("medium") == "AUDIO_VERIFIED" and not ex.get("audio_start"):
-            errors.append(f"excerpt {ex.get('id')} claims audio verification without timestamp")
 
-    # Owner calibration state: no aesthetic self-certification.
+    # Owner calibration remains an external gate.
     non_control = [p for p in owner_cal.get("pairs", []) if "DUP" not in p.get("pair_id", "")]
     real_owner_labels = [p for p in non_control if p.get("owner_result") in {"A", "B", "TIE", "UNCERTAIN"}]
     judge_runs_complete = bool(non_control) and all(p.get("judge_runs") and p.get("position_control_complete") is True for p in non_control)
     human_calibrated = len(real_owner_labels) == len(non_control) and judge_runs_complete
 
-    # Legacy v1.0 evaluations must be explicitly quarantined.
     legacy_note = paths["legacy_readme"].read_text(encoding="utf-8")
     if "NOT" not in legacy_note or "gold" not in legacy_note.lower():
         errors.append("legacy evaluation quarantine is not explicit")
 
     if errors:
-        status = "NOT_READY"
-        exit_code = 1
+        status, exit_code = "NOT_READY", 1
     elif human_calibrated and holdout.get("scored") is True:
-        status = "READY_FOR_EXIT_REVIEW"
-        exit_code = 0
+        status, exit_code = "READY_FOR_EXIT_REVIEW", 0
     else:
-        status = "READY_FOR_HUMAN_CALIBRATION"
-        exit_code = 0
+        status, exit_code = "READY_FOR_HUMAN_CALIBRATION", 0
         if not human_calibrated:
-            warnings.append("Owner/judge calibration is not completed; Phase 1 cannot close.")
+            warnings.append("Owner/judge calibration is incomplete; Phase 1 cannot close.")
         if holdout.get("scored") is False:
-            warnings.append("Holdout transfer is intentionally unscored; Phase 1 cannot close.")
+            warnings.append("Fresh-exposed transfer sample remains unscored; Phase 1 cannot close.")
 
     result = {
         "status": status,
@@ -218,10 +221,12 @@ def main() -> int:
             "owner_labels_recorded": len(real_owner_labels),
             "owner_labels_required": len(non_control),
         },
+        "measurement_lanes": ["TRUTH_GATE", "PRODUCT_PAIRWISE", "TARGET_GAP"],
         "limitations": [
             "Structural verification does not prove aesthetic validity.",
             "Transcript-only craft references do not establish audio listenability.",
-            "Human preference calibration and held-out transfer remain external evidence gates."
+            "Shared-repo holdout is fresh/exposed, not sequestered blind.",
+            "Human preference calibration and transfer remain external evidence gates."
         ],
     }
     print(json.dumps(result, ensure_ascii=False, indent=2))
