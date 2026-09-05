@@ -14,7 +14,8 @@
     "observations",
     "remaining_gaps",
     "retained_strengths",
-    "medium_limitation"
+    "medium_limitation",
+    "retroactive_preference_change"
   ],
   "$defs": {
     "span": {
