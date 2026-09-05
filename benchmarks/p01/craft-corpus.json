@@ -1,0 +1,112 @@
+{
+  "version": "1.0.0",
+  "corpus_id": "FOC-CRAFT-P01-V1",
+  "authority": "CRAFT_ONLY_NOT_TRUTH",
+  "audio_status": "NOT_VERIFIED",
+  "coverage": {
+    "episodes": ["The Sumerians", "China's Han Dynasty"],
+    "functions": [
+      "opening_investigation",
+      "mechanism_explanation",
+      "scale_change",
+      "uncertainty",
+      "transition",
+      "local_payoff"
+    ]
+  },
+  "excerpts": [
+    {
+      "id": "FOC-SUM-INVESTIGATION",
+      "episode": "The Sumerians",
+      "source_ref": "FOC-SUMER-OPENING",
+      "functions": ["opening_investigation", "local_payoff"],
+      "start_anchor": "In the year 1625",
+      "end_anchor": "what in all the world could have happened to it?",
+      "medium": "TRANSCRIPT_ONLY",
+      "reason_for_inclusion": "Sustained material investigation that turns encountered objects into unresolved historical questions.",
+      "limitations": "Transcript-only; no audio timing or cadence verification."
+    },
+    {
+      "id": "FOC-SUM-MECHANISM",
+      "episode": "The Sumerians",
+      "source_ref": "FOC-SUMER-FULL",
+      "functions": ["mechanism_explanation"],
+      "start_anchor": "For millennia, these rivers have brought life",
+      "end_anchor": "Other than its rich clay soil",
+      "medium": "TRANSCRIPT_ONLY",
+      "reason_for_inclusion": "Explains a physical mechanism through observable environmental cause-and-effect rather than abstract summary.",
+      "limitations": "Exact audio delivery not verified."
+    },
+    {
+      "id": "FOC-SUM-SCALE",
+      "episode": "The Sumerians",
+      "source_ref": "FOC-SUMER-SECTION2",
+      "functions": ["scale_change", "transition"],
+      "start_anchor": "The two great rivers",
+      "end_anchor": "the land we call Iraq",
+      "medium": "TRANSCRIPT_ONLY",
+      "reason_for_inclusion": "Moves smoothly from local water and mountains to regional geography and civilizational scale.",
+      "limitations": "Short extracted repository section; not an audio-verified complete chapter."
+    },
+    {
+      "id": "FOC-HAN-OPENING",
+      "episode": "China's Han Dynasty",
+      "source_ref": "FOC-HAN-FULL",
+      "functions": ["opening_investigation", "local_payoff"],
+      "start_anchor": "In the early years of the third century around the Year 207 ad",
+      "end_anchor": "would the Golden Age of the Emperor's ever return?",
+      "medium": "TRANSCRIPT_ONLY",
+      "reason_for_inclusion": "Builds historical stakes through a concrete return to ruined Luoyang, then converts the scene into episode-scale inquiry.",
+      "limitations": "Transcript contains automatic-transcription errors and lacks verified timestamps."
+    },
+    {
+      "id": "FOC-HAN-MECHANISM",
+      "episode": "China's Han Dynasty",
+      "source_ref": "FOC-HAN-FULL",
+      "functions": ["mechanism_explanation", "scale_change"],
+      "start_anchor": "If you've ever seen footage of a car crash in slow motion",
+      "end_anchor": "The result is a vast arid steppe",
+      "medium": "TRANSCRIPT_ONLY",
+      "reason_for_inclusion": "Uses an analogy, quantified motion, and physical sequence to explain continental collision before widening to geography.",
+      "limitations": "Analogy is episode-specific craft evidence, not a recipe that all explanations require."
+    },
+    {
+      "id": "FOC-HAN-TRANSITION",
+      "episode": "China's Han Dynasty",
+      "source_ref": "FOC-HAN-FULL",
+      "functions": ["transition", "movement"],
+      "start_anchor": "This era of development and ingenuity is known as the spring and autumn period",
+      "end_anchor": "known as the warring States period",
+      "medium": "TRANSCRIPT_ONLY",
+      "reason_for_inclusion": "Turns technological development into political consequence through an explicit intermediate mechanism.",
+      "limitations": "Function match is craft-only; historical causal claims are not transferable to P01."
+    },
+    {
+      "id": "FOC-HAN-UNCERTAINTY",
+      "episode": "China's Han Dynasty",
+      "source_ref": "FOC-HAN-FULL",
+      "functions": ["uncertainty"],
+      "start_anchor": "It's thought that his court physicians had been giving him pills full of the liquid metal mercury",
+      "end_anchor": "this might explain some of his strange preoccupations towards the end of his life",
+      "medium": "TRANSCRIPT_ONLY",
+      "reason_for_inclusion": "Shows uncertainty carried inside the narration through explicit epistemic qualification rather than a detached methodology aside.",
+      "limitations": "Historical claim itself is not authority for P01."
+    },
+    {
+      "id": "FOC-HAN-PAYOFF",
+      "episode": "China's Han Dynasty",
+      "source_ref": "FOC-HAN-FULL",
+      "functions": ["local_payoff", "continue"],
+      "start_anchor": "The blackened ruins of lor yang became an emblem of the golden age that had now passed",
+      "end_anchor": "My breath catches and I cannot speak",
+      "medium": "TRANSCRIPT_ONLY",
+      "reason_for_inclusion": "Converts prior historical setup into an emotionally legible local payoff anchored in a primary voice and physical ruin.",
+      "limitations": "Transcript spelling and punctuation are noisy; audio delivery remains unverified."
+    }
+  ],
+  "coverage_limitations": [
+    "All current references are transcript-only.",
+    "Repository transcripts contain transcription noise; exact quotations must be checked before high-confidence cadence claims.",
+    "The corpus is deliberately small and function-oriented; it does not represent all FoC craft or all history-podcast styles."
+  ]
+}
