@@ -1,0 +1,262 @@
+{
+  "schema_version": "1.0.0",
+  "iteration_id": "phase1-benchmark-iteration-01",
+  "source_commit": "2929c16bbd615dc512749bd6a9ef4c5941c39c06",
+  "created_at": "2026-09-06T01:09:06+07:00",
+  "process": {
+    "objective": "Replace the overfit Phase 1 v1.0 rubric with a personalized, pairwise, defect-grounded benchmark architecture and make the Worker improvement loop itself observable without exposing private chain-of-thought.",
+    "decisions": [
+      {
+        "id": "D01",
+        "area": "primary craft measurement",
+        "change": "Made anonymized A/B preference the primary comparative signal for open-ended prose; absolute adjective ratings are no longer the main optimization target.",
+        "declared_reason": "Open-ended creative prose is easier to compare reliably pairwise than to anchor on uncalibrated absolute GOOD/WEAK/FAIL labels.",
+        "basis": [
+          "Chatbot Arena / Bradley-Terry pairwise human preference pattern",
+          "LitBench human-labelled pairwise creative-writing evaluation",
+          "docs/phase1/ITERATION-01-WORK-ORDER.md section 1"
+        ],
+        "expected_effect": "Reduce arbitrary scalar/adjective scoring and make old/new improvement judgments more directly inspectable.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "D02",
+        "area": "defect representation",
+        "change": "Moved essay/lecture behavior out of a mandatory seventh craft dimension and introduced a hierarchical span-grounded defect taxonomy with severity.",
+        "declared_reason": "Essay-like behavior is usually a pattern across concrete progression, exposition, connection, or spoken defects; scoring it separately risks double-counting the same weakness.",
+        "basis": [
+          "MQM hierarchical error taxonomy and severity pattern",
+          "docs/phase1/ITERATION-01-WORK-ORDER.md section 2"
+        ],
+        "expected_effect": "Make failure signatures more local and useful as the future root of upstream trace.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "D03",
+        "area": "criterion generality",
+        "change": "Removed criterion definitions tied to the specific token -> envelope -> paradox -> tablet solution path and removed fixed syllable/word thresholds for spoken prose.",
+        "declared_reason": "The benchmark must measure future narrative architectures fairly rather than reward the current P01 hypothesis or an unvalidated sentence-length proxy.",
+        "basis": [
+          "HELM scenario/metric separation and explicit coverage philosophy",
+          "docs/phase1/ITERATION-01-WORK-ORDER.md sections 3 and 4"
+        ],
+        "expected_effect": "Reduce Goodhart-style optimization against one P01 representation and uncalibrated cadence rules.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "D04",
+        "area": "target gap",
+        "change": "Replaced NEAR/MODERATE/FAR as the primary target-gap representation with function-matched exact-span differences, similarities, retained strengths, and medium limitation.",
+        "declared_reason": "A single scalar-like distance from FoC cannot show what remains different or support downstream diagnosis.",
+        "basis": [
+          "docs/phase1/ITERATION-01-WORK-ORDER.md section 5",
+          "Observable Learning Architecture requirement that benchmark output be the trace root"
+        ],
+        "expected_effect": "Make target-gap feedback directly actionable without pretending to measure a global aesthetic distance.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "D05",
+        "area": "dataset isolation",
+        "change": "Split benchmark samples into DEV, CALIBRATION, and HOLDOUT with opaque reviewer aliases and null owner labels for real calibration pairs.",
+        "declared_reason": "Previously inspected samples cannot validate a tuned rubric, and descriptive roles such as known_weak_essay leak the expected answer.",
+        "basis": [
+          "HELM-style standardized evaluation separation",
+          "LitBench held-out human preference design",
+          "docs/phase1/ITERATION-01-WORK-ORDER.md sections 6 and 7"
+        ],
+        "expected_effect": "Allow judge reliability to be measured against owner preference without using development examples as fake held-out evidence.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "D06",
+        "area": "owner calibration",
+        "change": "Prepared three unlabeled owner-preference pairs plus one same-text control; no owner preference was inferred from historical comments.",
+        "declared_reason": "The benchmark is intended to predict the owner's product preference, and agent-agent agreement alone cannot establish relevance.",
+        "basis": [
+          "LitBench human-calibrated creative-writing judge pattern",
+          "Chatbot Arena pairwise preference controls",
+          "docs/quality/product-trial-protocol.md"
+        ],
+        "expected_effect": "Create a measurable owner/judge agreement gate while preserving honest missing labels.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "D07",
+        "area": "craft reference coverage",
+        "change": "Expanded FoC craft coverage from one excerpt to eight transcript-only excerpts across The Sumerians and China's Han Dynasty, covering investigation, mechanism, scale, uncertainty, transition, and local payoff.",
+        "declared_reason": "A single Sumerian adventure opening overfits the target and risks equating FoC quality with one motif.",
+        "basis": [
+          "Repository craft transcripts inspected through GitHub",
+          "docs/architecture/observable-learning-architecture-plan.md Phase 1 corpus requirement",
+          "docs/phase1/ITERATION-01-WORK-ORDER.md section 10"
+        ],
+        "expected_effect": "Broaden the craft frame of reference while keeping FoC craft-only and function-matched.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "D08",
+        "area": "truth boundary",
+        "change": "Quarantined legacy v1.0 evaluations, removed their status as calibration/gold evidence, and made craft references explicitly CRAFT_ONLY_NOT_TRUTH.",
+        "declared_reason": "The previous 32/32 Truth conclusion was known to contain semantic overapproval and cannot seed the new benchmark as ground truth.",
+        "basis": [
+          "Prior round-01 semantic audit",
+          "docs/phase1/ITERATION-01-WORK-ORDER.md section 9"
+        ],
+        "expected_effect": "Prevent contaminated evaluator outputs from becoming the benchmark's truth labels.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "D09",
+        "area": "verifier semantics",
+        "change": "Replaced the hard-coded Phase 1 checklist with structural checks for partition isolation, label leakage, craft corpus coverage, source identities, anchor validity, upstream blame leakage, owner calibration state, and holdout state.",
+        "declared_reason": "A verifier that prints literal True exit criteria proves only that the author wrote True.",
+        "basis": [
+          "docs/phase1/ITERATION-01-WORK-ORDER.md section 11",
+          "Observable Learning Architecture requirement that assertions be supported by observations"
+        ],
+        "expected_effect": "Make structural readiness a derived result rather than a self-asserted status.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "D10",
+        "area": "worker observability",
+        "change": "Added a Worker loop contract and structured iteration schema with separate process and output surfaces; Product review remains blind to process.",
+        "declared_reason": "Implementation intent must be traceable after an output failure without biasing the initial output review.",
+        "basis": [
+          "Owner request for white-box observable process",
+          "docs/phase1/WORKER-LOOP.md"
+        ],
+        "expected_effect": "Allow later audit to traverse output defect -> process decision without treating Worker self-report as proof of output quality.",
+        "status": "APPLIED"
+      }
+    ],
+    "implementation_steps": [
+      {
+        "seq": 1,
+        "action": "Added active Worker improvement-loop contract and required process/output iteration record.",
+        "files": ["docs/phase1/WORKER-LOOP.md", "schemas/phase1-worker-iteration.schema.json", "docs/phase1/START.md"],
+        "observed_result": "Phase 1 entrypoint now routes the bounded benchmark branch through an observable Worker iteration."
+      },
+      {
+        "seq": 2,
+        "action": "Froze the first improvement work order from the independent benchmark review.",
+        "files": ["docs/phase1/ITERATION-01-WORK-ORDER.md"],
+        "observed_result": "Worker scope is limited to measurement architecture; no Writer round or Phase 2 work is authorized."
+      },
+      {
+        "seq": 3,
+        "action": "Rewrote the Output Quality Contract around pairwise preference, hard gates, defect taxonomy, descriptive target gaps, and evaluator reliability.",
+        "files": ["docs/quality/output-quality-contract.md"],
+        "observed_result": "The contract no longer defines good writing through the round-01 object sequence or fixed cadence thresholds."
+      },
+      {
+        "seq": 4,
+        "action": "Replaced the evaluation schema to represent pairwise criteria, span defects, output-only failure signatures, and separate diagnostic hypotheses.",
+        "files": ["schemas/output-quality.schema.json"],
+        "observed_result": "Failure signature no longer contains suspect_upstream_regions and spoken_comprehension carries explicit evidence-medium semantics through the contract."
+      },
+      {
+        "seq": 5,
+        "action": "Rewrote Product trial protocol for black-box pairwise review, position reversal, same-text control, owner calibration, and partition separation.",
+        "files": ["docs/quality/product-trial-protocol.md"],
+        "observed_result": "Reviewer intent/newness/upstream process are explicitly excluded from Product review."
+      },
+      {
+        "seq": 6,
+        "action": "Partitioned benchmark sources and froze unlabeled calibration pairs plus one untouched holdout sample.",
+        "files": ["benchmarks/p01/benchmark-set.json", "benchmarks/p01/owner-calibration.json"],
+        "observed_result": "DEV=3 samples, CALIBRATION=3 samples with 3 real pairs + 1 duplicate control, HOLDOUT=1 unscored sample."
+      },
+      {
+        "seq": 7,
+        "action": "Expanded source manifest and FoC craft corpus while preserving CRAFT_ONLY boundary.",
+        "files": ["benchmarks/p01/source-manifest.json", "benchmarks/p01/craft-corpus.json"],
+        "observed_result": "Craft corpus contains 8 transcript-only excerpts across 2 FoC episodes and six declared editorial functions."
+      },
+      {
+        "seq": 8,
+        "action": "Quarantined superseded v1.0 evaluation files instead of treating them as new-schema evidence.",
+        "files": ["benchmarks/p01/evaluations/README.md"],
+        "observed_result": "Legacy absolute ratings and legacy Truth conclusions are explicitly excluded from calibration and exit evidence."
+      },
+      {
+        "seq": 9,
+        "action": "Replaced hard-coded exit checklist with property-oriented structural verifier and corrected two self-blocking verifier conditions found during implementation audit.",
+        "files": ["scripts/experiments/verify_phase1_benchmark.py"],
+        "observed_result": "Verifier derives structural readiness from artifacts and is designed to stop at human-calibration readiness when owner labels/holdout evidence are missing."
+      }
+    ],
+    "validations": [
+      {
+        "command": "GitHub source inventory: competitor's scripts directory and P01 probe/archive directories",
+        "status": "PASS",
+        "observed_result": "Confirmed repository contains FoC Sumerians and Han Dynasty transcripts plus distinct historical P01 samples suitable for DEV/CALIBRATION/HOLDOUT partitioning."
+      },
+      {
+        "command": "Manual exact-anchor spot check via GitHub for FoC Sumerians opening and Section 2 plus Han transcript excerpts",
+        "status": "PASS",
+        "observed_result": "Corrected the Sumerian scale start anchor and Han payoff capitalization after inspection. Remaining full-corpus anchor checks are delegated to the structural verifier."
+      },
+      {
+        "command": "python scripts/experiments/verify_phase1_benchmark.py",
+        "status": "NOT_RUN",
+        "observed_result": "Current assistant environment has GitHub connector write access but no checked-out repository filesystem; a container git clone attempt could not resolve github.com. The verifier therefore has not been represented as executed."
+      }
+    ],
+    "deviations": [
+      "The iteration could not execute the repository-local structural verifier in the current connector-only environment, so readiness remains conservative.",
+      "No owner preference labels were filled and no Product judge calibration was simulated.",
+      "No audio verification or timestamps were invented for FoC references."
+    ],
+    "unresolved": [
+      "Run the structural verifier from a real checkout and fix any exact-anchor or schema defects it reports.",
+      "Materialize anonymized calibration battles and collect owner preferences for the three non-control pairs.",
+      "Run independent counterbalanced Product judges after owner labels exist and measure agreement/reliability.",
+      "Keep holdout unscored until the contract is frozen after calibration.",
+      "Audio/listener evidence remains unavailable; spoken_comprehension is text-prediction only until observed otherwise."
+    ]
+  },
+  "output": {
+    "benchmark_version": "1.1.0",
+    "deliverables": [
+      {"path": "docs/quality/output-quality-contract.md", "role": "product-quality contract"},
+      {"path": "schemas/output-quality.schema.json", "role": "pairwise/defect evaluation schema"},
+      {"path": "docs/quality/product-trial-protocol.md", "role": "black-box calibration protocol"},
+      {"path": "benchmarks/p01/benchmark-set.json", "role": "partitioned sample and pair registry"},
+      {"path": "benchmarks/p01/source-manifest.json", "role": "product/craft source provenance"},
+      {"path": "benchmarks/p01/craft-corpus.json", "role": "function-matched multi-episode craft corpus"},
+      {"path": "benchmarks/p01/owner-calibration.json", "role": "unlabelled owner calibration state"},
+      {"path": "scripts/experiments/verify_phase1_benchmark.py", "role": "structural readiness verifier"},
+      {"path": "docs/phase1/WORKER-LOOP.md", "role": "observable Worker loop contract"},
+      {"path": "schemas/phase1-worker-iteration.schema.json", "role": "process/output iteration schema"}
+    ],
+    "measurement_design": {
+      "primary_evaluation": "Anonymized counterbalanced pairwise preference A|B|TIE|UNCERTAIN over six product criteria with exact-span grounding.",
+      "diagnostic_method": "MQM-inspired hierarchical span defects with MINOR|MAJOR|CRITICAL severity; essay-like is a pattern, not a seventh score.",
+      "target_gap_method": "Function-matched candidate/reference span differences with specific remaining gaps and medium limitations; no global NEAR/MODERATE/FAR distance."
+    },
+    "dataset_partitions": {
+      "dev": "3 previously inspected P01 development samples.",
+      "calibration": "3 previously unlabelled historical P01 prose samples forming 3 real pairs plus 1 same-text control; owner labels absent.",
+      "holdout": "1 archive P01 draft reserved unscored and not inspected for contract tuning."
+    },
+    "owner_calibration_status": "PREPARED",
+    "craft_corpus_coverage": "8 transcript-only excerpts across 2 FoC episodes covering opening/investigation, mechanism explanation, scale change, uncertainty, transition, and local payoff. Audio remains NOT_VERIFIED.",
+    "verifier_result": {
+      "status": "NOT_RUN",
+      "command": "python scripts/experiments/verify_phase1_benchmark.py",
+      "observed_result": "Verifier implementation was audited and two self-blocking conditions were corrected, but repository-local execution was unavailable in the current connector-only environment."
+    },
+    "known_limitations": [
+      "No owner preference calibration has been collected yet.",
+      "No independent judge reliability results exist yet.",
+      "Holdout transfer is intentionally unscored.",
+      "Craft references are transcript-only and contain transcription noise.",
+      "Legacy v1.0 evaluation JSON remains in Git history/directory but is quarantined and not current evidence.",
+      "Structural verifier execution is still pending in a real checkout."
+    ],
+    "phase1_readiness": "EXPLORATORY",
+    "summary": "The benchmark architecture has been substantially revised away from the overfit v1.0 rubric and now has a credible path to personalized human-calibrated pairwise evaluation. It is not yet Phase 1-complete and is not yet claimed READY_FOR_HUMAN_CALIBRATION because the structural verifier has not been executed in a real repository checkout."
+  }
+}
