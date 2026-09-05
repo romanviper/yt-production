@@ -1,0 +1,154 @@
+{
+  "schema_version": "1.0.0",
+  "iteration_id": "phase1-benchmark-iteration-03",
+  "source_commit": "f0ab32d4978f367d60941585bba8219bd467c704",
+  "created_at": "2026-09-06T01:21:03+07:00",
+  "process": {
+    "objective": "Materialize reproducible, label-free owner calibration inputs so the Phase 1 benchmark can collect real product preference without reconstructing samples ad hoc or leaking process/source roles.",
+    "decisions": [
+      {
+        "id": "I03-D01",
+        "area": "owner calibration packaging",
+        "change": "Created three owner-facing packets containing only neutral scenario text, Sample A/B prose, allowed preference results, and optional product-feedback prompts.",
+        "declared_reason": "Iteration 02 had an owner calibration protocol but no concrete input surface, so preference collection would otherwise require manual reconstruction and risk metadata leakage.",
+        "basis": [
+          "docs/phase1/ITERATION-03-WORK-ORDER.md",
+          "benchmarks/p01/benchmark-set.json calibration pairs",
+          "Black-box Product boundary"
+        ],
+        "expected_effect": "Make owner labels collectable from frozen prose inputs without exposing internal source identities or intended winners.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "I03-D02",
+        "area": "feedback burden",
+        "change": "Owner packets ask for overall A/B/TIE/UNCERTAIN first and make detailed feedback prompts optional rather than requiring full criterion scoring.",
+        "declared_reason": "Owner preference is the primary personalized relevance signal; excessive rubric work would turn the owner into another benchmark worker and reduce practical calibration quality.",
+        "basis": [
+          "docs/phase1/ITERATION-03-WORK-ORDER.md",
+          "Owner-preference calibration goal"
+        ],
+        "expected_effect": "Keep human calibration lightweight while still allowing useful qualitative anchors when the difference is salient.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "I03-D03",
+        "area": "identity isolation",
+        "change": "Separated reviewer-facing owner packets from an internal dispatch map that binds A/B positions back to calibration sample IDs and future judge reversal orders.",
+        "declared_reason": "Traceability requires the mapping to exist, but Product/owner input must not carry source role or historical identity.",
+        "basis": [
+          "Black-box boundary in docs/quality/product-trial-protocol.md",
+          "Observable trace requirement for reproducible packet provenance"
+        ],
+        "expected_effect": "Preserve both reproducibility and preference isolation instead of sacrificing one for the other.",
+        "status": "APPLIED"
+      },
+      {
+        "id": "I03-D04",
+        "area": "calibration state",
+        "change": "Updated owner calibration state to `READY_FOR_OWNER_LABELS` and linked each genuine pair to its materialized packet; the duplicate remains a judge-only reliability control.",
+        "declared_reason": "The state should describe the inputs that actually exist and should not ask the owner to perform a meaningless preference judgment on identical text.",
+        "basis": [
+          "benchmarks/p01/owner-calibration.json",
+          "docs/quality/product-trial-protocol.md same-text control"
+        ],
+        "expected_effect": "Create a clear next gate: collect real owner labels, then run independent counterbalanced judges.",
+        "status": "APPLIED"
+      }
+    ],
+    "implementation_steps": [
+      {
+        "seq": 1,
+        "action": "Froze Iteration 03 as packaging-only work.",
+        "files": ["docs/phase1/ITERATION-03-WORK-ORDER.md"],
+        "observed_result": "No rubric, Writer, Truth, FoC, or production-scope changes were authorized."
+      },
+      {
+        "seq": 2,
+        "action": "Read the three calibration source prose artifacts and materialized the three genuine owner pairs.",
+        "files": [
+          "benchmarks/p01/calibration/owner-packets/owner-cal-01.json",
+          "benchmarks/p01/calibration/owner-packets/owner-cal-02.json",
+          "benchmarks/p01/calibration/owner-packets/owner-cal-03.json"
+        ],
+        "observed_result": "Each owner packet contains prose A/B and neutral preference prompts only; no source paths, internal sample IDs, FoC, process logs, or historical verdicts are included."
+      },
+      {
+        "seq": 3,
+        "action": "Created a separate internal dispatch map for traceability and future judge A/B reversal.",
+        "files": ["benchmarks/p01/calibration/dispatch-map.json"],
+        "observed_result": "Source identity and position-control mappings exist outside reviewer-facing packets."
+      },
+      {
+        "seq": 4,
+        "action": "Linked materialized packets into the owner calibration state.",
+        "files": ["benchmarks/p01/owner-calibration.json"],
+        "observed_result": "Three genuine pairs are READY_FOR_OWNER_LABELS; same-text duplicate remains judge-only."
+      }
+    ],
+    "validations": [
+      {
+        "command": "Manual connector inspection of owner-cal-01/02/03 payload design against Iteration 03 forbidden metadata list",
+        "status": "PASS",
+        "observed_result": "Packet payloads contain neutral scenario, prose, allowed results and optional feedback only; internal mappings are separate."
+      },
+      {
+        "command": "Source-text comparison against P01-C001/P01-C002/P01-C003 GitHub artifacts",
+        "status": "PASS",
+        "observed_result": "Packet prose was materialized directly from the three selected calibration source files with the intended pair mappings."
+      },
+      {
+        "command": "python scripts/experiments/verify_phase1_benchmark.py",
+        "status": "NOT_RUN",
+        "observed_result": "No executable repository checkout is available in the current connector-backed session; this is still reported honestly as pending."
+      }
+    ],
+    "deviations": [
+      "The same-text control was not exposed to the owner because it is a mechanical judge reliability control rather than a genuine preference question.",
+      "No owner result was inferred or written during packet creation."
+    ],
+    "unresolved": [
+      "Collect owner A/B/TIE/UNCERTAIN labels for OWNER-CAL-01, OWNER-CAL-02 and OWNER-CAL-03.",
+      "After owner labels are frozen, materialize independent judge packets in both A/B orders and run Product calibration.",
+      "Execute the structural verifier from a repository checkout or CI-capable context.",
+      "Run fresh-exposed transfer only after calibration stabilizes the contract."
+    ]
+  },
+  "output": {
+    "benchmark_version": "1.2.0",
+    "deliverables": [
+      {"path": "benchmarks/p01/calibration/owner-packets/owner-cal-01.json", "role": "owner preference pair 1"},
+      {"path": "benchmarks/p01/calibration/owner-packets/owner-cal-02.json", "role": "owner preference pair 2"},
+      {"path": "benchmarks/p01/calibration/owner-packets/owner-cal-03.json", "role": "owner preference pair 3"},
+      {"path": "benchmarks/p01/calibration/dispatch-map.json", "role": "internal trace and future judge reversal map"},
+      {"path": "benchmarks/p01/owner-calibration.json", "role": "owner label state and judge-reliability gate"},
+      {"path": "benchmarks/p01/iterations/iteration-02.json", "role": "previous measurement-lane process/output trace"}
+    ],
+    "measurement_design": {
+      "primary_evaluation": "Owner calibration can now consume three concrete opaque A/B prose packets and return overall A|B|TIE|UNCERTAIN without seeing source roles or craft references.",
+      "diagnostic_method": "Optional owner comments capture attention drop, understanding change, memorable detail and preference reason; full rubric scoring is not required from the owner.",
+      "target_gap_method": "No target-gap reference is present in owner packets; FoC remains isolated to Lane C after Product preference freeze."
+    },
+    "dataset_partitions": {
+      "dev": "Unchanged from Iteration 02.",
+      "calibration": "Three genuine owner packets are materialized from the three calibration samples; internal A/B mapping is stored separately.",
+      "holdout": "Unchanged fresh-exposed transfer sample, not blind/sequestered."
+    },
+    "owner_calibration_status": "PREPARED",
+    "craft_corpus_coverage": "Unchanged: 8 transcript-only FoC excerpts across 2 episodes; none are included in owner preference packets.",
+    "verifier_result": {
+      "status": "NOT_RUN",
+      "command": "python scripts/experiments/verify_phase1_benchmark.py",
+      "observed_result": "Still pending in an executable checkout; no synthetic pass was recorded."
+    },
+    "known_limitations": [
+      "Owner preference labels are still absent until the owner actually judges the three packets.",
+      "Independent Product judge packets/runs and position-reversal reliability are not yet executed.",
+      "Structural verifier has not been executed in a checked-out repository.",
+      "Transfer sample is fresh/exposed rather than sequestered blind.",
+      "Audio/listener evidence remains absent."
+    ],
+    "phase1_readiness": "READY_FOR_HUMAN_CALIBRATION",
+    "summary": "The benchmark now has a concrete, reproducible human-calibration surface. Worker/process observability is preserved separately from owner-facing Product inputs. The next valid action is real owner preference labeling, not another rubric rewrite or a Writer round."
+  }
+}
