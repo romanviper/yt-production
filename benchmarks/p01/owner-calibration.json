@@ -1,0 +1,51 @@
+{
+  "version": "1.0.0",
+  "calibration_id": "P01-OWNER-CAL-V1",
+  "status": "PREPARED_NOT_LABELLED",
+  "contract_version": "1.1",
+  "instructions": "Present each pair with opaque sample aliases and reversed order. Do not reveal source paths, historical verdicts, or expected winner. Record owner preference only when explicitly supplied.",
+  "allowed_owner_results": ["A", "B", "TIE", "UNCERTAIN"],
+  "pairs": [
+    {
+      "pair_id": "P01-CAL-01",
+      "sample_aliases": ["PX-11", "PX-12"],
+      "owner_result": null,
+      "owner_notes": null,
+      "judge_runs": [],
+      "position_control_complete": false
+    },
+    {
+      "pair_id": "P01-CAL-02",
+      "sample_aliases": ["PX-12", "PX-13"],
+      "owner_result": null,
+      "owner_notes": null,
+      "judge_runs": [],
+      "position_control_complete": false
+    },
+    {
+      "pair_id": "P01-CAL-03",
+      "sample_aliases": ["PX-11", "PX-13"],
+      "owner_result": null,
+      "owner_notes": null,
+      "judge_runs": [],
+      "position_control_complete": false
+    },
+    {
+      "pair_id": "P01-CAL-DUP-01",
+      "sample_aliases": ["PX-11", "PX-11"],
+      "owner_result": "TIE",
+      "owner_notes": "Mechanical same-text reliability control, not a product preference label.",
+      "judge_runs": [],
+      "position_control_complete": false
+    }
+  ],
+  "metrics_after_labels": [
+    "owner_judge_pairwise_agreement",
+    "position_consistency",
+    "duplicate_consistency",
+    "uncertainty_rate",
+    "evidence_span_validity",
+    "clear_vs_subtle_pair_separation"
+  ],
+  "completion_rule": "Do not mark COMPLETED until real owner preferences and independent judge runs have been recorded for the non-control pairs."
+}
