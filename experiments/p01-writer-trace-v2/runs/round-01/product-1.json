@@ -1,0 +1,24 @@
+{
+  "packet_sha256": "9f45a0c62eb3f9f7945af09f7a82009a53b3e42901cc40ae5e50da8e7c34d953",
+  "winner": "A",
+  "dimensions": {
+    "continue": {
+      "winner": "A"
+    },
+    "movement": {
+      "winner": "A"
+    },
+    "specificity": {
+      "winner": "A"
+    },
+    "connections": {
+      "winner": "A"
+    },
+    "listenability": {
+      "winner": "B"
+    },
+    "payoff": {
+      "winner": "A"
+    }
+  }
+}

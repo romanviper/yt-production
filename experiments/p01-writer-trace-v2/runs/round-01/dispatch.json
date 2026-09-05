@@ -1,0 +1,13 @@
+{
+  "candidate_sha256": "57e790a6d685edaafc5930ef3f4d08f482e37bcc193cfd5d32c2d710fc3c546b",
+  "candidate_labels": {
+    "product-1": "A",
+    "product-2": "B"
+  },
+  "review_packet_hashes": {
+    "product-1": "9f45a0c62eb3f9f7945af09f7a82009a53b3e42901cc40ae5e50da8e7c34d953",
+    "product-2": "e24daac0be6bd72474065e941ea11c34fc53fe767af0f861a6872a041ecd2ae3",
+    "truth": "4c9a0b6c92a546e0716967cf4aaa07efc067212050ce55f19adcfe375f587ba8",
+    "trace-auditor": "01fafc5ba8b80c06da3720497dd6bb29f722dce786ce75d35ff1417867d78765"
+  }
+}

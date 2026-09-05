@@ -1,0 +1,5 @@
+{
+  "schema": 2,
+  "source_commit": "2bf59edd0a5e83a9d186146bff4bd6e0c18c671b",
+  "note": "v2 inherits historical/product inputs from the frozen v1 source commit; plan and generation artifacts are separately hash-locked during the run"
+}
