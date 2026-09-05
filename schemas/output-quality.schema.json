@@ -1,24 +1,19 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Phase1OutputQualityEvaluation",
+  "title": "Phase1ProductPairwiseEvaluation",
+  "description": "Lane B only: black-box Product pairwise preference. Truth and target-gap outputs use separate schemas.",
   "type": "object",
   "required": [
     "schema_version",
     "evaluation_id",
-    "evaluation_kind",
     "contract_version",
     "evidence_medium",
-    "absolute_gates",
+    "samples",
     "pairwise_criteria",
     "defect_annotations",
-    "failure_signature",
-    "target_gap"
+    "failure_signature"
   ],
   "$defs": {
-    "gateStatus": {
-      "type": "string",
-      "enum": ["PASS", "FAIL", "UNCERTAIN"]
-    },
     "pairwiseResult": {
       "type": "string",
       "enum": ["A", "B", "TIE", "UNCERTAIN", "NOT_APPLICABLE"]
@@ -35,19 +30,8 @@
       "type": "object",
       "required": ["sample", "quote"],
       "properties": {
-        "sample": {"type": "string", "enum": ["A", "B", "REFERENCE"]},
+        "sample": {"type": "string", "enum": ["A", "B"]},
         "quote": {"type": "string", "minLength": 1}
-      },
-      "additionalProperties": false
-    },
-    "gateEvaluation": {
-      "type": "object",
-      "required": ["status", "spans", "observation", "uncertainty"],
-      "properties": {
-        "status": {"$ref": "#/$defs/gateStatus"},
-        "spans": {"type": "array", "items": {"$ref": "#/$defs/span"}},
-        "observation": {"type": "string"},
-        "uncertainty": {"type": "string"}
       },
       "additionalProperties": false
     },
@@ -70,7 +54,7 @@
       "properties": {
         "defect": {
           "type": "string",
-          "pattern": "^(TRUTH|PROGRESSION|EXPOSITION|CONNECTION|SPOKEN)\\.[A-Z0-9_]+$"
+          "pattern": "^(PROGRESSION|EXPOSITION|CONNECTION|SPOKEN)\\.[A-Z0-9_]+$"
         },
         "severity": {"$ref": "#/$defs/severity"},
         "span": {"$ref": "#/$defs/span"},
@@ -84,25 +68,14 @@
   "properties": {
     "schema_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
     "evaluation_id": {"type": "string", "minLength": 1},
-    "evaluation_kind": {"type": "string", "enum": ["PAIRWISE_PRODUCT", "SINGLE_DIAGNOSTIC"]},
     "contract_version": {"type": "string", "minLength": 1},
     "evidence_medium": {"$ref": "#/$defs/medium"},
     "samples": {
       "type": "object",
+      "required": ["A", "B"],
       "properties": {
-        "A": {"type": "string"},
-        "B": {"type": "string"}
-      },
-      "additionalProperties": false
-    },
-    "absolute_gates": {
-      "type": "object",
-      "required": ["G_TRUTH", "G_COHERENCE", "G_SCOPE", "G_LANGUAGE"],
-      "properties": {
-        "G_TRUTH": {"$ref": "#/$defs/gateEvaluation"},
-        "G_COHERENCE": {"$ref": "#/$defs/gateEvaluation"},
-        "G_SCOPE": {"$ref": "#/$defs/gateEvaluation"},
-        "G_LANGUAGE": {"$ref": "#/$defs/gateEvaluation"}
+        "A": {"type": "string", "minLength": 1},
+        "B": {"type": "string", "minLength": 1}
       },
       "additionalProperties": false
     },
@@ -134,31 +107,6 @@
         "severity": {"type": ["string", "null"], "enum": ["MINOR", "MAJOR", "CRITICAL", null]},
         "observation": {"type": "string"},
         "uncertainty": {"type": "string"}
-      },
-      "additionalProperties": false
-    },
-    "target_gap": {
-      "type": "object",
-      "required": ["matched_reference_id", "matched_function", "candidate_spans", "reference_spans", "similarities", "differences", "remaining_gap", "retained_strengths", "medium_limitation"],
-      "properties": {
-        "matched_reference_id": {"type": ["string", "null"]},
-        "matched_function": {"type": ["string", "null"]},
-        "candidate_spans": {"type": "array", "items": {"type": "string"}},
-        "reference_spans": {"type": "array", "items": {"type": "string"}},
-        "similarities": {"type": "array", "items": {"type": "string"}},
-        "differences": {"type": "array", "items": {"type": "string"}},
-        "remaining_gap": {"type": "array", "items": {"type": "string"}},
-        "retained_strengths": {"type": "array", "items": {"type": "string"}},
-        "medium_limitation": {"type": "string"}
-      },
-      "additionalProperties": false
-    },
-    "diagnostic_hypothesis": {
-      "type": "object",
-      "properties": {
-        "status": {"type": "string", "enum": ["NOT_ASSESSED", "TENTATIVE"]},
-        "suspected_regions": {"type": "array", "items": {"type": "string"}},
-        "basis_refs": {"type": "array", "items": {"type": "string"}}
       },
       "additionalProperties": false
     }
