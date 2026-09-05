@@ -1,5 +1,10 @@
 # P01 writer-observability loop v2
 
+> **LEGACY / EVIDENCE ONLY.** Round 1 is complete and this experiment is closed.
+> Do not run `plan`, `lock-plan`, `prepare`, or `decide` as the current workflow.
+> Preserve the run artifacts as calibration/provenance evidence. Current
+> architecture work starts at `docs/phase1/START.md`.
+
 Owner-authorized diagnostic experiment on `codex/p01-writer-trace-loop-v2`, based on `2bf59edd0a5e83a9d186146bff4bd6e0c18c671b`. The frozen v1 experiment and production paths are read-only.
 
 ## 1. Preflight and Planner packet

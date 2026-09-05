@@ -1,5 +1,10 @@
 # P01: evidence-led FoC comparison loop
 
+> **LEGACY / EVIDENCE ONLY.** This experiment is closed. Do not start, extend,
+> rerun, or treat the commands below as the current repository workflow. Preserve
+> its artifacts as historical evidence for Phase 1 benchmark calibration. Current
+> architecture work starts at `docs/phase1/START.md`.
+
 Owner-authorized system experiment, 2026-09-05. Source: `82b94ed`.
 Branch: `codex/p01-foc-evidence-loop-v1`. Production and historical probes are read-only.
 
