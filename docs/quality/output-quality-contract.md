@@ -1,286 +1,297 @@
-# Output Quality Contract v1.2 — Historical Podcast Prose
+# Output Quality Contract v1.3 — Historical Podcast Prose
 
-Status: **PHASE 1 / CALIBRATION CANDIDATE, NOT CERTIFIED**  
+Status: **ARCHITECTURE FROZEN FOR PILOT / NOT CERTIFIED**  
+Construct: `OWNER_PRODUCT_FIT`  
 Target: Vietnamese long-form historical podcast prose  
-Primary craft reference family: Fall of Civilizations (`CRAFT_ONLY`, never historical authority)
+Craft reference family: Fall of Civilizations (`CRAFT_ONLY`, post-vote only)
 
-## 1. Measurement philosophy
+## 1. Frozen construct
 
-The benchmark is the product-side root of the future trace tree. It must identify an observable failure before any upstream process log is opened.
+Benchmark V1 measures:
 
-It answers three different questions through three independent measurement lanes:
+> blind preference of the product owner between two Vietnamese historical-podcast outputs performing the same editorial function, while historical truth is audited independently.
 
-1. **Truth lane:** Is this individual sample historically admissible?
-2. **Product lane:** Which anonymized sample works better for the intended podcast product?
-3. **Target-gap lane:** After Product preference is frozen, what observable craft differences remain to a function-matched reference?
+This is not a claim about general-audience preference, objective literary quality, FoC similarity, or AI-judge preference.
 
-These questions must not be collapsed into one evaluator record. A reviewer may not use evidence from a later lane to justify an earlier result.
+The benchmark is the product-side root of the future trace tree:
 
-The design adapts established patterns rather than inventing a single custom scoring system:
+`output -> observed preference/failure -> failure signature -> later white-box trace -> root cause`
 
-- HELM: explicit scenario/metric separation, multi-metric measurement, visible coverage gaps.
-- MQM: span-grounded hierarchical defect annotation with severity.
-- Chatbot Arena / Bradley-Terry: anonymized pairwise preference for open-ended output comparison.
-- LitBench: creative-writing judges require calibration against human preference; model agreement is not ground truth.
+Output diagnosis must never silently become upstream blame.
 
-## 2. Product scenario
+## 2. Evaluation unit primitive
 
-The benchmark is scoped to:
+Every comparison belongs to an explicit evaluation unit:
 
-- language: Vietnamese;
-- medium: spoken-first historical narration;
-- product: long-form 60–120 minute history podcast / video essay;
-- current pilot: history of writing in the Sumerian / Late Uruk context;
-- requirements: historical grounding, one-pass comprehensibility, sustained listener interest, meaningful progression, earned local payoff;
-- craft target: FoC-like narrative effectiveness without copying distinctive wording, cadence, motifs, or chapter structure.
+`historical_topic × editorial_function × granularity × modality × evidence_condition`
 
-A result outside this scenario is not automatically transferable.
+Granularity:
 
----
+- `FUNCTION_CLIP` — same editorial function, frequent iteration signal;
+- `SECTION_SENTINEL` — longer flow/accumulation check;
+- `EPISODE_SENTINEL` — occasional macro Goodhart check.
 
-# Lane A — Truth / scope gate
+Do not define evaluation units by fixed word counts.
 
-Lane A evaluates one sample at a time against approved P01 historical authority only.
+Schema: `schemas/eval-unit.schema.json`.
 
-It receives no FoC craft references, Product preference, target-gap analysis, Writer/Planner/Worker trace, or legacy reviewer verdict used as gold truth.
+## 3. Independent measurement lanes
 
-### `G_TRUTH`
+The benchmark has four non-compensatory/independent surfaces.
 
-Observable question: Does each factual proposition stay within approved historical authority and its uncertainty boundary?
+### Lane A — Product preference
 
-Relevant defects include unsupported fact, unsupported causal relationship, overstated certainty, hidden factual premise, or reconstruction presented as witnessed fact.
+Primary optimization signal.
 
-Exact quotation establishes location only; it does not establish semantic entailment.
+The owner or shadow judge sees only anonymized A/B material for the same evaluation unit. Before any taxonomy, Truth result, or craft reference appears, record:
 
-### `G_COHERENCE`
+`A | B | TIE | BOTH_FAIL | UNCERTAIN`
 
-Observable question: Does the prose contradict itself or require mutually incompatible states to be true?
+plus:
 
-### `G_SCOPE`
+`LOW | MEDIUM | HIGH` confidence.
 
-Observable question: Does the passage remain within the requested historical and editorial scope?
+The first-pass vote is then frozen.
 
-### `G_LANGUAGE`
+`BOTH_FAIL` is distinct from `TIE`: it prevents the benchmark from treating "less bad" as a positive target.
 
-Observable question: Is the Vietnamese intelligible enough to evaluate the intended product?
+Primary preference schema: `schemas/pairwise-preference.schema.json`.
 
-Gate result:
+### Lane B — Truth
 
-`PASS | FAIL | UNCERTAIN`
+Historical truth is audited claim by claim against approved historical authority. Truth does not receive FoC references or Product preference.
 
-`UNCERTAIN` cannot be silently converted to PASS.
+Truth runs even when Product preference is also being measured. A preferred output can still be blocked from release by a material truth failure.
 
-Lane A output conforms to `schemas/truth-gate.schema.json`.
+Truth is never numerically traded against craft.
 
----
+Schema: `schemas/truth-gate.schema.json`.
 
-# Lane B — Primary Product measurement: anonymized pairwise preference
+### Lane C — Spoken evidence
 
-Lane B is the primary open-ended craft comparison.
-
-It receives only anonymized Sample A and Sample B, the frozen Product criteria, and the Product output schema.
-
-It MUST NOT receive:
-
-- FoC or other craft-reference excerpts;
-- Truth reviewer results;
-- target-gap records;
-- candidate/baseline/new/old labels;
-- historical verdicts;
-- Planner/Writer/Worker process logs;
-- intended winner;
-- upstream diagnostic hypotheses.
-
-Allowed result per criterion:
-
-`A | B | TIE | UNCERTAIN`
-
-Each verdict requires exact spans, an observation about the supplied prose, a separate interpretation of likely listener consequence, and uncertainty/counterevidence.
-
-### `continue`
-
-Observable question: After this unit, which sample leaves a more concrete reason to keep listening?
-
-Valid evidence may be unresolved consequence, curiosity, a developing situation, an accumulating pattern, emotional stake, or intellectual pressure. A rhetorical question or cliffhanger is not required.
-
-False proxies include question-mark count, danger by itself, or requiring every paragraph to end unresolved.
-
-### `movement`
-
-Observable question: Which sample produces the more meaningful change in understanding, situation, or inquiry through the supplied text?
-
-Required evidence should identify the relevant before/after states and the textual step that causes the change.
-
-False proxies include event count, verb count, beat count, or the specific token → envelope → tablet sequence.
-
-### `specificity`
-
-Observable question: In which sample do concrete details do more explanatory or narrative work?
-
-A detail is useful when removing it would weaken the listener's ability to understand, imagine, distinguish, or infer something relevant.
-
-False proxies include raw counts of names, dates, measurements, artifact IDs, or sensory adjectives.
-
-### `connections`
-
-Observable question: Which sample supplies the clearer transition between adjacent ideas without requiring the reviewer to invent a bridge?
-
-A connection may be causal, contrastive, spatial, temporal, evidentiary, or conceptual. Historically unsupported causality is handled in Lane A; it is never rewarded as a craft strength.
-
-### `spoken_comprehension`
-
-Observable question: Which sample is easier to follow in one pass under the available medium evidence?
-
-Every judgment declares one medium:
+Spoken claims are constrained by the evidence mode:
 
 - `TEXT_PREDICTION`
 - `AUDIO_OBSERVATION`
 - `LISTENER_REPORT`
 
-Text-only judgments are predictions. No universal syllable, clause, or word-count threshold is assumed without calibration.
+Text can identify risks such as referent ambiguity, syntactic load, concept stacking, or difficult transitions. Text alone cannot certify prosody, listening effort, comprehension, memory, or actual desire to continue.
 
-### `payoff`
+Schema: `schemas/spoken-observation.schema.json`.
 
-Observable question: Which sample earns a more useful local understanding from what it has actually set up and developed?
+### Lane D — Target gap
 
-A local payoff need not resolve the entire episode. A summary is not automatically a payoff; an open question is not automatically a failure.
+FoC or other craft references appear only after primary preference has frozen.
 
-Lane B output conforms to `schemas/output-quality.schema.json`.
+Target-gap analysis is function-matched and descriptive. It must not score stylistic similarity, change the primary vote, or treat FoC as historical authority.
 
-## Lane B diagnostic defect taxonomy
+Schema: `schemas/target-gap.schema.json`.
 
-Defects explain observable Product weaknesses but do not replace pairwise preference.
+## 4. Post-vote Product diagnostics
 
-Each annotation requires defect family/subtype, exact span, severity, observation, consequence, and uncertainty.
+Rubric priming is forbidden. Diagnostics happen only after first-pass preference freezes.
 
-Severity:
+The legacy six-dimension score surface (`continue`, `movement`, `specificity`, `connections`, `spoken_comprehension`, `payoff`) is not the primary decision mechanism in Benchmark V1.
 
-- `MINOR`: noticeable but does not materially disrupt the unit's function;
-- `MAJOR`: materially weakens comprehension, progression, or desire to continue;
-- `CRITICAL`: makes the Product unit unusable for its intended function. Historical gate breaches remain Lane A findings.
+Instead, an observable weakness is represented as a failure signature.
 
-Initial Product taxonomy:
+Schema: `schemas/failure-signature.schema.json`.
 
-```text
-PROGRESSION
-  STAGNANT_STATE
-  REPETITIVE_STATE
-  UNEARNED_PAYOFF
+### Failure scope
 
-EXPOSITION
-  CONCLUSION_BEFORE_EXPERIENCE
-  ABSTRACT_THESIS_TRANSITION
-  EXPLANATION_CLOSES_QUESTION
+- `SPAN`
+- `MULTI_SPAN`
+- `UNIT_GLOBAL`
 
-CONNECTION
-  MISSING_BRIDGE
-  REVIEWER_SUPPLIED_BRIDGE
+Macro defects do not need an invented single culprit sentence.
 
-SPOKEN
-  PROCESSING_OVERLOAD
-  SYNTACTIC_BACKTRACK
-  REPETITIVE_PHRASING
-```
-
-`essay-like` is a pattern across concrete defects, not a mandatory seventh score and not an automatic veto on exposition.
-
-## Lane B failure signature
-
-A Product failure signature is strictly output-side evidence:
+### Minimal Product taxonomy
 
 ```text
-signature_id
-sample_or_pair_id
-criterion_ids
-primary_defect
-supporting_defects
-exact_spans
-severity
-observation
-uncertainty
+PRODUCT_DEFECT
+├── NARRATIVE_FUNCTION
+│   ├── STALLED_PROGRESSION
+│   ├── UNMOTIVATED_TRANSITION
+│   ├── LOST_ORIENTATION
+│   ├── SETUP_WITHOUT_PAYOFF
+│   └── PAYOFF_NOT_EARNED
+├── EXPOSITION_LOAD
+│   ├── CONCEPT_STACK
+│   ├── BACKGROUND_DETOUR
+│   ├── CAVEAT_STACK
+│   └── EXPLANATION_BEFORE_NEED
+├── SPOKEN_COMPREHENSION
+│   ├── REFERENT_AMBIGUITY
+│   ├── SYNTACTIC_OVERLOAD
+│   ├── ORAL_AMBIGUITY
+│   └── PROSODY_OR_PRONUNCIATION_FAILURE
+├── GROUNDING_SPECIFICITY
+│   ├── ABSTRACT_WITHOUT_ANCHOR
+│   ├── GENERIC_ACTOR_OR_ACTION
+│   └── SCENE_WITHOUT_MATERIAL_DETAIL
+├── VOICE_STANCE
+│   ├── LECTURE_MODE
+│   ├── META_EXPLANATION
+│   ├── EXCESSIVE_AUTHORITY
+│   ├── EXCESSIVE_HEDGING
+│   └── TONAL_MISMATCH
+└── REDUNDANCY
+    ├── PROPOSITION_RESTATEMENT
+    ├── CONCEPTUAL_LOOP
+    └── REDUNDANT_SUMMARY
 ```
 
-It MUST NOT contain `suspect_upstream_regions`, `planner_fault`, `writer_fault`, or equivalent root-cause claims.
+Canonical taxonomy artifact: `benchmarks/p01/taxonomy.json`.
 
-A separate diagnostic hypothesis may later use white-box process evidence, but it is not benchmark truth.
+### Anti-double-counting invariant
 
----
+One observable failure has exactly one `primary_family`.
 
-# Lane C — Post-preference target-gap analysis
+Secondary effects belong in `contributes_to` rather than becoming several supposedly independent failures.
 
-Lane C starts only after the Lane B Product result has been frozen.
+If owner preference is clear but the taxonomy cannot explain it, keep the Product preference and mark the diagnostic `UNRESOLVED`. The taxonomy does not have authority to erase a preference it cannot explain.
 
-It receives one selected sample/passage and pre-frozen function-matched `CRAFT_ONLY` reference excerpts.
+`root_cause` in a failure signature is always `null` during Phase 1.
 
-It MUST NOT change, reinterpret, or retroactively justify the frozen Lane B preference.
+## 5. Truth semantics
 
-Target gap is descriptive, not a scalar distance. Do not use `NEAR | MODERATE | FAR` as the primary representation.
+Truth audit first identifies what kind of claim exists before verifying it.
 
-A target-gap record requires:
+Claim types include:
 
-- frozen Product evaluation reference;
-- matched craft-reference ID and editorial function;
-- exact sample and reference spans;
-- observable similarity;
-- observable difference;
-- specific remaining gap;
-- retained strength;
-- medium limitation.
+- `EXPLICIT`
+- `IMPLIED_PREMISE`
+- `CAUSAL`
+- `DATE_QUANTITY`
+- `QUOTATION_PARAPHRASE`
+- `RECONSTRUCTION`
 
-No single excerpt establishes a global distance from FoC.
+Verifiability:
 
-FoC remains `CRAFT_ONLY_NOT_TRUTH`; its historical claims are never P01 truth authority.
+- `VERIFIABLE`
+- `PARTLY_VERIFIABLE`
+- `NONFACTUAL`
 
-Lane C output conforms to `schemas/target-gap.schema.json`.
+Source relation:
 
----
+- `SUPPORTS`
+- `QUALIFIES`
+- `CONFLICTS`
+- `ABSENT`
 
-# Reviewer grounding rules
+Verdict:
 
-Every verdict preserves the distinction:
+- `SUPPORTED`
+- `QUALIFIED`
+- `RECONSTRUCTION`
+- `UNSUPPORTED`
+- `NONFACTUAL`
 
-- **observation:** what is present or absent in the supplied material;
-- **interpretation:** why that may matter to the intended listener/product.
+A rhetorical question is not automatically nonfactual if it carries an implied factual premise. Temporal sequence or association does not prove causality. Exact quotation establishes location, not entailment.
 
-Missing evidence means `UNCERTAIN`, not an inferred PASS.
+A high-materiality unsupported claim or a material reconstruction narrated as settled fact may be a release blocker.
 
-Product reviewers may not use Worker process logs as proof that an intended feature exists. Process is opened only after an output defect has been observed and only for downstream diagnosis.
+## 6. Owner preference protocol
 
-# Dataset partitions
+The owner workflow is deliberately lightweight:
+
+1. hide system/model/prompt/source identity;
+2. randomize A/B position where controls require it;
+3. collect first-pass `A/B/TIE/BOTH_FAIL/UNCERTAIN`;
+4. collect confidence;
+5. freeze preference;
+6. only then ask optional free reason and decisive spans;
+7. only after that map the reason into the taxonomy, allowing `UNRESOLVED`.
+
+The owner is the gold signal only for the declared construct `OWNER_PRODUCT_FIT`. The owner cannot override Truth.
+
+## 7. LLM judge policy
+
+LLM judges begin in `SHADOW_ONLY` mode.
+
+A shadow judge predicts owner preference but cannot:
+
+- drive optimization;
+- overturn owner labels;
+- become gold because several models agree;
+- receive FoC during the primary vote.
+
+Reliability must be evaluated on unseen owner-labelled evidence using at least:
+
+- owner agreement;
+- owner self-consistency reference ceiling;
+- position reversal;
+- duplicate consistency;
+- evidence-span validity;
+- confidence-conditioned behavior;
+- abstention behavior;
+- Vietnamese slice;
+- long-context slice;
+- topic transfer.
+
+There is no universal agreement threshold in V1. Any tolerance must be pre-registered before the sequestered set is opened.
+
+Schema: `schemas/judge-reliability.schema.json`.
+
+## 8. Dataset roles
 
 ### DEV
 
-May be inspected while criteria are designed. Previously discussed P01 samples belong here.
+Anything used to design/tune the benchmark, including all historical P01 material already visible in this repository.
 
 ### CALIBRATION
 
-Used to compare judge predictions against real owner/human preference. Expected owner labels remain absent until actually supplied.
+Fresh owner-labelled pairs collected under a frozen protocol. Used to understand owner behavior and tune a shadow judge. Not final out-of-sample evidence.
 
-### HOLDOUT / transfer sample
+### SEQUESTERED
 
-Not used to tune criteria and reserved for a fresh transfer check after definitions stabilize.
+Private/restricted fresh-topic evidence not visible while benchmark/judge rules are being tuned.
 
-Because the current sample is stored in a shared repository, its reliability must be described as `FRESH_EXPOSED_NOT_BLIND`, not as a sequestered blind holdout. A sample used to tune the contract can never later be called a holdout.
+The public repository may contain only a metadata/hash manifest, never sequestered prose or labels.
 
-# Evaluator reliability
+Once a sequestered set is opened and used for tuning it becomes calibration history; the next blind claim requires `REFRESHED_SEQUESTERED`.
 
-Phase 1 evaluates the evaluator as well as the prose.
+Public shell: `benchmarks/p01/sequestered-manifest.json`.
 
-Required calibration signals include:
+The three existing historical P01 owner packets are `PILOT_ONLY_NOT_CALIBRATION_EVIDENCE`.
 
-- owner/judge pairwise agreement;
-- A/B position consistency;
-- duplicate/same-text consistency;
-- uncertainty rate;
-- exact-span validity;
-- separation of clearly different versus subtle pairs.
+## 9. Aggregation
 
-Agent-agent agreement alone is insufficient for Phase 1 closure.
+Benchmark V1 does not produce:
 
-# Completion boundary
+- one global quality score;
+- Elo ranking;
+- mandatory Bradley–Terry ranking;
+- majority-of-agents gold.
 
-A structural verifier may establish that artifacts are internally consistent and ready to dispatch.
+Preserve raw paired outcomes, uncertainty, failure signatures, Truth blockers, spoken evidence, and reliability slices by topic/editorial function/granularity.
 
-It cannot establish aesthetic validity, actual listening quality from text alone, owner alignment, or transfer performance.
+## 10. FoC/reference boundary
 
-Until owner/human calibration and a fresh transfer check are completed, the strongest valid status is `READY_FOR_HUMAN_CALIBRATION`.
+FoC remains `CRAFT_ONLY_NOT_TRUTH`.
+
+It is absent from the first-pass Product vote and appears only in post-vote function-matched target-gap analysis.
+
+Style similarity must never be a quality score.
+
+## 11. Phase 1 readiness layers
+
+### Structural readiness
+
+Schemas/versioning/blinding/lane boundaries and public/private dataset boundaries are mechanically coherent.
+
+### Human calibration readiness
+
+Pilot protocol is usable; fresh calibration pairs can be collected; tie/both-fail/uncertainty and unresolved diagnostics are representable.
+
+### Benchmark validity
+
+A frozen benchmark/judge configuration is tested on a real private/restricted sequestered set without retroactive threshold tuning.
+
+### Transfer validity
+
+The measurement architecture remains useful on new historical topics and multiple editorial functions/granularities.
+
+`all files exist`, `two AI reviewers agree`, `P01 improved`, or `output looks more like FoC` are not Phase 1 exit criteria.
+
+The strongest state after Iteration 04 is `ARCHITECTURE_FROZEN_READY_FOR_PILOT`, not Phase 1 complete.
