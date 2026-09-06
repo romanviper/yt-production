@@ -8,15 +8,15 @@
 Owner request
   → frozen P01 authority
   → Owner-approved budget cho Sol repo
-  → Sol repo freezes one Plan + common Writer assignment
-  → Owner launches any Writer/model(s)
+  → Sol repo may freeze one Plan + common Writer assignment for controlled comparison
+  → Owner launches any Writer/model(s), with or without that assignment
   → each returns draft + self-declared provenance
   → Owner closes submission pool
   → Owner comparison feedback
   → stop
 ```
 
-Writer không cần pre-register model/actor và không có time-budget gate. Timing của Writer chỉ là telemetry. `PREBOUND` submissions phải match frozen assignment hash; `NOT_PREBOUND` submissions vẫn có thể được đọc nhưng không được gọi là controlled same-input evidence.
+Writer không cần pre-register model/actor và không có time-budget gate. Timing của Writer chỉ là telemetry. `PREBOUND` submissions phải match frozen assignment hash. **Direct Owner instruction cũng đủ để Writer viết một bounded attempt mà không có assignment**; trường hợp đó Writer khai `NOT_PREBOUND`, `assignment_sha256=null` và liệt kê exact inputs đã dùng. Draft vẫn đọc/so sánh được nhưng không được gọi là controlled same-input evidence.
 
 Bắt đầu:
 
