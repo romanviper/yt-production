@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://romanviper.github.io/yt-production/schemas/decision-telemetry-event.schema.json",
+  "title": "Phase 3 Decision Telemetry Event",
+  "type": "object",
+  "required": [
+    "telemetry_version",
+    "sequence",
+    "event_id",
+    "role",
+    "execution_id",
+    "event_type",
+    "subject_refs"
+  ],
+  "properties": {
+    "telemetry_version": {"const": "PHASE3-DECISION-TELEMETRY-1"},
+    "sequence": {"type": "integer", "minimum": 1},
+    "event_id": {"type": "string", "minLength": 1},
+    "role": {"enum": ["plan", "writer", "truth", "review", "audit", "system_architect"]},
+    "execution_id": {"type": "string", "minLength": 1},
+    "event_type": {"enum": ["DECISION", "CHECKPOINT", "RISK", "DEVIATION"]},
+    "subject_refs": {"type": "array", "items": {"type": "string"}},
+    "decision_type": {"type": "string"},
+    "chosen_action": {"type": "string"},
+    "rationale_summary": {"type": "string", "maxLength": 600},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}},
+    "alternatives_considered": {"type": "array", "items": {"type": "string"}},
+    "expected_effect": {"type": "string"},
+    "risks": {"type": "array", "items": {"type": "string"}},
+    "output_refs": {"type": "array", "items": {"type": "string"}},
+    "checkpoint": {"type": "string"},
+    "status": {"type": "string"},
+    "artifact_refs": {"type": "array", "items": {"type": "string"}},
+    "risk": {"type": "string"},
+    "mitigation_or_acceptance": {"type": "string"},
+    "declared_from": {"type": "string"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"event_type": {"const": "DECISION"}}},
+      "then": {
+        "required": [
+          "decision_type",
+          "chosen_action",
+          "rationale_summary",
+          "evidence_refs",
+          "alternatives_considered",
+          "expected_effect",
+          "risks",
+          "output_refs"
+        ]
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "CHECKPOINT"}}},
+      "then": {"required": ["checkpoint", "status", "artifact_refs"]}
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "RISK"}}},
+      "then": {"required": ["risk", "mitigation_or_acceptance", "evidence_refs"]}
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "DEVIATION"}}},
+      "then": {"required": ["declared_from", "chosen_action", "rationale_summary", "evidence_refs", "output_refs"]}
+    }
+  ],
+  "not": {
+    "anyOf": [
+      {"required": ["chain_of_thought"]},
+      {"required": ["raw_chain_of_thought"]},
+      {"required": ["private_reasoning"]},
+      {"required": ["internal_monologue"]},
+      {"required": ["hidden_reasoning"]},
+      {"required": ["scratchpad_reasoning"]}
+    ]
+  },
+  "additionalProperties": true
+}
