@@ -10,10 +10,13 @@ from typing import Any
 from .artifacts import artifact_identity, write_json
 from .run import REPO_ROOT
 from .telemetry import (
+    REQUIRED_DECISION_ROLES,
     TELEMETRY_FILE,
     TELEMETRY_VERSION,
     TelemetryError,
+    decision_binds_output,
     is_execution_sealed,
+    read_telemetry,
     seal_execution,
     validate_event,
     verify_execution_seal,
@@ -65,6 +68,7 @@ def role_safe_brief(full_brief: dict[str, Any], role: str) -> dict[str, Any]:
             "version": TELEMETRY_VERSION,
             "path": TELEMETRY_FILE,
             "rule": "Record bounded declared decisions/checkpoints/risks/deviations during execution; do not record raw private chain-of-thought.",
+            "temporal_rule": "For Plan/Writer/Truth/Audit, a DECISION binding the exact output/<path> must exist before the first final output write. Iterate in scratch; final output is write-once.",
             "freeze_rule": "Telemetry and declared outputs are hashed and sealed before downstream handoff or feedback.",
         },
     }
@@ -106,6 +110,8 @@ def create_workspace_run(root: Path, run_id: str, role_executions: dict[str, str
             "read": ["input/**", "output/**", "scratch/**"],
             "write": ["output/**", "scratch/**"],
             "telemetry": TELEMETRY_FILE,
+            "decision_before_final_output": role in REQUIRED_DECISION_ROLES,
+            "final_output_write_once": True,
             "seal_before_handoff": True,
             "deny": [
                 "control/**",
@@ -113,15 +119,16 @@ def create_workspace_run(root: Path, run_id: str, role_executions: dict[str, str
                 "../**",
                 "absolute paths",
                 "resolved symlink escapes",
+                "final output overwrite; iterate in scratch",
                 "all writes after execution seal",
             ],
         }
 
     policy = {
-        "schema_version": "2.0.0",
+        "schema_version": "2.1.0",
         "policy_version": POLICY_VERSION,
         "run_id": run_id,
-        "enforcement_level": "FILE_BROKER_PLUS_EXECUTION_SEAL_NO_SHELL_OR_NETWORK_SURFACE",
+        "enforcement_level": "FILE_BROKER_PLUS_TEMPORAL_DECISION_GATE_PLUS_EXECUTION_SEAL_NO_SHELL_OR_NETWORK_SURFACE",
         "read_isolation": "ENFORCED_ONLY_WHEN_AGENT_RECEIVES_THIS_BROKER_AS_ITS_SOLE_FILESYSTEM_SURFACE",
         "host_process_isolation": "NOT_PROVEN",
         "telemetry_version": TELEMETRY_VERSION,
@@ -158,10 +165,13 @@ class RoleWorkspaceBroker:
             },
         )
 
+    def _deny(self, code: str, *, action: str, attempted: str, resolved: Path | None = None) -> None:
+        self._log(action, attempted, resolved, "DENIED", code)
+        raise WorkspaceError(code, action=action, attempted=attempted, resolved=str(resolved) if resolved else None)
+
     def _ensure_mutable(self, attempted: str) -> None:
         if is_execution_sealed(self.run_root, self.role, self.execution_id):
-            self._log("WRITE", attempted, None, "DENIED", "EXECUTION_SEALED")
-            raise WorkspaceError("EXECUTION_SEALED", action="WRITE", attempted=attempted)
+            self._deny("EXECUTION_SEALED", action="WRITE", attempted=attempted)
 
     def _resolve(self, relative: str, *, write: bool) -> Path:
         action = "WRITE" if write else "READ"
@@ -185,8 +195,7 @@ class RoleWorkspaceBroker:
                 (self.execution_root / "scratch").resolve(),
             ]
         if not any(_is_within(resolved, root) for root in allowed_roots):
-            self._log(action, relative, resolved, "DENIED", "ROLE_PATH_DENIED")
-            raise WorkspaceError("ROLE_PATH_DENIED", action=action, attempted=relative, resolved=str(resolved))
+            self._deny("ROLE_PATH_DENIED", action=action, attempted=relative, resolved=resolved)
         self._log(action, relative, resolved, "ALLOWED")
         return resolved
 
@@ -196,8 +205,28 @@ class RoleWorkspaceBroker:
             raise FileNotFoundError(path)
         return path.read_text(encoding="utf-8")
 
+    def _validate_final_output_write(self, relative: str, path: Path) -> None:
+        if not relative.startswith("output/") or relative == TELEMETRY_FILE:
+            return
+        if path.exists():
+            self._deny("OUTPUT_OVERWRITE_DENIED_USE_SCRATCH", action="WRITE", attempted=relative, resolved=path)
+        if self.role not in REQUIRED_DECISION_ROLES:
+            return
+        telemetry_path = self.execution_root / TELEMETRY_FILE
+        try:
+            events = read_telemetry(
+                telemetry_path,
+                expected_role=self.role,
+                expected_execution_id=self.execution_id,
+            )
+        except TelemetryError:
+            self._deny("DECISION_REQUIRED_BEFORE_FINAL_OUTPUT", action="WRITE", attempted=relative, resolved=path)
+        if not decision_binds_output(events, relative):
+            self._deny("DECISION_REQUIRED_BEFORE_FINAL_OUTPUT", action="WRITE", attempted=relative, resolved=path)
+
     def write_text(self, relative: str, value: str) -> Path:
         path = self._resolve(relative, write=True)
+        self._validate_final_output_write(relative, path)
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(value, encoding="utf-8")
         return path
@@ -271,7 +300,7 @@ def handoff_copy(
             "execution_id": source_execution,
             "path": source_rel,
             "identity": source_identity,
-            "seal_ref": str((Path("control") / "seals" / f"{source_role}-{source_execution}.json")),
+            "seal_ref": str(Path("control") / "seals" / f"{source_role}-{source_execution}.json"),
         },
         "destination": {
             "role": dest_role,
@@ -298,7 +327,7 @@ def workspace_manifest(run_root: Path) -> dict[str, Any]:
         "access_event_count": len([line for line in access if line.strip()]),
         "execution_seal_count": len(seals),
         "limitations": [
-            "This prototype enforces paths and post-seal immutability only when the agent receives RoleWorkspaceBroker as its sole filesystem surface.",
+            "This prototype enforces paths, decision-before-final-output ordering, write-once final outputs and post-seal immutability only when the agent receives RoleWorkspaceBroker as its sole filesystem surface.",
             "It does not prove host-level process isolation or protect against an independently granted shell/network/filesystem tool.",
             "Decision telemetry is declared process evidence, not raw private chain-of-thought and not independent proof that the declared rationale caused the output.",
         ],
@@ -315,15 +344,14 @@ def smoke_workspace(out: Path) -> dict[str, Any]:
     )
     writer = RoleWorkspaceBroker(run_root, "writer", "W1")
     writer.read_text("input/common-brief.json")
-    source = writer.write_text("output/candidate.md", "workspace smoke candidate\n")
     writer.record_event(
         {
             "event_id": "W-D01",
             "event_type": "DECISION",
-            "subject_refs": ["candidate.md"],
+            "subject_refs": ["input/common-brief.json"],
             "decision_type": "REALIZATION_STRATEGY",
             "chosen_action": "WRITE_MINIMAL_SMOKE_CANDIDATE",
-            "rationale_summary": "Exercise the output, telemetry, seal and handoff path with a deterministic candidate.",
+            "rationale_summary": "Exercise the output, telemetry, temporal gate, seal and handoff path with a deterministic candidate.",
             "evidence_refs": ["input/common-brief.json"],
             "alternatives_considered": [],
             "expected_effect": "Produce one hashable candidate for workspace verification.",
@@ -331,18 +359,11 @@ def smoke_workspace(out: Path) -> dict[str, Any]:
             "output_refs": ["output/candidate.md"],
         }
     )
-    seal = seal_execution(
-        run_root,
-        role="writer",
-        execution_id="W1",
-        required_output_refs=["candidate.md"],
-    )
 
     denied: list[dict[str, str]] = []
     for attempted, action in [
         ("../../review/R1/input/common-brief.json", "READ"),
         ("input/common-brief.json", "WRITE"),
-        ("output/candidate.md", "WRITE_AFTER_SEAL"),
     ]:
         try:
             if action == "READ":
@@ -353,6 +374,27 @@ def smoke_workspace(out: Path) -> dict[str, Any]:
             denied.append({"attempted": attempted, "action": action, "code": exc.code})
         else:
             raise RuntimeError(f"workspace smoke expected DENY for {action} {attempted}")
+
+    source = writer.write_text("output/candidate.md", "workspace smoke candidate\n")
+    try:
+        writer.write_text("output/candidate.md", "pre-seal rewrite")
+    except WorkspaceError as exc:
+        denied.append({"attempted": "output/candidate.md", "action": "WRITE_AGAIN_BEFORE_SEAL", "code": exc.code})
+    else:
+        raise RuntimeError("workspace smoke expected write-once final output DENY")
+
+    seal = seal_execution(
+        run_root,
+        role="writer",
+        execution_id="W1",
+        required_output_refs=["candidate.md"],
+    )
+    try:
+        writer.write_text("scratch/post-seal.txt", "tamper")
+    except WorkspaceError as exc:
+        denied.append({"attempted": "scratch/post-seal.txt", "action": "WRITE_AFTER_SEAL", "code": exc.code})
+    else:
+        raise RuntimeError("workspace smoke expected post-seal write DENY")
 
     handoff = handoff_copy(
         run_root,
