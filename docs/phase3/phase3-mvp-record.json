@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0.0",
+  "phase": 3,
+  "record_id": "PHASE3-MVP-01",
+  "source_phase2_commit": "ac18fefca5332cf6d7e5ccf90f54dd8602866049",
+  "objective": "Use one observable output defect to trace backward through Writer realization into the mapped Plan node, classify the bounded fault region, and produce one smallest-scope intervention without expanding the runtime into a generic platform.",
+  "process": {
+    "decisions": [
+      {
+        "id": "P3-D01",
+        "decision": "Instrument only Plan and Write for the first white-box slice.",
+        "reason": "The first useful uncertainty split is whether a prose defect was already encoded in planning or introduced during realization."
+      },
+      {
+        "id": "P3-D02",
+        "decision": "Use archived Round-01 B03 as the first trace fixture rather than fabricate a new live run.",
+        "reason": "Round-01 already contains writing-plan.json, writer-report.json, exact beat mappings and zero reported deviations."
+      },
+      {
+        "id": "P3-D03",
+        "decision": "Seed the trace with EXPO​SITION_LOAD.EXPLANATION_BEFORE_NEED anchored to an exact candidate sentence.",
+        "reason": "The symptom is observable in the prose and the mapped Plan beat contains an inspectable pre-resolved interpretation, making Plan-vs-realization attribution falsifiable."
+      },
+      {
+        "id": "P3-D04",
+        "decision": "Derive PLAN_FAILURE only when Writer mapping is REALIZED with no beat deviation and the same symptom is explicitly observed in the mapped Plan node.",
+        "reason": "This keeps observations separate from diagnosis and avoids relying on Writer self-assertion alone."
+      },
+      {
+        "id": "P3-D05",
+        "decision": "Create a PLAN_ONLY intervention for B03 rather than rewrite the whole harness.",
+        "reason": "The MVP learning rule is smallest targeted change to the diagnosed region."
+      },
+      {
+        "id": "P3-D06",
+        "decision": "Do not claim a successful learning iteration until a live Writer rerun exists and Product/owner measurement evaluates it.",
+        "reason": "This session has no live model-execution adapter inside the repository runtime; fabricating a rerun would invalidate the learning loop."
+      }
+    ],
+    "changed_surfaces": [
+      "learning_runtime/whitebox.py",
+      "learning_runtime/phase3.py",
+      "learning_runtime/scenarios/p01-rootcause-01.phase3.json",
+      "learning_runtime/scenarios/p01-rootcause-01.failure.json",
+      "learning_runtime/interventions/p01-rootcause-01-plan-only.json",
+      "tests/test_phase3_whitebox.py",
+      "docs/phase3/START.md",
+      "AGENTS.md"
+    ],
+    "validation": {
+      "validation_pr": 11,
+      "workflow_run": 34015993011,
+      "phase3_tests": {
+        "test_round1_failure_traces_to_plan": "PASS",
+        "test_writer_deviation_routes_to_realization": "PASS",
+        "test_missing_mapping_is_inconclusive": "PASS",
+        "test_phase3_run_materializes_plan_write_traces": "PASS"
+      },
+      "overall_ci": "FAIL_UNRELATED_BASELINE_DEBT",
+      "unrelated_failures": [
+        "test_historical_substrate_runtime.HistoricalSubstrateRuntimeIntegrationTest.test_section_migration_materializes_only_declared_section",
+        "test_writer_baseline.WriterBaselineTests.test_current_sumer_c003_p01_smoke_compiles_to_minimal_writer_packet",
+        "test_writer_baseline.WriterBaselineTests.test_current_sumer_p01_review_packet_with_handoff_and_receipts_stays_under_budget"
+      ],
+      "scope_note": "The same three production-baseline failures were already present during Phase 2 validation. All newly added Phase 3 tests passed before the unrelated baseline failures terminated the repository-wide unit-test step."
+    }
+  },
+  "output": {
+    "status": "PHASE3_TRACE_MVP_READY_FOR_LIVE_RERUN",
+    "command": "python -m learning_runtime.phase3 p01-rootcause-01 --out <run-dir>",
+    "trace_result": {
+      "failure_id": "P3-F01",
+      "symptom": "EXPOSITION_LOAD.EXPLANATION_BEFORE_NEED",
+      "output_span": "Khối cầu niêm phong bảo đảm an toàn cho số lượng, song cái giá phải trả là sự mù mịt về thị giác.",
+      "writer_mapping": "B03 / REALIZED / no beat deviation",
+      "plan_mapping": "B03",
+      "bounded_diagnosis": "PLAN_FAILURE",
+      "confidence": "HIGH",
+      "causal_status": "BOUNDED_REGION_NOT_FINAL_CAUSAL_PROOF"
+    },
+    "intervention": {
+      "id": "P3-I01",
+      "scope": "PLAN_ONLY:B03",
+      "prediction": "Reduce or remove EXPLANATION_BEFORE_NEED while preserving truth qualification, artifact clarity and sequence continuity.",
+      "status": "READY_FOR_LIVE_RERUN"
+    },
+    "whitebox_surface": {
+      "output_to_writer_mapping": true,
+      "writer_to_plan_mapping": true,
+      "plan_trace_jsonl": true,
+      "write_trace_jsonl": true,
+      "explicit_observation_vs_diagnosis": true,
+      "bounded_fault_isolation": true,
+      "live_writer_rerun": false,
+      "measured_post_intervention_output": false
+    },
+    "next_required_step": "Execute one live Writer realization with the same evidence ceiling and Writer contract while changing only the B03 plan representation, then return the new prose to the Phase 1 Product/owner measurement surface."
+  }
+}
