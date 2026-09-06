@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import shutil
@@ -7,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from .artifacts import artifact_identity, write_json
+from .run import REPO_ROOT
 
 
 POLICY_VERSION = "PHASE3-WORKSPACE-PROTOTYPE-1"
@@ -215,3 +217,81 @@ def workspace_manifest(run_root: Path) -> dict[str, Any]:
             "It does not prove host-level process isolation or protect against an independently granted shell/network/filesystem tool.",
         ],
     }
+
+
+def smoke_workspace(out: Path) -> dict[str, Any]:
+    brief = json.loads((REPO_ROOT / "learning_runtime/briefs/p01-rootcause-01.json").read_text(encoding="utf-8"))
+    run_root = create_workspace_run(
+        out,
+        "WORKSPACE-SMOKE-01",
+        {"writer": "W1", "truth": "T1", "review": "R1"},
+        brief,
+    )
+    writer = RoleWorkspaceBroker(run_root, "writer", "W1")
+    writer.read_text("input/common-brief.json")
+    source = writer.write_text("output/candidate.md", "workspace smoke candidate\n")
+
+    denied: list[dict[str, str]] = []
+    for attempted, action in [
+        ("../../review/R1/input/common-brief.json", "READ"),
+        ("input/common-brief.json", "WRITE"),
+    ]:
+        try:
+            if action == "READ":
+                writer.read_text(attempted)
+            else:
+                writer.write_text(attempted, "tamper")
+        except WorkspaceError as exc:
+            denied.append({"attempted": attempted, "action": action, "code": exc.code})
+        else:
+            raise RuntimeError(f"workspace smoke expected DENY for {action} {attempted}")
+
+    handoff = handoff_copy(
+        run_root,
+        source_role="writer",
+        source_execution="W1",
+        source_rel="candidate.md",
+        dest_role="truth",
+        dest_execution="T1",
+        dest_name="candidate.md",
+    )
+    truth = RoleWorkspaceBroker(run_root, "truth", "T1")
+    if truth.read_text("input/candidate.md") != "workspace smoke candidate\n":
+        raise RuntimeError("handoff destination content mismatch")
+    try:
+        truth.write_text("input/candidate.md", "tamper")
+    except WorkspaceError as exc:
+        denied.append({"attempted": "input/candidate.md", "action": "WRITE", "code": exc.code})
+    else:
+        raise RuntimeError("workspace smoke expected destination input write DENY")
+
+    review_packet = json.loads((run_root / "agents/review/R1/input/common-brief.json").read_text(encoding="utf-8"))
+    if "diagnostic_hypothesis" in review_packet:
+        raise RuntimeError("review packet leaked diagnostic hypothesis")
+
+    result = {
+        "status": "WORKSPACE_SMOKE_PASS",
+        "run_root": str(run_root),
+        "denied": denied,
+        "handoff": handoff,
+        "review_diagnostic_hidden": True,
+        "manifest": workspace_manifest(run_root),
+    }
+    write_json(run_root / "control/smoke-result.json", result)
+    return result
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Phase 3 bounded role workspace prototype")
+    sub = parser.add_subparsers(dest="command", required=True)
+    smoke = sub.add_parser("smoke")
+    smoke.add_argument("--out", type=Path, required=True)
+    args = parser.parse_args()
+    if args.command == "smoke":
+        print(json.dumps(smoke_workspace(args.out), ensure_ascii=False, indent=2))
+        return 0
+    return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
