@@ -39,11 +39,48 @@ the bounded task/intervention packet.
 For Phase 3 MVP work:
 
 1. Read `docs/phase3/START.md`.
-2. Use `python -m learning_runtime.phase3 p01-rootcause-01 --out <run-dir>` for the current white-box slice.
-3. Treat `plan/trace.jsonl`, `write/trace.jsonl`, `diagnosis.json`, and `phase3-manifest.json` as Phase 3 diagnostic artifacts.
-4. Keep observations separate from derived diagnosis. A diagnosis may bound a fault region; it is not final causal proof.
-5. The current bounded intervention is `learning_runtime/interventions/p01-rootcause-01-plan-only.json`.
-6. Do not fabricate a live rerun. A live Writer execution must use the same evidence ceiling and return to Product/owner measurement.
+2. Read `docs/phase3/decision-telemetry-contract.md` before any fresh agent execution.
+3. Use `python -m learning_runtime.phase3 p01-rootcause-01 --out <run-dir>` for the current white-box slice.
+4. Treat `plan/trace.jsonl`, `write/trace.jsonl`, `diagnosis.json`, and `phase3-manifest.json` as Phase 3 diagnostic artifacts.
+5. Keep observations separate from derived diagnosis. A diagnosis may bound a fault region; it is not final causal proof.
+6. The current bounded intervention is `learning_runtime/interventions/p01-rootcause-01-plan-only.json`.
+7. Do not fabricate a live rerun. A live Writer execution must use the same evidence ceiling and return to Product/owner measurement.
+
+## Structured process telemetry — mandatory for fresh roles
+
+A fresh Plan, Writer, Truth or Audit execution must not return only a final artifact plus a retrospective explanation.
+While it is working, the role must emit ordered structured telemetry through its `RoleWorkspaceBroker` to:
+
+`output/telemetry.jsonl`
+
+Allowed event classes are bounded engineering/editorial observations:
+
+- `DECISION`
+- `CHECKPOINT`
+- `RISK`
+- `DEVIATION`
+
+A `DECISION` records the chosen action, concise declared rationale, evidence refs,
+alternatives considered, expected effect, risks and affected output refs. This is
+**declared process evidence**, not raw private chain-of-thought and not causal proof.
+
+Do not request, store or simulate unrestricted private chain-of-thought, hidden
+scratchpads, internal monologues or token-by-token reasoning. Runtime validation
+rejects fields such as `chain_of_thought`, `private_reasoning` and
+`internal_monologue`.
+
+Before any downstream handoff or feedback, the launcher must validate telemetry,
+hash telemetry + declared primary outputs, and create an execution seal under:
+
+`control/seals/<role>-<execution-id>.json`
+
+After seal, broker writes from that execution are denied. A handoff may copy only
+an artifact whose identity is present in a valid source execution seal. This freeze
+is required so downstream feedback cannot be used to rewrite earlier rationale.
+
+The blind Product reviewer is the exception: do not force analytical decision
+rationale before its first-pass vote. Freeze the preference first; post-vote
+diagnostic observation may follow afterward.
 
 ## Phase 3 boundaries
 
@@ -51,6 +88,7 @@ Allowed in the current MVP:
 
 - exact output-span -> Writer-beat -> Plan-node mapping;
 - structured trace events and hashes;
+- in-execution structured decision/process telemetry with pre-feedback seals;
 - Plan-vs-realization fault isolation;
 - one bounded intervention targeted to the diagnosed region;
 - recording process/output and validation evidence.
@@ -90,6 +128,10 @@ For a newly requested production operation, create it through `python scripts/ta
 ## Hard stops
 
 Stop and report a blocker when the packet is stale, malformed, missing an input, over budget or requires evidence outside its ceiling. Do not solve those failures by browsing extra files, widening scope or padding prose.
+
+For a fresh Phase 3 role, also stop before handoff if telemetry is missing/invalid,
+required decision records are absent, the execution cannot be sealed, or the sealed
+artifact identity no longer matches. Do not downgrade these to warnings.
 
 ## User-facing handoff
 
