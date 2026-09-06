@@ -102,13 +102,11 @@ def main() -> int:
     pilot_eval_unit = parsed["pilot_eval_unit"]
     pilots = [parsed["pilot_1"], parsed["pilot_2"], parsed["pilot_3"]]
 
-    # Validate actual active instances rather than merely searching schema text.
     validate_named_instance(errors, "pilot_eval_unit", pilot_eval_unit, parsed["eval_unit_schema"])
     validate_named_instance(errors, "judge_state", judge_state, parsed["judge_schema"])
     validate_named_instance(errors, "guided_owner", parsed["guided_owner"], parsed["guided_schema"])
     validate_named_instance(errors, "guided_phase3", parsed["guided_phase3"], parsed["guided_comparison_schema"])
 
-    # Frozen architecture invariants retained from Benchmark V1.
     for term in ["OWNER_PRODUCT_FIT", "BOTH_FAIL", "SHADOW_ONLY", "FUNCTION_CLIP", "SECTION_SENTINEL", "EPISODE_SENTINEL", "SEQUESTERED", "root_cause"]:
         if term not in contract:
             errors.append(f"contract missing frozen Benchmark V1 concept: {term}")
@@ -181,7 +179,6 @@ def main() -> int:
     if sequestered.get("public_repo_contains_payload") is not False or sequestered.get("public_repo_contains_labels") is not False:
         errors.append("sequestered manifest claims private payload/labels are present in public repo")
 
-    # Validate first-pass owner packets and keep post-vote diagnostics isolated.
     expected_post_vote_ref = "benchmarks/p01/calibration/post-vote-owner-diagnostics.json"
     for packet in pilots:
         packet_id = packet.get("packet_id", "UNKNOWN")
@@ -202,7 +199,6 @@ def main() -> int:
     if set(owner_state.get("allowed_owner_results", [])) != {"A", "B", "TIE", "BOTH_FAIL", "UNCERTAIN"}:
         errors.append("owner allowed results do not match frozen enum")
 
-    # Product identities: resolve the actual file/JSON field and verify current content.
     manifest_samples = {item["sample_id"]: item for item in manifest.get("product_samples", [])}
     for sample_id in ids:
         if sample_id not in manifest_samples:
@@ -286,7 +282,7 @@ def main() -> int:
             "craft_episodes": len(episodes),
         },
         "verified_surfaces": ["ACTIVE_SCHEMA_INSTANCES", "PRODUCT_SOURCE_IDENTITIES", "CRAFT_SOURCE_IDENTITIES", "OWNER_PACKET_ISOLATION", "SHADOW_JUDGE_BOUNDARY"],
-        "phase1_complete": false
+        "phase1_complete": False,
     }
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0 if not errors else 1
