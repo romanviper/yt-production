@@ -2,27 +2,50 @@
 
 ## Current architecture-learning phase
 
-The repository is currently in **Observable Learning Architecture — Phase 1**.
-For owner-directed architecture/benchmark work, start at `docs/phase1/START.md` and
-read `docs/architecture/observable-learning-architecture-plan.md`.
+The repository is currently in **Observable Learning Architecture — Phase 2 MVP**.
+For owner-directed architecture-learning work, start at `docs/phase2/START.md` and
+read `docs/architecture/observable-learning-architecture-plan.md` only as historical
+design context. The active MVP objective is intentionally narrower than the original
+full Phase 2 plan.
+
+For architecture-learning work, `learning_runtime/` is the only active execution
+path. Its topology is exactly:
+
+`Plan -> Write -> Truth -> Product`
+
+Phase 2 uses deterministic fixture replay to prove stage boundaries and artifacts.
+It does not authorize a new Writer round, live Planner/Writer orchestration,
+white-box tracing, root-cause claims, benchmark expansion, or production prose.
+Those belong to Phase 3 or explicit owner-directed product work.
+
+The Phase 1 benchmark under `benchmarks/p01/` remains the current measurement
+surface. Do not continue benchmark perfection work unless a concrete learning-loop
+failure shows that the measurement surface itself is blocking diagnosis.
 
 The experiments under `docs/experiments/`, `experiments/`, and
 `scripts/experiments/` are **legacy evidence only**. Their historical `START.md`
 files and scripts must not be treated as active entrypoints, rerun, extended, or
 used to create a new round unless the owner explicitly re-authorizes that exact
-experiment. Existing run artifacts are immutable benchmark/provenance material.
-
-Phase 1 does not authorize new production prose, production task creation, a new
-Writer round, or evidence expansion. Product state stays untouched unless the
-owner explicitly asks for product work.
+experiment. Existing run artifacts may be imported as immutable Phase 2 smoke
+fixtures, but their historical evaluator verdicts do not become ground truth.
 
 This file contains only repo-wide operating boundaries. Creative logic belongs in the task packet.
 
 ## Canonical branch
 
-- `main` is the only working branch and the repository source of truth. Start from the current `main` HEAD; do not choose a historical commit as an entrypoint.
-- Do not create feature, task or agent branches for routine work. Commit authorized changes directly to `main` after the required validation.
-- Create a branch or pull request only when the user explicitly asks for isolation or review. Historical remote branches are not valid production inputs.
+- `main` remains the canonical production branch and repository source of truth.
+- `codex/p01-phase2-minimal-runtime` is an owner-authorized architecture-learning branch; it must not mutate production product state.
+- Do not create additional feature, task or agent branches for routine production work. Historical remote branches are not valid production inputs.
+
+## Architecture-learning entrypoint
+
+For Phase 2 MVP work:
+
+1. Read `docs/phase2/START.md`.
+2. Use `python -m learning_runtime.run p01-mvp --out <run-dir>` for the smoke path.
+3. Treat generated `input.json`, `output.*`, and `manifest.json` files as the only Phase 2 runtime artifacts.
+4. Do not call production router/rework/replay scripts from the Phase 2 runtime.
+5. Stop after the four-stage smoke path. Do not add trace/event infrastructure or live agents in Phase 2.
 
 ## Authority
 
