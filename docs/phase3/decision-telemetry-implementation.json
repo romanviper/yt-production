@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "PHASE3-DECISION-TELEMETRY-IMPLEMENTATION-01",
+  "status": "IMPLEMENTED_READY_FOR_ROUND01_RETRY",
+  "source_branch": "codex/p01-phase3-whitebox-mvp",
+  "source_commit": "4c0d6870cc4beb42b981fbf8e5f337a24c5af03e",
+  "validated_build_commit": "2bdc8ddf3d8f7fdd0cbf0162019bb9b2ad540340",
+  "validation": {
+    "workflow_run_id": 34022255994,
+    "focused_job_id": 101456856232,
+    "focused_job": "PASS",
+    "focused_tests": 52,
+    "focused_test_seconds": 0.439,
+    "workspace_smoke": "PASS",
+    "writer_execution_seal": "SEALED_BEFORE_DOWNSTREAM_FEEDBACK",
+    "writer_decision_count": 1,
+    "handoff_result": "COPIED_FROM_SEALED_EXECUTION_READ_ONLY_HASH_MATCH",
+    "phase1_benchmark_verifier": "PASS",
+    "guided_review_verifiers": "PASS"
+  },
+  "implemented": {
+    "telemetry_version": "PHASE3-DECISION-TELEMETRY-1",
+    "event_schema": "schemas/decision-telemetry-event.schema.json",
+    "runtime": "learning_runtime/telemetry.py",
+    "contract": "docs/phase3/decision-telemetry-contract.md",
+    "telemetry_path": "agents/<role>/<execution-id>/output/telemetry.jsonl",
+    "event_types": ["DECISION", "CHECKPOINT", "RISK", "DEVIATION"],
+    "required_decision_roles": ["plan", "writer", "truth", "audit"],
+    "review_prevote_decision_required": false,
+    "broker_assigns_identity_and_sequence": true,
+    "seal_before_handoff": true,
+    "post_seal_broker_writes_denied": true,
+    "handoff_requires_valid_source_seal": true,
+    "sealed_output_tamper_detection": true,
+    "sealed_telemetry_tamper_detection": true,
+    "private_reasoning_fields_rejected": true
+  },
+  "decision_record_minimum": [
+    "chosen_action",
+    "rationale_summary",
+    "evidence_refs",
+    "alternatives_considered",
+    "expected_effect",
+    "risks",
+    "output_refs"
+  ],
+  "authority": {
+    "telemetry": "DECLARED_PROCESS_EVIDENCE",
+    "not_causal_proof": true,
+    "not_semantic_adherence_proof": true,
+    "not_product_quality_evidence": true,
+    "auditor_may_contradict_agent_declaration": true
+  },
+  "full_suite": {
+    "status": "BASELINE_DEBT_UNCHANGED",
+    "failures": [
+      "test_historical_substrate_runtime.HistoricalSubstrateRuntimeIntegrationTest.test_section_migration_materializes_only_declared_section",
+      "test_writer_baseline.WriterBaselineTests.test_current_sumer_c003_p01_smoke_compiles_to_minimal_writer_packet",
+      "test_writer_baseline.WriterBaselineTests.test_current_sumer_p01_review_packet_with_handoff_and_receipts_stays_under_budget"
+    ],
+    "new_phase3_regressions_observed": false
+  },
+  "limitations": [
+    "Telemetry is concise declared rationale, not raw private chain-of-thought.",
+    "The execution seal prevents post-feedback mutation only on the broker-governed filesystem surface.",
+    "Host-process isolation remains NOT_PROVEN if an agent is separately granted shell/network/general filesystem tools.",
+    "No fresh Planner, Writer, Truth or Audit agent was executed in this implementation pass.",
+    "Round 01 must still run fresh roles through the broker and preserve their sealed telemetry artifacts."
+  ],
+  "round01_gate": "A fresh Plan/Writer/Truth/Audit output is invalid for learning handoff if required telemetry is missing, invalid, unsealed, or no longer hash-matches its seal."
+}
