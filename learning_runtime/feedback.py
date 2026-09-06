@@ -5,7 +5,6 @@ import copy
 import hashlib
 import json
 import re
-import shutil
 from pathlib import Path
 from typing import Any
 
@@ -221,6 +220,14 @@ def validate_guided_artifact(session_path: Path, *, root: Path = REPO_ROOT) -> d
 
 
 def _replace_only_beat(plan: dict[str, Any], beat_patch: dict[str, Any], allowed_beat_id: str) -> tuple[dict[str, Any], list[str]]:
+    if beat_patch.get("id") != allowed_beat_id:
+        raise FeedbackError(
+            "PLAN_SCOPE_VIOLATION",
+            artifact="revised-plan",
+            field="beat.id",
+            expected=allowed_beat_id,
+            observed=beat_patch.get("id"),
+        )
     revised = copy.deepcopy(plan)
     changed: list[str] = []
     found = False
