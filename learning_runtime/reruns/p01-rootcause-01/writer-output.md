@@ -1,0 +1,1 @@
+Khi lớp đất sét đã khép lại, những con tính bên trong không còn hiện ra trước mắt. Muốn nhìn lại và đếm chúng trực tiếp, người ta phải phá lớp vỏ. Chiếc vỏ càng còn nguyên, phần nằm trong nó càng không thể được kiểm tra bằng mắt.
