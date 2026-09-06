@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Structural verifier for Phase 1 benchmark readiness.
+"""Structural verifier for Phase 1 Benchmark V1.3 architecture freeze.
 
-This verifier establishes artifact consistency and dispatch readiness only. It
-cannot certify aesthetic validity, owner alignment, audio quality, or transfer.
+This verifier checks public-repository structure and invariants only. It cannot
+certify owner preference validity, aesthetic quality, LLM judge reliability,
+private sequestered evidence, or topic transfer.
 """
 from __future__ import annotations
 
 import hashlib
 import json
 import pathlib
-import re
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
@@ -31,19 +31,31 @@ def main() -> int:
     paths = {
         "contract": ROOT / "docs/quality/output-quality-contract.md",
         "protocol": ROOT / "docs/quality/product-trial-protocol.md",
-        "product_schema": ROOT / "schemas/output-quality.schema.json",
+        "start": ROOT / "docs/phase1/START.md",
+        "work_order": ROOT / "docs/phase1/ITERATION-04-WORK-ORDER.md",
+        "eval_unit_schema": ROOT / "schemas/eval-unit.schema.json",
+        "pairwise_schema": ROOT / "schemas/pairwise-preference.schema.json",
+        "failure_schema": ROOT / "schemas/failure-signature.schema.json",
         "truth_schema": ROOT / "schemas/truth-gate.schema.json",
+        "spoken_schema": ROOT / "schemas/spoken-observation.schema.json",
         "target_schema": ROOT / "schemas/target-gap.schema.json",
-        "decision_schema": ROOT / "schemas/decision-record.schema.json",
+        "judge_schema": ROOT / "schemas/judge-reliability.schema.json",
+        "legacy_output_schema": ROOT / "schemas/output-quality.schema.json",
         "worker_schema": ROOT / "schemas/phase1-worker-iteration.schema.json",
         "benchmark": ROOT / "benchmarks/p01/benchmark-set.json",
         "manifest": ROOT / "benchmarks/p01/source-manifest.json",
         "craft": ROOT / "benchmarks/p01/craft-corpus.json",
-        "owner_cal": ROOT / "benchmarks/p01/owner-calibration.json",
-        "legacy_readme": ROOT / "benchmarks/p01/evaluations/README.md",
-        "worker_loop": ROOT / "docs/phase1/WORKER-LOOP.md",
-        "iteration_1": ROOT / "benchmarks/p01/iterations/iteration-01.json",
+        "taxonomy": ROOT / "benchmarks/p01/taxonomy.json",
+        "owner_state": ROOT / "benchmarks/p01/owner-calibration.json",
+        "judge_state": ROOT / "benchmarks/p01/judge-reliability.json",
+        "sequestered": ROOT / "benchmarks/p01/sequestered-manifest.json",
+        "pilot_eval_unit": ROOT / "benchmarks/p01/eval-units/eu-p01-pilot-mechanism-01.json",
+        "dispatch_map": ROOT / "benchmarks/p01/calibration/dispatch-map.json",
+        "pilot_1": ROOT / "benchmarks/p01/calibration/owner-packets/owner-cal-01.json",
+        "pilot_2": ROOT / "benchmarks/p01/calibration/owner-packets/owner-cal-02.json",
+        "pilot_3": ROOT / "benchmarks/p01/calibration/owner-packets/owner-cal-03.json",
     }
+
     for name, path in paths.items():
         if not path.exists():
             errors.append(f"missing required artifact: {name} -> {path.relative_to(ROOT)}")
@@ -52,105 +64,205 @@ def main() -> int:
         print(json.dumps({"status": "NOT_READY", "structural_errors": errors}, ensure_ascii=False, indent=2))
         return 1
 
+    # Parse all JSON artifacts/schemas first. A parse failure is a hard structural failure.
+    json_keys = [
+        "eval_unit_schema", "pairwise_schema", "failure_schema", "truth_schema",
+        "spoken_schema", "target_schema", "judge_schema", "legacy_output_schema",
+        "worker_schema", "benchmark", "manifest", "craft", "taxonomy",
+        "owner_state", "judge_state", "sequestered", "pilot_eval_unit",
+        "dispatch_map", "pilot_1", "pilot_2", "pilot_3",
+    ]
+    parsed: dict[str, object] = {}
+    for key in json_keys:
+        try:
+            parsed[key] = load_json(paths[key])
+        except Exception as exc:  # structural verifier: report exact file and continue cleanly
+            errors.append(f"invalid JSON: {paths[key].relative_to(ROOT)} -> {exc}")
+
+    if errors:
+        print(json.dumps({"status": "NOT_READY", "structural_errors": errors}, ensure_ascii=False, indent=2))
+        return 1
+
     contract = paths["contract"].read_text(encoding="utf-8")
     protocol = paths["protocol"].read_text(encoding="utf-8")
-    product_schema_text = paths["product_schema"].read_text(encoding="utf-8")
+    start = paths["start"].read_text(encoding="utf-8")
+    pairwise_schema_text = paths["pairwise_schema"].read_text(encoding="utf-8")
+    failure_schema_text = paths["failure_schema"].read_text(encoding="utf-8")
     truth_schema_text = paths["truth_schema"].read_text(encoding="utf-8")
+    spoken_schema_text = paths["spoken_schema"].read_text(encoding="utf-8")
     target_schema_text = paths["target_schema"].read_text(encoding="utf-8")
-    benchmark = load_json(paths["benchmark"])
-    manifest = load_json(paths["manifest"])
-    craft = load_json(paths["craft"])
-    owner_cal = load_json(paths["owner_cal"])
-    for p in ["product_schema", "truth_schema", "target_schema", "decision_schema", "worker_schema", "iteration_1"]:
-        load_json(paths[p])
+    judge_schema_text = paths["judge_schema"].read_text(encoding="utf-8")
 
-    # Contract regression checks.
-    for frag in [
-        "15 - 25 âm tiết", "dài quá 40 từ", "NEAR`: Đã đạt",
-        "MODERATE`: Mạch truyện", "Mỗi đoạn kết thúc đều để lại",
-        "giải quyết trọn vẹn nghịch lý thị giác",
+    benchmark = parsed["benchmark"]
+    manifest = parsed["manifest"]
+    craft = parsed["craft"]
+    taxonomy = parsed["taxonomy"]
+    owner_state = parsed["owner_state"]
+    judge_state = parsed["judge_state"]
+    sequestered = parsed["sequestered"]
+    pilot_eval_unit = parsed["pilot_eval_unit"]
+    pilots = [parsed["pilot_1"], parsed["pilot_2"], parsed["pilot_3"]]
+
+    # Frozen construct and architecture boundaries.
+    for term in [
+        "OWNER_PRODUCT_FIT",
+        "BOTH_FAIL",
+        "SHADOW_ONLY",
+        "FUNCTION_CLIP",
+        "SECTION_SENTINEL",
+        "EPISODE_SENTINEL",
+        "SEQUESTERED",
+        "root_cause",
     ]:
-        if frag in contract:
-            errors.append(f"contract retains uncalibrated/overfit rule: {frag!r}")
-    for term in ["pairwise", "TEXT_PREDICTION", "DEV", "CALIBRATION", "HOLDOUT", "failure signature"]:
-        if term.upper() not in contract.upper():
-            errors.append(f"contract missing required design concept: {term}")
+        if term not in contract:
+            errors.append(f"contract missing frozen Benchmark V1 concept: {term}")
 
-    # Three-lane separation.
     for phrase in [
-        "MUST NOT receive:\n\n- FoC or other craft-reference excerpts",
-        "begins only AFTER Lane B pairwise preference has been frozen",
-        "Lane A — Truth / scope gate",
-        "Lane B — Product pairwise preference",
-        "Lane C — Target-gap analysis",
+        "taxonomy before the vote",
+        "first-pass preference is recorded and frozen",
+        "FoC is hidden from the primary vote",
+        "SHADOW_ONLY",
+        "The public repo contains only",
     ]:
         if phrase not in protocol:
-            errors.append(f"protocol missing measurement-lane invariant: {phrase}")
+            errors.append(f"protocol missing freeze/isolation invariant: {phrase}")
 
-    if "absolute_gates" in product_schema_text or '"target_gap"' in product_schema_text:
-        errors.append("Product pairwise schema still contains truth-gate or target-gap fields")
-    for term in ["pairwise_criteria", "defect_annotations", "spoken_comprehension", '"A"', '"B"']:
-        if term not in product_schema_text:
-            errors.append(f"Product pairwise schema missing {term}")
-    if "TRUTH|" in product_schema_text or "suspect_upstream_regions" in product_schema_text:
-        errors.append("Product output still embeds truth taxonomy or upstream blame")
+    if "schemas/output-quality.schema.json` is deprecated" not in start:
+        errors.append("Phase 1 START does not explicitly deprecate the monolithic output schema")
 
-    if "P01_HISTORICAL_AUTHORITY_ONLY_NO_CRAFT_REFERENCES" not in truth_schema_text:
-        errors.append("Truth schema does not enforce the no-craft-reference authority boundary")
+    # Pairwise preference must be holistic and preference-first.
+    for term in ["BOTH_FAIL", "confidence", "preference_frozen", "blind_to_reference", "LLM_SHADOW_JUDGE"]:
+        if term not in pairwise_schema_text:
+            errors.append(f"pairwise preference schema missing {term}")
+    for legacy_field in ['"pairwise_criteria"', '"continue"', '"movement"', '"payoff"', '"target_gap"', '"absolute_gates"']:
+        if legacy_field in pairwise_schema_text:
+            errors.append(f"pairwise preference schema still embeds legacy/other-lane field {legacy_field}")
+
+    # Failure signature is output-side only and supports macro scope/unresolved diagnostics.
+    for term in ["SPAN", "MULTI_SPAN", "UNIT_GLOBAL", "UNRESOLVED", '"root_cause"', '"type": "null"']:
+        if term not in failure_schema_text:
+            errors.append(f"failure-signature schema missing {term}")
+    for forbidden in ["planner_fault", "writer_fault", "suspect_upstream_regions"]:
+        if forbidden in failure_schema_text:
+            errors.append(f"failure-signature schema contains upstream blame field: {forbidden}")
+
+    expected_families = {
+        "NARRATIVE_FUNCTION",
+        "EXPOSITION_LOAD",
+        "SPOKEN_COMPREHENSION",
+        "GROUNDING_SPECIFICITY",
+        "VOICE_STANCE",
+        "REDUNDANCY",
+    }
+    taxonomy_families = set(taxonomy.get("families", {}).keys())
+    if taxonomy_families != expected_families:
+        errors.append(f"taxonomy families differ from frozen six-family set: {sorted(taxonomy_families)}")
+    if taxonomy.get("status") != "FROZEN_FOR_PILOT":
+        errors.append("taxonomy is not marked FROZEN_FOR_PILOT")
+
+    # Evaluation unit primitive and three granularities.
+    for granularity in ["FUNCTION_CLIP", "SECTION_SENTINEL", "EPISODE_SENTINEL"]:
+        if granularity not in paths["eval_unit_schema"].read_text(encoding="utf-8"):
+            errors.append(f"eval-unit schema missing granularity {granularity}")
+    if pilot_eval_unit.get("granularity") != "FUNCTION_CLIP":
+        errors.append("pilot evaluation unit is not FUNCTION_CLIP")
+
+    # Truth semantic audit must distinguish implied premises, causality and source relation.
+    for term in [
+        "IMPLIED_PREMISE", "CAUSAL", "VERIFIABLE", "PARTLY_VERIFIABLE",
+        "SUPPORTS", "QUALIFIES", "CONFLICTS", "ABSENT", "release_blocker",
+        "P01_HISTORICAL_AUTHORITY_ONLY_NO_CRAFT_REFERENCES",
+    ]:
+        if term not in truth_schema_text:
+            errors.append(f"truth schema missing semantic audit concept: {term}")
     if "CRAFT_ONLY_NOT_TRUTH" in truth_schema_text:
-        errors.append("Truth schema unexpectedly includes craft-reference authority")
+        errors.append("truth schema unexpectedly admits craft-reference authority")
 
-    for term in ["CRAFT_ONLY_NOT_TRUTH", "matched_function", "product_evaluation_frozen", "remaining_gaps", "medium_limitation"]:
+    # Spoken lane evidence levels.
+    for term in ["TEXT_PREDICTION", "AUDIO_OBSERVATION", "LISTENER_REPORT"]:
+        if term not in spoken_schema_text:
+            errors.append(f"spoken schema missing evidence mode {term}")
+
+    # Target gap must remain post-vote, function-based, and non-stylistic.
+    for term in [
+        "product_preference_frozen", "reference_visible_during_primary_vote",
+        "CRAFT_ONLY_NOT_TRUTH", "matched_editorial_function",
+        "style_similarity_used_as_score", "imitation_risk",
+        "retroactive_preference_change",
+    ]:
         if term not in target_schema_text:
-            errors.append(f"Target-gap schema missing {term}")
+            errors.append(f"target-gap schema missing {term}")
 
-    # Benchmark partitions and reviewer aliases.
+    # LLM judge is shadow-only at architecture freeze.
+    for term in ["SHADOW_ONLY", "owner_agreement", "position_reversal_consistency", "duplicate_consistency", "evidence_span_validity", "abstention_rate", "eligible_for_optimization_loop"]:
+        if term not in judge_schema_text:
+            errors.append(f"judge reliability schema missing {term}")
+    if judge_state.get("mode") != "SHADOW_ONLY" or judge_state.get("eligible_for_optimization_loop") is not False:
+        errors.append("current judge state is not SHADOW_ONLY / ineligible")
+    if judge_state.get("pre_registered_tolerance_ref") is not None:
+        warnings.append("Judge tolerance has already been populated; ensure it was pre-registered before any sequestered labels are opened.")
+
+    # Historical P01 material in this public repo must all be DEV.
     samples = benchmark.get("samples", [])
     ids = [s.get("id") for s in samples]
-    aliases = [s.get("reviewer_alias") for s in samples]
     if len(ids) != len(set(ids)):
         errors.append("duplicate benchmark sample ids")
-    if len(aliases) != len(set(aliases)):
-        errors.append("duplicate reviewer aliases")
-    partitions = {"DEV": set(), "CALIBRATION": set(), "HOLDOUT": set()}
     for sample in samples:
-        part = sample.get("partition")
-        if part not in partitions:
-            errors.append(f"sample {sample.get('id')} has invalid partition {part}")
-            continue
-        partitions[part].add(sample.get("id"))
-        if not re.fullmatch(r"PX-\d{2}", str(sample.get("reviewer_alias", ""))):
-            errors.append(f"reviewer alias leaks semantics or has unexpected format: {sample.get('reviewer_alias')}")
-    if not all(partitions.values()):
-        errors.append("DEV/CALIBRATION/HOLDOUT must all be non-empty")
-    if any(partitions[a] & partitions[b] for a, b in [("DEV", "CALIBRATION"), ("DEV", "HOLDOUT"), ("CALIBRATION", "HOLDOUT")]):
-        errors.append("dataset partitions overlap")
+        if sample.get("partition") != "DEV":
+            errors.append(f"public historical P01 sample is not DEV: {sample.get('id')} -> {sample.get('partition')}")
 
-    # Calibration labels and controls.
-    for pair in benchmark.get("calibration_pairs", []):
-        pair_id = pair.get("pair_id", "")
-        left, right = pair.get("left"), pair.get("right")
-        if left not in partitions["CALIBRATION"] or right not in partitions["CALIBRATION"]:
-            errors.append(f"calibration pair {pair_id} references non-calibration sample")
-        if left == right:
-            if pair.get("owner_label") != "TIE_EXPECTED_CONTROL":
-                errors.append(f"same-text control {pair_id} missing mechanical tie expectation")
-        elif pair.get("owner_label") is not None:
-            errors.append(f"owner preference appears pre-filled for {pair_id}")
+    for pair in benchmark.get("pilot_pairs", []):
+        if pair.get("left") not in ids or pair.get("right") not in ids:
+            errors.append(f"pilot pair references unknown sample: {pair.get('pair_id')}")
 
-    holdout = benchmark.get("holdout_policy", {})
-    if holdout.get("exposed_to_contract_tuning") is not False:
-        errors.append("holdout is exposed to contract tuning")
-    if holdout.get("reliability") != "FRESH_EXPOSED_NOT_BLIND":
-        errors.append("holdout reliability must state FRESH_EXPOSED_NOT_BLIND while stored in shared repo")
-    if holdout.get("access_enforcement") != "SHARED_REPO_NOT_SEQUESTERED":
-        errors.append("holdout access limitation is not explicit")
+    if benchmark.get("calibration_plan", {}).get("status") != "NOT_POPULATED":
+        errors.append("fresh calibration corpus is incorrectly marked populated during architecture freeze")
+    agg = benchmark.get("aggregation_policy", {})
+    if agg.get("global_quality_score") is not False or agg.get("bradley_terry_required") is not False or agg.get("elo_required") is not False:
+        errors.append("Benchmark V1 aggregation policy reintroduced scalar/BT/Elo requirements")
 
-    # Source manifest and craft-only boundary.
+    # Sequestered evidence must not be committed to the public repo.
+    if sequestered.get("public_repo_contains_payload") is not False or sequestered.get("public_repo_contains_labels") is not False:
+        errors.append("sequestered manifest claims private payload/labels are present in public repo")
+    if sequestered.get("status") != "NOT_CREATED_PRIVATE_PAYLOAD":
+        warnings.append("Private sequestered set status changed; verify no payload/labels entered the public repository.")
+
+    # Pilot owner packets: preference-first, BOTH_FAIL, confidence, no pre-vote taxonomy/reference metadata.
+    for packet in pilots:
+        packet_id = packet.get("packet_id", "UNKNOWN")
+        if packet.get("role") != "PILOT_ONLY_NOT_CALIBRATION_EVIDENCE":
+            errors.append(f"{packet_id} is not explicitly PILOT_ONLY_NOT_CALIBRATION_EVIDENCE")
+        if packet.get("eval_unit_id") != pilot_eval_unit.get("eval_unit_id"):
+            errors.append(f"{packet_id} references unexpected eval_unit_id")
+        first = packet.get("first_pass", {})
+        if "BOTH_FAIL" not in first.get("allowed_results", []):
+            errors.append(f"{packet_id} does not offer BOTH_FAIL")
+        if set(first.get("confidence_options", [])) != {"LOW", "MEDIUM", "HIGH"}:
+            errors.append(f"{packet_id} confidence options are incomplete")
+        if "freeze" not in str(first.get("freeze_rule", "")).lower() and "không sửa" not in str(first.get("freeze_rule", "")).lower():
+            errors.append(f"{packet_id} does not make first-pass freeze explicit")
+        post = packet.get("post_vote_optional", {})
+        if post.get("taxonomy_not_shown_before_vote") is not True:
+            errors.append(f"{packet_id} may expose taxonomy before preference")
+        packet_text = json.dumps(packet, ensure_ascii=False).lower()
+        for leak in ["craft_reference", "foc_reference", "historical_verdict", "intended_winner", "writer_process", "planner_process"]:
+            if leak in packet_text:
+                errors.append(f"{packet_id} contains forbidden reviewer metadata token {leak}")
+
+    if owner_state.get("status") != "PILOT_READY_NOT_CALIBRATION":
+        errors.append("owner state is not PILOT_READY_NOT_CALIBRATION")
+    if set(owner_state.get("allowed_owner_results", [])) != {"A", "B", "TIE", "BOTH_FAIL", "UNCERTAIN"}:
+        errors.append("owner state allowed results do not match frozen preference enum")
+    shadow_policy = owner_state.get("shadow_judge_policy", {})
+    if shadow_policy.get("mode") != "SHADOW_ONLY" or shadow_policy.get("may_drive_optimization") is not False:
+        errors.append("owner calibration state does not enforce shadow-only judge policy")
+
+    # Source manifest and craft-only boundary stay mechanically coherent.
     manifest_samples = {x["sample_id"]: x for x in manifest.get("product_samples", [])}
     for sid in ids:
         if sid not in manifest_samples:
             errors.append(f"sample {sid} missing from source manifest")
+
     craft_sources = {x["source_id"]: x for x in manifest.get("craft_sources", [])}
     for source in craft_sources.values():
         if source.get("authority") != "CRAFT_ONLY_NOT_TRUTH":
@@ -161,73 +273,63 @@ def main() -> int:
         elif source.get("git_blob_sha1") and git_blob_sha1(source_path) != source["git_blob_sha1"]:
             errors.append(f"craft source blob identity changed: {source['source_id']}")
 
-    # Craft corpus coverage and anchors.
     excerpts = craft.get("excerpts", [])
     episodes = {x.get("episode") for x in excerpts}
-    required_functions = {"opening_investigation", "mechanism_explanation", "scale_change", "uncertainty", "transition", "local_payoff"}
-    observed_functions = {f for x in excerpts for f in x.get("functions", [])}
     if not 6 <= len(excerpts) <= 10:
         errors.append(f"craft corpus should contain 6-10 excerpts, found {len(excerpts)}")
     if len(episodes) < 2:
         errors.append("craft corpus needs at least two episodes")
-    if required_functions - observed_functions:
-        errors.append(f"craft corpus missing functions: {sorted(required_functions - observed_functions)}")
     for ex in excerpts:
         source_id = ex.get("source_ref")
         if source_id not in craft_sources:
             errors.append(f"excerpt {ex.get('id')} references unknown craft source {source_id}")
             continue
         text = (ROOT / craft_sources[source_id]["locator"]).read_text(encoding="utf-8-sig")
-        start, end = ex.get("start_anchor", ""), ex.get("end_anchor", "")
-        if not start or start not in text:
+        start_anchor, end_anchor = ex.get("start_anchor", ""), ex.get("end_anchor", "")
+        if not start_anchor or start_anchor not in text:
             errors.append(f"excerpt {ex.get('id')} start anchor not found")
-        if not end or end not in text:
+        if not end_anchor or end_anchor not in text:
             errors.append(f"excerpt {ex.get('id')} end anchor not found")
-        if start in text and end in text and text.index(start) > text.index(end):
+        if start_anchor in text and end_anchor in text and text.index(start_anchor) > text.index(end_anchor):
             errors.append(f"excerpt {ex.get('id')} anchor order invalid")
 
-    # Owner calibration remains an external gate.
-    non_control = [p for p in owner_cal.get("pairs", []) if "DUP" not in p.get("pair_id", "")]
-    real_owner_labels = [p for p in non_control if p.get("owner_result") in {"A", "B", "TIE", "UNCERTAIN"}]
-    judge_runs_complete = bool(non_control) and all(p.get("judge_runs") and p.get("position_control_complete") is True for p in non_control)
-    human_calibrated = len(real_owner_labels) == len(non_control) and judge_runs_complete
-
-    legacy_note = paths["legacy_readme"].read_text(encoding="utf-8")
-    if "NOT" not in legacy_note or "gold" not in legacy_note.lower():
-        errors.append("legacy evaluation quarantine is not explicit")
+    deprecated_schema = parsed["legacy_output_schema"]
+    if deprecated_schema.get("deprecated") is not True:
+        errors.append("legacy schemas/output-quality.schema.json is not marked deprecated")
 
     if errors:
         status, exit_code = "NOT_READY", 1
-    elif human_calibrated and holdout.get("scored") is True:
-        status, exit_code = "READY_FOR_EXIT_REVIEW", 0
     else:
-        status, exit_code = "READY_FOR_HUMAN_CALIBRATION", 0
-        if not human_calibrated:
-            warnings.append("Owner/judge calibration is incomplete; Phase 1 cannot close.")
-        if holdout.get("scored") is False:
-            warnings.append("Fresh-exposed transfer sample remains unscored; Phase 1 cannot close.")
+        status, exit_code = "ARCHITECTURE_FROZEN_READY_FOR_PILOT", 0
+        warnings.extend([
+            "Pilot packets use historical DEV prose and cannot establish benchmark validity.",
+            "Fresh calibration corpus has not been collected.",
+            "No private/restricted sequestered payload exists yet.",
+            "LLM judge remains SHADOW_ONLY and unvalidated.",
+            "Structural verification cannot establish aesthetic validity, owner calibration validity, spoken quality, or transfer."
+        ])
 
     result = {
         "status": status,
         "structural_errors": errors,
         "warnings": warnings,
         "counts": {
-            "dev_samples": len(partitions["DEV"]),
-            "calibration_samples": len(partitions["CALIBRATION"]),
-            "holdout_samples": len(partitions["HOLDOUT"]),
-            "calibration_pairs": len(benchmark.get("calibration_pairs", [])),
+            "public_dev_samples": len(samples),
+            "pilot_pairs": len(benchmark.get("pilot_pairs", [])),
+            "pilot_owner_packets": len(pilots),
             "craft_excerpts": len(excerpts),
             "craft_episodes": len(episodes),
-            "owner_labels_recorded": len(real_owner_labels),
-            "owner_labels_required": len(non_control),
         },
-        "measurement_lanes": ["TRUTH_GATE", "PRODUCT_PAIRWISE", "TARGET_GAP"],
-        "limitations": [
-            "Structural verification does not prove aesthetic validity.",
-            "Transcript-only craft references do not establish audio listenability.",
-            "Shared-repo holdout is fresh/exposed, not sequestered blind.",
-            "Human preference calibration and transfer remain external evidence gates."
+        "measurement_surfaces": [
+            "EVALUATION_UNIT",
+            "PRODUCT_PREFERENCE",
+            "FAILURE_SIGNATURE",
+            "TRUTH",
+            "SPOKEN",
+            "TARGET_GAP",
+            "JUDGE_RELIABILITY",
         ],
+        "phase1_complete": False,
     }
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return exit_code
