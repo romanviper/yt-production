@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "review_id": "PHASE3-P3-F01-RERUN-GUIDED",
+  "mode": "GUIDED_TARGET_DIAGNOSTIC",
+  "benchmark_evidence_eligible": false,
+  "purpose": "Give the owner a micro-unit comparison for the first bounded Phase 3 learning intervention without requiring a full-probe reread.",
+  "source_failure_id": "P3-F01",
+  "intervention_id": "P3-I01",
+  "old": {
+    "label": "BEFORE",
+    "source_ref": "experiments/p01-writer-trace-v2/runs/round-01/writer-report.json -> B03",
+    "excerpt": "Khối cầu niêm phong bảo đảm an toàn cho số lượng, song cái giá phải trả là sự mù mịt về thị giác."
+  },
+  "new": {
+    "label": "AFTER",
+    "source_ref": "learning_runtime/reruns/p01-rootcause-01/writer-output.md",
+    "excerpt": "Khi lớp đất sét đã khép lại, những con tính bên trong không còn hiện ra trước mắt. Muốn nhìn lại và đếm chúng trực tiếp, người ta phải phá lớp vỏ. Chiếc vỏ càng còn nguyên, phần nằm trong nó càng không thể được kiểm tra bằng mắt."
+  },
+  "feature_cards": [
+    {
+      "feature": "INFORMATION_RELEASE",
+      "target_behavior_ref": "FOC-T-INFO-RELEASE-01",
+      "target_behavior": "Material observation should usually earn interpretation instead of presenting the resolved lesson first.",
+      "before_behavior": "Names the abstract lesson immediately: safety is guaranteed and visual blindness is the price.",
+      "after_behavior": "States only the visible physical condition and destructive inspection requirement, then stops before naming the larger lesson.",
+      "predicted_change": "CLOSER_TO_TARGET",
+      "owner_label_options": ["MATCHES_TARGET", "PARTIAL", "MISSES_TARGET", "WRONG_TARGET", "UNCERTAIN"],
+      "owner_label": null,
+      "owner_note": null
+    },
+    {
+      "feature": "NARRATOR_STANCE",
+      "target_behavior_ref": "FOC-T-STANCE-01",
+      "target_behavior": "Narrator guides through evidence and consequence without repeatedly announcing the lesson the listener should take away.",
+      "before_behavior": "Narrator explicitly summarizes the meaning of the artifact condition.",
+      "after_behavior": "Narrator remains closer to observation; no methodological or thesis-like conclusion is announced in this unit.",
+      "predicted_change": "CLOSER_TO_TARGET",
+      "owner_label_options": ["MATCHES_TARGET", "PARTIAL", "MISSES_TARGET", "WRONG_TARGET", "UNCERTAIN"],
+      "owner_label": null,
+      "owner_note": null
+    },
+    {
+      "feature": "LOCAL_TRANSFORMATION",
+      "target_behavior_ref": "FOC-T-TRANSFORM-01",
+      "target_behavior": "A unit should change the listener's model through a consequence or broken assumption rather than restating a thesis.",
+      "before_behavior": "The change is explained as a complete paradox/lesson inside the sentence.",
+      "after_behavior": "The listener encounters a concrete constraint: closed means unseen; inspection means breaking the object. The broader significance is deferred.",
+      "predicted_change": "CLOSER_TO_TARGET_BUT_UNVALIDATED",
+      "owner_label_options": ["MATCHES_TARGET", "PARTIAL", "MISSES_TARGET", "WRONG_TARGET", "UNCERTAIN"],
+      "owner_label": null,
+      "owner_note": null
+    }
+  ],
+  "owner_summary_question": {
+    "question": "So với BEFORE, AFTER có tiến gần hơn tới trải nghiệm kể chuyện bạn muốn không?",
+    "allowed_results": ["YES", "NO", "BOTH_FAIL", "WRONG_TARGET", "UNCERTAIN"],
+    "result": null,
+    "note": null
+  },
+  "limitations": [
+    "This is guided diagnostic review, not blind benchmark evidence.",
+    "The AFTER realization was produced manually in the same assistant session as the intervention and therefore is not an independent Writer test.",
+    "FoC target behaviors are craft abstractions, not truth authority or style templates."
+  ]
+}
