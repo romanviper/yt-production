@@ -16,14 +16,30 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Focused Phase 2/3 feedback regressions
-        run: python -m unittest tests.test_learning_runtime tests.test_phase3_whitebox tests.test_feedback_integrity tests.test_feedback_loop -v
-      - name: Phase 1 benchmark verifier
-        run: python scripts/experiments/verify_phase1_benchmark.py
-      - name: Guided single-sample verifier
-        run: python scripts/experiments/verify_phase1_guided_review.py --session benchmarks/p01/review-sessions/owner-pilot-01-guided.json
-      - name: Guided Phase 3 comparison verifier
-        run: python scripts/experiments/verify_phase1_guided_review.py --session benchmarks/p01/review-sessions/phase3-p3-f01-rerun-guided.json
+      - name: Focused feedback check
+        run: |
+          python -m unittest tests.test_learning_runtime tests.test_phase3_whitebox tests.test_feedback_integrity tests.test_feedback_loop -v && \
+          python scripts/experiments/verify_phase1_benchmark.py && \
+          python scripts/experiments/verify_phase1_guided_review.py --session benchmarks/p01/review-sessions/owner-pilot-01-guided.json && \
+          python scripts/experiments/verify_phase1_guided_review.py --session benchmarks/p01/review-sessions/phase3-p3-f01-rerun-guided.json && \
+          rm -rf /tmp/p01-feedback-case && \
+          python -m learning_runtime.feedback prepare p01-rootcause-01 --out /tmp/p01-feedback-case && \
+          python -m learning_runtime.feedback verify --case-dir /tmp/p01-feedback-case && \
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          case = json.loads(Path('/tmp/p01-feedback-case/case.json').read_text(encoding='utf-8'))
+          print(json.dumps({
+              'case_id': case['case_id'],
+              'baseline_text_sha256': case['baseline']['identity']['text_sha256'],
+              'candidate_text_sha256': case['candidate']['identity']['text_sha256'],
+              'intervention_raw_sha256': case['intervention']['identity']['raw_sha256'],
+              'measurement_status': case['measurement_status'],
+              'mapping': case['trace']['mapping_status'],
+              'suspected_regions': case['trace']['suspected_regions'],
+              'attribution_confidence': case['trace']['attribution_confidence'],
+          }, ensure_ascii=False, indent=2))
+          PY
 
   validate:
     runs-on: ubuntu-latest
