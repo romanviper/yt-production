@@ -1,32 +1,31 @@
 # YT Production
 
-## Owner-first MVP — đường hiện tại để lấy hai bản đọc đầu tiên
+## Owner-first MVP — dynamic Writer pool
 
-Trước khi tiếp tục benchmark/coordinator/diagnostic architecture, dùng đường tối thiểu này. `prepare` chỉ snapshot authority + Sol brief và **dừng chờ Owner duyệt budget**; chưa dispatch agent:
-
-```bash
-python scripts/learning.py prepare --run p01-owner-001 --request "Viết một đoạn P01 độc lập để tôi đọc và phản hồi" --code-ref <commit-or-config-ref>
-python scripts/learning.py status --run p01-owner-001
-```
-
-Hướng dẫn đầy đủ: [docs/MVP.md](docs/MVP.md). Owner amendment và acceptance RC1–RC6: [docs/MVP-REQUEST-CHANGES-02.md](docs/MVP-REQUEST-CHANGES-02.md).
-
-Flow MVP hiện tại là:
+Đường MVP hiện tại dùng nguyên tắc **Freeze the work, not the worker**:
 
 ```text
 Owner request
-  → frozen P01 authority + Sol repo brief
-  → Owner-approved time budget
-  → Sol repo prepares one frozen Plan
-  → two equal-common-content Writer packets
-      ├─ Gemini 3.8 Flash → sample A
-      └─ GPT-5.6 Sol     → sample B
-  → timing/budget report
+  → frozen P01 authority
+  → Owner-approved budget cho Sol repo
+  → Sol repo freezes one Plan + common Writer assignment
+  → Owner launches any Writer/model(s)
+  → each returns draft + self-declared provenance
+  → Owner closes submission pool
   → Owner comparison feedback
   → stop
 ```
 
-Không có Planner agent riêng, Reviewer/Audit/time-auditor/coordinator trong đường này. Controller không tự gọi model host, không tự reroll/chọn Writer thắng, và không được bắt đầu vòng live cho tới khi Owner duyệt budget cụ thể. Production router bên dưới vẫn là một luồng riêng; các experiment/Phase 1–3 là lịch sử/tham khảo trừ khi Owner tái ủy quyền cụ thể.
+Writer không cần pre-register model/actor và không có time-budget gate. Timing của Writer chỉ là telemetry. `PREBOUND` submissions phải match frozen assignment hash; `NOT_PREBOUND` submissions vẫn có thể được đọc nhưng không được gọi là controlled same-input evidence.
+
+Bắt đầu:
+
+```bash
+python scripts/learning.py prepare --run p01-owner-001 --request "Viết một đoạn P01 độc lập để tôi đọc và phản hồi" --code-ref <ref>
+python scripts/learning.py status --run p01-owner-001
+```
+
+Hướng dẫn đầy đủ: [docs/MVP.md](docs/MVP.md).
 
 Hệ điều hành biên tập cho phim lịch sử dài, được thiết kế để nhiều AI task cộng tác mà không mang toàn bộ repo và toàn bộ policy vào mỗi context window.
 
