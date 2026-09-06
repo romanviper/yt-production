@@ -44,7 +44,7 @@ Do not write the draft into `products/`, `runs/` or controller folders.
 
 ### 1. Write the PRE-WRITE SNAPSHOT first
 
-Create `writing-report.md` and fill only the PRE-WRITE sections below **before drafting prose**. Keep this concise. It is not a Planner artifact.
+Create `writing-report.md` and fill only the pre-write sections below **before drafting prose**. Keep this concise. It is not a Planner artifact.
 
 ### 2. Write one draft attempt
 
@@ -62,7 +62,7 @@ Once `draft.md` is complete, do not rewrite or reroll it because of observations
 
 ### 4. Finish the POST-WRITE TRACE
 
-Inspect your frozen draft and append the POST-WRITE sections. Do not change the draft afterward.
+Inspect your frozen draft and append the post-write sections. Do not change the draft afterward.
 
 ### 5. Write `meta.json`, commit the three files, stop
 
@@ -106,165 +106,169 @@ If a fact cannot be known truthfully, use `UNKNOWN`/`null` rather than guessing.
 
 ---
 
-# `writing-report.md` contract
+# Quy ước cho `writing-report.md`
 
-Use these headings in order. Prefer bullets/tables over long prose. The purpose is traceability, not self-justification.
+`writing-report.md` phải được viết bằng **tiếng Việt tự nhiên, rõ ràng, dễ đọc đối với Owner**.
 
-## PRE-WRITE SNAPSHOT
+Không viết report theo giọng tài liệu kỹ thuật hoặc prompt engineering. Không dùng tiếng Anh làm nhãn mặc định nếu có thể nói tự nhiên bằng tiếng Việt. Chỉ giữ nguyên tên file, path, model, ID nguồn như `HS-P01-0004`, hoặc thuật ngữ chuyên môn khi việc dịch sẽ làm mất nghĩa.
 
-### 1. Task I am executing
+Ưu tiên câu ngắn, bảng và bullet. Mục tiêu là để Owner đọc và hiểu Writer đã làm gì, không phải để Writer tự biện hộ hay chứng minh mình đúng.
 
-In 1–3 sentences, state what the Owner asked you to produce.
+Dùng đúng các heading dưới đây theo thứ tự.
 
-### 2. Product story and P01 role as I understand them
+## TRƯỚC KHI VIẾT
 
-State, in your own words:
+### 1. Tôi hiểu nhiệm vụ lần này là gì
 
-- what larger story this podcast is telling;
-- what P01 contributes to that story;
-- what would be lost if P01 became only an explanation of archaeological caution.
+Trong 1–3 câu, nói lại bằng tiếng Việt tự nhiên Writer hiểu Owner đang yêu cầu tạo ra sản phẩm gì.
 
-Tie this to `P01-creative-brief.md` rather than inventing a new product goal.
+### 2. Tôi hiểu câu chuyện lớn và vai trò của P01 như thế nào
 
-### 3. Listener state change I intend to create
+Nói bằng lời của mình:
 
-Record:
+- podcast dài này đang kể câu chuyện lớn nào;
+- P01 đóng vai trò gì trong hành trình đó;
+- điều gì sẽ bị mất nếu P01 chỉ còn là một đoạn giải thích về sự thận trọng khảo cổ học.
 
-- listener entry state;
-- listener exit state;
-- what you want the listener to become curious about next;
-- any feeling/stake you intend to create **only if the supplied material can support it**.
+Bám vào `P01-creative-brief.md`, không tự phát minh mục tiêu sản phẩm mới.
 
-This is more than a factual conclusion. It describes the intended audience experience.
+### 3. Tôi muốn người nghe thay đổi nhận thức như thế nào
 
-### 4. Storytelling functions and narrative approach I intend to use
+Ghi rõ:
 
-Record the final pre-draft choices:
+- trước đoạn này người nghe có thể đang hình dung điều gì;
+- sau đoạn này họ nên hiểu khác đi như thế nào;
+- câu hỏi hoặc sự tò mò nào nên kéo họ sang phần tiếp theo;
+- nếu chất liệu cho phép, cảm giác hoặc sức nặng nào Writer muốn tạo ra.
 
-- intended opening;
-- central narrative spine/question;
-- intended ending/destination;
-- point of view/narrator stance if relevant;
-- which useful long-form narrative functions from the creative brief you actually intend to use (for example causal movement, material anchor, human presence, scale change, evidence-earned consequence).
+Đây không chỉ là kết luận factual. Hãy mô tả trải nghiệm mà Writer định tạo ra cho người nghe.
 
-For each major choice, name the creative-brief clause, overlay field, substrate ID or Owner instruction that materially informed it when possible.
+### 4. Tôi định kể đoạn này như thế nào
 
-### 5. Evidence I expect to rely on
+Ghi những lựa chọn cuối cùng trước khi bắt đầu viết prose:
 
-List the overlay fields / historical-substrate IDs you expect to use and what each is for.
+- mở ở đâu hoặc bằng điều gì;
+- trục kể hoặc câu hỏi trung tâm;
+- đích đến của đoạn;
+- vị trí/giọng của người kể nếu có lựa chọn đáng kể;
+- những chức năng kể chuyện nào từ creative brief Writer thực sự định dùng, ví dụ: mạch nhân quả, điểm tựa vật chất, sự hiện diện của con người, chuyển quy mô, hệ quả có bằng chứng.
 
-### 6. Boundaries I am carrying — and how I intend to keep them backstage
+Với mỗi lựa chọn quan trọng, nếu có thể hãy chỉ ra creative-brief clause, overlay field, substrate ID hoặc chỉ dẫn của Owner đã tác động tới lựa chọn đó.
 
-List only material evidence/claim boundaries.
+### 5. Tôi dự định dựa vào bằng chứng nào
 
-For each one, state how it will affect the telling:
+Liệt kê những overlay field / historical-substrate ID Writer dự định dùng và mỗi nguồn sẽ giúp làm gì trong đoạn kể.
 
-- `OMIT_UNSUPPORTED_DETAIL`
-- `BRIEF_QUALIFIER_IN_PROSE`
-- `REPORT_ONLY`
-- `NARRATIVELY_RELEVANT_UNCERTAINTY`
+### 6. Những ranh giới bằng chứng tôi đang mang theo
 
-Do not assume a boundary deserves listener-facing explanation merely because it exists.
+Chỉ liệt kê những boundary thực sự có thể ảnh hưởng tới cách kể.
+
+Với mỗi boundary, nói rõ Writer dự định xử lý nó theo cách nào, bằng ngôn ngữ tự nhiên, chẳng hạn:
+
+- bỏ chi tiết không đủ căn cứ;
+- thêm một qualifier ngắn trong prose;
+- chỉ ghi trong report, không đưa vào lời kể;
+- biến uncertainty thành nội dung listener-facing vì bản thân uncertainty đó có ý nghĩa kể chuyện.
+
+Không mặc định rằng một boundary phải được nói cho người nghe chỉ vì nó tồn tại.
 
 ---
 
-## POST-WRITE TRACE
+## SAU KHI VIẾT
 
-### 7. Actual draft map
+### 7. Bản draft thực tế đi như thế nào
 
-Map the frozen draft from top to bottom.
+Map bản draft đã freeze từ đầu tới cuối.
 
-| Draft location | What this passage is doing for the listener | Source / substrate IDs used | Content type |
+| Vị trí trong draft | Đoạn này đang làm gì với người nghe | Nguồn / substrate ID | Loại nội dung |
 | --- | --- | --- | --- |
-| ¶1 | ... | HS-P01-... | sourced fact / inference / narrative framing / creative reconstruction |
+| ¶1 | ... | HS-P01-... | dữ kiện / suy luận / framing / tái dựng sáng tạo |
 
-### 8. Product goal → prose trace
+### 8. Mục tiêu sản phẩm đã đi vào prose ở đâu
 
-Show where the larger product goal and P01 role actually became visible in the draft.
+Cho thấy những mục tiêu lớn hơn và vai trò P01 thực sự xuất hiện ở đâu trong draft.
 
-| Intended product/section function | Draft location | What the listener actually receives |
+| Mục tiêu/chức năng đã định | Vị trí trong draft | Người nghe thực sự nhận được gì |
 | --- | --- | --- |
-| establish the historical problem before “writing” | ¶... | ... |
-| create forward pull into the next question | ¶... | ... |
+| đặt ra bài toán lịch sử trước khi có “writing” | ¶... | ... |
+| tạo lực kéo sang câu hỏi tiếp theo | ¶... | ... |
 
-If a goal from the PRE-WRITE snapshot never became visible, say so. Do not mark it PASS/FAIL.
+Nếu một mục tiêu đã định trước khi viết nhưng không xuất hiện trong draft, nói thẳng điều đó. Không PASS/FAIL.
 
-### 9. Source → prose trace
+### 9. Từ nguồn tới câu chữ
 
-For every material historical claim, concrete scene/detail or causal bridge, show its basis.
+Với mỗi claim lịch sử quan trọng, chi tiết cụ thể hoặc cầu nối nhân quả, chỉ ra căn cứ của nó.
 
-| Draft location or short phrase | Source/basis | What the source supports | What I added or transformed |
+| Vị trí hoặc cụm từ ngắn trong draft | Nguồn/căn cứ | Nguồn thực sự cho phép nói gì | Writer đã thêm hoặc biến đổi gì |
 | --- | --- | --- | --- |
-| ... | HS-P01-0004 | ... | compression / inference / framing / none |
+| ... | HS-P01-0004 | ... | nén ý / suy luận / framing / không thêm |
 
-Do not claim a source supports more than it does.
+Không được nói nguồn support nhiều hơn nội dung thực tế của nguồn.
 
-### 10. Creative additions and inference
+### 10. Những phần Writer tự thêm hoặc suy ra
 
-List material content not directly stated by the historical inputs and classify it:
+Liệt kê những nội dung đáng kể không được nói trực tiếp trong historical inputs. Với mỗi mục, dùng một mô tả tiếng Việt dễ hiểu như:
 
-- `CONSERVATIVE_INFERENCE`
-- `NARRATIVE_FRAMING`
-- `CREATIVE_RECONSTRUCTION`
-- `UNSUPPORTED_OR_UNCERTAIN`
+- suy luận thận trọng từ bằng chứng;
+- framing để kể chuyện;
+- tái dựng sáng tạo;
+- chưa được support chắc chắn / còn bất định.
 
-If none, say `None`.
+Nếu không có, ghi `Không có`.
 
-### 11. Evidence boundaries as they appeared in the draft
+### 11. Ranh giới bằng chứng đã ảnh hưởng draft thực tế ra sao
 
-For each material boundary, record what actually happened:
-
-| Boundary | Handling | Draft location if listener-facing | Did the boundary become methodological exposition? |
+| Boundary | Writer đã xử lý thế nào | Nếu lọt vào lời kể thì ở đâu | Nó có biến thành giọng giải trình phương pháp không? |
 | --- | --- | --- | --- |
-| ... | omitted / qualified / narrated | ¶... / N/A | yes / no |
+| ... | bỏ / qualifier ngắn / kể trực tiếp | ¶... / không có | có / không |
 
-This section exists so the Owner can see whether evidence discipline silently protected accuracy or leaked into the listener-facing script.
+Mục này tồn tại để Owner thấy evidence discipline đã âm thầm bảo vệ độ chính xác hay đã tràn ra thành methodological exposition.
 
-### 12. Material changes from the PRE-WRITE snapshot
+### 12. Những gì thay đổi so với ý định trước khi viết
 
-| Planned | Actually written | Observable reason/input that caused the change |
+| Trước khi viết định làm gì | Cuối cùng đã viết gì | Điều quan sát được nào khiến hướng đi thay đổi |
 | --- | --- | --- |
 | ... | ... | ... |
 
-If nothing materially changed, say `No material change`.
+Nếu không có thay đổi đáng kể, ghi `Không có thay đổi đáng kể`.
 
-### 13. Input limitations versus Writer choices
+### 13. Phần nào là do đầu vào thiếu, phần nào là do lựa chọn của Writer
 
-Keep these separate.
+Tách rõ hai nhóm:
 
-**Input limitations:** identify missing historical material that constrained possible human action, pressure, consequence, scene detail or causal movement.
+**Giới hạn của đầu vào:** chất liệu lịch sử nào còn thiếu khiến Writer khó tạo human action, pressure, consequence, scene detail hoặc causal movement phong phú hơn.
 
-**Writer choices:** identify places where richer telling was possible within the supplied material but you chose a more explanatory, abstract or cautious route.
+**Lựa chọn của Writer:** những nơi trong đó chất liệu hiện có vẫn cho phép một cách kể giàu hơn, nhưng Writer đã chủ động chọn cách giải thích, trừu tượng hoặc thận trọng hơn.
 
-Do not use input limitations as a blanket defense of the draft.
+Không dùng “đầu vào thiếu” như lời bào chữa chung cho toàn bộ draft.
 
-### 14. Self-observed output risks
+### 14. Những rủi ro Writer tự nhìn thấy trong output
 
-Do not score or declare success/failure. Point to inspectable passages that may show risks such as:
+Không chấm điểm và không tuyên bố draft thành công/thất bại. Chỉ ra những chỗ cụ thể có thể có vấn đề, ví dụ:
 
-- exposition/essay-like explanation;
-- weak narrative movement;
-- product goal disappearing behind a narrower factual point;
-- abstraction instead of concrete action/object/process;
-- missing human presence where evidence allowed it;
-- scale that never moves;
-- over-compression or repetition;
-- historical overreach;
-- excessive caution flattening the narrative;
-- evidence boundaries leaking into methodological narration;
-- an instruction visibly distorting the prose.
+- giống bài luận hoặc giảng giải;
+- câu chuyện không tiến lên;
+- mục tiêu sản phẩm biến mất phía sau một điểm factual hẹp;
+- quá trừu tượng thay vì có object/action/process cụ thể;
+- thiếu sự hiện diện của con người dù evidence cho phép;
+- quy mô không dịch chuyển;
+- nén quá mức hoặc lặp ý;
+- đi quá xa bằng chứng;
+- quá thận trọng làm câu chuyện phẳng;
+- boundary bằng chứng tràn vào lời kể thành giọng phương pháp luận;
+- một instruction nào đó làm prose bị méo rõ rệt.
 
-Use paragraph numbers or short phrases.
+Dùng số đoạn hoặc một cụm ngắn để Owner có thể nhìn đúng cùng vị trí.
 
-### 15. Execution disclosure
+### 15. Những gì đã xảy ra trong phiên viết
 
-State:
+Nói rõ:
 
-- repo files beyond the three Writer inputs that you read;
-- external source/search used;
-- whether another Writer output was visible/read;
-- whether Owner feedback on another Writer was visible/read;
-- whether you produced more than one prose attempt;
-- timing if actually observable, otherwise `UNKNOWN`.
+- có đọc thêm file repo nào ngoài ba input chính không;
+- có dùng nguồn/search bên ngoài không;
+- có nhìn thấy/đọc output Writer khác không;
+- có nhìn thấy/đọc feedback của Owner về Writer khác không;
+- có tạo hơn một prose attempt không;
+- timing nếu thực sự biết, nếu không ghi `UNKNOWN`.
 
-Then stop. Do not review another Writer, rank models, rewrite the frozen draft or modify the harness.
+Sau đó dừng. Không review Writer khác, không rank model, không sửa lại draft đã freeze và không sửa harness.
