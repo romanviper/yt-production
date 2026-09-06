@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "PHASE3-PROTOTYPE-FEEDBACK-IMPLEMENTATION-01",
+  "status": "IMPLEMENTED_READY_FOR_BOUNDED_REAL_ROUND",
+  "feedback_commit": "2c2116ab86128cc2d6f5d70c18a763385d863576",
+  "validated_commit": "d7115f9f1d08f8f521471c837c4115c0820a8ff6",
+  "workflow_run_id": 34020395669,
+  "focused_job": {
+    "job_id": 101451780610,
+    "status": "PASS",
+    "tests": 44,
+    "test_seconds": 0.379,
+    "phase1_benchmark_verifier": "PASS",
+    "guided_single_verifier": "PASS",
+    "guided_comparison_verifier": "PASS",
+    "feedback_case_prepare": "PASS",
+    "feedback_case_verify": "PASS",
+    "workspace_smoke": "PASS"
+  },
+  "implemented": {
+    "measurement_semantics": {
+      "preference_separate_from_symptom": true,
+      "missing_symptom_state": "NOT_MEASURED",
+      "uncertain_action": "CLARIFY_OR_COLLECT_MORE_OBSERVATION_KEEP_INTERVENTION",
+      "wrong_target_action": "REVISIT_TARGET_DEFINITION_KEEP_OUTPUT_FROZEN",
+      "partial_invariants_inherit_case_defaults": true
+    },
+    "measurement_provenance": {
+      "immutable_measurement_ids": true,
+      "duplicate_id_rejected": true,
+      "supersedes_supported": true,
+      "parallel_measurements_preserved": true,
+      "unresolved_disagreement_state": "MULTIPLE_MEASUREMENTS_UNRESOLVED",
+      "derived_current_state": "current.json"
+    },
+    "attribution_authority": {
+      "pre_measurement_authority": "REVIEWER_SUPPORTED_DIAGNOSTIC_HYPOTHESIS",
+      "intervention_support_requires_measurement": true
+    },
+    "frozen_learning_standard": {
+      "brief_ref": "learning_runtime/briefs/p01-rootcause-01.json",
+      "brief_raw_sha256": "602c7f375d846b7a42891b20eec2d0ad067bce477836191bad45cbd110ef2e1b",
+      "product_contract_ref": "docs/quality/output-quality-contract.md",
+      "product_contract_raw_sha256": "d4e60c5a4139b6ba48f62d9beb7ce9855c9bbb93a99ac4c3f126148765eed396",
+      "target_profile_ref": "benchmarks/p01/review-profiles/foc-functional-targets.json",
+      "target_profile_raw_sha256": "c7571a88ebcdf15be602ee39cc6aa3ce3c66b21ab3fd79d8fb2ac16d1b9c985c",
+      "product_review_blinding": "DIAGNOSTIC_HYPOTHESIS_HIDDEN_PRE_VOTE"
+    },
+    "workspace": {
+      "policy_version": "PHASE3-WORKSPACE-PROTOTYPE-1",
+      "enforcement_level": "FILE_BROKER_ONLY_NO_SHELL_OR_NETWORK_SURFACE",
+      "host_process_isolation": "NOT_PROVEN",
+      "review_diagnostic_hidden": true,
+      "smoke_denials": [
+        {
+          "role": "writer",
+          "action": "READ",
+          "attempted": "../../review/R1/input/common-brief.json",
+          "result": "DENIED",
+          "code": "PATH_ESCAPE_DENIED"
+        },
+        {
+          "role": "writer",
+          "action": "WRITE",
+          "attempted": "input/common-brief.json",
+          "result": "DENIED",
+          "code": "ROLE_PATH_DENIED"
+        },
+        {
+          "role": "truth",
+          "action": "WRITE",
+          "attempted": "input/candidate.md",
+          "result": "DENIED",
+          "code": "ROLE_PATH_DENIED"
+        }
+      ],
+      "handoff": {
+        "from": "writer/W1/output/candidate.md",
+        "to": "truth/T1/input/candidate.md",
+        "result": "COPIED_READ_ONLY_HASH_MATCH",
+        "raw_sha256": "3864ef4ec0073ccd3a009c781b7e0b1767750c0b6766e4f3fb0ae72e0ccccb59"
+      },
+      "path_tests": [
+        "relative traversal denied",
+        "absolute cross-role read denied",
+        "resolved symlink escape denied when symlink creation is available",
+        "input mutation denied with unchanged hash"
+      ]
+    }
+  },
+  "active_case": {
+    "case_id": "P3-B03-P3-I01",
+    "baseline_text_sha256": "aa0de7b1a42bb2233c84e12ba7ea0aa0c6ad40868516023d22a9a3566f258665",
+    "candidate_text_sha256": "abe8fe2bab89bcfbd7670c25e178c4da8fe4c2897fe82a9b6501ae7b3fd9a053",
+    "intervention_raw_sha256": "e4192555f5024511fd52f3b6e43d5d8508caf9de9258678a9c94a033e0c2a7e2",
+    "measurement_status": "AWAITING_MEASUREMENT",
+    "mapping": "VALIDATED_EXACT",
+    "suspected_regions": ["PLAN"],
+    "attribution_confidence": "MEDIUM",
+    "root_cause_proven": false,
+    "prose_improvement_established": false
+  },
+  "known_out_of_scope_ci_debt": [
+    "test_historical_substrate_runtime.HistoricalSubstrateRuntimeIntegrationTest.test_section_migration_materializes_only_declared_section",
+    "test_writer_baseline.WriterBaselineTests.test_current_sumer_c003_p01_smoke_compiles_to_minimal_writer_packet",
+    "test_writer_baseline.WriterBaselineTests.test_current_sumer_p01_review_packet_with_handoff_and_receipts_stays_under_budget"
+  ],
+  "limitations": [
+    "The workspace broker is an enforceable file surface only when it is the agent's sole filesystem surface; host-process isolation is not proven.",
+    "No live Planner or Writer was executed as part of this implementation pass.",
+    "No owner measurement was fabricated or inferred.",
+    "The B03 manual candidate has independence NONE.",
+    "Focused structural success is not evidence of prose quality improvement or causal root cause."
+  ],
+  "stop_rule": "Do not continue architecture polishing unless a bounded real round exposes a concrete evidence-loss or execution blocker.",
+  "next_step": "Run one bounded Plan -> Writer -> Truth/Product -> Audit learning round through role-safe workspaces when the owner requests execution."
+}
