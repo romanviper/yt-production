@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FeedbackResult",
+  "type": "object",
+  "required": [
+    "schema_version", "case_id", "status", "evidence_integrity", "trace_status", "suspected_region",
+    "symptom_delta", "invariant_state", "regressions", "measurement_authority", "improvement",
+    "limitations", "next_action"
+  ],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "case_id": {"type": "string", "minLength": 1},
+    "status": {"type": "string", "enum": ["AWAITING_MEASUREMENT", "MEASUREMENT_INGESTED"]},
+    "evidence_integrity": {"type": "string"},
+    "trace_status": {
+      "type": "object",
+      "required": ["mapping", "mapping_confidence", "attribution_confidence"],
+      "properties": {
+        "mapping": {"type": "string"},
+        "mapping_confidence": {"type": "string", "enum": ["LOW", "MEDIUM", "HIGH"]},
+        "attribution_confidence": {"type": "string", "enum": ["LOW", "MEDIUM", "HIGH"]}
+      },
+      "additionalProperties": false
+    },
+    "suspected_region": {"type": "array", "items": {"type": "string"}},
+    "symptom_delta": {"type": "string"},
+    "invariant_state": {"type": "object"},
+    "regressions": {"type": "array", "items": {"type": "string"}},
+    "measurement_authority": {"type": "string", "enum": ["NONE", "GUIDED_OWNER_DIRECTIONAL", "TEST_ONLY"]},
+    "improvement": {"type": "string", "const": "NOT_ESTABLISHED"},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "next_action": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}
