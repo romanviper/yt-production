@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0.0",
+  "base_scenario": "p01-mvp",
+  "plan_ref": "experiments/p01-writer-trace-v2/runs/round-01/writing-plan.json",
+  "writer_report_ref": "experiments/p01-writer-trace-v2/runs/round-01/writer-report.json",
+  "failure_ref": "learning_runtime/scenarios/p01-rootcause-01.failure.json",
+  "intervention_ref": "learning_runtime/interventions/p01-rootcause-01-plan-only.json"
+}

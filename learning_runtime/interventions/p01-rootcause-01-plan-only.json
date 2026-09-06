@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "intervention_id": "P3-I01",
+  "diagnosed_failure_id": "P3-F01",
+  "target_region": "PLAN:B03",
+  "change_scope": "PLAN_ONLY",
+  "hypothesis": "If B03 stops prescribing the resolved 'security versus visibility paradox' and instead specifies only the observable physical condition, Writer can realize the discovery without front-loading the interpretation.",
+  "bounded_change": {
+    "preserve": [
+      "closed envelope means enclosed counters are not directly visible",
+      "opening to inspect destroys the sealed object",
+      "no fraud-prevention motive",
+      "no named actor or transaction",
+      "B04 remains the next surface-impression step"
+    ],
+    "remove_or_delay": [
+      "language that the envelope 'guarantees security'",
+      "pre-labelled 'intractable material paradox' as listener_after",
+      "plan instruction that resolves the meaning before prose encounters the condition"
+    ],
+    "replacement_plan_behavior": "B03 should expose the closed/open physical constraint, then stop. The listener may infer the difficulty; B04 can make the exterior-surface response meaningful without B03 announcing the full lesson."
+  },
+  "predicted_observable_effect": {
+    "failure_signature": "EXPOSITION_LOAD.EXPLANATION_BEFORE_NEED",
+    "expected_change": "REDUCED_OR_ABSENT",
+    "must_not_trade_off": ["truth qualification", "artifact clarity", "sequence continuity"]
+  },
+  "status": "READY_FOR_LIVE_RERUN",
+  "rerun_requirement": "Use the same evidence ceiling and Writer realization contract; change only the mapped B03 planning representation. Owner/Product measurement must judge the resulting prose independently."
+}

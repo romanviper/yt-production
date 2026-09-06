@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "failure_id": "P3-F01",
+  "authority": "DIAGNOSTIC_HYPOTHESIS_NOT_OWNER_CALIBRATION_GOLD",
+  "symptom": "EXPOSITION_LOAD.EXPLANATION_BEFORE_NEED",
+  "candidate_quote": "Khối cầu niêm phong bảo đảm an toàn cho số lượng, song cái giá phải trả là sự mù mịt về thị giác.",
+  "output_observation": "The prose states the abstract interpretation of the physical condition as a resolved lesson instead of allowing the condition itself to carry the realization.",
+  "plan_observation": {
+    "symptom_present": true,
+    "fields": ["listener_after", "new_information", "forward_pressure"],
+    "observation": "Mapped Plan beat B03 already defines the desired listener state as an 'intractable material paradox' in which securing the count blinds the viewer and defines the operational conflict before prose realization."
+  }
+}
