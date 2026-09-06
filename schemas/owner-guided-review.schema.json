@@ -7,6 +7,7 @@
     "schema_version",
     "review_id",
     "sample_id",
+    "sample_source_ref",
     "eval_unit_id",
     "mode",
     "benchmark_evidence_eligible",
@@ -63,6 +64,7 @@
     "schema_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
     "review_id": {"type": "string", "minLength": 1},
     "sample_id": {"type": "string", "minLength": 1},
+    "sample_source_ref": {"type": "string", "minLength": 1},
     "eval_unit_id": {"type": "string", "minLength": 1},
     "mode": {"type": "string", "const": "GUIDED_TARGET_DIAGNOSTIC"},
     "benchmark_evidence_eligible": {"type": "boolean", "const": false},
@@ -73,6 +75,7 @@
         "type": "object",
         "required": [
           "unit_id",
+          "source_locator",
           "candidate_excerpt",
           "declared_function",
           "boundary_basis",
@@ -81,6 +84,7 @@
         ],
         "properties": {
           "unit_id": {"type": "string", "minLength": 1},
+          "source_locator": {"type": "string", "minLength": 1},
           "candidate_excerpt": {"type": "string", "minLength": 1},
           "declared_function": {"type": "string", "minLength": 1},
           "boundary_basis": {"type": "string", "minLength": 1},
