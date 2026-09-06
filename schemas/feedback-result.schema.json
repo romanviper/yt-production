@@ -3,13 +3,14 @@
   "title": "FeedbackResult",
   "type": "object",
   "required": [
-    "schema_version", "case_id", "status", "evidence_integrity", "trace_status", "suspected_region",
-    "symptom_delta", "invariant_state", "regressions", "measurement_authority", "improvement",
-    "limitations", "next_action"
+    "schema_version", "case_id", "measurement_id", "status", "evidence_integrity", "trace_status",
+    "suspected_region", "preference_result", "symptom_observation", "invariant_state", "regressions",
+    "measurement_authority", "improvement", "limitations", "next_action"
   ],
   "properties": {
     "schema_version": {"type": "string"},
     "case_id": {"type": "string", "minLength": 1},
+    "measurement_id": {"type": ["string", "null"]},
     "status": {"type": "string", "enum": ["AWAITING_MEASUREMENT", "MEASUREMENT_INGESTED"]},
     "evidence_integrity": {"type": "string"},
     "trace_status": {
@@ -23,7 +24,8 @@
       "additionalProperties": false
     },
     "suspected_region": {"type": "array", "items": {"type": "string"}},
-    "symptom_delta": {"type": "string"},
+    "preference_result": {"type": ["string", "null"], "enum": ["YES", "NO", "BOTH_FAIL", "WRONG_TARGET", "UNCERTAIN", null]},
+    "symptom_observation": {"type": "string", "enum": ["AWAITING_MEASUREMENT", "NOT_MEASURED", "REDUCED", "NOT_REDUCED", "UNCERTAIN"]},
     "invariant_state": {"type": "object"},
     "regressions": {"type": "array", "items": {"type": "string"}},
     "measurement_authority": {"type": "string", "enum": ["NONE", "GUIDED_OWNER_DIRECTIONAL", "TEST_ONLY"]},
