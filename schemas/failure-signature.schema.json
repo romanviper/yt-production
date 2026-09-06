@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Phase1FailureSignature",
+  "description": "Post-vote output-side diagnostic. Root cause is intentionally absent and must remain unknown until later white-box tracing.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "failure_id",
+    "eval_unit_id",
+    "candidate_id",
+    "linked_pair_id",
+    "scope",
+    "primary_family",
+    "subtype",
+    "evidence_spans",
+    "observable_description",
+    "severity",
+    "consequence",
+    "evidence_mode",
+    "confidence",
+    "contributes_to",
+    "related_truth_claim_ids",
+    "root_cause",
+    "taxonomy_version"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "failure_id": {"type": "string", "minLength": 1},
+    "eval_unit_id": {"type": "string", "minLength": 1},
+    "candidate_id": {"type": "string", "minLength": 1},
+    "linked_pair_id": {"type": ["string", "null"]},
+    "scope": {"type": "string", "enum": ["SPAN", "MULTI_SPAN", "UNIT_GLOBAL"]},
+    "primary_family": {
+      "type": ["string", "null"],
+      "enum": [
+        "NARRATIVE_FUNCTION",
+        "EXPOSITION_LOAD",
+        "SPOKEN_COMPREHENSION",
+        "GROUNDING_SPECIFICITY",
+        "VOICE_STANCE",
+        "REDUNDANCY",
+        null
+      ]
+    },
+    "subtype": {"type": ["string", "null"]},
+    "diagnostic_status": {"type": "string", "enum": ["RESOLVED", "UNRESOLVED"]},
+    "evidence_spans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sample", "quote"],
+        "properties": {
+          "sample": {"type": "string", "enum": ["A", "B", "SINGLE"]},
+          "quote": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "observable_description": {"type": "string", "minLength": 1},
+    "severity": {"type": "string", "enum": ["MINOR", "MAJOR", "CRITICAL"]},
+    "consequence": {"type": "string", "minLength": 1},
+    "evidence_mode": {"type": "string", "enum": ["TEXT_PREDICTION", "AUDIO_OBSERVATION", "LISTENER_REPORT"]},
+    "confidence": {"type": "string", "enum": ["LOW", "MEDIUM", "HIGH"]},
+    "contributes_to": {"type": "array", "items": {"type": "string"}},
+    "related_truth_claim_ids": {"type": "array", "items": {"type": "string"}},
+    "root_cause": {"type": "null"},
+    "annotator_id": {"type": ["string", "null"]},
+    "taxonomy_version": {"type": "string", "minLength": 1}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"diagnostic_status": {"const": "UNRESOLVED"}}},
+      "then": {
+        "properties": {
+          "primary_family": {"type": "null"},
+          "subtype": {"type": "null"}
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}
