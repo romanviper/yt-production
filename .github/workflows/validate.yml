@@ -18,7 +18,7 @@ jobs:
           python-version: "3.12"
       - name: Focused feedback check
         run: |
-          python -m unittest tests.test_learning_runtime tests.test_phase3_whitebox tests.test_feedback_integrity tests.test_feedback_loop tests.test_workspace -v && \
+          python -m unittest tests.test_learning_runtime tests.test_phase3_whitebox tests.test_feedback_integrity tests.test_feedback_loop tests.test_workspace tests.test_decision_telemetry -v && \
           python scripts/experiments/verify_phase1_benchmark.py && \
           python scripts/experiments/verify_phase1_guided_review.py --session benchmarks/p01/review-sessions/owner-pilot-01-guided.json && \
           python scripts/experiments/verify_phase1_guided_review.py --session benchmarks/p01/review-sessions/phase3-p3-f01-rerun-guided.json && \
@@ -49,6 +49,9 @@ jobs:
               'workspace_handoff_result': smoke['handoff']['result'],
               'workspace_handoff_sha256': smoke['handoff']['source']['identity']['raw_sha256'],
               'workspace_host_process_isolation': smoke['manifest']['policy']['host_process_isolation'],
+              'workspace_telemetry_version': smoke['manifest']['policy']['telemetry_version'],
+              'writer_execution_seal': smoke['writer_seal']['status'],
+              'writer_decision_count': smoke['writer_seal']['decision_count'],
           }, ensure_ascii=False, indent=2))
           PY
 
