@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from learning_runtime.artifacts import artifact_identity
+from learning_runtime.telemetry import TelemetryError, seal_execution, verify_execution_seal
 from learning_runtime.workspace import (
     RoleWorkspaceBroker,
     WorkspaceError,
@@ -29,12 +30,30 @@ class WorkspaceTests(unittest.TestCase):
             self._brief(),
         )
 
+    def _record_writer_decision(self, writer: RoleWorkspaceBroker):
+        return writer.record_event(
+            {
+                "event_id": "W-D01",
+                "event_type": "DECISION",
+                "subject_refs": ["plan:B03"],
+                "decision_type": "REALIZATION_STRATEGY",
+                "chosen_action": "SHOW_CONDITION_BEFORE_INTERPRETATION",
+                "rationale_summary": "Keep the prose on the material condition before stating the broader meaning.",
+                "evidence_refs": ["input/common-brief.json"],
+                "alternatives_considered": ["STATE_PARADOX_EXPLICITLY"],
+                "expected_effect": "Delay resolved interpretation until the physical constraint is legible.",
+                "risks": ["The unit may feel under-explained if the next beat does not carry the interpretation."],
+                "output_refs": ["output/candidate.md"],
+            }
+        )
+
     def test_review_brief_hides_diagnostic_hypothesis(self):
         review = role_safe_brief(self._brief(), "review")
         plan = role_safe_brief(self._brief(), "plan")
         self.assertNotIn("diagnostic_hypothesis", review)
         self.assertIn("diagnostic_hypothesis", plan)
         self.assertIn("product_standard", review)
+        self.assertIn("process_telemetry_contract", review)
 
     def test_role_can_read_input_and_write_output(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -87,11 +106,26 @@ class WorkspaceTests(unittest.TestCase):
             with self.assertRaises(WorkspaceError):
                 broker.read_text("scratch/review-link/common-brief.json")
 
-    def test_handoff_copies_exact_hash_to_read_only_input(self):
+    def test_handoff_requires_sealed_source_and_exact_hash(self):
         with tempfile.TemporaryDirectory() as tmp:
             run = self._run(tmp)
             writer = RoleWorkspaceBroker(run, "writer", "W1")
             source = writer.write_text("output/candidate.md", "candidate text")
+            self._record_writer_decision(writer)
+            with self.assertRaises(TelemetryError) as ctx:
+                handoff_copy(
+                    run,
+                    source_role="writer",
+                    source_execution="W1",
+                    source_rel="candidate.md",
+                    dest_role="truth",
+                    dest_execution="T1",
+                    dest_name="candidate.md",
+                )
+            self.assertEqual(ctx.exception.code, "EXECUTION_NOT_SEALED")
+
+            seal_execution(run, role="writer", execution_id="W1", required_output_refs=["candidate.md"])
+            self.assertEqual(verify_execution_seal(run, role="writer", execution_id="W1")["status"], "VALID")
             record = handoff_copy(
                 run,
                 source_role="writer",
@@ -103,17 +137,42 @@ class WorkspaceTests(unittest.TestCase):
             )
             destination = run / "agents/truth/T1/input/candidate.md"
             self.assertEqual(artifact_identity(source)["raw_sha256"], artifact_identity(destination)["raw_sha256"])
-            self.assertEqual(record["result"], "COPIED_READ_ONLY_HASH_MATCH")
+            self.assertEqual(record["result"], "COPIED_FROM_SEALED_EXECUTION_READ_ONLY_HASH_MATCH")
             truth = RoleWorkspaceBroker(run, "truth", "T1")
             with self.assertRaises(WorkspaceError):
                 truth.write_text("input/candidate.md", "changed")
 
-    def test_manifest_states_broker_only_limitations(self):
+    def test_writer_cannot_write_after_execution_seal(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = self._run(tmp)
+            writer = RoleWorkspaceBroker(run, "writer", "W1")
+            writer.write_text("output/candidate.md", "candidate text")
+            self._record_writer_decision(writer)
+            seal_execution(run, role="writer", execution_id="W1", required_output_refs=["candidate.md"])
+            with self.assertRaises(WorkspaceError) as ctx:
+                writer.write_text("output/candidate.md", "retroactive rewrite")
+            self.assertEqual(ctx.exception.code, "EXECUTION_SEALED")
+            with self.assertRaises(WorkspaceError) as telemetry_ctx:
+                writer.record_event(
+                    {
+                        "event_id": "W-D02",
+                        "event_type": "RISK",
+                        "subject_refs": ["candidate.md"],
+                        "risk": "post-hoc rationalization",
+                        "mitigation_or_acceptance": "should be impossible after seal",
+                        "evidence_refs": [],
+                    }
+                )
+            self.assertEqual(telemetry_ctx.exception.code, "EXECUTION_SEALED")
+
+    def test_manifest_states_broker_only_limitations_and_seals(self):
         with tempfile.TemporaryDirectory() as tmp:
             run = self._run(tmp)
             manifest = workspace_manifest(run)
             self.assertEqual(manifest["policy"]["host_process_isolation"], "NOT_PROVEN")
             self.assertIn("sole filesystem surface", " ".join(manifest["limitations"]))
+            self.assertEqual(manifest["execution_seal_count"], 0)
+            self.assertEqual(manifest["policy"]["telemetry_version"], "PHASE3-DECISION-TELEMETRY-1")
 
 
 if __name__ == "__main__":
