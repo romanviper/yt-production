@@ -1,5 +1,9 @@
 # Owner-first MVP
 
+**Yêu cầu sửa đang chờ:** [Request changes 02](MVP-REQUEST-CHANGES-02.md) bổ sung
+hai Writer và budget thời gian do Owner kiểm soát. Tài liệu bên dưới mô tả
+implementation một Writer hiện có; không phải bằng chứng tính năng mới đã hoàn tất.
+
 Đây là đường hoạt động tối thiểu để đưa một bản đọc mới tới Owner trước khi quay lại các vòng chẩn đoán/benchmark phức tạp.
 
 ## Mục tiêu

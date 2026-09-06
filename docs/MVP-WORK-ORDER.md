@@ -1,5 +1,10 @@
 # Work order cho Sol 5.6 — đưa repo về MVP do người đọc dẫn dắt
 
+**Owner amendment hiện hành:** [Request changes 02](MVP-REQUEST-CHANGES-02.md)
+chốt một Sol vận hành repo kiêm chuẩn bị Plan, hai Writer (Gemini 3.8 Flash và
+Sol 5.6), audit thời gian và budget/gia hạn do Owner duyệt. Nó thay các giả định
+Planner riêng/một Writer bên dưới; các phần khác vẫn là nền tảng MVP.
+
 Trạng thái: **PLAN ONLY — chưa triển khai, chưa có vòng live mới**.
 
 Owner yêu cầu tinh giản sau khi việc phối hợp kiến trúc–thi công phát sinh nhiều

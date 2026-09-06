@@ -2,6 +2,17 @@
 
 Format: `observed problem → acceptance ID → change → verification evidence`.
 
+## Owner amendment pending — RC1–RC6
+
+Review tại `fff42d7`: controller hiện có một Writer, timestamp bàn giao và optional
+host log; chưa có phép tính duration, budget, gia hạn hoặc lựa chọn giữa hai Writer.
+Owner yêu cầu bổ sung đúng các phần này trong
+[MVP-REQUEST-CHANGES-02.md](MVP-REQUEST-CHANGES-02.md). Đây là yêu cầu mới, chưa implement.
+
+Chạy lại 7 test MVP trên Windows: 6 pass, M1 fail do so sánh `/` với đường dẫn Windows
+tại `tests/test_owner_first_mvp.py:87`; unittest báo 0.487s. Không có agent live được gọi.
+Các số đo này không thay thế dữ liệu thời gian thực thi agent hoặc phê duyệt budget.
+
 ## Implementation log
 
 - Existing README/AGENTS routed new work through production/architecture-learning paths before a first fresh Owner reading → **M1** → added `docs/MVP.md`, `scripts/learning.py status`, and a top-level README/AGENTS entrypoint → `test_m1_status_has_single_waiting_role_and_artifact` passes locally.
