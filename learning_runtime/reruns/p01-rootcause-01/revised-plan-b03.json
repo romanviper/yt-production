@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "intervention_id": "P3-I01",
+  "source_plan_ref": "experiments/p01-writer-trace-v2/runs/round-01/writing-plan.json",
+  "source_beat_id": "B03",
+  "change_scope": "PLAN_ONLY",
+  "beat": {
+    "id": "B03",
+    "function": "expose_physical_constraint",
+    "listener_before": "The listener has seen counters enclosed inside a hollow clay envelope and may treat the object simply as a container.",
+    "listener_after": "The listener notices only the observable constraint: while the envelope remains closed, the counters cannot be directly seen; opening it to inspect them destroys the sealed object. The broader interpretation is intentionally left unresolved.",
+    "new_information": "Closed envelope means enclosed counters are not directly visible; opening to inspect the contents destroys the sealed object.",
+    "withheld_or_delayed": "Do not name this a security-versus-visibility paradox, do not say the envelope guarantees safety, and do not yet explain the historical response. Leave exterior impressions for B04.",
+    "forward_pressure": "What, if anything, can the exterior surface reveal while the envelope remains closed?",
+    "truth_boundary": "Do not infer fraud prevention, anti-tampering intent, named operators, regulations, or a universal administrative motive. State only the observable physical condition supported by the source."
+  },
+  "invariants": [
+    "same evidence ceiling",
+    "same artifact sequence",
+    "same B04 handoff",
+    "no new historical claim authority",
+    "Writer realization freedom remains inside the bounded beat"
+  ]
+}
