@@ -1,173 +1,118 @@
 # Phase 1 — Output Benchmark & Measurement Contract
 
-Status: **ITERATION 04 / ARCHITECTURE FREEZE**  
+Status: **ACTIVE / BENCHMARK V1 ARCHITECTURE FROZEN, OWNER PILOT ACTIVE**  
 Canonical production branch: `main`  
-Phase 1 parent branch: `codex/p01-phase1-benchmark`  
-Current implementation branch: `codex/p01-phase1-benchmark-v1-freeze`
+Active Phase 1 implementation branch: `codex/p01-phase1-benchmark`
 
-This is the active entrypoint for Phase 1 benchmark architecture.
+This is the active entrypoint for Phase 1 of the Observable Learning Architecture.
 
 Read in this order:
 
 1. `docs/architecture/observable-learning-architecture-plan.md`
-2. `docs/phase1/WORKER-LOOP.md`
-3. `docs/phase1/ITERATION-04-WORK-ORDER.md`
-4. `docs/quality/output-quality-contract.md`
-5. `docs/quality/product-trial-protocol.md`
-6. `schemas/phase1-worker-iteration.schema.json`
+2. `docs/quality/output-quality-contract.md`
+3. `docs/quality/product-trial-protocol.md`
+4. `docs/quality/owner-guided-review.md`
+5. `docs/phase1/WORKER-LOOP.md`
+6. latest iteration record under `benchmarks/p01/iterations/`
 
-Iteration 04 MUST publish `benchmarks/p01/iterations/iteration-04.json` with separate `process` and `output` sections.
+## Benchmark V1 primary construct
 
-## Frozen construct
+The benchmark-valid primary construct remains:
 
-Benchmark V1 measures:
+`blind holistic owner preference -> confidence -> freeze`
 
-> blind preference of the product owner between two Vietnamese historical-podcast outputs performing the same editorial function, while historical truth is audited independently.
-
-The construct is `OWNER_PRODUCT_FIT`.
-
-It is not general-audience preference, objective literary quality, FoC similarity, or AI-judge preference.
-
-## Objective
-
-Build the smallest benchmark that can tell us whether output is moving toward the product the owner wants, localize observable failure when it is not, preserve uncertainty, and create a clean root node for future white-box tracing.
-
-Phase 1 does **not** improve Writer prompts, create a new production draft, redesign the production router, or build the Phase 3 white-box runtime.
-
-## Active measurement primitives
-
-### Evaluation unit
-
-`schemas/eval-unit.schema.json`
-
-Every comparison declares:
-
-`historical_topic × editorial_function × granularity × modality × evidence_condition`
-
-Granularity:
-
-- `FUNCTION_CLIP`
-- `SECTION_SENTINEL`
-- `EPISODE_SENTINEL`
-
-### Product preference
-
-`schemas/pairwise-preference.schema.json`
-
-First-pass holistic result:
+Allowed results:
 
 `A | B | TIE | BOTH_FAIL | UNCERTAIN`
 
-plus confidence. Preference freezes before diagnostics/reference material.
+FoC/reference material, taxonomy, process logs, historical labels and diagnostics remain hidden before a benchmark-valid blind vote.
 
-### Failure signature
+## Owner-friendly guided review mode
 
-`schemas/failure-signature.schema.json`
+A separate diagnostic UX now exists because long-probe review can collapse into uninformative `BOTH_FAIL` feedback.
 
-Post-vote only. One primary defect family. Scope may be `SPAN`, `MULTI_SPAN`, or `UNIT_GLOBAL`. `root_cause` is always null in Phase 1.
+Guided path:
 
-### Truth
+`one sample -> rhetorical micro-units -> observable feature extraction -> function-matched FoC target behavior -> owner gap labels`
 
-`schemas/truth-gate.schema.json`
+This mode is defined by:
 
-Independent claim-level lane. Product evaluation still runs when Truth blocks release, and Truth still runs when Product loses.
+- `docs/quality/owner-guided-review.md`
+- `schemas/owner-guided-review.schema.json`
+- `benchmarks/p01/review-profiles/foc-functional-targets.json`
+- `benchmarks/p01/review-sessions/owner-pilot-01-guided.json`
 
-### Spoken evidence
+Important: guided review is `benchmark_evidence_eligible=false`. It is preference-elicitation/diagnostic evidence and MUST NOT be counted as blind calibration evidence.
 
-`schemas/spoken-observation.schema.json`
+Owner guided labels:
 
-Evidence modes stay separate:
+`MATCHES_TARGET | PARTIAL | MISSES_TARGET | WRONG_TARGET | UNCERTAIN`
 
-- `TEXT_PREDICTION`
-- `AUDIO_OBSERVATION`
-- `LISTENER_REPORT`
+`WRONG_TARGET` means the FoC-derived behavior abstraction itself does not represent the desired product and must be corrected rather than imposed on the owner.
 
-### Target gap
+## Guided feature vocabulary
 
-`schemas/target-gap.schema.json`
+The current owner-review UX uses a small behavior-level vocabulary:
 
-Runs only after Product preference freezes. FoC/reference is function-matched `CRAFT_ONLY_NOT_TRUTH` and style similarity is not a score.
+- `INFORMATION_RELEASE`
+- `LISTENER_ORIENTATION`
+- `FORWARD_PRESSURE`
+- `CONCRETENESS_FUNCTION`
+- `NARRATOR_STANCE`
+- `LOCAL_TRANSFORMATION`
+- `SPOKEN_LOAD`
 
-### LLM judge reliability
+These are descriptors, not scores. Do not aggregate them into a scalar quality metric.
 
-`schemas/judge-reliability.schema.json`
+## Measurement architecture
 
-LLM judge is `SHADOW_ONLY` until out-of-sample owner validation and transfer gates pass under pre-registered tolerances.
+Benchmark V1 keeps separate responsibilities:
 
-## Dataset roles
+1. **Product preference** — blind holistic owner A/B preference.
+2. **Truth** — independent claim-level historical audit.
+3. **Failure signature** — post-vote output-side diagnosis with `root_cause=null`.
+4. **Spoken evidence** — `TEXT_PREDICTION | AUDIO_OBSERVATION | LISTENER_REPORT`.
+5. **Target gap** — post-vote, function-matched `CRAFT_ONLY_NOT_TRUTH` comparison.
+6. **Judge reliability** — LLM judge remains `SHADOW_ONLY` until externally validated.
+7. **Guided owner review** — optional micro-unit target comparison for richer human feedback; never blind benchmark evidence.
 
-### DEV
+The legacy monolithic `schemas/output-quality.schema.json` is deprecated and must not be reintroduced as the active combined evaluation object.
 
-All historical P01 material already visible in this repository. This includes the former calibration candidates and former shared-repo holdout.
+## Dataset state
 
-### PILOT
+All historical P01 material already exposed in the public/shared repository is DEV.
 
-The three current owner A/B packets are DEV-derived protocol/interface pilots only. They may test `BOTH_FAIL`, confidence, freeze order, optional reason/span capture, and unresolved diagnostics. They cannot establish benchmark validity.
+The three existing owner A/B pairs are PILOT UX inputs only, not fresh calibration evidence.
 
-### CALIBRATION
+A true `SEQUESTERED` payload/label set must remain outside the public repository. The public repo may contain only its metadata/hash manifest shell.
 
-Fresh owner-labelled pairs collected after pilot protocol is stable.
+## Current pilot
 
-### SEQUESTERED
+Iteration 05 introduces a guided Sample A pilot with five micro-units. The purpose is to validate owner-review ergonomics before expanding the mechanism across the full probe, Sample B, Section sentinels, or Episode sentinels.
 
-Private/restricted fresh-topic evidence. Payload and labels MUST NOT be committed to this public repository.
+Do not generate dozens of cards before the owner confirms that this review format is useful.
 
-Public metadata shell: `benchmarks/p01/sequestered-manifest.json`.
+## Worker observability
 
-After a sequestered set is opened for tuning it becomes calibration history and a new `REFRESHED_SEQUESTERED` set is required.
+Every Phase 1 improvement iteration must publish separate `process` and `output` surfaces under:
 
-## Product taxonomy
+`benchmarks/p01/iterations/<iteration-id>.json`
 
-Canonical taxonomy: `benchmarks/p01/taxonomy.json`.
+Worker process is diagnostic telemetry only. Product/output review happens first; process is opened after an observable defect appears.
 
-Families:
+## Phase 1 scope boundary
 
-- `NARRATIVE_FUNCTION`
-- `EXPOSITION_LOAD`
-- `SPOKEN_COMPREHENSION`
-- `GROUNDING_SPECIFICITY`
-- `VOICE_STANCE`
-- `REDUNDANCY`
+Phase 1 does not authorize:
 
-The legacy six-dimension Product score surface is no longer the primary decision contract.
+- a new production Writer probe;
+- a Phase 2 runtime rewrite;
+- Phase 3 white-box orchestration;
+- LLM judge authority over optimization;
+- public-repo fake holdouts;
+- scalar FoC similarity scores.
 
-## Black-box boundary
+## Exit boundary
 
-The primary Product vote sees anonymized A/B output and neutral evaluation-unit context only.
+Phase 1 is not complete until structural readiness, owner calibration, evaluator validity, private/restricted sequestered validation and transfer validity have all been demonstrated.
 
-It does NOT see:
-
-- FoC/reference material;
-- Truth results;
-- taxonomy before the vote;
-- process logs;
-- model/system identity;
-- historical verdicts;
-- intended winner;
-- shadow-judge prediction.
-
-Only after the preference is frozen may diagnostics and target-gap analysis open their additional inputs.
-
-## Aggregation
-
-V1 keeps raw pair outcomes and uncertainty. No global quality score, Elo, Bradley-Terry requirement, or agent-majority gold.
-
-## Readiness
-
-Iteration 04 may reach only:
-
-`ARCHITECTURE_FROZEN_READY_FOR_PILOT`
-
-Phase 1 still requires:
-
-1. pilot usability;
-2. fresh owner calibration;
-3. shadow-judge reliability measurement;
-4. private/restricted sequestered validation;
-5. transfer to new historical topics/editorial functions/granularities.
-
-Structural verification alone cannot close Phase 1.
-
-## Legacy warning
-
-`schemas/output-quality.schema.json` is deprecated for new outputs. Legacy FoC/writer-trace experiment scripts and historical evaluator artifacts remain evidence only and must not be executed as the active Phase 1 workflow.
+A structural verifier or agent agreement alone cannot close Phase 1.
