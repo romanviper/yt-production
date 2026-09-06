@@ -1,8 +1,8 @@
 # AI Agent Router — direct-output MVP
 
-The immediate goal of this branch is simple: **produce Writer drafts for the Owner to read**.
+The immediate goal of this branch is simple: **produce Writer drafts the Owner can read and diagnose**.
 
-Do not redesign, optimize or extend the architecture before the Owner has read the current Writer outputs and given feedback.
+Do not redesign, optimize or extend the architecture before the Owner has read Writer outputs and given feedback.
 
 ## If you are a Writer
 
@@ -24,14 +24,21 @@ Writer flow:
 
 ```text
 Owner says write P01
-  → read the two inputs in WRITER.md
-  → write one attempt
-  → save draft + minimal metadata in your writer-output partition
+  → read the canonical inputs in WRITER.md
+  → record the small PRE-WRITE SNAPSHOT
+  → write one prose attempt
+  → freeze draft
+  → complete the POST-WRITE TRACE
+  → save draft + metadata + writing report in your partition
   → commit
   → STOP for Owner reading
 ```
 
-Do not read another Writer's output or Owner feedback before finishing. Do not self-review/reroll. Do not modify system architecture while acting as Writer.
+The observability artifacts exist for the **Owner**, not for an automated evaluator. Do not score, rank, PASS/FAIL, or decide whether the Writer succeeded. Record observable facts, final decisions, source mappings, material changes, uncertainty, and self-observed risk locations so the Owner can inspect them directly.
+
+Do not store chain-of-thought, private reasoning, hidden scratchpads, or internal-monologue transcripts.
+
+Do not read another Writer's output or Owner feedback before finishing. Do not reroll the prose. Do not modify system architecture while acting as Writer.
 
 ## If you are operating the repo
 
@@ -44,13 +51,21 @@ Prefer removing a constraint over adding a new abstraction.
 
 Do not optimize for hypothetical future models, provenance systems, orchestration or benchmarking before real script output and Owner feedback exist.
 
+Do not replace Owner judgment with automated quality gates. Writer observability should expose behavior and evidence, not decide quality on the Owner's behalf.
+
 ## Output location
 
 All current P01 Writer outputs live under:
 
 `writer-output/P01/`
 
-Each Writer/model uses its own partition containing only `draft.md` and `meta.json`.
+Each Writer/model uses its own partition containing exactly:
+
+- `draft.md`
+- `meta.json`
+- `writing-report.md`
+
+`meta.json` is compact factual execution metadata. `writing-report.md` is the human-readable behavioral/evidence trace defined in `WRITER.md`.
 
 ## Historical material
 
