@@ -1,30 +1,34 @@
-# Owner-first MVP
+# Owner-first MVP v3 — dynamic Writer pool
 
-Request changes 02 đã được implement ở controller/test layer. Đường MVP hiện tại dùng **một phiên Sol vận hành repo kiêm chuẩn bị Plan** và **hai Writer riêng** (Gemini 3.8 Flash và GPT-5.6 Sol), với budget thời gian phải được Owner phê duyệt trước khi bắt đầu agent work.
+Đường MVP hiện tại tối giản theo nguyên tắc:
 
-Đây vẫn là đường tối thiểu để đưa hai bản đọc mới tới Owner trước khi quay lại benchmark/coordinator/diagnostic architecture. Implementation không tự gọi model host và không phải bằng chứng một vòng live đã chạy.
+> **Freeze the work, not the worker.**
 
-## Mục tiêu
+Chỉ `sol_repo` là actor được đăng ký trước và bị time-budget gate vì nó có quyền vận hành/sửa repo. Writer là participant động: Owner có thể khởi chạy Gemini, GPT-5.6 Sol, GPT-6, Claude hoặc model khác mà không sửa controller trước. Writer timing chỉ là telemetry; không có per-Writer time budget hay extension gate.
+
+## Flow
 
 ```text
-Owner giao mục tiêu
+Owner request
   → snapshot P01 authority + Sol repo brief
-  → Owner chốt budget
-  → Sol repo chuẩn bị một Plan
-  → freeze Plan
-  → tạo hai Writer packet có cùng common-content hash
-      ├─ Writer Gemini 3.8 Flash → sample A
-      └─ Writer GPT-5.6 Sol     → sample B
-  → freeze đủ hai mẫu + báo cáo thời gian/budget
-  → Owner đọc, chọn A/B/TIE/UNSELECTED và phản hồi
+  → Owner approves Sol repo budget
+  → Sol repo prepares/freeze-binds one Plan
+  → freeze one common writer-assignment.json
+  → Owner launches any Writer(s)
+      ├─ Gemini
+      ├─ GPT-5.6 Sol
+      ├─ GPT-6
+      └─ ...
+  → each Writer returns draft.md + execution-report.json
+  → repo freezes dynamic submissions
+  → Owner closes submission pool
+  → Owner reads/compares frozen set and records feedback
   → STOP
 ```
 
-Không có Planner agent riêng, reviewer agent, time-auditor agent hay coordinator trong MVP này. Sol repo không viết thay draft và không tự chọn Writer thắng.
+Không có Planner riêng, Reviewer/Audit/time-auditor/coordinator trong MVP này. Controller không tự gọi model host, không tự review/reroll, không tự chọn Writer thắng và không biến một preference thành model-level conclusion.
 
-## 1. Prepare: chưa được dispatch agent
-
-Từ repo root:
+## 1. Prepare và budget Sol repo
 
 ```bash
 python scripts/learning.py prepare \
@@ -32,225 +36,230 @@ python scripts/learning.py prepare \
   --request "Viết một đoạn P01 độc lập để tôi đọc và phản hồi" \
   --code-ref <commit-or-config-ref>
 
-python scripts/learning.py status --run p01-owner-001
-```
-
-Sau `prepare`, state là:
-
-```text
-AWAITING_OWNER_BUDGET_APPROVAL
-```
-
-Artifact đầu tiên là `agents/sol_repo/sol-repo-001/input/brief.json`, nhưng **chưa được dispatch Sol repo** trước khi budget được Owner duyệt.
-
-Runtime artifacts nằm dưới `runs/<id>/` và không phải production content.
-
-## 2. Chốt budget trước agent work
-
-Budget dùng đơn vị chính:
-
-```text
-CUMULATIVE_AGENT_SESSION_SECONDS
-```
-
-Ví dụ chỉ để minh họa lệnh; các con số thực phải do Owner duyệt cho vòng live:
-
-```bash
 python scripts/learning.py budget-propose \
   --run p01-owner-001 \
   --budget-id B-P01-001 \
-  --cap-seconds 900 \
-  --sol-seconds 300 \
-  --gemini-seconds 300 \
-  --writer-sol-seconds 300 \
-  --scope "P01 two-writer round" \
+  --sol-seconds 1200 \
+  --scope "P01 repo/Plan preparation" \
   --code-ref <commit-or-config-ref>
-```
 
-Controller không coi proposal là approval. Quyết định Owner được ghi nguyên văn:
-
-```bash
 python scripts/learning.py budget-decision \
   --run p01-owner-001 \
   --request-id B-P01-001:initial \
   --decision APPROVED \
-  --owner-text "<quyết định nguyên văn của Owner>" \
-  --source-ref "<tham chiếu tới nguồn quyết định>"
+  --owner-text "<quyết định nguyên văn>" \
+  --source-ref "<nguồn quyết định>"
 ```
 
-Manual approval record là provenance do operator ghi, **không phải hệ thống xác thực**. Writer không có quyền ghi budget/approval.
+Budget chỉ áp dụng cho `sol_repo`. Writer không có allocation, không mượn giây, không request extension và không bị reject vì viết lâu.
 
-## 3. Sol repo chuẩn bị Plan
+## 2. Freeze Plan và assignment chung
 
-Sau initial budget approval, state là `READY_FOR_SOL_PLAN`. Sol repo dùng đúng brief đã freeze và trả một Plan ngắn:
+Sau approval, Sol repo trả một Plan ngắn:
 
 ```json
 {
   "section": "P01",
-  "telling_scope": "Đoạn này kể phần nào",
+  "telling_scope": "...",
   "source_refs": ["overlay:P01", "HS-P01-0001"],
-  "stop_condition": "Dừng ở đâu"
+  "stop_condition": "..."
 }
 ```
 
-Freeze Plan kèm timing quan sát được. Với chuyển thủ công, dùng `OPERATOR_OBSERVED_SESSION_WINDOW`; đó là cửa sổ phiên quan sát được, không phải active inference time:
+Freeze:
 
 ```bash
 python scripts/learning.py freeze-plan \
   --run p01-owner-001 \
   --session sol-repo-001 \
   --file /path/to/plan.json \
-  --reason "Lý do ngắn" \
-  --uncertainty "Điểm còn chưa chắc" \
-  --start-utc 2026-09-06T10:00:00+00:00 \
-  --end-utc 2026-09-06T10:02:00+00:00 \
-  --timestamp-source OPERATOR_OBSERVED_SESSION_WINDOW
-```
-
-Nếu timing không đo được, bỏ timestamp/duration; controller ghi `UNKNOWN`, không suy runtime từ `agent_created_at` hay thời điểm operator nhận file.
-
-Nếu work đã vượt budget, Plan vẫn được giữ làm evidence nhưng controller dừng ở `AWAITING_OWNER_BUDGET_APPROVAL` trước bước mới.
-
-## 4. Hai Writer từ cùng một nhiệm vụ
-
-Khi Plan hợp lệ và budget còn đủ, controller tạo hai packet:
-
-```text
-agents/writer_gemini/writer-gemini-001/input/packet.json
-agents/writer_sol/writer-sol-001/input/packet.json
-```
-
-Hai packet có:
-
-- cùng `common` payload;
-- cùng `common_content_sha256`;
-- cùng Owner request, Plan, authority, scope và output requirement;
-- session/model metadata riêng.
-
-Writer Gemini và Writer Sol phải là hai phiên riêng. Writer Sol không được tái dùng context của Sol repo. Mỗi Writer chỉ thấy packet của mình và workspace riêng; không thấy draft của Writer còn lại.
-
-Mỗi Writer có đúng một content attempt. Một lỗi kỹ thuật có thể được ghi và retry cùng nhiệm vụ, nhưng attempt lỗi và thời gian của nó không bị xóa; không reroll để tìm bản đẹp hơn.
-
-Freeze sample A:
-
-```bash
-python scripts/learning.py freeze-draft \
-  --run p01-owner-001 \
-  --session writer-gemini-001 \
-  --file /path/to/gemini.md \
-  --reason "Realized the frozen Plan" \
+  --reason "..." \
   --uncertainty "..." \
-  --actual-model "Gemini 3.8 Flash" \
-  --actual-config "<host config>" \
-  --start-utc <...> --end-utc <...> \
+  --duration-seconds 90 \
   --timestamp-source OPERATOR_OBSERVED_SESSION_WINDOW
 ```
 
-Freeze sample B tương tự với session `writer-sol-001` và model host thực tế. Nếu host trả model khác model Owner yêu cầu, controller lưu cả requested/actual identity; không giả nhãn.
+Kết quả là `control/writer-assignment.json`, hash-bound với Owner request, frozen Plan và authority. Không có `writer_gemini`/`writer_sol` registry, model list hay sample A/B được định nghĩa trước.
 
-Draft đầu tiên không kết thúc vòng. Chỉ khi đủ hai output hợp lệ và budget accounting không bị block, controller copy byte-identical sang:
+## 3. Giao assignment cho bất kỳ Writer nào
 
-```text
-owner/sample-A.md
-owner/sample-B.md
-```
-
-Một Writer fail/timeout không được thay bằng output cũ, Writer thứ ba hay draft do Sol repo viết. Cặp khi đó vẫn incomplete.
-
-## 5. Timing: work, elapsed và wait là ba số khác nhau
-
-`control/work-intervals.jsonl` giữ các interval quan sát được. `status` tổng hợp riêng:
-
-- **total work seconds**: tổng work của Sol repo + hai Writer, kể cả lỗi/retry;
-- **elapsed seconds**: thời gian lịch của vòng/checkpoint;
-- **waiting seconds**: Owner reading/approval, transfer hoặc queue khi quan sát được;
-- **UNKNOWN**: timing không đủ evidence.
-
-Hai Writer chạy song song 120 giây mỗi phiên tạo 240 giây work nhưng khoảng elapsed của cặp là 120 giây. Owner chờ 10 phút không cộng thêm 600 giây vào work budget.
-
-Controller từ chối interval work chồng lấn của cùng actor để tránh tính cha/con hai lần. Timestamp đảo chiều hoặc duration không khớp wall timestamps cũng bị reject.
-
-## 6. Hết budget và gia hạn
-
-Khi budget hết, bị vượt hoặc timing UNKNOWN làm accounting không đáng tin, controller giữ artifact/log và dừng phát sinh bước mới tại:
-
-```text
-AWAITING_OWNER_BUDGET_APPROVAL
-```
-
-Extension request phải gắn đúng actor/scope và hiển thị trần ban đầu, extension đã duyệt, work đã dùng, remaining, actual overrun, số giây xin thêm, reason và evidence.
+Có thể đưa trực tiếp `control/writer-assignment.json`, hoặc export bundle portable:
 
 ```bash
-python scripts/learning.py request-extension \
+python scripts/export_writer_assignment.py \
   --run p01-owner-001 \
-  --actor writer_gemini \
-  --seconds 30 \
-  --scope write_draft \
-  --reason "<lý do>" \
-  --evidence "<artifact/log ref>"
+  --out /path/to/writer-bundle
 ```
 
-Resume chỉ xảy ra sau Owner approval gắn đúng request/actor/scope/số giây. Rejection hoặc im lặng không phải approval. Extension cộng vào lịch sử; không reset used time, không tạo run khác để né budget và không cấp thêm content attempt.
+Bundle chứa:
 
-Controller hiện không tự gọi/cancel external model host, nên với phiên ngoài controller nó chỉ có thể chặn **bước kế tiếp** và ghi overrun/pending output; không tuyên bố hard-timeout nếu host không cung cấp cơ chế đó.
+```text
+assignment.json
+assignment-manifest.json
+execution-report-template.json
+START-HERE.md
+```
 
-## 7. Owner đọc hai mẫu và STOP
+Không có actor/model-specific packet.
 
-Khi đủ sample A/B, state là `AWAITING_OWNER_FEEDBACK`.
+## 4. Writer tự khai provenance sau khi viết
+
+Writer trả:
+
+```text
+draft.md
+execution-report.json
+```
+
+Metadata tối thiểu:
+
+```json
+{
+  "schema_version": "DYNAMIC_WRITER_SUBMISSION_1",
+  "submission_id": "p01-r01-gpt6-001",
+  "provider": "OpenAI",
+  "actual_model": "GPT-6",
+  "actual_config": null,
+  "provider_session_id": "...",
+  "assignment_binding": "PREBOUND",
+  "assignment_sha256": "...",
+  "inputs_used": [
+    {"ref": "control/writer-assignment.json", "sha256": "..."}
+  ],
+  "attempt": 1,
+  "status": "COMPLETED",
+  "timing": {
+    "source": "WRITER_SELF_REPORTED_DURATION",
+    "duration_seconds": 240
+  },
+  "draft_sha256": "...",
+  "issues_encountered": [],
+  "uncertainty": "..."
+}
+```
+
+`actual_model` phải phản ánh điều Writer/host thực sự biết; nếu không biết thì dùng `UNKNOWN`. Không giả nhãn model.
+
+Timing là telemetry. Có thể là:
+
+```json
+{"source": "UNKNOWN", "duration_seconds": null}
+```
+
+và submission vẫn có thể hợp lệ. Không ghi raw/private chain-of-thought.
+
+## 5. PREBOUND vs NOT_PREBOUND
+
+Nếu Writer thực sự nhận frozen assignment của round:
+
+```text
+assignment_binding = PREBOUND
+```
+
+và `assignment_sha256` phải match.
+
+Nếu Writer được Owner chỉ đạo trực tiếp hoặc viết trước khi có assignment:
+
+```text
+assignment_binding = NOT_PREBOUND
+```
+
+Repo vẫn có thể nhận artifact như readable submission nếu provenance đầy đủ, nhưng đánh dấu:
+
+```text
+controlled_comparison_eligible = false
+```
+
+Không được dùng nó để tuyên bố controlled same-input comparison.
+
+## 6. Nhận submission động
+
+```bash
+python scripts/writer_submission.py accept \
+  --run p01-owner-001 \
+  --report /path/to/execution-report.json \
+  --draft /path/to/draft.md
+```
+
+Writer không cần xuất hiện trong code trước đó. `submission_id` là write-once; không dùng cùng ID để reroll.
+
+Repo copy byte-identical sang:
+
+```text
+submissions/<submission-id>/draft.md
+submissions/<submission-id>/execution-report.json
+owner/submissions/<submission-id>.md
+```
+
+Có thể nhận bất kỳ số lượng Writer nào trước khi Owner đóng pool.
+
+## 7. Writer timing không còn là budget gate
+
+Các rule đã bỏ:
+
+```text
+writer allocation
+writer overrun
+writer extension request
+AWAITING_OWNER_BUDGET_APPROVAL vì Writer viết quá lâu
+transfer unused Writer budget
+```
+
+Timing vẫn được giữ để quan sát/so sánh chi phí, nhưng không quyết định acceptance.
+
+Sol repo vẫn có budget gate và extension approval vì repo/architecture work có thể phình scope.
+
+## 8. Owner đóng pool và feedback
+
+Khi đủ mẫu:
+
+```bash
+python scripts/learning.py close-submissions --run p01-owner-001
+```
+
+Từ đó không nhận Writer mới trong run. State:
+
+```text
+AWAITING_OWNER_FEEDBACK
+```
+
+Feedback:
 
 ```bash
 python scripts/learning.py feedback \
   --run p01-owner-001 \
   --text "<feedback nguyên văn>" \
-  --selection A \
-  --primary-writer writer_gemini
+  --selection p01-r01-gpt6-001 \
+  --primary-writer p01-r01-gpt6-001
 ```
 
-`--selection` nhận `A`, `B`, `TIE`, `UNSELECTED`. `--primary-writer` chỉ ghi khi Owner thật sự quyết định writer chính.
+`selection` là `submission_id`, `TIE`, hoặc `UNSELECTED`.
 
-Feedback bind với SHA-256 của cả hai mẫu. Một lần chọn A/B không được controller suy rộng thành “model A tốt hơn” hay cấu hình Writer mặc định. State kết thúc:
+Sau feedback:
 
 ```text
 OWNER_FEEDBACK_RECORDED
 ```
 
-Từ đây MVP dừng. Không tự review, reroll, FoC diagnosis, root-cause attribution hay vòng mới.
+và MVP dừng. Không auto-rerun, không set default model, không FoC diagnosis.
 
-## 8. Status và chi phí kiến trúc
+## 9. GPT-6 owner-directed draft hiện có
 
-```bash
-python scripts/learning.py status --run p01-owner-001
+Draft ở `codex/p01-owner-directed-draft` được giữ như evidence lịch sử. Notes của chính Writer cho biết nó không có frozen packet và được viết theo Owner direction. Theo v3, nó được mô tả trung thực là:
+
+```text
+assignment_binding = NOT_PREBOUND
+writer_budget = NOT_APPLICABLE
+timing = UNKNOWN
 ```
 
-Status trả về state, waiting person/role, artifact, Writer identity/status, common-content hash, timing/budget và bảng theo actor/task gồm allocation, used, overrun, UNKNOWN và waiting-for.
+Nó có thể được Owner đọc như một candidate, nhưng không được retroactively gọi là PREBOUND controlled submission.
 
-`record_cost_item(...)` trong controller tách:
+## Hard stops
 
-- `ROUND_EXECUTION` khỏi `ARCHITECTURE_REPAIR`;
-- `ESTIMATE` khỏi `OBSERVED`;
-- observed repair phải gắn commit + evidence.
-
-Synthetic tests chỉ chứng minh phép tính/controller behavior, không phải benchmark runtime model thật.
-
-## Authority và immutability
-
-`prepare` snapshot và kiểm tra liên kết giữa:
-
-- `products/sumer-writing/02_outline/section-overlays/P01.json`;
-- `products/sumer-writing/03_sections/P01/historical-substrate.json`.
-
-Controller từ chối packet/Plan/draft bị sửa sau freeze, sai session, Plan mở rộng authority, overwrite output, hoặc Owner feedback trên mẫu bị tamper.
-
-## Workspace boundary
-
-`scripts.learning.WorkspaceBroker` giới hạn mỗi role vào `input/output/scratch` của workspace riêng bằng resolved path, gồm `..`, absolute path và symlink escape; access được audit vào `control/access-events.jsonl`.
-
-Đây **không phải OS sandbox**. Chỉ được nói read/write isolation được enforce khi host cấp broker này làm filesystem surface duy nhất và không đồng thời cấp shell/network/general-filesystem access.
-
-## TEST_ONLY và trạng thái live
-
-Tests dùng fake/declared timing để chứng minh M1–M6 + RC1–RC6 mà không sleep dài hoặc gọi model thật. Chúng không chứng minh Gemini/GPT-5.6 đã chạy.
-
-Implementation có thể merge sau CI phù hợp ngay cả khi chưa có budget live cụ thể. **Vòng live không được bắt đầu** cho tới khi Owner đưa và phê duyệt budget thực tế.
-
-Production router hiện có vẫn là luồng riêng. Phase 1–3/coordinator experiments là lịch sử/tham khảo cho tới khi Owner tái ủy quyền một phần cụ thể.
+- Không Sol repo work trước matching Owner budget approval.
+- Sol repo hết/UNKNOWN budget → dừng và xin Owner.
+- Writer submission ID overwrite/reroll → reject.
+- PREBOUND assignment hash mismatch → reject.
+- Sau `close-submissions` → không nhận Writer mới.
+- Sau Owner feedback → STOP.
