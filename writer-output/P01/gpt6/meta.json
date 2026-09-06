@@ -1,0 +1,9 @@
+{
+  "model": "GPT-6",
+  "inputs": [
+    "products/sumer-writing/02_outline/section-overlays/P01.json",
+    "products/sumer-writing/03_sections/P01/historical-substrate.json"
+  ],
+  "attempt": 1,
+  "notes": "Migrated from codex/p01-owner-directed-draft. Direct Owner-directed draft; no frozen assignment was used. Timing was UNKNOWN."
+}
