@@ -1,185 +1,226 @@
-# Black-Box Product Evaluation Trial Protocol v1.2
+# Black-Box Product Evaluation Trial Protocol v1.3
 
-Status: **PHASE 1 / CALIBRATION PROTOCOL**
+Status: **ARCHITECTURE FROZEN FOR PILOT**
 
 ## 1. Purpose
 
-This protocol separates three measurement questions that must not contaminate one another:
+Benchmark V1 measures `OWNER_PRODUCT_FIT` through blind holistic pairwise preference, then explains failures after the vote. Historical truth, spoken evidence, and craft-reference target gap remain independent lanes.
 
-1. Is each sample historically admissible?
-2. Which anonymized sample works better as the intended podcast product?
-3. After preference is frozen, what observable craft gap remains to the function-matched target reference?
+No lane may retroactively rewrite another lane's observation.
 
-These are independent lanes. No single reviewer is asked to infer all three at once.
+## 2. Evaluation unit
 
-## 2. Lane A — Truth / scope gate
+Every trial references a frozen evaluation unit conforming to `schemas/eval-unit.schema.json`:
 
-The Truth reviewer receives:
+`historical_topic × editorial_function × granularity × modality × evidence_condition`
 
-- one sample only;
-- approved P01 historical authority;
-- truth/scope gate schema.
+Granularity:
 
-The Truth reviewer MUST NOT receive:
+- `FUNCTION_CLIP`
+- `SECTION_SENTINEL`
+- `EPISODE_SENTINEL`
 
-- FoC craft references;
-- Product pairwise verdicts;
-- Worker/Writer/Planner process logs;
-- target-gap analysis;
-- historical evaluator verdicts treated as gold labels.
+## 3. Product Lane — first-pass holistic preference
 
-Truth output is per-sample. Sample A and Sample B are audited independently.
+The Product/owner packet contains only:
 
-Exact quotation establishes location, not semantic entailment.
-
-## 3. Lane B — Product pairwise preference
-
-A Product Reviewer receives only:
-
+- neutral scenario/evaluation-unit context;
 - anonymized Sample A and Sample B;
-- frozen Output Quality Contract criteria;
-- Product pairwise output schema and grounding rules.
+- first-pass result options;
+- confidence options.
 
-The Product Reviewer MUST NOT receive:
+It MUST NOT contain:
 
-- FoC or other craft-reference excerpts;
-- Truth reviewer results;
-- target-gap records;
+- FoC or other craft references;
+- Truth results;
+- defect taxonomy before the vote;
+- previous preference or reviewer verdicts;
 - candidate/baseline/new/old labels;
-- filenames or titles that reveal expected quality;
-- historical verdicts;
+- source paths that reveal identity;
 - Planner/Writer/Worker process logs;
 - intended winner;
-- diagnostic hypotheses;
-- upstream agent identity.
+- upstream diagnostic hypotheses;
+- shadow-judge predictions.
 
-The purpose is to judge whether A or B works better as the product, not which sample resembles FoC more closely.
+First pass:
 
-### Pairwise criteria
+`A | B | TIE | BOTH_FAIL | UNCERTAIN`
 
-For each applicable criterion return:
+Confidence:
 
-`A | B | TIE | UNCERTAIN`
+`LOW | MEDIUM | HIGH`
 
-Criteria:
+`BOTH_FAIL` means neither output is acceptable as a positive product target. It is not equivalent to `TIE`.
 
-- `continue`
-- `movement`
-- `specificity`
-- `connections`
-- `spoken_comprehension`
-- `payoff`
+The first-pass preference is recorded and frozen before any diagnostic questions are shown.
 
-Each criterion requires:
+Canonical schema: `schemas/pairwise-preference.schema.json`.
 
-- exact quote(s) from A and/or B;
-- observation: what is present/absent in the supplied prose;
-- interpretation: likely consequence for the intended listener;
-- uncertainty/counterevidence;
-- evidence medium.
+## 4. Post-vote diagnostics
 
-Do not select a winner because one sample follows benchmark examples more literally.
+Only after the preference is frozen may the owner/reviewer provide:
 
-## 4. Pairwise reliability controls
+- optional free reason;
+- optional decisive spans;
+- output-side failure annotation.
 
-### Position reversal
+Do not require the owner to score dimensions before choosing the preferred product.
 
-Every meaningful calibration pair is evaluated twice:
+Failure annotations conform to `schemas/failure-signature.schema.json` and `benchmarks/p01/taxonomy.json`.
 
-- battle 1: X=A, Y=B;
-- battle 2: X=B, Y=A.
+A diagnostic may be `UNRESOLVED`. A clear preference does not become invalid merely because the current taxonomy cannot explain it.
 
-A preference that flips merely with position is `POSITION_UNSTABLE` and cannot count as demonstrated separation.
+One observable failure has one `primary_family`. Secondary consequences belong in `contributes_to`.
 
-Do not add extra voters simply to break a disagreement.
+Failure scope:
 
-### Duplicate / same-text control
+- `SPAN`
+- `MULTI_SPAN`
+- `UNIT_GLOBAL`
 
-Calibration includes at least one pair where A and B contain identical text under opaque IDs.
+`root_cause` remains `null` during Phase 1.
 
-Expected behavior is `TIE` or defensible `UNCERTAIN` across applicable criteria. A claimed substantive difference is a reliability defect.
+## 5. Product defect taxonomy
 
-## 5. Lane C — Target-gap analysis
+The six initial families are:
 
-Target-gap analysis begins only AFTER Lane B pairwise preference has been frozen and recorded.
+- `NARRATIVE_FUNCTION`
+- `EXPOSITION_LOAD`
+- `SPOKEN_COMPREHENSION`
+- `GROUNDING_SPECIFICITY`
+- `VOICE_STANCE`
+- `REDUNDANCY`
 
-The Target-gap reviewer receives:
+The historical six-dimension score surface is not the primary decision mechanism and is not averaged into a quality score.
 
-- one selected sample/passage;
-- one or more pre-frozen function-matched `CRAFT_ONLY` references;
-- target-gap schema.
+## 6. Truth Lane
 
-It returns:
+Truth receives one candidate plus approved historical authority and `schemas/truth-gate.schema.json`.
 
-- exact candidate/reference spans;
-- matched editorial function;
-- observable similarities;
-- observable differences;
-- specific remaining gaps;
-- retained strengths;
-- medium limitations.
+It receives no FoC, Product preference, target-gap result, or process log.
 
-Target-gap analysis MUST NOT modify, reinterpret, or retroactively justify the already-frozen Product pairwise preference.
+Truth identifies claim type and verifiability before judging support. In particular it must distinguish implied premises and causal claims from genuinely nonfactual material.
 
-FoC remains `CRAFT_ONLY_NOT_TRUTH`; it never expands P01 historical authority.
+Truth continues even when the candidate loses Product preference; Product evaluation also continues when Truth blocks release. The lanes capture different constructs.
 
-## 6. DEV / CALIBRATION / HOLDOUT
+A material Truth blocker prevents release but does not erase the Product observation.
+
+## 7. Spoken Lane
+
+Spoken evidence conforms to `schemas/spoken-observation.schema.json`.
+
+Evidence modes:
+
+- `TEXT_PREDICTION`
+- `AUDIO_OBSERVATION`
+- `LISTENER_REPORT`
+
+Claims must not exceed the evidence mode. Text-only review cannot certify prosody or actual listener comprehension.
+
+## 8. Target-gap Lane
+
+Target-gap starts only after first-pass Product preference is frozen.
+
+It receives:
+
+- one selected candidate/passage;
+- the frozen Product preference reference;
+- pre-frozen function-matched `CRAFT_ONLY` references;
+- `schemas/target-gap.schema.json`.
+
+FoC is hidden from the primary vote. Target gap compares editorial function, not stylistic similarity, and cannot alter the frozen vote.
+
+## 9. Owner pilot
+
+The three current historical P01 packets are protocol/interface pilots only.
+
+They test:
+
+- blinding of source/system identity;
+- `BOTH_FAIL` availability;
+- confidence capture;
+- first-pass freeze;
+- optional post-vote reason/spans;
+- ability to leave diagnostics unresolved.
+
+Because their prose has already been visible during P01 development, these packets are DEV and cannot establish benchmark validity.
+
+## 10. Fresh calibration
+
+After pilot usability is confirmed, build a fresh calibration corpus across multiple editorial functions, including clear, subtle, challenge, and both-fail pairs.
+
+Calibration is used to understand owner self-consistency and to train/tune a shadow judge. It is not final out-of-sample proof.
+
+Useful owner metrics include:
+
+- test-retest consistency;
+- position consistency;
+- clear-vs-subtle consistency;
+- tie rate;
+- both-fail rate;
+- uncertainty rate;
+- reason localizability;
+- taxonomy coverage/unresolved rate.
+
+Do not invent a universal owner-consistency threshold.
+
+## 11. LLM shadow judge
+
+LLM judges operate as `SHADOW_ONLY` until validated on unseen owner-labelled evidence.
+
+Shadow judges:
+
+- predict owner preference;
+- may run A/B reversal and duplicate controls;
+- may supply post-vote spans/diagnostics;
+- cannot drive optimization;
+- cannot overturn owner labels;
+- cannot become gold through agent majority.
+
+Reliability record: `schemas/judge-reliability.schema.json`.
+
+Acceptance tolerances must be pre-registered before opening sequestered evidence. Do not choose a threshold after seeing the result.
+
+## 12. Dataset lifecycle
 
 ### DEV
 
-May be inspected while criteria are designed. Historical P01 samples already discussed by the team belong here.
+All historical P01 artifacts and anything used to design/tune benchmark rules.
 
 ### CALIBRATION
 
-Used to measure judge predictions against real owner/human preference. Owner labels are absent until explicitly supplied.
+Fresh owner-labelled pairs collected after pilot protocol freeze.
 
-### HOLDOUT
+### SEQUESTERED
 
-Reserved for a fresh transfer check after definitions stabilize. The contract must not be tuned against holdout outcomes.
+Private/restricted fresh-topic evidence withheld until benchmark/judge rules and tolerances are frozen.
 
-A file present in the shared repository is not a cryptographically blind holdout. Until access is actually sequestered, label its reliability `FRESH_EXPOSED_NOT_BLIND` and preserve that limitation.
+The public repo contains only `benchmarks/p01/sequestered-manifest.json`, never sequestered prose or labels.
 
-Partition membership is frozen in `benchmarks/p01/benchmark-set.json` before owner/judge scoring.
+After a sequestered set is opened and used for tuning, it becomes calibration history and a new `REFRESHED_SEQUESTERED` set is required.
 
-## 7. Owner-preference calibration
+## 13. Aggregation
 
-Owner preference is the primary personalized relevance signal for this product. The benchmark prepares anonymized comparisons; it MUST NOT infer owner labels from historical filenames, comments, or previous agent summaries.
+V1 preserves raw outcomes and slices by topic/editorial function/granularity.
 
-For each owner-labelled pair, compare judge result against owner result and record:
+Do not require:
 
-- overall pairwise agreement;
-- criterion-level agreement where owner criterion feedback exists;
-- position consistency;
-- duplicate consistency;
-- uncertainty rate;
-- evidence-span validity;
-- whether the pair was clearly different or subtle/contested.
+- one quality score;
+- Elo;
+- Bradley–Terry;
+- AI majority voting.
 
-Small-sample results are descriptive. Do not claim population-level accuracy.
+## 14. Readiness semantics
 
-## 8. Defect annotation after preference
-
-After forming Lane B preference, the Product reviewer may annotate concrete output defects using the contract taxonomy.
-
-Defects require:
-
-- family/subtype;
-- exact span;
-- severity;
-- observation;
-- listener/product consequence;
-- uncertainty.
-
-`essay-like` is not a standalone score. It must resolve to concrete defects such as `EXPOSITION.CONCLUSION_BEFORE_EXPERIENCE` or `EXPOSITION.ABSTRACT_THESIS_TRANSITION`.
-
-## 9. Readiness semantics
-
-A structural verifier may return:
+Valid states include:
 
 - `NOT_READY`
 - `STRUCTURALLY_READY`
-- `READY_FOR_HUMAN_CALIBRATION`
+- `ARCHITECTURE_FROZEN_READY_FOR_PILOT`
+- `READY_FOR_FRESH_CALIBRATION`
+- `READY_FOR_SEQUESTERED_VALIDATION`
+- `READY_FOR_EXIT_REVIEW`
 
-Only actual owner/human calibration plus a fresh transfer check can support `READY_FOR_EXIT_REVIEW`.
+Iteration 04 may reach only `ARCHITECTURE_FROZEN_READY_FOR_PILOT`.
 
-A structural pass never certifies aesthetic quality.
+Phase 1 cannot close without real sequestered validation and transfer evidence on new historical topics.
