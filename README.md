@@ -1,5 +1,18 @@
 # YT Production
 
+## Owner-first MVP — đường hiện tại để lấy bản đọc đầu tiên
+
+Trước khi tiếp tục benchmark/coordinator/diagnostic architecture, dùng đường tối thiểu này để đưa một draft mới tới Owner:
+
+```bash
+python scripts/learning.py prepare --run p01-owner-001 --request "Viết một đoạn P01 độc lập để tôi đọc và phản hồi"
+python scripts/learning.py status --run p01-owner-001
+```
+
+Hướng dẫn đầy đủ: [docs/MVP.md](docs/MVP.md).
+
+Flow duy nhất của MVP là `Owner request → Planner packet → frozen Plan → Writer packet → frozen draft → Owner feedback → stop`. Nó không tự chạy Reviewer/Audit, A/B, FoC diagnosis, reroll hoặc causal conclusion. Production router bên dưới vẫn là một luồng riêng; các experiment/Phase 1–3 là lịch sử/tham khảo trừ khi Owner tái ủy quyền cụ thể.
+
 Hệ điều hành biên tập cho phim lịch sử dài, được thiết kế để nhiều AI task cộng tác mà không mang toàn bộ repo và toàn bộ policy vào mỗi context window.
 
 ## Source of truth
