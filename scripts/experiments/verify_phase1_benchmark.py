@@ -51,6 +51,7 @@ def main() -> int:
         "sequestered": ROOT / "benchmarks/p01/sequestered-manifest.json",
         "pilot_eval_unit": ROOT / "benchmarks/p01/eval-units/eu-p01-pilot-mechanism-01.json",
         "dispatch_map": ROOT / "benchmarks/p01/calibration/dispatch-map.json",
+        "post_vote_owner": ROOT / "benchmarks/p01/calibration/post-vote-owner-diagnostics.json",
         "pilot_1": ROOT / "benchmarks/p01/calibration/owner-packets/owner-cal-01.json",
         "pilot_2": ROOT / "benchmarks/p01/calibration/owner-packets/owner-cal-02.json",
         "pilot_3": ROOT / "benchmarks/p01/calibration/owner-packets/owner-cal-03.json",
@@ -64,19 +65,18 @@ def main() -> int:
         print(json.dumps({"status": "NOT_READY", "structural_errors": errors}, ensure_ascii=False, indent=2))
         return 1
 
-    # Parse all JSON artifacts/schemas first. A parse failure is a hard structural failure.
     json_keys = [
         "eval_unit_schema", "pairwise_schema", "failure_schema", "truth_schema",
         "spoken_schema", "target_schema", "judge_schema", "legacy_output_schema",
         "worker_schema", "benchmark", "manifest", "craft", "taxonomy",
         "owner_state", "judge_state", "sequestered", "pilot_eval_unit",
-        "dispatch_map", "pilot_1", "pilot_2", "pilot_3",
+        "dispatch_map", "post_vote_owner", "pilot_1", "pilot_2", "pilot_3",
     ]
     parsed: dict[str, object] = {}
     for key in json_keys:
         try:
             parsed[key] = load_json(paths[key])
-        except Exception as exc:  # structural verifier: report exact file and continue cleanly
+        except Exception as exc:
             errors.append(f"invalid JSON: {paths[key].relative_to(ROOT)} -> {exc}")
 
     if errors:
@@ -101,24 +101,19 @@ def main() -> int:
     judge_state = parsed["judge_state"]
     sequestered = parsed["sequestered"]
     pilot_eval_unit = parsed["pilot_eval_unit"]
+    post_vote_owner = parsed["post_vote_owner"]
     pilots = [parsed["pilot_1"], parsed["pilot_2"], parsed["pilot_3"]]
 
     # Frozen construct and architecture boundaries.
     for term in [
-        "OWNER_PRODUCT_FIT",
-        "BOTH_FAIL",
-        "SHADOW_ONLY",
-        "FUNCTION_CLIP",
-        "SECTION_SENTINEL",
-        "EPISODE_SENTINEL",
-        "SEQUESTERED",
-        "root_cause",
+        "OWNER_PRODUCT_FIT", "BOTH_FAIL", "SHADOW_ONLY", "FUNCTION_CLIP",
+        "SECTION_SENTINEL", "EPISODE_SENTINEL", "SEQUESTERED", "root_cause",
     ]:
         if term not in contract:
             errors.append(f"contract missing frozen Benchmark V1 concept: {term}")
 
     for phrase in [
-        "taxonomy before the vote",
+        "defect taxonomy before the vote",
         "first-pass preference is recorded and frozen",
         "FoC is hidden from the primary vote",
         "SHADOW_ONLY",
@@ -147,12 +142,8 @@ def main() -> int:
             errors.append(f"failure-signature schema contains upstream blame field: {forbidden}")
 
     expected_families = {
-        "NARRATIVE_FUNCTION",
-        "EXPOSITION_LOAD",
-        "SPOKEN_COMPREHENSION",
-        "GROUNDING_SPECIFICITY",
-        "VOICE_STANCE",
-        "REDUNDANCY",
+        "NARRATIVE_FUNCTION", "EXPOSITION_LOAD", "SPOKEN_COMPREHENSION",
+        "GROUNDING_SPECIFICITY", "VOICE_STANCE", "REDUNDANCY",
     }
     taxonomy_families = set(taxonomy.get("families", {}).keys())
     if taxonomy_families != expected_families:
@@ -161,13 +152,14 @@ def main() -> int:
         errors.append("taxonomy is not marked FROZEN_FOR_PILOT")
 
     # Evaluation unit primitive and three granularities.
+    eval_schema_text = paths["eval_unit_schema"].read_text(encoding="utf-8")
     for granularity in ["FUNCTION_CLIP", "SECTION_SENTINEL", "EPISODE_SENTINEL"]:
-        if granularity not in paths["eval_unit_schema"].read_text(encoding="utf-8"):
+        if granularity not in eval_schema_text:
             errors.append(f"eval-unit schema missing granularity {granularity}")
     if pilot_eval_unit.get("granularity") != "FUNCTION_CLIP":
         errors.append("pilot evaluation unit is not FUNCTION_CLIP")
 
-    # Truth semantic audit must distinguish implied premises, causality and source relation.
+    # Truth semantic audit.
     for term in [
         "IMPLIED_PREMISE", "CAUSAL", "VERIFIABLE", "PARTLY_VERIFIABLE",
         "SUPPORTS", "QUALIFIES", "CONFLICTS", "ABSENT", "release_blocker",
@@ -194,13 +186,17 @@ def main() -> int:
             errors.append(f"target-gap schema missing {term}")
 
     # LLM judge is shadow-only at architecture freeze.
-    for term in ["SHADOW_ONLY", "owner_agreement", "position_reversal_consistency", "duplicate_consistency", "evidence_span_validity", "abstention_rate", "eligible_for_optimization_loop"]:
+    for term in [
+        "SHADOW_ONLY", "owner_agreement", "position_reversal_consistency",
+        "duplicate_consistency", "evidence_span_validity", "abstention_rate",
+        "eligible_for_optimization_loop",
+    ]:
         if term not in judge_schema_text:
             errors.append(f"judge reliability schema missing {term}")
     if judge_state.get("mode") != "SHADOW_ONLY" or judge_state.get("eligible_for_optimization_loop") is not False:
         errors.append("current judge state is not SHADOW_ONLY / ineligible")
     if judge_state.get("pre_registered_tolerance_ref") is not None:
-        warnings.append("Judge tolerance has already been populated; ensure it was pre-registered before any sequestered labels are opened.")
+        warnings.append("Judge tolerance is populated; verify it was pre-registered before sequestered labels were opened.")
 
     # Historical P01 material in this public repo must all be DEV.
     samples = benchmark.get("samples", [])
@@ -227,7 +223,8 @@ def main() -> int:
     if sequestered.get("status") != "NOT_CREATED_PRIVATE_PAYLOAD":
         warnings.append("Private sequestered set status changed; verify no payload/labels entered the public repository.")
 
-    # Pilot owner packets: preference-first, BOTH_FAIL, confidence, no pre-vote taxonomy/reference metadata.
+    # Primary owner packets contain only first-pass material; post-vote prompts live separately.
+    expected_post_vote_ref = "benchmarks/p01/calibration/post-vote-owner-diagnostics.json"
     for packet in pilots:
         packet_id = packet.get("packet_id", "UNKNOWN")
         if packet.get("role") != "PILOT_ONLY_NOT_CALIBRATION_EVIDENCE":
@@ -241,13 +238,19 @@ def main() -> int:
             errors.append(f"{packet_id} confidence options are incomplete")
         if "freeze" not in str(first.get("freeze_rule", "")).lower() and "không sửa" not in str(first.get("freeze_rule", "")).lower():
             errors.append(f"{packet_id} does not make first-pass freeze explicit")
-        post = packet.get("post_vote_optional", {})
-        if post.get("taxonomy_not_shown_before_vote") is not True:
-            errors.append(f"{packet_id} may expose taxonomy before preference")
+        if packet.get("post_vote_artifact_ref") != expected_post_vote_ref:
+            errors.append(f"{packet_id} does not reference the separate post-vote diagnostic artifact")
+        if "post_vote_optional" in packet or "optional_feedback_prompts" in packet:
+            errors.append(f"{packet_id} embeds post-vote prompts in the first-pass packet")
         packet_text = json.dumps(packet, ensure_ascii=False).lower()
         for leak in ["craft_reference", "foc_reference", "historical_verdict", "intended_winner", "writer_process", "planner_process"]:
             if leak in packet_text:
                 errors.append(f"{packet_id} contains forbidden reviewer metadata token {leak}")
+
+    if post_vote_owner.get("visibility_gate") != "ONLY_AFTER_PAIRWISE_PREFERENCE_FROZEN":
+        errors.append("post-vote owner diagnostics are not gated after preference freeze")
+    if post_vote_owner.get("allow_unresolved") is not True:
+        errors.append("post-vote owner diagnostics do not permit unresolved taxonomy mapping")
 
     if owner_state.get("status") != "PILOT_READY_NOT_CALIBRATION":
         errors.append("owner state is not PILOT_READY_NOT_CALIBRATION")
@@ -255,13 +258,16 @@ def main() -> int:
         errors.append("owner state allowed results do not match frozen preference enum")
     shadow_policy = owner_state.get("shadow_judge_policy", {})
     if shadow_policy.get("mode") != "SHADOW_ONLY" or shadow_policy.get("may_drive_optimization") is not False:
-        errors.append("owner calibration state does not enforce shadow-only judge policy")
+        errors.append("owner state does not enforce shadow-only judge policy")
 
-    # Source manifest and craft-only boundary stay mechanically coherent.
+    # Source manifest and craft-only boundary.
     manifest_samples = {x["sample_id"]: x for x in manifest.get("product_samples", [])}
     for sid in ids:
         if sid not in manifest_samples:
             errors.append(f"sample {sid} missing from source manifest")
+    for item in manifest.get("product_samples", []):
+        if not str(item.get("benchmark_role", "")).startswith("DEV"):
+            errors.append(f"source manifest exposes non-DEV public P01 role: {item.get('sample_id')}")
 
     craft_sources = {x["source_id"]: x for x in manifest.get("craft_sources", [])}
     for source in craft_sources.values():
@@ -321,13 +327,8 @@ def main() -> int:
             "craft_episodes": len(episodes),
         },
         "measurement_surfaces": [
-            "EVALUATION_UNIT",
-            "PRODUCT_PREFERENCE",
-            "FAILURE_SIGNATURE",
-            "TRUTH",
-            "SPOKEN",
-            "TARGET_GAP",
-            "JUDGE_RELIABILITY",
+            "EVALUATION_UNIT", "PRODUCT_PREFERENCE", "FAILURE_SIGNATURE",
+            "TRUTH", "SPOKEN", "TARGET_GAP", "JUDGE_RELIABILITY",
         ],
         "phase1_complete": False,
     }
