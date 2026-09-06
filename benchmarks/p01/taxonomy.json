@@ -1,0 +1,61 @@
+{
+  "version": "1.0.0",
+  "taxonomy_id": "P01-PRODUCT-DEFECT-V1",
+  "status": "FROZEN_FOR_PILOT",
+  "design_rule": "One primary_family per failure. Secondary effects belong in contributes_to. If owner preference is clear but taxonomy cannot explain it, diagnostic_status may remain UNRESOLVED.",
+  "scope_options": ["SPAN", "MULTI_SPAN", "UNIT_GLOBAL"],
+  "families": {
+    "NARRATIVE_FUNCTION": [
+      "STALLED_PROGRESSION",
+      "UNMOTIVATED_TRANSITION",
+      "LOST_ORIENTATION",
+      "SETUP_WITHOUT_PAYOFF",
+      "PAYOFF_NOT_EARNED"
+    ],
+    "EXPOSITION_LOAD": [
+      "CONCEPT_STACK",
+      "BACKGROUND_DETOUR",
+      "CAVEAT_STACK",
+      "EXPLANATION_BEFORE_NEED"
+    ],
+    "SPOKEN_COMPREHENSION": [
+      "REFERENT_AMBIGUITY",
+      "SYNTACTIC_OVERLOAD",
+      "ORAL_AMBIGUITY",
+      "PROSODY_OR_PRONUNCIATION_FAILURE"
+    ],
+    "GROUNDING_SPECIFICITY": [
+      "ABSTRACT_WITHOUT_ANCHOR",
+      "GENERIC_ACTOR_OR_ACTION",
+      "SCENE_WITHOUT_MATERIAL_DETAIL"
+    ],
+    "VOICE_STANCE": [
+      "LECTURE_MODE",
+      "META_EXPLANATION",
+      "EXCESSIVE_AUTHORITY",
+      "EXCESSIVE_HEDGING",
+      "TONAL_MISMATCH"
+    ],
+    "REDUNDANCY": [
+      "PROPOSITION_RESTATEMENT",
+      "CONCEPTUAL_LOOP",
+      "REDUNDANT_SUMMARY"
+    ]
+  },
+  "anti_double_counting_rules": [
+    "A single observable weakness has exactly one primary_family.",
+    "If repetition causes stalled progression, primary_family is REDUNDANCY and stalled progression is recorded in contributes_to.",
+    "Use EXPOSITION_LOAD when the listener must hold too much information before it produces value; use SPOKEN_COMPREHENSION when expression itself is hard to decode in one pass.",
+    "Macro failures without one causal sentence use UNIT_GLOBAL with anchor spans rather than inventing a single culprit span.",
+    "Truth failures are not Product defect families; they belong to the independent Truth lane."
+  ],
+  "legacy_mapping_notes": {
+    "continue": "Diagnostic consequences may map to NARRATIVE_FUNCTION or VOICE_STANCE; no longer a required primary score.",
+    "movement": "Primarily represented by NARRATIVE_FUNCTION.",
+    "specificity": "Primarily represented by GROUNDING_SPECIFICITY.",
+    "connections": "Primarily represented by NARRATIVE_FUNCTION.UNMOTIVATED_TRANSITION or LOST_ORIENTATION.",
+    "spoken_comprehension": "Moved to SPOKEN_COMPREHENSION plus the independent spoken-evidence lane.",
+    "payoff": "Represented inside NARRATIVE_FUNCTION setup/payoff subtypes.",
+    "essay_tendency": "Not a score. Typically resolves to VOICE_STANCE and/or EXPOSITION_LOAD, otherwise UNRESOLVED."
+  }
+}
