@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Phase1PairwisePreference",
+  "description": "First-pass holistic Product preference. This record is frozen before diagnostics, truth results, or craft references are shown.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "pair_id",
+    "eval_unit_id",
+    "benchmark_version",
+    "annotator_role",
+    "blind_to_system_identity",
+    "blind_to_reference",
+    "displayed_left",
+    "displayed_right",
+    "verdict",
+    "confidence",
+    "preference_frozen",
+    "created_at"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "pair_id": {"type": "string", "minLength": 1},
+    "eval_unit_id": {"type": "string", "minLength": 1},
+    "benchmark_version": {"type": "string", "minLength": 1},
+    "annotator_role": {"type": "string", "enum": ["OWNER", "LLM_SHADOW_JUDGE", "LISTENER"]},
+    "annotator_id": {"type": ["string", "null"]},
+    "session_id": {"type": ["string", "null"]},
+    "blind_to_system_identity": {"type": "boolean", "const": true},
+    "blind_to_reference": {"type": "boolean", "const": true},
+    "displayed_left": {"type": "string", "enum": ["A", "B"]},
+    "displayed_right": {"type": "string", "enum": ["A", "B"]},
+    "randomization_seed": {"type": ["string", "integer", "null"]},
+    "verdict": {"type": "string", "enum": ["A", "B", "TIE", "BOTH_FAIL", "UNCERTAIN"]},
+    "confidence": {"type": "string", "enum": ["LOW", "MEDIUM", "HIGH"]},
+    "preference_frozen": {"type": "boolean", "const": true},
+    "reason_after_verdict": {"type": ["string", "null"]},
+    "decisive_spans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sample", "quote"],
+        "properties": {
+          "sample": {"type": "string", "enum": ["A", "B"]},
+          "quote": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "reversal_control_id": {"type": ["string", "null"]},
+    "duplicate_control_id": {"type": ["string", "null"]},
+    "created_at": {"type": "string", "format": "date-time"}
+  },
+  "allOf": [
+    {
+      "not": {
+        "properties": {
+          "displayed_left": {"const": "A"},
+          "displayed_right": {"const": "A"}
+        },
+        "required": ["displayed_left", "displayed_right"]
+      }
+    },
+    {
+      "not": {
+        "properties": {
+          "displayed_left": {"const": "B"},
+          "displayed_right": {"const": "B"}
+        },
+        "required": ["displayed_left", "displayed_right"]
+      }
+    }
+  ],
+  "additionalProperties": false
+}
