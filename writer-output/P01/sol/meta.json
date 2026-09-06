@@ -1,9 +1,31 @@
 {
+  "schema": "writer-observability-v1",
+  "writer": "sol",
   "model": "GPT-5.6 Sol",
-  "inputs": [
+  "task": "P01",
+  "attempt": 1,
+  "owner_instruction": "Đọc harness mới và viết đè lên version cũ.",
+  "branch": "codex/owner-first-mvp",
+  "starting_commit": "1598c42ad4677dd411e8034d7eb6178fe74ddedc",
+  "inputs_read": [
     "products/sumer-writing/02_outline/section-overlays/P01.json",
     "products/sumer-writing/03_sections/P01/historical-substrate.json"
   ],
-  "attempt": 1,
-  "notes": "Telling centers on the shift toward directly inspectable numerical information on durable clay surfaces while preserving coexistence of older practices and avoiding unsupported economic-mechanism claims."
+  "extra_context_accessed": [
+    "WRITER.md",
+    "GitHub branch metadata for codex/owner-first-mvp",
+    "writer-output/P01/sol directory listing"
+  ],
+  "other_writer_outputs_read": false,
+  "owner_feedback_read_before_draft": false,
+  "rerolled": false,
+  "draft_word_count": 613,
+  "timing": {
+    "seconds": null,
+    "source": "UNKNOWN"
+  },
+  "outputs": [
+    "draft.md",
+    "writing-report.md"
+  ]
 }
