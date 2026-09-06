@@ -11,7 +11,7 @@ Owner request
   → frozen P01 authority + Sol repo brief
   → Owner-approved time budget for Sol repo only
   → Sol repo prepares one frozen Plan
-  → one frozen common Writer assignment
+  → one frozen common Writer assignment when controlled comparison is desired
   → Owner launches any number/models of Writers
   → each Writer returns one draft + self-declared provenance
   → Owner closes the submission pool
@@ -31,7 +31,16 @@ Writers have **no time-budget gate**. Writer timing is observability metadata on
 
 Writers are not pre-registered actors. Do not hard-code Gemini/Sol/GPT-6/Claude into the controller merely to allow them to submit prose. Freeze the work, not the worker.
 
-The common artifact is `control/writer-assignment.json`. Owner may launch any model/session externally. A Writer returns `draft.md` plus `execution-report.json` with its own model/provider/session/input/timing metadata.
+A frozen common artifact `control/writer-assignment.json` may be created for controlled same-assignment comparison, but **it is not a prerequisite for an Owner-directed Writer to write**. An explicit Owner instruction to write a bounded product/section is sufficient authority to perform one Writer attempt.
+
+Two execution modes are valid:
+
+1. **PREBOUND** — the Writer actually receives the frozen assignment before writing. It must use that assignment as its task/evidence boundary and report the matching assignment hash.
+2. **NOT_PREBOUND** — the Owner directly instructs the Writer to write without supplying the frozen assignment. The Writer must proceed rather than stop merely because `control/writer-assignment.json` or exported `assignment.json` is absent. It may resolve the minimal current canonical inputs needed for the bounded Owner request, then report every input actually used with `ref` + `sha256` after writing.
+
+For a direct Owner request such as “write P01”, absence of a Writer assignment is **not** `WAITING_FOR_WRITER_ASSIGNMENT`. The Writer may use the current canonical P01 content authority needed to write (for example the current P01 overlay/historical substrate) without constructing a fake Plan or reviving a cancelled production task. It must not read other Writer drafts, Owner comparison feedback, historical experiment branches, or unrelated repo architecture unless the Owner explicitly requests that context.
+
+A Writer returns `draft.md` plus `execution-report.json` with its own model/provider/session/input/timing metadata. Direct Owner instruction may itself be included in `inputs_used` using a stable ref and a hash of the exact instruction text when available.
 
 A Writer that actually received the frozen assignment declares:
 
@@ -41,13 +50,14 @@ assignment_binding = PREBOUND
 
 and its assignment hash must match.
 
-A Writer launched directly by Owner without the frozen assignment may still be preserved as readable evidence with:
+A Writer launched directly by Owner without the frozen assignment declares:
 
 ```text
 assignment_binding = NOT_PREBOUND
+assignment_sha256 = null
 ```
 
-but the controller must mark it ineligible for controlled same-assignment claims. Never retroactively convert NOT_PREBOUND to PREBOUND.
+The controller preserves it as readable evidence and marks it ineligible for controlled same-assignment claims. Never retroactively convert NOT_PREBOUND to PREBOUND.
 
 Each `submission_id` is write-once. Writers get one content attempt: no self-review/reroll for a prettier result. Do not show an unfinished Writer another Writer's draft or Owner feedback.
 
@@ -57,7 +67,7 @@ After Owner has enough submissions, `close-submissions` freezes the comparison s
 
 The experiments under `docs/experiments/`, `experiments/`, historical Phase 1–3 material, and coordinator prototypes are **legacy/reference evidence only** for this MVP. They are not prerequisites for producing the reading set and must not be silently reactivated. The canonical production router described below remains a separate production flow.
 
-This file contains repo-wide operating boundaries. Creative logic belongs in the frozen assignment or canonical production packet, not in this router.
+This file contains repo-wide operating boundaries. Creative logic belongs in the frozen assignment, the bounded direct Owner request plus the inputs the Writer actually uses, or the canonical production packet—not in this router.
 
 ## Canonical branch
 
@@ -76,9 +86,9 @@ This file contains repo-wide operating boundaries. Creative logic belongs in the
 
 ## Owner-first MVP role boundaries
 
-- **Owner:** supplies the goal; approves Sol repo budget/extensions; launches any Writer models; decides when to close submissions; reads the frozen set; records selection/feedback; may explicitly choose a primary submission.
-- **Sol repo:** snapshots authority, prepares one Plan and common Writer assignment, operates/tests/transfers repo artifacts, records repo-work budget/timing evidence; may not write Writer prose, self-approve budget, or choose a winner.
-- **Dynamic Writer:** may be any model/session chosen by Owner. It writes one content attempt and self-declares provenance. It may not modify Plan/authority/control state, inspect another Writer/Owner feedback, self-review/reroll, or claim PREBOUND when it did not receive the frozen assignment.
+- **Owner:** supplies the goal; approves Sol repo budget/extensions; launches any Writer models directly or via a frozen assignment; decides when to close submissions; reads the frozen set; records selection/feedback; may explicitly choose a primary submission.
+- **Sol repo:** snapshots authority, prepares one Plan and (when useful) common Writer assignment, operates/tests/transfers repo artifacts, records repo-work budget/timing evidence; may not write Writer prose, self-approve budget, or choose a winner.
+- **Dynamic Writer:** may be any model/session chosen by Owner. Direct Owner instruction for a bounded writing task is enough to write one attempt even when no assignment was supplied. The Writer self-declares provenance and may not modify Plan/authority/control state, inspect another Writer/Owner feedback, self-review/reroll, or claim PREBOUND when it did not receive the frozen assignment.
 - **Operator/controller:** may snapshot, hash, freeze and transfer artifacts and parse a real Owner decision into an immutable record; may not invent Owner approval, model identity, timing, production prose or feedback.
 - **Review/Audit/time-auditor/coordinator:** inactive in this MVP unless Owner separately assigns a later work item.
 - **System architect:** may change system/docs/tests in the assigned PR; may not create or approve production prose. Architecture repair cost is separate from Writer execution telemetry.
@@ -111,6 +121,7 @@ For the Owner-first MVP specifically:
 
 - stop at `AWAITING_OWNER_BUDGET_APPROVAL` only for Sol repo budget/extension decisions;
 - Writer timing never creates that state;
+- **do not stop an Owner-directed NOT_PREBOUND Writer merely because no Writer assignment exists**;
 - reject duplicate/rerolled `submission_id` and PREBOUND hash mismatch;
 - stop accepting Writers after `close-submissions`;
 - stop at `AWAITING_OWNER_FEEDBACK` for Owner comparison;
