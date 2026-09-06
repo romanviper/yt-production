@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "judge_id": "UNASSIGNED-PHASE1-SHADOW",
+  "model_version": "UNASSIGNED",
+  "judge_prompt_hash": "UNFROZEN",
+  "taxonomy_version": "1.0.0",
+  "calibration_split_id": null,
+  "sequestered_split_id": null,
+  "mode": "SHADOW_ONLY",
+  "owner_agreement": null,
+  "owner_self_consistency": null,
+  "position_reversal_consistency": null,
+  "duplicate_consistency": null,
+  "evidence_span_validity": null,
+  "confidence_conditioned_agreement": {},
+  "abstention_rate": null,
+  "failure_slices": {
+    "verbose_vs_concise": null,
+    "high_hedging": null,
+    "authority_tone": null,
+    "foc_like_surface": null,
+    "vietnamese": null,
+    "long_context": null
+  },
+  "transfer_topic_results": [],
+  "pre_registered_tolerance_ref": null,
+  "gate_results": {},
+  "eligible_for_optimization_loop": false,
+  "validation_date": null,
+  "notes": [
+    "No LLM judge has been selected or validated for Benchmark V1.",
+    "Agent agreement cannot promote this record.",
+    "Selection, prompt freeze, acceptance tolerance, and sequestered validation must occur after owner pilot/fresh calibration design is stable."
+  ]
+}
