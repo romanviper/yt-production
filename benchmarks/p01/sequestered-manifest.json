@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "manifest_id": "P01-SEQUESTERED-V1-SHELL",
+  "status": "NOT_CREATED_PRIVATE_PAYLOAD",
+  "public_repo_contains_payload": false,
+  "public_repo_contains_labels": false,
+  "purpose": "Describe the existence and requirements of private/restricted benchmark evidence without exposing prose, labels, source identities, or evaluation outcomes in the public repository.",
+  "required_properties_before_use": {
+    "access_mode": "PRIVATE_OR_RESTRICTED",
+    "topics_minimum": 2,
+    "must_include_new_topic_outside_p01": true,
+    "must_include_section_sentinel_per_topic": true,
+    "contract_frozen_before_open": true,
+    "judge_prompt_frozen_before_open": true,
+    "acceptance_tolerances_pre_registered_before_open": true
+  },
+  "lifecycle": {
+    "initial_role": "SEQUESTERED",
+    "after_labels_or_payload_used_for_tuning": "CALIBRATION_HISTORY",
+    "next_required_role": "REFRESHED_SEQUESTERED"
+  },
+  "public_fields_allowed_after_private_set_exists": [
+    "set_id",
+    "content_hash_manifest",
+    "pair_count",
+    "topic_count",
+    "granularity_counts",
+    "created_at",
+    "opened_at",
+    "access_controller",
+    "status"
+  ],
+  "forbidden_public_fields": [
+    "prose_payload",
+    "owner_labels",
+    "judge_predictions",
+    "source_paths_that_reveal_payload",
+    "intended_winners"
+  ],
+  "note": "Historical P01 material already visible in this repository is DEV, not sequestered evidence."
+}
