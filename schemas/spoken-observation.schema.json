@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Phase1SpokenObservation",
+  "description": "Independent spoken-evidence record. Claims are limited by evidence mode: text prediction, audio observation, or listener report.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "observation_id",
+    "eval_unit_id",
+    "candidate_id",
+    "evidence_mode",
+    "observations",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "observation_id": {"type": "string", "minLength": 1},
+    "eval_unit_id": {"type": "string", "minLength": 1},
+    "candidate_id": {"type": "string", "minLength": 1},
+    "evidence_mode": {
+      "type": "string",
+      "enum": ["TEXT_PREDICTION", "AUDIO_OBSERVATION", "LISTENER_REPORT"]
+    },
+    "audio_ref": {"type": ["string", "null"]},
+    "listener_session_ref": {"type": ["string", "null"]},
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["observation_type", "scope", "description", "confidence"],
+        "properties": {
+          "observation_type": {
+            "type": "string",
+            "enum": [
+              "REFERENT_RISK",
+              "SYNTACTIC_LOAD",
+              "CONCEPT_STACK",
+              "TRANSITION_RISK",
+              "PACE",
+              "PAUSE_GROUPING",
+              "PRONUNCIATION",
+              "PROSODY",
+              "SELF_REPORTED_COMPREHENSION",
+              "SELF_REPORTED_MEMORY",
+              "SELF_REPORTED_CONTINUE",
+              "LISTENING_EFFORT",
+              "OTHER"
+            ]
+          },
+          "scope": {"type": "string", "enum": ["SPAN", "MULTI_SPAN", "UNIT_GLOBAL"]},
+          "spans": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1}
+          },
+          "description": {"type": "string", "minLength": 1},
+          "confidence": {"type": "string", "enum": ["LOW", "MEDIUM", "HIGH"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}
