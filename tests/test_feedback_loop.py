@@ -1,10 +1,9 @@
-import copy
 import json
 import tempfile
 import unittest
 from pathlib import Path
 
-from learning_runtime.feedback import FeedbackError, ingest_measurement, prepare_case, validate_guided_artifact, verify_case_bundle
+from learning_runtime.feedback import FeedbackError, _replace_only_beat, ingest_measurement, prepare_case, validate_guided_artifact, verify_case_bundle
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -44,6 +43,12 @@ class FeedbackLoopTests(unittest.TestCase):
             feedback = json.loads((case_dir / "feedback.json").read_text(encoding="utf-8"))
             self.assertEqual(feedback["status"], "AWAITING_MEASUREMENT")
             self.assertEqual(feedback["improvement"], "NOT_ESTABLISHED")
+
+    def test_plan_patch_outside_b03_is_rejected(self):
+        baseline = {"beats": [{"id": "B03", "listener_after": "old"}, {"id": "B04", "listener_after": "other"}]}
+        with self.assertRaises(FeedbackError) as ctx:
+            _replace_only_beat(baseline, {"id": "B04", "listener_after": "changed"}, "B03")
+        self.assertEqual(ctx.exception.code, "PLAN_SCOPE_VIOLATION")
 
     def test_static_phase3_comparison_is_actually_grounded(self):
         session = ROOT / "benchmarks/p01/review-sessions/phase3-p3-f01-rerun-guided.json"
