@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "artifact_id": "P01-OWNER-POST-VOTE-DIAGNOSTICS-V1",
+  "visibility_gate": "ONLY_AFTER_PAIRWISE_PREFERENCE_FROZEN",
+  "purpose": "Collect optional owner explanation after the holistic product preference is immutable. This artifact must never be included in the first-pass owner packet.",
+  "optional_feedback_prompts": [
+    "Chỗ nào khiến bạn bắt đầu mất chú ý?",
+    "Sau đoạn này, điều gì trong hiểu biết của bạn đã thay đổi?",
+    "Chi tiết hoặc ý nào còn đọng lại rõ nhất?",
+    "Vì sao bản bạn chọn hoạt động tốt hơn, hoặc vì sao cả hai đều không đạt?",
+    "Khác biệt này với bạn là rõ rệt hay chỉ tinh tế?"
+  ],
+  "decisive_spans_optional": true,
+  "taxonomy_mapping_order": "AFTER_FREE_REASON_AND_SPANS",
+  "allow_unresolved": true,
+  "forbidden_before_freeze": [
+    "defect taxonomy",
+    "craft references",
+    "Truth results",
+    "shadow judge prediction",
+    "historical verdicts"
+  ]
+}
