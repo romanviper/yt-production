@@ -1,132 +1,21 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Phase1ProductPairwiseEvaluation",
-  "description": "Lane B only: black-box Product pairwise preference. Truth and target-gap outputs use separate schemas.",
+  "title": "DEPRECATED Phase1OutputQualityEvaluation",
+  "description": "Deprecated by Benchmark V1.3 architecture freeze. Do not create new evaluation outputs with this monolithic schema. Use pairwise-preference.schema.json for first-pass Product preference and failure-signature.schema.json for post-vote diagnostics; Truth, Spoken, and Target Gap have separate schemas.",
+  "deprecated": true,
   "type": "object",
-  "required": [
-    "schema_version",
-    "evaluation_id",
-    "contract_version",
-    "evidence_medium",
-    "samples",
-    "overall_preference",
-    "pairwise_criteria",
-    "defect_annotations",
-    "failure_signature"
-  ],
-  "$defs": {
-    "overallResult": {
-      "type": "string",
-      "enum": ["A", "B", "TIE", "UNCERTAIN"]
-    },
-    "pairwiseResult": {
-      "type": "string",
-      "enum": ["A", "B", "TIE", "UNCERTAIN", "NOT_APPLICABLE"]
-    },
-    "medium": {
-      "type": "string",
-      "enum": ["TEXT_PREDICTION", "AUDIO_OBSERVATION", "LISTENER_REPORT"]
-    },
-    "severity": {
-      "type": "string",
-      "enum": ["MINOR", "MAJOR", "CRITICAL"]
-    },
-    "span": {
-      "type": "object",
-      "required": ["sample", "quote"],
-      "properties": {
-        "sample": {"type": "string", "enum": ["A", "B"]},
-        "quote": {"type": "string", "minLength": 1}
-      },
-      "additionalProperties": false
-    },
-    "preferenceEvaluation": {
-      "type": "object",
-      "required": ["result", "spans", "observation", "interpretation", "uncertainty"],
-      "properties": {
-        "result": {"$ref": "#/$defs/overallResult"},
-        "spans": {"type": "array", "items": {"$ref": "#/$defs/span"}},
-        "observation": {"type": "string"},
-        "interpretation": {"type": "string"},
-        "uncertainty": {"type": "string"}
-      },
-      "additionalProperties": false
-    },
-    "criterionEvaluation": {
-      "type": "object",
-      "required": ["result", "spans", "observation", "interpretation", "uncertainty"],
-      "properties": {
-        "result": {"$ref": "#/$defs/pairwiseResult"},
-        "spans": {"type": "array", "items": {"$ref": "#/$defs/span"}},
-        "observation": {"type": "string"},
-        "interpretation": {"type": "string"},
-        "uncertainty": {"type": "string"},
-        "not_applicable_reason": {"type": "string"}
-      },
-      "additionalProperties": false
-    },
-    "defectAnnotation": {
-      "type": "object",
-      "required": ["defect", "severity", "span", "observation", "consequence", "uncertainty"],
-      "properties": {
-        "defect": {
-          "type": "string",
-          "pattern": "^(PROGRESSION|EXPOSITION|CONNECTION|SPOKEN)\\.[A-Z0-9_]+$"
-        },
-        "severity": {"$ref": "#/$defs/severity"},
-        "span": {"$ref": "#/$defs/span"},
-        "observation": {"type": "string", "minLength": 1},
-        "consequence": {"type": "string", "minLength": 1},
-        "uncertainty": {"type": "string"}
-      },
-      "additionalProperties": false
-    }
-  },
+  "required": ["deprecated", "replacement_schemas"],
   "properties": {
-    "schema_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
-    "evaluation_id": {"type": "string", "minLength": 1},
-    "contract_version": {"type": "string", "minLength": 1},
-    "evidence_medium": {"$ref": "#/$defs/medium"},
-    "samples": {
-      "type": "object",
-      "required": ["A", "B"],
-      "properties": {
-        "A": {"type": "string", "minLength": 1},
-        "B": {"type": "string", "minLength": 1}
-      },
-      "additionalProperties": false
-    },
-    "overall_preference": {"$ref": "#/$defs/preferenceEvaluation"},
-    "pairwise_criteria": {
-      "type": "object",
-      "required": ["continue", "movement", "specificity", "connections", "spoken_comprehension", "payoff"],
-      "properties": {
-        "continue": {"$ref": "#/$defs/criterionEvaluation"},
-        "movement": {"$ref": "#/$defs/criterionEvaluation"},
-        "specificity": {"$ref": "#/$defs/criterionEvaluation"},
-        "connections": {"$ref": "#/$defs/criterionEvaluation"},
-        "spoken_comprehension": {"$ref": "#/$defs/criterionEvaluation"},
-        "payoff": {"$ref": "#/$defs/criterionEvaluation"}
-      },
-      "additionalProperties": false
-    },
-    "defect_annotations": {
+    "deprecated": {"type": "boolean", "const": true},
+    "replacement_schemas": {
       "type": "array",
-      "items": {"$ref": "#/$defs/defectAnnotation"}
-    },
-    "failure_signature": {
-      "type": "object",
-      "required": ["signature_id", "primary_defect", "supporting_defects", "spans", "severity", "observation", "uncertainty"],
-      "properties": {
-        "signature_id": {"type": "string", "minLength": 1},
-        "primary_defect": {"type": ["string", "null"]},
-        "supporting_defects": {"type": "array", "items": {"type": "string"}},
-        "spans": {"type": "array", "items": {"$ref": "#/$defs/span"}},
-        "severity": {"type": ["string", "null"], "enum": ["MINOR", "MAJOR", "CRITICAL", null]},
-        "observation": {"type": "string"},
-        "uncertainty": {"type": "string"}
-      },
-      "additionalProperties": false
+      "const": [
+        "schemas/pairwise-preference.schema.json",
+        "schemas/failure-signature.schema.json",
+        "schemas/truth-gate.schema.json",
+        "schemas/spoken-observation.schema.json",
+        "schemas/target-gap.schema.json"
+      ]
     }
   },
   "additionalProperties": false
