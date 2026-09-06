@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OwnerGuidedComparison",
+  "description": "Guided diagnostic BEFORE/AFTER comparison. Not blind benchmark evidence.",
+  "type": "object",
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "required": ["raw_sha256", "bytes", "text_sha256", "text_normalization"],
+      "properties": {
+        "raw_sha256": {"type": "string", "minLength": 64},
+        "bytes": {"type": "integer"},
+        "text_sha256": {"type": ["string", "null"]},
+        "text_normalization": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "side": {
+      "type": "object",
+      "required": ["label", "source_ref", "excerpt"],
+      "properties": {
+        "label": {"type": "string", "enum": ["BEFORE", "AFTER"]},
+        "source_ref": {"type": "string", "minLength": 1},
+        "excerpt": {"type": "string", "minLength": 1},
+        "source_identity": {"$ref": "#/$defs/identity"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version", "review_id", "mode", "benchmark_evidence_eligible", "purpose",
+    "source_failure_id", "intervention_id", "old", "new", "feature_cards",
+    "owner_summary_question", "limitations"
+  ],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "review_id": {"type": "string", "minLength": 1},
+    "case_id": {"type": "string"},
+    "mode": {"type": "string", "const": "GUIDED_TARGET_DIAGNOSTIC"},
+    "benchmark_evidence_eligible": {"type": "boolean", "const": false},
+    "purpose": {"type": "string", "minLength": 1},
+    "source_failure_id": {"type": "string", "minLength": 1},
+    "intervention_id": {"type": "string", "minLength": 1},
+    "old": {"$ref": "#/$defs/side"},
+    "new": {"$ref": "#/$defs/side"},
+    "feature_cards": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "feature", "target_behavior_ref", "target_behavior", "before_behavior", "after_behavior",
+          "predicted_change", "owner_label_options", "owner_label", "owner_note"
+        ],
+        "properties": {
+          "feature": {"type": "string", "enum": ["INFORMATION_RELEASE", "LISTENER_ORIENTATION", "FORWARD_PRESSURE", "CONCRETENESS_FUNCTION", "NARRATOR_STANCE", "LOCAL_TRANSFORMATION", "SPOKEN_LOAD"]},
+          "target_behavior_ref": {"type": "string", "minLength": 1},
+          "target_behavior": {"type": "string", "minLength": 1},
+          "before_behavior": {"type": "string", "minLength": 1},
+          "after_behavior": {"type": "string", "minLength": 1},
+          "predicted_change": {"type": "string", "minLength": 1},
+          "owner_label_options": {"type": "array", "minItems": 1, "items": {"type": "string", "enum": ["MATCHES_TARGET", "PARTIAL", "MISSES_TARGET", "WRONG_TARGET", "UNCERTAIN"]}},
+          "owner_label": {"type": ["string", "null"], "enum": ["MATCHES_TARGET", "PARTIAL", "MISSES_TARGET", "WRONG_TARGET", "UNCERTAIN", null]},
+          "owner_note": {"type": ["string", "null"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "owner_summary_question": {
+      "type": "object",
+      "required": ["question", "allowed_results", "result", "note"],
+      "properties": {
+        "question": {"type": "string", "minLength": 1},
+        "allowed_results": {"type": "array", "items": {"type": "string", "enum": ["YES", "NO", "BOTH_FAIL", "WRONG_TARGET", "UNCERTAIN"]}},
+        "result": {"type": ["string", "null"], "enum": ["YES", "NO", "BOTH_FAIL", "WRONG_TARGET", "UNCERTAIN", null]},
+        "note": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "measurement_status": {"type": "string", "enum": ["AWAITING_MEASUREMENT", "MEASURED"]},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}
