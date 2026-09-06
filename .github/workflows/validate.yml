@@ -22,14 +22,16 @@ jobs:
           python scripts/experiments/verify_phase1_benchmark.py && \
           python scripts/experiments/verify_phase1_guided_review.py --session benchmarks/p01/review-sessions/owner-pilot-01-guided.json && \
           python scripts/experiments/verify_phase1_guided_review.py --session benchmarks/p01/review-sessions/phase3-p3-f01-rerun-guided.json && \
-          rm -rf /tmp/p01-feedback-case && \
+          rm -rf /tmp/p01-feedback-case /tmp/p01-workspace-smoke && \
           python -m learning_runtime.feedback prepare p01-rootcause-01 --out /tmp/p01-feedback-case && \
           python -m learning_runtime.feedback verify --case-dir /tmp/p01-feedback-case && \
+          python -m learning_runtime.workspace smoke --out /tmp/p01-workspace-smoke && \
           python - <<'PY'
           import json
           from pathlib import Path
           case = json.loads(Path('/tmp/p01-feedback-case/case.json').read_text(encoding='utf-8'))
           current = json.loads(Path('/tmp/p01-feedback-case/current.json').read_text(encoding='utf-8'))
+          smoke = json.loads(Path('/tmp/p01-workspace-smoke/WORKSPACE-SMOKE-01/control/smoke-result.json').read_text(encoding='utf-8'))
           print(json.dumps({
               'case_id': case['case_id'],
               'brief_raw_sha256': case['standard']['brief']['identity']['raw_sha256'],
@@ -42,6 +44,11 @@ jobs:
               'mapping': case['trace']['mapping_status'],
               'suspected_regions': case['trace']['suspected_regions'],
               'attribution_confidence': case['trace']['attribution_confidence'],
+              'workspace_smoke': smoke['status'],
+              'workspace_denied': smoke['denied'],
+              'workspace_handoff_result': smoke['handoff']['result'],
+              'workspace_handoff_sha256': smoke['handoff']['source']['identity']['raw_sha256'],
+              'workspace_host_process_isolation': smoke['manifest']['policy']['host_process_isolation'],
           }, ensure_ascii=False, indent=2))
           PY
 
