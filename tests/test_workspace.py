@@ -30,10 +30,10 @@ class WorkspaceTests(unittest.TestCase):
             self._brief(),
         )
 
-    def _record_writer_decision(self, writer: RoleWorkspaceBroker):
+    def _record_writer_decision(self, writer: RoleWorkspaceBroker, output_ref: str = "output/candidate.md", event_id: str = "W-D01"):
         return writer.record_event(
             {
-                "event_id": "W-D01",
+                "event_id": event_id,
                 "event_type": "DECISION",
                 "subject_refs": ["plan:B03"],
                 "decision_type": "REALIZATION_STRATEGY",
@@ -43,7 +43,7 @@ class WorkspaceTests(unittest.TestCase):
                 "alternatives_considered": ["STATE_PARADOX_EXPLICITLY"],
                 "expected_effect": "Delay resolved interpretation until the physical constraint is legible.",
                 "risks": ["The unit may feel under-explained if the next beat does not carry the interpretation."],
-                "output_refs": ["output/candidate.md"],
+                "output_refs": [output_ref],
             }
         )
 
@@ -54,15 +54,40 @@ class WorkspaceTests(unittest.TestCase):
         self.assertIn("diagnostic_hypothesis", plan)
         self.assertIn("product_standard", review)
         self.assertIn("process_telemetry_contract", review)
+        self.assertIn("before the first final output write", plan["process_telemetry_contract"]["temporal_rule"])
 
-    def test_role_can_read_input_and_write_output(self):
+    def test_role_can_read_input_and_write_output_after_bound_decision(self):
         with tempfile.TemporaryDirectory() as tmp:
             run = self._run(tmp)
             broker = RoleWorkspaceBroker(run, "writer", "W1")
             brief = broker.read_text("input/common-brief.json")
             self.assertIn("OWNER_PRODUCT_FIT", brief)
+            self._record_writer_decision(broker, "output/draft.md")
             output = broker.write_text("output/draft.md", "draft")
             self.assertEqual(output.read_text(encoding="utf-8"), "draft")
+
+    def test_writer_final_output_requires_prior_decision(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = self._run(tmp)
+            writer = RoleWorkspaceBroker(run, "writer", "W1")
+            with self.assertRaises(WorkspaceError) as ctx:
+                writer.write_text("output/candidate.md", "candidate")
+            self.assertEqual(ctx.exception.code, "DECISION_REQUIRED_BEFORE_FINAL_OUTPUT")
+            self.assertFalse((run / "agents/writer/W1/output/candidate.md").exists())
+
+    def test_final_output_is_write_once_before_seal_and_scratch_remains_iterable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = self._run(tmp)
+            writer = RoleWorkspaceBroker(run, "writer", "W1")
+            self._record_writer_decision(writer)
+            writer.write_text("scratch/draft.md", "draft 1")
+            writer.write_text("scratch/draft.md", "draft 2")
+            self.assertEqual(writer.read_text("scratch/draft.md"), "draft 2")
+            writer.write_text("output/candidate.md", "candidate v1")
+            with self.assertRaises(WorkspaceError) as ctx:
+                writer.write_text("output/candidate.md", "candidate v2")
+            self.assertEqual(ctx.exception.code, "OUTPUT_OVERWRITE_DENIED_USE_SCRATCH")
+            self.assertEqual(writer.read_text("output/candidate.md"), "candidate v1")
 
     def test_writer_cannot_read_review_workspace_or_control(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -110,8 +135,8 @@ class WorkspaceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             run = self._run(tmp)
             writer = RoleWorkspaceBroker(run, "writer", "W1")
-            source = writer.write_text("output/candidate.md", "candidate text")
             self._record_writer_decision(writer)
+            source = writer.write_text("output/candidate.md", "candidate text")
             with self.assertRaises(TelemetryError) as ctx:
                 handoff_copy(
                     run,
@@ -146,16 +171,16 @@ class WorkspaceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             run = self._run(tmp)
             writer = RoleWorkspaceBroker(run, "writer", "W1")
-            writer.write_text("output/candidate.md", "candidate text")
             self._record_writer_decision(writer)
+            writer.write_text("output/candidate.md", "candidate text")
             seal_execution(run, role="writer", execution_id="W1", required_output_refs=["candidate.md"])
             with self.assertRaises(WorkspaceError) as ctx:
-                writer.write_text("output/candidate.md", "retroactive rewrite")
+                writer.write_text("scratch/retroactive.md", "retroactive rewrite")
             self.assertEqual(ctx.exception.code, "EXECUTION_SEALED")
             with self.assertRaises(WorkspaceError) as telemetry_ctx:
                 writer.record_event(
                     {
-                        "event_id": "W-D02",
+                        "event_id": "W-R02",
                         "event_type": "RISK",
                         "subject_refs": ["candidate.md"],
                         "risk": "post-hoc rationalization",
@@ -165,14 +190,18 @@ class WorkspaceTests(unittest.TestCase):
                 )
             self.assertEqual(telemetry_ctx.exception.code, "EXECUTION_SEALED")
 
-    def test_manifest_states_broker_only_limitations_and_seals(self):
+    def test_manifest_states_temporal_gate_limitations_and_seals(self):
         with tempfile.TemporaryDirectory() as tmp:
             run = self._run(tmp)
             manifest = workspace_manifest(run)
             self.assertEqual(manifest["policy"]["host_process_isolation"], "NOT_PROVEN")
-            self.assertIn("sole filesystem surface", " ".join(manifest["limitations"]))
+            limitations = " ".join(manifest["limitations"])
+            self.assertIn("sole filesystem surface", limitations)
+            self.assertIn("decision-before-final-output", limitations)
             self.assertEqual(manifest["execution_seal_count"], 0)
             self.assertEqual(manifest["policy"]["telemetry_version"], "PHASE3-DECISION-TELEMETRY-1")
+            self.assertTrue(manifest["policy"]["roles"]["writer"]["decision_before_final_output"])
+            self.assertTrue(manifest["policy"]["roles"]["writer"]["final_output_write_once"])
 
 
 if __name__ == "__main__":
