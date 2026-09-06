@@ -11,32 +11,13 @@
     "output"
   ],
   "properties": {
-    "schema_version": {
-      "type": "string",
-      "pattern": "^\\d+\\.\\d+\\.\\d+$"
-    },
-    "iteration_id": {
-      "type": "string",
-      "minLength": 1
-    },
-    "source_commit": {
-      "type": "string",
-      "pattern": "^[a-f0-9]{40}$"
-    },
-    "created_at": {
-      "type": "string",
-      "format": "date-time"
-    },
+    "schema_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "iteration_id": {"type": "string", "minLength": 1},
+    "source_commit": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "created_at": {"type": "string", "format": "date-time"},
     "process": {
       "type": "object",
-      "required": [
-        "objective",
-        "decisions",
-        "implementation_steps",
-        "validations",
-        "deviations",
-        "unresolved"
-      ],
+      "required": ["objective", "decisions", "implementation_steps", "validations", "deviations", "unresolved"],
       "properties": {
         "objective": {"type": "string", "minLength": 1},
         "decisions": {
@@ -49,11 +30,7 @@
               "area": {"type": "string", "minLength": 1},
               "change": {"type": "string", "minLength": 1},
               "declared_reason": {"type": "string", "minLength": 1},
-              "basis": {
-                "type": "array",
-                "items": {"type": "string", "minLength": 1},
-                "minItems": 1
-              },
+              "basis": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
               "expected_effect": {"type": "string", "minLength": 1},
               "status": {"type": "string", "enum": ["PROPOSED", "APPLIED", "REVISED", "REJECTED"]}
             },
@@ -87,14 +64,8 @@
             "additionalProperties": false
           }
         },
-        "deviations": {
-          "type": "array",
-          "items": {"type": "string"}
-        },
-        "unresolved": {
-          "type": "array",
-          "items": {"type": "string"}
-        }
+        "deviations": {"type": "array", "items": {"type": "string"}},
+        "unresolved": {"type": "array", "items": {"type": "string"}}
       },
       "additionalProperties": false
     },
@@ -106,6 +77,7 @@
         "measurement_design",
         "dataset_partitions",
         "owner_calibration_status",
+        "judge_status",
         "craft_corpus_coverage",
         "verifier_result",
         "known_limitations",
@@ -128,27 +100,35 @@
         },
         "measurement_design": {
           "type": "object",
-          "required": ["primary_evaluation", "diagnostic_method", "target_gap_method"],
+          "required": ["primary_evaluation", "diagnostic_method", "truth_method", "spoken_method", "target_gap_method"],
           "properties": {
             "primary_evaluation": {"type": "string"},
             "diagnostic_method": {"type": "string"},
+            "truth_method": {"type": "string"},
+            "spoken_method": {"type": "string"},
             "target_gap_method": {"type": "string"}
           },
           "additionalProperties": false
         },
         "dataset_partitions": {
           "type": "object",
-          "required": ["dev", "calibration", "holdout"],
+          "required": ["dev", "pilot", "calibration", "sequestered", "refreshed_sequestered"],
           "properties": {
             "dev": {"type": "string"},
+            "pilot": {"type": "string"},
             "calibration": {"type": "string"},
-            "holdout": {"type": "string"}
+            "sequestered": {"type": "string"},
+            "refreshed_sequestered": {"type": "string"}
           },
           "additionalProperties": false
         },
         "owner_calibration_status": {
           "type": "string",
-          "enum": ["NOT_STARTED", "PREPARED", "PARTIAL", "COMPLETED"]
+          "enum": ["NOT_STARTED", "PILOT_READY", "PILOT_COMPLETED", "FRESH_CALIBRATION_READY", "FRESH_CALIBRATION_PARTIAL", "FRESH_CALIBRATION_COMPLETED"]
+        },
+        "judge_status": {
+          "type": "string",
+          "enum": ["UNASSIGNED", "SHADOW_ONLY", "ELIGIBLE_PROXY"]
         },
         "craft_corpus_coverage": {"type": "string", "minLength": 1},
         "verifier_result": {
@@ -164,7 +144,15 @@
         "known_limitations": {"type": "array", "items": {"type": "string"}},
         "phase1_readiness": {
           "type": "string",
-          "enum": ["NOT_READY", "EXPLORATORY", "READY_FOR_HUMAN_CALIBRATION", "READY_FOR_EXIT_REVIEW"]
+          "enum": [
+            "NOT_READY",
+            "EXPLORATORY",
+            "STRUCTURALLY_READY",
+            "ARCHITECTURE_FROZEN_READY_FOR_PILOT",
+            "READY_FOR_FRESH_CALIBRATION",
+            "READY_FOR_SEQUESTERED_VALIDATION",
+            "READY_FOR_EXIT_REVIEW"
+          ]
         },
         "summary": {"type": "string", "minLength": 1}
       },
