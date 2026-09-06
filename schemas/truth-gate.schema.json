@@ -1,44 +1,54 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Phase1TruthGateAudit",
-  "description": "Lane A only: one sample audited against approved P01 historical authority. Craft references are forbidden as truth authority.",
+  "description": "Independent claim-level historical audit. Product preference still runs even when release is blocked by truth.",
   "type": "object",
   "required": [
     "schema_version",
     "audit_id",
-    "sample_id",
+    "eval_unit_id",
+    "candidate_id",
     "authority_packet_id",
     "authority_boundary",
     "claims",
-    "gates",
-    "unresolved",
-    "overall_status"
+    "overall_status",
+    "release_blocked",
+    "unresolved"
   ],
   "$defs": {
+    "claimType": {
+      "type": "string",
+      "enum": [
+        "EXPLICIT",
+        "IMPLIED_PREMISE",
+        "CAUSAL",
+        "DATE_QUANTITY",
+        "QUOTATION_PARAPHRASE",
+        "RECONSTRUCTION"
+      ]
+    },
+    "verifiability": {
+      "type": "string",
+      "enum": ["VERIFIABLE", "PARTLY_VERIFIABLE", "NONFACTUAL"]
+    },
     "claimStatus": {
       "type": "string",
       "enum": ["SUPPORTED", "QUALIFIED", "RECONSTRUCTION", "UNSUPPORTED", "NONFACTUAL"]
     },
-    "gateStatus": {
+    "sourceRelation": {
       "type": "string",
-      "enum": ["PASS", "FAIL", "UNCERTAIN"]
+      "enum": ["SUPPORTS", "QUALIFIES", "CONFLICTS", "ABSENT"]
     },
-    "gate": {
-      "type": "object",
-      "required": ["status", "observation", "evidence_refs", "uncertainty"],
-      "properties": {
-        "status": {"$ref": "#/$defs/gateStatus"},
-        "observation": {"type": "string"},
-        "evidence_refs": {"type": "array", "items": {"type": "string"}},
-        "uncertainty": {"type": "string"}
-      },
-      "additionalProperties": false
+    "materiality": {
+      "type": "string",
+      "enum": ["LOW", "MEDIUM", "HIGH"]
     }
   },
   "properties": {
     "schema_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
     "audit_id": {"type": "string", "minLength": 1},
-    "sample_id": {"type": "string", "minLength": 1},
+    "eval_unit_id": {"type": "string", "minLength": 1},
+    "candidate_id": {"type": "string", "minLength": 1},
     "authority_packet_id": {"type": "string", "minLength": 1},
     "authority_boundary": {
       "type": "string",
@@ -48,32 +58,42 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["claim_id", "claim_quote", "status", "source_ref", "source_quote", "locator", "reason"],
+        "required": [
+          "claim_id",
+          "claim_span",
+          "normalized_claim",
+          "claim_type",
+          "verifiability",
+          "source_ids",
+          "evidence_locations",
+          "source_relation",
+          "verdict",
+          "uncertainty_note",
+          "materiality",
+          "release_blocker"
+        ],
         "properties": {
           "claim_id": {"type": "string", "minLength": 1},
-          "claim_quote": {"type": "string", "minLength": 1},
-          "status": {"$ref": "#/$defs/claimStatus"},
-          "source_ref": {"type": ["string", "null"]},
-          "source_quote": {"type": ["string", "null"]},
-          "locator": {"type": ["string", "null"]},
-          "reason": {"type": "string", "minLength": 1}
+          "claim_span": {"type": "string", "minLength": 1},
+          "normalized_claim": {"type": "string", "minLength": 1},
+          "claim_type": {"$ref": "#/$defs/claimType"},
+          "verifiability": {"$ref": "#/$defs/verifiability"},
+          "source_ids": {"type": "array", "items": {"type": "string"}},
+          "evidence_locations": {"type": "array", "items": {"type": "string"}},
+          "source_relation": {"$ref": "#/$defs/sourceRelation"},
+          "source_quotes": {"type": "array", "items": {"type": "string"}},
+          "verdict": {"$ref": "#/$defs/claimStatus"},
+          "uncertainty_note": {"type": "string"},
+          "materiality": {"$ref": "#/$defs/materiality"},
+          "release_blocker": {"type": "boolean"}
         },
         "additionalProperties": false
       }
     },
-    "gates": {
-      "type": "object",
-      "required": ["G_TRUTH", "G_COHERENCE", "G_SCOPE", "G_LANGUAGE"],
-      "properties": {
-        "G_TRUTH": {"$ref": "#/$defs/gate"},
-        "G_COHERENCE": {"$ref": "#/$defs/gate"},
-        "G_SCOPE": {"$ref": "#/$defs/gate"},
-        "G_LANGUAGE": {"$ref": "#/$defs/gate"}
-      },
-      "additionalProperties": false
-    },
+    "overall_status": {"type": "string", "enum": ["PASS", "FAIL", "UNCERTAIN"]},
+    "release_blocked": {"type": "boolean"},
     "unresolved": {"type": "array", "items": {"type": "string"}},
-    "overall_status": {"type": "string", "enum": ["PASS", "FAIL", "UNCERTAIN"]}
+    "audit_notes": {"type": "array", "items": {"type": "string"}}
   },
   "additionalProperties": false
 }
