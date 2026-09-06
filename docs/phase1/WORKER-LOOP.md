@@ -1,6 +1,6 @@
 # Phase 1 Worker Improvement Loop
 
-Status: **ACTIVE ON `codex/p01-phase1-benchmark`**
+Status: **ACTIVE FOR BENCHMARK V1 FREEZE / PILOT PREPARATION**
 
 This loop improves the Phase 1 benchmark itself. It does not authorize a new Writer probe, production task, Phase 2 runtime, or Phase 3 white-box architecture.
 
@@ -12,20 +12,20 @@ Every Worker iteration MUST publish one structured iteration record under:
 
 The record conforms to `schemas/phase1-worker-iteration.schema.json` and has two first-class surfaces:
 
-- `process`: what the Worker actually implemented — observable decisions, changed files, validation steps, deviations, unresolved limitations, and the external/evidence basis used for consequential design choices.
-- `output`: the resulting Phase 1 benchmark state — benchmark version, deliverables, measurement design, calibration/holdout readiness, verifier result, known limitations, and readiness claim.
+- `process`: what the Worker actually implemented — observable decisions, changed files, validation steps, deviations, unresolved limitations, and external/evidence basis used for consequential design choices.
+- `output`: the resulting benchmark state — version, deliverables, measurement design, dataset lifecycle, owner state, judge state, verifier result, limitations, and readiness claim.
 
-`process` is diagnostic telemetry, not private chain-of-thought. Do not dump hidden reasoning. Record concise decisions and their inspectable basis.
+`process` is diagnostic telemetry, not private chain-of-thought. Record concise inspectable decisions, not hidden reasoning.
 
 ## Review isolation
 
-Product/benchmark quality review is black-box with respect to Worker process:
+Benchmark/Product quality review is black-box with respect to Worker process:
 
-1. Review the benchmark `output` and benchmark artifacts first.
-2. Do not use the Worker `process` log to excuse weak benchmark behavior or infer that an intended property exists.
-3. Only after an observable defect is found may an auditor open `process` to trace where that defect entered the implementation.
+1. Review benchmark `output` and artifacts first.
+2. Do not use Worker `process` to excuse weak benchmark behavior or infer that an intended property exists.
+3. Only after an observable defect is found may an auditor open `process` to trace where that defect entered implementation.
 
-This preserves the future architecture principle:
+Future diagnostic direction:
 
 `observable output failure -> inspect process -> bounded root-cause region`
 
@@ -35,41 +35,50 @@ not:
 
 ## Iteration lifecycle
 
-1. Freeze the review/work order for the iteration.
-2. Worker records the source commit and objective before editing.
-3. Worker makes the smallest coherent benchmark changes that address the frozen findings.
-4. Worker updates `process` as implementation facts become known; retrospective reconstruction must be labelled as such.
-5. Worker runs validations and records exact commands/results.
-6. Worker writes the `output` snapshot.
-7. Reviewer judges the output independently.
-8. If output still fails, auditor traces into `process`; the next work order targets only the bounded failure region.
+1. Freeze the work order.
+2. Record source commit and objective.
+3. Make the smallest coherent benchmark change.
+4. Record implementation facts as they become known; label retrospective reconstruction when applicable.
+5. Run validations where the environment allows and record exact commands/results.
+6. Write the `output` snapshot.
+7. Review output independently.
+8. If output fails, open process only to bound the next work order.
 
 ## Required process content
 
-At minimum record:
+At minimum:
 
 - objective and source commit;
-- consequential design decisions and why they were selected;
-- files changed by each implementation step;
-- external framework/paper or repository evidence used as basis when applicable;
-- validation commands and their observed results;
-- deviations from the work order;
+- consequential design decisions and declared basis;
+- files changed;
+- external framework/research basis when applicable;
+- validation commands and observed results;
+- deviations;
 - unresolved questions/coverage gaps;
-- no self-certification beyond what validations actually prove.
+- no self-certification beyond what validation proves.
 
 ## Required output content
 
-At minimum record:
+At minimum:
 
-- benchmark version and deliverable paths;
-- primary evaluation mode and secondary diagnostics;
-- DEV / CALIBRATION / HOLDOUT partition state;
-- owner-preference calibration state;
-- craft-reference corpus coverage;
+- benchmark version and deliverables;
+- primary evaluation and post-vote diagnostic design;
+- dataset state for `DEV`, `PILOT`, `CALIBRATION`, `SEQUESTERED`, and `REFRESHED_SEQUESTERED` where applicable;
+- owner calibration/pilot state;
+- shadow-judge state;
+- craft-reference coverage;
 - verifier result;
 - known limitations;
-- readiness status chosen from the schema.
+- readiness status.
+
+## Public/private data boundary
+
+Historical P01 material already committed to the shared/public repo is DEV.
+
+A real `SEQUESTERED` payload and labels must not be committed here. The public repo may contain only a metadata/hash shell. Once a sequestered set is opened for tuning it becomes calibration history and the next blind claim requires `REFRESHED_SEQUESTERED` evidence.
 
 ## Phase 1 completion boundary
 
-A Worker iteration may make the benchmark technically runnable, but it MUST NOT mark Phase 1 complete merely because files exist or a structural verifier passes. Human relevance/calibration and held-out transfer requirements from the architecture plan remain external exit gates.
+A Worker iteration may make the architecture structurally coherent or ready for pilot/calibration, but it MUST NOT mark Phase 1 complete merely because files exist or a verifier passes.
+
+Phase 1 closure requires real owner calibration, judge reliability evidence if an LLM judge is to be used, private/restricted sequestered validation, and transfer to new historical topics/functions/granularities.
