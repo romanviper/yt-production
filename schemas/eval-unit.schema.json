@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Phase1EvaluationUnit",
+  "description": "Benchmark primitive describing what historical content function is being evaluated, at what granularity and modality.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "eval_unit_id",
+    "historical_topic",
+    "editorial_function",
+    "granularity",
+    "modality",
+    "evidence_condition"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "eval_unit_id": {"type": "string", "minLength": 1},
+    "historical_topic": {"type": "string", "minLength": 1},
+    "editorial_function": {"type": "string", "minLength": 1},
+    "granularity": {
+      "type": "string",
+      "enum": ["FUNCTION_CLIP", "SECTION_SENTINEL", "EPISODE_SENTINEL"]
+    },
+    "modality": {
+      "type": "string",
+      "enum": ["TEXT", "AUDIO", "TEXT_AND_AUDIO"]
+    },
+    "evidence_condition": {"type": "string", "minLength": 1},
+    "scope_note": {"type": "string"},
+    "source_bundle_version": {"type": ["string", "null"]},
+    "created_at": {"type": ["string", "null"], "format": "date-time"}
+  },
+  "additionalProperties": false
+}
