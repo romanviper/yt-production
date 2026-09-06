@@ -1,5 +1,5 @@
 {
-  "packet_version": "1.1.0",
+  "packet_version": "1.2.0",
   "packet_id": "OWNER-PILOT-03",
   "pair_id": "P01-PILOT-03",
   "eval_unit_id": "EU-P01-PILOT-MECHANISM-01",
@@ -11,17 +11,7 @@
     "question": "Nếu phải chọn bản phù hợp hơn cho podcast lịch sử dài mà bạn muốn sản xuất, bạn chọn A, B, TIE, BOTH_FAIL hay UNCERTAIN?",
     "allowed_results": ["A", "B", "TIE", "BOTH_FAIL", "UNCERTAIN"],
     "confidence_options": ["LOW", "MEDIUM", "HIGH"],
-    "freeze_rule": "Ghi verdict và confidence trước khi xem hoặc trả lời bất kỳ câu hỏi chẩn đoán nào. Không sửa first-pass verdict sau khi taxonomy/reference được mở."
+    "freeze_rule": "Ghi verdict và confidence trước khi mở bất kỳ artifact chẩn đoán nào. Không sửa first-pass verdict sau khi preference đã freeze."
   },
-  "post_vote_optional": {
-    "feedback_prompts": [
-      "Chỗ nào khiến bạn bắt đầu mất chú ý?",
-      "Sau đoạn này, điều gì trong hiểu biết của bạn đã thay đổi?",
-      "Chi tiết hoặc ý nào còn đọng lại rõ nhất?",
-      "Vì sao bản bạn chọn hoạt động tốt hơn, hoặc vì sao cả hai đều không đạt?",
-      "Khác biệt này với bạn là rõ rệt hay chỉ tinh tế?"
-    ],
-    "decisive_spans_optional": true,
-    "taxonomy_not_shown_before_vote": true
-  }
+  "post_vote_artifact_ref": "benchmarks/p01/calibration/post-vote-owner-diagnostics.json"
 }
