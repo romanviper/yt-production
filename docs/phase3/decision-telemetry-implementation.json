@@ -1,22 +1,29 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "record_id": "PHASE3-DECISION-TELEMETRY-IMPLEMENTATION-01",
   "status": "IMPLEMENTED_READY_FOR_ROUND01_RETRY",
   "source_branch": "codex/p01-phase3-whitebox-mvp",
   "source_commit": "4c0d6870cc4beb42b981fbf8e5f337a24c5af03e",
-  "validated_build_commit": "2bdc8ddf3d8f7fdd0cbf0162019bb9b2ad540340",
+  "validated_build_commit": "d91843396aa742ab145bc2d710219d7fe2d0d02a",
   "validation": {
-    "workflow_run_id": 34022255994,
-    "focused_job_id": 101456856232,
+    "workflow_run_id": 34022630654,
+    "focused_job_id": 101457872761,
     "focused_job": "PASS",
-    "focused_tests": 52,
-    "focused_test_seconds": 0.439,
+    "focused_tests": 56,
+    "focused_test_seconds": 0.279,
     "workspace_smoke": "PASS",
     "writer_execution_seal": "SEALED_BEFORE_DOWNSTREAM_FEEDBACK",
     "writer_decision_count": 1,
     "handoff_result": "COPIED_FROM_SEALED_EXECUTION_READ_ONLY_HASH_MATCH",
     "phase1_benchmark_verifier": "PASS",
-    "guided_review_verifiers": "PASS"
+    "guided_review_verifiers": "PASS",
+    "temporal_gate_cases": {
+      "final_output_without_prior_decision": "DENIED",
+      "final_output_second_write_before_seal": "DENIED_OUTPUT_OVERWRITE_DENIED_USE_SCRATCH",
+      "unbound_output_in_direct_filesystem_bypass": "SEAL_REJECTED_PRIMARY_OUTPUT_NOT_BOUND_TO_DECISION",
+      "post_seal_write": "DENIED_EXECUTION_SEALED",
+      "sealed_handoff": "PASS_HASH_MATCH"
+    }
   },
   "implemented": {
     "telemetry_version": "PHASE3-DECISION-TELEMETRY-1",
@@ -28,6 +35,11 @@
     "required_decision_roles": ["plan", "writer", "truth", "audit"],
     "review_prevote_decision_required": false,
     "broker_assigns_identity_and_sequence": true,
+    "decision_precedes_final_output": true,
+    "decision_binds_exact_output_path": true,
+    "final_output_write_once": true,
+    "iterative_work_location": "scratch/",
+    "seal_rechecks_output_decision_binding": true,
     "seal_before_handoff": true,
     "post_seal_broker_writes_denied": true,
     "handoff_requires_valid_source_seal": true,
@@ -62,10 +74,11 @@
   },
   "limitations": [
     "Telemetry is concise declared rationale, not raw private chain-of-thought.",
-    "The execution seal prevents post-feedback mutation only on the broker-governed filesystem surface.",
+    "Temporal ordering proves that a bounded declaration existed before final artifact materialization on the broker surface; it does not prove that declaration was the hidden psychological cause of the output.",
+    "The execution seal and write-once rule apply only on the broker-governed filesystem surface.",
     "Host-process isolation remains NOT_PROVEN if an agent is separately granted shell/network/general filesystem tools.",
     "No fresh Planner, Writer, Truth or Audit agent was executed in this implementation pass.",
     "Round 01 must still run fresh roles through the broker and preserve their sealed telemetry artifacts."
   ],
-  "round01_gate": "A fresh Plan/Writer/Truth/Audit output is invalid for learning handoff if required telemetry is missing, invalid, unsealed, or no longer hash-matches its seal."
+  "round01_gate": "A fresh Plan/Writer/Truth/Audit output is invalid for learning handoff unless a bounded DECISION naming that exact output path was emitted before final materialization, telemetry remains valid, the output is write-once, the execution is sealed, and the handoff verifies the sealed hash."
 }
