@@ -131,7 +131,12 @@ def validate_event(event: dict[str, Any], *, expected_role: str | None = None, e
         _require_list(event, "alternatives_considered")
         _require_string(event, "expected_effect")
         _require_list(event, "risks")
-        _require_list(event, "output_refs")
+        output_refs = _require_list(event, "output_refs")
+        if not all(isinstance(ref, str) and ref.startswith("output/") and ".." not in Path(ref).parts for ref in output_refs):
+            raise TelemetryError(
+                "INVALID_DECISION_OUTPUT_REF",
+                "DECISION output_refs must use bounded output/<path> references",
+            )
     elif event_type == "CHECKPOINT":
         _require_string(event, "checkpoint")
         _require_string(event, "status")
@@ -145,7 +150,12 @@ def validate_event(event: dict[str, Any], *, expected_role: str | None = None, e
         _require_string(event, "chosen_action")
         _require_string(event, "rationale_summary")
         _require_list(event, "evidence_refs")
-        _require_list(event, "output_refs")
+        output_refs = _require_list(event, "output_refs")
+        if not all(isinstance(ref, str) and ref.startswith("output/") and ".." not in Path(ref).parts for ref in output_refs):
+            raise TelemetryError(
+                "INVALID_DEVIATION_OUTPUT_REF",
+                "DEVIATION output_refs must use bounded output/<path> references",
+            )
 
     return event
 
@@ -176,6 +186,13 @@ def read_telemetry(path: Path, *, expected_role: str | None = None, expected_exe
     if len(event_ids) != len(set(event_ids)):
         raise TelemetryError("TELEMETRY_EVENT_ID_DUPLICATE", "event_id values must be unique within one execution")
     return events
+
+
+def decision_binds_output(events: list[dict[str, Any]], output_ref: str) -> bool:
+    return any(
+        event.get("event_type") == "DECISION" and output_ref in event.get("output_refs", [])
+        for event in events
+    )
 
 
 def seal_path(run_root: Path, role: str, execution_id: str) -> Path:
@@ -227,10 +244,16 @@ def seal_execution(
             raise TelemetryError("TELEMETRY_CANNOT_BE_PRIMARY_OUTPUT", relative)
         if output_root not in path.parents:
             raise TelemetryError("REQUIRED_OUTPUT_ESCAPE", relative)
+        full_ref = f"output/{relative}"
+        if require_decision and not decision_binds_output(events, full_ref):
+            raise TelemetryError(
+                "PRIMARY_OUTPUT_NOT_BOUND_TO_DECISION",
+                f"{role}/{execution_id}:{full_ref}",
+            )
         outputs[relative] = artifact_identity(path)
 
     seal = {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "telemetry_version": TELEMETRY_VERSION,
         "role": role,
         "execution_id": execution_id,
@@ -240,6 +263,7 @@ def seal_execution(
         "event_count": len(events),
         "decision_count": sum(1 for event in events if event["event_type"] == "DECISION"),
         "output_identities": outputs,
+        "output_binding_rule": "Each required primary output for Plan/Writer/Truth/Audit must be named by a prior DECISION output_refs entry before materialization.",
         "limitations": [
             "Telemetry records declared engineering/editorial decisions, checkpoints, risks and deviations; it is not raw private chain-of-thought.",
             "A declared rationale remains self-report evidence and can be contradicted by downstream artifact analysis.",
