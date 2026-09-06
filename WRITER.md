@@ -1,21 +1,22 @@
 # Writer Harness — observable direct-output MVP
 
-The Owner needs to see not only **what you wrote**, but also **what you actually did to turn the inputs into that draft**.
+The immediate goal is to produce a Writer draft quickly **and make the Writer's observable decisions understandable to the Owner**.
 
 If the Owner tells you to write P01, write immediately. Do not wait for an assignment, controller state, budget, Planner, Reviewer, or other agent.
 
-This harness does **not** decide whether your writing is good or bad. Do not emit PASS/FAIL, scores, or a verdict. Your job is to leave enough factual, human-readable evidence for the Owner to make that judgment.
+This harness does not decide whether your writing is good or bad. Do not emit PASS/FAIL, scores, rankings or a verdict. The Owner evaluates the prose.
 
-Do not store chain-of-thought, private reasoning, hidden scratchpad, or an internal-monologue transcript. Record only observable facts, final decisions, brief stated rationales tied to inputs/constraints, material changes, uncertainties, and the resulting artifact.
+Do not store chain-of-thought, private reasoning, hidden scratchpad or internal-monologue transcripts. Record only observable facts, final decisions, brief stated rationales tied to the supplied inputs, material changes, uncertainties and the resulting artifact.
 
-## Inputs
+## Read these three Writer inputs
 
-For P01, read these two canonical inputs:
+1. `products/sumer-writing/02_outline/P01-creative-brief.md` — what product/experience you are making and P01's role in it.
+2. `products/sumer-writing/02_outline/section-overlays/P01.json` — bounded section territory/change/discovery.
+3. `products/sumer-writing/03_sections/P01/historical-substrate.json` — historical reality model and claim boundaries.
 
-- `products/sumer-writing/02_outline/section-overlays/P01.json`
-- `products/sumer-writing/03_sections/P01/historical-substrate.json`
+The creative brief already distills the approved product brief, benchmark, channel/story/voice direction needed for this attempt. Do not load the old workflow or legacy task contexts just to reconstruct those goals.
 
-If you access any other repo file or external source before finishing the draft, disclose it in `meta.json` and `writing-report.md`. Do not read another Writer's output or Owner feedback before finishing.
+If you access any other repo file or external source before finishing the draft, disclose it in `meta.json` and `writing-report.md`. Do not read another Writer's output or Owner feedback on another Writer before finishing.
 
 ## Output partition
 
@@ -31,208 +32,239 @@ Current partitions:
 
 A new model may create one short model-name partition.
 
-Each completed Writer attempt must contain exactly these three artifacts:
+Each completed attempt contains exactly:
 
-- `draft.md` — the prose the Owner will read
-- `meta.json` — compact factual execution metadata
-- `writing-report.md` — human-readable trace of the writing behavior
+- `draft.md` — listener-facing prose;
+- `meta.json` — compact factual execution metadata;
+- `writing-report.md` — Owner-readable trace of the writing behavior.
 
-Do not write the draft into `products/`, `runs/`, or controller folders.
+Do not write the draft into `products/`, `runs/` or controller folders.
 
 ## Execution sequence
 
-Follow this sequence so the Owner can distinguish intention from outcome.
+### 1. Write the PRE-WRITE SNAPSHOT first
 
-### 1. Start `writing-report.md` before drafting prose
-
-Write only the **PRE-WRITE SNAPSHOT** sections shown below. Keep them concise. This is not a formal Planner artifact and must not become an essay outline.
+Create `writing-report.md` and fill only the PRE-WRITE sections below **before drafting prose**. Keep this concise. It is not a Planner artifact.
 
 ### 2. Write one draft attempt
 
 Write one Vietnamese historical-podcast excerpt for P01.
 
-Choose the telling freely. Do not force essay structure, hook formulas, beat counts, or a generic explanatory template.
+The goal is not merely to explain the substrate correctly. Use the creative brief to create the intended listener experience and section state change while remaining inside the evidence boundaries.
 
-Historical boundaries:
+Choose the telling freely. Do not force essay structure, hook formulas, beat counts or a generic explanatory template.
 
-- overlapping clay practices are not a mandatory token → envelope → tablet replacement sequence;
-- do not invent a specific tax/market/tribute/ownership mechanism without evidence.
-
-Suggested size is roughly 450–650 words, but this is not a hard gate.
+Suggested size is roughly 450–650 words for this learning excerpt, but this is not a hard gate.
 
 ### 3. Freeze the draft
 
-Once `draft.md` is complete, do not rewrite or reroll it based on the reporting step. The report must describe the draft that actually existed at completion, not an improved second attempt.
+Once `draft.md` is complete, do not rewrite or reroll it because of observations made while filling the report. The report must describe the draft that actually existed at completion.
 
-### 4. Finish `writing-report.md`
+### 4. Finish the POST-WRITE TRACE
 
-Append the **POST-WRITE TRACE** sections below. You may inspect your own finished draft for reporting purposes, but do not change it afterward.
+Inspect your frozen draft and append the POST-WRITE sections. Do not change the draft afterward.
 
-### 5. Write `meta.json`, commit the three files, then stop
+### 5. Write `meta.json`, commit the three files, stop
 
-There is no Writer time budget. Timing is telemetry only. Never fabricate unknown timing/model/session information; use `UNKNOWN` or `null`.
+There is no Writer time budget. Timing is telemetry only. Never fabricate unknown model/session/timing information; use `UNKNOWN` or `null`.
 
 ---
 
 # `meta.json` contract
 
-Keep metadata factual and compact. The Owner should be able to understand it without knowing the controller architecture.
+Keep metadata factual and compact.
 
 ```json
 {
-  "schema": "writer-observability-v1",
-  "writer": "<partition name, e.g. sol>",
+  "schema": "writer-observability-v2",
+  "writer": "<partition name>",
   "model": "<actual model if known, otherwise UNKNOWN>",
   "task": "P01",
   "attempt": 1,
-  "owner_instruction": "<short literal/faithful summary of the instruction that started this attempt>",
+  "owner_instruction": "<short faithful summary of the instruction that started this attempt>",
   "branch": "<current branch if known, otherwise UNKNOWN>",
   "starting_commit": "<HEAD before this attempt if known, otherwise UNKNOWN>",
   "inputs_read": [
+    "products/sumer-writing/02_outline/P01-creative-brief.md",
     "products/sumer-writing/02_outline/section-overlays/P01.json",
     "products/sumer-writing/03_sections/P01/historical-substrate.json"
   ],
   "extra_context_accessed": [],
   "other_writer_outputs_read": false,
-  "owner_feedback_read_before_draft": false,
+  "owner_feedback_on_other_writer_read_before_draft": false,
   "rerolled": false,
   "draft_word_count": 0,
   "timing": {
     "seconds": null,
     "source": "UNKNOWN"
   },
-  "outputs": [
-    "draft.md",
-    "writing-report.md"
-  ]
+  "outputs": ["draft.md", "writing-report.md"]
 }
 ```
 
-If a boolean cannot be truthfully known, use `null` rather than guessing.
+If a fact cannot be known truthfully, use `UNKNOWN`/`null` rather than guessing.
 
 ---
 
 # `writing-report.md` contract
 
-Use these headings in this order. Prefer tables/bullets over long prose. The purpose is traceability, not self-justification.
+Use these headings in order. Prefer bullets/tables over long prose. The purpose is traceability, not self-justification.
 
 ## PRE-WRITE SNAPSHOT
 
 ### 1. Task I am executing
 
-In 1–3 sentences, state what you believe the Owner asked you to produce.
+In 1–3 sentences, state what the Owner asked you to produce.
 
-### 2. Audience discovery I intend to create
+### 2. Product story and P01 role as I understand them
 
-State the main thing you want the listener to realize or discover by the end. Do not describe whether this is a “good” choice.
+State, in your own words:
 
-### 3. Intended narrative approach
+- what larger story this podcast is telling;
+- what P01 contributes to that story;
+- what would be lost if P01 became only an explanation of archaeological caution.
 
-Record the final pre-draft choices only:
+Tie this to `P01-creative-brief.md` rather than inventing a new product goal.
+
+### 3. Listener state change I intend to create
+
+Record:
+
+- listener entry state;
+- listener exit state;
+- what you want the listener to become curious about next;
+- any feeling/stake you intend to create **only if the supplied material can support it**.
+
+This is more than a factual conclusion. It describes the intended audience experience.
+
+### 4. Storytelling functions and narrative approach I intend to use
+
+Record the final pre-draft choices:
 
 - intended opening;
 - central narrative spine/question;
-- intended ending or destination;
-- point of view / narrator stance if relevant.
+- intended ending/destination;
+- point of view/narrator stance if relevant;
+- which useful long-form narrative functions from the creative brief you actually intend to use (for example causal movement, material anchor, human presence, scale change, evidence-earned consequence).
 
-For each choice, name the input field, substrate ID, or Owner instruction that materially informed it when possible.
+For each major choice, name the creative-brief clause, overlay field, substrate ID or Owner instruction that materially informed it when possible.
 
-### 4. Evidence I expect to rely on
+### 5. Evidence I expect to rely on
 
-List the specific overlay fields / historical-substrate IDs you expect to use, with a one-line description of what each is for.
+List the overlay fields / historical-substrate IDs you expect to use and what each is for.
 
-### 5. Constraints I am actively carrying
+### 6. Boundaries I am carrying — and how I intend to keep them backstage
 
-List only constraints that you expect to materially affect the prose. Include any conflict or ambiguity you already see. Do not invent hidden requirements.
+List only material evidence/claim boundaries.
+
+For each one, state how it will affect the telling:
+
+- `OMIT_UNSUPPORTED_DETAIL`
+- `BRIEF_QUALIFIER_IN_PROSE`
+- `REPORT_ONLY`
+- `NARRATIVELY_RELEVANT_UNCERTAINTY`
+
+Do not assume a boundary deserves listener-facing explanation merely because it exists.
 
 ---
 
 ## POST-WRITE TRACE
 
-### 6. Actual draft map
+### 7. Actual draft map
 
-Map the finished draft by paragraph or short passage.
+Map the frozen draft from top to bottom.
 
-| Draft location | What this passage is doing | Source / substrate IDs used | Content type |
+| Draft location | What this passage is doing for the listener | Source / substrate IDs used | Content type |
 | --- | --- | --- | --- |
 | ¶1 | ... | HS-P01-... | sourced fact / inference / narrative framing / creative reconstruction |
 
-The Owner should be able to follow the draft from top to bottom using this table.
+### 8. Product goal → prose trace
 
-### 7. Source → prose trace
+Show where the larger product goal and P01 role actually became visible in the draft.
 
-For every **material historical claim, concrete scene/detail, or causal bridge**, show where it came from.
+| Intended product/section function | Draft location | What the listener actually receives |
+| --- | --- | --- |
+| establish the historical problem before “writing” | ¶... | ... |
+| create forward pull into the next question | ¶... | ... |
+
+If a goal from the PRE-WRITE snapshot never became visible, say so. Do not mark it PASS/FAIL.
+
+### 9. Source → prose trace
+
+For every material historical claim, concrete scene/detail or causal bridge, show its basis.
 
 | Draft location or short phrase | Source/basis | What the source supports | What I added or transformed |
 | --- | --- | --- | --- |
-| ... | HS-P01-0004 | ... | compressed wording / inference / framing / none |
+| ... | HS-P01-0004 | ... | compression / inference / framing / none |
 
-Do not claim a source supports more than it actually does.
+Do not claim a source supports more than it does.
 
-### 8. Creative additions and inference
+### 10. Creative additions and inference
 
-Explicitly list material content in the draft that is not directly stated by the two inputs. Classify each item as one of:
+List material content not directly stated by the historical inputs and classify it:
 
 - `CONSERVATIVE_INFERENCE`
 - `NARRATIVE_FRAMING`
 - `CREATIVE_RECONSTRUCTION`
 - `UNSUPPORTED_OR_UNCERTAIN`
 
-If there are none, say `None`.
+If none, say `None`.
 
-### 9. Constraints actually applied
+### 11. Evidence boundaries as they appeared in the draft
 
-For each material constraint, state its observable effect on the draft and point to the affected paragraph/passage.
+For each material boundary, record what actually happened:
 
-Also list any instruction you knowingly did **not** apply, with a brief factual explanation.
+| Boundary | Handling | Draft location if listener-facing | Did the boundary become methodological exposition? |
+| --- | --- | --- | --- |
+| ... | omitted / qualified / narrated | ¶... / N/A | yes / no |
 
-### 10. Material changes from the pre-write snapshot
+This section exists so the Owner can see whether evidence discipline silently protected accuracy or leaked into the listener-facing script.
 
-If the actual draft differs from the intended opening, spine, evidence use, or ending, record the difference:
+### 12. Material changes from the PRE-WRITE snapshot
 
 | Planned | Actually written | Observable reason/input that caused the change |
 | --- | --- | --- |
 | ... | ... | ... |
 
-This is a summary of the change, not a transcript of internal reasoning.
-
 If nothing materially changed, say `No material change`.
 
-### 11. Uncertainty and evidence gaps
+### 13. Input limitations versus Writer choices
 
-List places where:
+Keep these separate.
 
-- the source did not permit a stronger claim;
-- you were unsure how far an inference could go;
-- you deliberately omitted a detail because evidence was insufficient;
-- two instructions appeared to pull in different directions.
+**Input limitations:** identify missing historical material that constrained possible human action, pressure, consequence, scene detail or causal movement.
 
-Point to the relevant draft location and source/constraint.
+**Writer choices:** identify places where richer telling was possible within the supplied material but you chose a more explanatory, abstract or cautious route.
 
-### 12. Self-observed output risks
+Do not use input limitations as a blanket defense of the draft.
 
-Do **not** score the draft or declare it successful/failed. Simply point out passages that, from your own inspection, may exhibit observable risks such as:
+### 14. Self-observed output risks
+
+Do not score or declare success/failure. Point to inspectable passages that may show risks such as:
 
 - exposition/essay-like explanation;
 - weak narrative movement;
+- product goal disappearing behind a narrower factual point;
 - abstraction instead of concrete action/object/process;
-- over-compression;
-- repetitive explanation;
+- missing human presence where evidence allowed it;
+- scale that never moves;
+- over-compression or repetition;
 - historical overreach;
-- excessive caution that flattened the narrative;
-- an instruction that visibly distorted the prose.
+- excessive caution flattening the narrative;
+- evidence boundaries leaking into methodological narration;
+- an instruction visibly distorting the prose.
 
-Use paragraph numbers or short phrases so the Owner can inspect the same place.
+Use paragraph numbers or short phrases.
 
-### 13. Execution disclosure
+### 15. Execution disclosure
 
 State:
 
-- any repo files beyond the two canonical inputs that you read;
-- any external source/search used;
+- repo files beyond the three Writer inputs that you read;
+- external source/search used;
 - whether another Writer output was visible/read;
-- whether Owner feedback on another draft was visible/read;
+- whether Owner feedback on another Writer was visible/read;
 - whether you produced more than one prose attempt;
 - timing if actually observable, otherwise `UNKNOWN`.
 
-Then stop. Do not review another Writer, rank models, rewrite the draft, or modify the harness.
+Then stop. Do not review another Writer, rank models, rewrite the frozen draft or modify the harness.
