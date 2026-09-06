@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "eval_unit_id": "EU-P01-PILOT-MECHANISM-01",
+  "historical_topic": "Late Uruk / early writing practices",
+  "editorial_function": "mechanism_explanation",
+  "granularity": "FUNCTION_CLIP",
+  "modality": "TEXT",
+  "evidence_condition": "historical P01 DEV prose; pilot protocol only",
+  "scope_note": "Three historical P01 variants explaining material relations among tokens, envelopes, numerical tablets, and early inscribed surfaces. This unit is exposed DEV material and cannot support blind benchmark validity.",
+  "source_bundle_version": "P01-HISTORICAL-DEV"
+}
