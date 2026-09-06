@@ -18,7 +18,7 @@ jobs:
           python-version: "3.12"
       - name: Focused feedback check
         run: |
-          python -m unittest tests.test_learning_runtime tests.test_phase3_whitebox tests.test_feedback_integrity tests.test_feedback_loop -v && \
+          python -m unittest tests.test_learning_runtime tests.test_phase3_whitebox tests.test_feedback_integrity tests.test_feedback_loop tests.test_workspace -v && \
           python scripts/experiments/verify_phase1_benchmark.py && \
           python scripts/experiments/verify_phase1_guided_review.py --session benchmarks/p01/review-sessions/owner-pilot-01-guided.json && \
           python scripts/experiments/verify_phase1_guided_review.py --session benchmarks/p01/review-sessions/phase3-p3-f01-rerun-guided.json && \
@@ -29,12 +29,16 @@ jobs:
           import json
           from pathlib import Path
           case = json.loads(Path('/tmp/p01-feedback-case/case.json').read_text(encoding='utf-8'))
+          current = json.loads(Path('/tmp/p01-feedback-case/current.json').read_text(encoding='utf-8'))
           print(json.dumps({
               'case_id': case['case_id'],
+              'brief_raw_sha256': case['standard']['brief']['identity']['raw_sha256'],
+              'product_contract_raw_sha256': case['standard']['product_contract']['identity']['raw_sha256'],
+              'target_profile_raw_sha256': case['standard']['target_profile']['identity']['raw_sha256'],
               'baseline_text_sha256': case['baseline']['identity']['text_sha256'],
               'candidate_text_sha256': case['candidate']['identity']['text_sha256'],
               'intervention_raw_sha256': case['intervention']['identity']['raw_sha256'],
-              'measurement_status': case['measurement_status'],
+              'measurement_status': current['status'],
               'mapping': case['trace']['mapping_status'],
               'suspected_regions': case['trace']['suspected_regions'],
               'attribution_confidence': case['trace']['attribution_confidence'],
