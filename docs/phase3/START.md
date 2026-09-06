@@ -2,6 +2,12 @@
 
 Status: **ACTIVE — FEEDBACK LOOP REPAIRED, OWNER MEASUREMENT PENDING**
 
+Owner-accepted next worker scope: read `docs/phase3/prototype-learning-feedback.md`.
+It records the prototype review, two remaining feedback corrections, a shared
+learning brief, and owner-requested physical workspaces with role-specific
+read/write enforcement. These additions are requirements pending implementation,
+not a claim that agent isolation or a live Plan–Writer round already exists.
+
 ## Goal
 
 Turn a bounded output failure into trustworthy engineering feedback without pretending that exact mapping proves literary causality.
