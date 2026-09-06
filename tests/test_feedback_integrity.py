@@ -68,6 +68,12 @@ class FeedbackIntegrityTests(unittest.TestCase):
         self.assertEqual(a.classification, "PLAN_REGION_SUSPECT")
         self.assertEqual(a.confidence, "MEDIUM")
 
+    def test_bounded_attribution_is_diagnostic_not_intervention_supported(self):
+        result = diagnose_failure(candidate_text="bad", plan=self._plan(), writer_report=self._writer(), failure=self._failure())
+        bounded = next(item for item in result.observations if item["kind"] == "BOUNDED_ATTRIBUTION")
+        self.assertEqual(bounded["authority"], "REVIEWER_SUPPORTED_DIAGNOSTIC_HYPOTHESIS")
+        self.assertNotIn("INTERVENTION_SUPPORTED", bounded["authority"])
+
     def test_irrelevant_deviation_does_not_force_writer_fault(self):
         writer = self._writer(deviations=[{"beat_id": "B1", "type": "PUNCTUATION", "symptom_relevance": "IRRELEVANT", "evidence": "comma only"}])
         result = diagnose_failure(candidate_text="bad", plan=self._plan(), writer_report=writer, failure=self._failure())
