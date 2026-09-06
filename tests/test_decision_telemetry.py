@@ -26,7 +26,7 @@ class DecisionTelemetryTests(unittest.TestCase):
             self._brief(),
         )
 
-    def _writer_decision(self):
+    def _writer_decision(self, output_refs=None):
         return {
             "event_id": "W-D01",
             "event_type": "DECISION",
@@ -38,7 +38,7 @@ class DecisionTelemetryTests(unittest.TestCase):
             "alternatives_considered": ["STATE_PARADOX_EXPLICITLY"],
             "expected_effect": "The physical consequence earns the later interpretation.",
             "risks": ["The unit could become too implicit without a later interpretive beat."],
-            "output_refs": ["output/candidate.md"],
+            "output_refs": output_refs or ["output/candidate.md"],
         }
 
     def test_record_event_adds_role_execution_and_monotonic_sequence(self):
@@ -73,11 +73,13 @@ class DecisionTelemetryTests(unittest.TestCase):
                 writer.record_event(event)
             self.assertEqual(ctx.exception.code, "PRIVATE_REASONING_FIELD_FORBIDDEN")
 
-    def test_writer_seal_requires_at_least_one_decision(self):
+    def test_writer_seal_requires_at_least_one_decision_even_if_filesystem_was_bypassed(self):
         with tempfile.TemporaryDirectory() as tmp:
             run = self._run(tmp)
+            # Deliberately bypass the broker to exercise seal-level fail-closed behavior.
+            candidate = run / "agents/writer/W1/output/candidate.md"
+            candidate.write_text("candidate", encoding="utf-8")
             writer = RoleWorkspaceBroker(run, "writer", "W1")
-            writer.write_text("output/candidate.md", "candidate")
             writer.record_event(
                 {
                     "event_id": "W-C01",
@@ -92,15 +94,29 @@ class DecisionTelemetryTests(unittest.TestCase):
                 seal_execution(run, role="writer", execution_id="W1", required_output_refs=["candidate.md"])
             self.assertEqual(ctx.exception.code, "DECISION_EVENT_REQUIRED_BEFORE_SEAL")
 
+    def test_seal_rejects_primary_output_not_bound_to_decision(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = self._run(tmp)
+            writer = RoleWorkspaceBroker(run, "writer", "W1")
+            writer.record_event(self._writer_decision(["output/candidate.md"]))
+            writer.write_text("output/candidate.md", "candidate")
+            # Directly materialize an unbound output to ensure the seal catches broker bypass.
+            report = run / "agents/writer/W1/output/report.json"
+            report.write_text("{}", encoding="utf-8")
+            with self.assertRaises(TelemetryError) as ctx:
+                seal_execution(run, role="writer", execution_id="W1", required_output_refs=["candidate.md", "report.json"])
+            self.assertEqual(ctx.exception.code, "PRIMARY_OUTPUT_NOT_BOUND_TO_DECISION")
+
     def test_seal_hashes_telemetry_and_output_and_detects_direct_tampering(self):
         with tempfile.TemporaryDirectory() as tmp:
             run = self._run(tmp)
             writer = RoleWorkspaceBroker(run, "writer", "W1")
-            candidate = writer.write_text("output/candidate.md", "candidate v1")
             writer.record_event(self._writer_decision())
+            candidate = writer.write_text("output/candidate.md", "candidate v1")
             seal = seal_execution(run, role="writer", execution_id="W1", required_output_refs=["candidate.md"])
             self.assertEqual(seal["status"], "SEALED_BEFORE_DOWNSTREAM_FEEDBACK")
             self.assertEqual(seal["decision_count"], 1)
+            self.assertIn("prior DECISION", seal["output_binding_rule"])
             self.assertEqual(verify_execution_seal(run, role="writer", execution_id="W1")["status"], "VALID")
             candidate.write_text("candidate v2", encoding="utf-8")
             with self.assertRaises(TelemetryError) as ctx:
@@ -116,6 +132,15 @@ class DecisionTelemetryTests(unittest.TestCase):
             with self.assertRaises(TelemetryError) as ctx:
                 writer.record_event(event)
             self.assertEqual(ctx.exception.code, "DECISION_TYPE_NOT_ALLOWED_FOR_ROLE")
+
+    def test_decision_output_refs_must_be_bounded_final_output_paths(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = self._run(tmp)
+            writer = RoleWorkspaceBroker(run, "writer", "W1")
+            event = self._writer_decision(["scratch/candidate.md"])
+            with self.assertRaises(TelemetryError) as ctx:
+                writer.record_event(event)
+            self.assertEqual(ctx.exception.code, "INVALID_DECISION_OUTPUT_REF")
 
     def test_planner_can_record_information_order_decision(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -137,6 +162,7 @@ class DecisionTelemetryTests(unittest.TestCase):
                 }
             )
             self.assertEqual(event["decision_type"], "INFORMATION_ORDER")
+            planner.write_text("output/plan.json", "{}")
 
     def test_truth_and_audit_have_decision_contracts_but_review_is_not_forced_to_rationalize_prevote(self):
         with tempfile.TemporaryDirectory() as tmp:
