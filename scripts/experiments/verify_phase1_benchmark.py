@@ -32,6 +32,11 @@ def selected_text_sha256(text: str) -> str:
     return hashlib.sha256(normalize_text(text).encode("utf-8")).hexdigest()
 
 
+def legacy_stripped_text_sha256(text: str) -> str:
+    """Compatibility view for Phase-1 SHA256_TEXT records created before identity semantics were explicit."""
+    return hashlib.sha256(normalize_text(text).strip().encode("utf-8")).hexdigest()
+
+
 def raw_sha256(path: pathlib.Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -219,19 +224,17 @@ def main() -> int:
         kind = item.get("identity_kind")
         expected = item.get("identity")
         if kind == "SHA256_TEXT":
-            normalized_observed = selected_text_sha256(resolved["text"])
-            if resolved["selector"] is None:
-                legacy_raw_observed = raw_sha256(resolved["path"])
-                if expected == normalized_observed:
-                    pass
-                elif expected == legacy_raw_observed:
-                    warnings.append(f"{sample_id}: legacy SHA256_TEXT stores raw-file SHA256; verified current raw bytes and retained normalized text as a separate runtime identity")
-                else:
-                    errors.append(
-                        f"product sample identity changed: {sample_id} expected={expected} normalized_text={normalized_observed} raw_sha256={legacy_raw_observed}"
-                    )
-            elif normalized_observed != expected:
-                errors.append(f"product selected-text identity changed: {sample_id} expected={expected} observed={normalized_observed}")
+            exact_text = selected_text_sha256(resolved["text"])
+            legacy_text = legacy_stripped_text_sha256(resolved["text"])
+            raw = raw_sha256(resolved["path"]) if resolved["selector"] is None else None
+            if expected == exact_text:
+                pass
+            elif expected == legacy_text:
+                warnings.append(f"{sample_id}: verified through explicit LEGACY_STRIPPED_TEXT adapter; new runtime identities remain exact raw+normalized hashes")
+            elif raw is not None and expected == raw:
+                warnings.append(f"{sample_id}: legacy SHA256_TEXT stores raw-file SHA256; verified raw bytes while runtime retains normalized text separately")
+            else:
+                errors.append(f"product sample identity changed: {sample_id} expected={expected} exact_text={exact_text} legacy_stripped={legacy_text} raw_sha256={raw}")
         elif kind == "GIT_BLOB_SHA1":
             if resolved["selector"] is not None:
                 errors.append(f"GIT_BLOB_SHA1 sample must resolve whole file: {sample_id}")
