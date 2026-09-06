@@ -54,6 +54,16 @@ class DynamicOwnerFirstTests(unittest.TestCase):
         draft = self.root / f"{sid}.md"
         draft.write_text(f"TEST_ONLY draft from {model}\n", encoding="utf-8")
         state = learning._load_state(run)
+        if binding == "PREBOUND":
+            assignment_sha = state["writer_assignment_sha256"]
+            inputs = [{"ref": "control/writer-assignment.json", "sha256": assignment_sha}]
+        else:
+            assignment_sha = None
+            inputs = [
+                {"ref": "owner-instruction:test", "sha256": "owner-directive-sha256"},
+                {"ref": "products/test/P01-overlay.json", "sha256": "overlay-sha256"},
+                {"ref": "products/test/P01-historical-substrate.json", "sha256": "substrate-sha256"},
+            ]
         report = {
             "schema_version": learning.WRITER_REPORT_SCHEMA,
             "submission_id": sid,
@@ -62,8 +72,8 @@ class DynamicOwnerFirstTests(unittest.TestCase):
             "actual_config": None,
             "provider_session_id": f"host-{sid}",
             "assignment_binding": binding,
-            "assignment_sha256": state["writer_assignment_sha256"] if binding == "PREBOUND" else None,
-            "inputs_used": [{"ref": "control/writer-assignment.json", "sha256": state["writer_assignment_sha256"]}],
+            "assignment_sha256": assignment_sha,
+            "inputs_used": inputs,
             "attempt": 1,
             "status": "COMPLETED",
             "timing": {"source": "WRITER_SELF_REPORTED_DURATION", "duration_seconds": duration},
@@ -100,13 +110,18 @@ class DynamicOwnerFirstTests(unittest.TestCase):
         self.assertEqual(state["state"], "AWAITING_WRITER_SUBMISSIONS")
         self.assertEqual(learning.status(run)["budget"]["pending_extension_requests"], [])
 
-    def test_prebound_and_posthoc_are_distinguished(self):
+    def test_prebound_and_owner_directed_not_prebound_are_distinguished(self):
         run = self.prepare("binding")
         self.submission(run, "pre", "GPT-6", binding="PREBOUND")
-        self.submission(run, "post", "GPT-6", binding="NOT_PREBOUND")
+        self.submission(run, "owner-direct", "GPT-5.6 Sol", binding="NOT_PREBOUND")
         rows = {x["submission_id"]: x for x in learning.status(run)["submissions"]}
         self.assertTrue(rows["pre"]["controlled_comparison_eligible"])
-        self.assertFalse(rows["post"]["controlled_comparison_eligible"])
+        self.assertFalse(rows["owner-direct"]["controlled_comparison_eligible"])
+        self.assertIsNone(rows["owner-direct"]["assignment_sha256"])
+        report = json.loads((run / rows["owner-direct"]["report_ref"]).read_text(encoding="utf-8"))
+        self.assertEqual(report["assignment_binding"], "NOT_PREBOUND")
+        self.assertIsNone(report["assignment_sha256"])
+        self.assertNotIn("control/writer-assignment.json", {x["ref"] for x in report["inputs_used"]})
 
     def test_wrong_prebound_hash_is_rejected(self):
         run = self.prepare("hash")
