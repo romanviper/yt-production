@@ -64,6 +64,14 @@ A `DECISION` records the chosen action, concise declared rationale, evidence ref
 alternatives considered, expected effect, risks and affected output refs. This is
 **declared process evidence**, not raw private chain-of-thought and not causal proof.
 
+For Plan, Writer, Truth and Audit, the telemetry is also temporally binding: a
+`DECISION` naming the exact `output/<path>` must exist **before** that final output
+is materialized. Final artifacts under `output/` are write-once through the broker.
+If the role needs to explore, rewrite or compare alternatives, it must do that under
+`scratch/` and only materialize the final artifact after its bounded decision has
+been declared. The seal independently checks that every primary output is bound to
+a decision, so a direct-filesystem bypass fails closed at handoff.
+
 Do not request, store or simulate unrestricted private chain-of-thought, hidden
 scratchpads, internal monologues or token-by-token reasoning. Runtime validation
 rejects fields such as `chain_of_thought`, `private_reasoning` and
@@ -88,7 +96,7 @@ Allowed in the current MVP:
 
 - exact output-span -> Writer-beat -> Plan-node mapping;
 - structured trace events and hashes;
-- in-execution structured decision/process telemetry with pre-feedback seals;
+- in-execution structured decision/process telemetry with temporal output binding and pre-feedback seals;
 - Plan-vs-realization fault isolation;
 - one bounded intervention targeted to the diagnosed region;
 - recording process/output and validation evidence.
@@ -129,9 +137,10 @@ For a newly requested production operation, create it through `python scripts/ta
 
 Stop and report a blocker when the packet is stale, malformed, missing an input, over budget or requires evidence outside its ceiling. Do not solve those failures by browsing extra files, widening scope or padding prose.
 
-For a fresh Phase 3 role, also stop before handoff if telemetry is missing/invalid,
-required decision records are absent, the execution cannot be sealed, or the sealed
-artifact identity no longer matches. Do not downgrade these to warnings.
+For a fresh Phase 3 role, also stop before final output/handoff if a required decision
+has not been declared for that exact output path, if telemetry is missing/invalid,
+if the execution cannot be sealed, or if the sealed artifact identity no longer
+matches. Do not downgrade these to warnings.
 
 ## User-facing handoff
 
