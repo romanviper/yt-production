@@ -27,7 +27,10 @@
     "alternatives_considered": {"type": "array", "items": {"type": "string"}},
     "expected_effect": {"type": "string"},
     "risks": {"type": "array", "items": {"type": "string"}},
-    "output_refs": {"type": "array", "items": {"type": "string"}},
+    "output_refs": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^output/"}
+    },
     "checkpoint": {"type": "string"},
     "status": {"type": "string"},
     "artifact_refs": {"type": "array", "items": {"type": "string"}},
