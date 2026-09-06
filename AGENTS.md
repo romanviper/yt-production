@@ -2,50 +2,67 @@
 
 ## Current architecture-learning phase
 
-The repository is currently in **Observable Learning Architecture — Phase 2 MVP**.
-For owner-directed architecture-learning work, start at `docs/phase2/START.md` and
-read `docs/architecture/observable-learning-architecture-plan.md` only as historical
-design context. The active MVP objective is intentionally narrower than the original
-full Phase 2 plan.
-
-For architecture-learning work, `learning_runtime/` is the only active execution
-path. Its topology is exactly:
+The repository is currently in **Observable Learning Architecture — Phase 3 MVP**.
+For owner-directed architecture-learning work, start at `docs/phase3/START.md`.
+The active learning path remains `learning_runtime/` with the fixed topology:
 
 `Plan -> Write -> Truth -> Product`
 
-Phase 2 uses deterministic fixture replay to prove stage boundaries and artifacts.
-It does not authorize a new Writer round, live Planner/Writer orchestration,
-white-box tracing, root-cause claims, benchmark expansion, or production prose.
-Those belong to Phase 3 or explicit owner-directed product work.
+Phase 3 adds white-box instrumentation only where it reduces fault uncertainty.
+The current MVP instruments `Plan` and `Write` so an observed output failure can
+be traced backward to a mapped Writer beat and Plan node. Do not expand this into
+a generic observability platform, agent registry, event bus or root-cause engine.
 
-The Phase 1 benchmark under `benchmarks/p01/` remains the current measurement
-surface. Do not continue benchmark perfection work unless a concrete learning-loop
-failure shows that the measurement surface itself is blocking diagnosis.
+The Phase 1 benchmark under `benchmarks/p01/` remains the output-side measurement
+surface. Guided owner review may provide diagnostic failure seeds, but it does not
+become blind calibration evidence. Do not resume benchmark-perfection work unless
+a concrete learning-loop failure shows that the measurement surface itself blocks
+diagnosis.
 
 The experiments under `docs/experiments/`, `experiments/`, and
-`scripts/experiments/` are **legacy evidence only**. Their historical `START.md`
-files and scripts must not be treated as active entrypoints, rerun, extended, or
-used to create a new round unless the owner explicitly re-authorizes that exact
-experiment. Existing run artifacts may be imported as immutable Phase 2 smoke
-fixtures, but their historical evaluator verdicts do not become ground truth.
+`scripts/experiments/` are **legacy evidence only**. Their historical artifacts may
+be imported as immutable trace fixtures, but historical evaluator verdicts do not
+become current ground truth. Do not rerun or extend those experiments unless the
+owner explicitly re-authorizes that exact experiment.
 
-This file contains only repo-wide operating boundaries. Creative logic belongs in the task packet.
+This file contains only repo-wide operating boundaries. Creative logic belongs in
+the bounded task/intervention packet.
 
-## Canonical branch
+## Canonical branches
 
 - `main` remains the canonical production branch and repository source of truth.
-- `codex/p01-phase2-minimal-runtime` is an owner-authorized architecture-learning branch; it must not mutate production product state.
-- Do not create additional feature, task or agent branches for routine production work. Historical remote branches are not valid production inputs.
+- `codex/p01-phase3-whitebox-mvp` is an owner-authorized architecture-learning branch; it must not mutate production product state.
+- Historical architecture branches are evidence, not active production inputs.
 
 ## Architecture-learning entrypoint
 
-For Phase 2 MVP work:
+For Phase 3 MVP work:
 
-1. Read `docs/phase2/START.md`.
-2. Use `python -m learning_runtime.run p01-mvp --out <run-dir>` for the smoke path.
-3. Treat generated `input.json`, `output.*`, and `manifest.json` files as the only Phase 2 runtime artifacts.
-4. Do not call production router/rework/replay scripts from the Phase 2 runtime.
-5. Stop after the four-stage smoke path. Do not add trace/event infrastructure or live agents in Phase 2.
+1. Read `docs/phase3/START.md`.
+2. Use `python -m learning_runtime.phase3 p01-rootcause-01 --out <run-dir>` for the current white-box slice.
+3. Treat `plan/trace.jsonl`, `write/trace.jsonl`, `diagnosis.json`, and `phase3-manifest.json` as Phase 3 diagnostic artifacts.
+4. Keep observations separate from derived diagnosis. A diagnosis may bound a fault region; it is not final causal proof.
+5. The current bounded intervention is `learning_runtime/interventions/p01-rootcause-01-plan-only.json`.
+6. Do not fabricate a live rerun. A live Writer execution must use the same evidence ceiling and return to Product/owner measurement.
+
+## Phase 3 boundaries
+
+Allowed in the current MVP:
+
+- exact output-span -> Writer-beat -> Plan-node mapping;
+- structured trace events and hashes;
+- Plan-vs-realization fault isolation;
+- one bounded intervention targeted to the diagnosed region;
+- recording process/output and validation evidence.
+
+Not authorized merely by Phase 3:
+
+- production draft mutation;
+- broad Planner/Writer harness rewrite;
+- adding many specialist agents;
+- replacing Truth/Product contracts;
+- claiming improvement before a new output is measured;
+- unrestricted private chain-of-thought logging.
 
 ## Authority
 
@@ -68,9 +85,7 @@ The task entrypoint applies to AI-generated work. For explicit human feedback or
 
 When the user asks to replay a bounded production path across multiple operations, use `scripts/replay.py` instead of manually editing task or section state. `replay.py start` records the requested path and routes only its first canonical task; after each required human approval, `replay.py continue` materializes or routes the next task. Human approval gates remain mandatory. Single-operation reruns still use `scripts/rework.py`.
 
-An `outline` work order compiled with `execution_runtime.kind: dsh` is the only POC exception to direct packet consumption. Launch it through `scripts/outline_runtime.py`; the Agent receives a minimal seed and may access repository context only through the packet-declared, audit-logged capability broker. Do not grant that runtime filesystem, shell, web or repo-scan tools.
-
-For a newly requested operation, create it through `python scripts/task.py create`; never hand-author router artifacts. Operation names and preconditions are machine-readable in `system/operations/registry.json`.
+For a newly requested production operation, create it through `python scripts/task.py create`; never hand-author router artifacts. Operation names and preconditions are machine-readable in `system/operations/registry.json`.
 
 ## Hard stops
 
