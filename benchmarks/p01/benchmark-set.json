@@ -1,12 +1,14 @@
 {
-  "version": "1.2.0",
+  "version": "1.3.0",
   "benchmark_id": "BM-P01-OBSERVABLE-V1",
-  "contract_version": "1.2",
-  "scenario": "Vietnamese long-form historical podcast prose about the history of writing",
+  "contract_version": "1.3",
+  "construct": "OWNER_PRODUCT_FIT",
+  "scenario": "Vietnamese long-form historical podcast prose",
   "partition_policy": {
-    "DEV": "May be inspected while the measurement contract is tuned.",
-    "CALIBRATION": "Used for owner/judge agreement and reliability controls. Expected owner labels remain null until explicitly supplied.",
-    "HOLDOUT": "Reserved for fresh transfer after criteria stabilize. Shared-repository access means the current holdout is fresh/exposed rather than cryptographically blind."
+    "DEV": "Material visible during design/tuning. All historical P01 artifacts in this shared repository belong here.",
+    "CALIBRATION": "Fresh owner-labelled pairs collected under the frozen protocol. Not yet populated by Iteration 04.",
+    "SEQUESTERED": "Private/restricted fresh-topic evidence opened only after benchmark and judge acceptance rules are frozen. Payload/labels must not be committed to this public repository.",
+    "REFRESHED_SEQUESTERED": "A new private set required after a previous sequestered set has been opened and used for tuning."
   },
   "samples": [
     {
@@ -16,7 +18,7 @@
       "source_ref": "products/sumer-writing/03_sections/P01/probes/hsub-clean-01/probe.md",
       "source_identity": "c8090ae33576063aa56a370cb2b8d78505c0fe12a71aa7866f8eb13638ebaa0e",
       "identity_kind": "SHA256_TEXT",
-      "internal_note": "Previously inspected development sample; historical quality labels are not reviewer input."
+      "internal_note": "Previously inspected development sample; historical labels are hypotheses only."
     },
     {
       "id": "P01-D002",
@@ -25,7 +27,7 @@
       "source_ref": "experiments/p01-writer-trace-v2/runs/round-01/product-1-packet.json -> samples.B",
       "source_identity": "974515f03a8652cb8234ed5b83d7e2997d00bf07ef1d79044f72621632db1f29",
       "identity_kind": "SHA256_TEXT",
-      "internal_note": "Previously inspected development baseline; do not expose baseline/newness to reviewers."
+      "internal_note": "Previously inspected baseline; no longer eligible as blind evidence."
     },
     {
       "id": "P01-D003",
@@ -34,85 +36,88 @@
       "source_ref": "experiments/p01-writer-trace-v2/runs/round-01/candidate.md",
       "source_identity": "57e790a6d685edaafc5930ef3f4d08f482e37bcc193cfd5d32c2d710fc3c546b",
       "identity_kind": "SHA256_TEXT",
-      "internal_note": "Previously inspected development candidate; historical truth/product verdicts are hypotheses only."
+      "internal_note": "Previously inspected candidate; historical truth/product verdicts are not gold."
     },
     {
       "id": "P01-C001",
       "reviewer_alias": "PX-11",
-      "partition": "CALIBRATION",
+      "partition": "DEV",
       "source_ref": "products/sumer-writing/03_sections/P01/probes/three-writer-diagnostic/writer-a-rich-material.md",
       "source_identity": "7997f9669bd5013e96f8c2a4d5aa487ee65d1f3d",
       "identity_kind": "GIT_BLOB_SHA1",
-      "internal_note": "Calibration sample selected by provenance only; no owner preference assigned."
+      "internal_note": "Former calibration candidate. Demoted to DEV because it is historical P01 material already exposed during system tuning; retained for pilot packet testing only."
     },
     {
       "id": "P01-C002",
       "reviewer_alias": "PX-12",
-      "partition": "CALIBRATION",
+      "partition": "DEV",
       "source_ref": "products/sumer-writing/03_sections/P01/probes/three-writer-diagnostic/writer-b-substrate.md",
       "source_identity": "36af6146cfcee709dc999b7cd999adf9ef0d96c7",
       "identity_kind": "GIT_BLOB_SHA1",
-      "internal_note": "Calibration sample selected by provenance only; no owner preference assigned."
+      "internal_note": "Former calibration candidate. Demoted to DEV; retained for pilot packet testing only."
     },
     {
       "id": "P01-C003",
       "reviewer_alias": "PX-13",
-      "partition": "CALIBRATION",
+      "partition": "DEV",
       "source_ref": "products/sumer-writing/03_sections/P01/probes/three-writer-diagnostic/writer-c-composition.md",
       "source_identity": "eb7b5663b17cd204f1208d6b52514a9c778c0d94",
       "identity_kind": "GIT_BLOB_SHA1",
-      "internal_note": "Calibration sample selected by provenance only; no owner preference assigned."
+      "internal_note": "Former calibration candidate. Demoted to DEV; retained for pilot packet testing only."
     },
     {
       "id": "P01-H001",
       "reviewer_alias": "PX-21",
-      "partition": "HOLDOUT",
+      "partition": "DEV",
       "source_ref": "products/sumer-writing/03_sections/P01/archive/pre-historical-substrate-v1/draft.md",
       "source_identity": "0489689666d1b999d2dd1777824b97d7ee8f043c",
       "identity_kind": "GIT_BLOB_SHA1",
-      "internal_note": "Reserved transfer sample. Do not score while tuning Phase 1 criteria; repository presence prevents a claim of enforced blindness."
+      "internal_note": "Former shared-repo holdout. Demoted to DEV because repository exposure prevents any blind/sequestered validity claim."
     }
   ],
-  "calibration_pairs": [
+  "pilot_pairs": [
     {
-      "pair_id": "P01-CAL-01",
+      "pair_id": "P01-PILOT-01",
       "left": "P01-C001",
       "right": "P01-C002",
-      "owner_label": null,
-      "difficulty": "UNLABELLED",
-      "controls": ["REVERSE_ORDER"]
+      "purpose": "OWNER_INTERFACE_AND_PROTOCOL_PILOT",
+      "expected_owner_label": null
     },
     {
-      "pair_id": "P01-CAL-02",
+      "pair_id": "P01-PILOT-02",
       "left": "P01-C002",
       "right": "P01-C003",
-      "owner_label": null,
-      "difficulty": "UNLABELLED",
-      "controls": ["REVERSE_ORDER"]
+      "purpose": "OWNER_INTERFACE_AND_PROTOCOL_PILOT",
+      "expected_owner_label": null
     },
     {
-      "pair_id": "P01-CAL-03",
+      "pair_id": "P01-PILOT-03",
       "left": "P01-C001",
       "right": "P01-C003",
-      "owner_label": null,
-      "difficulty": "UNLABELLED",
-      "controls": ["REVERSE_ORDER"]
+      "purpose": "OWNER_INTERFACE_AND_PROTOCOL_PILOT",
+      "expected_owner_label": null
     },
     {
-      "pair_id": "P01-CAL-DUP-01",
+      "pair_id": "P01-PILOT-DUP-01",
       "left": "P01-C001",
       "right": "P01-C001",
-      "owner_label": "TIE_EXPECTED_CONTROL",
-      "difficulty": "CONTROL",
-      "controls": ["SAME_TEXT", "REVERSE_ORDER"]
+      "purpose": "MECHANICAL_DUPLICATE_CONTROL",
+      "expected_owner_label": "TIE_CONTROL"
     }
   ],
-  "holdout_policy": {
-    "sample_ids": ["P01-H001"],
-    "scored": false,
-    "exposed_to_contract_tuning": false,
-    "reliability": "FRESH_EXPOSED_NOT_BLIND",
-    "access_enforcement": "SHARED_REPO_NOT_SEQUESTERED",
-    "note": "A fresh transfer comparison may use this sample after calibration, but it must not be described as a blind/sequestered holdout unless access controls change."
+  "calibration_plan": {
+    "status": "NOT_POPULATED",
+    "target_role": "Fresh owner-labelled pairs collected after pilot protocol is frozen",
+    "suggested_budget_note": "Deep Research suggested 32-48 unique pairs plus controls as a practical starting range, not a statistical sufficiency threshold.",
+    "must_span_editorial_functions": true,
+    "must_include_clear_subtle_and_both_fail_pairs": true
+  },
+  "sequestered_policy_ref": "benchmarks/p01/sequestered-manifest.json",
+  "aggregation_policy": {
+    "global_quality_score": false,
+    "bradley_terry_required": false,
+    "elo_required": false,
+    "preserve_raw_pair_outcomes": true,
+    "slice_by": ["historical_topic", "editorial_function", "granularity"]
   }
 }
