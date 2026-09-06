@@ -4,285 +4,209 @@
   "source_commit": "a29dd8a4bc690c734f02b4312149f7b296dd74ba",
   "created_at": "2026-09-06T11:47:00+07:00",
   "process": {
-    "objective": "Implement the Deep Research benchmark recommendations as a final Benchmark V1 architecture freeze before real owner pilot/calibration data is collected.",
+    "objective": "Implement the Deep Research benchmark recommendations as the Benchmark V1 architecture freeze before collecting real owner pilot, calibration, or sequestered evidence.",
     "decisions": [
       {
         "id": "I04-D01",
-        "area": "primary construct",
-        "change": "Frozen the Benchmark V1 construct as OWNER_PRODUCT_FIT: blind owner preference between two Vietnamese historical-podcast outputs performing the same editorial function, with Truth audited independently.",
-        "declared_reason": "Deep Research found that the current project needs a personalized product-fit signal rather than AI quality, FoC similarity, or general-audience preference.",
-        "basis": [
-          "Deep Research report supplied by product owner on 2026-09-06",
-          "docs/phase1/ITERATION-04-WORK-ORDER.md"
-        ],
-        "expected_effect": "Prevent evaluator/rubric scores from silently redefining the product target.",
+        "area": "construct and primary signal",
+        "change": "Frozen OWNER_PRODUCT_FIT as the V1 construct and made blind holistic owner preference the primary signal: A | B | TIE | BOTH_FAIL | UNCERTAIN plus confidence.",
+        "declared_reason": "Deep Research concluded that the immediate target is the owner's product preference, not AI quality, general-audience preference, FoC similarity, or a weighted rubric score.",
+        "basis": ["Deep Research report supplied by the product owner on 2026-09-06", "docs/phase1/ITERATION-04-WORK-ORDER.md"],
+        "expected_effect": "Prevent rubric or judge proxies from silently redefining what counts as improvement.",
         "status": "APPLIED"
       },
       {
         "id": "I04-D02",
-        "area": "preference ordering",
-        "change": "Separated first-pass holistic pairwise preference from post-vote diagnostics and added BOTH_FAIL plus confidence and an explicit freeze boundary.",
-        "declared_reason": "The owner must be able to reject both variants and must choose before taxonomy/reference priming. Legacy six-dimension scoring cannot override holistic product preference.",
-        "basis": [
-          "Deep Research sections on pairwise preference, BOTH_FAIL, and taxonomy-after-vote",
-          "schemas/pairwise-preference.schema.json",
-          "docs/quality/product-trial-protocol.md"
-        ],
-        "expected_effect": "Reduce Goodhart pressure from fixed rubric dimensions and preserve cases where both outputs are unacceptable.",
-        "status": "APPLIED"
+        "area": "preference-first isolation",
+        "change": "Separated first-pass preference from post-vote diagnostics. Owner packets now contain only neutral context, A/B prose, verdict options, confidence, freeze rule, and a reference to a separately gated post-vote artifact.",
+        "declared_reason": "Static review found that embedding diagnostic prompts in the same raw packet could still prime the owner even if the protocol said they should be hidden until after voting.",
+        "basis": ["Deep Research taxonomy-after-vote recommendation", "benchmarks/p01/calibration/post-vote-owner-diagnostics.json"],
+        "expected_effect": "Enforce preference-before-diagnosis at the data boundary rather than relying only on operator discipline.",
+        "status": "REVISED"
       },
       {
         "id": "I04-D03",
         "area": "failure observability",
-        "change": "Created a separate failure-signature contract with SPAN/MULTI_SPAN/UNIT_GLOBAL scope, one primary family, optional UNRESOLVED state, contributes_to, and root_cause constrained to null.",
-        "declared_reason": "Output diagnosis must be a clean root node for future white-box tracing and must not smuggle upstream blame into the benchmark.",
-        "basis": [
-          "Deep Research failure-signature recommendation",
-          "schemas/failure-signature.schema.json"
-        ],
-        "expected_effect": "Localize or characterize failures without pretending to know which agent/module caused them.",
+        "change": "Created a standalone failure-signature contract with SPAN | MULTI_SPAN | UNIT_GLOBAL scope, RESOLVED | UNRESOLVED state, one primary family, contributes_to, and root_cause constrained to null.",
+        "declared_reason": "The benchmark must create a clean output-side failure node for later white-box tracing without prematurely blaming Planner, Writer, Evidence, or another module.",
+        "basis": ["Deep Research failure-signature recommendation", "schemas/failure-signature.schema.json"],
+        "expected_effect": "Make output failures traceable while keeping root-cause attribution downstream.",
         "status": "APPLIED"
       },
       {
         "id": "I04-D04",
         "area": "taxonomy",
-        "change": "Replaced the legacy Product defect vocabulary with a frozen six-family minimal taxonomy: NARRATIVE_FUNCTION, EXPOSITION_LOAD, SPOKEN_COMPREHENSION, GROUNDING_SPECIFICITY, VOICE_STANCE, REDUNDANCY.",
-        "declared_reason": "Deep Research showed that payoff/progression/connection and essay tendency were being split or double-counted in ways that could obscure the actual observable defect.",
-        "basis": [
-          "Deep Research proposed minimal taxonomy and anti-double-counting rules",
-          "benchmarks/p01/taxonomy.json"
-        ],
-        "expected_effect": "Make diagnostics smaller, more orthogonal, and more useful for later trace isolation.",
+        "change": "Frozen a six-family Product taxonomy: NARRATIVE_FUNCTION, EXPOSITION_LOAD, SPOKEN_COMPREHENSION, GROUNDING_SPECIFICITY, VOICE_STANCE, REDUNDANCY, with anti-double-counting rules.",
+        "declared_reason": "The previous dimension/defect vocabulary could double-count the same symptom and treat essay-like behavior as several supposedly independent failures.",
+        "basis": ["Deep Research minimal taxonomy recommendation", "benchmarks/p01/taxonomy.json"],
+        "expected_effect": "Keep diagnostics small, observable, and suitable for binary fault isolation later.",
         "status": "APPLIED"
       },
       {
         "id": "I04-D05",
-        "area": "evaluation unit",
-        "change": "Introduced evaluation-unit metadata and three granularities: FUNCTION_CLIP, SECTION_SENTINEL, EPISODE_SENTINEL.",
-        "declared_reason": "A clip-only benchmark can be gamed locally while damaging section/episode flow; evaluation must be tied to editorial function rather than arbitrary word counts.",
-        "basis": [
-          "Deep Research evaluation-unit and sentinel recommendation",
-          "schemas/eval-unit.schema.json"
-        ],
-        "expected_effect": "Support slice-based evaluation and future macro Goodhart checks without forcing all content into one primitive.",
+        "area": "evaluation granularity",
+        "change": "Introduced eval_unit as the benchmark primitive with historical_topic, editorial_function, granularity, modality, and evidence_condition; granularities are FUNCTION_CLIP, SECTION_SENTINEL, EPISODE_SENTINEL.",
+        "declared_reason": "Clip-only optimization can Goodhart locally while degrading section or episode flow, and evaluation units should be editorial-function based rather than fixed word-count based.",
+        "basis": ["Deep Research evaluation-unit recommendation", "schemas/eval-unit.schema.json"],
+        "expected_effect": "Support function/topic/granularity slices and later macro sentinels.",
         "status": "APPLIED"
       },
       {
         "id": "I04-D06",
-        "area": "truth semantics",
-        "change": "Strengthened Truth records with claim_type, verifiability, source_relation, materiality, release_blocker, implied-premise and causal claim types.",
-        "declared_reason": "Previous Truth review failed on rhetorical hidden premises and causal overreach because quote presence and NONFACTUAL labels were too coarse.",
-        "basis": [
-          "Deep Research factuality recommendation",
-          "schemas/truth-gate.schema.json",
-          "Round-01 semantic re-audit findings"
-        ],
-        "expected_effect": "Make Truth failures semantically auditable while keeping Product preference observable even when release is blocked.",
+        "area": "truth and spoken evidence",
+        "change": "Strengthened claim-level Truth semantics with implied-premise/causal claim types, verifiability, source relation, materiality and release blockers; created an independent Spoken lane for TEXT_PREDICTION, AUDIO_OBSERVATION, and LISTENER_REPORT.",
+        "declared_reason": "Round-01 truth review overapproved hidden premises and causal claims, while text-only listenability judgments were being asked to stand in for actual listening evidence.",
+        "basis": ["Deep Research factuality and spoken-evidence recommendations", "schemas/truth-gate.schema.json", "schemas/spoken-observation.schema.json"],
+        "expected_effect": "Make factual and spoken claims match the evidence actually available without suppressing Product preference measurement.",
         "status": "APPLIED"
       },
       {
         "id": "I04-D07",
-        "area": "spoken evidence",
-        "change": "Created a separate spoken-observation lane for TEXT_PREDICTION, AUDIO_OBSERVATION, and LISTENER_REPORT.",
-        "declared_reason": "Text-only review cannot validly certify prosody or actual listener comprehension; modality must bound the claims allowed.",
-        "basis": [
-          "Deep Research spoken-language recommendation",
-          "schemas/spoken-observation.schema.json"
-        ],
-        "expected_effect": "Prevent text heuristics from masquerading as listening evidence and leave a clean path for later audio/listener validation.",
+        "area": "dataset validity",
+        "change": "Demoted every historical/public P01 sample to DEV, converted the three existing owner pairs to PILOT, and replaced public HOLDOUT semantics with a private/restricted SEQUESTERED lifecycle plus REFRESHED_SEQUESTERED after tuning exposure.",
+        "declared_reason": "Historical P01 material has been repeatedly exposed during harness/evaluator design and cannot provide blind validity evidence; a public repository cannot contain a genuinely sequestered payload and labels.",
+        "basis": ["Deep Research dataset lifecycle recommendation", "benchmarks/p01/benchmark-set.json", "benchmarks/p01/sequestered-manifest.json"],
+        "expected_effect": "Prevent contaminated development material from being mistaken for out-of-sample validation.",
         "status": "APPLIED"
       },
       {
         "id": "I04-D08",
-        "area": "dataset validity",
-        "change": "Demoted every historical P01 artifact in the public/shared repo to DEV, converted the three existing owner pairs to PILOT, and replaced public HOLDOUT semantics with a private/restricted SEQUESTERED manifest shell.",
-        "declared_reason": "Anything repeatedly exposed during P01/harness tuning is contaminated for blind benchmark validity. A public repository cannot hold a genuine sequestered payload and labels.",
-        "basis": [
-          "Deep Research dataset lifecycle recommendation",
-          "benchmarks/p01/benchmark-set.json",
-          "benchmarks/p01/sequestered-manifest.json"
-        ],
-        "expected_effect": "Stop historical P01 from being reused as false out-of-sample evidence and make refreshed sequestered evidence mandatory after tuning exposure.",
-        "status": "APPLIED"
-      },
-      {
-        "id": "I04-D09",
-        "area": "judge authority",
-        "change": "Formalized LLM judge state as SHADOW_ONLY with no optimization authority until owner agreement, position/duplicate/span/uncertainty and transfer gates are validated out of sample under pre-registered tolerances.",
-        "declared_reason": "Deep Research documented multiple LLM judge biases and rejected agent agreement as gold.",
-        "basis": [
-          "Deep Research LLM judge reliability recommendation",
-          "schemas/judge-reliability.schema.json",
-          "benchmarks/p01/judge-reliability.json"
-        ],
-        "expected_effect": "Allow evaluator experimentation without letting an unvalidated proxy steer the writing loop.",
-        "status": "APPLIED"
-      },
-      {
-        "id": "I04-D10",
-        "area": "aggregation/reference",
-        "change": "Kept FoC strictly post-vote/function-matched, prohibited style similarity scoring, and removed any Bradley-Terry/Elo/global-quality-score requirement from V1.",
-        "declared_reason": "Small-sample latent rankings would create false precision, and reference visibility during primary preference can anchor the evaluator toward surface similarity.",
-        "basis": [
-          "Deep Research aggregation and reference-bias recommendations",
-          "schemas/target-gap.schema.json",
-          "benchmarks/p01/benchmark-set.json"
-        ],
-        "expected_effect": "Preserve raw owner outcomes and functional target-gap evidence without collapsing distinct constructs into one score.",
+        "area": "judge and reference authority",
+        "change": "Formalized LLM judges as SHADOW_ONLY until out-of-sample owner validation passes pre-registered reliability gates; kept FoC hidden during primary preference and available only for post-vote functional target-gap analysis; removed global score, Elo, and Bradley-Terry requirements from V1.",
+        "declared_reason": "Deep Research found substantial judge bias risk and warned that reference visibility and small-sample ranking models can create anchoring or false precision.",
+        "basis": ["Deep Research LLM-judge, reference-bias, and aggregation recommendations", "schemas/judge-reliability.schema.json", "schemas/target-gap.schema.json"],
+        "expected_effect": "Keep proxy evaluators and craft references subordinate to the owner/product construct until independently validated.",
         "status": "APPLIED"
       }
     ],
     "implementation_steps": [
       {
         "seq": 1,
-        "action": "Created an Iteration 04 work order and isolated implementation on a V1-freeze sub-branch.",
+        "action": "Frozen Iteration 04 work order on a safety sub-branch before edits.",
         "files": ["docs/phase1/ITERATION-04-WORK-ORDER.md"],
-        "observed_result": "Deep Research recommendations were converted into bounded implementation requirements before edits."
+        "observed_result": "Deep Research recommendations became bounded implementation requirements before architecture changes began."
       },
       {
         "seq": 2,
-        "action": "Created separate schemas for evaluation unit, first-pass preference, failure signature, spoken evidence, and judge reliability; strengthened Truth and Target-gap schemas.",
-        "files": [
-          "schemas/eval-unit.schema.json",
-          "schemas/pairwise-preference.schema.json",
-          "schemas/failure-signature.schema.json",
-          "schemas/truth-gate.schema.json",
-          "schemas/spoken-observation.schema.json",
-          "schemas/target-gap.schema.json",
-          "schemas/judge-reliability.schema.json",
-          "schemas/output-quality.schema.json"
-        ],
-        "observed_result": "The former monolithic output schema is deprecated; each measurement surface now has a bounded responsibility."
+        "action": "Split benchmark responsibilities into standalone evaluation schemas and deprecated the monolithic output-quality schema.",
+        "files": ["schemas/eval-unit.schema.json", "schemas/pairwise-preference.schema.json", "schemas/failure-signature.schema.json", "schemas/truth-gate.schema.json", "schemas/spoken-observation.schema.json", "schemas/target-gap.schema.json", "schemas/judge-reliability.schema.json", "schemas/output-quality.schema.json"],
+        "observed_result": "Product preference, diagnostics, Truth, Spoken, Target Gap, and judge reliability no longer share one evaluator object."
       },
       {
         "seq": 3,
-        "action": "Froze the six-family Product taxonomy and an explicit pilot evaluation unit.",
-        "files": [
-          "benchmarks/p01/taxonomy.json",
-          "benchmarks/p01/eval-units/eu-p01-pilot-mechanism-01.json"
-        ],
-        "observed_result": "Failure diagnostics now support one primary family, macro scope, unresolved classification, and later trace linkage."
+        "action": "Frozen six-family Product taxonomy and added an explicit pilot evaluation unit.",
+        "files": ["benchmarks/p01/taxonomy.json", "benchmarks/p01/eval-units/eu-p01-pilot-mechanism-01.json"],
+        "observed_result": "Diagnostics now support macro scope, one primary family, unresolved classification, and no upstream root-cause claim."
       },
       {
         "seq": 4,
-        "action": "Reclassified all public historical P01 samples as DEV and changed current owner pairs from calibration evidence to pilot-only inputs.",
-        "files": [
-          "benchmarks/p01/benchmark-set.json",
-          "benchmarks/p01/source-manifest.json",
-          "benchmarks/p01/owner-calibration.json",
-          "benchmarks/p01/calibration/dispatch-map.json"
-        ],
-        "observed_result": "No public P01 sample is represented as blind holdout/sequestered evidence."
+        "action": "Reclassified all shared/public historical P01 evidence as DEV and rewrote source roles accordingly.",
+        "files": ["benchmarks/p01/benchmark-set.json", "benchmarks/p01/source-manifest.json"],
+        "observed_result": "The former calibration candidates and former HOLDOUT are explicitly exposed DEV material."
       },
       {
         "seq": 5,
-        "action": "Added a public sequestered manifest shell and initialized an unvalidated shadow-judge state.",
-        "files": [
-          "benchmarks/p01/sequestered-manifest.json",
-          "benchmarks/p01/judge-reliability.json"
-        ],
-        "observed_result": "Private benchmark evidence has an explicit lifecycle without leaking payload/labels into the public repo; LLM judge has no optimization authority."
+        "action": "Added public sequestered metadata shell and initialized an unvalidated shadow-judge state.",
+        "files": ["benchmarks/p01/sequestered-manifest.json", "benchmarks/p01/judge-reliability.json"],
+        "observed_result": "No private validation prose or labels are represented as present in the public repository; judge has no optimization authority."
       },
       {
         "seq": 6,
-        "action": "Upgraded all three owner packets to pilot-first preference protocol with BOTH_FAIL, confidence, explicit freeze, and post-vote optional diagnostics.",
-        "files": [
-          "benchmarks/p01/calibration/owner-packets/owner-cal-01.json",
-          "benchmarks/p01/calibration/owner-packets/owner-cal-02.json",
-          "benchmarks/p01/calibration/owner-packets/owner-cal-03.json"
-        ],
-        "observed_result": "Owner can reject both outputs and is not shown taxonomy/reference material before the first-pass vote."
+        "action": "Converted the three historical owner pairs to pilot-only preference packets with BOTH_FAIL, confidence and freeze semantics.",
+        "files": ["benchmarks/p01/owner-calibration.json", "benchmarks/p01/calibration/dispatch-map.json", "benchmarks/p01/calibration/owner-packets/owner-cal-01.json", "benchmarks/p01/calibration/owner-packets/owner-cal-02.json", "benchmarks/p01/calibration/owner-packets/owner-cal-03.json"],
+        "observed_result": "Current pairs test protocol usability only and cannot be used as benchmark-validity evidence."
       },
       {
         "seq": 7,
-        "action": "Rewrote the Phase 1 contract, trial protocol, active entrypoint, Worker loop, Worker iteration schema, and structural verifier around Benchmark V1.3.",
-        "files": [
-          "docs/quality/output-quality-contract.md",
-          "docs/quality/product-trial-protocol.md",
-          "docs/phase1/START.md",
-          "docs/phase1/WORKER-LOOP.md",
-          "schemas/phase1-worker-iteration.schema.json",
-          "scripts/experiments/verify_phase1_benchmark.py"
-        ],
-        "observed_result": "Active documentation and verifier no longer route work through the legacy six-dimension/holdout architecture."
+        "action": "Static review found pre-vote priming risk because optional diagnostic prompts were still embedded in the same raw owner packet; moved them to a separately gated post-vote artifact and tightened verifier checks.",
+        "files": ["benchmarks/p01/calibration/post-vote-owner-diagnostics.json", "benchmarks/p01/calibration/owner-packets/owner-cal-01.json", "benchmarks/p01/calibration/owner-packets/owner-cal-02.json", "benchmarks/p01/calibration/owner-packets/owner-cal-03.json", "scripts/experiments/verify_phase1_benchmark.py"],
+        "observed_result": "First-pass packet boundaries now physically exclude post-vote diagnostic prompts; the separate artifact requires preference freeze before visibility."
+      },
+      {
+        "seq": 8,
+        "action": "Updated active Phase 1 routing, measurement contract, protocol, Worker loop, Worker iteration schema, and structural verifier for Benchmark V1.3.",
+        "files": ["docs/phase1/START.md", "docs/phase1/WORKER-LOOP.md", "docs/quality/output-quality-contract.md", "docs/quality/product-trial-protocol.md", "schemas/phase1-worker-iteration.schema.json", "scripts/experiments/verify_phase1_benchmark.py"],
+        "observed_result": "Active Phase 1 documentation no longer routes work through the legacy six-dimension/shared-holdout architecture."
       }
     ],
     "validations": [
       {
-        "command": "Static GitHub connector inspection of changed schemas/data/docs against Iteration 04 work order",
+        "command": "Static GitHub connector inspection of changed schemas/data/docs against Iteration 04 work order and Deep Research architecture",
         "status": "PASS",
-        "observed_result": "Confirmed implementation of preference-first separation, BOTH_FAIL/confidence, six-family taxonomy, evaluation-unit granularity, Truth semantic fields, spoken lane, DEV-only P01 history, sequestered shell, SHADOW_ONLY judge, and post-vote FoC boundary."
+        "observed_result": "Confirmed preference-first isolation, BOTH_FAIL/confidence, separate post-vote diagnostics, six-family taxonomy, evaluation-unit granularity, semantic Truth fields, Spoken lane, DEV-only public P01 history, public/private sequestered boundary, SHADOW_ONLY judge, post-vote FoC, and no mandatory scalar/BT/Elo aggregation."
       },
       {
         "command": "git clone --depth 1 --branch codex/p01-phase1-benchmark-v1-freeze https://github.com/romanviper/yt-production.git /tmp/yt-production && python scripts/experiments/verify_phase1_benchmark.py",
         "status": "NOT_RUN",
-        "observed_result": "Execution environment could not resolve github.com, so repository checkout failed before the verifier could run. No synthetic PASS was recorded."
+        "observed_result": "The available container could not resolve github.com, so checkout failed before verifier execution. No synthetic runtime PASS was recorded."
       }
     ],
     "deviations": [
-      "Implementation was performed on sub-branch codex/p01-phase1-benchmark-v1-freeze first so the parent Phase 1 branch could be fast-forwarded only after static review.",
-      "The three historical owner packets remain under the existing calibration/owner-packets directory for provenance compatibility, but their role/state is explicitly PILOT_ONLY_NOT_CALIBRATION_EVIDENCE.",
-      "No fresh calibration pairs or private sequestered payload were fabricated during architecture implementation."
+      "Implementation used sub-branch codex/p01-phase1-benchmark-v1-freeze as a safety branch before fast-forwarding the parent Phase 1 branch.",
+      "Historical owner packets remain under the existing calibration/owner-packets path for provenance compatibility, but their semantic role is PILOT_ONLY_NOT_CALIBRATION_EVIDENCE.",
+      "A static review revision physically separated post-vote prompts from first-pass packets; this was stricter than the initial work-order wording but consistent with the preference-before-diagnostics invariant.",
+      "No fresh calibration labels, LLM judge results, or private sequestered payload were fabricated."
     ],
     "unresolved": [
-      "Run scripts/experiments/verify_phase1_benchmark.py in CI or a repository checkout with network/repo access.",
-      "Run the three owner packets as protocol/usability pilots only; do not use their labels as benchmark-validity evidence.",
-      "Create a fresh calibration corpus across multiple editorial functions after pilot protocol stability is confirmed.",
-      "Select and freeze one LLM shadow judge/prompt only after owner calibration design is stable.",
+      "Run scripts/experiments/verify_phase1_benchmark.py in CI or a full repository checkout.",
+      "Run the three historical owner packets only as protocol/usability pilots.",
+      "Create a fresh calibration corpus across multiple editorial functions after pilot usability is confirmed.",
+      "Select/freeze one LLM shadow judge and prompt only after the fresh calibration design stabilizes.",
       "Pre-register judge acceptance tolerances before opening any private/restricted sequestered set.",
-      "Create private/restricted sequestered evidence on new historical topics and run transfer validation before Phase 1 exit."
+      "Create private/restricted sequestered evidence on new historical topics and validate topic/function/granularity transfer before Phase 1 exit."
     ]
   },
   "output": {
     "benchmark_version": "1.3.0",
     "deliverables": [
       {"path": "docs/quality/output-quality-contract.md", "role": "frozen Benchmark V1 measurement contract"},
-      {"path": "docs/quality/product-trial-protocol.md", "role": "preference-first black-box evaluation protocol"},
+      {"path": "docs/quality/product-trial-protocol.md", "role": "preference-first black-box trial protocol"},
       {"path": "schemas/eval-unit.schema.json", "role": "evaluation-unit primitive"},
-      {"path": "schemas/pairwise-preference.schema.json", "role": "first-pass holistic Product preference"},
-      {"path": "schemas/failure-signature.schema.json", "role": "post-vote output failure localization"},
-      {"path": "schemas/truth-gate.schema.json", "role": "independent claim-level historical audit"},
+      {"path": "schemas/pairwise-preference.schema.json", "role": "first-pass holistic preference"},
+      {"path": "schemas/failure-signature.schema.json", "role": "post-vote output failure node"},
+      {"path": "schemas/truth-gate.schema.json", "role": "claim-level independent Truth audit"},
       {"path": "schemas/spoken-observation.schema.json", "role": "text/audio/listener evidence lane"},
       {"path": "schemas/target-gap.schema.json", "role": "post-vote function-matched craft gap"},
-      {"path": "schemas/judge-reliability.schema.json", "role": "LLM shadow-judge validation contract"},
+      {"path": "schemas/judge-reliability.schema.json", "role": "shadow-judge validation contract"},
       {"path": "benchmarks/p01/taxonomy.json", "role": "frozen six-family Product taxonomy"},
-      {"path": "benchmarks/p01/benchmark-set.json", "role": "DEV/PILOT plus future calibration/sequestered lifecycle"},
+      {"path": "benchmarks/p01/benchmark-set.json", "role": "DEV/PILOT and future calibration/sequestered lifecycle"},
       {"path": "benchmarks/p01/sequestered-manifest.json", "role": "public metadata shell for private/restricted validation evidence"},
       {"path": "benchmarks/p01/judge-reliability.json", "role": "current SHADOW_ONLY judge state"},
-      {"path": "benchmarks/p01/owner-calibration.json", "role": "pilot owner state and future calibration metrics"}
+      {"path": "benchmarks/p01/owner-calibration.json", "role": "owner pilot state and future calibration metrics"},
+      {"path": "benchmarks/p01/calibration/post-vote-owner-diagnostics.json", "role": "diagnostic prompts visible only after preference freeze"}
     ],
     "measurement_design": {
-      "primary_evaluation": "Blind first-pass owner A|B|TIE|BOTH_FAIL|UNCERTAIN preference with confidence, frozen before diagnostics/reference material.",
-      "diagnostic_method": "Post-vote failure signatures using one primary family from a six-family taxonomy, SPAN/MULTI_SPAN/UNIT_GLOBAL scope, optional UNRESOLVED state, and root_cause=null.",
-      "truth_method": "Independent claim-level audit with claim type, verifiability, source relation, materiality, and release blocker; Product preference still runs even if Truth blocks release.",
-      "spoken_method": "Separate TEXT_PREDICTION, AUDIO_OBSERVATION, and LISTENER_REPORT evidence modes so text-only judgments cannot certify listening outcomes.",
-      "target_gap_method": "FoC/reference appears only after preference freeze, is matched by editorial function, cannot change the vote, and cannot use style similarity as a score."
+      "primary_evaluation": "Blind first-pass owner A|B|TIE|BOTH_FAIL|UNCERTAIN preference with LOW|MEDIUM|HIGH confidence, frozen before diagnostics, Truth results, shadow-judge predictions, or craft references.",
+      "diagnostic_method": "Post-vote failure signatures with one primary family from a six-family taxonomy, SPAN|MULTI_SPAN|UNIT_GLOBAL scope, explicit RESOLVED|UNRESOLVED state, contributes_to, and root_cause=null.",
+      "truth_method": "Independent claim-level audit with claim type, verifiability, source relation, materiality and release blocker; Truth cannot be traded numerically against Product preference.",
+      "spoken_method": "Independent TEXT_PREDICTION, AUDIO_OBSERVATION and LISTENER_REPORT evidence levels; text-only judgments cannot certify actual listening outcomes.",
+      "target_gap_method": "FoC/reference appears only after preference freeze, is matched by editorial function, cannot change the frozen vote, and cannot use style similarity as a score."
     },
     "dataset_partitions": {
-      "dev": "All historical P01 material in the public/shared repository, including the former calibration candidates and former holdout.",
-      "pilot": "Three historical P01 A/B packets used only to test protocol/interface behavior; not validity evidence.",
-      "calibration": "Not yet populated; must be fresh owner-labelled pairs collected after pilot protocol stability.",
-      "sequestered": "Private/restricted payload not yet created; public repository contains only a metadata shell.",
-      "refreshed_sequestered": "Required after any previous sequestered set is opened and used for tuning."
+      "dev": "All historical P01 material currently present in the public/shared repository.",
+      "pilot": "Three DEV-derived owner A/B packets used only to test preference-first protocol usability.",
+      "calibration": "Not populated; must be fresh owner-labelled pairs collected after pilot protocol stability.",
+      "sequestered": "Private/restricted payload not yet created; public repository contains metadata shell only.",
+      "refreshed_sequestered": "Required whenever a previous sequestered set has been opened and used for tuning."
     },
     "owner_calibration_status": "PILOT_READY",
     "judge_status": "SHADOW_ONLY",
-    "craft_corpus_coverage": "Unchanged: 8 transcript-only FoC excerpts across 2 episodes/functions; hidden from primary preference and used only post-vote.",
+    "craft_corpus_coverage": "Eight transcript-only FoC excerpts across two episodes remain available for post-vote function-matched target-gap analysis only.",
     "verifier_result": {
       "status": "NOT_RUN",
       "command": "python scripts/experiments/verify_phase1_benchmark.py",
-      "observed_result": "Verifier implementation was updated, but a real checkout execution could not run because the container could not resolve github.com. Static connector review passed; no runtime PASS is claimed."
+      "observed_result": "Verifier was rewritten for Benchmark V1.3, but runtime execution could not be performed because the available container could not resolve github.com for checkout. Static connector review passed; no runtime PASS is claimed."
     },
     "known_limitations": [
-      "Architecture is frozen for pilot, but the three current pilot pairs are exposed historical DEV material.",
+      "Current pilot pairs are historical exposed DEV material and cannot establish benchmark validity.",
       "Fresh calibration corpus has not been collected.",
-      "No LLM judge has been selected or validated; current state is SHADOW_ONLY and ineligible for optimization.",
+      "No LLM judge has been selected or validated; SHADOW_ONLY remains ineligible for optimization.",
       "No private/restricted sequestered payload or labels exist yet.",
-      "No topic-transfer evidence exists outside historical P01 material.",
+      "No transfer evidence exists on new historical topics, section sentinels, or episode sentinels.",
       "Audio/listener validation has not been run.",
-      "Structural verifier has not yet executed in a full repository checkout/CI environment."
+      "Structural verifier has not yet run in a full repository checkout/CI environment."
     ],
     "phase1_readiness": "ARCHITECTURE_FROZEN_READY_FOR_PILOT",
-    "summary": "Deep Research recommendations are encoded as Benchmark V1.3 architecture. Primary preference is now holistic and preference-first; diagnostics, Truth, Spoken, Target Gap, and judge reliability are separate artifacts; all public historical P01 evidence is DEV; sequestered evidence is explicitly private/restricted; LLM judges have no optimization authority. The next valid step is owner protocol pilot, not another rubric redesign or Writer round."
+    "summary": "Benchmark V1.3 now encodes the Deep Research architecture as enforceable data boundaries: owner preference first, diagnostics after freeze, independent Truth/Spoken/Target-Gap lanes, DEV-only public P01 history, private/restricted sequestered lifecycle, and SHADOW_ONLY LLM judges. The next valid step is owner protocol pilot plus runtime verification, not another rubric rewrite or Writer round."
   }
 }
