@@ -1,0 +1,210 @@
+{
+  "schema_version": "1.0.0",
+  "review_id": "OWNER-PILOT-01-GUIDED-A",
+  "sample_id": "OWNER-PILOT-01:A",
+  "sample_source_ref": "benchmarks/p01/calibration/owner-packets/owner-cal-01.json -> sample_A",
+  "eval_unit_id": "EU-P01-PILOT-MECHANISM-01",
+  "mode": "GUIDED_TARGET_DIAGNOSTIC",
+  "benchmark_evidence_eligible": false,
+  "micro_units": [
+    {
+      "unit_id": "U01",
+      "source_locator": "sample_A paragraph 1 sentences 1-2",
+      "candidate_excerpt": "đất sét đã mang nhiều loại dấu khác",
+      "declared_function": "establish_material_object",
+      "boundary_basis": "Introduces the physical substrate and object class before interpretive qualification.",
+      "feature_comparisons": [
+        {
+          "feature": "CONCRETENESS_FUNCTION",
+          "candidate_behavior": "Starts from shapes, marks, and hand-scale clay objects.",
+          "target_behavior_ref": "FOC-T-CONCRETE-01",
+          "target_behavior": "Material detail should alter what the listener can imagine or infer, not act as decorative inventory.",
+          "overlap": "The objects are physically imaginable.",
+          "gap": "Their consequence is not yet active; some detail still behaves like inventory.",
+          "confidence": "MEDIUM",
+          "medium_limitation": "TEXT_PREDICTION only.",
+          "owner_label": null,
+          "owner_note": null,
+          "owner_preferred_behavior": null
+        },
+        {
+          "feature": "LISTENER_ORIENTATION",
+          "candidate_behavior": "The listener knows the object category but not yet the concrete problem being pursued.",
+          "target_behavior_ref": "FOC-T-ORIENTATION-01",
+          "target_behavior": "The immediate object/problem/question should be trackable while larger interpretation remains deferred.",
+          "overlap": "The object is clear.",
+          "gap": "Why this object matters is still a broad before-writing frame rather than a live question.",
+          "confidence": "HIGH",
+          "medium_limitation": "TEXT_PREDICTION only.",
+          "owner_label": null,
+          "owner_note": null,
+          "owner_preferred_behavior": null
+        }
+      ],
+      "owner_unit_note": null,
+      "owner_boundary_correction": null
+    },
+    {
+      "unit_id": "U02",
+      "source_locator": "sample_A paragraph 1 sentences 3-4",
+      "candidate_excerpt": "chưa cho phép ta vạch đường thẳng từ vật đếm đến chữ viết",
+      "declared_function": "qualify_interpretation",
+      "boundary_basis": "Interprets the objects and immediately installs an anti-overclaim boundary.",
+      "feature_comparisons": [
+        {
+          "feature": "INFORMATION_RELEASE",
+          "candidate_behavior": "Supplies both a cautious interpretation and the corrective conclusion very early.",
+          "target_behavior_ref": "FOC-T-INFO-RELEASE-01",
+          "target_behavior": "Observation should usually earn interpretation rather than follow a conclusion already delivered.",
+          "overlap": "The interpretation is careful and evidence-aware.",
+          "gap": "The listener is told which conclusion not to make before a concrete contradiction has made that correction necessary.",
+          "confidence": "HIGH",
+          "medium_limitation": "TEXT_PREDICTION only.",
+          "owner_label": null,
+          "owner_note": null,
+          "owner_preferred_behavior": null
+        },
+        {
+          "feature": "NARRATOR_STANCE",
+          "candidate_behavior": "The narrator explicitly polices the acceptable historical inference.",
+          "target_behavior_ref": "FOC-T-STANCE-01",
+          "target_behavior": "Guide through evidence and consequence without repeatedly announcing the correct lesson.",
+          "overlap": "The stance protects against historical overclaiming.",
+          "gap": "The correction arrives as methodological instruction, increasing lecture feel.",
+          "confidence": "HIGH",
+          "medium_limitation": "TEXT_PREDICTION only.",
+          "owner_label": null,
+          "owner_note": null,
+          "owner_preferred_behavior": null
+        }
+      ],
+      "owner_unit_note": null,
+      "owner_boundary_correction": null
+    },
+    {
+      "unit_id": "U03",
+      "source_locator": "sample_A paragraph 2 sentences 1-4",
+      "candidate_excerpt": "muốn thấy trực tiếp phần bên trong, người ta phải phá chính vật đang giữ nó kín",
+      "declared_function": "reveal_mechanism_and_constraint",
+      "boundary_basis": "Introduces the envelope mechanism and ends on a physical visibility constraint.",
+      "feature_comparisons": [
+        {
+          "feature": "LOCAL_TRANSFORMATION",
+          "candidate_behavior": "The listener moves from loose objects to a closed system where preservation itself makes inspection costly.",
+          "target_behavior_ref": "FOC-T-TRANSFORM-01",
+          "target_behavior": "A unit should change the listener's model through consequence, reinterpretation, or a broken assumption.",
+          "overlap": "The physical constraint genuinely changes the problem.",
+          "gap": "The first sentence pre-labels the meaning before the mechanism fully produces the realization.",
+          "confidence": "HIGH",
+          "medium_limitation": "TEXT_PREDICTION only.",
+          "owner_label": null,
+          "owner_note": null,
+          "owner_preferred_behavior": null
+        },
+        {
+          "feature": "FORWARD_PRESSURE",
+          "candidate_behavior": "Ends on a concrete contradiction between sealing and direct inspection.",
+          "target_behavior_ref": "FOC-T-PRESSURE-01",
+          "target_behavior": "Continuation pressure should emerge from consequence, contradiction, or a missing piece rather than an appended cliffhanger.",
+          "overlap": "Strong match: the physical design itself creates the next problem.",
+          "gap": "The following explanation must not resolve the contradiction so completely that the pressure disappears.",
+          "confidence": "HIGH",
+          "medium_limitation": "TEXT_PREDICTION only.",
+          "owner_label": null,
+          "owner_note": null,
+          "owner_preferred_behavior": null
+        }
+      ],
+      "owner_unit_note": null,
+      "owner_boundary_correction": null
+    },
+    {
+      "unit_id": "U04",
+      "source_locator": "sample_A paragraph 2 sentence 5",
+      "candidate_excerpt": "một công dụng suy ra từ quan hệ giữa hai bề mặt",
+      "declared_function": "interpret_constraint_with_qualification",
+      "boundary_basis": "Resolves the mechanism's implication and qualifies the inference in one sentence.",
+      "feature_comparisons": [
+        {
+          "feature": "INFORMATION_RELEASE",
+          "candidate_behavior": "Immediately converts the preceding contradiction into its takeaway and methodological caveat.",
+          "target_behavior_ref": "FOC-T-INFO-RELEASE-01",
+          "target_behavior": "Explanation should not close inquiry faster than the listener needs it closed.",
+          "overlap": "The conclusion is earned by the preceding mechanism.",
+          "gap": "Function and caveat land together, leaving little room for the listener to form the inference themselves.",
+          "confidence": "HIGH",
+          "medium_limitation": "TEXT_PREDICTION only.",
+          "owner_label": null,
+          "owner_note": null,
+          "owner_preferred_behavior": null
+        },
+        {
+          "feature": "SPOKEN_LOAD",
+          "candidate_behavior": "One sentence carries mechanism consequence, epistemic status, and rejected motive examples.",
+          "target_behavior_ref": "FOC-T-SPOKEN-01",
+          "target_behavior": "One-pass orientation should avoid stacking several conceptual pivots before the main relation settles.",
+          "overlap": "The main causal relation is visible early.",
+          "gap": "The caveat creates a second interpretive task before the first consequence has had time to land.",
+          "confidence": "MEDIUM",
+          "medium_limitation": "TEXT_PREDICTION only; audio may change perceived load.",
+          "owner_label": null,
+          "owner_note": null,
+          "owner_preferred_behavior": null
+        }
+      ],
+      "owner_unit_note": null,
+      "owner_boundary_correction": null
+    },
+    {
+      "unit_id": "U05",
+      "source_locator": "sample_A paragraph 3 sentences 1-4",
+      "candidate_excerpt": "phần thiếu để lộ các vật đếm vẫn nằm bên trong",
+      "declared_function": "instantiate_mechanism_in_artifact",
+      "boundary_basis": "Moves from generic mechanism to one recoverable artifact and bounds representativeness.",
+      "feature_comparisons": [
+        {
+          "feature": "CONCRETENESS_FUNCTION",
+          "candidate_behavior": "The broken envelope and visible contents instantiate the previous hidden/visible problem.",
+          "target_behavior_ref": "FOC-T-CONCRETE-01",
+          "target_behavior": "Specific detail should change what the listener can imagine, infer, or distinguish.",
+          "overlap": "The broken state makes the mechanism physically imaginable.",
+          "gap": "Exact dimensions may carry less functional value than the broken state unless scale matters later.",
+          "confidence": "HIGH",
+          "medium_limitation": "TEXT_PREDICTION only.",
+          "owner_label": null,
+          "owner_note": null,
+          "owner_preferred_behavior": null
+        },
+        {
+          "feature": "NARRATOR_STANCE",
+          "candidate_behavior": "Uses the object as evidence and then immediately adds a representativeness disclaimer.",
+          "target_behavior_ref": "FOC-T-STANCE-01",
+          "target_behavior": "Keep uncertainty visible without repeatedly interrupting the listener's encounter with evidence.",
+          "overlap": "The historical limitation is responsible.",
+          "gap": "The disclaimer may arrive before the object has produced enough consequence, so caution dominates the experience.",
+          "confidence": "MEDIUM",
+          "medium_limitation": "TEXT_PREDICTION only.",
+          "owner_label": null,
+          "owner_note": null,
+          "owner_preferred_behavior": null
+        }
+      ],
+      "owner_unit_note": null,
+      "owner_boundary_correction": null
+    }
+  ],
+  "session_summary": {
+    "recurring_gaps": [
+      "Interpretation/qualification often arrives earlier than necessary, reducing discovery-led information release.",
+      "Historical caution often occupies the main narrative surface and can shift narrator stance toward methodological lecture.",
+      "The strongest target match occurs when a physical mechanism creates a contradiction before explanation resolves it."
+    ],
+    "wrong_targets": [],
+    "unresolved": [
+      "Owner labels are not yet collected.",
+      "Pilot currently covers five micro-units of Sample A to test review ergonomics before expanding.",
+      "Target behaviors must be revised if owner marks them WRONG_TARGET."
+    ],
+    "scalar_score": null
+  }
+}
