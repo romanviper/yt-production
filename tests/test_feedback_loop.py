@@ -1,3 +1,4 @@
+import copy
 import json
 import tempfile
 import unittest
@@ -14,15 +15,15 @@ class FeedbackLoopTests(unittest.TestCase):
         result = prepare_case("p01-rootcause-01", case_dir)
         return case_dir, result
 
-    def _measurement(self, case_dir: Path, *, result="YES", candidate_hash=None, regressions=None, invariants=None):
+    def _measurement(self, case_dir: Path, *, result="YES", candidate_hash=None, regressions=None, invariants=None, scope=None, case_id=None):
         case = json.loads((case_dir / "case.json").read_text(encoding="utf-8"))
         payload = {
             "schema_version": "1.0.0",
-            "case_id": case["case_id"],
+            "case_id": case_id or case["case_id"],
             "candidate_text_sha256": candidate_hash or case["candidate"]["identity"]["text_sha256"],
             "reviewer_id": "TEST-REVIEWER",
             "trust_mode": "TEST_ONLY",
-            "scope": case["measurement_scope"],
+            "scope": scope or case["measurement_scope"],
             "result": result,
             "invariants": invariants or case["invariants"],
             "regressions": regressions or [],
@@ -51,6 +52,34 @@ class FeedbackLoopTests(unittest.TestCase):
         self.assertEqual(result["errors"], [])
         self.assertTrue(result["owner_measurement_pending"])
 
+    def test_empty_guided_session_fails_structure(self):
+        source = json.loads((ROOT / "benchmarks/p01/review-sessions/owner-pilot-01-guided.json").read_text(encoding="utf-8"))
+        source["micro_units"] = []
+        with tempfile.TemporaryDirectory() as tmp:
+            session = Path(tmp) / "empty.json"
+            session.write_text(json.dumps(source, ensure_ascii=False), encoding="utf-8")
+            result = validate_guided_artifact(session, root=ROOT)
+        self.assertTrue(result["errors"])
+        self.assertTrue(any("minItems" in error for error in result["errors"]))
+
+    def test_fake_guided_locator_fails_grounding(self):
+        source = json.loads((ROOT / "benchmarks/p01/review-sessions/owner-pilot-01-guided.json").read_text(encoding="utf-8"))
+        source["micro_units"][0]["source_locator"] = "paragraph 999"
+        with tempfile.TemporaryDirectory() as tmp:
+            session = Path(tmp) / "fake-locator.json"
+            session.write_text(json.dumps(source, ensure_ascii=False), encoding="utf-8")
+            result = validate_guided_artifact(session, root=ROOT)
+        self.assertTrue(any("LOCATOR_OUT_OF_RANGE" in error for error in result["errors"]))
+
+    def test_fake_guided_quote_fails_grounding(self):
+        source = json.loads((ROOT / "benchmarks/p01/review-sessions/phase3-p3-f01-rerun-guided.json").read_text(encoding="utf-8"))
+        source["new"]["excerpt"] = "THIS QUOTE DOES NOT EXIST"
+        with tempfile.TemporaryDirectory() as tmp:
+            session = Path(tmp) / "fake-quote.json"
+            session.write_text(json.dumps(source, ensure_ascii=False), encoding="utf-8")
+            result = validate_guided_artifact(session, root=ROOT)
+        self.assertTrue(any("excerpt not grounded" in error for error in result["errors"]))
+
     def test_positive_test_measurement_changes_symptom_delta_not_overall_gain(self):
         with tempfile.TemporaryDirectory() as tmp:
             case_dir, _ = self._prepare(tmp)
@@ -58,6 +87,7 @@ class FeedbackLoopTests(unittest.TestCase):
             self.assertEqual(feedback["symptom_delta"], "DIRECTIONALLY_REDUCED_NOT_RESOLVED")
             self.assertEqual(feedback["measurement_authority"], "TEST_ONLY")
             self.assertEqual(feedback["improvement"], "NOT_ESTABLISHED")
+            self.assertIn("Lexical disappearance", " ".join(feedback["limitations"]))
 
     def test_negative_measurement_changes_feedback(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -73,6 +103,22 @@ class FeedbackLoopTests(unittest.TestCase):
             with self.assertRaises(FeedbackError) as ctx:
                 ingest_measurement(case_dir, measurement)
             self.assertEqual(ctx.exception.code, "STALE_MEASUREMENT_CANDIDATE")
+
+    def test_measurement_wrong_case_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            case_dir, _ = self._prepare(tmp)
+            measurement = self._measurement(case_dir, case_id="OLD-CASE")
+            with self.assertRaises(FeedbackError) as ctx:
+                ingest_measurement(case_dir, measurement)
+            self.assertEqual(ctx.exception.code, "MEASUREMENT_CASE_MISMATCH")
+
+    def test_measurement_wrong_scope_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            case_dir, _ = self._prepare(tmp)
+            measurement = self._measurement(case_dir, scope="WHOLE_SECTION")
+            with self.assertRaises(FeedbackError) as ctx:
+                ingest_measurement(case_dir, measurement)
+            self.assertEqual(ctx.exception.code, "MEASUREMENT_SCOPE_MISMATCH")
 
     def test_regression_and_missing_truth_remain_visible_even_when_preferred(self):
         with tempfile.TemporaryDirectory() as tmp:
