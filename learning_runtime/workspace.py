@@ -9,9 +9,18 @@ from typing import Any
 
 from .artifacts import artifact_identity, write_json
 from .run import REPO_ROOT
+from .telemetry import (
+    TELEMETRY_FILE,
+    TELEMETRY_VERSION,
+    TelemetryError,
+    is_execution_sealed,
+    seal_execution,
+    validate_event,
+    verify_execution_seal,
+)
 
 
-POLICY_VERSION = "PHASE3-WORKSPACE-PROTOTYPE-1"
+POLICY_VERSION = "PHASE3-WORKSPACE-PROTOTYPE-2"
 SUPPORTED_ROLES = {"plan", "writer", "truth", "review", "audit", "system_architect"}
 
 
@@ -52,6 +61,12 @@ def role_safe_brief(full_brief: dict[str, Any], role: str) -> dict[str, Any]:
         "brief_id": full_brief.get("brief_id"),
         "role": role,
         "visibility": visible,
+        "process_telemetry_contract": {
+            "version": TELEMETRY_VERSION,
+            "path": TELEMETRY_FILE,
+            "rule": "Record bounded declared decisions/checkpoints/risks/deviations during execution; do not record raw private chain-of-thought.",
+            "freeze_rule": "Telemetry and declared outputs are hashed and sealed before downstream handoff or feedback.",
+        },
     }
     for key in visible:
         if key in full_brief:
@@ -68,6 +83,7 @@ def create_workspace_run(root: Path, run_id: str, role_executions: dict[str, str
     control = run_root / "control"
     control.mkdir(parents=True, exist_ok=True)
     (control / "measurements").mkdir(parents=True, exist_ok=True)
+    (control / "seals").mkdir(parents=True, exist_ok=True)
     (control / "access-events.jsonl").write_text("", encoding="utf-8")
     (control / "handoffs.jsonl").write_text("", encoding="utf-8")
 
@@ -89,16 +105,26 @@ def create_workspace_run(root: Path, run_id: str, role_executions: dict[str, str
             "execution_id": execution_id,
             "read": ["input/**", "output/**", "scratch/**"],
             "write": ["output/**", "scratch/**"],
-            "deny": ["control/**", "agents/<other-role>/**", "../**", "absolute paths", "resolved symlink escapes"],
+            "telemetry": TELEMETRY_FILE,
+            "seal_before_handoff": True,
+            "deny": [
+                "control/**",
+                "agents/<other-role>/**",
+                "../**",
+                "absolute paths",
+                "resolved symlink escapes",
+                "all writes after execution seal",
+            ],
         }
 
     policy = {
-        "schema_version": "1.0.0",
+        "schema_version": "2.0.0",
         "policy_version": POLICY_VERSION,
         "run_id": run_id,
-        "enforcement_level": "FILE_BROKER_ONLY_NO_SHELL_OR_NETWORK_SURFACE",
+        "enforcement_level": "FILE_BROKER_PLUS_EXECUTION_SEAL_NO_SHELL_OR_NETWORK_SURFACE",
         "read_isolation": "ENFORCED_ONLY_WHEN_AGENT_RECEIVES_THIS_BROKER_AS_ITS_SOLE_FILESYSTEM_SURFACE",
         "host_process_isolation": "NOT_PROVEN",
+        "telemetry_version": TELEMETRY_VERSION,
         "roles": roles,
     }
     write_json(control / "role-policy.json", policy)
@@ -117,20 +143,30 @@ class RoleWorkspaceBroker:
         self.event_log = self.run_root / "control" / "access-events.jsonl"
 
     def _log(self, action: str, attempted: str, resolved: Path | None, result: str, code: str | None = None) -> None:
-        _append_jsonl(self.event_log, {
-            "policy_version": POLICY_VERSION,
-            "run_id": self.run_root.name,
-            "role": self.role,
-            "execution_id": self.execution_id,
-            "action": action,
-            "attempted_path": attempted,
-            "resolved_path": str(resolved) if resolved else None,
-            "result": result,
-            "code": code,
-        })
+        _append_jsonl(
+            self.event_log,
+            {
+                "policy_version": POLICY_VERSION,
+                "run_id": self.run_root.name,
+                "role": self.role,
+                "execution_id": self.execution_id,
+                "action": action,
+                "attempted_path": attempted,
+                "resolved_path": str(resolved) if resolved else None,
+                "result": result,
+                "code": code,
+            },
+        )
+
+    def _ensure_mutable(self, attempted: str) -> None:
+        if is_execution_sealed(self.run_root, self.role, self.execution_id):
+            self._log("WRITE", attempted, None, "DENIED", "EXECUTION_SEALED")
+            raise WorkspaceError("EXECUTION_SEALED", action="WRITE", attempted=attempted)
 
     def _resolve(self, relative: str, *, write: bool) -> Path:
         action = "WRITE" if write else "READ"
+        if write:
+            self._ensure_mutable(relative)
         try:
             rel = _safe_rel(relative)
         except WorkspaceError as exc:
@@ -166,9 +202,44 @@ class RoleWorkspaceBroker:
         path.write_text(value, encoding="utf-8")
         return path
 
+    def record_event(self, payload: dict[str, Any]) -> dict[str, Any]:
+        self._ensure_mutable(TELEMETRY_FILE)
+        telemetry_path = self.execution_root / TELEMETRY_FILE
+        existing = [line for line in telemetry_path.read_text(encoding="utf-8").splitlines() if line.strip()] if telemetry_path.exists() else []
+        event = dict(payload)
+        event.update(
+            {
+                "telemetry_version": TELEMETRY_VERSION,
+                "sequence": len(existing) + 1,
+                "role": self.role,
+                "execution_id": self.execution_id,
+            }
+        )
+        validate_event(event, expected_role=self.role, expected_execution_id=self.execution_id)
+        _append_jsonl(telemetry_path, event)
+        self._log("TELEMETRY_APPEND", TELEMETRY_FILE, telemetry_path, "ALLOWED")
+        return event
 
-def handoff_copy(run_root: Path, *, source_role: str, source_execution: str, source_rel: str, dest_role: str, dest_execution: str, dest_name: str) -> dict[str, Any]:
+
+def handoff_copy(
+    run_root: Path,
+    *,
+    source_role: str,
+    source_execution: str,
+    source_rel: str,
+    dest_role: str,
+    dest_execution: str,
+    dest_name: str,
+) -> dict[str, Any]:
     run_root = run_root.resolve()
+    verification = verify_execution_seal(run_root, role=source_role, execution_id=source_execution)
+    seal = verification["seal"]
+    if source_rel not in seal["output_identities"]:
+        raise TelemetryError(
+            "HANDOFF_SOURCE_NOT_IN_SEAL",
+            f"{source_role}/{source_execution}:{source_rel}",
+        )
+
     source_root = (run_root / "agents" / source_role / source_execution / "output").resolve()
     destination_root = (run_root / "agents" / dest_role / dest_execution / "input").resolve()
     source_rel_path = _safe_rel(source_rel)
@@ -193,10 +264,22 @@ def handoff_copy(run_root: Path, *, source_role: str, source_execution: str, sou
         raise RuntimeError("handoff hash mismatch")
     record = {
         "policy_version": POLICY_VERSION,
+        "telemetry_version": TELEMETRY_VERSION,
         "run_id": run_root.name,
-        "source": {"role": source_role, "execution_id": source_execution, "path": source_rel, "identity": source_identity},
-        "destination": {"role": dest_role, "execution_id": dest_execution, "path": dest_name, "identity": destination_identity},
-        "result": "COPIED_READ_ONLY_HASH_MATCH",
+        "source": {
+            "role": source_role,
+            "execution_id": source_execution,
+            "path": source_rel,
+            "identity": source_identity,
+            "seal_ref": str((Path("control") / "seals" / f"{source_role}-{source_execution}.json")),
+        },
+        "destination": {
+            "role": dest_role,
+            "execution_id": dest_execution,
+            "path": dest_name,
+            "identity": destination_identity,
+        },
+        "result": "COPIED_FROM_SEALED_EXECUTION_READ_ONLY_HASH_MATCH",
     }
     _append_jsonl(run_root / "control" / "handoffs.jsonl", record)
     return record
@@ -207,14 +290,17 @@ def workspace_manifest(run_root: Path) -> dict[str, Any]:
     policy = json.loads((run_root / "control" / "role-policy.json").read_text(encoding="utf-8"))
     handoffs = (run_root / "control" / "handoffs.jsonl").read_text(encoding="utf-8").splitlines()
     access = (run_root / "control" / "access-events.jsonl").read_text(encoding="utf-8").splitlines()
+    seals = list((run_root / "control" / "seals").glob("*.json"))
     return {
         "run_id": run_root.name,
         "policy": policy,
         "handoff_count": len([line for line in handoffs if line.strip()]),
         "access_event_count": len([line for line in access if line.strip()]),
+        "execution_seal_count": len(seals),
         "limitations": [
-            "This prototype enforces paths only when the agent receives RoleWorkspaceBroker as its sole filesystem surface.",
+            "This prototype enforces paths and post-seal immutability only when the agent receives RoleWorkspaceBroker as its sole filesystem surface.",
             "It does not prove host-level process isolation or protect against an independently granted shell/network/filesystem tool.",
+            "Decision telemetry is declared process evidence, not raw private chain-of-thought and not independent proof that the declared rationale caused the output.",
         ],
     }
 
@@ -230,11 +316,33 @@ def smoke_workspace(out: Path) -> dict[str, Any]:
     writer = RoleWorkspaceBroker(run_root, "writer", "W1")
     writer.read_text("input/common-brief.json")
     source = writer.write_text("output/candidate.md", "workspace smoke candidate\n")
+    writer.record_event(
+        {
+            "event_id": "W-D01",
+            "event_type": "DECISION",
+            "subject_refs": ["candidate.md"],
+            "decision_type": "REALIZATION_STRATEGY",
+            "chosen_action": "WRITE_MINIMAL_SMOKE_CANDIDATE",
+            "rationale_summary": "Exercise the output, telemetry, seal and handoff path with a deterministic candidate.",
+            "evidence_refs": ["input/common-brief.json"],
+            "alternatives_considered": [],
+            "expected_effect": "Produce one hashable candidate for workspace verification.",
+            "risks": ["This is infrastructure smoke evidence only."],
+            "output_refs": ["output/candidate.md"],
+        }
+    )
+    seal = seal_execution(
+        run_root,
+        role="writer",
+        execution_id="W1",
+        required_output_refs=["candidate.md"],
+    )
 
     denied: list[dict[str, str]] = []
     for attempted, action in [
         ("../../review/R1/input/common-brief.json", "READ"),
         ("input/common-brief.json", "WRITE"),
+        ("output/candidate.md", "WRITE_AFTER_SEAL"),
     ]:
         try:
             if action == "READ":
@@ -273,6 +381,7 @@ def smoke_workspace(out: Path) -> dict[str, Any]:
         "status": "WORKSPACE_SMOKE_PASS",
         "run_root": str(run_root),
         "denied": denied,
+        "writer_seal": seal,
         "handoff": handoff,
         "review_diagnostic_hidden": True,
         "manifest": workspace_manifest(run_root),
