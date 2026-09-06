@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0.0",
+  "phase": 2,
+  "record_id": "PHASE2-MVP-01",
+  "source_commit": "9060aae2415c220c8b85707a5f55b2b2311072c4",
+  "objective": "Create the smallest active Plan -> Write -> Truth -> Product learning path that Phase 3 can instrument without refactoring the whole production system.",
+  "process": {
+    "decisions": [
+      {
+        "id": "P2-D01",
+        "decision": "Use a vertical-slice MVP instead of completing the original broad Phase 2 cleanup plan.",
+        "reason": "The owner explicitly prioritized running all three phases over perfecting any one phase."
+      },
+      {
+        "id": "P2-D02",
+        "decision": "Add learning_runtime/ as a separate architecture-learning path and leave the existing production router/rework/replay machinery intact.",
+        "reason": "Phase 2 needs one unambiguous learning path, not a risky rewrite of production compatibility code."
+      },
+      {
+        "id": "P2-D03",
+        "decision": "Keep exactly four stages: plan, write, truth, product.",
+        "reason": "This is the minimum topology needed for the first Phase 3 fault split: construction vs evaluation, then plan vs realization."
+      },
+      {
+        "id": "P2-D04",
+        "decision": "Use deterministic fixture replay rather than live agents.",
+        "reason": "Phase 2 validates execution/artifact boundaries only. New creative generation and white-box instrumentation are Phase 3 concerns."
+      },
+      {
+        "id": "P2-D05",
+        "decision": "Mark historical Truth as LEGACY_UNTRUSTED and guided owner review as diagnostic-only when replayed.",
+        "reason": "A smoke fixture must not silently promote known-bad historical evaluator outputs into ground truth."
+      },
+      {
+        "id": "P2-D06",
+        "decision": "Do not add trace.jsonl, agent registry, event bus, root-cause engine or module framework.",
+        "reason": "Those additions would prematurely turn Phase 2 into Phase 3/platform work."
+      }
+    ],
+    "changed_surfaces": [
+      "learning_runtime/__init__.py",
+      "learning_runtime/artifacts.py",
+      "learning_runtime/stages.py",
+      "learning_runtime/run.py",
+      "learning_runtime/scenarios/p01-mvp.json",
+      "docs/phase2/START.md",
+      "tests/test_learning_runtime.py",
+      "AGENTS.md",
+      ".gitignore"
+    ],
+    "validation": {
+      "validation_pr": 10,
+      "workflow_run": 34015696565,
+      "phase2_tests": {
+        "test_frozen_scenario_has_minimal_stage_order": "PASS",
+        "test_rejects_topology_drift": "PASS",
+        "test_smoke_run_materializes_chain": "PASS",
+        "test_existing_run_requires_force": "PASS"
+      },
+      "fixture_source_checks": {
+        "writing_plan": "FOUND",
+        "candidate": "FOUND",
+        "legacy_truth": "FOUND",
+        "guided_product_review": "FOUND"
+      },
+      "overall_ci": "FAIL_UNRELATED_BASELINE_DEBT",
+      "unrelated_failures": [
+        "test_historical_substrate_runtime.HistoricalSubstrateRuntimeIntegrationTest.test_section_migration_materializes_only_declared_section",
+        "test_writer_baseline.WriterBaselineTests.test_current_sumer_c003_p01_smoke_compiles_to_minimal_writer_packet",
+        "test_writer_baseline.WriterBaselineTests.test_current_sumer_p01_review_packet_with_handoff_and_receipts_stays_under_budget"
+      ],
+      "scope_note": "The failing production tests exercise historical-substrate/current-Sumer production state and files not modified by Phase 2. They are recorded as baseline debt and intentionally not repaired inside this MVP architecture change."
+    }
+  },
+  "output": {
+    "status": "PHASE2_MVP_READY_FOR_PHASE3",
+    "entrypoint": "python -m learning_runtime.run p01-mvp --out <run-dir>",
+    "topology": ["plan", "write", "truth", "product"],
+    "artifact_contract": {
+      "per_stage": ["input.json", "output.*", "manifest.json"],
+      "run_root": ["manifest.json"],
+      "mechanically_visible": ["parent_node_id", "input_sha256", "output_sha256", "fixture_source_sha256", "fixture_trust"]
+    },
+    "phase3_ready_surface": {
+      "single_active_learning_path": true,
+      "plan_write_boundaries": true,
+      "truth_product_boundaries": true,
+      "node_parentage": true,
+      "hash_provenance": true,
+      "white_box_trace": false,
+      "live_agents": false
+    },
+    "known_limitations": [
+      "The runtime currently proves topology with immutable fixtures rather than live agent execution.",
+      "No Phase 3 trace or root-cause diagnosis exists yet.",
+      "The Phase 1 benchmark is intentionally MVP-level and remains a measurement dependency rather than a completed evaluation product.",
+      "The repository has unrelated failing production baseline tests that were not expanded into Phase 2 scope."
+    ]
+  }
+}
