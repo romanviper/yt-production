@@ -1,0 +1,13 @@
+Hãy thử nhìn một vật bằng đất sét còn đóng kín. Bên trong lớp vỏ rỗng ấy là những vật đếm nhỏ, cũng bằng đất sét. Ta biết chúng ở đó, nhưng chừng nào lớp vỏ còn nguyên, ta chưa thể nhìn trực tiếp vào chúng. Muốn quan sát những gì nằm bên trong, mắt ta gặp một giới hạn rất cụ thể: bề mặt của chiếc vỏ.
+
+Bây giờ, đặt cạnh nó một bảng đất sét mang dấu ghi số. Thông tin về số lượng nằm ngay phía ngoài. Không phải tìm nó trong một khoang kín; các dấu đã hiện trên một bề mặt có thể lưu giữ chúng. Cả hai đều bằng đất sét. Nhưng vị trí của thông tin khiến cách tiếp cận chúng khác nhau.
+
+Ở miền nam Lưỡng Hà, vào cuối thiên niên kỷ thứ tư trước Công nguyên, những thực hành như vậy hiện diện trong hoạt động hành chính thời Uruk muộn. Có vật đếm, có vỏ đất sét chứa vật đếm, có dấu niêm phong, có bảng ghi số và những bề mặt đất sét mang chữ viết sớm. Khi đặt chúng cạnh nhau, chúng ta dễ muốn xếp thành một hàng: thứ này ra đời, rồi nhường chỗ cho thứ kia. Những gì còn lại cho thấy một cảnh nhiều lớp hơn. Các cách ghi nhận ấy từng cùng tồn tại, chồng lấn với nhau.
+
+Hãy quay lại chiếc vỏ kín. Trên một số hiện vật, bên ngoài còn có dấu in hoặc dấu niêm phong. Như vậy, sự chú ý không chỉ hướng vào những vật nhỏ được chứa bên trong. Bề mặt ngoài cũng mang thông tin. Tuy nhiên, không phải chiếc vỏ nào cũng có những dấu ấy. Ta cần giữ sự khác biệt đó, nếu muốn hình dung những thực hành đã diễn ra, thay vì dựng nên một mẫu vật hoàn hảo đại diện cho tất cả.
+
+Ở một số bảng ghi số, dấu xác thực cũng xuất hiện bên cạnh thông tin số lượng. Trên cùng một bề mặt đất sét, việc ghi nhận và việc xác thực có thể gặp nhau. Dẫu vậy, chỉ nhìn một bảng số chưa đủ để kể rằng ai đã giao món gì cho ai. Những dấu số ấy không tự nói với chúng ta rằng đây là một khoản thuế, một cuộc mua bán hay một phần cống nạp. Để gọi tên một việc như thế, cần thêm chứng cứ về chính việc đó.
+
+Điều có thể theo dõi ở đây nằm gần bàn tay và con mắt hơn: thông tin số được đặt ở đâu, và có thể nhìn thấy nó bằng cách nào. Qua thời Uruk muộn, thông tin ấy ngày càng xuất hiện trực tiếp trên những bề mặt đất sét bền. Một phần việc ghi nhận đã có hình thức cho phép số lượng hiện ra ở phía ngoài, đôi khi đi cùng dấu xác thực. Trong lúc ấy, vật đếm, vỏ chứa và các cách dùng đất sét khác vẫn tiếp tục hiện diện.
+
+Vì thế, hãy để những vật này nằm cạnh nhau thêm một lúc. Chiếc vỏ vẫn kín. Dấu số trên bảng vẫn ở ngay trước mắt. Khoảng cách giữa hai cách đặt thông tin là một thay đổi có thể nhận ra; còn cả thế giới sử dụng chúng thì không chuyển sang cách mới trong cùng một khoảnh khắc. Những dấu ghi bền trên đất sét xuất hiện giữa nhiều thực hành đang tiếp diễn. Muốn đến gần buổi đầu của việc lưu giữ thông tin ấy, ta phải nhìn cả những gì ở trên bề mặt, lẫn những gì vẫn còn được giữ bên trong.
