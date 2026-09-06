@@ -149,7 +149,8 @@ class WriterSelfReportTests(unittest.TestCase):
             "remaining_work_if_approved": "Cover the observed overrun and allow repo acceptance of the already-produced draft only.",
         }
         draft, report = self._submission(run, duration=15, extension=extension)
-        state = accept_writer_submission(run, report_file=report, draft_file=draft)
+        accept_writer_submission(run, report_file=report, draft_file=draft)
+        state = learning.status(run)
         self.assertEqual(state["state"], "AWAITING_OWNER_BUDGET_APPROVAL")
         pending = learning.budget_summary(run)["pending_extension_requests"]
         self.assertEqual(len(pending), 1)
