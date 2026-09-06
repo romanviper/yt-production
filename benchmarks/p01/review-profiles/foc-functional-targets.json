@@ -1,0 +1,71 @@
+{
+  "version": "1.0.0",
+  "profile_id": "FOC-FUNCTIONAL-TARGETS-V1",
+  "authority": "CRAFT_ONLY_NOT_TRUTH",
+  "purpose": "Transferable behavior targets for guided owner review. These are not style templates and not benchmark scores.",
+  "source_corpus_ref": "benchmarks/p01/craft-corpus.json",
+  "rules": [
+    "Match by editorial function, not by wording or sentence shape.",
+    "Do not score surface similarity.",
+    "Do not use these targets in blind Product preference before freeze.",
+    "Owner may mark any target behavior WRONG_TARGET."
+  ],
+  "targets": [
+    {
+      "target_id": "FOC-T-INFO-RELEASE-01",
+      "feature": "INFORMATION_RELEASE",
+      "editorial_functions": ["opening_investigation", "mechanism_explanation", "uncertainty"],
+      "behavior": "Concrete observation or situation usually earns the interpretation; the narrator avoids front-loading the final meaning before the listener has encountered the material that makes it matter.",
+      "anti_target": "State the thesis first, then use artifacts/details mainly as proof of a conclusion already delivered.",
+      "evidence_basis": "Function-matched excerpts in the frozen FoC craft corpus; behavior-level abstraction only."
+    },
+    {
+      "target_id": "FOC-T-ORIENTATION-01",
+      "feature": "LISTENER_ORIENTATION",
+      "editorial_functions": ["opening_investigation", "mechanism_explanation", "transition"],
+      "behavior": "The listener can identify the immediate object, problem, or question being followed, while larger interpretation remains only as explicit as needed for orientation.",
+      "anti_target": "Abstract thematic framing expands faster than the concrete object/question the listener can track.",
+      "evidence_basis": "Function-matched excerpts in the frozen FoC craft corpus; behavior-level abstraction only."
+    },
+    {
+      "target_id": "FOC-T-PRESSURE-01",
+      "feature": "FORWARD_PRESSURE",
+      "editorial_functions": ["opening_investigation", "transition", "local_payoff"],
+      "behavior": "Continuation pressure comes from a developing consequence, contradiction, missing piece, or reinterpretation—not from mechanically appending rhetorical questions or cliffhangers.",
+      "anti_target": "Close each paragraph with an explicit question while the underlying inquiry has already been answered by exposition.",
+      "evidence_basis": "Function-matched excerpts in the frozen FoC craft corpus; behavior-level abstraction only."
+    },
+    {
+      "target_id": "FOC-T-CONCRETE-01",
+      "feature": "CONCRETENESS_FUNCTION",
+      "editorial_functions": ["opening_investigation", "mechanism_explanation", "scale_change"],
+      "behavior": "Specific material detail changes what the listener can infer, imagine, distinguish, or feel about the historical situation; detail is functional rather than decorative inventory.",
+      "anti_target": "Accumulate measurements, artifact IDs, names, or adjectives without changing the listener's model of the situation.",
+      "evidence_basis": "Function-matched excerpts in the frozen FoC craft corpus; behavior-level abstraction only."
+    },
+    {
+      "target_id": "FOC-T-STANCE-01",
+      "feature": "NARRATOR_STANCE",
+      "editorial_functions": ["opening_investigation", "mechanism_explanation", "uncertainty", "local_payoff"],
+      "behavior": "The narrator acts as guide through evidence, uncertainty, and consequence; explanation is present but does not repeatedly announce the lesson, thesis, or what the listener should conclude.",
+      "anti_target": "Lecture stance: topic sentence -> evidence -> explanation -> conclusion, repeated as the dominant local rhythm.",
+      "evidence_basis": "Function-matched excerpts in the frozen FoC craft corpus; behavior-level abstraction only."
+    },
+    {
+      "target_id": "FOC-T-TRANSFORM-01",
+      "feature": "LOCAL_TRANSFORMATION",
+      "editorial_functions": ["mechanism_explanation", "transition", "local_payoff", "scale_change"],
+      "behavior": "Across a unit, the listener's state changes in a specific way: an object acquires a new significance, a prior assumption becomes inadequate, scale changes, or a consequence becomes visible.",
+      "anti_target": "Restate or refine the same proposition without materially changing what the listener now understands or expects.",
+      "evidence_basis": "Function-matched excerpts in the frozen FoC craft corpus; behavior-level abstraction only."
+    },
+    {
+      "target_id": "FOC-T-SPOKEN-01",
+      "feature": "SPOKEN_LOAD",
+      "editorial_functions": ["opening_investigation", "mechanism_explanation", "transition", "uncertainty", "local_payoff", "scale_change"],
+      "behavior": "Text tends to preserve one-pass orientation by limiting simultaneous conceptual pivots, referent ambiguity, and nested qualification; this is only a text prediction until audio/listener evidence exists.",
+      "anti_target": "A sentence or short span asks the listener to track several qualifications, contrasts, and referents before the main relation becomes clear.",
+      "evidence_basis": "Text-level craft abstraction only; not an audio or listener-performance claim."
+    }
+  ]
+}
