@@ -1,52 +1,63 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "calibration_id": "P01-OWNER-CAL-V1",
-  "status": "READY_FOR_OWNER_LABELS",
-  "contract_version": "1.2",
-  "instructions": "Present only the linked opaque owner packet. Do not reveal source paths, historical verdicts, internal sample IDs, expected winner, process logs, or craft references. Record owner preference only when explicitly supplied. A/B reversal applies later to independent Product judge runs.",
-  "allowed_owner_results": ["A", "B", "TIE", "UNCERTAIN"],
-  "pairs": [
+  "status": "PILOT_READY_NOT_CALIBRATION",
+  "contract_version": "1.3",
+  "construct": "OWNER_PRODUCT_FIT",
+  "instructions": "Use the historical P01 packets only to test the blind preference protocol. Record a first-pass A/B/TIE/BOTH_FAIL/UNCERTAIN vote and confidence before asking for reasons or spans. These pilot labels must not be used as evidence of benchmark validity because all source prose is already exposed DEV material.",
+  "allowed_owner_results": ["A", "B", "TIE", "BOTH_FAIL", "UNCERTAIN"],
+  "allowed_confidence": ["LOW", "MEDIUM", "HIGH"],
+  "pilot_pairs": [
     {
-      "pair_id": "P01-CAL-01",
+      "pair_id": "P01-PILOT-01",
       "owner_packet": "benchmarks/p01/calibration/owner-packets/owner-cal-01.json",
       "owner_result": null,
-      "owner_notes": null,
-      "judge_runs": [],
-      "position_control_complete": false
+      "owner_confidence": null,
+      "owner_reason_after_verdict": null,
+      "owner_decisive_spans": [],
+      "preference_frozen": false
     },
     {
-      "pair_id": "P01-CAL-02",
+      "pair_id": "P01-PILOT-02",
       "owner_packet": "benchmarks/p01/calibration/owner-packets/owner-cal-02.json",
       "owner_result": null,
-      "owner_notes": null,
-      "judge_runs": [],
-      "position_control_complete": false
+      "owner_confidence": null,
+      "owner_reason_after_verdict": null,
+      "owner_decisive_spans": [],
+      "preference_frozen": false
     },
     {
-      "pair_id": "P01-CAL-03",
+      "pair_id": "P01-PILOT-03",
       "owner_packet": "benchmarks/p01/calibration/owner-packets/owner-cal-03.json",
       "owner_result": null,
-      "owner_notes": null,
-      "judge_runs": [],
-      "position_control_complete": false
-    },
-    {
-      "pair_id": "P01-CAL-DUP-01",
-      "owner_packet": null,
-      "owner_result": "TIE",
-      "owner_notes": "Mechanical same-text judge reliability control, not a genuine owner preference question.",
-      "judge_runs": [],
-      "position_control_complete": false
+      "owner_confidence": null,
+      "owner_reason_after_verdict": null,
+      "owner_decisive_spans": [],
+      "preference_frozen": false
     }
   ],
-  "internal_dispatch_map": "benchmarks/p01/calibration/dispatch-map.json",
-  "metrics_after_labels": [
-    "owner_judge_pairwise_agreement",
-    "position_consistency",
-    "duplicate_consistency",
-    "uncertainty_rate",
-    "evidence_span_validity",
-    "clear_vs_subtle_pair_separation"
+  "judge_duplicate_control": {
+    "pair_id": "P01-PILOT-DUP-01",
+    "purpose": "MECHANICAL_DUPLICATE_CONTROL",
+    "owner_vote_required": false,
+    "expected_behavior": "TIE_OR_DEFENSIBLE_UNCERTAIN",
+    "judge_runs": []
+  },
+  "metrics_for_future_calibration": [
+    "owner_test_retest_consistency",
+    "owner_position_consistency",
+    "clear_vs_subtle_consistency",
+    "tie_rate",
+    "both_fail_rate",
+    "uncertain_rate",
+    "reason_localizability",
+    "taxonomy_coverage"
   ],
-  "completion_rule": "Do not mark COMPLETED until real owner preferences and independent counterbalanced judge runs have been recorded for all non-control pairs."
+  "shadow_judge_policy": {
+    "mode": "SHADOW_ONLY",
+    "may_drive_optimization": false,
+    "may_overturn_owner": false,
+    "promotion_requires_out_of_sample_validation": true
+  },
+  "completion_rule": "Pilot completion proves protocol usability only. Benchmark validity requires a fresh calibration corpus followed by private/restricted sequestered validation and topic transfer."
 }
