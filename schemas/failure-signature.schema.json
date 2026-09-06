@@ -10,6 +10,7 @@
     "candidate_id",
     "linked_pair_id",
     "scope",
+    "diagnostic_status",
     "primary_family",
     "subtype",
     "evidence_spans",
@@ -30,6 +31,7 @@
     "candidate_id": {"type": "string", "minLength": 1},
     "linked_pair_id": {"type": ["string", "null"]},
     "scope": {"type": "string", "enum": ["SPAN", "MULTI_SPAN", "UNIT_GLOBAL"]},
+    "diagnostic_status": {"type": "string", "enum": ["RESOLVED", "UNRESOLVED"]},
     "primary_family": {
       "type": ["string", "null"],
       "enum": [
@@ -43,7 +45,6 @@
       ]
     },
     "subtype": {"type": ["string", "null"]},
-    "diagnostic_status": {"type": "string", "enum": ["RESOLVED", "UNRESOLVED"]},
     "evidence_spans": {
       "type": "array",
       "items": {
@@ -74,6 +75,15 @@
         "properties": {
           "primary_family": {"type": "null"},
           "subtype": {"type": "null"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"diagnostic_status": {"const": "RESOLVED"}}},
+      "then": {
+        "properties": {
+          "primary_family": {"type": "string"},
+          "subtype": {"type": "string", "minLength": 1}
         }
       }
     }
