@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FeedbackMeasurement",
+  "type": "object",
+  "required": [
+    "schema_version", "measurement_id", "case_id", "candidate_text_sha256",
+    "reviewer_id", "trust_mode", "scope", "preference_result"
+  ],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "measurement_id": {"type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9._-]+$"},
+    "case_id": {"type": "string", "minLength": 1},
+    "candidate_text_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "reviewer_id": {"type": "string", "minLength": 1},
+    "trust_mode": {"type": "string", "enum": ["OWNER_GUIDED_DIAGNOSTIC", "TEST_ONLY"]},
+    "scope": {"type": "string", "minLength": 1},
+    "preference_result": {"type": "string", "enum": ["YES", "NO", "BOTH_FAIL", "WRONG_TARGET", "UNCERTAIN"]},
+    "symptom_observation": {"type": ["string", "null"], "enum": ["REDUCED", "NOT_REDUCED", "UNCERTAIN", null]},
+    "symptom_note": {"type": ["string", "null"]},
+    "invariants": {"type": "object"},
+    "regressions": {"type": "array", "items": {"type": "string"}},
+    "supersedes": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}
