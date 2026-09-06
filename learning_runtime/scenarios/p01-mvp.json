@@ -1,0 +1,37 @@
+{
+  "scenario_version": "1.0.0",
+  "scenario_id": "p01-mvp",
+  "run_id": "phase2-p01-mvp-smoke-01",
+  "mode": "FIXTURE_REPLAY",
+  "purpose": "Prove the minimal Plan -> Write -> Truth -> Product execution and artifact path without running a new Writer or reactivating legacy experiment scripts.",
+  "stage_order": ["plan", "write", "truth", "product"],
+  "stages": {
+    "plan": {
+      "kind": "import_json",
+      "source_ref": "experiments/p01-writer-trace-v2/runs/round-01/writing-plan.json",
+      "fixture_trust": "LEGACY_FIXTURE_NOT_GROUND_TRUTH"
+    },
+    "write": {
+      "kind": "import_text",
+      "source_ref": "experiments/p01-writer-trace-v2/runs/round-01/candidate.md",
+      "fixture_trust": "LEGACY_FIXTURE_NOT_PRODUCT_APPROVAL"
+    },
+    "truth": {
+      "kind": "reference_only",
+      "source_ref": "experiments/p01-writer-trace-v2/runs/round-01/truth.json",
+      "fixture_trust": "LEGACY_UNTRUSTED_DO_NOT_USE_AS_GATE",
+      "note": "Round-01 Truth was semantically over-approving; this stage only proves the boundary and provenance path."
+    },
+    "product": {
+      "kind": "import_json",
+      "source_ref": "benchmarks/p01/review-sessions/owner-pilot-01-guided.json",
+      "fixture_trust": "DIAGNOSTIC_FIXTURE_NOT_BLIND_BENCHMARK_EVIDENCE"
+    }
+  },
+  "limitations": [
+    "No live agent is invoked in Phase 2 smoke mode.",
+    "Legacy Truth output is referenced but explicitly not trusted as a factual gate.",
+    "Guided owner review is diagnostic evidence, not blind calibration evidence.",
+    "No trace.jsonl or root-cause diagnosis is produced; that belongs to Phase 3."
+  ]
+}
