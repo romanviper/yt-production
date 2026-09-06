@@ -3,7 +3,7 @@
   "title": "FeedbackCase",
   "type": "object",
   "required": [
-    "schema_version", "case_id", "source_run_id", "source_commit", "baseline", "candidate",
+    "schema_version", "case_id", "source_run_id", "source_commit", "standard", "baseline", "candidate",
     "symptom", "trace", "intervention", "plan_change", "evidence_ceiling", "measurement_scope",
     "invariants", "acceptance_rule", "comparison_ref", "measurement_status"
   ],
@@ -18,6 +18,15 @@
         "text_normalization": {"type": ["string", "null"]}
       },
       "additionalProperties": false
+    },
+    "refIdentity": {
+      "type": "object",
+      "required": ["ref", "identity"],
+      "properties": {
+        "ref": {"type": "string", "minLength": 1},
+        "identity": {"$ref": "#/$defs/identity"}
+      },
+      "additionalProperties": false
     }
   },
   "properties": {
@@ -25,6 +34,17 @@
     "case_id": {"type": "string", "minLength": 1},
     "source_run_id": {"type": "string", "minLength": 1},
     "source_commit": {"type": ["string", "null"]},
+    "standard": {
+      "type": "object",
+      "required": ["brief", "product_contract", "target_profile", "product_review_blinding"],
+      "properties": {
+        "brief": {"$ref": "#/$defs/refIdentity"},
+        "product_contract": {"$ref": "#/$defs/refIdentity"},
+        "target_profile": {"$ref": "#/$defs/refIdentity"},
+        "product_review_blinding": {"type": "string", "const": "DIAGNOSTIC_HYPOTHESIS_HIDDEN_PRE_VOTE"}
+      },
+      "additionalProperties": false
+    },
     "baseline": {
       "type": "object",
       "required": ["id", "source_ref", "identity"],
