@@ -260,12 +260,12 @@ def diagnose_failure(
     observations.append(
         {
             "kind": "BOUNDED_ATTRIBUTION",
-            "authority": "INTERVENTION_SUPPORTED_HYPOTHESIS",
+            "authority": "REVIEWER_SUPPORTED_DIAGNOSTIC_HYPOTHESIS",
             "classification": classification,
             "suspected_regions": suspected_regions,
             "mapping_confidence": "HIGH",
             "attribution_confidence": attribution_confidence,
-            "rule": "Exact identity/mapping is necessary but not causal proof. Reviewer interpretation may nominate Plan; only symptom-relevant grounded deviations may nominate Write; boolean flags and REALIZED/no-deviation declarations never decide attribution alone.",
+            "rule": "Exact identity/mapping is necessary but not causal proof. Reviewer interpretation may nominate Plan; only symptom-relevant grounded deviations may nominate Write; boolean flags and REALIZED/no-deviation declarations never decide attribution alone. Intervention support requires a separate measured intervention result.",
         }
     )
 
