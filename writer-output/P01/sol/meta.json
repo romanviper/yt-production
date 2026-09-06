@@ -1,0 +1,9 @@
+{
+  "model": "GPT-5.6 Sol",
+  "inputs": [
+    "products/sumer-writing/02_outline/section-overlays/P01.json",
+    "products/sumer-writing/03_sections/P01/historical-substrate.json"
+  ],
+  "attempt": 1,
+  "notes": "Telling centers on the shift toward directly inspectable numerical information on durable clay surfaces while preserving coexistence of older practices and avoiding unsupported economic-mechanism claims."
+}
