@@ -6,146 +6,63 @@
   "process": {
     "objective": "Build a more owner-friendly review mechanism that decomposes long probes into micro-units and compares observable craft behavior against function-matched FoC target behavior without weakening the blind benchmark boundary.",
     "decisions": [
-      {
-        "id": "I05-D01",
-        "area": "review UX",
-        "change": "Added a separate GUIDED_TARGET_DIAGNOSTIC mode rather than replacing blind owner preference.",
-        "declared_reason": "The owner reported that reviewing full long passages only yields BOTH_FAIL and does not efficiently expose why the outputs miss the product target.",
-        "basis": ["Product-owner feedback on 2026-09-06", "docs/phase1/ITERATION-05-WORK-ORDER.md"],
-        "expected_effect": "Collect higher-resolution owner preference evidence while preserving blind benchmark validity as a separate construct.",
-        "status": "APPLIED"
-      },
-      {
-        "id": "I05-D02",
-        "area": "review granularity",
-        "change": "Defined rhetorical/functional micro-units, usually 1-3 sentences, rather than arbitrary word-count chunks.",
-        "declared_reason": "Owner review should focus on one change in listener state or editorial function at a time.",
-        "basis": ["docs/quality/owner-guided-review.md"],
-        "expected_effect": "Reduce cognitive load and allow precise span-level feedback.",
-        "status": "APPLIED"
-      },
-      {
-        "id": "I05-D03",
-        "area": "feature extraction",
-        "change": "Introduced seven behavior-level review features: INFORMATION_RELEASE, LISTENER_ORIENTATION, FORWARD_PRESSURE, CONCRETENESS_FUNCTION, NARRATOR_STANCE, LOCAL_TRANSFORMATION, SPOKEN_LOAD.",
-        "declared_reason": "These features describe observable craft behavior that an owner can compare directly without turning them into a scalar rubric.",
-        "basis": ["Deep Research architecture principles", "docs/quality/owner-guided-review.md"],
-        "expected_effect": "Turn vague feedback such as 'both feel like essays' into repeatable, inspectable product-language signals.",
-        "status": "APPLIED"
-      },
-      {
-        "id": "I05-D04",
-        "area": "FoC target comparison",
-        "change": "Created a function-matched FoC behavioral target profile that describes transferable craft behavior, not wording/style imitation.",
-        "declared_reason": "The owner asked to see similarities and differences against the target directly, but benchmark architecture must avoid pre-vote reference anchoring and style copying.",
-        "basis": ["benchmarks/p01/review-profiles/foc-functional-targets.json", "benchmarks/p01/craft-corpus.json"],
-        "expected_effect": "Make target gaps legible while keeping FoC CRAFT_ONLY_NOT_TRUTH and non-scalar.",
-        "status": "APPLIED"
-      },
-      {
-        "id": "I05-D05",
-        "area": "owner controls",
-        "change": "Added MATCHES_TARGET, PARTIAL, MISSES_TARGET, WRONG_TARGET, UNCERTAIN plus optional notes/preferred behavior and boundary correction.",
-        "declared_reason": "The owner must be able to reject not only candidate behavior but also an incorrect extracted target itself.",
-        "basis": ["schemas/owner-guided-review.schema.json"],
-        "expected_effect": "Prevent FoC-derived target abstractions from silently becoming unquestionable product truth.",
-        "status": "APPLIED"
-      },
-      {
-        "id": "I05-D06",
-        "area": "artifact ergonomics",
-        "change": "Guided session stores source locator and a short candidate excerpt instead of duplicating entire probe text.",
-        "declared_reason": "A first attempt to materialize large prose copies was blocked; shorter locator-based cards are also a better fit for the intended review experience.",
-        "basis": ["Tool guardrail encountered during implementation", "benchmarks/p01/review-sessions/owner-pilot-01-guided.json"],
-        "expected_effect": "Keep diagnostic artifacts small and make review genuinely micro-unit oriented.",
-        "status": "APPLIED"
-      }
+      {"id":"I05-D01","area":"review UX","change":"Added a separate GUIDED_TARGET_DIAGNOSTIC mode rather than replacing blind owner preference.","declared_reason":"The owner reported that reviewing full long passages only yields BOTH_FAIL and does not efficiently expose why the outputs miss the product target.","basis":["Product-owner feedback on 2026-09-06","docs/phase1/ITERATION-05-WORK-ORDER.md"],"expected_effect":"Collect higher-resolution owner preference evidence while preserving blind benchmark validity as a separate construct.","status":"APPLIED"},
+      {"id":"I05-D02","area":"review granularity","change":"Defined rhetorical/functional micro-units, usually 1-3 sentences, rather than arbitrary word-count chunks.","declared_reason":"Owner review should focus on one change in listener state or editorial function at a time.","basis":["docs/quality/owner-guided-review.md"],"expected_effect":"Reduce cognitive load and allow precise span-level feedback.","status":"APPLIED"},
+      {"id":"I05-D03","area":"feature extraction","change":"Introduced seven behavior-level review features: INFORMATION_RELEASE, LISTENER_ORIENTATION, FORWARD_PRESSURE, CONCRETENESS_FUNCTION, NARRATOR_STANCE, LOCAL_TRANSFORMATION, SPOKEN_LOAD.","declared_reason":"These features describe observable craft behavior that an owner can compare directly without turning them into a scalar rubric.","basis":["Deep Research architecture principles","docs/quality/owner-guided-review.md"],"expected_effect":"Turn vague feedback such as 'both feel like essays' into repeatable, inspectable product-language signals.","status":"APPLIED"},
+      {"id":"I05-D04","area":"FoC target comparison","change":"Created a function-matched FoC behavioral target profile that describes transferable craft behavior, not wording/style imitation.","declared_reason":"The owner asked to see similarities and differences against the target directly, but benchmark architecture must avoid pre-vote reference anchoring and style copying.","basis":["benchmarks/p01/review-profiles/foc-functional-targets.json","benchmarks/p01/craft-corpus.json"],"expected_effect":"Make target gaps legible while keeping FoC CRAFT_ONLY_NOT_TRUTH and non-scalar.","status":"APPLIED"},
+      {"id":"I05-D05","area":"owner controls","change":"Added MATCHES_TARGET, PARTIAL, MISSES_TARGET, WRONG_TARGET, UNCERTAIN plus optional notes/preferred behavior and boundary correction.","declared_reason":"The owner must be able to reject not only candidate behavior but also an incorrect extracted target itself.","basis":["schemas/owner-guided-review.schema.json"],"expected_effect":"Prevent FoC-derived target abstractions from silently becoming unquestionable product truth.","status":"APPLIED"},
+      {"id":"I05-D06","area":"artifact ergonomics","change":"Guided session stores source locator and a short candidate excerpt instead of duplicating entire probe text.","declared_reason":"A first attempt to materialize large prose copies was blocked; shorter locator-based cards are also a better fit for the intended review experience.","basis":["Tool guardrail encountered during implementation","benchmarks/p01/review-sessions/owner-pilot-01-guided.json"],"expected_effect":"Keep diagnostic artifacts small and make review genuinely micro-unit oriented.","status":"APPLIED"}
     ],
     "implementation_steps": [
-      {
-        "seq": 1,
-        "action": "Opened an explicit Iteration 05 work order preserving blind benchmark boundaries.",
-        "files": ["docs/phase1/ITERATION-05-WORK-ORDER.md"],
-        "observed_result": "Guided review was scoped as diagnostic UX, not calibration-valid blind evidence."
-      },
-      {
-        "seq": 2,
-        "action": "Documented the owner-guided review protocol and behavior-level feature model.",
-        "files": ["docs/quality/owner-guided-review.md"],
-        "observed_result": "Review now has a defined micro-unit flow and explicit no-scalar/no-style-copy rules."
-      },
-      {
-        "seq": 3,
-        "action": "Added a machine-readable guided-review schema.",
-        "files": ["schemas/owner-guided-review.schema.json"],
-        "observed_result": "Owner labels, source locators, feature comparisons, WRONG_TARGET and scalar_score=null are structurally represented."
-      },
-      {
-        "seq": 4,
-        "action": "Added a FoC functional target profile and one guided review pilot for Sample A.",
-        "files": ["benchmarks/p01/review-profiles/foc-functional-targets.json", "benchmarks/p01/review-sessions/owner-pilot-01-guided.json"],
-        "observed_result": "Five micro-units can now be reviewed independently with direct behavior-level target overlap/gap comparisons."
-      }
+      {"seq":1,"action":"Opened Iteration 05 work order preserving blind benchmark boundaries.","files":["docs/phase1/ITERATION-05-WORK-ORDER.md"],"observed_result":"Guided review scoped as diagnostic UX, not calibration-valid blind evidence."},
+      {"seq":2,"action":"Documented guided review protocol and behavior-level feature model.","files":["docs/quality/owner-guided-review.md"],"observed_result":"Review has a micro-unit flow and explicit no-scalar/no-style-copy rules."},
+      {"seq":3,"action":"Added guided-review schema.","files":["schemas/owner-guided-review.schema.json"],"observed_result":"Owner labels, source locators, WRONG_TARGET and scalar_score=null are represented."},
+      {"seq":4,"action":"Added FoC functional target profile and guided Sample A pilot.","files":["benchmarks/p01/review-profiles/foc-functional-targets.json","benchmarks/p01/review-sessions/owner-pilot-01-guided.json"],"observed_result":"Five micro-units can be reviewed independently with candidate-vs-target behavior comparisons."},
+      {"seq":5,"action":"Routed the active Phase 1 entrypoint through both blind and guided owner-review modes and added a dedicated structural verifier.","files":["docs/phase1/START.md","scripts/experiments/verify_phase1_guided_review.py"],"observed_result":"The two review modes are explicitly separated and mechanically checkable."}
     ],
     "validations": [
-      {
-        "command": "Static inspection against Iteration 05 work order",
-        "status": "PASS",
-        "observed_result": "Confirmed separate diagnostic mode, micro-unit source locators, non-scalar feature comparisons, WRONG_TARGET owner control, and FoC craft-only behavior targets."
-      },
-      {
-        "command": "Repository-local JSON Schema validation",
-        "status": "NOT_RUN",
-        "observed_result": "No local checkout/runtime was available in this connector-only implementation turn."
-      }
+      {"command":"Static inspection against Iteration 05 work order","status":"PASS","observed_result":"Confirmed separate diagnostic mode, micro-unit locators, non-scalar feature comparisons, WRONG_TARGET owner control, and FoC craft-only targets."},
+      {"command":"python scripts/experiments/verify_phase1_guided_review.py","status":"NOT_RUN","observed_result":"Verifier implemented but not executed because no local repository runtime was available in this connector-only turn."}
     ],
     "deviations": [
-      "The first guided pilot covers only five micro-units of Sample A so the owner can validate review ergonomics before the mechanism is expanded to the entire probe or Sample B.",
-      "The first attempt to embed much larger candidate passages in the session artifact was abandoned in favor of source locators plus short excerpts."
+      "The first guided pilot covers only five micro-units of Sample A so review ergonomics can be validated before expansion.",
+      "A first attempt to embed much larger candidate passages was replaced by source locators plus short excerpts."
     ],
     "unresolved": [
-      "Collect owner UX feedback on whether the micro-unit size and feature cards are actually easier to review.",
-      "Owner must mark any FoC-derived feature target that does not reflect the desired product as WRONG_TARGET.",
-      "After UX acceptance, add a deterministic/agent workflow for generating guided cards for arbitrary samples and extend to full Section/episode sentinel review.",
-      "Run schema validation in a real checkout/CI."
+      "Collect owner UX feedback on micro-unit size and feature-card usefulness.",
+      "Honor WRONG_TARGET whenever a FoC-derived behavior abstraction does not reflect the desired product.",
+      "After UX acceptance, add a reusable agent workflow for arbitrary samples and extend to full Section/Episode sentinels.",
+      "Run the guided-review verifier in CI or a real checkout."
     ]
   },
   "output": {
     "benchmark_version": "1.3.0",
     "deliverables": [
-      {"path": "docs/quality/owner-guided-review.md", "role": "guided owner review UX contract"},
-      {"path": "schemas/owner-guided-review.schema.json", "role": "guided review machine-readable contract"},
-      {"path": "benchmarks/p01/review-profiles/foc-functional-targets.json", "role": "FoC function-level behavior targets"},
-      {"path": "benchmarks/p01/review-sessions/owner-pilot-01-guided.json", "role": "five-card guided pilot for Sample A"}
+      {"path":"docs/quality/owner-guided-review.md","role":"guided owner review UX contract"},
+      {"path":"schemas/owner-guided-review.schema.json","role":"guided review machine-readable contract"},
+      {"path":"benchmarks/p01/review-profiles/foc-functional-targets.json","role":"FoC function-level behavior targets"},
+      {"path":"benchmarks/p01/review-sessions/owner-pilot-01-guided.json","role":"five-card guided pilot for Sample A"},
+      {"path":"scripts/experiments/verify_phase1_guided_review.py","role":"guided-review structural boundary verifier"}
     ],
     "measurement_design": {
-      "primary_evaluation": "Unchanged: blind holistic owner preference remains the benchmark-valid primary construct.",
-      "diagnostic_method": "New guided UX decomposes one sample into rhetorical micro-units and compares 3-5 relevant behavior features directly against function-matched FoC target behaviors.",
-      "truth_method": "Unchanged and independent; FoC remains CRAFT_ONLY_NOT_TRUTH.",
-      "spoken_method": "SPOKEN_LOAD remains TEXT_PREDICTION unless audio/listener evidence exists.",
-      "target_gap_method": "Guided mode may expose FoC-derived behavior targets because it is explicitly diagnostic and benchmark_evidence_eligible=false.",
-      "judge_policy": "No change; LLM benchmark judge remains SHADOW_ONLY."
+      "primary_evaluation":"Unchanged: blind holistic owner preference remains the benchmark-valid primary construct.",
+      "diagnostic_method":"Guided UX decomposes one sample into rhetorical micro-units and compares 3-5 relevant behavior features against function-matched FoC target behaviors.",
+      "truth_method":"Unchanged and independent; FoC remains CRAFT_ONLY_NOT_TRUTH.",
+      "spoken_method":"SPOKEN_LOAD remains TEXT_PREDICTION unless audio/listener evidence exists.",
+      "target_gap_method":"Guided mode may expose FoC-derived behavior targets because benchmark_evidence_eligible=false.",
+      "judge_policy":"No change; LLM benchmark judge remains SHADOW_ONLY."
     },
     "dataset_partitions": {
-      "dev": "Historical P01 material remains DEV.",
-      "pilot": "Guided Sample A session is PILOT UX evidence only.",
-      "calibration": "Fresh calibration corpus remains unpopulated.",
-      "sequestered": "Private/restricted validation payload remains uncreated."
+      "dev":"Historical P01 material remains DEV.",
+      "pilot":"Guided Sample A session is PILOT UX evidence only.",
+      "calibration":"Fresh calibration corpus remains unpopulated.",
+      "sequestered":"Private/restricted validation payload remains uncreated."
     },
-    "owner_calibration_status": "PILOT_PREPARED",
-    "craft_corpus_coverage": "Uses the existing frozen FoC craft corpus through a behavior-level functional target profile; no truth authority or scalar similarity is assigned.",
-    "verifier_result": {
-      "status": "NOT_RUN",
-      "command": "repository-local schema/structural validation",
-      "observed_result": "Static inspection only in connector session; local verifier not run."
-    },
-    "known_limitations": [
-      "Current guided session covers only five micro-units of Sample A.",
-      "Feature extraction is a diagnostic hypothesis until owner labels it; WRONG_TARGET must be honored.",
-      "Behavior targets are abstractions from the existing FoC craft corpus, not claims of universal narrative quality.",
-      "Guided labels are not blind benchmark-valid preference evidence."
-    ],
-    "phase1_readiness": "ARCHITECTURE_FROZEN_READY_FOR_PILOT",
-    "summary": "Added a separate owner-friendly guided review mechanism so long probes can be inspected as small functional cards with direct candidate-vs-target behavior gaps, while preserving blind benchmark validity as a separate lane."
+    "owner_calibration_status":"PILOT_PREPARED",
+    "craft_corpus_coverage":"Uses the existing frozen FoC craft corpus through a behavior-level target profile; no truth authority or scalar similarity is assigned.",
+    "verifier_result":{"status":"NOT_RUN","command":"python scripts/experiments/verify_phase1_guided_review.py","observed_result":"Verifier exists but has not been executed in a local checkout."},
+    "known_limitations":["Current guided session covers five micro-units of Sample A.","Feature extraction is diagnostic until owner labels it; WRONG_TARGET must be honored.","FoC targets are behavior abstractions, not universal narrative-quality claims.","Guided labels are not blind benchmark-valid preference evidence."],
+    "phase1_readiness":"ARCHITECTURE_FROZEN_READY_FOR_PILOT",
+    "summary":"Added an owner-friendly guided review mechanism so long probes can be inspected as small functional cards with direct candidate-vs-target behavior gaps while preserving blind benchmark validity as a separate lane."
   }
 }
