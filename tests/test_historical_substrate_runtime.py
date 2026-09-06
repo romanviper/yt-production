@@ -61,7 +61,7 @@ class HistoricalSubstrateRuntimeIntegrationTest(unittest.TestCase):
         self.assertEqual(verify_canonical_section_state(self.product, "P01"), [])
         with self.assertRaisesRegex(ValueError, "explicit Historical Substrate adoption"):
             materialize(self.product, section="P02")
-        with self.assertRaisesRegex(ValueError, "product-complete"):
+        with self.assertRaisesRegex(ValueError, "bounded Historical Substrate adoption"):
             materialize(self.product)
 
     def test_whole_outline_task_requires_product_complete_substrate(self) -> None:
