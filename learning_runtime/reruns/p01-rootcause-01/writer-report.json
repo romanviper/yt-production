@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "executor": "ASSISTANT_MANUAL_MODULE_MVP",
+  "independence": "NONE",
+  "purpose": "Exercise the bounded learning loop after white-box attribution; not benchmark evidence and not a substitute for an independent live Writer agent.",
+  "plan_ref": "learning_runtime/reruns/p01-rootcause-01/revised-plan-b03.json",
+  "output_ref": "learning_runtime/reruns/p01-rootcause-01/writer-output.md",
+  "beat_execution": [
+    {
+      "beat_id": "B03",
+      "status": "REALIZED",
+      "candidate_quote": "Khi lớp đất sét đã khép lại, những con tính bên trong không còn hiện ra trước mắt. Muốn nhìn lại và đếm chúng trực tiếp, người ta phải phá lớp vỏ. Chiếc vỏ càng còn nguyên, phần nằm trong nó càng không thể được kiểm tra bằng mắt.",
+      "deviation": "NONE",
+      "declared_mapping": "The prose realizes only the closed/open visibility condition and deliberately stops before naming the broader historical meaning."
+    }
+  ],
+  "new_claims": [],
+  "warnings": [
+    "This is a manual MVP realization produced in the same assistant session that designed the intervention, so it cannot establish independent causal success.",
+    "Owner/Product measurement is still required before any improvement claim."
+  ]
+}
