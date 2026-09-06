@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -10,6 +11,20 @@ from .stages import STAGE_ORDER, run_stage, validate_scenario
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCENARIO_DIR = Path(__file__).resolve().parent / "scenarios"
+
+
+def current_source_commit() -> str | None:
+    try:
+        proc = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=REPO_ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    return proc.stdout.strip() or None
 
 
 def load_scenario(name: str) -> dict[str, Any]:
@@ -21,12 +36,19 @@ def load_scenario(name: str) -> dict[str, Any]:
     return scenario
 
 
-def run_scenario(name: str, out_dir: Path, force: bool = False) -> dict[str, Any]:
+def run_scenario(
+    name: str,
+    out_dir: Path,
+    force: bool = False,
+    *,
+    run_id_override: str | None = None,
+    runtime_phase: int = 2,
+) -> dict[str, Any]:
     scenario = load_scenario(name)
     store = ArtifactStore(out_dir)
     store.prepare(force=force)
 
-    run_id = scenario["run_id"]
+    run_id = run_id_override or scenario["run_id"]
     results = []
     parent_node_id = None
     previous_output_sha256 = None
@@ -40,16 +62,18 @@ def run_scenario(name: str, out_dir: Path, force: bool = False) -> dict[str, Any
             run_id=run_id,
             parent_node_id=parent_node_id,
             previous_output_sha256=previous_output_sha256,
+            runtime_phase=runtime_phase,
         )
         results.append(result)
         parent_node_id = result.node_id
         previous_output_sha256 = result.output_sha256
 
     manifest = {
-        "runtime_version": "0.1.0",
-        "phase": 2,
+        "runtime_version": "0.3.0" if runtime_phase >= 3 else "0.1.1",
+        "phase": runtime_phase,
         "scenario": name,
         "run_id": run_id,
+        "source_commit": current_source_commit(),
         "mode": scenario["mode"],
         "stage_order": list(STAGE_ORDER),
         "status": "SMOKE_REPLAY_COMPLETE",
@@ -59,6 +83,7 @@ def run_scenario(name: str, out_dir: Path, force: bool = False) -> dict[str, Any
                 "node_id": r.node_id,
                 "output_path": r.output_path,
                 "output_sha256": r.output_sha256,
+                "output_identity": r.output_identity,
                 "manifest_sha256": r.manifest_sha256,
             }
             for r in results
@@ -76,7 +101,7 @@ def run_scenario(name: str, out_dir: Path, force: bool = False) -> dict[str, Any
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Phase 2 minimal learning runtime")
+    parser = argparse.ArgumentParser(description="Minimal learning runtime")
     parser.add_argument("scenario", help="scenario name, e.g. p01-mvp")
     parser.add_argument("--out", type=Path, default=None, help="output directory")
     parser.add_argument("--force", action="store_true", help="allow writing into an existing non-empty run directory")
