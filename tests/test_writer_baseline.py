@@ -575,7 +575,7 @@ class WriterBaselineTests(unittest.TestCase):
             self.assertEqual(
                 [
                     "system/core/creative-boundaries.md",
-                    "system/operations/draft-section.md",
+                    "system/operations/substrate/draft-section.md",
                 ],
                 packet["instruction_files"],
             )
@@ -636,6 +636,10 @@ class WriterBaselineTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             product = Path(temp) / "sumer-writing"
             shutil.copytree(SOURCE_PRODUCT, product)
+            # The canonical source product is intentionally pre-draft. Build the
+            # review prerequisite inside this temporary copy instead of requiring
+            # or mutating a product draft in the repository.
+            submit_fixture_prose(product, [])
             state_path = product / "03_sections" / "P01" / "section.json"
             state = json.loads(state_path.read_text(encoding="utf-8"))
             state["status"] = "ready_for_review"
