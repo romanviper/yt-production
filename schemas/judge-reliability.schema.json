@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Phase1JudgeReliability",
+  "description": "Reliability record for an LLM judge operating in SHADOW_ONLY mode until out-of-sample owner validation passes all pre-registered gates.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "judge_id",
+    "model_version",
+    "judge_prompt_hash",
+    "taxonomy_version",
+    "calibration_split_id",
+    "sequestered_split_id",
+    "mode",
+    "owner_agreement",
+    "position_reversal_consistency",
+    "duplicate_consistency",
+    "evidence_span_validity",
+    "confidence_conditioned_agreement",
+    "abstention_rate",
+    "failure_slices",
+    "transfer_topic_results",
+    "pre_registered_tolerance_ref",
+    "eligible_for_optimization_loop",
+    "validation_date"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "judge_id": {"type": "string", "minLength": 1},
+    "model_version": {"type": "string", "minLength": 1},
+    "judge_prompt_hash": {"type": "string", "minLength": 1},
+    "taxonomy_version": {"type": "string", "minLength": 1},
+    "calibration_split_id": {"type": ["string", "null"]},
+    "sequestered_split_id": {"type": ["string", "null"]},
+    "mode": {"type": "string", "enum": ["SHADOW_ONLY", "ELIGIBLE_PROXY"]},
+    "owner_agreement": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "owner_self_consistency": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "position_reversal_consistency": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "duplicate_consistency": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "evidence_span_validity": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "confidence_conditioned_agreement": {"type": "object"},
+    "abstention_rate": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "failure_slices": {
+      "type": "object",
+      "properties": {
+        "verbose_vs_concise": {"type": ["object", "null"]},
+        "high_hedging": {"type": ["object", "null"]},
+        "authority_tone": {"type": ["object", "null"]},
+        "foc_like_surface": {"type": ["object", "null"]},
+        "vietnamese": {"type": ["object", "null"]},
+        "long_context": {"type": ["object", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "transfer_topic_results": {"type": "array", "items": {"type": "object"}},
+    "pre_registered_tolerance_ref": {"type": ["string", "null"]},
+    "gate_results": {"type": "object"},
+    "eligible_for_optimization_loop": {"type": "boolean"},
+    "validation_date": {"type": ["string", "null"], "format": "date-time"},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"mode": {"const": "SHADOW_ONLY"}}},
+      "then": {"properties": {"eligible_for_optimization_loop": {"const": false}}}
+    },
+    {
+      "if": {"properties": {"eligible_for_optimization_loop": {"const": true}}},
+      "then": {
+        "properties": {
+          "mode": {"const": "ELIGIBLE_PROXY"},
+          "pre_registered_tolerance_ref": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}
