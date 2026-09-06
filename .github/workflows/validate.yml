@@ -3,9 +3,26 @@ name: Validate production system
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, codex/p01-phase3-whitebox-mvp]
 
 jobs:
+  feedback-focused:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Focused Phase 2/3 feedback regressions
+        run: python -m unittest tests.test_learning_runtime tests.test_phase3_whitebox tests.test_feedback_integrity -v
+      - name: Phase 1 benchmark verifier
+        run: python scripts/experiments/verify_phase1_benchmark.py
+      - name: Guided-review verifier
+        run: python scripts/experiments/verify_phase1_guided_review.py
+
   validate:
     runs-on: ubuntu-latest
     steps:
