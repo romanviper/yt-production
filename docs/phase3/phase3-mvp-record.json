@@ -1,9 +1,9 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "phase": 3,
   "record_id": "PHASE3-MVP-01",
   "source_phase2_commit": "ac18fefca5332cf6d7e5ccf90f54dd8602866049",
-  "objective": "Use one observable output defect to trace backward through Writer realization into the mapped Plan node, classify the bounded fault region, and produce one smallest-scope intervention without expanding the runtime into a generic platform.",
+  "objective": "Use one observable output defect to trace backward through Writer realization into the mapped Plan node, classify the bounded fault region, make one smallest-scope Plan intervention, produce one bounded rerun, and return it to owner measurement without expanding the runtime into a generic platform.",
   "process": {
     "decisions": [
       {
@@ -13,12 +13,12 @@
       },
       {
         "id": "P3-D02",
-        "decision": "Use archived Round-01 B03 as the first trace fixture rather than fabricate a new live run.",
+        "decision": "Use archived Round-01 B03 as the first trace fixture rather than fabricate a new live historical agent run.",
         "reason": "Round-01 already contains writing-plan.json, writer-report.json, exact beat mappings and zero reported deviations."
       },
       {
         "id": "P3-D03",
-        "decision": "Seed the trace with EXPO​SITION_LOAD.EXPLANATION_BEFORE_NEED anchored to an exact candidate sentence.",
+        "decision": "Seed the trace with EXPOSITION_LOAD.EXPLANATION_BEFORE_NEED anchored to an exact candidate sentence.",
         "reason": "The symptom is observable in the prose and the mapped Plan beat contains an inspectable pre-resolved interpretation, making Plan-vs-realization attribution falsifiable."
       },
       {
@@ -33,8 +33,13 @@
       },
       {
         "id": "P3-D06",
-        "decision": "Do not claim a successful learning iteration until a live Writer rerun exists and Product/owner measurement evaluates it.",
-        "reason": "This session has no live model-execution adapter inside the repository runtime; fabricating a rerun would invalidate the learning loop."
+        "decision": "Materialize one bounded B03 rerun after attribution, but label it ASSISTANT_MANUAL_MODULE_MVP with independence NONE.",
+        "reason": "This exercises the vertical learning loop without pretending the repository has an independent live-agent adapter. The rerun is diagnostic input only until the owner measures it."
+      },
+      {
+        "id": "P3-D07",
+        "decision": "Return the rerun through a guided micro-unit review card instead of a full-probe comparison.",
+        "reason": "The owner explicitly needs small feature-level comparisons against functional FoC targets in order to provide more informative feedback than BOTH_FAIL on long probes."
       }
     ],
     "changed_surfaces": [
@@ -43,6 +48,10 @@
       "learning_runtime/scenarios/p01-rootcause-01.phase3.json",
       "learning_runtime/scenarios/p01-rootcause-01.failure.json",
       "learning_runtime/interventions/p01-rootcause-01-plan-only.json",
+      "learning_runtime/reruns/p01-rootcause-01/revised-plan-b03.json",
+      "learning_runtime/reruns/p01-rootcause-01/writer-output.md",
+      "learning_runtime/reruns/p01-rootcause-01/writer-report.json",
+      "benchmarks/p01/review-sessions/phase3-p3-f01-rerun-guided.json",
       "tests/test_phase3_whitebox.py",
       "docs/phase3/START.md",
       "AGENTS.md"
@@ -66,7 +75,7 @@
     }
   },
   "output": {
-    "status": "PHASE3_TRACE_MVP_READY_FOR_LIVE_RERUN",
+    "status": "PHASE3_MVP_AWAITING_OWNER_MEASUREMENT",
     "command": "python -m learning_runtime.phase3 p01-rootcause-01 --out <run-dir>",
     "trace_result": {
       "failure_id": "P3-F01",
@@ -82,7 +91,21 @@
       "id": "P3-I01",
       "scope": "PLAN_ONLY:B03",
       "prediction": "Reduce or remove EXPLANATION_BEFORE_NEED while preserving truth qualification, artifact clarity and sequence continuity.",
-      "status": "READY_FOR_LIVE_RERUN"
+      "status": "APPLIED_TO_BOUNDED_RERUN"
+    },
+    "rerun": {
+      "plan_ref": "learning_runtime/reruns/p01-rootcause-01/revised-plan-b03.json",
+      "output_ref": "learning_runtime/reruns/p01-rootcause-01/writer-output.md",
+      "writer_report_ref": "learning_runtime/reruns/p01-rootcause-01/writer-report.json",
+      "executor": "ASSISTANT_MANUAL_MODULE_MVP",
+      "independence": "NONE",
+      "improvement_claim": "NOT_ALLOWED_UNTIL_OWNER_MEASUREMENT"
+    },
+    "owner_measurement": {
+      "review_ref": "benchmarks/p01/review-sessions/phase3-p3-f01-rerun-guided.json",
+      "mode": "GUIDED_TARGET_DIAGNOSTIC",
+      "benchmark_evidence_eligible": false,
+      "status": "AWAITING_OWNER_LABELS"
     },
     "whitebox_surface": {
       "output_to_writer_mapping": true,
@@ -91,9 +114,10 @@
       "write_trace_jsonl": true,
       "explicit_observation_vs_diagnosis": true,
       "bounded_fault_isolation": true,
-      "live_writer_rerun": false,
+      "bounded_rerun_materialized": true,
+      "independent_live_writer_rerun": false,
       "measured_post_intervention_output": false
     },
-    "next_required_step": "Execute one live Writer realization with the same evidence ceiling and Writer contract while changing only the B03 plan representation, then return the new prose to the Phase 1 Product/owner measurement surface."
+    "next_required_step": "Collect owner labels on the guided BEFORE/AFTER micro review. If the owner sees a meaningful improvement, the first end-to-end MVP learning loop has positive directional evidence; if not, reject or revise P3-I01 without broad harness changes."
   }
 }
