@@ -38,6 +38,37 @@ Runtime version: `PHASE3-DECISION-TELEMETRY-1`
 
 Events are append-ordered. The broker assigns `role`, `execution_id` and monotonic `sequence`; the agent cannot use another role identity.
 
+## Temporal rule: decision before final artifact
+
+A seal alone is not sufficient because an agent could otherwise finish an artifact and then write a plausible rationale immediately before sealing it.
+
+For **Plan, Writer, Truth and Audit** the broker therefore requires:
+
+```text
+work / exploration
+      ↓
+scratch/  (may be rewritten)
+      ↓
+DECISION event naming exact output/<path>
+      ↓
+first and only final write to output/<path>
+      ↓
+optional later CHECKPOINT / RISK / DEVIATION events
+      ↓
+seal
+      ↓
+downstream handoff
+```
+
+Rules:
+
+1. A `DECISION` that names the exact final `output/<path>` must already exist before that final artifact can be materialized.
+2. Final artifacts in `output/` are write-once through the broker. If the agent still needs to explore, rewrite or compare alternatives, it must use `scratch/`.
+3. The execution seal independently checks that every declared primary output is bound to at least one decision; this catches direct-filesystem/broker-bypass cases at the handoff boundary.
+4. After seal, no broker write is allowed, including telemetry or scratch writes.
+
+This establishes an observable ordering relation between declared decisions and final output. It does **not** prove that the declared rationale was the hidden psychological cause of the choice; telemetry remains self-report process evidence.
+
 ## Event types
 
 ### DECISION
@@ -55,7 +86,7 @@ risks
 output_refs
 ```
 
-`rationale_summary` is a short engineering/editorial explanation, not a reasoning transcript.
+`rationale_summary` is a short engineering/editorial explanation, not a reasoning transcript. `output_refs` must use bounded `output/<path>` references.
 
 Examples of useful decisions:
 
@@ -64,7 +95,7 @@ Examples of useful decisions:
 - Truth: `CLAIM_CLASSIFICATION`, `EVIDENCE_JUDGMENT`, `QUALIFICATION`.
 - Audit: `ATTRIBUTION`, `EVIDENCE_LIMITATION`, `HYPOTHESIS_UPDATE`.
 
-Plan, Writer, Truth and Audit executions must contain at least one `DECISION` before they can be sealed.
+Plan, Writer, Truth and Audit executions must contain at least one `DECISION` before they can be sealed, and each primary output must be named by a decision.
 
 ### CHECKPOINT
 
@@ -80,7 +111,7 @@ Records a conscious departure from an upstream Plan/contract, the chosen action,
 
 ## Product review exception
 
-The blind Product reviewer must not be forced to generate analytical rationale before its first-pass preference is frozen. A Review role may therefore seal a first-pass preference with checkpoint telemetry and zero `DECISION` events.
+The blind Product reviewer must not be forced to generate analytical rationale before its first-pass preference is frozen. A Review role may therefore materialize and seal a first-pass preference with checkpoint telemetry and zero `DECISION` events.
 
 Only after the vote is frozen may post-vote diagnostic observation be collected. Diagnostic target, attribution and intervention prediction remain hidden before the first-pass vote.
 
@@ -92,10 +123,11 @@ The runtime must:
 
 1. validate `telemetry.jsonl`;
 2. require bounded decision evidence for Plan / Writer / Truth / Audit;
-3. hash telemetry and declared primary outputs;
-4. create `control/seals/<role>-<execution-id>.json`;
-5. reject all broker writes from that execution after seal;
-6. allow handoff only from an artifact identity present in the valid execution seal.
+3. verify every primary output is bound to a prior decision;
+4. hash telemetry and declared primary outputs;
+5. create `control/seals/<role>-<execution-id>.json`;
+6. reject all broker writes from that execution after seal;
+7. allow handoff only from an artifact identity present in the valid execution seal.
 
 The seal status is:
 
@@ -107,7 +139,7 @@ This prevents downstream Product/Truth/Audit feedback from being used to silentl
 
 ## Evidence authority
 
-Decision telemetry is **declared process evidence**. It has more diagnostic value than an unstructured retrospective essay because it is ordered and frozen before downstream feedback, but it is still self-report.
+Decision telemetry is **declared process evidence**. It has more diagnostic value than an unstructured retrospective essay because it is ordered, bound before final materialization and frozen before downstream feedback, but it is still self-report.
 
 Therefore:
 
@@ -140,7 +172,10 @@ Do not restart Phase 3 Learning Round 01 until the execution path used for the f
 
 ```text
 role packet includes telemetry contract
--> role emits ordered telemetry during execution
+-> role explores only in scratch/
+-> role emits bounded DECISION for exact final output path
+-> final output is materialized once
+-> output overwrite is denied
 -> primary output + telemetry validate
 -> execution seal is created
 -> post-seal mutation is denied
