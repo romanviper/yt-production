@@ -1,42 +1,47 @@
-# Direct Writer Fast Path
+# Writer Fast Path
 
-This is the active path when the Owner directly tells you to write P01.
+If the Owner tells you to write P01, write immediately. Do not wait for any assignment, controller state, budget, active task, Planner, Reviewer, or other agent.
 
-## Do this immediately
+## Read only these two inputs
 
-1. Read only:
-   - `products/sumer-writing/02_outline/section-overlays/P01.json`
-   - `products/sumer-writing/03_sections/P01/historical-substrate.json`
-2. Write **one** Vietnamese historical-podcast draft for P01.
-3. Save it to:
-   - `products/sumer-writing/03_sections/P01/draft.md`
-4. Save minimal metadata to:
-   - `products/sumer-writing/03_sections/P01/writer-meta.json`
-5. Commit both files on your current Writer branch and stop.
+- `products/sumer-writing/02_outline/section-overlays/P01.json`
+- `products/sumer-writing/03_sections/P01/historical-substrate.json`
 
-## Owner authority
+## Write one attempt
 
-A direct Owner instruction such as "write P01" is sufficient authority to start writing.
+Write one Vietnamese historical-podcast excerpt for P01.
 
-Do **not** wait for `writer-assignment.json`, `assignment.json`, a controller run, a budget, an active production task, a Planner, or another role.
+Choose the telling freely. Do not force essay structure, hook formulas, beat counts, or self-review. Do not read another Writer's output or Owner feedback before finishing.
 
-Do **not** revive cancelled tasks or scan for a different assignment.
+Historical boundaries:
 
-## Writing constraints
+- overlapping clay practices are not a mandatory token → envelope → tablet replacement sequence;
+- do not invent a specific tax/market/tribute/ownership mechanism without evidence.
 
-- One content attempt only.
-- Use the P01 overlay for the intended audience discovery / angle.
-- Use the P01 historical substrate as the factual boundary.
-- Do not turn overlapping clay practices into a simple token → envelope → tablet replacement genealogy.
-- Do not invent a specific tax/market/tribute/ownership mechanism without evidence.
-- Choose the telling freely. Do not force essay structure, hook formulas, beat counts, or self-review.
-- Do not read another Writer's draft or Owner feedback before finishing.
+Suggested size is roughly 450–650 words, but this is not a hard gate.
 
-The suggested size is roughly 450–650 words, but this is **not** a hard gate. Write the amount needed for a strong readable excerpt.
+## Save output only here
+
+Use your own partition under:
+
+`writer-output/P01/<writer>/`
+
+For the current Writers:
+
+- Gemini → `writer-output/P01/gemini/`
+- GPT-5.6 Sol → `writer-output/P01/sol/`
+- GPT-6 → `writer-output/P01/gpt6/`
+
+A new model may create one new short model-name partition under `writer-output/P01/`.
+
+Each partition contains only:
+
+- `draft.md`
+- `meta.json`
+
+Do not write the draft into `products/`, `runs/`, or controller folders.
 
 ## Minimal metadata
-
-`writer-meta.json` only needs:
 
 ```json
 {
@@ -46,10 +51,12 @@ The suggested size is roughly 450–650 words, but this is **not** a hard gate. 
     "products/sumer-writing/03_sections/P01/historical-substrate.json"
   ],
   "attempt": 1,
-  "notes": "<brief issues/uncertainty if any>"
+  "notes": "<brief issue/uncertainty if any>"
 }
 ```
 
-Timing is optional. No Writer time budget applies.
+Timing is optional. There is no Writer time budget.
+
+Commit `draft.md` and `meta.json` on your current Writer branch, then stop for Owner reading.
 
 Do not store chain-of-thought or private reasoning.
