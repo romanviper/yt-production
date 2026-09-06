@@ -583,12 +583,13 @@ class WriterBaselineTests(unittest.TestCase):
             self.assertEqual(
                 [
                     "03_sections/P01/section.json",
+                    "03_sections/P01/historical-substrate.json",
                     "03_sections/P01/narration-pack.json",
                     "03_sections/P01/continuity-in.md",
                 ],
-                input_paths[:3],
+                input_paths[:4],
             )
-            self.assertTrue(set(input_paths[3:]).issubset({"03_sections/P01/draft-rework-request.md"}))
+            self.assertTrue(set(input_paths[4:]).issubset({"03_sections/P01/draft-rework-request.md"}))
             self.assertIn("evidence_access", packet)
             self.assertIn('"mission"', context)
             self.assertIn("writer_directed_on_demand_v1", context)
