@@ -1,16 +1,20 @@
 # Phase 3 — White-box Learning MVP
 
-Status: **READY FOR ONE BOUNDED REAL LEARNING ROUND**
+Status: **READY FOR ROUND 01 RETRY WITH MANDATORY DECISION TELEMETRY**
 
-The owner-accepted feedback in `docs/phase3/prototype-learning-feedback.md` has now been implemented. Machine-readable closure and CI evidence live in `docs/phase3/prototype-learning-implementation.json`.
+The prototype feedback corrections and the owner-requested process-observability blocker are implemented. Machine-readable evidence lives in:
 
-Do not continue polishing the architecture before a real bounded round exposes a concrete execution or evidence-loss defect.
+- `docs/phase3/prototype-learning-implementation.json`
+- `docs/phase3/decision-telemetry-implementation.json`
+
+Read `docs/phase3/decision-telemetry-contract.md` before any fresh agent execution.
+Do not continue architecture polishing unless the next bounded real round exposes a concrete execution/evidence-loss defect.
 
 ## Goal
 
-Turn a bounded output failure into trustworthy engineering feedback without pretending that exact mapping proves literary causality.
+Turn a bounded output failure into trustworthy engineering feedback without pretending that exact mapping, agent self-report, or one intervention proves literary causality.
 
-Keep the active topology:
+Active topology:
 
 ```text
 Plan -> Write -> Truth -> Product
@@ -18,47 +22,110 @@ Plan -> Write -> Truth -> Product
                    Audit
 ```
 
-The loop must answer, in order:
+The loop must answer:
 
-1. Are the candidate, failure span, Writer report and Plan the exact artifacts intended for this run?
-2. Does the output span map exactly and unambiguously to a Writer beat and Plan beat?
-3. Which bounded region is supported by semantic evidence, and how uncertain is that attribution?
-4. Was the allowed intervention actually limited to the registered region?
-5. What did the owner/Product reviewer prefer?
-6. Separately, was the named symptom observed to reduce, remain, or stay unknown?
-7. Which invariants were measured, missing or regressed?
+1. What exact inputs and standards did each role receive?
+2. What bounded decisions did Plan / Writer / Truth / Audit declare **during execution**?
+3. Which evidence, alternatives, expected effects and risks were attached to those decisions?
+4. Did each declared decision precede the final artifact it claims to produce?
+5. Is the final artifact write-once, hash-bound and sealed before downstream feedback?
+6. What did blind Product review prefer?
+7. Separately, did the named symptom reduce, remain or stay unknown?
+8. Which invariants were measured, missing or regressed?
+9. Which bounded region remains supported after artifact evidence and process telemetry are compared?
 
-Preference is not symptom evidence. Exact mapping is not causal proof.
+Preference is not symptom evidence. Exact mapping is not causal proof. Declared process telemetry is not private chain-of-thought and is not causal proof.
+
+## Mandatory process telemetry
+
+For fresh `plan`, `writer`, `truth` and `audit` executions, `input -> final output` is no longer sufficient.
+
+Each role must emit ordered telemetry to:
+
+```text
+agents/<role>/<execution-id>/output/telemetry.jsonl
+```
+
+Telemetry version:
+
+```text
+PHASE3-DECISION-TELEMETRY-1
+```
+
+Supported events:
+
+```text
+DECISION
+CHECKPOINT
+RISK
+DEVIATION
+```
+
+A `DECISION` carries at least:
+
+```text
+chosen_action
+rationale_summary
+evidence_refs
+alternatives_considered
+expected_effect
+risks
+output_refs
+```
+
+### Temporal anti-rationalization rule
+
+For Plan / Writer / Truth / Audit:
+
+```text
+explore / rewrite in scratch/
+          ↓
+DECISION binds exact output/<path>
+          ↓
+first and only final write to output/<path>
+          ↓
+seal telemetry + final outputs
+          ↓
+downstream handoff
+```
+
+The broker rejects a final output write if its decision does not already exist. Final `output/` artifacts are write-once. The seal independently rechecks decision/output binding to catch broker bypass, hashes telemetry + primary outputs, and blocks handoff if the seal is absent or stale.
+
+After seal, all broker writes from that execution are denied, including telemetry and scratch.
+
+The blind Product reviewer is intentionally different: first-pass preference is frozen without requiring analytical decision rationale. Post-vote diagnostic observation may follow only after that freeze.
+
+Runtime validation rejects raw/private-reasoning fields such as:
+
+```text
+chain_of_thought
+raw_chain_of_thought
+private_reasoning
+internal_monologue
+hidden_reasoning
+scratchpad_reasoning
+```
 
 ## Frozen learning standard
 
-The active B03 case binds exact identities for:
+The current B03 case binds exact identities for:
 
 - `learning_runtime/briefs/p01-rootcause-01.json`
 - `docs/quality/output-quality-contract.md`
 - `benchmarks/p01/review-profiles/foc-functional-targets.json`
 
-The common brief contains one product goal and decision rules, but role visibility is bounded.
-
-Before the first-pass Product vote, the reviewer does **not** receive:
-
-- the diagnostic defect hypothesis;
-- suspected Plan/Writer attribution;
-- intervention prediction;
-- FoC target behavior used for post-vote guided diagnosis.
-
-Therefore “one standard” does not mean “every role sees every diagnostic fact.”
+Before first-pass Product vote, the reviewer does **not** receive diagnostic defect labels, suspected Plan/Writer attribution, intervention prediction, or FoC target behaviors used for post-vote diagnosis.
 
 ## White-box trace
+
+Current fixture command:
 
 ```bash
 python -m learning_runtime.phase3 p01-rootcause-01 --out /tmp/p01-phase3-rootcause-01
 python -m learning_runtime.phase3 --verify-run /tmp/p01-phase3-rootcause-01
 ```
 
-The run snapshots candidate, Plan, Writer report, failure observation and intervention before diagnosis. `diagnosis.json` reads those snapshots rather than mutable repository sources.
-
-A valid current B03 trace yields:
+The existing B03 fixture supports only:
 
 ```text
 mapping: VALIDATED_EXACT / HIGH
@@ -67,81 +134,38 @@ attribution confidence: MEDIUM
 root-cause status: BOUNDED_HYPOTHESIS_NOT_CAUSAL_PROOF
 ```
 
-The attribution observation authority is only:
+Its attribution authority is:
 
 ```text
 REVIEWER_SUPPORTED_DIAGNOSTIC_HYPOTHESIS
 ```
 
-It is not `INTERVENTION_SUPPORTED_HYPOTHESIS`. Intervention support requires a separately measured intervention result.
-
-`REALIZED`, absence of a declared deviation and legacy `symptom_present` booleans are provenance observations only. They never decide causality by themselves.
+Do not promote legacy `REALIZED`, no-deviation declarations, boolean symptom flags, or structured telemetry into causal proof by themselves.
 
 ## Immutable measurement history
 
-Prepare the bounded B03 case:
-
-```bash
-rm -rf /tmp/p01-feedback-case
-python -m learning_runtime.feedback prepare p01-rootcause-01 --out /tmp/p01-feedback-case
-python -m learning_runtime.feedback verify --case-dir /tmp/p01-feedback-case
-python -m learning_runtime.feedback show --case-dir /tmp/p01-feedback-case
-```
-
-Measurements now use `schemas/feedback-measurement.schema.json` and must have an immutable `measurement_id`.
-
-Case state is stored as:
+Measurements remain append-only:
 
 ```text
-case.json                         # frozen case
-measurements/M001.json            # immutable observation
-feedback/M001.json                # derived result for M001
-measurements/M002.json            # later observation/correction
+case.json
+measurements/M001.json
+feedback/M001.json
+measurements/M002.json
 feedback/M002.json
-current.json                      # derived current pointer/resolution
+current.json
 ```
 
-A duplicate measurement ID is rejected. A correction uses a new ID plus `supersedes`. Independent parallel measurements are both preserved; without explicit supersession the state becomes `MULTIPLE_MEASUREMENTS_UNRESOLVED` rather than silently choosing the latest record.
-
-Ingestion:
-
-```bash
-python -m learning_runtime.feedback ingest \
-  --case-dir /tmp/p01-feedback-case \
-  --measurement <measurement.json>
-```
-
-### Measurement semantics
-
-The following are independent:
-
-```text
-preference_result
-symptom_observation
-invariant_state
-```
-
-A preference `YES` without a symptom observation produces:
-
-```text
-preference_result: YES
-symptom_observation: NOT_MEASURED
-improvement: NOT_ESTABLISHED
-```
-
-`UNCERTAIN` asks for clarification or more observation while keeping the intervention frozen. `WRONG_TARGET` returns to target definition without automatically rewriting Plan or Writer. Partial invariant reports inherit the case's explicit `NOT_MEASURED` states instead of erasing them.
-
-Guided owner evidence remains directional/diagnostic only. It cannot establish blind benchmark gain, whole-section quality or causal proof.
+`preference_result`, `symptom_observation` and `invariant_state` are separate evidence. Guided owner evidence remains diagnostic/directional only and cannot establish blind benchmark gain, whole-section quality or causal proof.
 
 ## Role workspaces
 
-The prototype workspace implementation is `learning_runtime/workspace.py`.
+Implementation: `learning_runtime/workspace.py`
 
-Smoke command:
+Policy:
 
-```bash
-rm -rf /tmp/p01-workspace-smoke
-python -m learning_runtime.workspace smoke --out /tmp/p01-workspace-smoke
+```text
+PHASE3-WORKSPACE-PROTOTYPE-2
+FILE_BROKER_PLUS_TEMPORAL_DECISION_GATE_PLUS_EXECUTION_SEAL_NO_SHELL_OR_NETWORK_SURFACE
 ```
 
 Layout:
@@ -153,94 +177,78 @@ Layout:
     frozen-standard.json
     handoffs.jsonl
     access-events.jsonl
+    seals/
     measurements/
   agents/
     <role>/<execution-id>/
       input/
       output/
+        telemetry.jsonl
       scratch/
 ```
 
-Policy version:
+The broker enforces role-local reads/writes, input immutability, path traversal/symlink boundaries, decision-before-final-output, write-once final outputs, execution seals, and hash-bound handoffs.
 
-```text
-PHASE3-WORKSPACE-PROTOTYPE-1
-```
+### Isolation limitation
 
-Enforcement level:
-
-```text
-FILE_BROKER_ONLY_NO_SHELL_OR_NETWORK_SURFACE
-```
-
-The broker allows a role to read its own input/output/scratch and write only its own output/scratch. Resolved `..`, absolute cross-role access and symlink escapes are denied. Handoff is a launcher-owned byte copy from one role's output to the next role's input, verified by SHA-256; the destination role cannot rewrite the handed-off input through the broker.
-
-The Product review packet is role-safe and excludes diagnostic hypothesis data before vote.
-
-### Important isolation limitation
-
-This is **not** claimed as a host/OS sandbox.
+This is **not** a host/OS sandbox:
 
 ```text
 host_process_isolation: NOT_PROVEN
 ```
 
-Read isolation is enforceable only when the agent receives `RoleWorkspaceBroker` as its sole filesystem surface and is not separately granted a shell/network/general filesystem tool that bypasses it. Any future real round using broader tools must state that isolation is not enforced rather than pretending otherwise.
+Enforcement is valid only when `RoleWorkspaceBroker` is the role's sole filesystem surface and the role is not separately granted a shell/network/general filesystem tool that bypasses it.
 
-## Verified prototype evidence
+## Verified telemetry evidence
 
-Focused CI at validation commit `d7115f9f1d08f8f521471c837c4115c0820a8ff6` ran:
+Temporal telemetry validation at build commit `d91843396aa742ab145bc2d710219d7fe2d0d02a`:
 
-- 44 focused tests: PASS in 0.379s;
+- 56 focused tests: **PASS** in 0.279s;
 - Phase 1 benchmark verifier: PASS;
-- guided single-sample verifier: PASS;
-- guided Phase 3 comparison verifier: PASS;
+- both guided review verifiers: PASS;
 - B03 case prepare/verify: PASS;
-- workspace broker smoke: PASS.
+- workspace smoke: PASS;
+- final output without prior decision: DENIED;
+- second final-output write before seal: DENIED;
+- direct-filesystem unbound primary output: seal rejects it;
+- post-seal write: DENIED;
+- Writer -> Truth sealed handoff: hash match.
 
-Workspace smoke observed real broker denials for:
+The full production suite still has the same three pre-existing Sumer/historical-substrate failures. They are outside this Phase 3 scope and are not waived.
 
-- Writer cross-role review read via traversal;
-- Writer input mutation;
-- Truth mutation of handed-off candidate input.
+## Round 01 hard gate
 
-Writer -> Truth handoff result:
+Do **not** accept a fresh Plan / Writer / Truth / Audit artifact into the learning chain unless:
 
 ```text
-COPIED_READ_ONLY_HASH_MATCH
-sha256: 3864ef4ec0073ccd3a009c781b7e0b1767750c0b6766e4f3fb0ae72e0ccccb59
+role-safe packet received
+→ ordered telemetry emitted during work
+→ bounded DECISION names exact final output path
+→ final output materialized once
+→ telemetry + output validate
+→ execution sealed before downstream feedback
+→ handoff verifies sealed hash
+→ downstream role receives only sealed artifact
 ```
 
-The full production suite still has the same three pre-existing Sumer/historical-substrate baseline failures. They remain outside this Phase 3 feedback-repair scope and are not waived.
-
-## Guided review verification
-
-```bash
-python scripts/experiments/verify_phase1_guided_review.py \
-  --session benchmarks/p01/review-sessions/owner-pilot-01-guided.json
-
-python scripts/experiments/verify_phase1_guided_review.py \
-  --session benchmarks/p01/review-sessions/phase3-p3-f01-rerun-guided.json
-```
-
-Both formats verify actual schema/source/locator/excerpt/target grounding. Null owner labels are a valid pending state, never a quality claim.
+A fresh round must preserve these telemetry files and seals alongside final artifacts. This is required so a failed prose span can be traced not only to a Plan node or Writer beat, but also to the declared decisions that produced those artifacts.
 
 ## Boundaries
 
-Do not use this prototype to:
+Do not:
 
+- log or request raw private chain-of-thought;
 - infer symptom change from preference alone;
 - overwrite previous measurements;
-- expose diagnostic prediction to the blind Product reviewer;
-- call exact mapping causal proof;
+- expose diagnostic prediction to blind Product review;
+- call telemetry declarations or exact mapping causal proof;
 - call the workspace broker an OS sandbox;
-- grant a role repo-wide shell/filesystem access and still claim broker isolation;
+- grant agents bypass tools and still claim broker isolation;
 - generalize B03 into a global writing rule;
-- add a registry, event bus, generic permission platform or new scoring layer;
-- continue architecture polishing without evidence from a real bounded round.
+- add a registry, event bus, generic permission platform or new scoring layer.
 
 ## Next legitimate step
 
-When the owner requests execution, run **one bounded real Plan -> Writer -> Truth/Product -> Audit round** through role-safe packets/workspaces.
+After this branch is validated, retry **one bounded real Plan -> Writer -> Truth/Product -> Audit learning round** with fresh role contexts and mandatory sealed decision telemetry.
 
-That round may succeed, fail or remain inconclusive. Any of those outcomes counts as useful learning if evidence is preserved and the system does not respond by inventing broad new rules without support.
+A success, failure or inconclusive result is useful if the artifacts and decision history remain trustworthy. Do not modify architecture during that round before the evidence chain is complete.
