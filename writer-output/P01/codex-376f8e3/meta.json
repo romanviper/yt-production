@@ -1,0 +1,32 @@
+{
+  "schema": "writer-observability-v2",
+  "writer": "codex-376f8e3",
+  "model": "UNKNOWN",
+  "task": "P01",
+  "attempt": 1,
+  "owner_instruction": "Viết một lượt P01 theo harness và creative brief mới nhất trên nhánh remote; lưu draft, metadata, report và commit theo quy trình hiện tại.",
+  "branch": "codex/owner-first-mvp",
+  "starting_commit": "376f8e33a647e1c3edd6f2655ab6b2072b316a5b",
+  "inputs_read": [
+    "products/sumer-writing/02_outline/P01-creative-brief.md",
+    "products/sumer-writing/02_outline/section-overlays/P01.json",
+    "products/sumer-writing/03_sections/P01/historical-substrate.json"
+  ],
+  "extra_context_accessed": [
+    "AGENTS.md",
+    "WRITER.md",
+    "GitHub ref, commit and tree metadata: branch SHA, repository file paths, blob SHAs and sizes; no other file contents read"
+  ],
+  "other_writer_outputs_read": false,
+  "owner_feedback_on_other_writer_read_before_draft": false,
+  "rerolled": false,
+  "draft_word_count": 533,
+  "word_count_method": "Whitespace-separated units using Python str.split(); not Vietnamese lexical segmentation",
+  "excerpt_scope": "Phần mở P01: thực hành đất sét Late Uruk, thao tác tạo dấu, mảnh bảng Chogha Mish có dấu số và dấu niêm, câu hỏi về nội dung công việc; chưa dùng ví dụ ngũ cốc Jemdet Nasr.",
+  "draft_sha256_at_freeze": "5bd1b1ced597160321bfd6a2455edc9897b5f4c62b3615f0d72a6652e69c1e11",
+  "timing": {
+    "seconds": null,
+    "source": "UNKNOWN"
+  },
+  "outputs": ["draft.md", "writing-report.md"]
+}
