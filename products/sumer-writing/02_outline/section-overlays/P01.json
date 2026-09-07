@@ -2,12 +2,12 @@
   "schema_version": 1,
   "section": "P01",
   "status": "approved_migration",
-  "base_outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+  "base_outline_sha256": "e9ed837a40304b8514a5778ac3a35e8ff53fa6b4010b4c6a70de24d5886e0c8c",
   "historical_substrate_contract_version": 1,
-  "historical_territory": "Các hoạt động ghi nhận và xác thực trong Late Uruk: con người/role xử lý quantity và authentication bằng counters, clay envelopes, sealings và numerical surfaces; trong cùng ecology đó, information ngày càng có thể nằm trực tiếp trên durable clay surfaces trong khi older practices vẫn cùng tồn tại.",
+  "historical_territory": "Công việc ghi nhận trong Late Uruk và một ví dụ chữ viết sơ kỳ thời Jemdet Nasr: tạo dấu, giữ số lượng, xác thực và khả năng ghi việc giao/phân phối ngũ cốc. Giữ riêng niên đại và xuất xứ của từng trường hợp.",
   "historical_change": {
-    "from": "Quantity và authentication được xử lý qua nhiều clay devices/practices, trong đó information có thể nằm trong counters, sealed containers hoặc các media khác.",
-    "to": "Numerical information ngày càng xuất hiện trực tiếp trên durable clay surfaces, đôi khi cùng authentication marks, trong khi older/parallel practices vẫn tiếp tục chồng lấn."
+    "from": "Lượng và xác thực được xử lý qua nhiều thiết bị và thực hành đất sét trong Late Uruk.",
+    "to": "Trong giai đoạn chữ viết sơ kỳ, dấu và số trên bảng đã có thể gắn với một công việc có nội dung như ghi việc giao/phân phối ngũ cốc. Đây là sự mở rộng điều quan sát được, không phải phả hệ trực tiếp giữa các hiện vật."
   },
   "historical_substrate_ids": [
     "HS-P01-0001",
@@ -15,8 +15,9 @@
     "HS-P01-0010",
     "HS-P01-0011",
     "HS-P01-0012",
+    "HS-P01-0013",
     "HS-P01-0007"
   ],
-  "audience_discovery": "Khán giả bước vào một Late-Uruk world nơi con người đã đếm, đóng, niêm phong và tạo marks trên clay; discovery không chỉ là nhiều practices cùng tồn tại mà là durable recording đang trở thành một phần của công việc thực tế, mở câu hỏi writing sẽ còn cho phép thế giới này ghi và truyền điều gì tiếp theo.",
-  "authority_note": "P01 primary substrate includes institutional pressure, two catalogued Chogha Mish objects and a bounded record-making action. Non-linear formation, no-single-inventor and no-specific-transaction rules remain truth guardrails rather than the section's sole narrative payoff."
+  "audience_discovery": "Người nghe hiểu dấu ghi từng phục vụ công việc của con người, hình dung được một phần đời sống đằng sau chúng và muốn tìm hiểu chúng còn giúp ta biết gì về Sumer. Không cần thuộc hệ phân loại hiện vật hay giải xong nguồn gốc chữ viết.",
+  "authority_note": "Owner-directed revision after 594df8d: add a qualified, independently sourced early grain-account case and align P01 narrative purpose. Chogha Mish remains optional comparative material, not its ancestor or transaction equivalent."
 }

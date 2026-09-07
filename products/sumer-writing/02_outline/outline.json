@@ -160,18 +160,18 @@
       "id": "P01",
       "order": 1,
       "title": "Trước chữ viết đã có một bài toán phải giải",
-      "mission": "Điều gì khiến việc giữ thông tin bằng những dấu bền trên đất sét trở nên hữu ích?",
+      "mission": "Đưa người nghe vào những công việc khiến việc ghi lại trở nên có ý nghĩa, và mở hành trình khám phá Sumer qua chữ viết.",
       "movement_ids": [
         "M01"
       ],
-      "narrative_job": "Thiết lập các pressure và information practices trước/sát thời điểm proto-cuneiform xuất hiện, đồng thời phá hai shortcut: một invention event duy nhất và token→tablet như đường tiến hóa tất định. Section phải kết thúc khi audience đã hiểu vì sao durable, inspectable records trở nên đáng giá mà chưa cần biết 'ai phát minh chữ viết'.",
-      "entry_state": "Chữ viết được hình dung như một ý tưởng xuất hiện đột ngột.",
-      "exit_state": "Khán giả hiểu formation là một ecology gồm numerical practices, seals/bullae/tablets và institutional demand; administration là pressure lớn nhưng không phải nguyên nhân duy nhất.",
+      "narrative_job": "Cho người nghe gặp một công việc hoặc trải nghiệm được dựng trên nền lịch sử, hiểu việc ghi lại có ý nghĩa gì trong đó, rồi mở hành trình khám phá Sumer qua chữ viết. Writer tự chọn cảnh và cách dẫn; bảng ngũ cốc thời Jemdet Nasr là một lựa chọn có nguồn, không phải cảnh bắt buộc. Các giới hạn về nguồn gốc bảo vệ cách kể, không làm đích đến chính.",
+      "entry_state": "Người nghe biết Sumer gắn với chữ viết nhưng những dấu trên đất sét còn xa lạ, chưa gắn với một công việc hay đời sống cụ thể.",
+      "exit_state": "Người nghe hiểu dấu ghi từng phục vụ công việc của con người, hình dung được một phần đời sống đằng sau chúng và muốn tìm hiểu chúng còn giúp ta biết gì về Sumer. Không cần thuộc hệ phân loại hiện vật hay giải xong nguồn gốc chữ viết.",
       "historical_change": {
-        "from": "Bằng chứng Late Uruk lưu giữ số lượng và sự xác thực trên nhiều vật mang và thực hành bằng đất sét khác nhau.",
-        "to": "Thông tin số ngày càng xuất hiện trực tiếp trên các bề mặt đất sét bền, bên cạnh các dấu xác thực."
+        "from": "Lượng và xác thực được xử lý qua nhiều thiết bị và thực hành đất sét trong Late Uruk.",
+        "to": "Trong giai đoạn chữ viết sơ kỳ, dấu và số trên bảng đã có thể gắn với một công việc có nội dung như ghi việc giao/phân phối ngũ cốc. Đây là sự mở rộng điều quan sát được, không phải phả hệ trực tiếp giữa các hiện vật."
       },
-      "earned_meaning": "Việc ghi chép Late Uruk không xuất hiện như một invention event duy nhất: thông tin số và xác thực đã được vật chất hóa qua nhiều thực hành đất sét, trong đó có những bề mặt bền có thể tiếp tục được kiểm tra sau tình huống trực tiếp.",
+      "earned_meaning": "Qua một việc được ghi lại, những dấu trên đất sét trở thành lối tiếp cận con người và đời sống của thế giới đã mất.",
       "claim_ids": [
         "CLM-0011",
         "CLM-0012",
@@ -180,15 +180,16 @@
         "CLM-0015",
         "CLM-0016",
         "CLM-0017",
-        "CLM-0018"
+        "CLM-0018",
+        "CLM-0072"
       ],
       "dependencies": [],
-      "transition": "Nếu nhu cầu và các recording practices đã tồn tại, câu hỏi tiếp theo là điều gì khiến hệ thống dấu mới thực sự khác biệt và hữu ích.",
+      "transition": "Khi những dấu đã có thể giữ lại một phần công việc, chúng còn ghi được những gì, và người sử dụng hiểu chúng bằng cách nào?",
       "target_words": {
         "min": 1050,
         "max": 1550
       },
-      "non_goal": "Không invention scene; không ethnic attribution; không universal token code; không direct token→tablet genealogy; không biến administrative pressure thành monocause."
+      "non_goal": "Không trình bày một cảnh phát minh hư cấu như sự kiện có thật; không đồng nhất proto-cuneiform với chữ nêm trưởng thành; không suy từ bảng ngũ cốc muộn hơn về công dụng của hiện vật Chogha Mish. Phân tích sâu cấu trúc dấu và khả năng biểu đạt thuộc P02."
     },
     {
       "id": "P02",

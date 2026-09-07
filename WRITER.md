@@ -50,9 +50,11 @@ Create `writing-report.md` and fill only the pre-write sections below **before d
 
 Write one Vietnamese historical-podcast excerpt for P01.
 
-The goal is not merely to explain the substrate correctly. Use the creative brief to create the intended listener experience and section state change while remaining inside the evidence boundaries.
+The goal is not merely to explain the substrate correctly. Use the creative brief to create the intended listener experience while remaining inside the evidence boundaries. For a 450–650-word excerpt, state which part of P01 you are sampling and its local listener change; do not compress the whole section or force its complete exit state into the sample.
 
 Choose the telling freely. Do not force essay structure, hook formulas, beat counts or a generic explanatory template.
+
+The Owner authorizes cinematic, bounded fiction as defined in the creative brief: reconstructed scenes, anonymous/composite characters, plausible dialogue, sensory detail and interiority. Historical inputs constrain claims presented as history, not every invented gesture or line. Distinguish a scene from documentary evidence with light framing where needed; disclose substantial reconstruction by scene in the report. Never use an invented event as evidence for a historical conclusion.
 
 Suggested size is roughly 450–650 words for this learning excerpt, but this is not a hard gate.
 
@@ -197,7 +199,7 @@ Nếu một mục tiêu đã định trước khi viết nhưng không xuất hi
 
 ### 9. Từ nguồn tới câu chữ
 
-Với mỗi claim lịch sử quan trọng, chi tiết cụ thể hoặc cầu nối nhân quả, chỉ ra căn cứ của nó.
+Với mỗi khẳng định lịch sử quan trọng hoặc cầu nối nhân quả được trình bày như thật, chỉ ra căn cứ. Chi tiết tái dựng gom theo cảnh ở mục 10: nêu nền lịch sử, phần đã sáng tạo và cách báo hiệu; không ép từng cử chỉ, âm thanh hay câu thoại hư cấu phải có nguồn riêng.
 
 | Vị trí hoặc cụm từ ngắn trong draft | Nguồn/căn cứ | Nguồn thực sự cho phép nói gì | Writer đã thêm hoặc biến đổi gì |
 | --- | --- | --- | --- |

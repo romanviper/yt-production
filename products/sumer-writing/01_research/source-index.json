@@ -1138,6 +1138,34 @@
           "local_id": "WS08-SRC-006"
         }
       ]
+    },
+    {
+      "id": "SRC-0043",
+      "title": "Cuneiform tablet: administrative account concerning the distribution of barley and emmer (1988.433.2)",
+      "author": "The Metropolitan Museum of Art",
+      "year": null,
+      "type": "museum collection record and curatorial interpretation",
+      "authority": "Holding museum catalogue for an identified early tablet.",
+      "url": "https://www.metmuseum.org/art/collection/search/327384",
+      "locators": [
+        "Object overview, especially paragraph on likely grain deliveries/distributions; Artwork Details"
+      ],
+      "status": "reviewed",
+      "accessed_at": "2026-09-07",
+      "limitations": [
+        "Grain deliveries/distributions are a likely interpretation, not a secure complete translation.",
+        "Jemdet Nasr, ca. 3100–2900 BCE; findspot only probably Uruk. Do not back-project to earlier Late Uruk or Chogha Mish.",
+        "No named recipient, quantity, payment, tax, wage, ownership or demonstrated enforcement outcome is established here."
+      ],
+      "notes": [
+        "Read the holding museum record directly. Use this bounded case to connect early records with handling grain; do not adopt its broad invention narrative as independent authority."
+      ],
+      "provenance": [
+        {
+          "workstream": "P01-owner-revision",
+          "local_id": "MET-1988.433.2"
+        }
+      ]
     }
   ]
 }

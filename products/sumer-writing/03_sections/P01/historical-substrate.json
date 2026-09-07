@@ -2,10 +2,10 @@
   "schema_version": 2,
   "contract_version": 1,
   "section": "P01",
-  "historical_territory": "Các hoạt động ghi nhận và xác thực trong Late Uruk: con người/role xử lý quantity và authentication bằng counters, clay envelopes, sealings và numerical surfaces; trong cùng ecology đó, information ngày càng có thể nằm trực tiếp trên durable clay surfaces trong khi older practices vẫn cùng tồn tại.",
+  "historical_territory": "Công việc ghi nhận trong Late Uruk và một ví dụ chữ viết sơ kỳ thời Jemdet Nasr: tạo dấu, giữ số lượng, xác thực và khả năng ghi việc giao/phân phối ngũ cốc. Giữ riêng niên đại và xuất xứ của từng trường hợp.",
   "historical_change": {
-    "from": "Quantity và authentication được xử lý qua nhiều clay devices/practices, trong đó information có thể nằm trong counters, sealed containers hoặc các media khác.",
-    "to": "Numerical information ngày càng xuất hiện trực tiếp trên durable clay surfaces, đôi khi cùng authentication marks, trong khi older/parallel practices vẫn tiếp tục chồng lấn."
+    "from": "Lượng và xác thực được xử lý qua nhiều thiết bị và thực hành đất sét trong Late Uruk.",
+    "to": "Trong giai đoạn chữ viết sơ kỳ, dấu và số trên bảng đã có thể gắn với một công việc có nội dung như ghi việc giao/phân phối ngũ cốc. Đây là sự mở rộng điều quan sát được, không phải phả hệ trực tiếp giữa các hiện vật."
   },
   "primitives": [
     {
@@ -98,6 +98,26 @@
       "place_scope": "Southern Mesopotamia and related Late-Uruk recording contexts"
     },
     {
+      "id": "HS-P01-0013",
+      "kind": "practice",
+      "world": {
+        "participants": [
+          "unidentified people involved in recording grain movements"
+        ],
+        "operation": "record grain deliveries and distributions, according to the likely interpretation of tablet 1988.433.2",
+        "object_or_medium": [
+          "clay tablet 1988.433.2"
+        ],
+        "information_or_relation_handled": [
+          "barley and emmer grain movements, interpreted as probable deliveries/distributions"
+        ],
+        "context": "Early writing: Jemdet Nasr, ca. 3100–2900 BCE; probably Uruk. A bounded example, not a reconstruction of earlier Chogha Mish practice."
+      },
+      "epistemic_status": "qualified_inference",
+      "time_scope": "Jemdet Nasr, ca. 3100–2900 BCE (museum dating)",
+      "place_scope": "Mesopotamia, probably Uruk; secure excavation context not asserted"
+    },
+    {
       "id": "HS-P01-0007",
       "kind": "change",
       "world": {
@@ -143,7 +163,19 @@
     },
     {
       "source": "HS-P01-0012",
-      "rule": "Do not invent a named person, motive, dialogue, emotion or specific transaction."
+      "rule": "Named identities, motives, dialogue and emotions are not documented by the traces. Writer may create a plausible anonymous/composite scene under the creative brief, identified as reconstruction rather than artifact evidence."
+    },
+    {
+      "source": "HS-P01-0013",
+      "rule": "Keep the likely grain-delivery/distribution reading and probable findspot qualified."
+    },
+    {
+      "source": "HS-P01-0013",
+      "rule": "This early-writing example does not establish an earlier Late-Uruk cause, a direct developmental sequence, or the use of the Chogha Mish objects."
+    },
+    {
+      "source": "HS-P01-0013",
+      "rule": "Recipients, quantities, motives and individual outcomes are not established historical facts here. A signaled fictional illustration may add plausible human detail, but must not assert a known transaction, tax, wage or entitlement or prove a causal claim."
     },
     {
       "source": "HS-P01-0007",
@@ -155,7 +187,8 @@
         "HS-P01-0001",
         "HS-P01-0007",
         "HS-P01-0010",
-        "HS-P01-0011"
+        "HS-P01-0011",
+        "HS-P01-0013"
       ],
       "rule": "Do not convert overlapping clay practices into a direct token-to-tablet replacement genealogy."
     },
@@ -173,16 +206,17 @@
         "HS-P01-0007",
         "HS-P01-0010",
         "HS-P01-0011",
-        "HS-P01-0012"
+        "HS-P01-0012",
+        "HS-P01-0013"
       ],
       "rule": "Do not label a specific economic mechanism such as market exchange, tax, tribute, redistribution, labor obligation or ownership unless independent transaction evidence supports it."
     }
   ],
   "authority_binding": {
-    "product_substrate_sha256": "645bd2c3e2ef587de0fc82eb45877b1460aee4e5ce4db77149a66f18f2af1cba",
-    "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
-    "section_overlay_sha256": "55aea12abcd215b22aa4d02420cdca11b9a8753e703707e0a47b2008b3d74722",
-    "section_binding_sha256": "c9eb4575aaa2164b9437601c3491b161d480e965eb86ddb91ff413260094e230"
+    "product_substrate_sha256": "b281156433177fe91754ad1e07f065a0bae114f06e366c94598d380ce78e29e1",
+    "outline_sha256": "e9ed837a40304b8514a5778ac3a35e8ff53fa6b4010b4c6a70de24d5886e0c8c",
+    "section_overlay_sha256": "46412dcc7430c7691d659f7fd4ad1ef89796b7ed3480527814033df9a6d8a003",
+    "section_binding_sha256": "0fc8af3024416641d86b4f1ab70b9f2572be3dcde081924ed2b274637c3c1ed4"
   },
   "writer_contract": "Historical Substrate is the primary model of historical reality. Evidence lookup is secondary and only verifies, sharpens or qualifies details needed by a telling already chosen from this model."
 }

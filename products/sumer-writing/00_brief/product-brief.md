@@ -5,16 +5,24 @@ Status: direction approved by user on 2026-08-12.
 ## Locked direction
 
 - Đây là sản phẩm đầu tiên theo North Star mới của kênh.
-- Subject là câu chuyện về chữ viết trong nền văn minh Sumer.
+- Subject là nền văn minh Sumer được khám phá qua hành trình của chữ viết; chữ nêm quyết định việc chọn và nối nội dung, con người tạo và sử dụng nó mang sức nặng của câu chuyện.
 - *Fall of Civilizations* là benchmark/đối thủ tham chiếu, không phải template để sao chép.
 - Kịch bản dự kiến dài 1–2 giờ và được tạo, review, sửa theo module.
 - Research xác định historical mechanism và boundary; không quyết định lại subject.
+
+## Lời hứa với người nghe
+
+Theo những dấu ghi để bước vào công việc, quyền lực, việc học và ký ức của người Sumer; rồi tìm hiểu vì sao vật mang chữ có thể còn khi người biết đọc đã mất, và việc đọc lại mở được phần nào của thế giới ấy. Sự sống sót của vật thể, ngôn ngữ và cộng đồng đọc là những lịch sử khác nhau.
 
 ## Product question
 
 > Một hệ thống ghi dấu xuất hiện trong những cộng đồng ngày càng phức tạp ở miền nam Mesopotamia đã hình thành, mở rộng chức năng, tái phân phối năng lực xã hội, biến đổi qua các ngôn ngữ và thiết chế, rồi để lại di sản lâu hơn thế giới tạo ra nó như thế nào?
 
 Đây là research frame, không phải verdict. Mọi causal verb phải được evidence kiểm tra.
+
+## Quyền sáng tác do Owner bổ sung — 2026-09-07
+
+Writer được kể với tư duy điện ảnh và hư cấu có giới hạn: dựng cảnh, nhân vật vô danh/tổng hợp, đối thoại, cảm giác và tâm lý hợp bối cảnh. Nền sự kiện và kết luận lịch sử phải có căn cứ; phần tái dựng không được giả làm chứng cứ hay lời cổ có nguồn. Báo hiệu nhẹ trong lời kể khi cần, khai báo theo cảnh trong report. Chi tiết xem creative brief P01.
 
 ## In scope
 

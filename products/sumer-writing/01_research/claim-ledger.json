@@ -1377,6 +1377,24 @@
           "local_id": "WS08-CLM-009"
         }
       ]
+    },
+    {
+      "id": "CLM-0072",
+      "statement": "Met tablet 1988.433.2, dated ca. 3100–2900 BCE and probably from Uruk, is interpreted as likely recording grain deliveries and distributions, including barley and emmer.",
+      "type": "inference",
+      "confidence": "medium",
+      "status": "qualified",
+      "sources": [
+        "SRC-0043"
+      ],
+      "counterevidence": "The museum qualifies its interpretation because early texts lack verbs; exact participants and transaction mechanism are not established.",
+      "narrative_implication": "A dated early-writing example of an actual kind of work; retain likely/probably and do not infer a tax, wage, ration entitlement or a direct sequence from Chogha Mish.",
+      "provenance": [
+        {
+          "workstream": "P01-owner-revision",
+          "local_id": "MET-1988.433.2"
+        }
+      ]
     }
   ],
   "contradiction_register": [

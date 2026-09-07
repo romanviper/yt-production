@@ -2,7 +2,7 @@
   "schema_version": 3,
   "section": "P01",
   "cycle_id": "C003",
-  "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
+  "outline_sha256": "e9ed837a40304b8514a5778ac3a35e8ff53fa6b4010b4c6a70de24d5886e0c8c",
   "claim_ids": [
     "CLM-0011",
     "CLM-0012",
@@ -11,7 +11,8 @@
     "CLM-0015",
     "CLM-0016",
     "CLM-0017",
-    "CLM-0018"
+    "CLM-0018",
+    "CLM-0072"
   ],
   "source_ids": [
     "SRC-0001",
@@ -19,7 +20,8 @@
     "SRC-0005",
     "SRC-0009",
     "SRC-0010",
-    "SRC-0011"
+    "SRC-0011",
+    "SRC-0043"
   ],
   "claims": [
     {
@@ -177,6 +179,24 @@
         {
           "workstream": "WS02",
           "local_id": "WS02-CLM-008"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0072",
+      "statement": "Met tablet 1988.433.2, dated ca. 3100–2900 BCE and probably from Uruk, is interpreted as likely recording grain deliveries and distributions, including barley and emmer.",
+      "type": "inference",
+      "confidence": "medium",
+      "status": "qualified",
+      "sources": [
+        "SRC-0043"
+      ],
+      "counterevidence": "The museum qualifies its interpretation because early texts lack verbs; exact participants and transaction mechanism are not established.",
+      "narrative_implication": "A dated early-writing example of an actual kind of work; retain likely/probably and do not infer a tax, wage, ration entitlement or a direct sequence from Chogha Mish.",
+      "provenance": [
+        {
+          "workstream": "P01-owner-revision",
+          "local_id": "MET-1988.433.2"
         }
       ]
     }
@@ -369,6 +389,34 @@
         {
           "workstream": "WS02",
           "local_id": "WS02-SRC-006"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0043",
+      "title": "Cuneiform tablet: administrative account concerning the distribution of barley and emmer (1988.433.2)",
+      "author": "The Metropolitan Museum of Art",
+      "year": null,
+      "type": "museum collection record and curatorial interpretation",
+      "authority": "Holding museum catalogue for an identified early tablet.",
+      "url": "https://www.metmuseum.org/art/collection/search/327384",
+      "locators": [
+        "Object overview, especially paragraph on likely grain deliveries/distributions; Artwork Details"
+      ],
+      "status": "reviewed",
+      "accessed_at": "2026-09-07",
+      "limitations": [
+        "Grain deliveries/distributions are a likely interpretation, not a secure complete translation.",
+        "Jemdet Nasr, ca. 3100–2900 BCE; findspot only probably Uruk. Do not back-project to earlier Late Uruk or Chogha Mish.",
+        "No named recipient, quantity, payment, tax, wage, ownership or demonstrated enforcement outcome is established here."
+      ],
+      "notes": [
+        "Read the holding museum record directly. Use this bounded case to connect early records with handling grain; do not adopt its broad invention narrative as independent authority."
+      ],
+      "provenance": [
+        {
+          "workstream": "P01-owner-revision",
+          "local_id": "MET-1988.433.2"
         }
       ]
     }

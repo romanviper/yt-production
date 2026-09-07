@@ -414,7 +414,42 @@
       "place_scope": "Southern Mesopotamia and related Late-Uruk recording contexts",
       "boundaries": [
         "This is a manufacture/action reconstruction from object traces, not a witnessed event.",
-        "Do not invent a named person, motive, dialogue, emotion or specific transaction."
+        "Named identities, motives, dialogue and emotions are not documented by the traces. Writer may create a plausible anonymous/composite scene under the creative brief, identified as reconstruction rather than artifact evidence."
+      ]
+    },
+    {
+      "id": "HS-P01-0013",
+      "kind": "practice",
+      "world": {
+        "participants": [
+          "unidentified people involved in recording grain movements"
+        ],
+        "operation": "record grain deliveries and distributions, according to the likely interpretation of tablet 1988.433.2",
+        "object_or_medium": [
+          "clay tablet 1988.433.2"
+        ],
+        "information_or_relation_handled": [
+          "barley and emmer grain movements, interpreted as probable deliveries/distributions"
+        ],
+        "context": "Early writing: Jemdet Nasr, ca. 3100–2900 BCE; probably Uruk. A bounded example, not a reconstruction of earlier Chogha Mish practice."
+      },
+      "statement": "Met tablet 1988.433.2, dated ca. 3100–2900 BCE and probably from Uruk, is interpreted as likely recording grain deliveries and distributions, including barley and emmer.",
+      "epistemic_status": "qualified_inference",
+      "claim_ids": [
+        "CLM-0072"
+      ],
+      "source_refs": [
+        {
+          "source_id": "SRC-0043",
+          "locator": "Object overview and Artwork Details, accession 1988.433.2"
+        }
+      ],
+      "time_scope": "Jemdet Nasr, ca. 3100–2900 BCE (museum dating)",
+      "place_scope": "Mesopotamia, probably Uruk; secure excavation context not asserted",
+      "boundaries": [
+        "Keep the likely grain-delivery/distribution reading and probable findspot qualified.",
+        "This early-writing example does not establish an earlier Late-Uruk cause, a direct developmental sequence, or the use of the Chogha Mish objects.",
+        "Recipients, quantities, motives and individual outcomes are not established historical facts here. A signaled fictional illustration may add plausible human detail, but must not assert a known transaction, tax, wage or entitlement or prove a causal claim."
       ]
     }
   ],
@@ -430,7 +465,8 @@
         "HS-P01-0005",
         "HS-P01-0007",
         "HS-P01-0010",
-        "HS-P01-0011"
+        "HS-P01-0011",
+        "HS-P01-0013"
       ],
       "claim_ids": [
         "CLM-0012",
@@ -482,7 +518,8 @@
         "HS-P01-0007",
         "HS-P01-0010",
         "HS-P01-0011",
-        "HS-P01-0012"
+        "HS-P01-0012",
+        "HS-P01-0013"
       ],
       "claim_ids": [
         "CLM-0016",

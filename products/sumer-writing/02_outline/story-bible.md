@@ -8,11 +8,13 @@ Phim không dùng mệnh đề “chữ viết tạo ra văn minh Sumer” như 
 
 Continuity không nằm ở một loại tablet, một dạng script hay một language bất biến. Thứ có thể sống qua nhiều thế kỷ là một **thực hành xã hội có thể tái tạo**: chọn quan hệ cần giữ, biến chúng thành dấu đủ bền và đủ quy ước, rồi duy trì người và thủ tục có khả năng tạo, đọc, chép, sửa, thích nghi, truy hồi và hành động dựa trên chúng.
 
-Câu hỏi trung tâm dành cho khán giả là: **chữ viết đã thay đổi xã hội Sumer bằng cách nào, nếu bản thân những dấu trên đất sét không thể tự làm gì?**
+Câu hỏi trung tâm dành cho khán giả là: **theo hành trình của chữ viết, ta có thể bước vào đời sống Sumer như thế nào, và vì sao những dấu còn lại có thể đưa một phần thế giới ấy trở về?**
+
+Chữ nêm quyết định việc chọn và nối nội dung. Mỗi chặng phải làm rõ một biến đổi trong cách dùng/truyền chữ hoặc mở thêm một phần đời sống Sumer qua chữ viết. Sức nặng đến từ người làm việc, học, ra lệnh, ghi nhớ và truyền lại; không gán ý chí cho hệ chữ.
 
 ## Whole-product causal progression
 
-1. **Formation pressure / ecology:** trước một hệ thống writing rõ ràng đã có nhu cầu và nhiều phương thức để giữ quantity, classification và authentication. Administration là pressure lớn nhưng không phải monocause; không có một invention event hay genealogy tuyến tính được phép mặc định.
+1. **Công việc và những dấu ghi:** P01 giúp người nghe gắn ghi chép với một công việc có căn cứ. Thực hành Late Uruk là nền; bảng Met 1988.433.2, khoảng 3100–2900 TCN, là ví dụ sơ kỳ riêng có khả năng ghi việc giao/phân phối ngũ cốc. Các giới hạn về nguồn gốc vẫn được giữ, nhưng không làm thành quả khám phá chính. P02 tiếp tục tìm hiểu cách các dấu hoạt động.
 2. **Early usefulness:** một record có thể giữ những quan hệ lặp lại đủ để làm việc trước khi continuous speech hay underlying language được phục hồi chắc chắn. Writing threshold vì vậy là một boundary phải qualified, không phải opening verdict.
 3. **Functional expansion:** writing tích lũy thêm economic, political, religious, legal/normative, correspondence, lexical, scholarly và literary uses theo kiểu additions/recombinations, không phải chiếc thang accounting → literature.
 4. **Institutional feedback:** record tăng capacity khi gắn với classification, responsible people, authentication, accumulation và retrieval. Later institutional evidence có thể test mechanism này nhưng không được back-project magnitude về Uruk.
@@ -23,8 +25,13 @@ Câu hỏi trung tâm dành cho khán giả là: **chữ viết đã thay đổi
 
 Các bước trên là **state progression của toàn bộ phim**, không phải quy định về carrier, scene, reveal order hay paragraph structure. Writer được quyền chọn local route miễn ở trong evidence ceiling và đưa audience từ entry state tới exit state của section.
 
+## Tái dựng sáng tạo
+
+Theo chỉ dẫn Owner ngày 2026-09-07, tư liệu là nền lịch sử, không phải danh sách duy nhất những điều được kể. Writer được dựng cảnh và nhân vật tổng hợp, thêm đối thoại, cảm giác, suy nghĩ, nhịp điện ảnh và những nối cảnh hợp lý. Phân biệt hư cấu với sự kiện cụ thể có nguồn bằng cách dẫn nhẹ khi cần và ghi theo cảnh trong report; không biến cảnh dựng thành bằng chứng cho kết luận lịch sử. Các guardrail dưới đây áp dụng cho những khẳng định lịch sử, không cấm mọi chi tiết hư cấu phù hợp bối cảnh.
+
 ## Guardrail thời gian và attribution
 
+- Bảng Met 1988.433.2 dùng niên đại catalogue Jemdet Nasr khoảng 3100–2900 TCN và xuất xứ có lẽ từ Uruk; không ép khớp một niên biểu tuyệt đối khác, không gọi là bằng chứng trực tiếp cho Chogha Mish hoặc giai đoạn sớm hơn.
 - Uruk IV thường được đặt khoảng 3350/3300–3200 BCE; Uruk III/Jemdet Nasr khoảng 3200–3000 BCE. Ưu tiên relative sequence và giữ qualifier cho absolute date.
 - Không xác định chắc underlying language của Uruk IV–III proto-cuneiform là Sumerian; không suy từ regional script tradition sang ethnic attribution.
 - Không dùng “world first” như một fact không tranh cãi; early Egyptian writing chồng lấn chronology và priority phụ thuộc definition/calibration.
