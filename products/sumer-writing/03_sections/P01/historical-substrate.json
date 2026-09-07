@@ -2,10 +2,10 @@
   "schema_version": 2,
   "contract_version": 1,
   "section": "P01",
-  "historical_territory": "Các thực hành ghi nhận và xác thực bằng đất sét trong Late Uruk, đặc biệt sự dịch chuyển toward việc đặt thông tin số trực tiếp trên bề mặt bền trong khi nhiều phương tiện cũ vẫn cùng tồn tại.",
+  "historical_territory": "Các hoạt động ghi nhận và xác thực trong Late Uruk: con người/role xử lý quantity và authentication bằng counters, clay envelopes, sealings và numerical surfaces; trong cùng ecology đó, information ngày càng có thể nằm trực tiếp trên durable clay surfaces trong khi older practices vẫn cùng tồn tại.",
   "historical_change": {
-    "from": "Số lượng và sự xác thực được xử lý qua nhiều thiết bị và thực hành đất sét cùng tồn tại, gồm counters, envelopes, sealings và các bề mặt ghi số.",
-    "to": "Thực hành ghi nhận ngày càng đặt thông tin số trực tiếp trên bề mặt đất sét bền, đôi khi cùng dấu xác thực, trong khi các phương tiện cũ vẫn tiếp tục chồng lấn."
+    "from": "Quantity và authentication được xử lý qua nhiều clay devices/practices, trong đó information có thể nằm trong counters, sealed containers hoặc các media khác.",
+    "to": "Numerical information ngày càng xuất hiện trực tiếp trên durable clay surfaces, đôi khi cùng authentication marks, trong khi older/parallel practices vẫn tiếp tục chồng lấn."
   },
   "primitives": [
     {
@@ -32,42 +32,70 @@
       "place_scope": "Southern Mesopotamia and associated Late-Uruk administrative contexts"
     },
     {
-      "id": "HS-P01-0003",
-      "kind": "object_affordance",
+      "id": "HS-P01-0006",
+      "kind": "relation",
       "world": {
-        "object": "hollow clay envelope",
-        "permits": [
-          "enclose small clay counters"
-        ],
-        "carries": [
-          "enclosed counters",
-          "on some examples exterior impressions or sealings"
-        ],
-        "constrains": [
-          "enclosed counters are not directly inspectable while the envelope remains closed"
-        ]
+        "left": "growth in administrative and institutional scale",
+        "relation": "co-occurred with and created pressure compatible with",
+        "right": "greater demand for records and authentication",
+        "temporal_scope": "Late-Uruk formation period",
+        "qualification": "co-occurrence does not establish a sole cause or one-way causal sequence"
       },
-      "epistemic_status": "documented",
-      "time_scope": "Late Uruk",
-      "place_scope": "Late-Uruk administrative contexts represented in the approved source set"
+      "epistemic_status": "qualified_inference",
+      "time_scope": "Late Uruk formation period",
+      "place_scope": "Urban and institutional contexts in southern Mesopotamia represented in the approved sources"
     },
     {
-      "id": "HS-P01-0004",
+      "id": "HS-P01-0010",
       "kind": "object_affordance",
       "world": {
-        "object": "numerical clay tablet",
+        "object": "broken clay envelope OIM A64678 from Chogha Mish",
         "permits": [
-          "place quantity information directly on a durable exterior surface"
+          "enclose small clay counters/tokens inside a hollow clay shell"
         ],
         "carries": [
-          "numerical impressions",
-          "on some examples sealing or authentication marks"
+          "clay tokens still surviving inside the broken shell"
         ],
         "constrains": []
       },
       "epistemic_status": "documented",
+      "time_scope": "Late Uruk period (3350–3100 BCE)",
+      "place_scope": "Chogha Mish, southwestern Iran"
+    },
+    {
+      "id": "HS-P01-0011",
+      "kind": "object_affordance",
+      "world": {
+        "object": "sealed numerical-tablet fragment ChM III-937a from Chogha Mish",
+        "permits": [
+          "carry numerical information directly as signs on a clay surface"
+        ],
+        "carries": [
+          "five numeral signs",
+          "several animal seal rollings including a bull"
+        ],
+        "constrains": []
+      },
+      "epistemic_status": "documented",
+      "time_scope": "Late Uruk period (3350–3100 BCE)",
+      "place_scope": "Chogha Mish, southwestern Iran"
+    },
+    {
+      "id": "HS-P01-0012",
+      "kind": "process",
+      "world": {
+        "participants": [
+          "unknown record-maker role"
+        ],
+        "operation": "shape damp clay and press or incise marks before the clay dries",
+        "object_or_medium": [
+          "damp clay recording surface"
+        ],
+        "result": "numerical impressions or incised marks remain on the clay surface"
+      },
+      "epistemic_status": "bounded_reconstruction",
       "time_scope": "Late Uruk",
-      "place_scope": "Southern Mesopotamia and related Late-Uruk administrative sites in the approved source set"
+      "place_scope": "Southern Mesopotamia and related Late-Uruk recording contexts"
     },
     {
       "id": "HS-P01-0007",
@@ -90,20 +118,32 @@
       "rule": "Parallel practices must not be converted into a single mandatory developmental sequence."
     },
     {
-      "source": "HS-P01-0003",
-      "rule": "Exterior impressions are not universal to every envelope."
+      "source": "HS-P01-0006",
+      "rule": "Administration is a major formation pressure, not a monocausal explanation."
     },
     {
-      "source": "HS-P01-0003",
-      "rule": "The affordance does not establish a single transitional step toward tablets."
+      "source": "HS-P01-0010",
+      "rule": "This specimen does not identify a transaction, operator, motive or universal bulla function."
     },
     {
-      "source": "HS-P01-0004",
-      "rule": "A numerical tablet alone does not identify a commodity, transaction mechanism or named actor."
+      "source": "HS-P01-0010",
+      "rule": "Do not treat it as an earlier step in a direct sequence leading to ChM III-937a."
     },
     {
-      "source": "HS-P01-0004",
-      "rule": "Direct surface recording must not be described as wholesale replacement of envelopes or tokens."
+      "source": "HS-P01-0011",
+      "rule": "The object does not identify the recorded commodity, transaction, operator or complete reading of the numerals."
+    },
+    {
+      "source": "HS-P01-0011",
+      "rule": "Sharing a site and broad period with OIM A64678 does not establish a direct sequence or shared transaction type."
+    },
+    {
+      "source": "HS-P01-0012",
+      "rule": "This is a manufacture/action reconstruction from object traces, not a witnessed event."
+    },
+    {
+      "source": "HS-P01-0012",
+      "rule": "Do not invent a named person, motive, dialogue, emotion or specific transaction."
     },
     {
       "source": "HS-P01-0007",
@@ -113,27 +153,36 @@
       "source": "HSC-P01-0001",
       "applies_to": [
         "HS-P01-0001",
-        "HS-P01-0003",
-        "HS-P01-0004",
-        "HS-P01-0007"
+        "HS-P01-0007",
+        "HS-P01-0010",
+        "HS-P01-0011"
       ],
       "rule": "Do not convert overlapping clay practices into a direct token-to-tablet replacement genealogy."
+    },
+    {
+      "source": "HSC-P01-0002",
+      "applies_to": [
+        "HS-P01-0006"
+      ],
+      "rule": "Do not turn administrative pressure or institutional co-occurrence into a sole-cause or one-way causal verdict."
     },
     {
       "source": "HSC-P01-0003",
       "applies_to": [
         "HS-P01-0001",
-        "HS-P01-0004",
-        "HS-P01-0007"
+        "HS-P01-0007",
+        "HS-P01-0010",
+        "HS-P01-0011",
+        "HS-P01-0012"
       ],
       "rule": "Do not label a specific economic mechanism such as market exchange, tax, tribute, redistribution, labor obligation or ownership unless independent transaction evidence supports it."
     }
   ],
   "authority_binding": {
-    "product_substrate_sha256": "eb7ada6dc9414e5cd629fdc262e09bcf6fdb3afa6327ba0d8dcb19adf93ef818",
+    "product_substrate_sha256": "645bd2c3e2ef587de0fc82eb45877b1460aee4e5ce4db77149a66f18f2af1cba",
     "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
-    "section_overlay_sha256": "5db68ce464d768dfbe59854208f8ecd5c9317878ebce96b062e176b2365e3973",
-    "section_binding_sha256": "a4fe962b6fe8a094085fbe8f152e5bb6033dd51ebf6d8c8fa6168150e0143332"
+    "section_overlay_sha256": "55aea12abcd215b22aa4d02420cdca11b9a8753e703707e0a47b2008b3d74722",
+    "section_binding_sha256": "c9eb4575aaa2164b9437601c3491b161d480e965eb86ddb91ff413260094e230"
   },
   "writer_contract": "Historical Substrate is the primary model of historical reality. Evidence lookup is secondary and only verifies, sharpens or qualifies details needed by a telling already chosen from this model."
 }

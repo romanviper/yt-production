@@ -2,72 +2,101 @@
 
 Status: active Owner-approved learning input for the direct Writer loop.
 
-Purpose: restore the minimum product/story context that was lost when the Writer fast path was reduced to only the P01 overlay and historical substrate. This file is a compact execution brief, not a Planner artifact or a replacement for evidence authority.
+Purpose: truyền cho Writer **ý đồ sáng tác cần thiết của sản phẩm và riêng P01**. Đây không phải Planner artifact, không phải bản tóm tắt toàn bộ workflow cũ, và không thay thế evidence authority.
 
-## What product are you making?
+## Sản phẩm đang kể câu chuyện gì?
 
-You are writing part of a long-form Vietnamese historical podcast about **the history of writing in Sumer/Mesopotamia as a socio-technical system**, not a lecture about archaeological classification.
+Đây là một podcast lịch sử tiếng Việt dài 60–120 phút về **nền văn minh Sumer được khám phá qua hành trình của chữ viết**.
 
-The whole product investigates how durable recording practices formed under growing information pressures, acquired new functions, changed what institutions and people could do, adapted across languages and institutions, and left consequences beyond the societies that first used them.
+Sản phẩm không kể tổng sử Sumer. Nó zoom sâu vào một khía cạnh: từ những thực hành ghi nhận sớm, qua lúc dấu viết được dùng cho ngày càng nhiều việc, được học và truyền lại, thích nghi sang ngôn ngữ và thiết chế khác, rồi có lúc vật thể còn tồn tại trong khi cộng đồng từng biết đọc chúng đã biến mất.
 
-The historical system is the protagonist, but people, work, skill, responsibility, access and consequences should remain visible whenever the evidence supports them.
+“Chữ nêm là nhân vật chính” nghĩa là writing/cuneiform giữ vai trò **đường dẫn xuyên suốt**: sự hình thành, cách sử dụng, biến đổi, truyền lại và mất khả năng đọc quyết định việc chọn và nối material. Nó không có nghĩa clay hay script tự có agency.
 
-The desired experience is deliberate, clear, weighty and investigative. The listener should feel that a historical problem is being uncovered through material evidence and causal consequences, not that a specialist is explaining methodological cautions to them.
+Mỗi phần lịch sử được chọn phải phục vụ ít nhất một trong hai câu hỏi:
 
-## What is P01 doing in that larger story?
+1. Điều này làm thay đổi việc người ta tạo, sử dụng, học hoặc truyền lại chữ viết như thế nào?
+2. Qua việc chữ viết được sử dụng ở đây, người nghe hiểu sâu hơn điều gì về thế giới Sumer?
 
-P01 is the opening movement: **"Trước chữ viết đã có một bài toán phải giải."**
+Giữ cả hai. Nếu chỉ theo biến đổi kỹ thuật của sign system, sản phẩm mất nền văn minh. Nếu chỉ kể đời sống Sumer mà writing không còn quyết định selection, sản phẩm mất subject.
 
-- **Entry state:** the listener may imagine writing as an idea or invention that appeared suddenly.
-- **Narrative job:** reveal the pressures and overlapping information practices that existed before/around proto-cuneiform, while breaking the false shortcuts of one invention event and a mandatory token → envelope → tablet ladder.
-- **Exit state:** the listener should understand that durable, inspectable records became valuable inside an ecology of practices and institutional demand; administration is an important pressure but not a proven single cause.
-- **Forward pull:** once the audience sees the problem and the ecology around it, the next question becomes what made newer systems of signs genuinely different and useful.
+Sumer giữ trọng tâm. Phần hậu Sumer chỉ mở rộng khi cần theo dõi continuity, adaptation và legacy của cuneiform. Luôn phân biệt script, language, community/population và institution.
 
-Do not reduce this role to merely proving that several clay practices coexisted. Coexistence is historical truth; the storytelling job is to make the listener understand **why a problem of preserving, inspecting and acting on information matters in the larger story of writing**.
+## Vì sao câu chuyện này đáng nghe trong 60–120 phút?
 
-## Storytelling functions to carry forward
+Hành trình của writing lần lượt mở ra những phần khác nhau của một historical world: công việc, tổ chức, quyền lực, học tập, tri thức, ký ức, sự thích nghi và sự đứt gãy. Mỗi chặng phải vừa làm hành trình của writing tiến lên, vừa cho người nghe thấy thêm con người và thế giới đã sử dụng nó.
 
-Borrow functions from *Fall of Civilizations* and other strong long-form narrative history, not their wording or formulas:
+Mục tiêu không phải kéo dài một lời giải thích về “hệ thống xã hội–kỹ thuật”. Mục tiêu là để historical meaning tích lũy qua vật thể, hành động, văn bản và hệ quả có bằng chứng.
 
-- maintain a clear causal movement rather than a catalogue or chronology dump;
-- use material/sensory anchors when the evidence supports them;
-- keep people or human practice present when the evidence supports them;
-- move scale for a reason: tangible object/practice → institutional pressure/capability → human consequence, then back when useful;
-- let emotional weight come from evidenced stakes or consequences, not hyperbole;
-- use uncertainty briefly and only where it changes what the listener should conclude.
+## Học gì từ hai tập Fall of Civilizations?
+
+Transcript FoC chỉ là **craft reference**, không phải historical authority và không chứng minh retention.
+
+- **Han Dynasty:** phần mở đặt Cao Zhi trước Luoyang đã bị tàn phá, biến một câu hỏi lịch sử lớn thành một nơi chốn và mất mát cụ thể. Ở giữa, con người, landscape và các tiếng nói/văn bản cổ liên tục làm câu chuyện thay đổi scale. Cuối tập quay lại Luoyang/Bei Mang khi hình ảnh ban đầu đã mang thêm sức nặng của toàn bộ hành trình.
+- **Sumerians:** phần mở dùng Pietro della Valle ở Ur và những dấu trên clay chưa đọc được để tạo khoảng trống khám phá. Trong thân bài, tablet, inscription, letter, lament và các văn bản khác ngày càng mở ra lao động, thành phố, quyền lực và ký ức. Cuối tập quay lại Ur và những clay texts sống sót sau khi khả năng đọc mất đi, khiến vật thể mở đầu có nghĩa khác.
+
+Điều cần học là chức năng:
+
+`một người / nơi / vật / câu hỏi → mở historical world → artifact/text/action làm discovery tiến lên → hệ quả tích lũy → hình ảnh/câu hỏi cũ có thêm nghĩa`
+
+Đây **không phải formula bắt buộc** cho mỗi section. Writer vẫn sở hữu opening, point of view, pace, structure và reveal order.
+
+## P01 phải làm gì?
+
+P01 là opening movement: **“Trước chữ viết đã có một bài toán phải giải.”**
+
+P01 không cần “giải xong” nguồn gốc writing. Việc không có một invention event duy nhất và không có token → envelope → tablet ladder bắt buộc là truth guardrails, **không phải thành quả khám phá duy nhất của phần mở**.
+
+P01 cần:
+
+1. **Đưa người nghe vào một Late-Uruk world cụ thể.** Có người/role đang đếm, đóng, niêm phong, tạo marks và xử lý clay records trong những institutional contexts lớn dần.
+2. **Làm việc ghi lại trở nên có stakes.** Khi quantity hoặc authentication cần tồn tại ngoài khoảnh khắc trực tiếp, cách information được đặt vào vật thể bắt đầu quan trọng đối với công việc thật.
+3. **Tạo lực kéo cho hành trình của writing.** Khi numerical information ngày càng có thể nằm trực tiếp trên durable clay surfaces, câu hỏi mở ra là những marks ấy sẽ còn có thể mang và làm được gì tiếp theo trong thế giới này.
+
+P01 excerpt thử nghiệm khoảng 450–650 từ chỉ là **một contiguous sample để Owner đánh giá cách viết**, không phải bản nén của toàn bộ P01 canonical 1050–1550 từ. Sample có thể chỉ hoàn thành một phần movement.
+
+## Chất liệu trực tiếp Writer hiện có
+
+Historical Substrate của P01 đã có thêm material cụ thể từ research hiện hữu:
+
+- pressure giữa institutional growth và nhu cầu records/authentication ở mức qualified inference;
+- **OIM A64678, Chogha Mish:** một broken clay envelope Late Uruk còn clay tokens bên trong;
+- **ChM III-937a, Chogha Mish:** một numerical-tablet fragment Late Uruk có năm numeral signs và nhiều seal rollings;
+- một bounded reconstruction cho phép theo **unknown record-maker role** shaping damp clay và tạo marks trước khi clay khô;
+- broad Late-Uruk ecology và shift toward direct surface recording vẫn giữ các practice chồng lấn.
+
+Hai hiện vật Chogha Mish là ví dụ cùng site và broad period ở southwestern Iran. Chúng **không** chứng minh một excavation sequence, một shared transaction hay một ladder envelope → tablet.
+
+Writer không bắt buộc dùng tất cả material trên và không bắt buộc mở bằng Chogha Mish. Chúng tồn tại để local telling có place, object và action thật thay vì chỉ có abstraction.
+
+## Con người có thể hiện diện đến đâu?
+
+Có thể dùng:
+
+- unknown record-maker / administrative roles;
+- thao tác với counters, clay envelope, sealings, damp clay và numerical marks;
+- institutional/administrative pressure ở mức substrate cho phép;
+- consequence trực tiếp của việc information được chứa, đặt lên surface, giữ lại hoặc có thể inspect.
+
+Không tự gán cho một tablet/actor cụ thể nếu evidence không cho phép:
+
+- commodity, nghề nghiệp hay named identity;
+- tax, tribute, market exchange, redistribution, ownership hoặc labor obligation;
+- motive, emotion, dialogue hay interiority.
+
+Nếu dùng một ví dụ muộn hơn, phải giới thiệu đúng period và không back-project về Uruk.
 
 ## Writer freedom
 
-Inside the historical boundaries, you own the local telling: opening, structure, point of view, pace, factual selection, scale, imagery, reveal timing, transitions and phrasing.
+Trong evidence ceiling, Writer sở hữu local telling: opening, structure, point of view, pace, factual selection, scale, imagery, reveal timing, transitions và phrasing.
 
-There is no mandatory hook, scene type, paragraph template, before/after pattern, concrete-first rule or FoC imitation pattern.
+Không có mandatory hook count, scene type, paragraph template, concrete-first rule hay FoC imitation pattern.
 
-## Evidence boundaries are backstage controls
+## Evidence boundaries là backstage controls
 
-The overlay and historical substrate define what you may claim. They do **not** automatically define what the listener must hear.
+Overlay và Historical Substrate quyết định điều được phép claim. Chúng không mặc định quyết định listener phải nghe gì.
 
-Do not turn a source boundary into methodological narration merely because it exists. Prefer:
-
-- omitting an unsupported mechanism rather than listing all mechanisms that cannot be proven;
-- qualifying a claim briefly where the qualification changes meaning;
-- keeping technical evidence limits in `writing-report.md` when they do not belong in the listener-facing story.
-
-A sentence such as "the evidence does not allow us to say tax, tribute, market exchange or ownership" should appear in the draft only if that uncertainty itself is narratively necessary. Otherwise the boundary should silently constrain the telling.
-
-## Known limitation of the current P01 substrate
-
-The current substrate is deliberately narrow and rich in objects/affordances but sparse in named people, concrete activities, pressures and social consequences. Do not invent those missing specifics.
-
-If that limitation prevents a richer human or causal passage, keep the claim modest and disclose the limitation in `writing-report.md`. This allows the Owner to distinguish **input insufficiency** from **Writer choice**.
-
-## What the PRE-WRITE snapshot must prove to the Owner
-
-Before prose, make it possible for the Owner to see whether you understood:
-
-1. the whole-product story you are contributing to;
-2. P01's role in that story;
-3. the listener state change you intend to create;
-4. which storytelling functions you intend to use;
-5. how you will keep evidence boundaries accurate without automatically narrating them.
-
-This brief distills currently approved direction from the product brief, benchmark, Channel Constitution, C003 Story Bible/Voice Profile, P01 section role, and the Owner's Round-01 feedback. Historical claims remain bounded by the P01 overlay and historical substrate.
+- Bỏ unsupported mechanism thay vì đọc ra danh sách điều “không thể biết”.
+- Qualify ngắn khi thiếu qualifier sẽ làm sai meaning.
+- Không biến coexistence/non-linearity thành lecture phương pháp nếu story không cần.
+- Không anthropomorphize writing thành autonomous cause.
+- Nếu một input limitation thực sự ngăn local telling, ghi rõ trong `writing-report.md` để Owner phân biệt **input insufficiency** với **Writer choice**.
