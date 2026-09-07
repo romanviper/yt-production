@@ -1,8 +1,32 @@
 # Work order — đưa vòng Writer trở lại bản đọc của Owner
 
-**Trạng thái:** sẵn sàng giao; chưa thực hiện lượt biên tập. Lệnh hiện tại chỉ tạo work order này.
-**Nhánh đích:** `codex/owner-first-mvp`; HEAD khi soạn: `326022f`.
-**Mục tiêu duy nhất:** Owner đọc bản trước–sau và nhận thấy có dễ hình dung hơn hay không, không cần đọc report để hiểu thay đổi.
+**Trạng thái hiện tại:** lượt 01 đã giao tại `217348c`. Owner thấy comparison dễ đọc nhưng từ chối phần mở; chưa có cải thiện được Owner chấp nhận. Điều chỉnh bên dưới là work order cho lượt 02; chưa thực hiện lượt viết đó.
+**Nhánh đích:** `codex/owner-first-mvp`; fetch HEAD hiện tại trước khi làm. Không sửa output lượt 01.
+
+## Điều chỉnh hiện hành — lượt 02: viết được một phần mở đáng nghe
+
+Owner nói rõ: “writer thậm chí không biết cách mở bài”. Người thực hiện phải chọn lại cách mở, không tiếp tục minh họa chức năng giữ số lượng bằng một danh sách vật hoặc chỉnh câu cho cụ thể hơn. Mục tiêu của lượt này là cho người chưa quan tâm một lý do nghe tiếp, bằng lời kể đủ rõ để hình dung.
+
+Khi Owner giao thực hiện lượt 02, điều chỉnh này thay mục tiêu, baseline và đường dẫn đầu ra của lượt 01 ở phần lịch sử bên dưới. Giữ cách làm một Writer, một comparison ngắn và dừng cho Owner đọc. Không tạo task/router hay report 15 mục; không mở nghiên cứu, sửa harness, gọi thêm agent hoặc viết toàn P01.
+
+**Đọc đúng đầu vào:** work order này; phần “Bản biên tập” trong `writer-output/P01/editorial-reset-01/comparison.md` tại `217348c` làm baseline; creative brief hiện hành; overlay và historical substrate đã cố định tại `3b117553a987e8c9c6b8c3661511042c988f8678` như mục 3 bên dưới. Không đọc thêm các report hoặc draft khác. Baseline là văn bản so sánh, không phải cấu trúc buộc phải giữ.
+
+**Việc phải làm:** viết lại một đoạn mở ngắn từ cùng bộ chất liệu. Được bỏ cả hai câu mở cũ, đổi điểm vào, chọn lại facts và tổ chức lại toàn bộ đoạn. Không có yêu cầu tiếp tục lấy “vị trí thông tin” hoặc “mặt đất sét” làm trục. Chọn một điều đáng quan tâm, định hướng đủ để người nghe tiếp cận nó và phát triển lý do nghe câu tiếp theo. Sự tò mò phải phát sinh từ nội dung; không chữa bằng một câu hỏi tu từ, lời hứa lớn hoặc tình huống bịa. Không ép số cảnh, số câu hỏi hay nhân vật. Tự biên tập cấu trúc trong một lượt, chỉ giao một bản.
+
+**Chỉ tạo:** `writer-output/P01/editorial-reset-02/comparison.md`. Nếu đã có file, dừng, không ghi đè. File gồm đúng ba phần:
+
+1. **Bản gốc:** nguyên văn phần “Bản biên tập” của lượt 01, ghi commit `217348c`.
+2. **Bản mở viết lại:** prose để đọc, không chú giải kỹ thuật; giữ quy mô đoạn mở ngắn, không kéo thành bản 450–650 từ.
+3. **Đã sửa gì:** tối đa ba ghi chú ngắn về lựa chọn mở, điều trong prose được dùng để tạo lý do nghe tiếp và thay đổi nguồn/tái dựng nếu có. Dẫn cụm từ thật; không tự nhận hook hiệu quả hoặc khán giả đã tò mò. Ghi chú không dài hơn một đoạn gốc.
+
+**Bàn giao và dừng:** commit đúng comparison lên nhánh đích theo cách thông thường, không force-push; gửi link để Owner đọc và trả lời tự do: “Bạn có muốn nghe tiếp từ đoạn mở này không? Câu nào khiến bạn dừng lại hoặc muốn đi tiếp?” Không yêu cầu report, điểm số hoặc giải thích kỹ thuật. Dễ hình dung hơn nhưng Owner vẫn không muốn nghe chưa đáp ứng mục tiêu lượt này. Chưa có phản hồi thì ghi chưa biết, không tự kết luận cải thiện. Không tự mở lượt 03, viết tiếp P01 hoặc sửa harness sau khi giao.
+
+---
+
+Phần bên dưới lưu work order lượt 01 để giữ lịch sử; mục tiêu và đường dẫn của nó không áp dụng cho lượt 02.
+
+**HEAD khi soạn lượt 01:** `326022f`.
+**Mục tiêu lượt 01:** Owner đọc bản trước–sau và nhận thấy có dễ hình dung hơn hay không, không cần đọc report để hiểu thay đổi.
 
 ## 1. Vấn đề cần sửa và quyết định reset
 

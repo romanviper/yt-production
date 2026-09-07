@@ -50,6 +50,8 @@ Create `writing-report.md` and fill only the pre-write sections below **before d
 
 Write one Vietnamese historical-podcast excerpt for P01.
 
+If the excerpt is the opening, your first editorial responsibility is to earn the listener's attention. Choose what is worth opening with and give an uncommitted listener a reason to hear the next sentence. Do not assume they already want a lesson on recording technology. Making the first supplied fact more concrete is not enough. You may replace the entry point and structure within the supplied evidence; preserve the product purpose, not the previous opening's premise. Use the creative brief's opening guidance. Do not satisfy this responsibility by appending a rhetorical question or labelling a passage a hook.
+
 The goal is not merely to explain the substrate correctly. Use the creative brief to create the intended listener experience while remaining inside the evidence boundaries. For a 450–650-word excerpt, state which part of P01 you are sampling and its local listener change; do not compress the whole section or force its complete exit state into the sample.
 
 Choose the telling freely. Do not force essay structure, hook formulas, beat counts or a generic explanatory template.
