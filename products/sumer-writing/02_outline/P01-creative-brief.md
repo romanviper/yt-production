@@ -20,6 +20,18 @@ Viết cho người chỉ nghe và chưa biết các hiện vật. Cho họ đ�
 
 Hình ảnh cần có tác dụng trong mạch kể. Thêm tính từ, bụi, ánh sáng hoặc cử động tay chân chưa chắc giúp hình dung công việc rõ hơn. Có thể kể cả một quá trình bằng vài câu bao quát; chỉ dừng ở thao tác nhỏ khi nó giúp nhận ra điều đáng chú ý. Mục tiêu là dễ hình dung và đáng theo dõi, không phải kéo dài một ý bằng nhiều chi tiết.
 
+## Phần mở phải tạo được sự quan tâm
+
+Owner phản hồi sau `editorial-reset-01` tại `217348c`: comparison dễ đọc nhưng phần mở vẫn bị từ chối ở tư cách người nghe. Cụ thể hóa câu về con số và vật chứa chưa tạo lý do quan tâm đến chúng. Nhiệm vụ mở bài là lựa chọn một cửa vào đáng nghe và thực hiện nó bằng lời kể; không phải trình bày facts đầu tiên của input cho sáng rõ hơn.
+
+Đừng giả định người nghe đã muốn tìm hiểu công cụ ghi số. Ngay từ phần mở, cho họ điều đáng theo: một tình thế, phát hiện, hình ảnh có ý nghĩa, quan hệ bất ngờ hoặc quá trình đang mở ra. Writer tự chọn cách phù hợp với nguồn. Định hướng đủ để họ hiểu điều đang kể, đồng thời tạo một điều chưa biết mà họ có lý do muốn biết. Thông tin tiếp theo cần đáp lại hoặc phát triển sự quan tâm đó; một chuỗi giải thích đúng chưa tự tạo được lực nghe tiếp.
+
+Ở opening Della Valle, người nghe có thể tự hỏi ông là ai, vì sao ở đó, đoàn đang gặp nguy hiểm gì và phế tích là nơi nào. Những câu hỏi ấy nảy sinh từ tình thế và các tiết lộ trong lời kể, không phải danh sách câu hỏi narrator phải đọc lên. Taurus cho thấy vẫn có thể dẫn sự chú ý bằng không gian, chuyển động và quan hệ mà không cần nguy hiểm hoặc nhân vật. Không áp một công thức hook, số câu hỏi, nhân vật hay xung đột bắt buộc.
+
+Một câu như “một con số có thể được giữ lại bằng những vật rất cụ thể” thông báo chức năng trước khi cho người nghe lý do quan tâm. Đổi thêm tính từ hoặc gắn “nhưng tại sao?” ở cuối không giải quyết được lựa chọn mở bài ấy. Được bỏ cách mở cũ, chọn lại facts và xây lại cấu trúc trong cùng bộ nguồn. Không dùng giật gân, bí ẩn giả, động cơ bịa hoặc lời hứa vượt điều câu chuyện có thể đáp lại để tạo sức hút.
+
+Khi biên tập, tự xét hai việc cùng nhau: người chưa quan tâm có lý do gì nghe tiếp, và lời kể có đủ rõ để họ hình dung điều đang khiến họ tò mò không? Không bắt Owner chấp nhận một bản mở vì report nói đã có hình ảnh, đúng nguồn hoặc đúng kỹ thuật. Không tuyên bố tăng retention khi chưa có quan sát người nghe.
+
 ## Biên tập các facts thành narration
 
 Không cần nguồn phải có sẵn một nhân vật, xung đột hay mẩu chuyện hoàn chỉnh mới viết được narration. Phân biệt ba công việc: **chọn chất liệu**, **tổ chức đường đi cho người nghe**, rồi **thể hiện bằng câu chữ và nhịp**. Thiếu tên người hoặc sự kiện cụ thể không tự chứng minh đầu vào không đủ để kể hấp dẫn.
