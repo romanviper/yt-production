@@ -56,9 +56,13 @@ Choose the telling freely. Do not force essay structure, hook formulas, beat cou
 
 Follow the creative brief's viewpoint and pacing guide: default to a broad historical narrator for the P01 opening; move close to a character when their perspective has a purpose, and use first-person voices when useful. Summary and historical explanation are valid storytelling. There is no required scene, dialogue, viewpoint rotation or cinematic technique.
 
+The Owner's primary experience priority is low effort to imagine while listening. Give unfamiliar objects and work enough perceptible form, position, action or relation that the listener need not build them from technical labels alone. Let explanation work through what the listener can picture. Compose a route through the supplied facts; narration does not require a ready-made character story. The creative brief contains the full guidance and two FoC craft examples. This is not a requirement for a scene, sensory detail in every sentence or a concrete-first formula.
+
 The Owner permits bounded fiction as an optional tool: reconstructed scenes, anonymous/composite characters, plausible dialogue, sensory detail and interiority. Historical inputs constrain claims presented as history, not every invented gesture or line. Distinguish a scene from documentary evidence with light framing where needed; disclose substantial reconstruction by scene in the report. Never use an invented event as evidence for a historical conclusion.
 
 Suggested size is roughly 450–650 words for this learning excerpt, but this is not a hard gate.
+
+Before declaring the draft complete, read it as words heard once without a screen. Edit within this same attempt where an unfamiliar term has no usable image, a transition loses the listener, an explanation repeats a property, or a small action consumes attention without helping the telling. Choose concrete cuts, reordering, clarification or compression as needed; do not merely defer those decisions to the report. Ordinary editing of this attempt before freeze is allowed. Do not generate alternative complete drafts, reroll or add an evaluator/approval loop. Record material editorial changes briefly in report section 12; no extra artifact is required.
 
 ### 3. Freeze the draft
 
@@ -153,6 +157,7 @@ Ghi những lựa chọn cuối cùng trước khi bắt đầu viết prose:
 
 - mở ở đâu hoặc bằng điều gì;
 - trục kể hoặc câu hỏi trung tâm;
+- điểm tựa đầu tiên giúp người chỉ nghe hình dung được thứ đang kể, và cách dự định nối các facts để phát triển hình dung đó; không cần một mẩu chuyện nhân vật có sẵn;
 - đích đến của đoạn;
 - điểm nhìn chủ đạo và điều nó giúp người nghe biết/cảm nhận; nếu định tiến gần nhân vật hoặc dùng ngôi thứ nhất, nói ngắn mục đích và lúc nào nên rời điểm nhìn đó (không cần dùng đủ ba cách);
 - nơi định tóm lược hoặc kể gần hơn, và điều đáng khám phá khiến bạn chọn nhịp ấy.
@@ -186,9 +191,11 @@ Không mặc định rằng một boundary phải được nói cho người ngh
 
 Map bản draft đã freeze từ đầu tới cuối.
 
-| Vị trí trong draft | Đoạn này đang làm gì với người nghe | Nguồn / substrate ID | Loại nội dung |
-| --- | --- | --- | --- |
-| ¶1 | ... | HS-P01-... | dữ kiện / suy luận / framing / tái dựng sáng tạo |
+| Vị trí trong draft | Điểm tựa hình dung: cụm ngắn thực sự có trong prose | Hình dung hoặc hiểu biết được phát triển ra sao | Nguồn / substrate ID | Loại nội dung |
+| --- | --- | --- | --- | --- |
+| ¶1 | ... / chưa rõ | ... | HS-P01-... | dữ kiện / suy luận / framing / tái dựng sáng tạo |
+
+Ghi “kế thừa từ ¶...” nếu đoạn phát triển một hình dung đã có; không ép mỗi đoạn phải tạo hình ảnh mới. Không bổ sung trong report một âm thanh, vật thể hoặc hành động mà draft chưa viết. Mô tả cơ sở trong câu chữ, không khẳng định đã đo được trí tưởng tượng hay phản ứng của người nghe.
 
 ### 8. Mục tiêu sản phẩm đã đi vào prose ở đâu
 
@@ -196,6 +203,7 @@ Cho thấy những mục tiêu lớn hơn và vai trò P01 thực sự xuất hi
 
 | Mục tiêu/chức năng đã định | Vị trí trong draft | Người nghe thực sự nhận được gì |
 | --- | --- | --- |
+| cho người chỉ nghe một điểm tựa hình dung | ¶... và cụm từ ngắn | ... / chưa thể hiện rõ |
 | đặt ra bài toán lịch sử trước khi có “writing” | ¶... | ... |
 | tạo lực kéo sang câu hỏi tiếp theo | ¶... | ... |
 
@@ -209,7 +217,7 @@ Với mỗi khẳng định lịch sử quan trọng hoặc cầu nối nhân qu
 | --- | --- | --- | --- |
 | ... | HS-P01-0004 | ... | nén ý / suy luận / framing / không thêm |
 
-Không được nói nguồn support nhiều hơn nội dung thực tế của nguồn.
+Không được nói nguồn support nhiều hơn nội dung thực tế của nguồn. Phân biệt cầu nối nhân quả với chuyển không gian, đối chiếu hoặc liên tưởng chủ đề. Một câu được gọi là “framing” vẫn cần căn cứ nếu nó khẳng định một nguyên nhân, công dụng hoặc giới hạn lịch sử.
 
 ### 10. Những phần Writer tự thêm hoặc suy ra
 
@@ -236,15 +244,15 @@ Mục này tồn tại để Owner thấy evidence discipline đã âm thầm b�
 | --- | --- | --- |
 | ... | ... | ... |
 
-Nếu không có thay đổi đáng kể, ghi `Không có thay đổi đáng kể`.
+Bao gồm quyết định biên tập đáng kể trong cùng lượt trước freeze: đã cắt, chuyển, làm rõ hoặc nén phần nào và vì sao. Chỉ ghi điều thực sự đã làm, không dựng lại lịch sử các phiên bản. Nếu không có thay đổi đáng kể, ghi `Không có thay đổi đáng kể`.
 
 ### 13. Phần nào là do đầu vào thiếu, phần nào là do lựa chọn của Writer
 
 Tách rõ hai nhóm:
 
-**Giới hạn của đầu vào:** chất liệu lịch sử nào còn thiếu khiến Writer khó tạo human action, pressure, consequence, scene detail hoặc causal movement phong phú hơn.
+**Giới hạn của đầu vào:** nêu thông tin cụ thể còn thiếu và khẳng định hoặc hướng kể nào vì thế chưa có căn cứ. Thiếu nhân vật có tên, xung đột hoặc một sự kiện hoàn chỉnh không tự chứng minh thiếu chất liệu cho narration về quá trình, không gian hay quan hệ.
 
-**Lựa chọn của Writer:** những nơi chất liệu cho phép một cách triển khai khác nhưng Writer chọn nhịp, mức chi tiết hoặc điểm nhìn hiện tại. Giải thích và tóm lược không tự thân là điểm yếu; một cảnh rất chi tiết cũng có thể ít khám phá.
+**Lựa chọn của Writer:** những nơi chất liệu cho phép một cách triển khai khác nhưng Writer chọn trục nối facts, nhịp, mức chi tiết hoặc điểm nhìn hiện tại. Tách việc chưa giúp người nghe hình dung chất liệu đã có khỏi việc không được phép khẳng định điều nguồn chưa cho biết. Giải thích và tóm lược không tự thân là điểm yếu; một cảnh rất chi tiết cũng có thể ít khám phá.
 
 Không dùng “đầu vào thiếu” như lời bào chữa chung cho toàn bộ draft.
 
@@ -252,6 +260,9 @@ Không dùng “đầu vào thiếu” như lời bào chữa chung cho toàn b�
 
 Không chấm điểm và không tuyên bố draft thành công/thất bại. Chỉ ra những chỗ cụ thể có thể có vấn đề, ví dụ:
 
+- người chỉ nghe phải tự đoán hình dạng, thao tác hoặc quan hệ vì prose mới đưa thuật ngữ hay danh sách vật;
+- câu giải thích chưa có điểm tựa để hình dung, hoặc câu chuyển làm mất hình dung đang theo;
+- thêm chi tiết không khí nhưng chưa giúp hiểu vật, công việc hay diễn biến;
 - giải thích lặp hoặc rời mạch chuyện; không coi mọi lời giải thích của narrator là lỗi;
 - bám động tác vụn trong khi tình thế/nhận thức không tiến;
 - hạn tri trước khi người nghe có lý do quan tâm, hoặc chuyển điểm nhìn mà không rõ ai biết điều gì;

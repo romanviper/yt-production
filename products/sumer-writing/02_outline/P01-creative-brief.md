@@ -1,6 +1,6 @@
 # P01 Creative Brief — Sumer qua hành trình chữ viết
 
-Status: active; Owner revision 2026-09-07 — narrative viewpoint and pacing guide; bounded fiction remains available.
+Status: active; Owner revision 2026-09-07 — reduce the listener's effort to imagine; compose narration from facts and edit within one attempt before freeze. Incorporates the Owner discussion following draft 3b11755; bounded fiction remains available.
 
 ## Câu chuyện chúng ta muốn kể
 
@@ -10,9 +10,27 @@ Người nghe phải dần thấy sau những dấu trên đất sét là một 
 
 Chữ nêm quyết định việc chọn và nối nội dung. Một đoạn có thể theo sự thay đổi của chữ viết, hoặc dùng một văn bản để mở vào đời sống Sumer. Giữ cả hai hướng trong toàn tập. Phần hậu Sumer phục vụ số phận và di sản của chữ nêm; không mở thành tổng sử các đế chế kế tiếp.
 
+## Ưu tiên trải nghiệm: cho trí tưởng tượng một điểm tựa
+
+Phản hồi trọng tâm của Owner: lời kể bắt người nghe tự đoán vật thể, thao tác và quan hệ giữa chúng gây khó chịu ngay khi bắt đầu. **Giúp người nghe hình dung là điều kiện để họ tiếp cận câu chuyện, không chỉ là phần trang trí sau khi ý nghĩa đã đúng.** Một outline có chuỗi nhân quả hay chưa đủ nếu prose chưa giúp người nghe bước vào thế giới ấy. Đây là ưu tiên trải nghiệm do Owner xác định, chưa phải kết quả đo retention hoặc cơ chế dopamine.
+
+Viết cho người chỉ nghe và chưa biết các hiện vật. Cho họ đủ đặc điểm để hình dung thứ đang được kể: hình dạng hoặc vật liệu có liên quan, vị trí tương đối, thao tác, chuyển động hay âm thanh giúp hiểu công việc. Chọn những điểm tựa cần thiết cho đoạn, không điền đủ một danh sách giác quan. Tên gọi như “dấu niêm”, “bảng ghi số” chưa tự cung cấp hình ảnh; “ghi nhận”, “xác thực”, “áp lực quản lý” chưa tự cho thấy một công việc.
+
+Để lời giải thích gắn với thứ người nghe đã hoặc đang hình dung. Câu tiếp theo có thể phát triển hình ảnh ấy, mở rộng quy mô, làm rõ quan hệ hoặc dẫn sang một hình dung mới với cầu nối dễ theo dõi. Đừng để người nghe phải liên tục tự dựng lại nơi chốn và vật thể từ các thuật ngữ. Một câu khái quát ngắn vẫn có thể định hướng tốt; không có luật mọi đoạn phải mở bằng vật cụ thể hay mọi câu đều phải vẽ được thành hình.
+
+Hình ảnh cần có tác dụng trong mạch kể. Thêm tính từ, bụi, ánh sáng hoặc cử động tay chân chưa chắc giúp hình dung công việc rõ hơn. Có thể kể cả một quá trình bằng vài câu bao quát; chỉ dừng ở thao tác nhỏ khi nó giúp nhận ra điều đáng chú ý. Mục tiêu là dễ hình dung và đáng theo dõi, không phải kéo dài một ý bằng nhiều chi tiết.
+
+## Biên tập các facts thành narration
+
+Không cần nguồn phải có sẵn một nhân vật, xung đột hay mẩu chuyện hoàn chỉnh mới viết được narration. Phân biệt ba công việc: **chọn chất liệu**, **tổ chức đường đi cho người nghe**, rồi **thể hiện bằng câu chữ và nhịp**. Thiếu tên người hoặc sự kiện cụ thể không tự chứng minh đầu vào không đủ để kể hấp dẫn.
+
+Từ chất liệu được phép dùng, chọn một trục mà người nghe có thể theo: một vật, chất liệu, quá trình, không gian hoặc câu hỏi. Sắp facts theo điều chúng giúp người nghe hình dung và khám phá tiếp. Mỗi chặng có thể mở một chức năng, quan hệ hoặc quy mô khác; cùng một từ khóa xuất hiện nhiều lần chưa tạo ra tiến triển nếu vẫn chỉ nói lại một thuộc tính. Câu nối, khoảng nhìn và thứ tự tiết lộ là một phần cấu trúc kể chuyện, không phải phần “thịt” trang trí có thể bỏ hết khi đánh giá cấu trúc.
+
+Mạch kể có thể dựa vào diễn biến sự kiện, quá trình vật chất, hành trình trong không gian, đối chiếu hoặc liên tưởng chủ đề. Không ép mọi liên kết thành nhân quả. Writer được tổ chức đường dẫn giữa facts; một liên kết được trình bày như nguyên nhân hay tác động lịch sử vẫn phải có căn cứ độc lập. Gọi một câu là “framing” không bỏ đi nội dung khẳng định của câu đó. Nguồn chưa cho biết một thông tin không có nghĩa người cổ đại không thể biết hoặc hệ thống ghi chép không thể biểu đạt thông tin ấy.
+
 ## Cách kể và điều khiển điểm nhìn
 
-Mục tiêu là tự sự lịch sử sáng rõ, giàu hình ảnh và có nhiều điều đáng khám phá. Điện ảnh nằm ở việc chọn góc nhìn, khoảng cách, nhịp và điều đáng kể; không phải yêu cầu dựng cảnh, có đối thoại hay theo từng cử động. Lời kể bao quát, tóm lược và giải thích quan hệ lịch sử đều là phương tiện kể chuyện chính đáng.
+Mục tiêu là tự sự lịch sử sáng rõ, giàu hình ảnh và có nhiều điều đáng khám phá. Điện ảnh nằm ở việc chọn góc nhìn, khoảng cách, nhịp và điều đáng kể; không phải yêu cầu dựng cảnh, có đối thoại hay theo từng cử động. Lời kể bao quát, tóm lược và giải thích quan hệ lịch sử đều là phương tiện kể chuyện chính đáng. Toàn tri cho narrator quyền đi qua không gian, thời gian và mức hiểu biết; bản thân nhãn điểm nhìn không tạo hình ảnh. Dùng quyền ấy để người nghe biết đang nhìn vào đâu, thứ gì ở cạnh hoặc tác động lên thứ gì, và vì sao chuyển sang điều tiếp theo.
 
 Phân biệt ba quyết định: **ai kể / biết tới đâu**, **đứng xa hay gần trải nghiệm**, và **đi qua thời gian nhanh hay chậm**. Chúng phối hợp nhưng không đồng nhất. Có một nhân vật trong câu đầu không có nghĩa đã vào hạn tri. Hạn tri vẫn có thể tóm lược nhiều giờ trong một câu; ngôi kể bao quát vẫn có thể dừng ở một hình ảnh cụ thể.
 
@@ -63,6 +81,13 @@ Học chất lượng xây dựng thế giới, sự gắn bó và ý nghĩa tí
 
 Trong các phần mở này, narrator còn nhanh chóng đưa bối cảnh vào: quan hệ giữa hành trình và chiến tranh ở tập Sumerians, giữa người trở về và thành phố đổi khác ở tập Han. Câu chuyện đi qua nhiều sự việc bằng tóm lược, chỉ dừng ở chi tiết có sức nặng. Học cách thông tin làm hình ảnh có ý nghĩa, không coi sự giàu hình ảnh là chỉ dẫn mô tả mọi động tác.
 
+Hai ví dụ từ transcript Sumerians cho thấy những đường kể khác nhau:
+
+- **Della Valle, phần mở:** nơi trú chân trở thành nơi khám phá dấu chữ rồi thành dấu tích của một nền văn minh trong lời narrator. Ý nghĩa của cùng một địa điểm mở rộng; chi tiết không khí nâng đỡ một diễn biến sự kiện.
+- **Taurus, section 2:** narrator nối núi, mây, mưa, đá, tín ngưỡng rồi sông và đồng bằng bằng trục nước. Người nghe đi từ cao xuống thấp, theo chuyển động và sự thay đổi quy mô. Nước lần lượt hiện ra trong thời tiết, cảnh quan, cách con người hình dung thế giới và đường dẫn tới đồng bằng; đoạn không chỉ nhắc lại rằng nước quan trọng. Đây là narration từ các facts địa lý và văn hóa, không cần một nhân vật trải qua biến cố.
+
+Đây là phân tích cách tổ chức transcript, không khẳng định research notes, nguồn Wikipedia hay các vòng draft thực tế của tác giả. Các quan hệ khoa học, liên tưởng văn hóa và suy đoán trong transcript không có cùng mức bằng chứng. Học cách dẫn trí tưởng tượng, không nhập các claims ấy làm authority cho P01. Hai ví dụ được tóm lược ở đây để Writer không cần đọc thêm transcript hoặc bản của Writer khác.
+
 Vận dụng các chức năng ấy theo cách riêng. Không sao chép lời, giọng hay thứ tự chương, và không bắt buộc mọi phần phải có một vòng mở–kết giống nhau.
 
 ## Vai trò của P01
@@ -86,10 +111,12 @@ Excerpt thử nghiệm 450–650 từ chỉ là một đoạn liền mạch củ
 
 Giữ riêng niên đại và địa điểm. Bảng ngũ cốc không chứng minh công dụng của hai hiện vật Chogha Mish hoặc một chuỗi phát minh trực tiếp. Dùng nó như ví dụ chữ viết sơ kỳ với cách dẫn thời gian rõ. Writer có thể dùng cách đọc này trong lời kể bao quát, giải thích hoặc tái dựng; không bắt buộc diễn một cảnh giao hàng. Không giả rằng đã phục hồi toàn bộ giao dịch.
 
-Chất liệu hiện tại cho phép mở vào công việc và dựng trải nghiệm; chưa cho phép tuyên bố hệ quả cụ thể đối với một cá nhân lịch sử. Khi cần một biến cố hay quan hệ nhân quả vượt nền này, tìm thêm căn cứ thay vì dùng cảnh hư cấu để lấp chỗ thiếu.
+Chất liệu hiện tại cho phép mở vào công việc, kể quá trình và dựng trải nghiệm; chưa cho phép tuyên bố hệ quả cụ thể đối với một cá nhân lịch sử. Phân biệt giới hạn khẳng định lịch sử với lựa chọn biên tập: chưa có một giao dịch đầy đủ không buộc lời kể phải trừu tượng hoặc lặp. Nếu một hướng kể cần dữ kiện vượt đầu vào, chọn hướng có căn cứ hoặc ghi rõ phần còn thiếu trong report; brief này không tự cấp quyền mở rộng nghiên cứu.
 
 ## Điều cần kiểm tra khi đọc lại
 
-Người nghe đã hiểu thêm tình thế, quan hệ, diễn biến hoặc trải nghiệm nào, và vì sao muốn theo tiếp? Điểm nhìn đang giúp họ biết điều cần biết hay đang giữ họ trong chi tiết chưa đáng quan tâm? Có thể tóm lược phần nào để dành thời lượng cho điều có sức nặng hơn? Đây là câu hỏi biên tập, không phải checklist kỹ thuật phải biểu diễn trong từng đoạn.
+Trước hết, nếu chỉ nghe một lượt và chưa biết hiện vật, người nghe có điểm tựa nào để hình dung? Câu chữ đã cung cấp nó hay mới gọi tên một loại vật/công việc rồi bắt họ tự bổ sung? Câu sau phát triển hình dung ấy hay chuyển sang khái niệm khác mà thiếu cầu nối?
+
+Tiếp đó, người nghe hiểu thêm tình thế, quan hệ, diễn biến hoặc trải nghiệm nào, và vì sao muốn theo tiếp? Điểm nhìn đang giúp họ biết điều cần biết hay giữ họ trong chi tiết chưa đáng quan tâm? Có thể tóm lược phần nào để dành thời lượng cho điều có sức nặng hơn? Hình dung rõ là cần thiết nhưng chưa đủ; một cảnh dễ thấy vẫn có thể ít khám phá. Đây là câu hỏi biên tập trong cùng lượt viết trước freeze, không phải checklist phải biểu diễn trong prose, điểm số hay vòng xét duyệt mới.
 
 Bỏ các đoạn chỉ đổi cách nói của cùng một thuộc tính. Để sự thận trọng lịch sử bảo vệ câu chuyện ở phía sau; chỉ nói ra điều bất định khi nó thay đổi cách người nghe nên hiểu một chi tiết.
