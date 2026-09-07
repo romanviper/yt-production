@@ -54,7 +54,9 @@ The goal is not merely to explain the substrate correctly. Use the creative brie
 
 Choose the telling freely. Do not force essay structure, hook formulas, beat counts or a generic explanatory template.
 
-The Owner authorizes cinematic, bounded fiction as defined in the creative brief: reconstructed scenes, anonymous/composite characters, plausible dialogue, sensory detail and interiority. Historical inputs constrain claims presented as history, not every invented gesture or line. Distinguish a scene from documentary evidence with light framing where needed; disclose substantial reconstruction by scene in the report. Never use an invented event as evidence for a historical conclusion.
+Follow the creative brief's viewpoint and pacing guide: default to a broad historical narrator for the P01 opening; move close to a character when their perspective has a purpose, and use first-person voices when useful. Summary and historical explanation are valid storytelling. There is no required scene, dialogue, viewpoint rotation or cinematic technique.
+
+The Owner permits bounded fiction as an optional tool: reconstructed scenes, anonymous/composite characters, plausible dialogue, sensory detail and interiority. Historical inputs constrain claims presented as history, not every invented gesture or line. Distinguish a scene from documentary evidence with light framing where needed; disclose substantial reconstruction by scene in the report. Never use an invented event as evidence for a historical conclusion.
 
 Suggested size is roughly 450–650 words for this learning excerpt, but this is not a hard gate.
 
@@ -152,8 +154,10 @@ Ghi những lựa chọn cuối cùng trước khi bắt đầu viết prose:
 - mở ở đâu hoặc bằng điều gì;
 - trục kể hoặc câu hỏi trung tâm;
 - đích đến của đoạn;
-- vị trí/giọng của người kể nếu có lựa chọn đáng kể;
-- những chức năng kể chuyện nào từ creative brief Writer thực sự định dùng, ví dụ: mạch nhân quả, điểm tựa vật chất, sự hiện diện của con người, chuyển quy mô, hệ quả có bằng chứng.
+- điểm nhìn chủ đạo và điều nó giúp người nghe biết/cảm nhận; nếu định tiến gần nhân vật hoặc dùng ngôi thứ nhất, nói ngắn mục đích và lúc nào nên rời điểm nhìn đó (không cần dùng đủ ba cách);
+- nơi định tóm lược hoặc kể gần hơn, và điều đáng khám phá khiến bạn chọn nhịp ấy.
+
+Chỉ ghi lựa chọn cuối cùng trong vài dòng, không lập kế hoạch từng câu hoặc cam kết số cảnh, số lần chuyển điểm nhìn. Nhịp và điểm nhìn có thể thay đổi trong lúc viết; report ghi nhận điều thực tế đã làm.
 
 Với mỗi lựa chọn quan trọng, nếu có thể hãy chỉ ra creative-brief clause, overlay field, substrate ID hoặc chỉ dẫn của Owner đã tác động tới lựa chọn đó.
 
@@ -240,7 +244,7 @@ Tách rõ hai nhóm:
 
 **Giới hạn của đầu vào:** chất liệu lịch sử nào còn thiếu khiến Writer khó tạo human action, pressure, consequence, scene detail hoặc causal movement phong phú hơn.
 
-**Lựa chọn của Writer:** những nơi trong đó chất liệu hiện có vẫn cho phép một cách kể giàu hơn, nhưng Writer đã chủ động chọn cách giải thích, trừu tượng hoặc thận trọng hơn.
+**Lựa chọn của Writer:** những nơi chất liệu cho phép một cách triển khai khác nhưng Writer chọn nhịp, mức chi tiết hoặc điểm nhìn hiện tại. Giải thích và tóm lược không tự thân là điểm yếu; một cảnh rất chi tiết cũng có thể ít khám phá.
 
 Không dùng “đầu vào thiếu” như lời bào chữa chung cho toàn bộ draft.
 
@@ -248,7 +252,9 @@ Không dùng “đầu vào thiếu” như lời bào chữa chung cho toàn b�
 
 Không chấm điểm và không tuyên bố draft thành công/thất bại. Chỉ ra những chỗ cụ thể có thể có vấn đề, ví dụ:
 
-- giống bài luận hoặc giảng giải;
+- giải thích lặp hoặc rời mạch chuyện; không coi mọi lời giải thích của narrator là lỗi;
+- bám động tác vụn trong khi tình thế/nhận thức không tiến;
+- hạn tri trước khi người nghe có lý do quan tâm, hoặc chuyển điểm nhìn mà không rõ ai biết điều gì;
 - câu chuyện không tiến lên;
 - mục tiêu sản phẩm biến mất phía sau một điểm factual hẹp;
 - quá trừu tượng thay vì có object/action/process cụ thể;
