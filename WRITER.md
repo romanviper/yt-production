@@ -1,12 +1,14 @@
-# Writer Harness — observable direct-output MVP
+# Writer Harness — compression-first MVP
 
-The immediate goal is to produce a Writer draft quickly **and make the Writer's observable decisions understandable to the Owner**.
+The immediate goal is to make the **story itself easy for the Owner to inspect before prose is written**.
 
-If the Owner tells you to write P01, write immediately. Do not wait for an assignment, controller state, budget, Planner, Reviewer, or other agent.
+If the Owner tells you to write P01 or start Writer round 1, begin immediately. Do not wait for an assignment, controller state, budget, Planner, Reviewer, or other agent.
 
-This harness does not decide whether your writing is good or bad. Do not emit PASS/FAIL, scores, rankings or a verdict. The Owner evaluates the prose.
+Round 1 produces a **narrative compression**, not listener-facing prose.
 
-Do not store chain-of-thought, private reasoning, hidden scratchpad or internal-monologue transcripts. Record only observable facts, final decisions, brief stated rationales tied to the supplied inputs, material changes, uncertainties and the resulting artifact.
+The Owner will decide whether the compression is ready. Only a later, separate Owner order may ask a Writer to expand an approved compression into prose.
+
+Do not store chain-of-thought, private reasoning, hidden scratchpad or internal-monologue transcripts.
 
 ## Read these three Writer inputs
 
@@ -14,282 +16,109 @@ Do not store chain-of-thought, private reasoning, hidden scratchpad or internal-
 2. `products/sumer-writing/02_outline/section-overlays/P01.json` — bounded section territory/change/discovery.
 3. `products/sumer-writing/03_sections/P01/historical-substrate.json` — historical reality model and claim boundaries.
 
-The creative brief already distills the approved product brief, benchmark, channel/story/voice direction needed for this attempt. Do not load the old workflow or legacy task contexts just to reconstruct those goals.
+The creative brief already distills the product/story direction needed for this attempt. Do not reload the old workflow or legacy task contexts merely to reconstruct those goals.
 
-If you access any other repo file or external source before finishing the draft, disclose it in `meta.json` and `writing-report.md`. Do not read another Writer's output or Owner feedback on another Writer before finishing.
+Do not read another Writer's output or Owner feedback on another Writer before finishing when the Owner wants independent attempts.
 
-## Output partition
+## Output
 
-Use your own partition:
+Write exactly one new round-1 artifact in your Writer partition:
 
-`writer-output/P01/<writer>/`
+`writer-output/P01/<writer>/compression.md`
 
-Current partitions:
+Do not create `draft.md`, `writing-report.md`, `meta.json`, a plan, scorecard, evaluator output or alternative complete versions for this round unless the Owner explicitly asks.
 
-- Gemini → `writer-output/P01/gemini/`
-- GPT-5.6 Sol → `writer-output/P01/sol/`
-- GPT-6 → `writer-output/P01/gpt6/`
+Existing historical files in the partition may remain untouched.
 
-A new model may create one short model-name partition.
+## What a narrative compression is
 
-Each completed attempt contains exactly:
+A narrative compression is the **smallest readable version of the intended story that still preserves its movement and meaning**.
 
-- `draft.md` — listener-facing prose;
-- `meta.json` — compact factual execution metadata;
-- `writing-report.md` — Owner-readable trace of the writing behavior.
+It is not:
 
-Do not write the draft into `products/`, `runs/` or controller folders.
+- an outline;
+- a bullet list of facts;
+- a list of beats or scene instructions;
+- a summary of what you intend to write;
+- polished podcast prose;
+- a methodological explanation of the evidence.
 
-## Execution sequence
+Write it as a condensed retelling in natural Vietnamese. It may use short headings when useful, but the body should read as a story rather than a production document.
 
-### 1. Write the PRE-WRITE SNAPSHOT first
+The Owner should be able to read the compression and quickly see:
 
-Create `writing-report.md` and fill only the pre-write sections below **before drafting prose**. Keep this concise. It is not a Planner artifact.
+- where the historical world begins;
+- what becomes interesting or problematic;
+- what question the listener has enough context to naturally care about;
+- where explanation is needed and what it resolves;
+- what actually changes historically rather than merely being rephrased;
+- what consequence or new meaning follows;
+- what creates the pull into the next movement.
 
-### 2. Write one draft attempt
+A useful compression often has a movement such as:
 
-Write one Vietnamese historical-podcast excerpt for P01.
-
-If the excerpt is the opening, your first editorial responsibility is to earn the listener's attention. Choose what is worth opening with and give an uncommitted listener a reason to hear the next sentence. Do not assume they already want a lesson on recording technology. Making the first supplied fact more concrete is not enough. You may replace the entry point and structure within the supplied evidence; preserve the product purpose, not the previous opening's premise. Use the creative brief's opening guidance. Do not satisfy this responsibility by appending a rhetorical question or labelling a passage a hook.
-
-The goal is not merely to explain the substrate correctly. Use the creative brief to create the intended listener experience while remaining inside the evidence boundaries. For a 450–650-word excerpt, state which part of P01 you are sampling and its local listener change; do not compress the whole section or force its complete exit state into the sample.
-
-Choose the telling freely. Do not force essay structure, hook formulas, beat counts or a generic explanatory template.
-
-Follow the creative brief's viewpoint and pacing guide: default to a broad historical narrator for the P01 opening; move close to a character when their perspective has a purpose, and use first-person voices when useful. Summary and historical explanation are valid storytelling. There is no required scene, dialogue, viewpoint rotation or cinematic technique.
-
-The Owner's primary experience priority is low effort to imagine while listening. Give unfamiliar objects and work enough perceptible form, position, action or relation that the listener need not build them from technical labels alone. Let explanation work through what the listener can picture. Compose a route through the supplied facts; narration does not require a ready-made character story. The creative brief contains the full guidance and two FoC craft examples. This is not a requirement for a scene, sensory detail in every sentence or a concrete-first formula.
-
-The Owner permits bounded fiction as an optional tool: reconstructed scenes, anonymous/composite characters, plausible dialogue, sensory detail and interiority. Historical inputs constrain claims presented as history, not every invented gesture or line. Distinguish a scene from documentary evidence with light framing where needed; disclose substantial reconstruction by scene in the report. Never use an invented event as evidence for a historical conclusion.
-
-Suggested size is roughly 450–650 words for this learning excerpt, but this is not a hard gate.
-
-Before declaring the draft complete, read it as words heard once without a screen. Edit within this same attempt where an unfamiliar term has no usable image, a transition loses the listener, an explanation repeats a property, or a small action consumes attention without helping the telling. Choose concrete cuts, reordering, clarification or compression as needed; do not merely defer those decisions to the report. Ordinary editing of this attempt before freeze is allowed. Do not generate alternative complete drafts, reroll or add an evaluator/approval loop. Record material editorial changes briefly in report section 12; no extra artifact is required.
-
-### 3. Freeze the draft
-
-Once `draft.md` is complete, do not rewrite or reroll it because of observations made while filling the report. The report must describe the draft that actually existed at completion.
-
-### 4. Finish the POST-WRITE TRACE
-
-Inspect your frozen draft and append the post-write sections. Do not change the draft afterward.
-
-### 5. Write `meta.json`, commit the three files, stop
-
-There is no Writer time budget. Timing is telemetry only. Never fabricate unknown model/session/timing information; use `UNKNOWN` or `null`.
-
----
-
-# `meta.json` contract
-
-Keep metadata factual and compact.
-
-```json
-{
-  "schema": "writer-observability-v2",
-  "writer": "<partition name>",
-  "model": "<actual model if known, otherwise UNKNOWN>",
-  "task": "P01",
-  "attempt": 1,
-  "owner_instruction": "<short faithful summary of the instruction that started this attempt>",
-  "branch": "<current branch if known, otherwise UNKNOWN>",
-  "starting_commit": "<HEAD before this attempt if known, otherwise UNKNOWN>",
-  "inputs_read": [
-    "products/sumer-writing/02_outline/P01-creative-brief.md",
-    "products/sumer-writing/02_outline/section-overlays/P01.json",
-    "products/sumer-writing/03_sections/P01/historical-substrate.json"
-  ],
-  "extra_context_accessed": [],
-  "other_writer_outputs_read": false,
-  "owner_feedback_on_other_writer_read_before_draft": false,
-  "rerolled": false,
-  "draft_word_count": 0,
-  "timing": {
-    "seconds": null,
-    "source": "UNKNOWN"
-  },
-  "outputs": ["draft.md", "writing-report.md"]
-}
+```text
+world / situation
+→ pressure, change or puzzle becomes visible
+→ listener has enough context to want an explanation
+→ explanation resolves part of the puzzle
+→ a historical consequence or new capability becomes visible
+→ the story moves forward
 ```
 
-If a fact cannot be known truthfully, use `UNKNOWN`/`null` rather than guessing.
+This is a diagnostic shape, not a mandatory formula. Do not force every section into identical beats.
 
----
+## What to optimize for in round 1
 
-# Quy ước cho `writing-report.md`
+### 1. Story before sentences
 
-`writing-report.md` phải được viết bằng **tiếng Việt tự nhiên, rõ ràng, dễ đọc đối với Owner**.
+Do not spend effort making individual lines beautiful. Make the **sequence of meaning** clear first.
 
-Không viết report theo giọng tài liệu kỹ thuật hoặc prompt engineering. Không dùng tiếng Anh làm nhãn mặc định nếu có thể nói tự nhiên bằng tiếng Việt. Chỉ giữ nguyên tên file, path, model, ID nguồn như `HS-P01-0004`, hoặc thuật ngữ chuyên môn khi việc dịch sẽ làm mất nghĩa.
+If the compression reveals that several steps are only restating the same idea, fix the story structure here rather than hiding repetition inside longer prose.
 
-Ưu tiên câu ngắn, bảng và bullet. Mục tiêu là để Owner đọc và hiểu Writer đã làm gì, không phải để Writer tự biện hộ hay chứng minh mình đúng.
+### 2. Earn explanation
 
-Dùng đúng các heading dưới đây theo thứ tự.
+Historical explanation and essay-like exposition are valid and often necessary, especially when explaining how writing functions.
 
-## TRƯỚC KHI VIẾT
+The question is not whether a passage is explanatory. The question is whether the preceding story has given the listener enough context to want that explanation.
 
-### 1. Tôi hiểu nhiệm vụ lần này là gì
+Before an explanatory movement, make it possible for the Owner to see why that question has become relevant. Do not manufacture curiosity with a rhetorical question when the story has not earned it.
 
-Trong 1–3 câu, nói lại bằng tiếng Việt tự nhiên Writer hiểu Owner đang yêu cầu tạo ra sản phẩm gì.
+### 3. Preserve the product promise
 
-### 2. Tôi hiểu câu chuyện lớn và vai trò của P01 như thế nào
+This podcast uses the history of writing/cuneiform as the path through which the listener discovers the Sumerian world. Do not reduce the compression to a technical history of sign systems.
 
-Nói bằng lời của mình:
+When selecting and connecting material, keep both questions alive:
 
-- podcast dài này đang kể câu chuyện lớn nào;
-- P01 đóng vai trò gì trong hành trình đó;
-- điều gì sẽ bị mất nếu P01 chỉ còn là một đoạn giải thích về sự thận trọng khảo cổ học.
+- What changes in how people create, use, learn or transmit writing here?
+- What does this use of writing reveal about the Sumerian world?
 
-Bám vào `P01-creative-brief.md`, không tự phát minh mục tiêu sản phẩm mới.
+### 4. Historical movement over conceptual repetition
 
-### 3. Tôi muốn người nghe thay đổi nhận thức như thế nào
+A compression should make it obvious when the section moves through history, capability, social use, consequence or meaning.
 
-Ghi rõ:
+Do not mistake several reformulations of one property — for example durability, inspectability or information storage — for several story developments.
 
-- trước đoạn này người nghe có thể đang hình dung điều gì;
-- sau đoạn này họ nên hiểu khác đi như thế nào;
-- câu hỏi hoặc sự tò mò nào nên kéo họ sang phần tiếp theo;
-- nếu chất liệu cho phép, cảm giác hoặc sức nặng nào Writer muốn tạo ra.
+### 5. Evidence boundaries stay backstage
 
-Đây không chỉ là kết luận factual. Hãy mô tả trải nghiệm mà Writer định tạo ra cho người nghe.
+The overlay and historical substrate constrain what may be presented as history. They do not need to dominate the compression.
 
-### 4. Tôi định kể đoạn này như thế nào
+Do not invent unsupported commodities, transactions, named actors, motives, taxes, ownership claims or deterministic causal links. Keep chronological distinctions clear.
 
-Ghi những lựa chọn cuối cùng trước khi bắt đầu viết prose:
+If uncertainty itself changes the story, include it naturally. Otherwise let it constrain the telling silently.
 
-- mở ở đâu hoặc bằng điều gì;
-- trục kể hoặc câu hỏi trung tâm;
-- điểm tựa đầu tiên giúp người chỉ nghe hình dung được thứ đang kể, và cách dự định nối các facts để phát triển hình dung đó; không cần một mẩu chuyện nhân vật có sẵn;
-- đích đến của đoạn;
-- điểm nhìn chủ đạo và điều nó giúp người nghe biết/cảm nhận; nếu định tiến gần nhân vật hoặc dùng ngôi thứ nhất, nói ngắn mục đích và lúc nào nên rời điểm nhìn đó (không cần dùng đủ ba cách);
-- nơi định tóm lược hoặc kể gần hơn, và điều đáng khám phá khiến bạn chọn nhịp ấy.
+## Scope
 
-Chỉ ghi lựa chọn cuối cùng trong vài dòng, không lập kế hoạch từng câu hoặc cam kết số cảnh, số lần chuyển điểm nhìn. Nhịp và điểm nhìn có thể thay đổi trong lúc viết; report ghi nhận điều thực tế đã làm.
+Unless the Owner explicitly asks for a smaller test, compress the **whole assigned P01 story movement**, not a 450–650-word prose excerpt.
 
-Với mỗi lựa chọn quan trọng, nếu có thể hãy chỉ ra creative-brief clause, overlay field, substrate ID hoặc chỉ dẫn của Owner đã tác động tới lựa chọn đó.
+There is no required word count. Use enough space for the Owner to see the complete movement without prose-level expansion.
 
-### 5. Tôi dự định dựa vào bằng chứng nào
+## Finish
 
-Liệt kê những overlay field / historical-substrate ID Writer dự định dùng và mỗi nguồn sẽ giúp làm gì trong đoạn kể.
+Read the compression once as a whole.
 
-### 6. Những ranh giới bằng chứng tôi đang mang theo
+Fix obvious problems that are easier to see at this level: missing setup, premature explanation, repeated meaning, weak causal links, historical jumps, a payoff with no setup, or a next question that has not been earned.
 
-Chỉ liệt kê những boundary thực sự có thể ảnh hưởng tới cách kể.
+Then freeze `compression.md`, commit it, and STOP for Owner reading.
 
-Với mỗi boundary, nói rõ Writer dự định xử lý nó theo cách nào, bằng ngôn ngữ tự nhiên, chẳng hạn:
-
-- bỏ chi tiết không đủ căn cứ;
-- thêm một qualifier ngắn trong prose;
-- chỉ ghi trong report, không đưa vào lời kể;
-- biến uncertainty thành nội dung listener-facing vì bản thân uncertainty đó có ý nghĩa kể chuyện.
-
-Không mặc định rằng một boundary phải được nói cho người nghe chỉ vì nó tồn tại.
-
----
-
-## SAU KHI VIẾT
-
-### 7. Bản draft thực tế đi như thế nào
-
-Map bản draft đã freeze từ đầu tới cuối.
-
-| Vị trí trong draft | Điểm tựa hình dung: cụm ngắn thực sự có trong prose | Hình dung hoặc hiểu biết được phát triển ra sao | Nguồn / substrate ID | Loại nội dung |
-| --- | --- | --- | --- | --- |
-| ¶1 | ... / chưa rõ | ... | HS-P01-... | dữ kiện / suy luận / framing / tái dựng sáng tạo |
-
-Ghi “kế thừa từ ¶...” nếu đoạn phát triển một hình dung đã có; không ép mỗi đoạn phải tạo hình ảnh mới. Không bổ sung trong report một âm thanh, vật thể hoặc hành động mà draft chưa viết. Mô tả cơ sở trong câu chữ, không khẳng định đã đo được trí tưởng tượng hay phản ứng của người nghe.
-
-### 8. Mục tiêu sản phẩm đã đi vào prose ở đâu
-
-Cho thấy những mục tiêu lớn hơn và vai trò P01 thực sự xuất hiện ở đâu trong draft.
-
-| Mục tiêu/chức năng đã định | Vị trí trong draft | Người nghe thực sự nhận được gì |
-| --- | --- | --- |
-| cho người chỉ nghe một điểm tựa hình dung | ¶... và cụm từ ngắn | ... / chưa thể hiện rõ |
-| đặt ra bài toán lịch sử trước khi có “writing” | ¶... | ... |
-| tạo lực kéo sang câu hỏi tiếp theo | ¶... | ... |
-
-Nếu một mục tiêu đã định trước khi viết nhưng không xuất hiện trong draft, nói thẳng điều đó. Không PASS/FAIL.
-
-### 9. Từ nguồn tới câu chữ
-
-Với mỗi khẳng định lịch sử quan trọng hoặc cầu nối nhân quả được trình bày như thật, chỉ ra căn cứ. Chi tiết tái dựng gom theo cảnh ở mục 10: nêu nền lịch sử, phần đã sáng tạo và cách báo hiệu; không ép từng cử chỉ, âm thanh hay câu thoại hư cấu phải có nguồn riêng.
-
-| Vị trí hoặc cụm từ ngắn trong draft | Nguồn/căn cứ | Nguồn thực sự cho phép nói gì | Writer đã thêm hoặc biến đổi gì |
-| --- | --- | --- | --- |
-| ... | HS-P01-0004 | ... | nén ý / suy luận / framing / không thêm |
-
-Không được nói nguồn support nhiều hơn nội dung thực tế của nguồn. Phân biệt cầu nối nhân quả với chuyển không gian, đối chiếu hoặc liên tưởng chủ đề. Một câu được gọi là “framing” vẫn cần căn cứ nếu nó khẳng định một nguyên nhân, công dụng hoặc giới hạn lịch sử.
-
-### 10. Những phần Writer tự thêm hoặc suy ra
-
-Liệt kê những nội dung đáng kể không được nói trực tiếp trong historical inputs. Với mỗi mục, dùng một mô tả tiếng Việt dễ hiểu như:
-
-- suy luận thận trọng từ bằng chứng;
-- framing để kể chuyện;
-- tái dựng sáng tạo;
-- chưa được support chắc chắn / còn bất định.
-
-Nếu không có, ghi `Không có`.
-
-### 11. Ranh giới bằng chứng đã ảnh hưởng draft thực tế ra sao
-
-| Boundary | Writer đã xử lý thế nào | Nếu lọt vào lời kể thì ở đâu | Nó có biến thành giọng giải trình phương pháp không? |
-| --- | --- | --- | --- |
-| ... | bỏ / qualifier ngắn / kể trực tiếp | ¶... / không có | có / không |
-
-Mục này tồn tại để Owner thấy evidence discipline đã âm thầm bảo vệ độ chính xác hay đã tràn ra thành methodological exposition.
-
-### 12. Những gì thay đổi so với ý định trước khi viết
-
-| Trước khi viết định làm gì | Cuối cùng đã viết gì | Điều quan sát được nào khiến hướng đi thay đổi |
-| --- | --- | --- |
-| ... | ... | ... |
-
-Bao gồm quyết định biên tập đáng kể trong cùng lượt trước freeze: đã cắt, chuyển, làm rõ hoặc nén phần nào và vì sao. Chỉ ghi điều thực sự đã làm, không dựng lại lịch sử các phiên bản. Nếu không có thay đổi đáng kể, ghi `Không có thay đổi đáng kể`.
-
-### 13. Phần nào là do đầu vào thiếu, phần nào là do lựa chọn của Writer
-
-Tách rõ hai nhóm:
-
-**Giới hạn của đầu vào:** nêu thông tin cụ thể còn thiếu và khẳng định hoặc hướng kể nào vì thế chưa có căn cứ. Thiếu nhân vật có tên, xung đột hoặc một sự kiện hoàn chỉnh không tự chứng minh thiếu chất liệu cho narration về quá trình, không gian hay quan hệ.
-
-**Lựa chọn của Writer:** những nơi chất liệu cho phép một cách triển khai khác nhưng Writer chọn trục nối facts, nhịp, mức chi tiết hoặc điểm nhìn hiện tại. Tách việc chưa giúp người nghe hình dung chất liệu đã có khỏi việc không được phép khẳng định điều nguồn chưa cho biết. Giải thích và tóm lược không tự thân là điểm yếu; một cảnh rất chi tiết cũng có thể ít khám phá.
-
-Không dùng “đầu vào thiếu” như lời bào chữa chung cho toàn bộ draft.
-
-### 14. Những rủi ro Writer tự nhìn thấy trong output
-
-Không chấm điểm và không tuyên bố draft thành công/thất bại. Chỉ ra những chỗ cụ thể có thể có vấn đề, ví dụ:
-
-- người chỉ nghe phải tự đoán hình dạng, thao tác hoặc quan hệ vì prose mới đưa thuật ngữ hay danh sách vật;
-- câu giải thích chưa có điểm tựa để hình dung, hoặc câu chuyển làm mất hình dung đang theo;
-- thêm chi tiết không khí nhưng chưa giúp hiểu vật, công việc hay diễn biến;
-- giải thích lặp hoặc rời mạch chuyện; không coi mọi lời giải thích của narrator là lỗi;
-- bám động tác vụn trong khi tình thế/nhận thức không tiến;
-- hạn tri trước khi người nghe có lý do quan tâm, hoặc chuyển điểm nhìn mà không rõ ai biết điều gì;
-- câu chuyện không tiến lên;
-- mục tiêu sản phẩm biến mất phía sau một điểm factual hẹp;
-- quá trừu tượng thay vì có object/action/process cụ thể;
-- thiếu sự hiện diện của con người dù evidence cho phép;
-- quy mô không dịch chuyển;
-- nén quá mức hoặc lặp ý;
-- đi quá xa bằng chứng;
-- quá thận trọng làm câu chuyện phẳng;
-- boundary bằng chứng tràn vào lời kể thành giọng phương pháp luận;
-- một instruction nào đó làm prose bị méo rõ rệt.
-
-Dùng số đoạn hoặc một cụm ngắn để Owner có thể nhìn đúng cùng vị trí.
-
-### 15. Những gì đã xảy ra trong phiên viết
-
-Nói rõ:
-
-- có đọc thêm file repo nào ngoài ba input chính không;
-- có dùng nguồn/search bên ngoài không;
-- có nhìn thấy/đọc output Writer khác không;
-- có nhìn thấy/đọc feedback của Owner về Writer khác không;
-- có tạo hơn một prose attempt không;
-- timing nếu thực sự biết, nếu không ghi `UNKNOWN`.
-
-Sau đó dừng. Không review Writer khác, không rank model, không sửa lại draft đã freeze và không sửa harness.
+Do not begin prose on your own, even if the compression seems good to you. Approval and the prose order belong to the Owner.
