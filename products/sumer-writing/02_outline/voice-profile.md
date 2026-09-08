@@ -20,9 +20,9 @@ Giọng nền là người kể lịch sử bao quát, giàu hình ảnh và th�
 
 Ngôi thứ ba hạn tri hữu ích khi nhận thức, mong muốn hoặc điều nhân vật chưa biết tạo trải nghiệm đáng theo dõi; không đồng nghĩa tả từng động tác. Ngôi thứ nhất hữu ích khi một tiếng nói riêng có giá trị; phải rõ ai nói và đó là lời có nguồn hay tái dựng. Rời điểm nhìn gần khi cần mở bối cảnh/hệ quả hoặc khi trải nghiệm đã hoàn thành chức năng. Không buộc dùng đủ ba ngôi hay luân phiên theo công thức.
 
-Phân biệt phạm vi người kể biết, khoảng cách với nhân vật và tốc độ đi qua thời gian. Chọn độ chi tiết theo sức nặng của điều được kể; để thông tin làm hình ảnh có nghĩa. Có thể dành chỗ cho không khí và khoảng lặng, nhưng không kéo dài thao tác chỉ để tạo vẻ điện ảnh. Guide trực tiếp cho Writer nằm trong mục “Cách kể và điều khiển điểm nhìn” của `P01-creative-brief.md`, đã được đưa vào ba input chính.
+Phân biệt phạm vi người kể biết, khoảng cách với nhân vật và tốc độ đi qua thời gian. Chọn độ chi tiết theo sức nặng của điều được kể; để thông tin làm hình ảnh có nghĩa. Có thể dành chỗ cho không khí và khoảng lặng, nhưng không kéo dài thao tác chỉ để tạo vẻ điện ảnh. Guide trực tiếp cho Writer nằm trong mục “Cách kể và khoảng nhìn” của `P01-creative-brief.md`, đã được đưa vào ba input chính.
 
-Quyền dựng cảnh, nhân vật tổng hợp, đối thoại và nội tâm vẫn giữ nguyên; đây là lựa chọn, không phải kỹ thuật phải xuất hiện. Tái dựng phải hợp bối cảnh, không giả làm sự kiện hoặc trích dẫn được chứng thực. Nhận diện nhẹ khi dễ hiểu nhầm, ghi phần sáng tạo theo cảnh trong report; không đòi nguồn cho từng chi tiết tưởng tượng hoặc dùng chúng làm bằng chứng lịch sử.
+Quyền dựng cảnh, nhân vật tổng hợp, đối thoại và nội tâm vẫn giữ nguyên; đây là lựa chọn, không phải kỹ thuật phải xuất hiện. Tái dựng phải hợp bối cảnh, không giả làm sự kiện hoặc trích dẫn được chứng thực. Nhận diện nhẹ khi dễ hiểu nhầm; không đòi nguồn cho từng chi tiết tưởng tượng hoặc dùng chúng làm bằng chứng lịch sử. Round 1 theo WRITER.md chỉ tạo compression toàn P01, không report.
 
 ## Prohibited imitation
 
@@ -30,4 +30,5 @@ Không sao chép wording, cadence, motif, narrator persona, signature transition
 
 ## Draft tests
 
-Khi review hoặc revise, kiểm tra bốn điều: section có đạt entry→exit state đã duyệt không (excerpt chỉ cần đạt chuyển biến cục bộ đã chọn); causal claim có nằm trong evidence ceiling không; uncertainty quan trọng có được giữ đúng mức không; và prose có đứng được bằng logic, bằng chứng và expression riêng thay vì dựa vào việc mô phỏng benchmark không.
+Ở round compression, đọc toàn bộ đường kể: phần mở có tạo lý do quan tâm, các chuyển đoạn có phát triển sự quan tâm ấy, công việc và quan hệ có dễ hình dung, cuối phần có khám phá hoặc ý nghĩa đã được chuẩn bị không? Đồng thời giữ khẳng định trong căn cứ và expression riêng. Không dùng độ dè dặt hoặc mật độ thông tin để bù cho thiếu sức hút; không chấm điểm thay Owner. Prose chỉ bắt đầu khi Owner có lệnh riêng.
+

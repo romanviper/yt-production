@@ -1166,6 +1166,64 @@
           "local_id": "MET-1988.433.2"
         }
       ]
+    },
+    {
+      "id": "SRC-0044",
+      "title": "The first writing: counting beer for the workers (1989,0130.4)",
+      "author": "British Museum, collection contribution to Google Arts & Culture",
+      "year": null,
+      "type": "holding-museum interpretation and object metadata",
+      "authority": "British Museum authored collection entry hosted on Google Arts & Culture; accession matches collection catalogue.",
+      "url": "https://artsandculture.google.com/asset/the-first-writing-counting-beer-for-the-workers/fgF9ioy89DC2Uw?hl=en",
+      "locators": [
+        "Opening description; sign descriptions; Details: registration number, dimensions, period and acquisition",
+        "Final paragraph on early Uruk tablets discarded from large temples and reused as building-foundation packing"
+      ],
+      "status": "reviewed",
+      "accessed_at": "2026-09-08",
+      "limitations": [
+        "Use the attribution to workers daily beer rations as the museum interpretation, not a complete translation identifying recipients.",
+        "Southern Iraq; no secure Uruk findspot or named issuing temple asserted for this purchased object.",
+        "Do not infer modern wages, intoxication, coercion, water safety or a sole origin of writing.",
+        "The building-fill account concerns early tablets generally, not the excavated provenance of purchased tablet 1989,0130.4. No destruction event or reason for discarding is identified."
+      ],
+      "notes": [
+        "Read the museum-authored partner page in full. The direct British Museum object page returned HTTP 403; its indexed catalogue dates and registration corroborate identity."
+      ],
+      "provenance": [
+        {
+          "workstream": "P01-local-editorial-lab",
+          "local_id": "BM-1989-0130-4"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0045",
+      "title": "The Origins of Writing",
+      "author": "Ira Spar, Department of Ancient Near Eastern Art, The Metropolitan Museum of Art",
+      "year": 2004,
+      "type": "museum scholarly essay",
+      "authority": "Museum specialist synthesis with scholarly bibliography.",
+      "url": "https://www.metmuseum.org/essays/the-origins-of-writing",
+      "locators": [
+        "Opening paragraphs on late-fourth-millennium Uruk, temple estates, accounting, and the list of professions"
+      ],
+      "status": "reviewed",
+      "accessed_at": "2026-09-08",
+      "limitations": [
+        "A 2004 synthesis, used here only for bounded urban, occupational and accounting context.",
+        "Temple accounting is a formation context, not a sole-cause origin account; do not assign every surviving tablet to one temple.",
+        "Do not import broad first-city, first-writing, population or language claims from this essay."
+      ],
+      "notes": [
+        "Read the full essay; retain the distinction between general Uruk context and the findspot or transaction of an individual object."
+      ],
+      "provenance": [
+        {
+          "workstream": "P01-local-editorial-lab",
+          "local_id": "MET-ORIGINS-WRITING"
+        }
+      ]
     }
   ]
 }

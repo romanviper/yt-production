@@ -2,22 +2,20 @@
   "schema_version": 1,
   "section": "P01",
   "status": "approved_migration",
-  "base_outline_sha256": "e9ed837a40304b8514a5778ac3a35e8ff53fa6b4010b4c6a70de24d5886e0c8c",
+  "base_outline_sha256": "fa2f82574a128a4b99cdbe26671b02ada2132b3e93d2b03e2ab281ae0706aa7c",
   "historical_substrate_contract_version": 1,
-  "historical_territory": "Công việc ghi nhận trong Late Uruk và một ví dụ chữ viết sơ kỳ thời Jemdet Nasr: tạo dấu, giữ số lượng, xác thực và khả năng ghi việc giao/phân phối ngũ cốc. Giữ riêng niên đại và xuất xứ của từng trường hợp.",
+  "historical_territory": "Công việc và nhu cầu ghi chép tại Late Uruk và đầu thiên niên kỷ III TCN: bối cảnh đô thị/đền thờ, ghi lương thực và khẩu phần; có thể chạm việc bản ghi cổ được dùng lại làm vật liệu xây dựng để mở cách nhìn vào đời sống đó. Mỗi trường hợp giữ riêng niên đại, nơi chốn và mức diễn giải.",
   "historical_change": {
-    "from": "Lượng và xác thực được xử lý qua nhiều thiết bị và thực hành đất sét trong Late Uruk.",
-    "to": "Trong giai đoạn chữ viết sơ kỳ, dấu và số trên bảng đã có thể gắn với một công việc có nội dung như ghi việc giao/phân phối ngũ cốc. Đây là sự mở rộng điều quan sát được, không phải phả hệ trực tiếp giữa các hiện vật."
+    "from": "Trong đô thị Late Uruk, những công việc tổ chức vật chất và cấp phát đi cùng nhu cầu theo dõi lượng và xác thực.",
+    "to": "Các thực hành đất sét đáp ứng việc ghi số và xác thực; các bảng chữ viết sơ kỳ còn ghi công việc liên quan đến ngũ cốc và khẩu phần của người lao động. Đây là các thực hành trong cùng bối cảnh hình thành, không phải phả hệ giữa từng hiện vật."
   },
   "historical_substrate_ids": [
-    "HS-P01-0001",
     "HS-P01-0006",
-    "HS-P01-0010",
-    "HS-P01-0011",
     "HS-P01-0012",
-    "HS-P01-0013",
-    "HS-P01-0007"
+    "HS-P01-0014",
+    "HS-P01-0015",
+    "HS-P01-0016"
   ],
   "audience_discovery": "Người nghe hiểu dấu ghi từng phục vụ công việc của con người, hình dung được một phần đời sống đằng sau chúng và muốn tìm hiểu chúng còn giúp ta biết gì về Sumer. Không cần thuộc hệ phân loại hiện vật hay giải xong nguồn gốc chữ viết.",
-  "authority_note": "Owner-directed revision after 594df8d: add a qualified, independently sourced early grain-account case and align P01 narrative purpose. Chogha Mish remains optional comparative material, not its ancestor or transaction equivalent."
+  "authority_note": "Owner-directed local rewrite experiment, 2026-09-08: select urban context, mark-making, worker provisions and documented secondary use for independent narrative choice. Comparative objects remain in product research. No prescribed story order or opening."
 }

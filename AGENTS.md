@@ -34,7 +34,7 @@ Owner approves the compression and later gives a separate prose order
   → only then may a Writer expand the approved story into listener-facing prose
 ```
 
-Round 1 is **not a prose-writing round**. Do not create a draft, writing report, metadata packet, scorecard or alternative versions unless the Owner explicitly asks for them.
+Round 1 is **a short telling of the whole story, before expansion into a full podcast script**. Do not create a draft, writing report, metadata packet, scorecard or alternative versions unless the Owner explicitly asks for them.
 
 Do not store chain-of-thought, private reasoning, hidden scratchpads, or internal-monologue transcripts.
 
@@ -68,3 +68,4 @@ Existing historical `draft.md`, `meta.json` and `writing-report.md` files may re
 ## Historical material
 
 Phase 1/2/3 experiments, coordinator prototypes, old budget/submission machinery and cancelled production tasks are not prerequisites for this compression-first MVP. Do not activate them unless the Owner explicitly asks.
+

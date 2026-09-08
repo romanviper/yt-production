@@ -1395,6 +1395,60 @@
           "local_id": "MET-1988.433.2"
         }
       ]
+    },
+    {
+      "id": "CLM-0073",
+      "statement": "British Museum interprets tablet 1989,0130.4, dated ca. 3100–3000 BCE in southern Iraq, as recording beer issued to workers within daily rations. Its signs include pointed-base jars with wavy contents and a bowl toward a human head, interpreted as to eat and indicating rations.",
+      "type": "inference",
+      "confidence": "medium",
+      "status": "qualified",
+      "sources": [
+        "SRC-0044"
+      ],
+      "counterevidence": "Museum-level interpretation, not a complete identification of the transaction, people or issuing institution.",
+      "narrative_implication": "Optional specific relation between recording, provisions and workers; do not require this object or its position in the story.",
+      "provenance": [
+        {
+          "workstream": "P01-local-editorial-lab",
+          "local_id": "BM-1989-0130-4"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0074",
+      "statement": "In late-fourth-millennium Uruk, large temple estates handled accounting and disbursement, and early written lists name specialist occupations including potters and metalworkers. These provide a concrete institutional and occupational setting for record-making.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0045"
+      ],
+      "counterevidence": "General setting does not locate a particular purchased tablet in a temple or identify its workers; no sole-cause invention claim follows.",
+      "narrative_implication": "Optional world context for work and record keeping; not evidence of a specific wage, obligation or ration entitlement.",
+      "provenance": [
+        {
+          "workstream": "P01-local-editorial-lab",
+          "local_id": "MET-ORIGINS-WRITING"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0075",
+      "statement": "The British Museum account describes early Uruk tablets discarded from large temples and subsequently reused as packing in foundations of new buildings. This is a general account of secondary use, not the find history of tablet 1989,0130.4.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0044"
+      ],
+      "counterevidence": "No exact rebuilding date, individual building, reason for discard or excavated history of the purchased beer tablet is established by this passage.",
+      "narrative_implication": "Optional distinct material history: an early record could become building material; this does not require a particular opening or a ruin-and-recovery plot.",
+      "provenance": [
+        {
+          "workstream": "P01-local-editorial-lab",
+          "local_id": "BM-EARLY-TABLETS-SECONDARY-USE"
+        }
+      ]
     }
   ],
   "contradiction_register": [

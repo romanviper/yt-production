@@ -451,6 +451,115 @@
         "This early-writing example does not establish an earlier Late-Uruk cause, a direct developmental sequence, or the use of the Chogha Mish objects.",
         "Recipients, quantities, motives and individual outcomes are not established historical facts here. A signaled fictional illustration may add plausible human detail, but must not assert a known transaction, tax, wage or entitlement or prove a causal claim."
       ]
+    },
+    {
+      "id": "HS-P01-0014",
+      "kind": "practice",
+      "world": {
+        "participants": [
+          "unnamed workers receiving daily provisions",
+          "people recording provisions"
+        ],
+        "operation": "record beer issued to workers as part of daily rations, in the British Museum interpretation of tablet 1989,0130.4",
+        "object_or_medium": [
+          "clay tablet 1989,0130.4, about 9.4 by 6.87 cm",
+          "signs shaped as pointed-base jars with wavy contents",
+          "a bowl directed toward a human head, interpreted as to eat and indicating rations"
+        ],
+        "information_or_relation_handled": [
+          "beer allocations",
+          "daily worker provisions"
+        ],
+        "context": "Southern Iraq, ca. 3100–3000 BCE, Late Uruk; precise excavated findspot and issuing institution are not established here."
+      },
+      "statement": "British Museum interprets tablet 1989,0130.4, dated ca. 3100–3000 BCE in southern Iraq, as recording beer issued to workers within daily rations. Its signs include pointed-base jars with wavy contents and a bowl toward a human head, interpreted as to eat and indicating rations.",
+      "epistemic_status": "qualified_inference",
+      "claim_ids": [
+        "CLM-0073"
+      ],
+      "source_refs": [
+        {
+          "source_id": "SRC-0044",
+          "locator": "Opening description, signs for beer and to eat, and object details"
+        }
+      ],
+      "time_scope": "ca. 3100–3000 BCE, Late Uruk (museum dating)",
+      "place_scope": "Southern Iraq; specific Uruk findspot not asserted",
+      "boundaries": [
+        "Retain the museum-attributed reading of daily worker beer rations. Do not present a named recipient, ration quantity, wage rate, issuer, coercion or deprivation outcome as established by this tablet. Identified fictional illustration remains available under the creative brief and cannot prove a historical consequence.",
+        "A recorded ration is not evidence that writing created that ration, guaranteed receipt, or first made distribution possible.",
+        "Do not identify this purchased object with the temple archives mentioned generally in the same essay or with the Chogha Mish and Met grain objects."
+      ]
+    },
+    {
+      "id": "HS-P01-0015",
+      "kind": "practice",
+      "world": {
+        "participants": [
+          "people handling accounts and disbursements for large temple estates",
+          "specialist occupations including potters and metalworkers named in early Uruk lists"
+        ],
+        "operation": "keep economic records in an urban setting with temple estates and differentiated work",
+        "object_or_medium": [
+          "clay economic tablets",
+          "early lists of occupations"
+        ],
+        "information_or_relation_handled": [
+          "institutional accounting and disbursement",
+          "occupational distinctions"
+        ],
+        "context": "Uruk in the later fourth millennium BCE; general setting from Ira Spar, The Met, 2004."
+      },
+      "statement": "In late-fourth-millennium Uruk, large temple estates handled accounting and disbursement, and early written lists name specialist occupations including potters and metalworkers. These provide a concrete institutional and occupational setting for record-making.",
+      "epistemic_status": "documented",
+      "claim_ids": [
+        "CLM-0074"
+      ],
+      "source_refs": [
+        {
+          "source_id": "SRC-0045",
+          "locator": "Opening paragraphs on Uruk, temple estates and occupations"
+        }
+      ],
+      "time_scope": "Later fourth millennium BCE",
+      "place_scope": "Uruk, southern Mesopotamia",
+      "boundaries": [
+        "Urban and temple accounting context does not establish a sole cause of writing or prove that all work, resources or records were temple-controlled.",
+        "Do not identify the workers in tablet 1989,0130.4 as potters, metalworkers or employees of a particular temple; these are separate contextual facts."
+      ]
+    },
+    {
+      "id": "HS-P01-0016",
+      "kind": "process",
+      "world": {
+        "participants": [
+          "people discarding early tablets from large temples",
+          "people constructing later buildings"
+        ],
+        "operation": "reuse discarded early Uruk tablets as packing in foundations of new buildings",
+        "object_or_medium": [
+          "clay tablets previously used as records",
+          "building foundations"
+        ],
+        "result": "written clay surfaces occur in a secondary construction context rather than an intact working archive"
+      },
+      "statement": "The British Museum account describes early Uruk tablets discarded from large temples and subsequently reused as packing in foundations of new buildings. This is a general account of secondary use, not the find history of tablet 1989,0130.4.",
+      "epistemic_status": "documented",
+      "claim_ids": [
+        "CLM-0075"
+      ],
+      "source_refs": [
+        {
+          "source_id": "SRC-0044",
+          "locator": "Final paragraph on early Uruk tablets and secondary building use"
+        }
+      ],
+      "time_scope": "Early Uruk tablets and subsequent ancient reuse; exact rebuilding date not supplied",
+      "place_scope": "Uruk early-tablet contexts discussed generally by British Museum, not the findspot of 1989,0130.4",
+      "boundaries": [
+        "Do not claim the purchased beer tablet was excavated from these foundations, or that every early tablet had this history.",
+        "No disaster, deliberate erasure, motive for disposal or named excavator is established. Later reading of the records does not imply their creators intended to address future generations."
+      ]
     }
   ],
   "constraints": [
