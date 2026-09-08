@@ -1,12 +1,12 @@
-# AI Agent Router — direct-output MVP
+# AI Agent Router — compression-first Writer MVP
 
-The immediate goal of this branch is simple: **produce Writer drafts the Owner can read and diagnose**.
+The immediate goal of this branch is simple: **let the Owner inspect the story before anyone spends effort turning it into polished prose**.
 
-Do not redesign, optimize or extend the architecture before the Owner has read Writer outputs and given feedback.
+Do not redesign, optimize or extend the architecture before the Owner has read the Writer output and given feedback.
 
 ## If you are a Writer
 
-If the Owner tells you to write P01, follow [WRITER.md](WRITER.md) immediately.
+If the Owner tells you to write P01 or start Writer round 1, follow [WRITER.md](WRITER.md) immediately.
 
 A direct Owner instruction is sufficient authority.
 
@@ -20,25 +20,25 @@ Do not wait for or require:
 
 Absence of those artifacts is not a blocker.
 
-Writer flow:
+Current Writer flow:
 
 ```text
-Owner says write P01
-  → read the canonical inputs in WRITER.md
-  → record the small PRE-WRITE SNAPSHOT
-  → write one prose attempt
-  → freeze draft
-  → complete the POST-WRITE TRACE
-  → save draft + metadata + writing report in your partition
+Owner starts Writer round 1 for P01
+  → read the three canonical inputs in WRITER.md
+  → write one narrative compression
+  → save compression.md in the Writer partition
   → commit
   → STOP for Owner reading
+
+Owner approves the compression and later gives a separate prose order
+  → only then may a Writer expand the approved story into listener-facing prose
 ```
 
-The observability artifacts exist for the **Owner**, not for an automated evaluator. Do not score, rank, PASS/FAIL, or decide whether the Writer succeeded. Record observable facts, final decisions, source mappings, material changes, uncertainty, and self-observed risk locations so the Owner can inspect them directly.
+Round 1 is **not a prose-writing round**. Do not create a draft, writing report, metadata packet, scorecard or alternative versions unless the Owner explicitly asks for them.
 
 Do not store chain-of-thought, private reasoning, hidden scratchpads, or internal-monologue transcripts.
 
-Do not read another Writer's output or Owner feedback before finishing. Do not reroll the prose. Do not modify system architecture while acting as Writer.
+Do not read another Writer's compression or Owner feedback on another Writer before finishing your own attempt when the Owner wants an independent comparison. Do not modify system architecture while acting as Writer.
 
 ## If you are operating the repo
 
@@ -49,9 +49,9 @@ Keep repo work minimal. Only change architecture/harness when:
 
 Prefer removing a constraint over adding a new abstraction.
 
-Do not optimize for hypothetical future models, provenance systems, orchestration or benchmarking before real script output and Owner feedback exist.
+Do not add code enforcement for the compression-first loop unless the Owner explicitly asks for it. The current contract is instructional and intentionally lightweight.
 
-Do not replace Owner judgment with automated quality gates. Writer observability should expose behavior and evidence, not decide quality on the Owner's behalf.
+Do not replace Owner judgment with automated quality gates. The Owner decides whether a compression is ready to become prose.
 
 ## Output location
 
@@ -59,14 +59,12 @@ All current P01 Writer outputs live under:
 
 `writer-output/P01/`
 
-Each Writer/model uses its own partition containing exactly:
+For a new round-1 attempt, each Writer/model writes:
 
-- `draft.md`
-- `meta.json`
-- `writing-report.md`
+`writer-output/P01/<writer>/compression.md`
 
-`meta.json` is compact factual execution metadata. `writing-report.md` is the human-readable behavioral/evidence trace defined in `WRITER.md`.
+Existing historical `draft.md`, `meta.json` and `writing-report.md` files may remain where they already exist. Do not delete or rewrite them merely to conform to the new loop.
 
 ## Historical material
 
-Phase 1/2/3 experiments, coordinator prototypes, old budget/submission machinery and cancelled production tasks are not prerequisites for this direct-output MVP. Do not activate them unless the Owner explicitly asks.
+Phase 1/2/3 experiments, coordinator prototypes, old budget/submission machinery and cancelled production tasks are not prerequisites for this compression-first MVP. Do not activate them unless the Owner explicitly asks.
