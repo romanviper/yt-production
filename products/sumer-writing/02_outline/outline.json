@@ -1,14 +1,14 @@
 {
   "schema_version": 4,
   "product": "sumer-writing",
-  "cycle_id": "C003",
+  "cycle_id": "C004",
   "status": "approved",
   "section_count": 8,
   "script_architecture": {
     "writer_authorship_contract_version": 1,
-    "central_question": "Chữ viết đã thay đổi xã hội Sumer bằng cách nào, nếu bản thân những dấu trên đất sét không thể tự làm gì?",
-    "audience_promise": "Bộ phim đi từ áp lực phải giữ thông tin ổn định ngoài trí nhớ con người, qua lúc những record sớm trở nên hữu ích, rồi theo cách chữ viết mở rộng chức năng, được gắn vào thủ tục và kho lưu trữ, phải được tái tạo qua người có kỹ năng, gặp giới hạn khi văn bản không tự tạo ra hành động, thích nghi sang ngôn ngữ mới, suy yếu cùng các cộng đồng thực hành và cuối cùng được con người hiện đại học cách đọc lại. Payoff là phân biệt sức mạnh của dấu viết với sức mạnh của hệ thống người–quy ước–thiết chế khiến dấu viết có nghĩa và có thể dùng.",
-    "design_rationale": "Rebuild sạch theo writer authorship contract v1. Outline chỉ khóa whole-product progression, state change, section boundary và evidence territory; không khóa carrier, reveal order, object sequence, paragraph mechanics hay local storytelling route. Kiến trúc tăng từ 7 lên 8 section để trả lại một movement riêng cho functional expansion — mắt xích bị nén quá mạnh trong bản trước — rồi đi theo trục dễ theo: formation → early usefulness → expansion of uses → institutional feedback → reproduced competence → enforcement boundary → adaptation → contraction/recovery.",
+    "central_question": "Làm thế nào những dấu đất sét ban đầu chủ yếu giữ quantity, category và relation trở thành một hệ thống có thể mang lời nói và ký ức của con người, sống qua nhiều cộng đồng/ngôn ngữ, rồi được đọc lại sau khi tradition sử dụng nó đã đứt?",
+    "audience_promise": "Bắt đầu bằng hai bức tranh không khớp về writing: later Sumerian literary tradition tưởng tượng words được đặt lên clay khi messenger không thể repeat một message, còn earliest surviving proto-cuneiform lại chủ yếu là administrative marks với language khó phục hồi. Từ puzzle đó, bộ phim theo lúc signs bắt đầu carry language, writing mở rộng sang nhiều phần của human world, institutions và scribes làm nó usable, text gặp giới hạn trước action, cuneiform sống bằng adaptation, rồi clay sống lâu hơn readers và meaning phải được dựng lại.",
+    "design_rationale": "2026-09-09 narrative-research reset. Architecture is organized as a story of changing writing capacities and the communities that keep them alive, not a document-like checklist of mechanisms. P01 is materially reselected around Enmerkar literary memory versus early archaeological state; P02–P08 retain useful researched territory but are reframed as consequences in the same journey.",
     "total_word_envelope": {
       "min": 9000,
       "max": 13600
@@ -18,10 +18,10 @@
         "id": "A01",
         "order": 1,
         "role": "opening",
-        "title": "Khi một xã hội cần trí nhớ ngoài con người",
-        "narrative_job": "Biến câu chuyện nguồn gốc chữ viết từ một khoảnh khắc 'phát minh' thành một vấn đề lịch sử: các cộng đồng và thiết chế ngày càng phức tạp cần giữ lượng, loại, người và nghĩa vụ ổn định qua thời gian. Sau đó xác lập điều khác thường của hệ thống sớm nhất: nó đã có thể làm công việc thực tế ngay cả khi chưa tương ứng với hình dung hiện đại về một câu viết liên tục.",
-        "entry_state": "Khán giả dễ hình dung chữ viết xuất hiện khi ai đó lần đầu nghĩ ra cách ghi lời nói.",
-        "exit_state": "Khán giả hiểu nguồn gốc là một quá trình đồng phát triển giữa nhiều thực hành ghi đếm/xác thực và nhu cầu thể chế; early writing có giá trị vì giữ được các quan hệ có thể dùng lại, dù ranh giới 'writing' và ngôn ngữ nền vẫn chưa hoàn toàn chắc chắn.",
+        "title": "Từ dấu không có giọng nói rõ ràng tới words trên clay",
+        "narrative_job": "Mở bằng khoảng cách giữa later literary imagination và earliest archaeological state, rồi theo câu hỏi how signs acquired the capacity to carry language. Explanation về early writing được earned bởi puzzle này, không đứng trước story.",
+        "entry_state": "Khán giả dễ nghĩ writing ngay từ đầu đã là visible speech hoặc một invention event rõ ràng.",
+        "exit_state": "Khán giả hiểu earliest writing and later Sumerian imagination are separated by a transformation worth following: marks useful for relations/categories become increasingly capable of carrying language.",
         "movement_ids": [
           "M01",
           "M02"
@@ -31,10 +31,10 @@
         "id": "A02",
         "order": 2,
         "role": "body",
-        "title": "Khi record trở thành hạ tầng xã hội",
-        "narrative_job": "Theo dõi một hệ thống ban đầu thiên về hành chính khi nó tích lũy thêm chức năng, rồi thử xem điều gì xảy ra khi record được gắn với người chịu trách nhiệm, xác thực, lưu trữ, truy hồi và đào tạo. Act này phải vừa cho thấy năng lực mới vừa đặt giới hạn của nó: chữ viết có thể làm tổ chức nhớ, nhìn và phối hợp tốt hơn, nhưng không tự sản sinh năng lực đọc, quyền lực hay sự tuân thủ.",
-        "entry_state": "Khán giả đã thấy record sớm hữu ích nhưng chưa biết vì sao một công nghệ ghi chép có thể trở thành lực lịch sử lâu dài.",
-        "exit_state": "Khán giả hiểu sức mạnh của writing là sức mạnh có điều kiện: nó mở rộng khi nằm trong một network xã hội có thể chuẩn hóa, học, xác thực, lưu trữ và hành động; chính vì vậy tác động của nó luôn phân phối không đều và luôn có khoảng cách giữa văn bản với hành động.",
+        "title": "Khi writing bắt đầu mang cả một thế giới",
+        "narrative_job": "Theo cách language-bearing writing accumulates uses, becomes institutional memory, depends on trained people and reveals the limit between text and action.",
+        "entry_state": "Khán giả đã muốn biết what becomes possible once signs can carry language.",
+        "exit_state": "Khán giả thấy writing can preserve increasingly rich human/institutional worlds, but only communities make those marks retrievable, meaningful and actionable.",
         "movement_ids": [
           "M03",
           "M04",
@@ -46,10 +46,10 @@
         "id": "A03",
         "order": 3,
         "role": "ending",
-        "title": "Khi hệ thống phải sống qua thay đổi và đứt gãy",
-        "narrative_job": "Đưa thesis tới giới hạn cuối của vòng đời. Truyền thống chỉ sống lâu khi cộng đồng có thể thích nghi script và competence sang ngôn ngữ, địa điểm và thiết chế mới. Khi những cộng đồng ấy co lại, vật thể có thể sống sót trong lúc năng lực đọc biến mất. Quá trình giải mã hiện đại trở thành bằng chứng cuối cùng rằng meaning không nằm sẵn trong đất sét mà phải được duy trì hoặc xây dựng lại.",
-        "entry_state": "Khán giả biết writing phụ thuộc vào communities of practice nhưng chưa biết continuity ấy có thể chịu được thay đổi lớn và đứt gãy tới đâu.",
-        "exit_state": "Khán giả phân biệt ba thứ: vật thể sống sót, truyền thống sống và nghĩa được hiểu. Chữ viết trở thành lực lịch sử khi năng lực sử dụng nó được tái tạo; khi chuỗi đó đứt, clay có thể còn nhưng meaning phải chờ một cộng đồng khác phục dựng.",
+        "title": "Khi words sống lâu hơn language và readers",
+        "narrative_job": "Theo survival by adaptation, split timelines of script/language/community, competence break and modern recovery.",
+        "entry_state": "Khán giả biết writing survives through human communities, not material alone.",
+        "exit_state": "Khán giả hiểu words may outlive mouths and clay may outlive readers, but meaning survives only through continued or rebuilt competence.",
         "movement_ids": [
           "M07",
           "M08"
@@ -61,10 +61,10 @@
         "id": "M01",
         "order": 1,
         "act_id": "A01",
-        "title": "Trước chữ viết đã có một bài toán phải giải",
-        "narrative_job": "Xác lập formation pressure và ecology: nhu cầu giữ thông tin hành chính/xác thực tăng trong bối cảnh thiết chế lớn hơn, nhưng evidence không cho phép một nguyên nhân duy nhất hay một genealogy tuyến tính. Movement phải khiến câu hỏi chuyển từ 'ai phát minh?' sang 'những áp lực và thực hành nào khiến durable recording trở nên hữu ích?'.",
-        "entry_state": "Nguồn gốc được tưởng như một invention event đơn lẻ.",
-        "exit_state": "Nguồn gốc được hiểu như một quá trình nhiều thực hành và nhiều áp lực cùng hội tụ; administration là trọng tâm nhưng không phải monocause.",
+        "title": "Hai bức tranh về lúc writing bắt đầu",
+        "narrative_job": "Đặt later Enmerkar literary tradition cạnh earliest proto-cuneiform state. Movement không tìm invention verdict; nó biến mismatch thành story question: how did marks that were mainly administrative and weakly speech-readable become able to carry words?",
+        "entry_state": "Writing được tưởng như visible speech xuất hiện trong một khoảnh khắc phát minh.",
+        "exit_state": "Khán giả thấy một historical gap: later people can imagine words traveling on clay, but earliest surviving writing barely gives us that voice; họ muốn theo transformation.",
         "section_ids": [
           "P01"
         ]
@@ -73,10 +73,10 @@
         "id": "M02",
         "order": 2,
         "act_id": "A01",
-        "title": "Một hệ thống có thể hữu ích trước khi thành câu",
-        "narrative_job": "Xác lập writing threshold và early function mà không làm khán giả sa vào định nghĩa. Movement phải cho thấy record có thể giữ cấu trúc, quantity/category/position và những quan hệ lặp lại đủ để dùng trước khi continuous speech hay underlying language có thể được phục hồi chắc chắn.",
-        "entry_state": "Nếu chưa ghi được câu nói thì hệ thống dễ bị xem là chưa thực sự có tác dụng.",
-        "exit_state": "Khán giả thấy usefulness đến trước sentence-likeness; từ đây câu hỏi trở thành hệ thống đó tích lũy thêm năng lực ra sao.",
+        "title": "Khi dấu bắt đầu mang tiếng nói",
+        "narrative_job": "Theo rare phonetic/rebus uses và growing language encoding để giải quyết puzzle do P01 tạo ra, without forcing a single threshold or Sumerian attribution.",
+        "entry_state": "Listener biết early marks useful but asks how they could become words.",
+        "exit_state": "Listener sees graphic relations gain more explicit phonological/language value; writing can now carry a wider range of human utterance and thought.",
         "section_ids": [
           "P02"
         ]
@@ -85,8 +85,8 @@
         "id": "M03",
         "order": 3,
         "act_id": "A02",
-        "title": "Từ công cụ hành chính thành một repertoire",
-        "narrative_job": "Cho thấy writing không đi theo chiếc thang accounting→literature mà tích lũy và tái kết hợp thêm các use cases: kinh tế, tôn giáo, chính trị, thư từ, luật/normative practice, lexical/scholarly work và textual memory. Movement phải làm rõ consequence của expansion: càng nhiều domain phụ thuộc vào writing, càng nhiều convention và competence phải được duy trì.",
+        "title": "Khi đất sét bắt đầu giữ nhiều hơn công việc",
+        "narrative_job": "Follow what happens after writing can carry language: economic, correspondence, religious, legal/normative, lexical, scholarly and literary uses accumulate and recombine. The movement is a widening human world, not a genre catalogue.",
         "entry_state": "Writing vẫn được hiểu chủ yếu như bookkeeping.",
         "exit_state": "Khán giả hiểu nó đã trở thành một repertoire nhiều chức năng, nhưng expansion này làm nảy sinh nhu cầu về hạ tầng tổ chức và người biết vận hành.",
         "section_ids": [
@@ -97,8 +97,8 @@
         "id": "M04",
         "order": 4,
         "act_id": "A02",
-        "title": "Khi record cho institution một loại trí nhớ mới",
-        "narrative_job": "Thử causal feedback ở cấp institution: writing tăng capacity khi được gắn với classification, responsibility, authentication, accumulation và retrieval. Movement phải đồng thời giữ archive bias và không back-project quy mô của later systems về Uruk.",
+        "title": "Khi words trở thành memory của institution",
+        "narrative_job": "Show how procedures, authentication, accumulation and retrieval make written material organizational memory; keep agency with people and expose archive bias.",
         "entry_state": "Nhiều use cases cho thấy writing quan trọng hơn, nhưng cơ chế nó tăng institutional capacity vẫn mơ hồ.",
         "exit_state": "Khán giả thấy một cơ chế cụ thể: record không tự có agency, nhưng network quanh record có thể làm nghĩa vụ và nguồn lực trở nên nhìn thấy, truy hồi và audit được ở quy mô lớn hơn.",
         "section_ids": [
@@ -109,8 +109,8 @@
         "id": "M05",
         "order": 5,
         "act_id": "A02",
-        "title": "Hạ tầng ấy phải được tái tạo trong con người",
-        "narrative_job": "Chuyển từ institutional memory sang competence. Movement phải chứng minh continuity không nằm ở clay hay sign list một mình mà ở quá trình đào tạo, sao chép, sửa, tính toán, học lexical/genre conventions và duy trì communities of practice. Access phải được trình bày như bất đối xứng nhưng không định lượng quá evidence.",
+        "title": "Những người giữ chữ sống",
+        "narrative_job": "Move from surviving tablets to living competence: learners/scribes copy, classify, calculate, correct and reproduce traditions. Cultural meaning of scribal life can enter here when sourced.",
         "entry_state": "Khán giả có thể nghĩ một archive bền thì knowledge cũng tự bền.",
         "exit_state": "Khán giả hiểu hệ thống chỉ sống khi competence được tái tạo; durability of material và continuity of practice là hai việc khác nhau.",
         "section_ids": [
@@ -121,8 +121,8 @@
         "id": "M06",
         "order": 6,
         "act_id": "A02",
-        "title": "Văn bản có thể giữ một mệnh lệnh mà vẫn không làm nó xảy ra",
-        "narrative_job": "Đặt giới hạn rõ nhất cho agency của writing. Movement phải tách claim-making, persistence và coordination khỏi enforcement/compliance; writing có thể giúp một instruction, law hay norm tồn tại và được truy hồi, nhưng action vẫn phụ thuộc người và authority bên ngoài text.",
+        "title": "Words can command; clay cannot obey",
+        "narrative_job": "Stress-test the story: a written order can persist and travel while action fails. Text extends claim/memory but human authority still determines consequence.",
         "entry_state": "Sau institutional feedback và trained competence, written authority rất dễ bị đồng nhất với effective authority.",
         "exit_state": "Khán giả có một boundary sạch: writing có thể mở rộng trí nhớ và coordination, nhưng không tự cưỡng chế thế giới.",
         "section_ids": [
@@ -133,8 +133,8 @@
         "id": "M07",
         "order": 7,
         "act_id": "A03",
-        "title": "Muốn sống lâu, truyền thống phải biết thay đổi",
-        "narrative_job": "Cho thấy survival là adaptation chứ không phải purity. Script có thể được sửa convention để ghi ngôn ngữ mới; Sumerian language, cuneiform script và institutional tradition có thể sống theo các timeline khác nhau; transfer đi qua specialists, curricula, copying và contact, không phải diffusion tự động.",
+        "title": "Một hệ chữ sống bằng cách đổi ngôn ngữ",
+        "narrative_job": "Show cuneiform surviving through adaptation across languages and communities; track Sumerian, script and institutions on different timelines.",
         "entry_state": "Continuity vẫn dễ bị hiểu là giữ nguyên một script của cùng một people/language.",
         "exit_state": "Khán giả hiểu một tradition sống được vì nó có thể được học lại và biến đổi; survival của script không đồng nghĩa survival của language hay institution.",
         "section_ids": [
@@ -145,8 +145,8 @@
         "id": "M08",
         "order": 8,
         "act_id": "A03",
-        "title": "Khi đất sét sống lâu hơn cộng đồng biết đọc nó",
-        "narrative_job": "Đóng lifecycle bằng contraction, competence break và recovery. Movement không được dựng một 'last reader' hay absolute final date; thay vào đó phải cho thấy living tradition co lại, material tablets còn, rồi modern decipherment phục dựng competence qua copying, multilingual comparison và repeated testing. Legacy được khóa ở recovery-mediated knowledge, không direct lineage tới writing hiện đại.",
+        "title": "Khi chữ còn mà người đọc biến mất",
+        "narrative_job": "Complete the opening paradox: living competence contracts, clay remains, modern decipherment rebuilds reading. Words can outlive mouths only when someone can still—or can again—read the marks.",
         "entry_state": "P07 cho thấy competence có thể sống rất lâu nếu được tái tạo và thích nghi.",
         "exit_state": "Final answer: signs không tự mang power hay meaning qua thời gian. Historical force xuất hiện khi communities làm chúng repeatable, retrievable và actionable; modern reading là một lần xây lại chuỗi đó sau khi nó đã đứt.",
         "section_ids": [
@@ -159,52 +159,49 @@
     {
       "id": "P01",
       "order": 1,
-      "title": "Trước chữ viết đã có một bài toán phải giải",
-      "mission": "Đưa người nghe vào những công việc khiến việc ghi lại trở nên có ý nghĩa, và mở hành trình khám phá Sumer qua chữ viết.",
+      "title": "Hai bức tranh về lúc chữ viết bắt đầu",
+      "mission": "Đặt later Sumerian literary imagination of writing cạnh earliest proto-cuneiform state để tạo một historical puzzle có sức kéo: how did marks become able to carry words?",
       "movement_ids": [
         "M01"
       ],
-      "narrative_job": "Cho người nghe hiểu một nhu cầu ghi lại trong đời sống và mở hành trình khám phá Sumer qua chữ viết. Writer tự chọn đường kể; các trường hợp ngũ cốc, khẩu phần bia và bối cảnh đô thị là lựa chọn có nguồn, không phải danh sách phải dùng. Khám phá công dụng và quan hệ có thể tạo chuyển biến của P01 mà không dựng phả hệ giữa các hiện vật.",
-      "entry_state": "Người nghe biết Sumer gắn với chữ viết nhưng những dấu trên đất sét còn xa lạ, chưa gắn với một công việc hay đời sống cụ thể.",
-      "exit_state": "Người nghe hiểu dấu ghi từng phục vụ công việc của con người, hình dung được một phần đời sống đằng sau chúng và muốn tìm hiểu chúng còn giúp ta biết gì về Sumer. Không cần thuộc hệ phân loại hiện vật hay giải xong nguồn gốc chữ viết.",
+      "narrative_job": "Kể trọn chặng mở bằng một documented literary tradition và một archaeological reversal. Enmerkar gives a later picture of words on clay when oral repetition fails; Uruk IV gives an earlier material world dominated by administrative relations and uncertain language. P01 ends at the gap, not at an origin verdict.",
+      "entry_state": "Người nghe có thể mặc định writing từ đầu là lời nói được nhìn thấy hoặc một invention event rõ ràng.",
+      "exit_state": "Người nghe hiểu later literary memory và earliest surviving writing không khớp; khoảng cách đó tạo nhu cầu theo dõi khi/how signs begin carrying language more fully.",
       "historical_change": {
-        "from": "Trong đô thị Late Uruk, những công việc tổ chức vật chất và cấp phát đi cùng nhu cầu theo dõi lượng và xác thực.",
-        "to": "Các thực hành đất sét đáp ứng việc ghi số và xác thực; các bảng chữ viết sơ kỳ còn ghi công việc liên quan đến ngũ cốc và khẩu phần của người lao động. Đây là các thực hành trong cùng bối cảnh hình thành, không phải phả hệ giữa từng hiện vật."
+        "from": "Early proto-cuneiform primarily stabilizes quantities, categories and administrative relations while continuous speech and underlying language remain weakly recoverable.",
+        "to": "Later cuneiform can carry extended language, and Sumerian literary tradition can imagine a written message traveling beyond a messenger's oral capacity."
       },
-      "earned_meaning": "Qua một việc được ghi lại, những dấu trên đất sét trở thành lối tiếp cận con người và đời sống của thế giới đã mất.",
+      "earned_meaning": "Writing's beginning is not one solved invention scene; the gap between early marks and later words-on-clay becomes the first mystery of its long transformation.",
       "claim_ids": [
-        "CLM-0011",
-        "CLM-0012",
-        "CLM-0013",
+        "CLM-0004",
+        "CLM-0006",
         "CLM-0014",
-        "CLM-0015",
-        "CLM-0016",
-        "CLM-0017",
         "CLM-0018",
-        "CLM-0072",
-        "CLM-0073",
-        "CLM-0074",
-        "CLM-0075"
+        "CLM-0021",
+        "CLM-0076",
+        "CLM-0077",
+        "CLM-0078",
+        "CLM-0079"
       ],
       "dependencies": [],
-      "transition": "Khi những dấu đã có thể giữ lại một phần công việc, chúng còn ghi được những gì, và người sử dụng hiểu chúng bằng cách nào?",
+      "transition": "Những dấu sớm đã làm được việc mà chưa cho ta nghe một voice rõ ràng. Vậy khi nào và bằng cách nào signs bắt đầu carry language?",
       "target_words": {
         "min": 1050,
         "max": 1550
       },
-      "non_goal": "Không trình bày một cảnh phát minh hư cấu như sự kiện có thật; không đồng nhất proto-cuneiform với chữ nêm trưởng thành; không suy từ bảng ngũ cốc muộn hơn về công dụng của hiện vật Chogha Mish. Phân tích sâu cấu trúc dấu và khả năng biểu đạt thuộc P02."
+      "non_goal": "Không kể Enmerkar như historical inventor; không dùng poem để prove actual origin; không biến early administrative corpus thành proof that no other use/media existed; không catalog token/envelope/ration; phonetic mechanism belongs to P02."
     },
     {
       "id": "P02",
       "order": 2,
-      "title": "Hữu ích trước khi thành câu",
-      "mission": "Làm thế nào một hệ thống ký hiệu chưa thể ghi lại lời nói trọn vẹn vẫn giải quyết được các nhu cầu vận hành thực tế?",
+      "title": "Khi dấu bắt đầu mang tiếng nói",
+      "mission": "Từ puzzle của P01, theo cách signs acquire more explicit phonetic/language value without pretending there was one clean threshold.",
       "movement_ids": [
         "M02"
       ],
-      "narrative_job": "Giải thích early record có thể làm công việc có thật trước khi continuous speech hoặc underlying language được recover chắc chắn. Section phải land được usefulness trước khi mở các guardrail về writing threshold, chronology, language và world-first.",
-      "entry_state": "Khán giả vẫn có thể nghĩ 'chưa thành câu' đồng nghĩa 'chưa phải công nghệ có sức nặng'.",
-      "exit_state": "Khán giả hiểu structured signs/layout có thể giữ repeatable relations đủ để vận hành administration; ranh giới writing/proto-writing và language attribution vẫn phải qualified.",
+      "narrative_job": "Explain rebus/phonetic use, graphic structure and language attribution as the answer to a question P01 has already made worth asking. Land the change in what writing can carry, not in a definition contest.",
+      "entry_state": "Audience asks how early useful marks became able to carry words.",
+      "exit_state": "Audience sees language-bearing capacity emerge gradually enough to open correspondence, names, claims and literature; uncertainty around earliest language remains bounded.",
       "claim_ids": [
         "CLM-0001",
         "CLM-0002",
@@ -228,7 +225,7 @@
       "dependencies": [
         "P01"
       ],
-      "transition": "Một system đã có thể làm việc. Bây giờ câu chuyện cần theo dõi điều gì xảy ra khi writing được dùng cho ngày càng nhiều loại việc khác nhau.",
+      "transition": "Một khi words có thể nằm lại trên clay, câu hỏi đổi từ how signs speak sang what parts of human life people begin entrusting to them.",
       "target_words": {
         "min": 1150,
         "max": 1750
@@ -238,12 +235,12 @@
     {
       "id": "P03",
       "order": 3,
-      "title": "Khi chữ viết bắt đầu làm nhiều việc hơn",
-      "mission": "Chữ viết mở rộng từ công cụ kiểm kê hạn hẹp thành một hệ sinh thái nhiều chức năng như thế nào?",
+      "title": "Khi đất sét bắt đầu giữ nhiều hơn công việc",
+      "mission": "Theo writing khi nó bắt đầu mang ngày càng nhiều phần của human world.",
       "movement_ids": [
         "M03"
       ],
-      "narrative_job": "Thiết lập functional expansion như additions và recombinations thay vì một ladder. Section phải cho audience thấy writing đi từ dominant administrative use tới một repertoire rộng hơn và giải thích vì sao expansion này thay đổi stakes của câu chuyện: writing giờ không chỉ giữ hàng hóa mà còn có thể giữ claims, categories, instructions và textual traditions.",
+      "narrative_job": "Tell functional expansion as a widening world rather than a genre catalogue: writing can carry correspondence, ritual, rules/claims, organized knowledge and literature while administration continues.",
       "entry_state": "Writing vẫn chủ yếu được nhìn như công cụ bookkeeping.",
       "exit_state": "Khán giả hiểu writing đã trở thành một môi trường nhiều chức năng; càng nhiều domain dựa vào nó, càng quan trọng việc duy trì convention, access và competence.",
       "claim_ids": [
@@ -271,8 +268,8 @@
     {
       "id": "P04",
       "order": 4,
-      "title": "Khi record cho một institution trí nhớ dài hơn",
-      "mission": "Việc lưu giữ và tra cứu văn bản lâu dài đã tái cấu trúc trật tự và quyền lực thể chế ra sao?",
+      "title": "Khi words trở thành memory của institution",
+      "mission": "Theo lúc accumulated records, people and procedure turn writing into retrievable institutional memory.",
       "movement_ids": [
         "M04"
       ],
@@ -304,8 +301,8 @@
     {
       "id": "P05",
       "order": 5,
-      "title": "Đất sét không tự truyền được cách đọc nó",
-      "mission": "Kỹ năng đọc viết và truyền thống sao chép được duy trì thế nào qua các thế hệ học viên?",
+      "title": "Những người giữ chữ sống",
+      "mission": "Theo communities of learning that reproduce the ability to read, write, copy and reinterpret cuneiform.",
       "movement_ids": [
         "M05"
       ],
@@ -339,8 +336,8 @@
     {
       "id": "P06",
       "order": 6,
-      "title": "Một mệnh lệnh được viết ra vẫn có thể thất bại",
-      "mission": "Những ranh giới thực tế nào bộc lộ khi văn bản hành chính không thể tự đảm bảo sự tuân thủ?",
+      "title": "Words can command; clay cannot obey",
+      "mission": "Dùng một failure boundary để thấy text can preserve authority without automatically producing action.",
       "movement_ids": [
         "M06"
       ],
@@ -367,8 +364,8 @@
     {
       "id": "P07",
       "order": 7,
-      "title": "Muốn sống lâu, chữ hình nêm phải học cách thay đổi",
-      "mission": "Một truyền thống chữ viết thích nghi và biến đổi ra sao khi chuyển dịch qua các ngôn ngữ mới?",
+      "title": "Một hệ chữ sống bằng cách đổi ngôn ngữ",
+      "mission": "Theo cuneiform as it survives by adaptation while Sumerian language and institutions follow different timelines.",
       "movement_ids": [
         "M07"
       ],
@@ -398,8 +395,8 @@
     {
       "id": "P08",
       "order": 8,
-      "title": "Khi đất sét sống lâu hơn người đọc",
-      "mission": "Điều gì xảy ra khi cộng đồng biết đọc tan rã, để lại các văn bản đất sét chờ đợi sự phục dựng hiện đại?",
+      "title": "Khi chữ còn mà người đọc biến mất",
+      "mission": "Theo competence break and recovery để hoàn tất câu hỏi opening: words can survive mouths only if reading survives or is rebuilt.",
       "movement_ids": [
         "M08"
       ],

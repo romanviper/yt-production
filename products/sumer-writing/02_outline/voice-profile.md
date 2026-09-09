@@ -1,34 +1,34 @@
-# Voice Profile — Sumer Writing C003
+# Voice Profile — Sumer Writing narrative reset
 
-Status: approved
+Status: Owner-directed update, 2026-09-09.
 
 ## Product voice
 
-Giọng kể bình tĩnh, sáng rõ, có sức nặng và mang tinh thần điều tra. Bộ phim khám phá Sumer qua hành trình chữ viết: người ta dùng nó trong công việc, quyền lực, học tập và ký ức như thế nào, truyền lại nó ra sao, và điều gì còn lại khi thế giới sử dụng nó đổi khác. Sự chắc chắn trong giọng kể phải đi theo độ chắc của bằng chứng; không dùng cường điệu để bù cho chỗ evidence yếu.
+Giọng kể bình tĩnh, sáng rõ, có sức nặng và mang tinh thần điều tra. Đây là voice của một người đang **kể một câu chuyện từ những mảnh bằng chứng không hoàn chỉnh**, không phải prosecutor chỉ đọc những mệnh đề đã chứng minh được. Confidence trong giọng vẫn phải theo confidence của source.
 
-## Borrowed functions
+## Kể giả thuyết bằng reasoning
 
-Từ *Fall of Civilizations* và các benchmark lịch sử dài, chỉ học những chức năng tổng quát: giữ được một causal macro arc, chuyển scale khi cần, tôn trọng nguồn và uncertainty, và để vật thể, con người hoặc thực hành lịch sử xuất hiện khi evidence thực sự hỗ trợ chúng. Benchmark là tiêu chuẩn chức năng, không phải template sáng tác.
+Khi một hypothesis đáng theo, không chỉ nói “có giả thuyết rằng X”. Hãy cho listener thấy vì sao X xuất hiện: fact/clue nào tạo câu hỏi, clue nào support, clue nào chỉ compatible, objection nào làm nó chưa chắc, và bức tranh nào emerge nếu X đúng. Listener nên hiểu logic trước khi được yêu cầu chấp nhận possibility.
 
-## Original expression
+Không dùng uy tín của một source về background để bảo chứng toàn hypothesis. Không giấu uncertainty; đặt nó ở nơi listener đã hiểu vấn đề để caveat không thay thế story.
 
-Bản tiếng Việt phải có nhịp và cách diễn đạt riêng của sản phẩm này. Khi thuật ngữ học thuật cần thiết, dùng nó chính xác nhưng không để vocabulary phân tích thay thế cho lịch sử đang được kể. Qualifier chỉ xuất hiện ở nơi thiếu nó sẽ làm sai nghĩa. Chữ nêm là chủ thể theo dõi; con người tạo và dùng nó làm cho hành trình có ý nghĩa. Chọn chi tiết giúp người nghe hiểu thêm một việc, một quan hệ hay một thay đổi, thay vì diễn đạt lại thuộc tính của hệ thống.
+## Ancient traditions
 
-## Điểm nhìn, nhịp và quyền hư cấu
+Myth, epic, hymn và later literary memory có thể được kể đầy đủ khi chúng cho thấy ancient people imagined writing/world như thế nào. Frame nhẹ nhưng rõ rằng đây là tradition/text được chứng thực, không eyewitness event. Literary truth có thể có narrative weight mà không cần bị nâng thành historical fact.
 
-Giọng nền là người kể lịch sử bao quát, giàu hình ảnh và thông tin có quan hệ. Phần mở P01 mặc định dùng khoảng nhìn rộng để đặt bối cảnh và tình thế; Writer có thể chọn cách khác khi nó vẫn định hướng và thu hút được khán giả. Tóm lược và giải thích là phương tiện kể chuyện, không phải lỗi cần tránh.
+## Explanation
 
-Ngôi thứ ba hạn tri hữu ích khi nhận thức, mong muốn hoặc điều nhân vật chưa biết tạo trải nghiệm đáng theo dõi; không đồng nghĩa tả từng động tác. Ngôi thứ nhất hữu ích khi một tiếng nói riêng có giá trị; phải rõ ai nói và đó là lời có nguồn hay tái dựng. Rời điểm nhìn gần khi cần mở bối cảnh/hệ quả hoặc khi trải nghiệm đã hoàn thành chức năng. Không buộc dùng đủ ba ngôi hay luân phiên theo công thức.
+Summary và historical explanation là storytelling hợp lệ. Một đoạn có thể essay-like nếu setup đã khiến listener muốn hiểu question đó. Trước exposition, kiểm tra xem listener đã có context để tự hình thành question chưa; sau exposition, story phải có consequence, new possibility hoặc next pull.
 
-Phân biệt phạm vi người kể biết, khoảng cách với nhân vật và tốc độ đi qua thời gian. Chọn độ chi tiết theo sức nặng của điều được kể; để thông tin làm hình ảnh có nghĩa. Có thể dành chỗ cho không khí và khoảng lặng, nhưng không kéo dài thao tác chỉ để tạo vẻ điện ảnh. Guide trực tiếp cho Writer nằm trong mục “Cách kể và khoảng nhìn” của `P01-creative-brief.md`, đã được đưa vào ba input chính.
+## Điểm nhìn và reconstruction
 
-Quyền dựng cảnh, nhân vật tổng hợp, đối thoại và nội tâm vẫn giữ nguyên; đây là lựa chọn, không phải kỹ thuật phải xuất hiện. Tái dựng phải hợp bối cảnh, không giả làm sự kiện hoặc trích dẫn được chứng thực. Nhận diện nhẹ khi dễ hiểu nhầm; không đòi nguồn cho từng chi tiết tưởng tượng hoặc dùng chúng làm bằng chứng lịch sử. Round 1 theo WRITER.md chỉ tạo compression toàn P01, không report.
+Giọng nền là historical narrator bao quát. Có thể tiến gần nhân vật/text khi perspective giúp story; ngôi thứ nhất chỉ khi source/reconstruction được nhận diện. Bounded fiction vẫn được phép để hoàn thiện experience, nhưng invented detail không trở thành evidence.
 
-## Prohibited imitation
+## Benchmark
 
-Không sao chép wording, cadence, motif, narrator persona, signature transition, chapter sequence hay opening formula của benchmark. Không dùng “Sumer invented writing” như settled fact; không kể token → tablet → civilization như một chiếc thang tất định; không gán agency tự trị cho clay hay writing; không biến archive thành toàn bộ society hoặc school evidence thành population literacy.
+Học từ FoC các chức năng: question setup, guided inference, scale shift, ancient voice, uncertainty và payoff. Không sao chép wording, cadence, motifs, narrator persona, opening formula hay exact hypothesis.
 
-## Draft tests
+## Round 1
 
-Ở round compression, đọc toàn bộ đường kể: phần mở có tạo lý do quan tâm, các chuyển đoạn có phát triển sự quan tâm ấy, công việc và quan hệ có dễ hình dung, cuối phần có khám phá hoặc ý nghĩa đã được chuẩn bị không? Đồng thời giữ khẳng định trong căn cứ và expression riêng. Không dùng độ dè dặt hoặc mật độ thông tin để bù cho thiếu sức hút; không chấm điểm thay Owner. Prose chỉ bắt đầu khi Owner có lệnh riêng.
+Writer round 1 chỉ tạo narrative compression. Compression phải là story told briefly: người đọc thấy chuyện gì xảy ra hoặc bức tranh hiểu biết được hình thành ra sao. Nếu một hypothesis quan trọng xuất hiện, compression phải giữ được reasoning chain đủ để Owner audit, không chỉ giữ conclusion.
 

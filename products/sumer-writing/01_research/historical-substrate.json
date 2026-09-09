@@ -560,6 +560,145 @@
         "Do not claim the purchased beer tablet was excavated from these foundations, or that every early tablet had this history.",
         "No disaster, deliberate erasure, motive for disposal or named excavator is established. Later reading of the records does not imply their creators intended to address future generations."
       ]
+    },
+    {
+      "id": "HS-P01-0017",
+      "kind": "state",
+      "world": {
+        "tradition": "Sumerian literary composition Enmerkar and the Lord of Aratta",
+        "represented_problem": "a substantial and extensive royal message exceeds the messenger's ability to repeat it orally",
+        "represented_response": "Enmerkar places the message on clay as a tablet and sends it to Aratta",
+        "represented_use": "written message travels while the messenger no longer needs to reproduce the whole message from memory"
+      },
+      "statement": "Enmerkar and the Lord of Aratta portrays a substantial message that the messenger cannot repeat, after which Enmerkar places the message on clay and sends the tablet to Aratta.",
+      "epistemic_status": "documented",
+      "claim_ids": [
+        "CLM-0076"
+      ],
+      "source_refs": [
+        {
+          "source_id": "SRC-0046",
+          "locator": "lines 500–535"
+        },
+        {
+          "source_id": "SRC-0047",
+          "locator": "composite Q000369"
+        }
+      ],
+      "time_scope": "literary tradition surviving in Old Babylonian witnesses; narrated setting is earlier and not used here as a dated historical event",
+      "place_scope": "Sumerian literary tradition concerning Uruk/Kulaba and Aratta",
+      "boundaries": [
+        "Documented means the literary tradition is attested; it does not mean Enmerkar historically invented writing or that the narrated exchange occurred as described.",
+        "Frame the scene as later literary memory/etiology when listener could otherwise hear it as an eyewitness origin account."
+      ]
+    },
+    {
+      "id": "HS-P01-0018",
+      "kind": "state",
+      "world": {
+        "period": "Uruk IV and early proto-cuneiform horizon",
+        "dominant_attested_use": "administrative recording of quantities, categories and related institutional information",
+        "language_visibility": "continuous speech and the underlying language are not securely recoverable across the early material",
+        "phonetic_capacity": "rare possible phonetic/rebus uses exist early, while consistent phonetic writing is clearer later"
+      },
+      "statement": "The earliest substantial Uruk proto-cuneiform corpus is predominantly administrative, while its underlying language cannot be securely identified and consistent phonetic writing becomes clearer later.",
+      "epistemic_status": "qualified_inference",
+      "claim_ids": [
+        "CLM-0004",
+        "CLM-0006",
+        "CLM-0021"
+      ],
+      "source_refs": [
+        {
+          "source_id": "SRC-0001",
+          "locator": "pp. 24–31"
+        },
+        {
+          "source_id": "SRC-0003",
+          "locator": "pp. 410–412"
+        },
+        {
+          "source_id": "SRC-0004",
+          "locator": "Uruk tablets, language attribution and rebus discussion"
+        }
+      ],
+      "time_scope": "Uruk IV–III, late fourth to early third millennium BCE",
+      "place_scope": "Uruk cultural sphere, especially southern Mesopotamia",
+      "boundaries": [
+        "Predominantly administrative preserved material does not prove administration was the only use or cause; survival and excavation are selective.",
+        "Undetermined underlying language does not mean the writers lacked spoken language or that no early sign ever had phonetic value.",
+        "Do not label the entire earliest corpus securely Sumerian."
+      ]
+    },
+    {
+      "id": "HS-P01-0019",
+      "kind": "relation",
+      "world": {
+        "left": "later Sumerian literary imagination of a written message carrying words beyond a messenger's oral capacity",
+        "relation": "can be set in qualified contrast with",
+        "right": "earliest substantial proto-cuneiform material dominated by administrative relations with limited recoverable speech/language",
+        "temporal_scope": "comparison between late-fourth-millennium early writing and much later surviving literary witnesses",
+        "qualification": "the contrast motivates a question about changing writing capacities; it does not prove that the poem preserves a historical memory of that change"
+      },
+      "statement": "The later Enmerkar tradition and the much earlier archaeological state can be contrasted to ask how writing became more capable of carrying language, without treating the poem as causal evidence for the transition.",
+      "epistemic_status": "qualified_inference",
+      "claim_ids": [
+        "CLM-0079"
+      ],
+      "source_refs": [
+        {
+          "source_id": "SRC-0046",
+          "locator": "lines 500–535"
+        },
+        {
+          "source_id": "SRC-0047",
+          "locator": "Old Babylonian witness horizon"
+        },
+        {
+          "source_id": "SRC-0001",
+          "locator": "pp. 24–31"
+        },
+        {
+          "source_id": "SRC-0003",
+          "locator": "pp. 410–412"
+        },
+        {
+          "source_id": "SRC-0004",
+          "locator": "early signs and rebus discussion"
+        }
+      ],
+      "time_scope": "analytical contrast across early writing and later literary tradition",
+      "place_scope": "Mesopotamian/Sumerian writing tradition",
+      "boundaries": [
+        "Do not narrate the literary scene as a surviving oral memory of the actual invention unless separate evidence is supplied.",
+        "Do not turn the contrast into a deterministic administration-to-speech ladder; functions overlap and intermediate evidence is incomplete."
+      ]
+    },
+    {
+      "id": "HS-P01-0020",
+      "kind": "state",
+      "world": {
+        "composition": "Enmerkar and the Lord of Aratta (CDLI composite Q000369)",
+        "surviving_witness_period": "Old Babylonian, ca. 1900–1600 BCE",
+        "language": "Sumerian",
+        "witness_context": "multiple manuscripts including Nippur witnesses"
+      },
+      "statement": "The surviving witnesses represented by CDLI composite Q000369 are Old Babylonian, ca. 1900–1600 BCE, and thus much later than the earliest proto-cuneiform horizon.",
+      "epistemic_status": "documented",
+      "claim_ids": [
+        "CLM-0077"
+      ],
+      "source_refs": [
+        {
+          "source_id": "SRC-0047",
+          "locator": "Chronology and witness list"
+        }
+      ],
+      "time_scope": "Old Babylonian ca. 1900–1600 BCE",
+      "place_scope": "surviving manuscript tradition including Nippur and other Mesopotamian witnesses",
+      "boundaries": [
+        "Manuscript date does not equal the date when every element of the tradition was first composed or orally circulated; it does bound what survives directly."
+      ]
     }
   ],
   "constraints": [
@@ -646,6 +785,39 @@
         {
           "source_id": "SRC-0005",
           "locator": "pp. 33–50"
+        }
+      ]
+    },
+    {
+      "id": "HSC-P01-0004",
+      "rule": "Keep documented tradition, historical event and scholarly hypothesis distinct: an attested literary scene may carry narrative weight without being promoted to eyewitness history or causal proof.",
+      "applies_to": [
+        "HS-P01-0017",
+        "HS-P01-0019",
+        "HS-P01-0020"
+      ],
+      "claim_ids": [
+        "CLM-0076",
+        "CLM-0077",
+        "CLM-0078",
+        "CLM-0079"
+      ],
+      "source_refs": [
+        {
+          "source_id": "SRC-0046",
+          "locator": "lines 500–535"
+        },
+        {
+          "source_id": "SRC-0047",
+          "locator": "Chronology and witnesses"
+        },
+        {
+          "source_id": "SRC-0048",
+          "locator": "interpretive discussion"
+        },
+        {
+          "source_id": "SRC-0051",
+          "locator": "abstract and analysis"
         }
       ]
     }

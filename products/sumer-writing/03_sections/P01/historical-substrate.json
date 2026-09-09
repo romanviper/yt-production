@@ -2,12 +2,65 @@
   "schema_version": 2,
   "contract_version": 1,
   "section": "P01",
-  "historical_territory": "Công việc và nhu cầu ghi chép tại Late Uruk và đầu thiên niên kỷ III TCN: bối cảnh đô thị/đền thờ, ghi lương thực và khẩu phần; có thể chạm việc bản ghi cổ được dùng lại làm vật liệu xây dựng để mở cách nhìn vào đời sống đó. Mỗi trường hợp giữ riêng niên đại, nơi chốn và mức diễn giải.",
+  "historical_territory": "Sự tương phản giữa một Sumerian literary tradition về sau, nơi writing mang một thông điệp vượt quá khả năng lặp lại của messenger, và trạng thái sớm hơn của proto-cuneiform, nơi các dấu được chứng thực chủ yếu trong công việc hành chính và chưa cho thấy continuous speech hay underlying language một cách chắc chắn.",
   "historical_change": {
-    "from": "Trong đô thị Late Uruk, những công việc tổ chức vật chất và cấp phát đi cùng nhu cầu theo dõi lượng và xác thực.",
-    "to": "Các thực hành đất sét đáp ứng việc ghi số và xác thực; các bảng chữ viết sơ kỳ còn ghi công việc liên quan đến ngũ cốc và khẩu phần của người lao động. Đây là các thực hành trong cùng bối cảnh hình thành, không phải phả hệ giữa từng hiện vật."
+    "from": "Early proto-cuneiform primarily stabilizes quantities, categories and administrative relations while continuous speech and underlying language remain only weakly recoverable.",
+    "to": "Later cuneiform can carry extended language, and Sumerian literary tradition can imagine a written message as something that travels beyond the oral memory of its messenger."
   },
   "primitives": [
+    {
+      "id": "HS-P01-0017",
+      "kind": "state",
+      "world": {
+        "tradition": "Sumerian literary composition Enmerkar and the Lord of Aratta",
+        "represented_problem": "a substantial and extensive royal message exceeds the messenger's ability to repeat it orally",
+        "represented_response": "Enmerkar places the message on clay as a tablet and sends it to Aratta",
+        "represented_use": "written message travels while the messenger no longer needs to reproduce the whole message from memory"
+      },
+      "epistemic_status": "documented",
+      "time_scope": "literary tradition surviving in Old Babylonian witnesses; narrated setting is earlier and not used here as a dated historical event",
+      "place_scope": "Sumerian literary tradition concerning Uruk/Kulaba and Aratta"
+    },
+    {
+      "id": "HS-P01-0020",
+      "kind": "state",
+      "world": {
+        "composition": "Enmerkar and the Lord of Aratta (CDLI composite Q000369)",
+        "surviving_witness_period": "Old Babylonian, ca. 1900–1600 BCE",
+        "language": "Sumerian",
+        "witness_context": "multiple manuscripts including Nippur witnesses"
+      },
+      "epistemic_status": "documented",
+      "time_scope": "Old Babylonian ca. 1900–1600 BCE",
+      "place_scope": "surviving manuscript tradition including Nippur and other Mesopotamian witnesses"
+    },
+    {
+      "id": "HS-P01-0018",
+      "kind": "state",
+      "world": {
+        "period": "Uruk IV and early proto-cuneiform horizon",
+        "dominant_attested_use": "administrative recording of quantities, categories and related institutional information",
+        "language_visibility": "continuous speech and the underlying language are not securely recoverable across the early material",
+        "phonetic_capacity": "rare possible phonetic/rebus uses exist early, while consistent phonetic writing is clearer later"
+      },
+      "epistemic_status": "qualified_inference",
+      "time_scope": "Uruk IV–III, late fourth to early third millennium BCE",
+      "place_scope": "Uruk cultural sphere, especially southern Mesopotamia"
+    },
+    {
+      "id": "HS-P01-0019",
+      "kind": "relation",
+      "world": {
+        "left": "later Sumerian literary imagination of a written message carrying words beyond a messenger's oral capacity",
+        "relation": "can be set in qualified contrast with",
+        "right": "earliest substantial proto-cuneiform material dominated by administrative relations with limited recoverable speech/language",
+        "temporal_scope": "comparison between late-fourth-millennium early writing and much later surviving literary witnesses",
+        "qualification": "the contrast motivates a question about changing writing capacities; it does not prove that the poem preserves a historical memory of that change"
+      },
+      "epistemic_status": "qualified_inference",
+      "time_scope": "analytical contrast across early writing and later literary tradition",
+      "place_scope": "Mesopotamian/Sumerian writing tradition"
+    },
     {
       "id": "HS-P01-0006",
       "kind": "relation",
@@ -21,131 +74,44 @@
       "epistemic_status": "qualified_inference",
       "time_scope": "Late Uruk formation period",
       "place_scope": "Urban and institutional contexts in southern Mesopotamia represented in the approved sources"
-    },
-    {
-      "id": "HS-P01-0012",
-      "kind": "process",
-      "world": {
-        "participants": [
-          "unknown record-maker role"
-        ],
-        "operation": "shape damp clay and press or incise marks before the clay dries",
-        "object_or_medium": [
-          "damp clay recording surface"
-        ],
-        "result": "numerical impressions or incised marks remain on the clay surface"
-      },
-      "epistemic_status": "bounded_reconstruction",
-      "time_scope": "Late Uruk",
-      "place_scope": "Southern Mesopotamia and related Late-Uruk recording contexts"
-    },
-    {
-      "id": "HS-P01-0014",
-      "kind": "practice",
-      "world": {
-        "participants": [
-          "unnamed workers receiving daily provisions",
-          "people recording provisions"
-        ],
-        "operation": "record beer issued to workers as part of daily rations, in the British Museum interpretation of tablet 1989,0130.4",
-        "object_or_medium": [
-          "clay tablet 1989,0130.4, about 9.4 by 6.87 cm",
-          "signs shaped as pointed-base jars with wavy contents",
-          "a bowl directed toward a human head, interpreted as to eat and indicating rations"
-        ],
-        "information_or_relation_handled": [
-          "beer allocations",
-          "daily worker provisions"
-        ],
-        "context": "Southern Iraq, ca. 3100–3000 BCE, Late Uruk; precise excavated findspot and issuing institution are not established here."
-      },
-      "epistemic_status": "qualified_inference",
-      "time_scope": "ca. 3100–3000 BCE, Late Uruk (museum dating)",
-      "place_scope": "Southern Iraq; specific Uruk findspot not asserted"
-    },
-    {
-      "id": "HS-P01-0015",
-      "kind": "practice",
-      "world": {
-        "participants": [
-          "people handling accounts and disbursements for large temple estates",
-          "specialist occupations including potters and metalworkers named in early Uruk lists"
-        ],
-        "operation": "keep economic records in an urban setting with temple estates and differentiated work",
-        "object_or_medium": [
-          "clay economic tablets",
-          "early lists of occupations"
-        ],
-        "information_or_relation_handled": [
-          "institutional accounting and disbursement",
-          "occupational distinctions"
-        ],
-        "context": "Uruk in the later fourth millennium BCE; general setting from Ira Spar, The Met, 2004."
-      },
-      "epistemic_status": "documented",
-      "time_scope": "Later fourth millennium BCE",
-      "place_scope": "Uruk, southern Mesopotamia"
-    },
-    {
-      "id": "HS-P01-0016",
-      "kind": "process",
-      "world": {
-        "participants": [
-          "people discarding early tablets from large temples",
-          "people constructing later buildings"
-        ],
-        "operation": "reuse discarded early Uruk tablets as packing in foundations of new buildings",
-        "object_or_medium": [
-          "clay tablets previously used as records",
-          "building foundations"
-        ],
-        "result": "written clay surfaces occur in a secondary construction context rather than an intact working archive"
-      },
-      "epistemic_status": "documented",
-      "time_scope": "Early Uruk tablets and subsequent ancient reuse; exact rebuilding date not supplied",
-      "place_scope": "Uruk early-tablet contexts discussed generally by British Museum, not the findspot of 1989,0130.4"
     }
   ],
   "boundaries": [
     {
+      "source": "HS-P01-0017",
+      "rule": "Documented means the literary tradition is attested; it does not mean Enmerkar historically invented writing or that the narrated exchange occurred as described."
+    },
+    {
+      "source": "HS-P01-0017",
+      "rule": "Frame the scene as later literary memory/etiology when listener could otherwise hear it as an eyewitness origin account."
+    },
+    {
+      "source": "HS-P01-0020",
+      "rule": "Manuscript date does not equal the date when every element of the tradition was first composed or orally circulated; it does bound what survives directly."
+    },
+    {
+      "source": "HS-P01-0018",
+      "rule": "Predominantly administrative preserved material does not prove administration was the only use or cause; survival and excavation are selective."
+    },
+    {
+      "source": "HS-P01-0018",
+      "rule": "Undetermined underlying language does not mean the writers lacked spoken language or that no early sign ever had phonetic value."
+    },
+    {
+      "source": "HS-P01-0018",
+      "rule": "Do not label the entire earliest corpus securely Sumerian."
+    },
+    {
+      "source": "HS-P01-0019",
+      "rule": "Do not narrate the literary scene as a surviving oral memory of the actual invention unless separate evidence is supplied."
+    },
+    {
+      "source": "HS-P01-0019",
+      "rule": "Do not turn the contrast into a deterministic administration-to-speech ladder; functions overlap and intermediate evidence is incomplete."
+    },
+    {
       "source": "HS-P01-0006",
       "rule": "Administration is a major formation pressure, not a monocausal explanation."
-    },
-    {
-      "source": "HS-P01-0012",
-      "rule": "This is a manufacture/action reconstruction from object traces, not a witnessed event."
-    },
-    {
-      "source": "HS-P01-0012",
-      "rule": "Named identities, motives, dialogue and emotions are not documented by the traces. Writer may create a plausible anonymous/composite scene under the creative brief, identified as reconstruction rather than artifact evidence."
-    },
-    {
-      "source": "HS-P01-0014",
-      "rule": "Retain the museum-attributed reading of daily worker beer rations. Do not present a named recipient, ration quantity, wage rate, issuer, coercion or deprivation outcome as established by this tablet. Identified fictional illustration remains available under the creative brief and cannot prove a historical consequence."
-    },
-    {
-      "source": "HS-P01-0014",
-      "rule": "A recorded ration is not evidence that writing created that ration, guaranteed receipt, or first made distribution possible."
-    },
-    {
-      "source": "HS-P01-0014",
-      "rule": "Do not identify this purchased object with the temple archives mentioned generally in the same essay or with the Chogha Mish and Met grain objects."
-    },
-    {
-      "source": "HS-P01-0015",
-      "rule": "Urban and temple accounting context does not establish a sole cause of writing or prove that all work, resources or records were temple-controlled."
-    },
-    {
-      "source": "HS-P01-0015",
-      "rule": "Do not identify the workers in tablet 1989,0130.4 as potters, metalworkers or employees of a particular temple; these are separate contextual facts."
-    },
-    {
-      "source": "HS-P01-0016",
-      "rule": "Do not claim the purchased beer tablet was excavated from these foundations, or that every early tablet had this history."
-    },
-    {
-      "source": "HS-P01-0016",
-      "rule": "No disaster, deliberate erasure, motive for disposal or named excavator is established. Later reading of the records does not imply their creators intended to address future generations."
     },
     {
       "source": "HSC-P01-0002",
@@ -155,18 +121,20 @@
       "rule": "Do not turn administrative pressure or institutional co-occurrence into a sole-cause or one-way causal verdict."
     },
     {
-      "source": "HSC-P01-0003",
+      "source": "HSC-P01-0004",
       "applies_to": [
-        "HS-P01-0012"
+        "HS-P01-0017",
+        "HS-P01-0019",
+        "HS-P01-0020"
       ],
-      "rule": "Do not label a specific economic mechanism such as market exchange, tax, tribute, redistribution, labor obligation or ownership unless independent transaction evidence supports it."
+      "rule": "Keep documented tradition, historical event and scholarly hypothesis distinct: an attested literary scene may carry narrative weight without being promoted to eyewitness history or causal proof."
     }
   ],
   "authority_binding": {
-    "product_substrate_sha256": "a1deeb0ca8ff8f681342eaeaba86f08c95ee444c32747fdcf1d43c5be7663499",
-    "outline_sha256": "fa2f82574a128a4b99cdbe26671b02ada2132b3e93d2b03e2ab281ae0706aa7c",
-    "section_overlay_sha256": "75f282e8878919654b3cf84dc04ce39ae616b2056cd39acf16635e8bf45c6ab8",
-    "section_binding_sha256": "eac3d0568762b25ee9cd63622bfd7949842001cdfaf871b3b255f75b9fd432e9"
+    "product_substrate_sha256": "70e5065d1760f9371db28381b46dade775a4a49832761b2056ab9b71cb330a6b",
+    "outline_sha256": "7a985217b743fb544d73eceeccf5dd52f151b6b064725f08e35ed28eb5e5f454",
+    "section_overlay_sha256": "27b6d73ba526feedcc22f139a941916345ed2d207480d434f71d6cc87356338c",
+    "section_binding_sha256": "5e8f778e7356645d83a905b5ac86caec3d95ef73fa3b4131c82111bd49badc0b"
   },
-  "writer_contract": "Historical Substrate is the primary model of historical reality. Evidence lookup is secondary and only verifies, sharpens or qualifies details needed by a telling already chosen from this model."
+  "writer_contract": "Historical Substrate is a source-anchored set of historical conditions, documented traditions, qualified interpretations and bounded reconstructions. Epistemic status controls how each may be narrated: a documented tradition proves the tradition is attested, not that its narrated event occurred. The Writer may connect supported material into an explicitly qualified possibility, but compatibility must not be turned into proof."
 }

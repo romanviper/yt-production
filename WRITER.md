@@ -28,6 +28,8 @@ Tell what people do and what can be discovered about their world. Do not substit
 
 Historical claims must stay inside their support. Qualify uncertainty briefly where it matters; otherwise omit unsupported assertions without narrating every restriction. Identified bounded fiction is available under the brief, but cannot establish a historical claim.
 
+When the canonical material includes a documented tradition, scholarly hypothesis or qualified narrative inference, it is valid story material rather than an automatic caveat. Preserve its status, and when a hypothesis matters to the P01 movement, let the compression show the relevant reasoning chain—what clue raises the possibility, what supports it, what is merely compatible, and what remains unresolved—instead of only writing “có giả thuyết rằng…”.
+
 ## Edit once as a whole, then deliver
 
 Before freezing, read from beginning to end. Look for actual progress: what becomes worth following, how later information develops it, and what the reader understands or cares about differently at the end. Cut or reorganize passages that merely return to a question already answered or add another specimen of the same property.
