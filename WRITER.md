@@ -1,45 +1,37 @@
-# Writer Harness — compression-first MVP
+# Writer Harness — whole-work narrative compression
 
-Write when the Owner asks for P01 or Writer round 1. No assignment file, budget, controller or additional approval is needed.
+Write when the Owner authorizes a whole-work compression. A direct Owner work order is sufficient authority; do not require P01 assignment files, controller state or intermediate approval unless the task explicitly asks for a controlled comparison.
 
-## Task and inputs
+## Canonical inputs
 
-Round 1 produces one narrative compression of **the whole P01**: the story told briefly, so the Owner can judge its interest and movement before expansion into a full podcast script.
+For `sumer-writing` narrative-identity reset, read:
 
-Read AGENTS.md, this file and these three canonical inputs:
+1. `products/sumer-writing/00_brief/product-brief.md`
+2. `products/sumer-writing/01_research/narrative-identity-reset-01.md`
+3. `products/sumer-writing/02_outline/outline.md`
+4. `products/sumer-writing/02_outline/story-bible.md`
+5. `products/sumer-writing/02_outline/voice-profile.md`
 
-1. `products/sumer-writing/02_outline/P01-creative-brief.md`
-2. `products/sumer-writing/02_outline/section-overlays/P01.json`
-3. `products/sumer-writing/03_sections/P01/historical-substrate.json`
+Use source/claim ledgers only when a factual detail needs resolution. Previous compressions are baselines for review after the new pass, not templates.
 
-The brief defines the experience, the overlay defines the territory, and the substrate supplies historical material and claim boundaries. None gives a required paragraph order. The supplied facts are a choice of material, not a coverage checklist.
+## Task
 
-For an independent attempt, do not read other Writer outputs, Owner feedback about them, legacy workflows or extra sources. Do not edit the harness.
+Tell the selected historical journey briefly in natural Vietnamese so the Owner can judge the work before 60–120 minute prose is attempted. The compression must itself be a complete listening story with an opening, developing middle and ending. Preserve the situations, processes, discoveries, relationships and consequences that make the route intelligible; reduce extent and detail rather than converting every movement into a conclusion sentence.
 
-## Write the short story itself
+The outline owns the whole-work journey and the reason each movement exists. It may also establish a recurring relationship, case, point of inquiry, discovery order or information placement when those choices are structural. Treat those as architecture, not suggestions to ignore. Writer still owns sentence-level execution, local pacing, scale, imagery, selection among permitted detail and transitions, and may flag an architecture/material failure instead of decorating it with cinematic language.
 
-Write natural Vietnamese for a reader who is not already interested in writing systems. The short version must already have a reason to keep reading. Preserve the telling's situation, meaningful discoveries and connective language; reduce its extent instead of describing what a future script will do.
+Explanation is valid wherever the listener has a reason to need it. Do not force a protagonist, scene, antagonist, hook formula, second-person address or climax onto every movement.
 
-Choose an interesting relationship, situation, process or discovery from the material. Develop it into a complete movement. Explanation is welcome when it advances what the reader has become interested in. A story may open with a result and reveal how or why it matters; withholding the result is not mandatory.
+## Historical integrity
 
-Use only the facts that contribute to this telling. A short complete compression is better than a long tour of specimens. There is no required word count, number of paragraphs, character, scene, hook formula or viewpoint rotation.
+Keep claims inside source support. A documented literary tradition can be told as a tradition without becoming eyewitness history. A scholarly hypothesis or guided inference may carry story weight when the clue, support, compatibility and unresolved part are clear enough for the listener to understand its status. Bounded reconstruction may support continuity/experience but cannot establish a historical conclusion.
 
-Tell what people do and what can be discovered about their world. Do not substitute comments about the value of the evidence for that world. Information density and caution do not compensate for a story with little pull.
+Do not turn administration into a sole cause, a late copy into an original dispatch, a last-known dated object into an absolute last reader, or script survival into language/population continuity.
 
-Historical claims must stay inside their support. Qualify uncertainty briefly where it matters; otherwise omit unsupported assertions without narrating every restriction. Identified bounded fiction is available under the brief, but cannot establish a historical claim.
+## Delivery
 
-When the canonical material includes a documented tradition, scholarly hypothesis or qualified narrative inference, it is valid story material rather than an automatic caveat. Preserve its status, and when a hypothesis matters to the P01 movement, let the compression show the relevant reasoning chain—what clue raises the possibility, what supports it, what is merely compatible, and what remains unresolved—instead of only writing “có giả thuyết rằng…”.
+Write exactly the requested whole-work compression at:
 
-## Edit once as a whole, then deliver
+`writer-output/full-script/narrative-identity-reset-01/compression.md`
 
-Before freezing, read from beginning to end. Look for actual progress: what becomes worth following, how later information develops it, and what the reader understands or cares about differently at the end. Cut or reorganize passages that merely return to a question already answered or add another specimen of the same property.
-
-This is ordinary editing within one attempt. Do not generate alternative complete drafts, score yourself, produce a review packet or store chain-of-thought, private scratchpads or internal-monologue transcripts.
-
-Save exactly one new artifact:
-
-`writer-output/P01/<writer>/compression.md`
-
-The file contains only the compression, with short headings if useful. Do not create draft.md, writing-report.md, meta.json, a plan or a scorecard unless separately requested. Preserve previous outputs.
-
-Freeze the compression, commit it and stop for Owner reading. An explicit local-only experiment instruction overrides the commit/push step. Only a separate Owner prose order authorizes expansion into a full script.
+Do not create a full prose script, scorecard, meta packet or alternative complete compression unless separately ordered. Read the finished compression from beginning to end once, repair concrete loss of progression/repetition/evidence overreach, then freeze it for Owner review. The output remains pending Owner approval.
