@@ -1,74 +1,123 @@
-# Story Bible — Sumer Writing C004 narrative reset
+# Story Bible — Một lời nhắn tìm người đọc
 
-Status: editorial architecture rebuilt from P01 narrative research, 2026-09-09.
+Status: `draft_pending_owner_review`, narrative identity reset 2026-09-10.
 
-## Story, không phải document
+This file supports `outline.md`; it does not create a second architecture. If wording conflicts, `products/sumer-writing/02_outline/outline.md` is canonical for the current review pass.
 
-Podcast không được tổ chức quanh câu hỏi “khán giả cần biết những facts nào về cuneiform?”. Nó theo một transformation có thể kể lại: **marks giữ được một phần nhỏ của đời sống → marks dần mang được language → writing mang ngày càng nhiều loại human experience/power/memory → competence phải được con người tái tạo → system sống bằng adaptation → community đọc biến mất → meaning được dựng lại.**
+## Điều người nghe đang theo
 
-Một section có thể có exposition rất dài. Exposition không phải failure nếu story phía trước đã tạo cognitive demand: listener đã thấy vấn đề, đã có context để tự muốn hỏi, và explanation giúp câu chuyện đi sang một state mới.
+Tác phẩm theo một quan hệ bị kéo giãn qua hơn ba thiên niên kỷ: **một dấu trên vật chất và một con người phải làm dấu ấy có nghĩa**.
 
-## Hai story chạy song song
+Khoảng cách này liên tục đổi dạng:
 
-1. **Story of what happened:** writing thay đổi capacity và social uses theo thời gian.
-2. **Story of how we know / imagine it:** artifacts, literary traditions và scholarship chỉ cho ta những mảnh không đều; đôi khi journey của listener chính là quá trình đặt các mảnh cạnh nhau để thấy một possibility emerge.
+- một messenger không thể giữ hết lời trong memory;
+- earliest surviving marks lại chưa cho ta recover một voice rõ như later writing;
+- reader có thể vắng mặt khỏi speaking moment;
+- message tới nơi nhưng action có thể không xảy ra;
+- xã hội phải đào tạo reader mới;
+- reader có thể phải học một language không còn là vernacular của mình;
+- specialist community có thể giữ access sống rất lâu rồi co lại;
+- clay còn sau khi living competence đứt;
+- modern scholars phải dựng lại khả năng đọc mà không có ancient teacher.
 
-Với Sumer, story thứ hai không phải meta-commentary thừa. Nó là cách hợp pháp để kể một quá khứ fragmentary mà không giả vờ có documentary coverage như modern history.
+“Reader” là quan hệ xuyên suốt, không phải thesis phải lặp lại. Mỗi movement chỉ tồn tại nếu có một historical change/consequence khác thật sự.
+
+## Hai lớp lịch sử chạy cùng nhau
+
+1. **What happened:** marks, language encoding, messages, institutions, schooling, bilingual learned traditions, contraction and decipherment change what texts/readers can do.
+2. **How we can know it:** administrative objects, literary traditions, school tablets, letters, bilingual texts, late catalogues and modern decipherment evidence survive không đều nhau.
+
+Lớp thứ hai không phải meta-commentary. Nó cho phép kể một quá khứ fragmentary mà không giả vờ có documentary coverage hiện đại.
 
 ## Epistemic storytelling modes
 
-- **Documented world:** nói với confidence phù hợp source.
-- **Documented tradition:** được kể đầy đủ như một story ancient people preserved; frame đủ để không biến myth/literary scene thành witnessed history.
-- **Scholarly hypothesis:** narrator cho listener thấy chain of reasoning, support, compatibility và objections trước/đồng thời với conclusion.
-- **Guided inference:** editor có thể đặt clues cạnh nhau để đưa ra một possibility; phải dùng ngôn ngữ điều kiện và không đổi correlation/compatibility thành proof.
-- **Bounded reconstruction:** dùng để hoàn thiện experience/continuity; không làm evidence cho conclusion.
+- **Documented historical material:** kể trong phạm vi source.
+- **Documented tradition:** kể đầy đủ như một text/tradition được chứng thực; không đổi narrated event thành eyewitness fact.
+- **Scholarly hypothesis:** cho listener thấy clue, support, compatibility, objection và phần chưa ngã ngũ khi hypothesis gánh một bước quan trọng.
+- **Guided inference:** đặt các clue được support cạnh nhau để mở possibility; correlation/compatibility không thành proof.
+- **Bounded reconstruction:** chỉ giúp continuity/experience; không thiết lập historical conclusion.
 
-Mục tiêu không phải luôn giữ listener ở mode “fact”. Mục tiêu là listener hiểu mình đang ở mode nào mà không phải chịu một chuỗi caveat phá nhịp.
+Listener cần hiểu mode bằng framing tự nhiên, không bằng chuỗi disclaimer.
 
-## Whole-product story progression
+## Whole-work progression
 
-### P01 — Hai bức tranh về lúc writing bắt đầu
-Một later Sumerian literary tradition kể rằng message của Enmerkar trở nên quá substantial để messenger repeat, nên words được đặt lên clay. Archaeology của Uruk IV lại cho ta một opening khác: predominantly administrative tablets, language often undetermined, relations dễ recover hơn continuous speech. P01 không chọn một bên làm “true origin”; nó làm khoảng cách giữa hai bức tranh trở thành mystery có trọng lượng.
+### Movement 1 — Promise và reversal
 
-**Exit question:** làm thế nào marks hữu ích cho quantity/category dần có thể carry words?
+*Enmerkar and the Lord of Aratta* cho một later literary picture gần như hoàn hảo: message vượt sức oral repetition, words được đặt lên clay và gửi đi. Archaeology của Uruk IV–III lập tức làm origin image ấy khó hơn: surviving corpus chủ yếu administrative, language thường undetermined, continuous speech khó recover.
 
-### P02 — Khi dấu bắt đầu mang tiếng nói
-Đi vào rebus/phonetic uses, language attribution và transition từ graphic relations tới more explicit language encoding. Writing threshold là part of discovery, không phải opening lecture.
+**Điều được tạo ra:** một mystery đáng theo—làm thế nào từ marks hữu ích nhưng gần như im lặng với chúng ta xuất hiện một medium có thể carry words?
 
-### P03 — Khi đất sét bắt đầu giữ nhiều hơn công việc
-Writing accumulates/recombines uses: correspondence, religion, legal/normative claims, lexical/scholarly work, literature. Câu chuyện không phải “accounting evolved into poetry” mà “một medium ban đầu hẹp dần trở thành nơi ngày càng nhiều phần của human world có thể tồn tại”.
+### Movement 2 — Làm ra absent reader
 
-### P04 — Khi record trở thành memory của institution
-Procedure, authentication, archives and retrieval make records actionable at larger scale. Power comes from people/institutions around text; archive bias remains visible.
+Rare phonetic/rebus uses và later clearer logo-syllabic language encoding giải quyết problem opening đã earned. Không có một ngày duy nhất signs “học nói”.
 
-### P05 — Những người giữ chữ sống
-Competence phải được taught/copied/corrected. Scribal communities, curricula, lexical traditions và cultural figures such as Nisaba show writing becoming a learned world, not merely a technology.
+**Change:** message có thể chờ; reader không cần đứng cạnh speaker.
 
-### P06 — Words can command; clay cannot obey
-Written order, law or norm can persist and travel while implementation still fails. This chapter creates a limit inside the story rather than an anti-writing verdict.
+### Movement 3 — Message đến nơi; mệnh lệnh không
 
-### P07 — Cuneiform survives by changing
-Script crosses languages, Sumerian survives as learned language after vernacular decline, transmission moves through specialists/curricula/contact. Survival is adaptation, not purity.
+Marduk-mushallim report rằng royal orders liên quan tới security quanh Sippar-Yahrurum không được thực hiện. Tình huống này được phát triển như một event, không phải ví dụ cho slogan.
 
-### P08 — Clay survives the readers
-Living tradition contracts; latest-known texts are only anchors, not a cinematic “last reader”. Material survives a competence break. Modern decipherment becomes the final transformation: strangers rebuild the ability to hear voices whose reading community disappeared.
+**Change:** writing tách survival/reception of words khỏi consequence. Text có thể tồn tại trong khi obedience vắng mặt.
 
-## P01 authority
+### Movement 4 — Một xã hội tạo reader mới
 
-P01 may use *Enmerkar and the Lord of Aratta* as a documented literary tradition. The poem does **not** prove Enmerkar invented writing, that its scene preserves a true invention memory, or that long-distance speech caused Uruk writing. The surviving witnesses are much later than the earliest proto-cuneiform horizon.
+Old Babylonian school evidence và exercise tablets đưa competence reproduction vào trung tâm. Teacher model, student copies; thousands of small acts renew the chain.
 
-The archaeological counter-image is also bounded: an administrative center of gravity and undetermined language do not prove no speech-related/other media existed. The contrast is a question-producing juxtaposition, not a causal proof.
+**Change:** durable clay không đủ. Reading/writing competence phải được con người tái tạo qua generation.
 
-## FoC functions worth retaining
+### Movement 5 — Reader sinh ra trong một language khác
 
-- Let a concrete story/question earn the right to explain.
-- Show the reasoning of an interesting hypothesis instead of merely announcing “some scholars think...”.
-- Move between documented facts, ancient traditions and speculation without flattening them into one certainty level.
-- Let uncertainty close a mystery honestly when the journey itself changed what the listener understands.
-- Return explanation to consequence: after learning how something works, the listener should see a different historical world.
+Bilingual lexical curricula cho phép Akkadian-speaking learners tiếp cận Sumerian learned texts sau khi vernacular world thay đổi.
 
-Never copy FoC wording, cadence, opening motifs, chapter sequence or its specific Sumer origin hypothesis as default.
+**Change:** transmission giờ phải vượt linguistic distance, không chỉ spatial/temporal absence.
 
-## Continuity / final payoff
+### Movement 6 — Chain thu hẹp
 
-Opening P01 asks how a message might escape a messenger’s memory while archaeology initially gives us records that barely sound like speech. The whole episode answers not with one invention story but with a long transformation: communities taught marks to carry more meaning, then taught people to keep reading them. At the end, the human chain breaks while clay survives. Modern decipherment makes the opening paradox visible from the opposite direction: **words can outlive mouths, but only if someone can still—or can again—read the marks.**
+Late Sumerian/Akkadian cuneiform survives among learned specialists trong một world nơi Aramaic/Greek chiếm vị trí lớn hơn. Evidence sau đó thưa dần; 75 CE chỉ là latest-known dated anchor, không phải ngày “last reader” chết.
+
+**Change:** material có thể survive trong khi living transmission biến mất khỏi record.
+
+### Movement 7 — Readers return
+
+Nineteenth-century decipherment là một distributed reconstruction: recurring names, known languages, parallel inscriptions, sign behavior, competing hypotheses and independent comparison. 1857 translation test gives a concrete verification episode.
+
+**Payoff:** opening từng hỏi liệu words có thể thoát khỏi memory của messenger. Ending cho thấy mức cực hạn: words có thể sống lâu hơn mouths, institutions và living languages—but meaning không tự nằm sẵn trong clay. Khi reader relation đứt, humans phải build it again.
+
+## Why the order matters
+
+- M1 tạo mismatch để technical explanation ở M2 có lý do tồn tại.
+- M2 khiến absent linguistic reader có thể xảy ra; M3 stress-test sự khác nhau giữa reception và action.
+- M3 mở nhu cầu nhìn vào competence/social world; M4 cho thấy competence được manufactured.
+- M4 tạo mechanism để M5—reading across language change—không chỉ là một fact về survival.
+- M5 giải thích vì sao specialist learned traditions có thể kéo dài tới M6.
+- M6 tạo một actual competence break để decipherment ở M7 trở thành reversal/payoff chứ không phải appendix antiquarian.
+
+Major movements không freely swappable mà không làm mất causal/experiential logic.
+
+## Voice / experience
+
+Giọng bình tĩnh, rõ, có tinh thần điều tra. Cho concrete object, action, distance, repetition, failure, language shift và discovery tạo cinematic weight. Exposition dài được phép khi opening/movement đã tạo demand cho explanation.
+
+Không cần protagonist, antagonist, scene hay climax ở mọi movement. Không biến second-person hoặc fictional reconstruction thành default cinematic device.
+
+## FoC as functional benchmark
+
+Giữ các chức năng hữu ích: question earns exposition; ancient voice có thể mở history; guided inference cho listener thấy reasoning; scale có thể đổi từ object sang society; uncertainty có thể đóng một mystery trung thực; explanation phải quay lại consequence.
+
+Không sao chép wording, cadence, narrator persona, chapter sequence hoặc một specific historical hypothesis của FoC.
+
+## Historical boundaries that shape the route
+
+- Enmerkar = documented later literary tradition, không invention proof.
+- Early administrative predominance ≠ administration là only use/cause.
+- `language undetermined` ≠ người cổ không có spoken language / không hề có phonetic value.
+- Cuneiform development ≠ inevitable ladder toward alphabet.
+- Marduk-mushallim letter ≠ representative proof royal orders usually failed.
+- School evidence ≠ population literacy rate; không project Old Babylonian classroom back to Uruk.
+- Sumerian vernacular decline là gradual/regional; script/language/community timelines khác nhau.
+- 75 CE = latest-known dated anchor trong evidence dùng ở đây, không absolute last tablet/reader.
+- Decipherment = collective/distributed reconstruction, không lone-genius myth.
+
+## Ending consequence
+
+Do not end on an abstract sentence that “writing needs people”. End on what recovered reading changes: thousands of mute clay objects again become letters, exercises, administrative records, hymns, laments and arguments made by people whose intended readers had vanished millennia earlier.
