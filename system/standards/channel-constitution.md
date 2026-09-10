@@ -1,27 +1,29 @@
 # Channel Constitution
 
-## Core value
+## Core identity
 
-A system, institution, technology or idea is the protagonist. Follow how pressure forms it, what capabilities it creates, what conflicts/consequences follow, and how it changes, weakens or survives.
+Build historical works from questions worth following about people and the worlds they inhabited. The subject may be a technology, institution, place, belief or object, but it is not automatically the protagonist. The work follows the human situations, relationships, pressures, actions, discoveries and consequences through which that subject becomes historically meaningful.
 
-## Whole-script architecture
+A topic is not yet a story. Do not derive chapters from a taxonomy of the subject's functions or attributes and then add cinematic prose afterward.
 
-Every script has three audience-facing acts:
+## Whole-work movement
 
-- **Opening:** establish the central tension, question and promise.
-- **Body:** develop formation, expansion, conflict, consequence and adaptation.
-- **Ending:** answer the question and close through consequence or legacy.
+A work must create something concrete to follow, develop it through consequential change or discovery, and arrive at an ending whose weight was accumulated by the middle. Opening/body/ending are useful descriptions of that movement, not a mandatory beat formula or a requirement for three equal acts.
 
-The three acts belong to the whole script, not each production section. Local storytelling form is adaptive.
+Exposition, montage, thematic juxtaposition and investigation are legitimate when they advance the followed historical reality. Not every movement needs a protagonist, antagonist, scene or climax.
 
-## Voice and authorship
+## Research, architecture and authorship
 
-Narration should feel deliberate, clear, weighty and investigative, with expression suited to the subject. It need not be conversational.
+Research both protects historical truth and discovers material capable of carrying the work: circumstances, processes, relationships, voices, texts, objects, disputes, consequences and gaps. Outline chooses and organizes the journey before prose, including structural relationships, cases, ordering and information placement when they matter to the story. Writer tells that journey and owns local execution within the evidence boundary.
 
-Prefer causality to chronology dumps and consequence to trivia. Emotional weight must come from evidenced consequences, not rhetoric.
+Do not preserve a responsibility gap by declaring every narrative decision 'Writer freedom'. If research cannot support a promised movement, narrow, replace or reopen it.
 
-Inside approved truth/continuity boundaries, the writer owns local structure, POV, pace, factual selection, scale, imagery, reveal timing and phrasing. No carrier, concrete-first, before/after or recount-before-interpret route is universal.
+## Voice and evidence
 
-## Conditional audience agency
+Narration should be clear, deliberate and historically present without imitating a named creator. Emotional or cinematic weight may come from space, time, scale, action, contrast, discovery and consequence; it must not be manufactured by false certainty or invented documentary detail.
 
-Only when narration stages discovery/inference, the audience must have had access to the relevant cue before specialist classification. This is an integrity rule for that technique, not a requirement that every section use it.
+Keep documented event, documented tradition, scholarly hypothesis, guided inference and bounded reconstruction distinct. Uncertainty can be part of the story when it changes what can be known; it should not become repetitive disclaimer language.
+
+## Review
+
+Judge the actual work before checking whether it followed an intended method. Ask what the listener has to follow, what changes, how later material develops earlier material and whether the ending is earned. Check historical integrity separately. Strong qualification cannot substitute for a weak story, and a strong story cannot excuse evidence overreach.
