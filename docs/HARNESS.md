@@ -1,104 +1,112 @@
-# Harness v3 — Hard Boundaries, Soft Logic
+# Harness — Hard Boundaries, Creative Ownership
 
 ## Decision
 
-The harness controls what must never happen and what outcome must be reviewed. It does not prescribe the creative path between them.
+The harness protects authority, integrity and truth boundaries. It must not choose the story by hard-coding a taxonomy, section sequence, carrier formula or evaluator-approved style.
 
 ## Layer classification
 
 | Concern | Layer | Mechanism |
 |---|---|---|
-| Product/system authority | HARD | governance and scope checker |
-| Allowed write paths | HARD | router-generated work order |
-| Task state and human approval | HARD | preconditions and approval commands |
-| Human-directed creative edits | HARD | explicit user request, output allowlist, validators and amendment log |
-| Input freshness/context integrity | HARD | hashes and packet schema |
-| Evidence provenance/narration ceiling | HARD | ledgers, evidence roles and narration-pack hashes |
-| Context/instruction/section caps | HARD | compiler and validators |
-| Global three-act identity | CONSTITUTION | schema v4 plus Channel Constitution |
-| Opening form, order, beats, paragraphs, cadence | SOFT | Agent judgement |
-| Target word range | SOFT ESTIMATE | planning and evaluation; not submit quota |
-| Voice, causal motion, semantic repetition | EVAL-ONLY | outcome review |
-| Failure ownership | EVAL-ONLY | prose/design/architecture/evidence routing |
+| Product/system authority | HARD | governance + write scope |
+| Allowed paths / task lifecycle | HARD | deterministic routing when runtime tasks use it |
+| Input freshness / provenance | HARD | hashes, source/claim records, audit trail |
+| Historical integrity / evidence ceiling | HARD | sourced boundaries + validation |
+| Resource/context limits | HARD | compiler/runtime caps where needed |
+| Cross-product creative identity | CONSTITUTION | `system/standards/channel-constitution.md` |
+| Research discovery method | CREATIVE/EDITORIAL | research operation + judgement |
+| Whole-work route selection | EDITORIAL | research + outline |
+| Movement order / structural relationships | OUTLINE | product architecture |
+| Local pacing, POV, prose, imagery | WRITER | authorship |
+| Listening quality / accumulation | REVIEW | outcome evaluation |
+
+## Canonical creative path
+
+```text
+Owner question / work order
+  → editorial question + scope
+  → exploratory research + route comparison
+  → targeted research for selected journey
+  → whole-work outline
+  → narrative compression
+  → product-first review + evidence check
+  → Owner reading / approval
+```
+
+Full prose is a later task unless explicitly included by the Owner.
+
+A direct Owner work order is sufficient authority for the bounded chain it names. Deterministic approval/state machinery must not invent intermediate creative gates that contradict that authority.
 
 ## Prompt composition
 
-Canonical creative prompts may contain only:
+Creative agents should receive only what materially helps their decision:
 
-1. short content boundaries and positive authorship ground;
-2. Channel Constitution;
-3. one short operation objective;
-4. product/local material needed for the current decision.
+1. short cross-product creative identity;
+2. operation objective;
+3. product question/scope;
+4. source-backed material and boundaries needed for the current decision;
+5. prior approved/current architecture only when it is genuinely an input rather than a template to preserve.
 
-`system/harness.json` blocks hard-policy and eval-only files from leaking into writer prompts and limits instruction tokens independently from total context tokens. Operator-interface is validated outside the creative context.
+Do not leak legacy evaluator rules, old section taxonomies or previous Writer output into a fresh creative pass unless comparison is explicitly requested.
 
-Operation inputs are compact and hash-bound. Outline design receives a deterministic claim catalog instead of the full claim ledger; drafting receives the approved narration pack instead of the full section evidence archive. Detailed provenance remains authoritative outside the creative prompt.
+## Research contract
 
-Non-canonical excerpt calibration uses `scripts/excerpt_packet.py`, not `draft_section`. Its packet binds the product language, approved section and narration/evidence hashes but projects only a local job, local stopping rule, excerpt word range and one to three selected in-scope claims. It omits the full section exit state and cannot write, submit or approve product artifacts.
+Research is not limited to producing claims for an already-selected route. It must both:
 
-`draft-excerpt` uses a cinematic narrative-nonfiction compass: stage historical change as an experience in time, space and scale, then explain only what the scene cannot carry. This is an original craft contract, not a named-author style target or an invitation to imitate fiction prose.
+- establish what can be said honestly; and
+- discover situations, processes, relationships, voices, texts, objects, disputes and consequences capable of carrying a story.
 
-Camera grammar is carrier-based rather than a required POV sequence. A person, object, place, process or question may carry attention; a scale/viewpoint cut must retain a physical or causal anchor and may widen narrator knowledge only when the current frame reaches a real boundary. The transition is performed in prose, never announced as technique.
+A route may be reopened when source material does not support it. Source count, claim count and object count are not proxies for narratability.
 
-Excerpt probes default to `evidence_bound`. An explicit `representative_fiction` mode lets the writer invent a composite protagonist, local stakes, connective events and focal movement while the selected claims remain the historical world boundary rather than a plot outline. This permission is recorded in the compiled packet and does not alter canonical `draft_section` behavior. Reconstruction must be signaled once at the scene boundary; it must not be laundered into documentary fact through vividness.
+## Outline contract
 
-## Outline execution-runtime POC
+Outline owns the whole-work journey. It can decide structural cases, relationships, ordering, dependencies, discovery sequence and information placement when those choices determine the story. It must leave sentence-level execution and local pacing to Writer.
 
-`outline` may be compiled explicitly with `--runtime dsh`. This changes only the execution path:
+Production sections are implementation units, not a mandatory creative ontology. No validator should require a fixed P01–P08 narrative shape merely because a previous cycle used it.
 
-- the Python router still owns preconditions, work order, hashes, write scope, validators, submission and human approval;
-- product artifacts keep the same outline/story-bible/voice-profile contracts and contain no DSH fields;
-- `context.md` becomes a minimal seed containing bounded operation instructions, not product facts;
-- DSH runs headless in an empty temporary workspace with telemetry disabled;
-- a Cordis overlay disables filesystem, shell, code, web, skill, workflow and subagent tools, then inserts one `yt_outline` MCP broker;
-- the runner accepts only the audited `0.1.0-rc.5` CLI and preflights the fully composed Cordis config before any model call; a version or row mismatch fails closed;
-- the broker reads only packet-declared inputs and current declared outputs, enforces fresh hashes and exact write paths, and records every returned context/evidence payload in `runtime-trace.jsonl`;
-- `validate` and `submit` delegate to the existing deterministic Python control plane.
+## Writer contract
 
-The capability interface is versioned independently of product schemas: `get_task_state`, `get_product_direction`, `get_research_summary`, `search_evidence`, `get_claims`, `get_benchmark`, `get_current_outline`, `write_outputs`, `validate`, `submit`.
+Writer receives architecture + material + truth boundary and tells the selected journey as an actual listening work. Explanation, summary, montage, scene, text/object reading, investigation and inference are all valid forms when they advance the journey.
 
-DSH remains opt-in because v0.1 is a developer preview. A DSH upgrade requires re-auditing the base/headless rows, updating `TESTED_DSH_VERSION` and rerunning the boundary tests. Omitting `--runtime` preserves the precompiled-context harness. Rollback requires no artifact migration: cancel/replace the task and create `outline` again with `--runtime legacy`, or remove the adapter and the two runtime routing fields from the outline registry entry.
+Writer may identify an architecture/material failure instead of compensating with style. It may not silently widen factual/causal claims beyond source support.
+
+## Review contract
+
+Review reads the produced work first. It asks what the listener has to follow, what changes, whether the middle accumulates rather than enumerates, and whether the ending is earned. Historical integrity is checked separately.
+
+Evaluation mechanics are diagnostic, not a creative route generator. Do not build an automatic “cinematic” score or require one storytelling device because it worked once.
+
+Failure routing belongs in `system/standards/outcome-evaluation.md`.
 
 ## Authoritative homes
 
-This document explains the layout; it is not another policy source.
-
-| Concern | Authoritative home |
+| Concern | Home |
 |---|---|
-| Authority, write scope and task lifecycle | `AGENTS.md` plus deterministic scripts |
-| Context profiles, caps and layer allowlists | `system/harness.json` |
-| Content safety and evidence ceiling | `system/core/creative-boundaries.md` |
-| Three-act identity, voice and channel values | `system/standards/channel-constitution.md` |
-| One operation's reasoning problem | its file in `system/operations/` |
-| Non-canonical excerpt compilation | `scripts/excerpt_packet.py` plus `system/operations/draft-excerpt.md` |
-| Outcome criteria and failure routing | `system/standards/outcome-evaluation.md` |
-| Machine routing, inputs and outputs | `system/operations/registry.json` |
-| Optional outline runtime boundary and audit trace | `scripts/outline_runtime.py` plus the task packet |
-| Product decisions and feedback | product artifacts and local change requests |
-| Direct human amendments | `scripts/approval.py` and product-local `human-amendments.jsonl` |
+| Router / Owner authority | `AGENTS.md` |
+| Whole-work Writer contract | `WRITER.md` |
+| Cross-product creative identity | `system/standards/channel-constitution.md` |
+| Research operation | `system/operations/research-*.md` |
+| Outline operation | `system/operations/outline.md` |
+| Outcome/failure routing | `system/standards/outcome-evaluation.md` |
+| Product question/scope | product brief |
+| Selected journey | product outline |
+| Historical material/provenance | product research + source/claim ledgers |
+| Runtime integrity | existing scripts/registry/hashes when invoked |
 
-Generated hashes, allowed paths and validation commands may repeat across router artifacts because they enforce integrity. Manually authored behavioral prose must have one home.
+Manually authored behavioral policy should have one home; supporting docs summarize rather than create competing constitutions.
+
+## Current `sumer-writing` reset
+
+Canonical creative inputs are listed in `AGENTS.md`. `products/sumer-writing/02_outline/outline.md` is the human-readable narrative architecture pending Owner review; `writer-output/full-script/narrative-identity-reset-01/compression.md` is the review artifact.
+
+Legacy `outline.json`, overlays, P01-only packets and old approvals remain available for audit/compatibility but cannot override the new route. Synchronize machine artifacts only when a runtime dependency actually requires them, and never carry old `approved_by`/`approved_at` metadata into a new draft.
 
 ## Anti-accretion rule
 
-Feedback is absorbed at the smallest valid layer:
+For every new rule ask:
 
-- one draft failure → local change request;
-- repeated outcome failure → evaluator/rubric;
-- stable cross-product identity → constitution;
-- safety, authority or integrity requirement → hard boundary.
+1. Is it required for authority, safety, provenance, historical integrity or deterministic interoperability? → hard-enforce only as narrowly as needed.
+2. Is it an observable quality outcome? → evaluate after output.
+3. Is it merely one technique for achieving quality? → keep optional.
 
-Never add a global negative writer rule merely because one draft failed.
-
-## Compatibility
-
-Approved outline schema v2/v3, story-plan v1/v2 and packet v1-v3 remain readable. New output uses outline v4, story-plan v3, compact narration-pack v2 and packet v4.
-
-## Success criteria
-
-- creative instructions stay under their profile budget;
-- writer packets exclude hard-policy and evaluation files;
-- registry entries contain routing data rather than creative acceptance prose;
-- no minimum word count can force padding;
-- every AI-authored section is outcome-reviewed before approval, unless the user directly edits or explicitly accepts a bounded amendment;
-- three acts remain stable across runtimes while movement/section counts remain adaptive.
+A reset is proven by changed editorial decisions and changed work, not by the number of framework files modified.
