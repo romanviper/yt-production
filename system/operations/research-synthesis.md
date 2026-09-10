@@ -2,43 +2,33 @@
 
 ## Responsibility
 
-Hợp nhất workstream handoff thành **authoritative research model** cho outline. Global source/claim ledgers đã được router hợp nhất bằng code trước task và không phải output của AI task này.
-
-Research synthesis owns truth integration, không owns storytelling architecture.
+Integrate authoritative evidence into a model that lets the outline choose an honest, supportable historical journey. Synthesis still does not write narration, but it must preserve the concrete circumstances and relationships needed to distinguish a story from a list of claims.
 
 ## Output
 
-- `research-synthesis.md`: causal model, chronology, contradictions, claim decisions, confidence/qualification và open evidence decisions.
+`research-synthesis.md` should provide:
 
-`story-material-map.json` là legacy compatibility artifact. Synthesis mới/rework không bắt buộc tạo hoặc cập nhật nó.
+- chronology and causal/mechanism model with confidence and qualifications;
+- contradictions, rejected shortcuts and open uncertainties;
+- the strongest concrete cases/processes, including participants, documented actions, texts/objects, consequences and source locators where these matter;
+- distinctions among documented event, documented tradition, scholarly hypothesis, guided inference and reconstruction;
+- story-relevant evidence gaps: where a proposed movement has only a conclusion but not enough supported development;
+- for a new product/reset, a short comparison of plausible whole-work routes and the selected route with an editorial reason grounded in both narrative movement and evidence.
+
+Global ledgers remain authoritative for source/claim provenance. Do not silently rewrite them to fit a chosen route.
 
 ## Rules
 
-- Không mở hoặc rewrite toàn bộ local/global ledger; `consolidation.json` xác nhận provenance.
-- Dùng workstream synthesis làm bounded handoff. Thiếu evidence thì trả blocker đúng workstream.
-- Conflict trở thành contradiction, không trung bình hóa.
-- Phân biệt chronology, mechanism, magnitude, lived experience và source-level detail.
-- Xác định claim trụ cột nào supported, qualified, contested, rejected hoặc vẫn unknown.
-- `research-synthesis.md` tổ chức theo causal/chronological problem, không theo WS01, WS02…
-- Concrete detail từ optional material ledger có thể được nhắc để tránh information loss, nhưng synthesis không quyết định detail nào phải trở thành carrier, scene, opening, reversal, ending hoặc narrative route.
+- Organize by historical problem/relationship/chronology, not by workstream numbering.
+- Conflict remains contradiction; do not average it away.
+- Preserve concrete source detail that would otherwise disappear in compression.
+- Do not turn a candidate route into a thesis that research must prove.
+- Do not require every case to have a protagonist or scene.
+- If the middle of a route is merely several examples of the same conclusion, identify that structural weakness.
+- If a source can only support compatibility, do not upgrade it to causation because the route would be cleaner.
 
-## Separation of decision ownership
+## Handoff to outline
 
-Research synthesis trả lời:
+Synthesis should make it possible to answer: what can the audience genuinely follow; what changes; which cases/processes can carry those changes; what remains unknown; and where exposition is needed to make the historical development intelligible.
 
-- Điều gì đã xảy ra / có thể khẳng định?
-- Chronology nào đủ chắc?
-- Mechanism nào được support đến mức nào?
-- Bằng chứng nào mâu thuẫn hoặc giới hạn kết luận?
-- Nguồn/locator nào support claim?
-- Khoảng trống evidence nằm ở đâu?
-
-Nó không trả lời:
-
-- Audience phải theo object/person/process nào?
-- Material nào “narratable” hơn?
-- Story phải mở bằng gì?
-- Reversal hay ending nên dùng case nào?
-- Sequence nào writer phải kể?
-
-Nếu một fact/source detail có thể hữu ích cho downstream nhưng không thuộc causal synthesis chính, giữ locator/provenance ở evidence store thay vì biến nó thành story recommendation.
+Outline owns the final selection, ordering and structural relationship among those materials. Writer owns local telling. Research remains authority for truth boundaries.
