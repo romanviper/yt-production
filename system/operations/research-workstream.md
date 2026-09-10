@@ -2,55 +2,38 @@
 
 ## Responsibility
 
-Research đúng một workstream và bàn giao **authoritative evidence**, không pre-author story. Web notes và quá trình tìm kiếm không phải deliverable.
+Research one bounded question and return authoritative evidence **without stripping away the historical situation that makes the evidence intelligible**.
 
-Research owns truth:
+Research owns:
 
-- source, locator và provenance;
-- claim, classification, confidence và status;
-- chronology;
-- contradiction, counterevidence và qualification;
-- factual limitation;
-- concrete source detail khi detail đó dễ mất qua compression.
+- source, locator and provenance;
+- claim, classification, confidence and status;
+- chronology, contradiction, counterevidence and qualification;
+- participants/communities when supported;
+- documented action, process, sequence, physical setting/object and consequence when supported;
+- content/status of relevant texts, traditions and scholarly disputes;
+- factual limitations and unknowns.
 
-Research không quyết định audience nên follow gì, carrier nào nên dùng, opening/reversal/ending, narrative route, reveal strategy hay sequence nào phải trở thành storytelling.
+Research may identify that a case/process has narrative potential or fails to support a proposed movement. That observation is a handoff about evidence richness, not authority to dictate final prose.
 
 ## Required outputs
 
-- `sources.json`: source records có ID namespaced `{WS##}-SRC-{###}`, type, authority, locators, access status, limitation và notes.
-- `claims.json`: claim có ID namespaced `{WS##}-CLM-{###}`, classification, confidence, local source IDs, counterevidence, status và narrative implication.
-- `synthesis.md`: tối đa khoảng 2.500 từ, trả question, chronology/mechanism, strongest evidence, contradictions, unknowns và handoff cho synthesis toàn cục.
+Keep the product's existing ledger contracts when the runtime depends on them:
 
-ID local được namespace để các workstream có thể chạy độc lập. `research_synthesis` nhận ledger đã remap và provenance local được giữ lại.
+- `sources.json`: namespaced source records, source type/authority, URL or bibliographic locator, access status and limitations;
+- `claims.json`: namespaced claims, classification, confidence, sources, counterevidence, status and bounded implication;
+- `synthesis.md`: answer the question with chronology/mechanism, strongest evidence, concrete case detail, contradictions, unknowns and implications for the current story choice.
 
-## Optional evidence-preservation artifact
+Optional `materials.json` may preserve complex cases/objects/processes. It is not a mandatory story-plan schema.
 
-`materials.json` có thể tồn tại khi một primary object/case/process có concrete detail dễ mất hoặc provenance/limitation phức tạp. Nó là **evidence-preservation artifact**, không phải story plan.
+## Story-bearing evidence
 
-Nếu dùng, mỗi record nên giữ các trường sự thật khi source trực tiếp support:
+When a source supports it, preserve enough of the event/process for downstream editors to understand what actually happened rather than only the scholar's conclusion. Useful fields or prose notes may include actor/community, object or text, documented action, sequence, time/place, physical description, wording/content summary, consequence, later reception/discovery, unresolved question and representativeness.
 
-- `id`, `kind`, `label`;
-- `claim_ids` liên quan;
-- `source_refs` với locator hẹp;
-- `actor` hoặc acting system khi được support trực tiếp;
-- `object_or_trace`: vật thể, di tích hoặc dấu vết;
-- `documented_action`: hành động được ghi lại trong tư liệu;
-- `explicit_sequence`: trình tự các bước hoặc biến cố được source nêu rõ;
-- `time`, `place`, `physical_description`, `measurement`, `spatial_relation`;
-- `unresolved_question`: câu hỏi lịch sử còn bỏ ngỏ mà tư liệu phản ánh;
-- `later_evidence`: bằng chứng/phát hiện về sau làm thay đổi cách hiểu;
-- `source_relation`: `contemporary_material`, `contemporary_interested_account`, `later_copy`, `retrospective_literature`, `cultural_tradition`, `modern_hypothesis`;
-- concrete source-supported detail dưới `details` (để tương thích ngược);
-- `limitations` và, khi hữu ích, `representativeness`.
+Do not score 'narratability' or force opening/reversal/ending labels. Do not invent connective events. The goal is to keep information that architecture may need, not to pre-author the architecture.
 
-Legacy material fields như `what_audience_follows`, `sequence` hoặc `narratable_reconstruction` vẫn có thể được đọc để không phá artifact cũ, nhưng output mới **không được bắt buộc** tạo chúng và downstream không được coi chúng là creative authority.
+## Epistemic distinction
 
-Không tạo narratability score/class. Không gắn opening/reversal/ending role. Không đánh giá material có “carry motion” hay không.
+A documented tradition proves the tradition/text is attested in its surviving context, not its narrated event. A hypothesis must retain the clue/support/objection chain that makes its status auditable. Guided inference may state compatibility but not proof. Reconstruction cannot become evidence by being vivid.
 
-## Compression rule
-
-Do not isolate information ownership. Isolate decision ownership.
-
-Research có thể bảo tồn chi tiết source-level như measurement, physical description, documented action, spatial relation, chronology detail hoặc explicit sequence nếu source support. Mục đích là tránh mất evidence qua compression, không phải quyết định cách kể.
-
-Không thêm weather, cảm xúc, dialogue, motive, action, spatial relation hoặc sensory detail nếu source không support. `narrative_implication` là handoff note về giới hạn/ý nghĩa của claim, không phải prose để copy và không phải route bắt buộc cho writer.
+If source coverage is too thin to support the action/change a proposed movement promises, say so explicitly so the outline can narrow, replace or remove that movement.
