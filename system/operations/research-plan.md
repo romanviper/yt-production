@@ -2,45 +2,36 @@
 
 ## Responsibility
 
-Chia product đã khóa thành các research workstream độc lập để acquisition factual có ownership rõ ràng. Không đánh giá lại việc có làm subject hay không và không pre-author cách kể.
+Plan research that can both establish historical truth and test whether the current story question is actually tellable. Research is not a prose-authoring stage, but it must not discard narrative-bearing information merely because story architecture comes later.
 
-> **Research plans evidence acquisition, not narrative execution.**
+Research Plan owns:
 
-Research Plan chịu trách nhiệm thiết kế cấu trúc nghiên cứu factual:
-
-- central research question;
-- hypotheses cần kiểm tra;
-- chronology và terminology protocol;
-- factual/mechanism questions;
-- required evidence classes;
-- scope ownership và dependency;
-- contradiction/counterevidence responsibilities;
-- cross-cutting factual ownership;
-- completion criteria;
+- central research question and competing hypotheses;
+- chronology, terminology and provenance protocol;
+- factual/mechanism questions and contradiction responsibilities;
+- exploratory questions about relevant people, communities, situations, processes, texts, objects, voices, consequences and discoveries;
+- evidence classes and source priorities;
+- scope ownership/dependencies;
+- completion criteria that include whether candidate movements have enough source-supported substance to be developed honestly;
 - synthesis handoff.
 
-Research Plan không quyết định hoặc phân công story carrier, object/person/process để audience follow, narrative material, opening/reversal/ending candidate, narratability, sequence kể chuyện, storytelling value hay carrier cho một state change.
+For a new product or a substantial narrative reset, compare a small number of plausible whole-work routes before committing all acquisition effort to one. These are editorial possibilities, not prewritten outlines. A route may be rejected because its central relationship is weak, because the middle would become a taxonomy, or because sources cannot support the promised change.
 
 ## Output contract
 
-`plan.json` gồm:
+`plan.json` may keep machine fields needed by the runtime. Human-facing planning/research artifacts should preserve:
 
-- `status: draft`;
-- `central_research_question`;
-- `hypotheses_to_test`;
-- `shared_research_protocol`: chronology, terminology, case selection, cross-cutting factual ownership và common handoff contract;
-- `workstreams[]`: `id` dạng `WS##`, title, question, in/out boundary, ownership, required evidence classes, completion criteria và `synthesis_handoff`;
-- `coverage_matrix`: mapping factual/research coverage sang workstream chịu trách nhiệm; đây không phải story/lifecycle architecture;
-- `synthesis_questions` cần nối các workstream về chronology, mechanism, contradiction, qualification hoặc factual relationship.
+- what question is being tested;
+- what kinds of change or inquiry could sustain a whole work;
+- which concrete cases/processes initially support or threaten each route;
+- what evidence gap could make a route infeasible;
+- source/locator/provenance requirements;
+- workstream ownership and synthesis questions.
 
-Không để hai workstream cùng sở hữu một question. Dependency phải được khai báo, không ngầm hiểu.
+Do not pre-write narration, manufacture a mandatory hero's journey, or require every case to supply an anecdote. But do not ban research from recognizing that one body of evidence contains an actual sequence/relationship while another supplies only a conclusion.
 
 ## Evidence preservation
 
-Plan có thể yêu cầu một workstream giữ source-level concrete detail khi detail đó có nguy cơ mất qua compression hoặc có provenance/limitation phức tạp. Lý do là **evidence preservation**, không phải để chọn cách kể.
+Preserve source-level detail that changes the listener's access to a historical situation: documented actions, participants, physical/spatial relations, wording/content of texts, chronology, measurements, sequence, consequences, disputes and later discoveries. The purpose is to prevent information loss and allow downstream architecture to make informed choices.
 
-Ví dụ có thể giữ measurement, physical description, documented action, spatial relation, chronology detail hoặc explicit source-supported sequence nếu chúng cần để reconstruct factual evidence sau này. Việc detail đó có trở thành narration, carrier hay không thuộc downstream authorship.
-
-Không bắt mỗi workstream phải tìm anecdote, carrier hoặc “story material”. Absence of such material không làm workstream thất bại nếu factual questions, evidence classes, contradictions và completion criteria đã được đáp ứng.
-
-Mọi field ảnh hưởng đến execution factual phải được materializer truyền vào isolated workstream brief; không đặt instruction chỉ có global synthesis nhìn thấy.
+Do not add weather, emotions, dialogue, motive or sensory particulars unless the source supports them. A missing story-bearing detail is a research gap, not permission to invent it.
