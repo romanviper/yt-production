@@ -1,71 +1,45 @@
-# AI Agent Router — compression-first Writer MVP
+# AI Agent Router — historical narrative production
 
-The immediate goal of this branch is simple: **let the Owner inspect the story before anyone spends effort turning it into polished prose**.
+This repo builds historical works from questions worth following about people and the worlds they inhabited. Evidence protects truth; it does not by itself choose the story.
 
-Do not redesign, optimize or extend the architecture before the Owner has read the Writer output and given feedback.
+## Authority
 
-## If you are a Writer
+A direct Owner instruction may authorize an end-to-end bounded production pass. Do not invent intermediate approval gates when the Owner has explicitly authorized research, architecture, writing and review in one work order. Human approval still controls final content acceptance and any later full-prose expansion.
 
-If the Owner tells you to write P01 or start Writer round 1, follow [WRITER.md](WRITER.md) immediately.
+Do not store private chain-of-thought, hidden scratchpads or internal-monologue transcripts.
 
-A direct Owner instruction is sufficient authority.
-
-Do not wait for or require:
-
-- `writer-assignment.json` or `assignment.json`;
-- controller/runtime state;
-- Writer budget approval;
-- `tasks/ACTIVE.json` or a fresh canonical task;
-- Planner/Reviewer/Audit/coordinator handoff.
-
-Absence of those artifacts is not a blocker.
-
-Current Writer flow:
+## Canonical creative path
 
 ```text
-Owner starts Writer round 1 for P01
-  → read the three canonical inputs in WRITER.md
-  → write one narrative compression
-  → save compression.md in the Writer partition
-  → commit
-  → STOP for Owner reading
-
-Owner approves the compression and later gives a separate prose order
-  → only then may a Writer expand the approved story into listener-facing prose
+Owner question / work order
+  → editorial question and scope
+  → exploratory + targeted historical research
+  → whole-work outline
+  → narrative compression
+  → product-first review + evidence check
+  → Owner reading / approval
+  → only then, if separately ordered, full prose production
 ```
 
-Round 1 is **a short telling of the whole story, before expansion into a full podcast script**. Do not create a draft, writing report, metadata packet, scorecard or alternative versions unless the Owner explicitly asks for them.
+Research must both establish what can be said honestly and preserve/discover situations, processes, relationships, voices, texts, objects and disputes that may carry the story. Outline owns the journey: what the audience follows, why each movement exists, how movements relate, where exposition is earned and how the ending gains weight. Writer owns execution inside that architecture and truth boundary. Review judges the actual listening experience first, then diagnoses whether a failure belongs to story choice, research/material, handoff or prose.
 
-Do not store chain-of-thought, private reasoning, hidden scratchpads, or internal-monologue transcripts.
+Production sections such as `P##` are context/revision units, not a mandatory chapter taxonomy. Do not infer story structure from a list of writing-system functions or from legacy section boundaries.
 
-Do not read another Writer's compression or Owner feedback on another Writer before finishing your own attempt when the Owner wants an independent comparison. Do not modify system architecture while acting as Writer.
+## Current sumer-writing reset
 
-## If you are operating the repo
+For the active narrative-identity reset, canonical product inputs are:
 
-Keep repo work minimal. Only change architecture/harness when:
+1. `products/sumer-writing/00_brief/product-brief.md`
+2. `products/sumer-writing/01_research/narrative-identity-reset-01.md`
+3. `products/sumer-writing/02_outline/outline.md` (human-readable canonical narrative architecture)
+4. `products/sumer-writing/02_outline/outline.json` (machine mirror when runtime requires it)
+5. `products/sumer-writing/02_outline/story-bible.md`
+6. `products/sumer-writing/02_outline/voice-profile.md`
 
-1. the Owner explicitly asks for that change; or
-2. a concrete blocker prevents a Writer from producing an output, and the smallest fix is necessary.
+The whole-work compression is written to:
 
-Prefer removing a constraint over adding a new abstraction.
+`writer-output/full-script/narrative-identity-reset-01/compression.md`
 
-Do not add code enforcement for the compression-first loop unless the Owner explicitly asks for it. The current contract is instructional and intentionally lightweight.
+New outline/compression outputs remain `draft` / pending Owner review. Do not carry old `approved_by` or `approved_at` metadata forward.
 
-Do not replace Owner judgment with automated quality gates. The Owner decides whether a compression is ready to become prose.
-
-## Output location
-
-All current P01 Writer outputs live under:
-
-`writer-output/P01/`
-
-For a new round-1 attempt, each Writer/model writes:
-
-`writer-output/P01/<writer>/compression.md`
-
-Existing historical `draft.md`, `meta.json` and `writing-report.md` files may remain where they already exist. Do not delete or rewrite them merely to conform to the new loop.
-
-## Historical material
-
-Phase 1/2/3 experiments, coordinator prototypes, old budget/submission machinery and cancelled production tasks are not prerequisites for this compression-first MVP. Do not activate them unless the Owner explicitly asks.
-
+Legacy experiments, old section flows and previous Writer outputs remain available for comparison, but they are not default creative inputs unless a task explicitly asks for them.
