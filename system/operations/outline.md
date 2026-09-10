@@ -2,43 +2,40 @@
 
 ## Responsibility
 
-Design **where the story must go**, not how the writer must get there. Do not write narration or pre-author local storytelling mechanics.
+Design the historical journey the audience will actually follow before prose begins. Outline is not a taxonomy of facts and is not limited to abstract objectives while every meaningful story decision is postponed to Writer.
 
 Outline owns:
 
-- central question and audience promise;
-- whole-product progression and exactly three acts;
-- movement/section objective;
-- entry and exit state;
-- section boundaries;
-- approved evidence territory via `claim_ids`;
-- dependencies, continuity, transition and word allocation.
+- central question, audience promise, scope and final understanding;
+- opening: what becomes concretely worth following and why;
+- whole-work movements selected for their role in that journey;
+- the circumstances, event/process/discovery and change each movement develops;
+- structural relationships among movements and why information appears where it does;
+- recurring relationship, case, point of inquiry, discovery order or viewpoint when these choices are necessary to make the whole work coherent;
+- where exposition is needed and what story problem it resolves;
+- evidence/material refs, uncertainty boundaries and dependencies;
+- production-section boundaries and flexible duration estimates when needed by runtime.
 
-It does not own exact carrier, object/imagery sequence, narrative route, reveal strategy, paragraph order or local mechanics.
+Writer still owns local execution: sentence/paragraph construction, exact transitions, local pacing, imagery, scale shifts, phrasing and evidence-safe choices within the architecture. Writer may propose reopening the outline when the promised movement cannot be told from available material.
 
 ## Design order
 
-1. Define question, promise and final understanding.
-2. Design opening, body and ending.
-3. Add only the movements the inquiry/causal progression needs.
-4. Give each movement an objective/state change.
-5. Assign enough approved claim territory for a writer to solve that objective without expanding truth.
-6. Cut `P##` work units at meaningful state/context/review limits.
+1. State the question, promise, scope and what would count as a meaningful ending.
+2. Decide what historical reality the listener first follows.
+3. Add only movements that develop, complicate or transform that reality.
+4. For each movement identify: starting circumstance; event/process/discovery; what changes; why the next movement follows; evidence/material anchors; unresolved boundaries.
+5. Place exposition only where it helps the audience continue something already worth understanding.
+6. Check the middle for accumulation: if movements merely restate the same conclusion through different examples, reorganize or replace them.
+7. Cut `P##` units only for production/context/review needs. Production units need not equal narrative movements.
 
-Movement count, section count, length and local form remain adaptive.
+No fixed movement count is required. A whole work may have three acts, another structure, montage or an investigative return pattern if the material supports it.
 
-## Section contract
+## Human-readable authority and machine mirror
 
-A section must make clear: what it is trying to establish/explore, audience entry/exit state, evidence territory, whole-product role and why the next section follows. Use `narrative_job`, `entry_state`, `exit_state`, `claim_ids`, `dependencies`, `target_words` and `transition`.
+For substantial narrative work, `outline.md` is the human-readable canonical story architecture. If `outline.json` remains required by runtime, mirror the same question, movement order, evidence territory, status and section mapping there. Do not maintain two independent creative versions.
 
-New/revised output sets `script_architecture.writer_authorship_contract_version: 1`.
-
-Legacy `story_material_contract_version`, `audience_experience` and `material_ids` may remain readable but have no authority in new output.
+New/revised content remains `draft`/pending human approval. Never inherit approval metadata from a prior outline.
 
 ## Freedom test
 
-A competent writer should be able to reach the section objective through more than one evidence-safe route. If the section only works with one carrier/reveal order, reframe the objective/evidence territory or reopen research; do not encode the preferred route.
-
-`claim_ids` are permissions, not facts that must all appear. Optional preserved material is evidence retention only, not story architecture.
-
-Schema v4 keeps whole-script acts/movements, section architecture and word envelope. `story-bible.md` keeps global causal/chronology/term/continuity constraints; `voice-profile.md` keeps product voice. All remain draft until human approval.
+The outline may make consequential story choices; it must not script every sentence, camera cut or micro-beat. A competent Writer should retain meaningful execution freedom while being able to tell why each movement exists and why reordering/removing it would change the work.
