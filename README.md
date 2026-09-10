@@ -1,116 +1,62 @@
 # YT Production
 
-## Owner-first MVP — dynamic Writer pool
+YT Production là môi trường xây dựng tác phẩm lịch sử từ những câu hỏi đáng theo đuổi về con người và thế giới của họ. Evidence bảo vệ tính trung thực; nó không tự chọn câu chuyện. Research phát hiện và kiểm tra các khả năng kể; outline tổ chức hành trình; Writer kể hành trình đó; review đọc sản phẩm trước rồi mới chẩn đoán lỗi.
 
-Đường MVP hiện tại dùng nguyên tắc **Freeze the work, not the worker**:
-
-```text
-Owner request
-  → frozen P01 authority
-  → Owner-approved budget cho Sol repo
-  → Sol repo may freeze one Plan + common Writer assignment for controlled comparison
-  → Owner launches any Writer/model(s), with or without that assignment
-  → each returns draft + self-declared provenance
-  → Owner closes submission pool
-  → Owner comparison feedback
-  → stop
-```
-
-Writer không cần pre-register model/actor và không có time-budget gate. Timing của Writer chỉ là telemetry. `PREBOUND` submissions phải match frozen assignment hash. **Direct Owner instruction cũng đủ để Writer viết một bounded attempt mà không có assignment**; trường hợp đó Writer khai `NOT_PREBOUND`, `assignment_sha256=null` và liệt kê exact inputs đã dùng. Draft vẫn đọc/so sánh được nhưng không được gọi là controlled same-input evidence.
-
-Bắt đầu:
-
-```bash
-python scripts/learning.py prepare --run p01-owner-001 --request "Viết một đoạn P01 độc lập để tôi đọc và phản hồi" --code-ref <ref>
-python scripts/learning.py status --run p01-owner-001
-```
-
-Hướng dẫn đầy đủ: [docs/MVP.md](docs/MVP.md).
-
-Hệ điều hành biên tập cho phim lịch sử dài, được thiết kế để nhiều AI task cộng tác mà không mang toàn bộ repo và toàn bộ policy vào mỗi context window.
-
-## Source of truth
-
-`main` là nhánh làm việc duy nhất. Agent mới luôn checkout `main` ở HEAD hiện tại và không chọn commit hay branch lịch sử để bắt đầu. Chỉ tạo branch/PR khi người dùng yêu cầu riêng một vòng review hoặc isolation.
-
-## Harness
-
-Hệ thống dùng nguyên tắc **Hard boundaries, Soft logic**:
-
-- **Hard boundaries:** authority, write scope, task state, approval, freshness, provenance và hard cap được code/validator giữ bên ngoài prompt.
-- **Soft logic:** Agent sáng tạo chỉ nhận Channel Constitution ngắn, product blueprint, vai trò work unit, continuity và evidence ceiling; nó tự chọn route, nhịp và câu chữ.
-- **Eval-only:** storytelling, voice, causal clarity và semantic repetition được đánh giá sau draft. Evaluator chấm outcome, không chấm việc đi đúng một route định trước.
-
-Machine-readable profiles nằm ở `system/harness.json`. Phân loại và lý do thiết kế nằm ở [docs/HARNESS.md](docs/HARNESS.md).
-
-Quy trình canonical để sản xuất section nằm ở [system/workflows/section-production-harness.md](system/workflows/section-production-harness.md), với quality gate tại [system/standards/section-quality-gate.md](system/standards/section-quality-gate.md). Agent không dùng branch lịch sử hay artifact thử nghiệm làm production input.
-
-## Kiến trúc câu chuyện
-
-Mọi script có ba act rõ ràng ở cấp toàn phim:
-
-`opening → body → ending`
-
-Số narrative movement và số production section không cố định. `P##` là work unit để giới hạn context/revision; nó không phải mini-chapter bắt buộc có hook–body–payoff riêng. Length range là estimate; chỉ production-unit hard cap mới bị máy cưỡng chế.
-
-## Production flow
+## Canonical creative flow
 
 ```text
-research plan
-  → isolated research workstreams
-  → research synthesis
-  → three-act product architecture + narrative movements
-  → bounded production sections
-  → lean story design + human approval
-  → autonomous draft
-  → outcome evaluation
-  → human approval / targeted revision
-  → handoff integration
-  → deterministic assembly
+Owner question / work order
+  → editorial question + scope
+  → exploratory research + route comparison
+  → targeted research for the selected journey
+  → whole-work outline
+  → narrative compression
+  → product-first review + evidence check
+  → Owner reading / approval
+  → full prose only when separately ordered
 ```
 
-Story design chỉ khóa audience shift, evidence roles (`core / optional / guardrail / exclude`) và length estimate. Approval sinh narration pack compact có provenance refs; raw research và full source metadata không đi vào writer packet.
+Một direct Owner work order có thể authorize toàn chuỗi bounded ở trên. Không tự dựng lại các intermediate approval gate của flow cũ khi Owner đã giao end-to-end execution. Owner vẫn giữ quyền chấp nhận nội dung cuối cùng.
 
-## Lệnh thường dùng
+## Decision ownership
 
-```bash
-python scripts/new_product.py ten-san-pham --title "Tên làm việc"
-python scripts/task.py create products/ten-san-pham research_plan
-python scripts/task.py create products/ten-san-pham outline --runtime dsh  # optional POC
-python scripts/outline_runtime.py run products/ten-san-pham <task-id>     # requires dsh executable
-python scripts/task.py create products/ten-san-pham design_section --section P04
-python scripts/approval.py approve-story-plan products/ten-san-pham P04
-python scripts/task.py create products/ten-san-pham draft_section --section P04
-python scripts/task.py create products/ten-san-pham review_section --section P04
-python scripts/approval.py approve-section products/ten-san-pham P04
-python scripts/assemble.py products/ten-san-pham
-```
+- **Research** xác định điều có thể nói trung thực **và** phát hiện situations, processes, relationships, voices, texts, objects, disputes hoặc discoveries có thể gánh câu chuyện. Research có thể làm yếu hoặc thay đổi route ban đầu.
+- **Outline** sở hữu whole-work journey: người nghe theo gì, vì sao từng movement tồn tại, quan hệ giữa các movement, thứ tự discovery, nơi exposition được earned và cách ending tích lũy trọng lượng.
+- **Writer** sở hữu execution trong architecture và truth boundary: pacing, local selection, prose, imagery, transitions, scale, viewpoint. Nếu material/architecture không gánh được route, Writer phải flag/sửa đúng lớp thay vì trang trí câu chữ.
+- **Review** đọc output trước; kiểm tra progression, accumulation và listening experience; sau đó kiểm tra riêng historical integrity và route failure về đúng layer.
 
-Human có thể sửa hoặc chỉ đạo sửa trực tiếp output mà không mở task mới:
+Production unit như `P##` chỉ là context/revision unit. Không suy ra story structure từ taxonomy về function/capability của đối tượng.
 
-```bash
-python scripts/approval.py human-amend-outline products/ten-san-pham --request "..." --path outline.json
-python scripts/approval.py human-amend-section products/ten-san-pham P04 --request "..." --path draft.md
-```
+## Historical integrity
 
-Đường này vẫn giữ allowlist, evidence ceiling, hard cap và provenance; nó chỉ bỏ AI task/design/review trung gian khi authority đến trực tiếp từ người dùng.
+Source URL/locator, provenance, uncertainty, chronology và ranh giới giữa documented event, documented tradition, hypothesis, inference và reconstruction phải được giữ. Myth/literary tradition có thể là story material khi được frame đúng tư cách. Hypothesis/guided inference có thể gánh narrative weight khi listener thấy clue, support và phần chưa ngã ngũ. Không biến qualification thành thay thế cho storytelling và không dùng storytelling để vượt source.
 
-Mở một vòng sản xuất mới từ research đã duyệt:
+## Current product: `products/sumer-writing`
 
-```bash
-python scripts/approval.py start-new-cycle products/ten-san-pham --request "Yêu cầu kiến trúc mới"
-python scripts/task.py state products/ten-san-pham <old-active-task> cancelled
-python scripts/task.py create products/ten-san-pham outline
-```
+Narrative identity reset hiện dùng:
 
-Sau khi outline mới được duyệt, archive workspaces cũ rồi materialize cycle mới:
+1. `products/sumer-writing/00_brief/product-brief.md`
+2. `products/sumer-writing/01_research/narrative-identity-reset-01.md`
+3. `products/sumer-writing/02_outline/outline.md` — canonical human-readable narrative architecture
+4. `products/sumer-writing/02_outline/story-bible.md`
+5. `products/sumer-writing/02_outline/voice-profile.md`
 
-```bash
-python scripts/materialize_sections.py products/ten-san-pham --archive-previous-cycle
-```
+Whole-work compression chờ Owner đọc:
 
-Chi tiết vận hành: [docs/WORKFLOW.md](docs/WORKFLOW.md).
+`writer-output/full-script/narrative-identity-reset-01/compression.md`
 
-## Pilot
+`outline.json`, section overlays và các P01–P08 workflow cũ được giữ để compatibility/audit cho tới khi một runtime task thật sự cần materialize lại; chúng không được quyền kéo route mới quay về eight-function architecture. Bản mới không mang `approved_by`/`approved_at` của cycle cũ.
 
-`products/sumer-writing/` kể vòng đời chữ viết như một công nghệ–thiết chế của văn minh Sumer. *Fall of Civilizations* là benchmark chức năng, không phải mẫu câu, cadence, persona hay structure để sao chép.
+## Harness principle
+
+**Hard boundaries, creative ownership.** Code/validator nên giữ authority, allowed writes, lifecycle, provenance, source/evidence integrity và resource limits. Creative method, route và listening quality không được hard-code thành một taxonomy hay score tự động.
+
+Xem thêm:
+
+- `AGENTS.md` — router/authority hiện hành.
+- `WRITER.md` — whole-work compression contract.
+- `system/standards/channel-constitution.md` — creative identity dùng được cho nhiều đề tài.
+- `docs/WORKFLOW.md` — ownership và production workflow.
+- `docs/HARNESS.md` — ranh giới hard/soft/evaluation.
+
+Các experiment/MVP cũ vẫn được giữ làm bằng chứng và compatibility surface nhưng không phải default creative path.
