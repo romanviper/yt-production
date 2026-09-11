@@ -1138,6 +1138,249 @@
           "local_id": "WS08-SRC-006"
         }
       ]
+    },
+    {
+      "id": "SRC-0043",
+      "title": "Cuneiform tablet: administrative account concerning the distribution of barley and emmer (1988.433.2)",
+      "author": "The Metropolitan Museum of Art",
+      "year": null,
+      "type": "museum collection record and curatorial interpretation",
+      "authority": "Holding museum catalogue for an identified early tablet.",
+      "url": "https://www.metmuseum.org/art/collection/search/327384",
+      "locators": [
+        "Object overview, especially paragraph on likely grain deliveries/distributions; Artwork Details"
+      ],
+      "status": "reviewed",
+      "accessed_at": "2026-09-07",
+      "limitations": [
+        "Grain deliveries/distributions are a likely interpretation, not a secure complete translation.",
+        "Jemdet Nasr, ca. 3100–2900 BCE; findspot only probably Uruk. Do not back-project to earlier Late Uruk or Chogha Mish.",
+        "No named recipient, quantity, payment, tax, wage, ownership or demonstrated enforcement outcome is established here."
+      ],
+      "notes": [
+        "Read the holding museum record directly. Use this bounded case to connect early records with handling grain; do not adopt its broad invention narrative as independent authority."
+      ],
+      "provenance": [
+        {
+          "workstream": "P01-owner-revision",
+          "local_id": "MET-1988.433.2"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0044",
+      "title": "The first writing: counting beer for the workers (1989,0130.4)",
+      "author": "British Museum, collection contribution to Google Arts & Culture",
+      "year": null,
+      "type": "holding-museum interpretation and object metadata",
+      "authority": "British Museum authored collection entry hosted on Google Arts & Culture; accession matches collection catalogue.",
+      "url": "https://artsandculture.google.com/asset/the-first-writing-counting-beer-for-the-workers/fgF9ioy89DC2Uw?hl=en",
+      "locators": [
+        "Opening description; sign descriptions; Details: registration number, dimensions, period and acquisition",
+        "Final paragraph on early Uruk tablets discarded from large temples and reused as building-foundation packing"
+      ],
+      "status": "reviewed",
+      "accessed_at": "2026-09-08",
+      "limitations": [
+        "Use the attribution to workers daily beer rations as the museum interpretation, not a complete translation identifying recipients.",
+        "Southern Iraq; no secure Uruk findspot or named issuing temple asserted for this purchased object.",
+        "Do not infer modern wages, intoxication, coercion, water safety or a sole origin of writing.",
+        "The building-fill account concerns early tablets generally, not the excavated provenance of purchased tablet 1989,0130.4. No destruction event or reason for discarding is identified."
+      ],
+      "notes": [
+        "Read the museum-authored partner page in full. The direct British Museum object page returned HTTP 403; its indexed catalogue dates and registration corroborate identity."
+      ],
+      "provenance": [
+        {
+          "workstream": "P01-local-editorial-lab",
+          "local_id": "BM-1989-0130-4"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0045",
+      "title": "The Origins of Writing",
+      "author": "Ira Spar, Department of Ancient Near Eastern Art, The Metropolitan Museum of Art",
+      "year": 2004,
+      "type": "museum scholarly essay",
+      "authority": "Museum specialist synthesis with scholarly bibliography.",
+      "url": "https://www.metmuseum.org/essays/the-origins-of-writing",
+      "locators": [
+        "Opening paragraphs on late-fourth-millennium Uruk, temple estates, accounting, and the list of professions"
+      ],
+      "status": "reviewed",
+      "accessed_at": "2026-09-08",
+      "limitations": [
+        "A 2004 synthesis, used here only for bounded urban, occupational and accounting context.",
+        "Temple accounting is a formation context, not a sole-cause origin account; do not assign every surviving tablet to one temple.",
+        "Do not import broad first-city, first-writing, population or language claims from this essay."
+      ],
+      "notes": [
+        "Read the full essay; retain the distinction between general Uruk context and the findspot or transaction of an individual object."
+      ],
+      "provenance": [
+        {
+          "workstream": "P01-local-editorial-lab",
+          "local_id": "MET-ORIGINS-WRITING"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0046",
+      "title": "Enmerkar and the Lord of Aratta: translation (ETCSL 1.8.2.3)",
+      "author": "Electronic Text Corpus of Sumerian Literature, University of Oxford",
+      "year": null,
+      "type": "academic primary-text composite translation",
+      "authority": "Curated Sumerian literary corpus; direct text of the composition used for the writing episode.",
+      "url": "https://etcsl.orinst.ox.ac.uk/section1/tr1823.htm",
+      "locators": [
+        "lines 500–535, especially 500–506 and 518–535"
+      ],
+      "status": "reviewed",
+      "accessed_at": "2026-09-09",
+      "limitations": [
+        "Modern composite/translation; surviving manuscripts are later than the narrated setting and earliest proto-cuneiform.",
+        "The episode is evidence for a literary tradition, not direct evidence of the historical invention of writing."
+      ],
+      "notes": [
+        "Direct source for the messenger unable to repeat the message and Enmerkar placing the words on clay."
+      ],
+      "provenance": [
+        {
+          "workstream": "P01-narrative-reset",
+          "local_id": "ETCSL-ENMERKAR"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0047",
+      "title": "CDLI Literary 000369 (Enmerkar and the Lord of Aratta) composite (P469674 / Q000369)",
+      "author": "Cuneiform Digital Library Initiative",
+      "year": null,
+      "type": "academic corpus metadata and witness list",
+      "authority": "CDLI composite record with language, period and manuscript witnesses.",
+      "url": "https://cdli.earth/artifacts/469674",
+      "locators": [
+        "Text content; Chronology; witness list"
+      ],
+      "status": "reviewed",
+      "accessed_at": "2026-09-09",
+      "limitations": [
+        "Composite metadata describes surviving Old Babylonian witnesses, not the date of a historical Enmerkar event."
+      ],
+      "notes": [
+        "Anchors the Sumerian language label of the composition and Old Babylonian ca. 1900–1600 BCE witness horizon."
+      ],
+      "provenance": [
+        {
+          "workstream": "P01-narrative-reset",
+          "local_id": "CDLI-Q000369"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0048",
+      "title": "The Sumerian Account of the Invention of Writing — A New Interpretation",
+      "author": "Gong Yushu",
+      "year": 2010,
+      "type": "peer-reviewed/open-access scholarly article",
+      "authority": "Philological study focused specifically on the Enmerkar writing passage and competing interpretations.",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1877042810012449",
+      "locators": [
+        "pp. 7446–7453; discussion of lines 501–540"
+      ],
+      "status": "reviewed",
+      "accessed_at": "2026-09-09",
+      "limitations": [
+        "The author's preferred reading—writing on clay rather than writing in general—is an interpretation, not consensus fact."
+      ],
+      "notes": [
+        "Useful precisely because it documents interpretive disagreement around what the literary scene claims."
+      ],
+      "provenance": [
+        {
+          "workstream": "P01-narrative-reset",
+          "local_id": "GONG-2010"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0049",
+      "title": "When Mesopotamians sent enveloped letters",
+      "author": "Centre for the Study of Manuscript Cultures, Universität Hamburg",
+      "year": 2017,
+      "type": "academic research overview",
+      "authority": "University manuscript-culture research center overview of Mesopotamian correspondence and the Enmerkar legend.",
+      "url": "https://www.csmc.uni-hamburg.de/publications/mesopotamia/2017-06-30.html",
+      "locators": [
+        "opening discussion of Enmerkar and earliest letters"
+      ],
+      "status": "reviewed",
+      "accessed_at": "2026-09-09",
+      "limitations": [
+        "Public-facing synthesis; use for the documented later interpretation of long-distance communication, not an origin proof."
+      ],
+      "notes": [
+        "Notes that early-second-millennium scribes attributed writing to long-distance communication while actual letters appear much later than earliest writing."
+      ],
+      "provenance": [
+        {
+          "workstream": "P01-narrative-reset",
+          "local_id": "CSMC-LETTERS"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0050",
+      "title": "Nidaba (goddess)",
+      "author": "Oracc / Ancient Mesopotamian Gods and Goddesses",
+      "year": null,
+      "type": "academic reference overview",
+      "authority": "Specialist-curated Oracc reference entry.",
+      "url": "https://oracc.museum.upenn.edu/amgg/listofdeities/nidaba/",
+      "locators": [
+        "Functions"
+      ],
+      "status": "reviewed",
+      "accessed_at": "2026-09-09",
+      "limitations": [
+        "Cultural/religious association is not evidence for the historical cause or exact date of writing's origin."
+      ],
+      "notes": [
+        "Alternative narrative material: Nidaba joins grain, accounting/writing and scribal identity; better suited to later functional/scribal sections."
+      ],
+      "provenance": [
+        {
+          "workstream": "P01-narrative-reset",
+          "local_id": "ORACC-NIDABA"
+        }
+      ]
+    },
+    {
+      "id": "SRC-0051",
+      "title": "Spectral Etiologies in Enmerkar and the Lord of Aratta",
+      "author": "Claudio Sansone",
+      "year": null,
+      "type": "peer-reviewed literary study",
+      "authority": "Focused analysis of the writing episode as literary etiology and progress model.",
+      "url": "https://interface.org.tw/index.php/if/article/view/253",
+      "locators": [
+        "abstract and writing-invention analysis"
+      ],
+      "status": "reviewed",
+      "accessed_at": "2026-09-09",
+      "limitations": [
+        "Literary interpretation; not archaeological evidence for writing's origin."
+      ],
+      "notes": [
+        "Supports treating the scene as a later literary construction whose apparent circularity matters to interpretation."
+      ],
+      "provenance": [
+        {
+          "workstream": "P01-narrative-reset",
+          "local_id": "SANSONE-ENMERKAR"
+        }
+      ]
     }
   ]
 }

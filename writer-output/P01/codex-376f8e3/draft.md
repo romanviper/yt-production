@@ -1,0 +1,11 @@
+Vào cuối thiên niên kỷ thứ tư trước Công nguyên, ở miền nam Lưỡng Hà, công việc quản lý đang diễn ra trên một quy mô ngày càng lớn. Người ta cần giữ lại số lượng, cần xác thực điều đã ghi. Trong thế giới ấy, đất sét là một vật liệu của công việc. Nó có thể được nặn thành những vật đếm nhỏ, thành lớp vỏ rỗng chứa vật đếm, hoặc thành mặt bảng để ghi dấu. Nhiều cách làm cùng tồn tại. Trước khi theo những dòng chữ vào đời sống Sumer, chúng ta hãy dừng ở thứ vật liệu mà người ghi có thể đặt tay lên.
+
+Khi còn ẩm, đất sét nhận một vết ấn hay một đường rạch. Từ những dấu còn lại, có thể hình dung người làm nắn đất thành mặt ghi, rồi tạo dấu trước khi nó khô. Chỗ bị ấn lõm xuống; đường rạch nằm lại trên bề mặt. Động tác đã kết thúc, nhưng hình dạng mà nó để lại vẫn còn. Bởi thế, khi nhìn một bảng đất sét cổ, ta cũng đang nhìn những chỗ một người từng làm biến đổi vật liệu để giữ lại điều cần ghi.
+
+Một mảnh bảng tìm thấy ở Chogha Mish, thuộc vùng tây nam Iran ngày nay, đưa công việc ấy lại gần hơn. Nó có niên đại khoảng 3350 đến 3100 trước Công nguyên, trong thời kỳ cuối Uruk. Chúng ta đã rời miền nam Lưỡng Hà để nhìn sang một địa điểm khác có những thực hành ghi nhận cùng thời. Trên phần đất sét còn lại của mảnh bảng này, đếm được năm dấu ghi số. Thông tin về lượng đã có chỗ ngay trên mặt vật.
+
+Nhưng ở đó còn có hình những con vật, trong đó có một con bò. Những hình ấy được để lại qua việc lăn con dấu trên đất sét: hình trên con dấu in xuống mặt đất khi nó lăn qua. Đó là những dấu niêm. Trong thực hành quản lý thời ấy, dấu niêm phục vụ việc xác thực. Ở đây, dấu số và dấu niêm cùng nằm trên một mảnh bảng: cùng mặt đất sét ấy tham gia cả việc giữ lượng lẫn xác thực.
+
+Quy mô quản lý lớn lên đi cùng nhu cầu ghi nhận và xác thực nhiều hơn; đó là một sức ép trong thế giới đang hình thành chữ viết. Nhìn từ khoảng cách ấy, những vết trên mảnh bảng bắt đầu thuộc về một công việc. Có người phải ghi lượng, có cách để xác thực, và có một vật mang những dấu ấy. Từ mặt đất sét, ta đã nhìn sang mối quan hệ giữa người làm và điều cần được ghi lại.
+
+Ta vẫn chưa biết những số trên riêng mảnh vỡ này nói tới hàng gì. Câu hỏi ấy đưa chúng ta đi xa hơn hình dạng của dấu: người ta đã ghi lại việc gì? Nếu một mặt đất sét có thể giữ số lượng, thì những dấu đi cùng số còn có thể cho biết bao nhiêu về công việc, và về những người từng cần đến bản ghi ấy?

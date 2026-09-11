@@ -1,0 +1,13 @@
+Một lớp vỏ đất sét khép kín. Bên trong là những vật đếm nhỏ, cũng bằng đất sét. Chúng vẫn nằm đó, nhưng chừng nào lớp vỏ còn đóng, người muốn xem trực tiếp những gì được giữ bên trong sẽ gặp chính lớp vỏ ấy. Một vật có thể giữ lấy thông tin, đồng thời đặt thông tin ngoài tầm mắt.
+
+Đó là một phần thế giới mà chúng ta gặp ở miền nam Lưỡng Hà vào cuối thiên niên kỷ thứ tư trước Công nguyên, trong thời kỳ Uruk muộn. Những phong bì đất sét rỗng như thế thuộc về các thực hành ghi nhận và xác thực trong hoạt động quản lý. Trên một số chiếc còn có dấu in hoặc dấu niêm ở bên ngoài. Vật đếm bên trong, dấu bên ngoài: cùng một khối đất sét có thể mang thông tin ở những nơi khác nhau, với những cách tiếp cận khác nhau.
+
+Trước khi hỏi ai đã nghĩ ra chữ viết, hãy dừng lại ở công việc này. Con người đang tìm cách ghi nhận số lượng, và đang dùng dấu để xác thực. Một con số cần được giữ lại. Nhưng giữ lại chưa phải toàn bộ bài toán. Thông tin được giữ ở đâu? Người cần kiểm tra có thể tiếp cận nó ra sao? Qua những câu hỏi rất cụ thể ấy, việc ghi chép bắt đầu hiện ra như một công việc phải làm, chứ không chỉ là một ý tưởng phải nghĩ tới.
+
+Bây giờ, đặt cạnh lớp vỏ khép kín ấy một bảng đất sét ghi số. Thông tin số lượng được in trực tiếp trên bề mặt bền của bảng. Người xem không phải nhìn xuyên qua một vật chứa để tiếp cận các dấu số: chúng nằm ngay ở phía ngoài. Một số bảng còn mang dấu xác thực. Ở đây, điều đáng chú ý chưa phải là một văn bản có thể kể lại câu chuyện. Đó là một khả năng khiêm nhường hơn: số lượng có một chỗ để lưu lại, ngay trên bề mặt có thể xem xét.
+
+Với người đang ghi nhận và kiểm tra, khác biệt ấy có ý nghĩa thực tế. Thông tin không chỉ cần tồn tại; hình thức lưu giữ còn quyết định điều gì có thể được nhìn thấy trực tiếp. Từ một lớp vỏ và một mặt bảng, ta bắt đầu chạm tới nhu cầu rộng hơn của hoạt động quản lý: có những ghi nhận còn đó để xem lại, có những dấu đi cùng việc xác thực chúng. Giá trị của một dấu số nằm cả ở công việc mà nó cho phép con người tiếp tục làm.
+
+Nhưng bảng ghi số không xuất hiện trong một thế giới lập tức bỏ hết vật đếm, phong bì và dấu niêm. Những cách làm ấy tiếp tục chồng lấn. Trong thời kỳ này, thông tin số ngày càng được đặt trực tiếp lên các bề mặt đất sét bền, đôi khi cùng dấu xác thực. Sự thay đổi nằm trong cả một tập hợp thực hành đang cùng tồn tại, không gói gọn vào khoảnh khắc một người tìm ra lời giải duy nhất.
+
+Vì thế, ở đầu lịch sử chữ viết, ta đã gặp một bài toán: làm cho thông tin có thể được giữ lại và được xem xét trong công việc của con người. Hoạt động quản lý là một nơi bài toán ấy hiện rõ. Và khi những con số đã có thể nằm trên mặt đất sét, câu hỏi tiếp theo mới bắt đầu mở ra: những hệ thống dấu mới sẽ làm được thêm điều gì?

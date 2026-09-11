@@ -402,8 +402,10 @@ def build_writer_section_substrate(
             "section_binding_sha256": binding_sha256(section_spec),
         },
         "writer_contract": (
-            "Historical Substrate is the primary model of historical reality. Evidence lookup is secondary "
-            "and only verifies, sharpens or qualifies details needed by a telling already chosen from this model."
+            "Historical Substrate is a source-anchored set of historical conditions, documented traditions, "
+            "qualified interpretations and bounded reconstructions. Epistemic status controls how each may be narrated: "
+            "a documented tradition proves the tradition is attested, not that its narrated event occurred. The Writer may "
+            "connect supported material into an explicitly qualified possibility, but compatibility must not be turned into proof."
         ),
     }
 

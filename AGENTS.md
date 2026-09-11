@@ -1,58 +1,71 @@
-# AI Agent Router
+# AI Agent Router — compression-first Writer MVP
 
-## Current architecture-learning phase
+The immediate goal of this branch is simple: **let the Owner inspect the story before anyone spends effort turning it into polished prose**.
 
-The repository is currently in **Observable Learning Architecture — Phase 1**.
-For owner-directed architecture/benchmark work, start at `docs/phase1/START.md` and
-read `docs/architecture/observable-learning-architecture-plan.md`.
+Do not redesign, optimize or extend the architecture before the Owner has read the Writer output and given feedback.
 
-The experiments under `docs/experiments/`, `experiments/`, and
-`scripts/experiments/` are **legacy evidence only**. Their historical `START.md`
-files and scripts must not be treated as active entrypoints, rerun, extended, or
-used to create a new round unless the owner explicitly re-authorizes that exact
-experiment. Existing run artifacts are immutable benchmark/provenance material.
+## If you are a Writer
 
-Phase 1 does not authorize new production prose, production task creation, a new
-Writer round, or evidence expansion. Product state stays untouched unless the
-owner explicitly asks for product work.
+If the Owner tells you to write P01 or start Writer round 1, follow [WRITER.md](WRITER.md) immediately.
 
-This file contains only repo-wide operating boundaries. Creative logic belongs in the task packet.
+A direct Owner instruction is sufficient authority.
 
-## Canonical branch
+Do not wait for or require:
 
-- `main` is the only working branch and the repository source of truth. Start from the current `main` HEAD; do not choose a historical commit as an entrypoint.
-- Do not create feature, task or agent branches for routine work. Commit authorized changes directly to `main` after the required validation.
-- Create a branch or pull request only when the user explicitly asks for isolation or review. Historical remote branches are not valid production inputs.
+- `writer-assignment.json` or `assignment.json`;
+- controller/runtime state;
+- Writer budget approval;
+- `tasks/ACTIVE.json` or a fresh canonical task;
+- Planner/Reviewer/Audit/coordinator handoff.
 
-## Authority
+Absence of those artifacts is not a blocker.
 
-- Product work runs as `product_agent` and may write only the paths declared by its router-generated work order.
-- An explicit user instruction to edit an outline or section output may run as a human-directed amendment instead of an AI task. It may touch only the creative output allowlists enforced by `scripts/approval.py`, must record provenance, and may not widen evidence authority.
-- `.github/`, `AGENTS.md`, `Makefile`, `README.md`, `docs/`, `scripts/`, `system/`, `templates/` and `tests/` are protected system paths.
-- A system defect is reported as a blocker. It does not grant a Product Agent permission to fix the system.
-- System architecture changes require an explicit owner-assigned `system_architect` task and may not share a commit with product content.
-- Only the user may approve research plans, outlines, story plans or sections.
+Current Writer flow:
 
-## Product task entrypoint
+```text
+Owner starts Writer round 1 for P01
+  → read the three canonical inputs in WRITER.md
+  → write one narrative compression
+  → save compression.md in the Writer partition
+  → commit
+  → STOP for Owner reading
 
-1. Resolve the named product. If the repo has only one product and none is named, use it.
-2. Read `products/<slug>/tasks/ACTIVE.json`, its work order and the single compiled context packet it references.
-3. Do not scan the repository or load files outside that packet.
-4. Write only `allowed_write_paths`, run the packet's validations, produce `report.md` and `operator-brief.json`, then submit through `scripts/task.py`.
-5. Stop at the current checkpoint. Do not silently start the next operation.
+Owner approves the compression and later gives a separate prose order
+  → only then may a Writer expand the approved story into listener-facing prose
+```
 
-The task entrypoint applies to AI-generated work. For explicit human feedback or a direct human edit, use `human-amend-outline` or `human-amend-section`; do not create a replacement task merely to legitimize the user's authority.
+Round 1 is **a short telling of the whole story, before expansion into a full podcast script**. Do not create a draft, writing report, metadata packet, scorecard or alternative versions unless the Owner explicitly asks for them.
 
-When the user asks to replay a bounded production path across multiple operations, use `scripts/replay.py` instead of manually editing task or section state. `replay.py start` records the requested path and routes only its first canonical task; after each required human approval, `replay.py continue` materializes or routes the next task. Human approval gates remain mandatory. Single-operation reruns still use `scripts/rework.py`.
+Do not store chain-of-thought, private reasoning, hidden scratchpads, or internal-monologue transcripts.
 
-An `outline` work order compiled with `execution_runtime.kind: dsh` is the only POC exception to direct packet consumption. Launch it through `scripts/outline_runtime.py`; the Agent receives a minimal seed and may access repository context only through the packet-declared, audit-logged capability broker. Do not grant that runtime filesystem, shell, web or repo-scan tools.
+Do not read another Writer's compression or Owner feedback on another Writer before finishing your own attempt when the Owner wants an independent comparison. Do not modify system architecture while acting as Writer.
 
-For a newly requested operation, create it through `python scripts/task.py create`; never hand-author router artifacts. Operation names and preconditions are machine-readable in `system/operations/registry.json`.
+## If you are operating the repo
 
-## Hard stops
+Keep repo work minimal. Only change architecture/harness when:
 
-Stop and report a blocker when the packet is stale, malformed, missing an input, over budget or requires evidence outside its ceiling. Do not solve those failures by browsing extra files, widening scope or padding prose.
+1. the Owner explicitly asks for that change; or
+2. a concrete blocker prevents a Writer from producing an output, and the smallest fix is necessary.
 
-## User-facing handoff
+Prefer removing a constraint over adding a new abstraction.
 
-For task output, lead with `python scripts/task.py brief products/<slug> <task-id>`. Keep operational detail in `report.md`; expose deeper analysis only when the user asks for it or needs it to make a safe decision.
+Do not add code enforcement for the compression-first loop unless the Owner explicitly asks for it. The current contract is instructional and intentionally lightweight.
+
+Do not replace Owner judgment with automated quality gates. The Owner decides whether a compression is ready to become prose.
+
+## Output location
+
+All current P01 Writer outputs live under:
+
+`writer-output/P01/`
+
+For a new round-1 attempt, each Writer/model writes:
+
+`writer-output/P01/<writer>/compression.md`
+
+Existing historical `draft.md`, `meta.json` and `writing-report.md` files may remain where they already exist. Do not delete or rewrite them merely to conform to the new loop.
+
+## Historical material
+
+Phase 1/2/3 experiments, coordinator prototypes, old budget/submission machinery and cancelled production tasks are not prerequisites for this compression-first MVP. Do not activate them unless the Owner explicitly asks.
+

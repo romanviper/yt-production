@@ -2,138 +2,139 @@
   "schema_version": 2,
   "contract_version": 1,
   "section": "P01",
-  "historical_territory": "Các thực hành ghi nhận và xác thực bằng đất sét trong Late Uruk, đặc biệt sự dịch chuyển toward việc đặt thông tin số trực tiếp trên bề mặt bền trong khi nhiều phương tiện cũ vẫn cùng tồn tại.",
+  "historical_territory": "Sự tương phản giữa một Sumerian literary tradition về sau, nơi writing mang một thông điệp vượt quá khả năng lặp lại của messenger, và trạng thái sớm hơn của proto-cuneiform, nơi các dấu được chứng thực chủ yếu trong công việc hành chính và chưa cho thấy continuous speech hay underlying language một cách chắc chắn.",
   "historical_change": {
-    "from": "Số lượng và sự xác thực được xử lý qua nhiều thiết bị và thực hành đất sét cùng tồn tại, gồm counters, envelopes, sealings và các bề mặt ghi số.",
-    "to": "Thực hành ghi nhận ngày càng đặt thông tin số trực tiếp trên bề mặt đất sét bền, đôi khi cùng dấu xác thực, trong khi các phương tiện cũ vẫn tiếp tục chồng lấn."
+    "from": "Early proto-cuneiform primarily stabilizes quantities, categories and administrative relations while continuous speech and underlying language remain only weakly recoverable.",
+    "to": "Later cuneiform can carry extended language, and Sumerian literary tradition can imagine a written message as something that travels beyond the oral memory of its messenger."
   },
   "primitives": [
     {
-      "id": "HS-P01-0001",
-      "kind": "practice",
+      "id": "HS-P01-0017",
+      "kind": "state",
       "world": {
-        "participants": [],
-        "operation": "record and authenticate administrative information through several coexisting clay-based practices",
-        "object_or_medium": [
-          "clay counters/tokens",
-          "clay envelopes",
-          "sealings",
-          "numerical tablets",
-          "early written clay surfaces"
-        ],
-        "information_or_relation_handled": [
-          "quantities",
-          "authentication"
-        ],
-        "context": "Late-Uruk administrative practice"
+        "tradition": "Sumerian literary composition Enmerkar and the Lord of Aratta",
+        "represented_problem": "a substantial and extensive royal message exceeds the messenger's ability to repeat it orally",
+        "represented_response": "Enmerkar places the message on clay as a tablet and sends it to Aratta",
+        "represented_use": "written message travels while the messenger no longer needs to reproduce the whole message from memory"
       },
       "epistemic_status": "documented",
-      "time_scope": "Late Uruk, especially the late fourth millennium BCE",
-      "place_scope": "Southern Mesopotamia and associated Late-Uruk administrative contexts"
+      "time_scope": "literary tradition surviving in Old Babylonian witnesses; narrated setting is earlier and not used here as a dated historical event",
+      "place_scope": "Sumerian literary tradition concerning Uruk/Kulaba and Aratta"
     },
     {
-      "id": "HS-P01-0003",
-      "kind": "object_affordance",
+      "id": "HS-P01-0020",
+      "kind": "state",
       "world": {
-        "object": "hollow clay envelope",
-        "permits": [
-          "enclose small clay counters"
-        ],
-        "carries": [
-          "enclosed counters",
-          "on some examples exterior impressions or sealings"
-        ],
-        "constrains": [
-          "enclosed counters are not directly inspectable while the envelope remains closed"
-        ]
+        "composition": "Enmerkar and the Lord of Aratta (CDLI composite Q000369)",
+        "surviving_witness_period": "Old Babylonian, ca. 1900–1600 BCE",
+        "language": "Sumerian",
+        "witness_context": "multiple manuscripts including Nippur witnesses"
       },
       "epistemic_status": "documented",
-      "time_scope": "Late Uruk",
-      "place_scope": "Late-Uruk administrative contexts represented in the approved source set"
+      "time_scope": "Old Babylonian ca. 1900–1600 BCE",
+      "place_scope": "surviving manuscript tradition including Nippur and other Mesopotamian witnesses"
     },
     {
-      "id": "HS-P01-0004",
-      "kind": "object_affordance",
+      "id": "HS-P01-0018",
+      "kind": "state",
       "world": {
-        "object": "numerical clay tablet",
-        "permits": [
-          "place quantity information directly on a durable exterior surface"
-        ],
-        "carries": [
-          "numerical impressions",
-          "on some examples sealing or authentication marks"
-        ],
-        "constrains": []
-      },
-      "epistemic_status": "documented",
-      "time_scope": "Late Uruk",
-      "place_scope": "Southern Mesopotamia and related Late-Uruk administrative sites in the approved source set"
-    },
-    {
-      "id": "HS-P01-0007",
-      "kind": "change",
-      "world": {
-        "dimension": "physical placement and inspectability of numerical information",
-        "earlier_state": "quantities and authentication were handled across several coexisting physical devices and clay practices",
-        "later_state": "numerical information increasingly appeared directly on durable clay surfaces, sometimes alongside authentication marks",
-        "coexistence": "older and parallel clay practices continued to overlap with direct surface recording",
-        "qualification": "the shift does not identify one invention event or an immediate complete replacement"
+        "period": "Uruk IV and early proto-cuneiform horizon",
+        "dominant_attested_use": "administrative recording of quantities, categories and related institutional information",
+        "language_visibility": "continuous speech and the underlying language are not securely recoverable across the early material",
+        "phonetic_capacity": "rare possible phonetic/rebus uses exist early, while consistent phonetic writing is clearer later"
       },
       "epistemic_status": "qualified_inference",
-      "time_scope": "Late Uruk, late fourth millennium BCE",
-      "place_scope": "Southern Mesopotamia and related Late-Uruk administrative contexts"
+      "time_scope": "Uruk IV–III, late fourth to early third millennium BCE",
+      "place_scope": "Uruk cultural sphere, especially southern Mesopotamia"
+    },
+    {
+      "id": "HS-P01-0019",
+      "kind": "relation",
+      "world": {
+        "left": "later Sumerian literary imagination of a written message carrying words beyond a messenger's oral capacity",
+        "relation": "can be set in qualified contrast with",
+        "right": "earliest substantial proto-cuneiform material dominated by administrative relations with limited recoverable speech/language",
+        "temporal_scope": "comparison between late-fourth-millennium early writing and much later surviving literary witnesses",
+        "qualification": "the contrast motivates a question about changing writing capacities; it does not prove that the poem preserves a historical memory of that change"
+      },
+      "epistemic_status": "qualified_inference",
+      "time_scope": "analytical contrast across early writing and later literary tradition",
+      "place_scope": "Mesopotamian/Sumerian writing tradition"
+    },
+    {
+      "id": "HS-P01-0006",
+      "kind": "relation",
+      "world": {
+        "left": "growth in administrative and institutional scale",
+        "relation": "co-occurred with and created pressure compatible with",
+        "right": "greater demand for records and authentication",
+        "temporal_scope": "Late-Uruk formation period",
+        "qualification": "co-occurrence does not establish a sole cause or one-way causal sequence"
+      },
+      "epistemic_status": "qualified_inference",
+      "time_scope": "Late Uruk formation period",
+      "place_scope": "Urban and institutional contexts in southern Mesopotamia represented in the approved sources"
     }
   ],
   "boundaries": [
     {
-      "source": "HS-P01-0001",
-      "rule": "Parallel practices must not be converted into a single mandatory developmental sequence."
+      "source": "HS-P01-0017",
+      "rule": "Documented means the literary tradition is attested; it does not mean Enmerkar historically invented writing or that the narrated exchange occurred as described."
     },
     {
-      "source": "HS-P01-0003",
-      "rule": "Exterior impressions are not universal to every envelope."
+      "source": "HS-P01-0017",
+      "rule": "Frame the scene as later literary memory/etiology when listener could otherwise hear it as an eyewitness origin account."
     },
     {
-      "source": "HS-P01-0003",
-      "rule": "The affordance does not establish a single transitional step toward tablets."
+      "source": "HS-P01-0020",
+      "rule": "Manuscript date does not equal the date when every element of the tradition was first composed or orally circulated; it does bound what survives directly."
     },
     {
-      "source": "HS-P01-0004",
-      "rule": "A numerical tablet alone does not identify a commodity, transaction mechanism or named actor."
+      "source": "HS-P01-0018",
+      "rule": "Predominantly administrative preserved material does not prove administration was the only use or cause; survival and excavation are selective."
     },
     {
-      "source": "HS-P01-0004",
-      "rule": "Direct surface recording must not be described as wholesale replacement of envelopes or tokens."
+      "source": "HS-P01-0018",
+      "rule": "Undetermined underlying language does not mean the writers lacked spoken language or that no early sign ever had phonetic value."
     },
     {
-      "source": "HS-P01-0007",
-      "rule": "Increasing direct surface recording does not imply immediate or complete replacement of other clay practices."
+      "source": "HS-P01-0018",
+      "rule": "Do not label the entire earliest corpus securely Sumerian."
     },
     {
-      "source": "HSC-P01-0001",
+      "source": "HS-P01-0019",
+      "rule": "Do not narrate the literary scene as a surviving oral memory of the actual invention unless separate evidence is supplied."
+    },
+    {
+      "source": "HS-P01-0019",
+      "rule": "Do not turn the contrast into a deterministic administration-to-speech ladder; functions overlap and intermediate evidence is incomplete."
+    },
+    {
+      "source": "HS-P01-0006",
+      "rule": "Administration is a major formation pressure, not a monocausal explanation."
+    },
+    {
+      "source": "HSC-P01-0002",
       "applies_to": [
-        "HS-P01-0001",
-        "HS-P01-0003",
-        "HS-P01-0004",
-        "HS-P01-0007"
+        "HS-P01-0006"
       ],
-      "rule": "Do not convert overlapping clay practices into a direct token-to-tablet replacement genealogy."
+      "rule": "Do not turn administrative pressure or institutional co-occurrence into a sole-cause or one-way causal verdict."
     },
     {
-      "source": "HSC-P01-0003",
+      "source": "HSC-P01-0004",
       "applies_to": [
-        "HS-P01-0001",
-        "HS-P01-0004",
-        "HS-P01-0007"
+        "HS-P01-0017",
+        "HS-P01-0019",
+        "HS-P01-0020"
       ],
-      "rule": "Do not label a specific economic mechanism such as market exchange, tax, tribute, redistribution, labor obligation or ownership unless independent transaction evidence supports it."
+      "rule": "Keep documented tradition, historical event and scholarly hypothesis distinct: an attested literary scene may carry narrative weight without being promoted to eyewitness history or causal proof."
     }
   ],
   "authority_binding": {
-    "product_substrate_sha256": "eb7ada6dc9414e5cd629fdc262e09bcf6fdb3afa6327ba0d8dcb19adf93ef818",
-    "outline_sha256": "22ba42e198615bb75bcb6db0aac25bc468a0c06a7c0858f114ce5c5b564f2d25",
-    "section_overlay_sha256": "5db68ce464d768dfbe59854208f8ecd5c9317878ebce96b062e176b2365e3973",
-    "section_binding_sha256": "a4fe962b6fe8a094085fbe8f152e5bb6033dd51ebf6d8c8fa6168150e0143332"
+    "product_substrate_sha256": "70e5065d1760f9371db28381b46dade775a4a49832761b2056ab9b71cb330a6b",
+    "outline_sha256": "7a985217b743fb544d73eceeccf5dd52f151b6b064725f08e35ed28eb5e5f454",
+    "section_overlay_sha256": "27b6d73ba526feedcc22f139a941916345ed2d207480d434f71d6cc87356338c",
+    "section_binding_sha256": "5e8f778e7356645d83a905b5ac86caec3d95ef73fa3b4131c82111bd49badc0b"
   },
-  "writer_contract": "Historical Substrate is the primary model of historical reality. Evidence lookup is secondary and only verifies, sharpens or qualifies details needed by a telling already chosen from this model."
+  "writer_contract": "Historical Substrate is a source-anchored set of historical conditions, documented traditions, qualified interpretations and bounded reconstructions. Epistemic status controls how each may be narrated: a documented tradition proves the tradition is attested, not that its narrated event occurred. The Writer may connect supported material into an explicitly qualified possibility, but compatibility must not be turned into proof."
 }

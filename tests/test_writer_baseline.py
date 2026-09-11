@@ -575,7 +575,7 @@ class WriterBaselineTests(unittest.TestCase):
             self.assertEqual(
                 [
                     "system/core/creative-boundaries.md",
-                    "system/operations/draft-section.md",
+                    "system/operations/substrate/draft-section.md",
                 ],
                 packet["instruction_files"],
             )
@@ -583,12 +583,13 @@ class WriterBaselineTests(unittest.TestCase):
             self.assertEqual(
                 [
                     "03_sections/P01/section.json",
+                    "03_sections/P01/historical-substrate.json",
                     "03_sections/P01/narration-pack.json",
                     "03_sections/P01/continuity-in.md",
                 ],
-                input_paths[:3],
+                input_paths[:4],
             )
-            self.assertTrue(set(input_paths[3:]).issubset({"03_sections/P01/draft-rework-request.md"}))
+            self.assertTrue(set(input_paths[4:]).issubset({"03_sections/P01/draft-rework-request.md"}))
             self.assertIn("evidence_access", packet)
             self.assertIn('"mission"', context)
             self.assertIn("writer_directed_on_demand_v1", context)
@@ -636,6 +637,10 @@ class WriterBaselineTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             product = Path(temp) / "sumer-writing"
             shutil.copytree(SOURCE_PRODUCT, product)
+            # The canonical source product is intentionally pre-draft. Build the
+            # review prerequisite inside this temporary copy instead of requiring
+            # or mutating a product draft in the repository.
+            submit_fixture_prose(product, [])
             state_path = product / "03_sections" / "P01" / "section.json"
             state = json.loads(state_path.read_text(encoding="utf-8"))
             state["status"] = "ready_for_review"

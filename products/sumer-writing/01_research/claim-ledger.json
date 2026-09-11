@@ -1377,6 +1377,174 @@
           "local_id": "WS08-CLM-009"
         }
       ]
+    },
+    {
+      "id": "CLM-0072",
+      "statement": "Met tablet 1988.433.2, dated ca. 3100–2900 BCE and probably from Uruk, is interpreted as likely recording grain deliveries and distributions, including barley and emmer.",
+      "type": "inference",
+      "confidence": "medium",
+      "status": "qualified",
+      "sources": [
+        "SRC-0043"
+      ],
+      "counterevidence": "The museum qualifies its interpretation because early texts lack verbs; exact participants and transaction mechanism are not established.",
+      "narrative_implication": "A dated early-writing example of an actual kind of work; retain likely/probably and do not infer a tax, wage, ration entitlement or a direct sequence from Chogha Mish.",
+      "provenance": [
+        {
+          "workstream": "P01-owner-revision",
+          "local_id": "MET-1988.433.2"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0073",
+      "statement": "British Museum interprets tablet 1989,0130.4, dated ca. 3100–3000 BCE in southern Iraq, as recording beer issued to workers within daily rations. Its signs include pointed-base jars with wavy contents and a bowl toward a human head, interpreted as to eat and indicating rations.",
+      "type": "inference",
+      "confidence": "medium",
+      "status": "qualified",
+      "sources": [
+        "SRC-0044"
+      ],
+      "counterevidence": "Museum-level interpretation, not a complete identification of the transaction, people or issuing institution.",
+      "narrative_implication": "Optional specific relation between recording, provisions and workers; do not require this object or its position in the story.",
+      "provenance": [
+        {
+          "workstream": "P01-local-editorial-lab",
+          "local_id": "BM-1989-0130-4"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0074",
+      "statement": "In late-fourth-millennium Uruk, large temple estates handled accounting and disbursement, and early written lists name specialist occupations including potters and metalworkers. These provide a concrete institutional and occupational setting for record-making.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0045"
+      ],
+      "counterevidence": "General setting does not locate a particular purchased tablet in a temple or identify its workers; no sole-cause invention claim follows.",
+      "narrative_implication": "Optional world context for work and record keeping; not evidence of a specific wage, obligation or ration entitlement.",
+      "provenance": [
+        {
+          "workstream": "P01-local-editorial-lab",
+          "local_id": "MET-ORIGINS-WRITING"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0075",
+      "statement": "The British Museum account describes early Uruk tablets discarded from large temples and subsequently reused as packing in foundations of new buildings. This is a general account of secondary use, not the find history of tablet 1989,0130.4.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0044"
+      ],
+      "counterevidence": "No exact rebuilding date, individual building, reason for discard or excavated history of the purchased beer tablet is established by this passage.",
+      "narrative_implication": "Optional distinct material history: an early record could become building material; this does not require a particular opening or a ruin-and-recovery plot.",
+      "provenance": [
+        {
+          "workstream": "P01-local-editorial-lab",
+          "local_id": "BM-EARLY-TABLETS-SECONDARY-USE"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0076",
+      "statement": "Enmerkar and the Lord of Aratta portrays a substantial message that the messenger cannot repeat, after which Enmerkar places the message on clay and sends the tablet to Aratta; this is an attested literary representation, not direct evidence of a historical invention event.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0046",
+        "SRC-0047"
+      ],
+      "counterevidence": "The surviving composition is a later literary tradition and cannot establish that Enmerkar existed as described or invented writing.",
+      "narrative_implication": "The episode may be told as an ancient story about what writing could mean; lightly frame its literary status rather than reducing it to a disclaimer.",
+      "provenance": [
+        {
+          "workstream": "P01-narrative-reset",
+          "local_id": "ENMERKAR-WRITING-SCENE"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0077",
+      "statement": "The surviving witnesses of Enmerkar and the Lord of Aratta represented by CDLI composite Q000369 are Old Babylonian, ca. 1900–1600 BCE, and therefore substantially later than the earliest proto-cuneiform horizon.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "supported",
+      "sources": [
+        "SRC-0047"
+      ],
+      "counterevidence": "The composition may preserve earlier traditions, but the surviving witnesses do not provide a contemporary record of the fourth-millennium origin of writing.",
+      "narrative_implication": "Use the poem as later Sumerian literary memory/etiology, not eyewitness history.",
+      "provenance": [
+        {
+          "workstream": "P01-narrative-reset",
+          "local_id": "ENMERKAR-WITNESS-DATE"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0078",
+      "statement": "Scholars disagree over whether the Enmerkar passage imagines the invention of writing in general, the introduction of writing messages on clay, or a deliberately circular literary scene that already presupposes writing-related competence.",
+      "type": "contested",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0048",
+        "SRC-0051"
+      ],
+      "counterevidence": "Different philological and literary readings emphasize different details; no single interpretation should silently become historical fact.",
+      "narrative_implication": "The disagreement itself permits a bounded mystery; the script can use the scene without deciding the actual origin mechanism.",
+      "provenance": [
+        {
+          "workstream": "P01-narrative-reset",
+          "local_id": "ENMERKAR-INTERPRETATION"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0079",
+      "statement": "A productive historical contrast exists between the later Enmerkar tradition, which imagines writing as carrying an extensive message beyond a messenger's oral capacity, and the earliest substantial proto-cuneiform corpus, which is predominantly administrative and often does not securely expose continuous speech or a known underlying language. The contrast frames a transformation question but does not establish a direct memory or causal sequence.",
+      "type": "inference",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0046",
+        "SRC-0047",
+        "SRC-0001",
+        "SRC-0003",
+        "SRC-0004"
+      ],
+      "counterevidence": "Survival bias and lost media prevent the preserved early corpus from proving that other uses never existed; the poem is centuries later.",
+      "narrative_implication": "Use the gap as P01's story engine: how did marks that first appear mainly as administrative relations become capable of carrying language strongly enough for later people to imagine writing this way?",
+      "provenance": [
+        {
+          "workstream": "P01-narrative-reset",
+          "local_id": "LITERARY-ARCHAEOLOGY-CONTRAST"
+        }
+      ]
+    },
+    {
+      "id": "CLM-0080",
+      "statement": "Nidaba/Nisaba is attested in Mesopotamian tradition as a goddess associated with grain and writing and later as patron of scribes; this cultural association is not evidence that grain accounting was the sole historical cause of writing.",
+      "type": "fact",
+      "confidence": "high",
+      "status": "qualified",
+      "sources": [
+        "SRC-0050"
+      ],
+      "counterevidence": "The deity's functions develop across periods and do not document an origin event.",
+      "narrative_implication": "Retain as later cultural/scribal material rather than P01 origin proof.",
+      "provenance": [
+        {
+          "workstream": "P01-narrative-reset",
+          "local_id": "NIDABA-WRITING"
+        }
+      ]
     }
   ],
   "contradiction_register": [
@@ -1446,6 +1614,18 @@
         "WS08-CLM-009"
       ],
       "outline_rule": "End at the break and recovery, not a smartphone lineage."
+    },
+    {
+      "id": "CTR-0006",
+      "question": "Enmerkar episode cho biết writing thực sự được phát minh như thế nào, hay cho biết later Sumerians tưởng tượng writing như thế nào?",
+      "positions": [
+        "The text explicitly depicts a message placed on clay because the messenger cannot repeat it.",
+        "Scholars disagree whether this is invention of writing, writing on clay, or a literary/presentist etiology that already presupposes writing competence."
+      ],
+      "provenance": [
+        "P01-narrative-reset"
+      ],
+      "outline_rule": "Use the episode as documented literary tradition and a narrative question-generator; do not convert any preferred literary interpretation into origin fact."
     }
   ]
 }

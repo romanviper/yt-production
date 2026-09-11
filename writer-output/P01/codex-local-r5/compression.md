@@ -1,0 +1,9 @@
+Ở Uruk, miền nam Lưỡng Hà, có những bản ghi về sau được dùng để chèn móng công trình. Người ta thải chúng khỏi các đền lớn, rồi đem những miếng đất sét mang dấu viết ấy làm vật liệu xây dựng. Chúng từng có việc khác để làm. Muốn gặp những người đã dùng chúng, phải trở lại lúc các dấu ấy còn cần được đọc.
+
+Cuối thiên niên kỷ IV trước Công nguyên, Uruk có những người làm gốm, những người làm kim loại; tên các nghề xuất hiện trong những danh sách cổ của thành phố. Tại các đền lớn, có người lo sổ sách và cấp phát. Đô thị và các cơ sở ấy lớn lên, công việc cần theo dõi cũng nhiều hơn. Người ta ghi lên đất sét.
+
+Từ dấu vết còn lại, có thể hình dung thao tác ấy: nắn đất khi còn ẩm, ấn hoặc rạch lên bề mặt trước khi nó khô. Đất mềm nhận dấu, đất khô giữ dấu. Người ghi theo dõi những phần được cấp; với người nhận, đó là phần dùng hằng ngày.
+
+Một bảng khác, từ miền nam Iraq, đưa ta đến gần phần nhận ấy. Nó có niên đại khoảng 3100–3000 trước Công nguyên, dài chưa tới mười xăngtimét. Trên mặt đất sét có hình bình đáy nhọn, bên trong là những đường lượn, và hình chiếc bát hướng vào đầu người. Theo cách đọc của Bảo tàng Anh, bình chỉ bia; chiếc bát và đầu người chỉ việc ăn, tức khẩu phần. Bảng ghi bia trong phần cấp hằng ngày của người lao động. Bia của một ngày đã qua vẫn còn được nhận ra, bởi ai đó từng có công việc ghi nó xuống.
+
+Tại Uruk, những bảng bị thải đã bước sang một công việc khác: lấp chỗ trống dưới nền công trình. Người xây dựng dùng được khối đất sét mà không cần dùng điều ghi trên đó. Hai phần từng gắn với nhau — vật mang dấu và nội dung của dấu — đã có số phận khác nhau. Hơn năm nghìn năm sau, đọc được những dấu còn lại là lần theo chiều ngược lại: từ đất sét trở về công việc, từ công việc trở về con người. Bên dưới những công trình của Uruk từng có cả những bản ghi về đời sống đã vận hành ở đó. Một phần thế giới Sumer còn chờ trong những dấu ấy.

@@ -1,0 +1,31 @@
+{
+  "schema": "writer-observability-v2",
+  "writer": "codex-clean-59c41ac",
+  "model": "UNKNOWN",
+  "task": "P01",
+  "attempt": 1,
+  "owner_instruction": "Viết sạch một draft P01 từ input hiện tại tại commit 59c41ac; snapshot trước prose, freeze, báo cáo và metadata trung thực; lưu ba file vào partition mới và commit rồi dừng.",
+  "branch": "codex/owner-first-mvp",
+  "starting_commit": "59c41ac8931460f5e85f07c6e972e89b3d73de33",
+  "inputs_read": [
+    "products/sumer-writing/02_outline/P01-creative-brief.md",
+    "products/sumer-writing/02_outline/section-overlays/P01.json",
+    "products/sumer-writing/03_sections/P01/historical-substrate.json"
+  ],
+  "extra_context_accessed": [
+    "AGENTS.md",
+    "WRITER.md"
+  ],
+  "other_writer_outputs_read": false,
+  "owner_feedback_on_other_writer_read_before_draft": false,
+  "rerolled": false,
+  "draft_word_count": 546,
+  "timing": {
+    "seconds": null,
+    "source": "UNKNOWN"
+  },
+  "outputs": [
+    "draft.md",
+    "writing-report.md"
+  ]
+}

@@ -1,5 +1,32 @@
 # YT Production
 
+## Owner-first MVP — dynamic Writer pool
+
+Đường MVP hiện tại dùng nguyên tắc **Freeze the work, not the worker**:
+
+```text
+Owner request
+  → frozen P01 authority
+  → Owner-approved budget cho Sol repo
+  → Sol repo may freeze one Plan + common Writer assignment for controlled comparison
+  → Owner launches any Writer/model(s), with or without that assignment
+  → each returns draft + self-declared provenance
+  → Owner closes submission pool
+  → Owner comparison feedback
+  → stop
+```
+
+Writer không cần pre-register model/actor và không có time-budget gate. Timing của Writer chỉ là telemetry. `PREBOUND` submissions phải match frozen assignment hash. **Direct Owner instruction cũng đủ để Writer viết một bounded attempt mà không có assignment**; trường hợp đó Writer khai `NOT_PREBOUND`, `assignment_sha256=null` và liệt kê exact inputs đã dùng. Draft vẫn đọc/so sánh được nhưng không được gọi là controlled same-input evidence.
+
+Bắt đầu:
+
+```bash
+python scripts/learning.py prepare --run p01-owner-001 --request "Viết một đoạn P01 độc lập để tôi đọc và phản hồi" --code-ref <ref>
+python scripts/learning.py status --run p01-owner-001
+```
+
+Hướng dẫn đầy đủ: [docs/MVP.md](docs/MVP.md).
+
 Hệ điều hành biên tập cho phim lịch sử dài, được thiết kế để nhiều AI task cộng tác mà không mang toàn bộ repo và toàn bộ policy vào mỗi context window.
 
 ## Source of truth

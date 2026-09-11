@@ -23,6 +23,11 @@ except ModuleNotFoundError:  # pragma: no cover
     from section_overlay_contract import validate_section_overlay, resolve_section_spec
     from substrate_preflight import verify_canonical_section_state
 
+# Keep an immutable reference to the legacy validator before main() temporarily
+# injects this module's wrapper for validate_legacy.main(). Without this alias,
+# the wrapper would call the monkeypatched symbol and recurse into itself.
+_legacy_validate_product = _legacy.validate_product
+
 
 def _append(issues: list[Issue], location: Path | str, messages: list[str]) -> None:
     for message in messages:
@@ -31,7 +36,7 @@ def _append(issues: list[Issue], location: Path | str, messages: list[str]) -> N
 
 def validate_product(product_dir: Path) -> list[Issue]:
     product_dir = product_dir.resolve()
-    issues = list(_legacy.validate_product(product_dir))
+    issues = list(_legacy_validate_product(product_dir))
 
     substrate_path = product_dir / "01_research" / "historical-substrate.json"
     claims_path = product_dir / "01_research" / "claim-ledger.json"
@@ -114,8 +119,16 @@ def validate_product(product_dir: Path) -> list[Issue]:
 
 
 def main() -> int:
+    # validate_legacy.main() resolves validate_product from its own module.
+    # Temporarily route that call through this wrapper, while this wrapper calls
+    # the captured original legacy validator above. Restore afterward so imports
+    # remain side-effect free for tests and other callers.
+    original = _legacy.validate_product
     _legacy.validate_product = validate_product
-    return _legacy.main()
+    try:
+        return _legacy.main()
+    finally:
+        _legacy.validate_product = original
 
 
 if __name__ == "__main__":

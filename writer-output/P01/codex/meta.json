@@ -1,0 +1,34 @@
+{
+  "schema": "writer-observability-v2",
+  "writer": "codex",
+  "model": "UNKNOWN",
+  "task": "P01",
+  "attempt": 1,
+  "owner_instruction": "Làm writer, nhận nhiệm vụ từ nhánh codex/owner-first-mvp của repo yt-production, viết và ghi lại kết quả.",
+  "branch": "codex/owner-first-mvp",
+  "starting_commit": "96731e0ec7c50fad7278d31736fc6cdbe6c99b0f",
+  "inputs_read": [
+    "products/sumer-writing/02_outline/P01-creative-brief.md",
+    "products/sumer-writing/02_outline/section-overlays/P01.json",
+    "products/sumer-writing/03_sections/P01/historical-substrate.json"
+  ],
+  "extra_context_accessed": [
+    "AGENTS.md",
+    "WRITER.md",
+    "/workspace/scratch/20eb7e90d0ed/yt-production/AGENTS.md (old checkout, read during repository discovery)",
+    "Git status, branch, remote and path listings from local checkouts; no other writer output files opened",
+    "e0/oai/personal-context SKILL.md and Personal Context tool description; no search called",
+    "System-provided memory summary containing prior script excerpts and Owner feedback before this attempt"
+  ],
+  "other_writer_outputs_read": true,
+  "owner_feedback_on_other_writer_read_before_draft": true,
+  "rerolled": false,
+  "draft_word_count": 573,
+  "word_count_method": "Whitespace-separated units; not Vietnamese lexical segmentation",
+  "draft_sha256": "79cd36f95f759dbbbd109eca3ff00a6ace628e3fa707f77f274ba242b192aced",
+  "timing": {
+    "seconds": null,
+    "source": "UNKNOWN"
+  },
+  "outputs": ["draft.md", "writing-report.md"]
+}
